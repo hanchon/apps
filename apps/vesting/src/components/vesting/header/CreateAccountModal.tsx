@@ -1,5 +1,5 @@
 import { ModalTitle } from "ui-helpers";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -36,34 +36,36 @@ export const CreateAccountModal = () => {
 
   const endDate = getEndDate(selectedStartDate, selectedVestingDuration);
 
-  const vestingSettingsConfig = {
-    [PlansType.Team]: {
-      duration: [Duration.FourYears],
-      cliff: [Duration.OneYear],
-      schedule: [Duration.Monthly],
-      lockup: [Duration.OneYear],
-      disabled: true,
-    },
-    [PlansType.Grantee]: {
-      duration: [Duration.OneYear],
-      cliff: [Duration.OneDay],
-      schedule: [Duration.Monthly],
-      lockup: [Duration.OneYear],
-      disabled: true,
-    },
-    [PlansType.Custom]: {
-      duration: [Duration.FourYears, Duration.OneYear],
-      cliff: [
-        Duration.None,
-        Duration.OneYear,
-        Duration.OneMonth,
-        Duration.OneDay,
-      ],
-      schedule: [Duration.Monthly, Duration.Quarterly],
-      lockup: [Duration.None, Duration.OneYear, Duration.OneMonth],
-      disabled: false,
-    },
-  };
+  const vestingSettingsConfig = useMemo(() => {
+    return {
+      [PlansType.Team]: {
+        duration: [Duration.FourYears],
+        cliff: [Duration.OneYear],
+        schedule: [Duration.Monthly],
+        lockup: [Duration.OneYear],
+        disabled: true,
+      },
+      [PlansType.Grantee]: {
+        duration: [Duration.OneYear],
+        cliff: [Duration.OneDay],
+        schedule: [Duration.Monthly],
+        lockup: [Duration.OneYear],
+        disabled: true,
+      },
+      [PlansType.Custom]: {
+        duration: [Duration.FourYears, Duration.OneYear],
+        cliff: [
+          Duration.None,
+          Duration.OneYear,
+          Duration.OneMonth,
+          Duration.OneDay,
+        ],
+        schedule: [Duration.Monthly, Duration.Quarterly],
+        lockup: [Duration.None, Duration.OneYear, Duration.OneMonth],
+        disabled: false,
+      },
+    };
+  }, []);
 
   const DEFAULT_TYPE = vestingSettingsConfig[PlansType.Team];
   const [type, setType] = useState(DEFAULT_TYPE);
@@ -71,6 +73,7 @@ export const CreateAccountModal = () => {
   useEffect(() => {
     setType(vestingSettingsConfig[selectedPlanType]);
   }, [selectedPlanType, vestingSettingsConfig]);
+
   return (
     <div className="space-y-5">
       <ModalTitle title="Create Vesting Account" />
@@ -89,9 +92,10 @@ export const CreateAccountModal = () => {
           id="planType"
           {...register("planType")}
           aria-invalid={Boolean(errors.title)}
+          defaultValue="Team"
         >
           {plans.map((elt) => (
-            <option key={elt} value={elt} selected={elt === "Team"}>
+            <option key={elt} value={elt}>
               {elt}
             </option>
           ))}
