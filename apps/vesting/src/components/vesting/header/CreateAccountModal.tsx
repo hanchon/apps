@@ -70,7 +70,7 @@ export const CreateAccountModal = () => {
 
   useEffect(() => {
     setType(vestingSettingsConfig[selectedPlanType]);
-  }, [selectedPlanType]);
+  }, [selectedPlanType, vestingSettingsConfig]);
   return (
     <div className="space-y-5">
       <ModalTitle title="Create Vesting Account" />
