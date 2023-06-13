@@ -4,6 +4,8 @@ export const getEndDate = (
   date: string | undefined,
   vestingDuration: string
 ) => {
+  console.log(date);
+  console.log(vestingDuration);
   const duration = Number(vestingDuration?.split(" ")[0]);
   const year = Number(date?.split("-")[0]);
   if (!isNaN(duration) && !isNaN(year)) {
@@ -88,3 +90,44 @@ export const schema = z.object({
   lockupDuration: z.enum(lockup),
   startDate: z.coerce.date(),
 });
+
+export const vestingSettingsConfig = {
+  [PlansType.Team]: {
+    duration: [Duration.FourYears],
+    cliff: [Duration.OneYear],
+    schedule: [Duration.Monthly],
+    lockup: [Duration.OneYear],
+    disabled: true,
+  },
+  [PlansType.Grantee]: {
+    duration: [Duration.OneYear],
+    cliff: [Duration.OneDay],
+    schedule: [Duration.Monthly],
+    lockup: [Duration.OneYear],
+    disabled: true,
+  },
+  [PlansType.Custom]: {
+    duration: [Duration.FourYears, Duration.OneYear],
+    cliff: [
+      Duration.None,
+      Duration.OneYear,
+      Duration.OneMonth,
+      Duration.OneDay,
+    ],
+    schedule: [Duration.Monthly, Duration.Quarterly],
+    lockup: [Duration.None, Duration.OneYear, Duration.OneMonth],
+    disabled: false,
+  },
+};
+
+export const DEFAULT_FORM_VALUES = {
+  address: "",
+  accountName: "",
+  amount: "",
+  planType: PlansType.Team,
+  vestingDuration: Duration.FourYears,
+  vestingCliff: Duration.OneYear,
+  vestingSchedule: Duration.Monthly,
+  lockupDuration: Duration.OneYear,
+  startDate: " ",
+};

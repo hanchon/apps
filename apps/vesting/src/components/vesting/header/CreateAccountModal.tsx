@@ -1,17 +1,17 @@
 import { ModalTitle } from "ui-helpers";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { formatNumber } from "helpers";
 import {
-  Duration,
+  DEFAULT_FORM_VALUES,
   PlansType,
   dummyProps,
   getEndDate,
   plans,
   schema,
   setVestingAccountNameLocalstorage,
+  vestingSettingsConfig,
 } from "./helpers";
 
 export const CreateAccountModal = () => {
@@ -25,62 +25,29 @@ export const CreateAccountModal = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
+    defaultValues: DEFAULT_FORM_VALUES,
   });
 
   const selectedPlanType: PlansType = watch("planType");
   const selectedStartDate = watch("startDate");
   const selectedVestingDuration = watch("vestingDuration");
 
-  const endDate = getEndDate(selectedStartDate, selectedVestingDuration);
+  const endDate = useMemo(() => {
+    return getEndDate(selectedStartDate, selectedVestingDuration);
+  }, [selectedStartDate, selectedVestingDuration]);
 
-  const vestingSettingsConfig = useMemo(() => {
-    return {
-      [PlansType.Team]: {
-        duration: [Duration.FourYears],
-        cliff: [Duration.OneYear],
-        schedule: [Duration.Monthly],
-        lockup: [Duration.OneYear],
-        disabled: true,
-      },
-      [PlansType.Grantee]: {
-        duration: [Duration.OneYear],
-        cliff: [Duration.OneDay],
-        schedule: [Duration.Monthly],
-        lockup: [Duration.OneYear],
-        disabled: true,
-      },
-      [PlansType.Custom]: {
-        duration: [Duration.FourYears, Duration.OneYear],
-        cliff: [
-          Duration.None,
-          Duration.OneYear,
-          Duration.OneMonth,
-          Duration.OneDay,
-        ],
-        schedule: [Duration.Monthly, Duration.Quarterly],
-        lockup: [Duration.None, Duration.OneYear, Duration.OneMonth],
-        disabled: false,
-      },
-    };
-  }, []);
-
-  const DEFAULT_TYPE = vestingSettingsConfig[PlansType.Team];
-  const [type, setType] = useState(DEFAULT_TYPE);
-
-  useEffect(() => {
-    setType(vestingSettingsConfig[selectedPlanType]);
-  }, [selectedPlanType, vestingSettingsConfig]);
-
+  const planTypeRegister = register("planType");
   return (
     <div className="space-y-5">
       <ModalTitle title="Create Vesting Account" />
 
       <form
         onSubmit={handleSubmit((d) => {
-          // console.log(d);
+          console.log(d);
           handleOnClick(d);
         })}
         className="flex flex-col space-y-3"
@@ -90,9 +57,24 @@ export const CreateAccountModal = () => {
         </label>
         <select
           id="planType"
-          {...register("planType")}
-          aria-invalid={Boolean(errors.title)}
-          defaultValue="Team"
+          {...planTypeRegister}
+          onChange={(e) => {
+            const planType = e.target.value as "Team" | "Grantee" | "Custom";
+            planTypeRegister.onChange(e); // method from hook form register
+            setValue(
+              "vestingDuration",
+              vestingSettingsConfig[planType].duration[0]
+            );
+            setValue("vestingCliff", vestingSettingsConfig[planType].cliff[0]);
+            setValue(
+              "vestingSchedule",
+              vestingSettingsConfig[planType].schedule[0]
+            );
+            setValue(
+              "lockupDuration",
+              vestingSettingsConfig[planType].lockup[0]
+            );
+          }}
         >
           {plans.map((elt) => (
             <option key={elt} value={elt}>
@@ -110,10 +92,10 @@ export const CreateAccountModal = () => {
             <select
               id="vestingDuration"
               {...register("vestingDuration")}
-              aria-invalid={Boolean(errors.title)}
-              disabled={type?.disabled}
+              disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
+              value={selectedVestingDuration}
             >
-              {type?.duration.map((elt) => (
+              {vestingSettingsConfig[selectedPlanType]?.duration.map((elt) => (
                 <option key={elt} value={elt}>
                   {elt}
                 </option>
@@ -129,10 +111,9 @@ export const CreateAccountModal = () => {
             <select
               id="vestingCliff"
               {...register("vestingCliff")}
-              aria-invalid={Boolean(errors.title)}
-              disabled={type?.disabled}
+              disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
             >
-              {type?.cliff.map((elt) => (
+              {vestingSettingsConfig[selectedPlanType]?.cliff.map((elt) => (
                 <option key={elt} value={elt}>
                   {elt}
                 </option>
@@ -150,10 +131,9 @@ export const CreateAccountModal = () => {
             <select
               id="vestingSchedule"
               {...register("vestingSchedule")}
-              aria-invalid={Boolean(errors.title)}
-              disabled={type?.disabled}
+              disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
             >
-              {type?.schedule.map((elt) => (
+              {vestingSettingsConfig[selectedPlanType]?.schedule.map((elt) => (
                 <option key={elt} value={elt}>
                   {elt}
                 </option>
@@ -169,10 +149,9 @@ export const CreateAccountModal = () => {
             <select
               id="lockupDuration"
               {...register("lockupDuration")}
-              aria-invalid={Boolean(errors.title)}
-              disabled={type?.disabled}
+              disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
             >
-              {type?.lockup.map((elt) => (
+              {vestingSettingsConfig[selectedPlanType]?.lockup.map((elt) => (
                 <option key={elt} value={elt}>
                   {elt}
                 </option>
@@ -239,7 +218,7 @@ export const CreateAccountModal = () => {
         <input
           type="submit"
           style={{ backgroundColor: "#ed4e33" }}
-          className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg  font-bold uppercase text-pearl"
+          className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg font-bold uppercase text-pearl"
           value="Create"
         />
       </form>
