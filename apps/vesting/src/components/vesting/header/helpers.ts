@@ -24,6 +24,10 @@ export const setVestingAccountNameLocalstorage = (accountName: string) => {
   localStorage.setItem(VESTING_ACCOUNT_NAME_LOCALSTORAGE, accountName);
 };
 
+export const getVestingAccountNameLocalstorage = () => {
+  return localStorage.getItem(VESTING_ACCOUNT_NAME_LOCALSTORAGE);
+};
+
 export enum Duration {
   OneYear = "1 YEAR",
   FourYears = "4 YEARS",
@@ -130,3 +134,9 @@ export const DEFAULT_FORM_VALUES = {
   lockupDuration: Duration.OneYear,
   startDate: " ",
 };
+
+export interface VestingProps {
+  accountAddress: string;
+  funderAddress: string;
+  isVesting: boolean;
+}
