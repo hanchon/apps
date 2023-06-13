@@ -1,4 +1,3 @@
-// create test
 import * as z from "zod";
 export const getEndDate = (
   date: string | undefined,
