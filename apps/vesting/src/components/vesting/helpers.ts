@@ -1,5 +1,4 @@
 import * as z from "zod";
-import { ethToEvmos } from "@evmos/address-converter";
 
 export const getEndDate = (
   date: string | undefined,
@@ -140,38 +139,3 @@ export interface VestingProps {
   funderAddress: string;
   isVesting: boolean;
 }
-
-export const getEvmosAddress = (account: string | undefined) => {
-  if (account !== undefined) {
-    if (account.startsWith("0x")) {
-      // && account.length == 42
-      try {
-        return ethToEvmos(account);
-      } catch (e) {
-        return account;
-      }
-    }
-  }
-  return account;
-};
-
-// TODO: this function will change when we use the correct information
-// TODO: see if it is necessary the test for this.
-export const getAccountDetails = (
-  dummyAccountsProps: VestingProps[],
-  account: string | undefined
-) => {
-  const address = getEvmosAddress(account);
-
-  const filteredProps = dummyAccountsProps.filter((e) => {
-    if (e.accountAddress.startsWith("0x")) {
-      return ethToEvmos(e.accountAddress) === address;
-    }
-    if (e.accountAddress.startsWith("evmos")) {
-      return e.accountAddress === address;
-    }
-    return false;
-  });
-
-  return filteredProps;
-};
