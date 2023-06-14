@@ -12,7 +12,7 @@ import {
   schema,
   setVestingAccountNameLocalstorage,
   vestingSettingsConfig,
-} from "./helpers";
+} from "../helpers";
 
 export const CreateAccountModal = () => {
   const handleOnClick = (d: FieldValues) => {

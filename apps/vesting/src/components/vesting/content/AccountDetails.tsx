@@ -3,10 +3,7 @@ import { ConfirmButton, Modal, ViewExplorer } from "ui-helpers";
 import { StoreType } from "evmos-wallet";
 import { useState } from "react";
 import { ClawbackModal } from "./modal/ClawbackModal";
-import {
-  VestingProps,
-  getVestingAccountNameLocalstorage,
-} from "../header/helpers";
+import { VestingProps, getVestingAccountNameLocalstorage } from "../helpers";
 
 export const AccountDetails = ({ props }: { props: VestingProps }) => {
   const [showModal, setShowModal] = useState(false);
