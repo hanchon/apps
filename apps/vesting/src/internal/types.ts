@@ -42,10 +42,9 @@ export interface VestingResponse {
   account: AccountResponse;
 }
 
-// TODO: use Pick
 export type VestingAccountDetail = {
-  accountAddress: string;
-  funderAddress: string;
-  unvestedAmount: string;
-  originalVestingAmount: string;
+  accountAddress: VestingResponse["account"]["base_vesting_account"]["base_account"]["address"];
+  funderAddress: VestingResponse["account"]["funder_address"];
+  unvestedAmount: VestingResponse["unvested"][0]["amount"];
+  originalVestingAmount: VestingResponse["account"]["base_vesting_account"]["original_vesting"][0]["amount"];
 };
