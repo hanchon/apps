@@ -11,13 +11,11 @@ export const SearchVesting = () => {
     router.push({ pathname: "/", query: { account: value } });
   };
   const handleOnClick = () => {
-    // TODO: redirects to vesting account or to 404
     handleRouting();
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      // TODO:redirects to vesting account or to 404
       handleRouting();
     }
   };
