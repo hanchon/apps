@@ -3,13 +3,7 @@ import { ConfirmButton, Modal, ViewExplorer } from "ui-helpers";
 import { StoreType } from "evmos-wallet";
 import { useState } from "react";
 import { ClawbackModal } from "./modal/ClawbackModal";
-
-interface VestingProps {
-  accountName: string;
-  accountAddress: string;
-  funderAddress: string;
-  isVesting: boolean;
-}
+import { VestingProps, getVestingAccountNameLocalstorage } from "../helpers";
 
 export const AccountDetails = ({ props }: { props: VestingProps }) => {
   const [showModal, setShowModal] = useState(false);
@@ -18,8 +12,9 @@ export const AccountDetails = ({ props }: { props: VestingProps }) => {
     setShowModal(true);
     setModalContent(<ClawbackModal />);
   };
+  const accountName = getVestingAccountNameLocalstorage();
   const value = useSelector((state: StoreType) => state.wallet.value);
-  return !props.isVesting ? (
+  return !props?.isVesting ? (
     <div className="flex items-center justify-center rounded-2xl bg-darkGray2 p-5">
       There is no vesting account linked to this address
     </div>
@@ -28,7 +23,7 @@ export const AccountDetails = ({ props }: { props: VestingProps }) => {
       <h1 className="text-2xl">Vesting Account Details</h1>
       <div className="my-5 mr-1 space-y-5 rounded-2xl bg-darkGray2 p-5 font-[IBM] text-sm text-pearl xl:mx-0 ">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg uppercase">{props.accountName} Account</h2>
+          <h2 className="text-lg uppercase">{accountName} Account</h2>
           <ConfirmButton
             text="Clawback"
             onClick={handleClawbackClick}

@@ -6,20 +6,31 @@ import { Header } from "./header/Header";
 import { Navigation } from "ui-helpers";
 import { NAV_TO_VESTING } from "constants-helper";
 import { AccountDetails } from "./content/AccountDetails";
+import { getAccountDetails } from "./helpers";
 
-const Content = () => {
-  const router = useRouter();
-  const { account } = router.query;
+interface RouterQuery {
+  account?: string;
+}
 
-  // TODO: use it with the right information
-  const dummyProps = {
-    accountName: "Evan Mosley",
+// TODO: use it with the right information - use the useProposals as example
+const dummyAccountsProps = [
+  {
     // eslint-disable-next-line no-secrets/no-secrets
-    accountAddress: "evmosc5ljcjw341ls6f7xpfvakm2amg962y84z3kell8ks",
+    accountAddress: "evmos1c8wgcmqde5jzymrjrflpp8j20ss000c00zd0ak",
     // eslint-disable-next-line no-secrets/no-secrets
     funderAddress: "evmos1cnr73vd4xcjm83xs8275twu06w3xqr6n7g5cud",
     isVesting: true,
-  };
+  },
+  {
+    accountAddress: "0xaF3219826Cb708463B3AA3B73c6640A21497AE49",
+    // eslint-disable-next-line no-secrets/no-secrets
+    funderAddress: "testingFunder",
+    isVesting: true,
+  },
+];
+const Content = () => {
+  const router = useRouter();
+  const { account }: RouterQuery = router.query;
 
   return (
     <>
@@ -32,7 +43,9 @@ const Content = () => {
             A list of your vesting accounts will appear here in the next version
           </p>
         ) : (
-          <AccountDetails props={dummyProps} />
+          <AccountDetails
+            props={getAccountDetails(dummyAccountsProps, account)[0]}
+          />
         )}
       </div>
     </>

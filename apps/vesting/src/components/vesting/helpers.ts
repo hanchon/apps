@@ -1,10 +1,10 @@
 import * as z from "zod";
+import { ethToEvmos } from "@evmos/address-converter";
+
 export const getEndDate = (
   date: string | undefined,
   vestingDuration: string
 ) => {
-  console.log(date);
-  console.log(vestingDuration);
   const duration = Number(vestingDuration?.split(" ")[0]);
   const year = Number(date?.split("-")[0]);
   if (!isNaN(duration) && !isNaN(year)) {
@@ -22,6 +22,10 @@ const VESTING_ACCOUNT_NAME_LOCALSTORAGE = "VESTING_ACCOUNT_NAME";
 
 export const setVestingAccountNameLocalstorage = (accountName: string) => {
   localStorage.setItem(VESTING_ACCOUNT_NAME_LOCALSTORAGE, accountName);
+};
+
+export const getVestingAccountNameLocalstorage = () => {
+  return localStorage.getItem(VESTING_ACCOUNT_NAME_LOCALSTORAGE);
 };
 
 export enum Duration {
@@ -129,4 +133,45 @@ export const DEFAULT_FORM_VALUES = {
   vestingSchedule: Duration.Monthly,
   lockupDuration: Duration.OneYear,
   startDate: " ",
+};
+
+export interface VestingProps {
+  accountAddress: string;
+  funderAddress: string;
+  isVesting: boolean;
+}
+
+export const getEvmosAddress = (account: string | undefined) => {
+  if (account !== undefined) {
+    if (account.startsWith("0x")) {
+      // && account.length == 42
+      try {
+        return ethToEvmos(account);
+      } catch (e) {
+        return account;
+      }
+    }
+  }
+  return account;
+};
+
+// TODO: this function will change when we use the correct information
+// TODO: see if it is necessary the test for this.
+export const getAccountDetails = (
+  dummyAccountsProps: VestingProps[],
+  account: string | undefined
+) => {
+  const address = getEvmosAddress(account);
+
+  const filteredProps = dummyAccountsProps.filter((e) => {
+    if (e.accountAddress.startsWith("0x")) {
+      return ethToEvmos(e.accountAddress) === address;
+    }
+    if (e.accountAddress.startsWith("evmos")) {
+      return e.accountAddress === address;
+    }
+    return false;
+  });
+
+  return filteredProps;
 };
