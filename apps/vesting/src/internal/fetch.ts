@@ -2,23 +2,35 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 // import { EVMOS_BACKEND } from "evmos-wallet";
-import { isValidAccount } from "../components/vesting/helpers";
 import { VestingResponse } from "./types";
 
 // TODO: change EVMOS_STAGING_BACKEND to EVMOS_BACKEND
 const EVMOS_STAGING_BACKEND = "https://goapi-staging.evmos.org";
 
-export const getVesting = async (account?: string | false) => {
-  if (account === false || account === undefined) {
+export const getVesting = async (account?: string) => {
+  const acc = account?.trim();
+  let address: string = "";
+  if (acc === undefined) {
+    return "There is no vesting account linked to this address.";
+  }
+  if (acc === null) {
+    return "There is no vesting account linked to this address.";
+  }
+  if (typeof acc !== "string") {
+    return "There is no vesting account linked to this address.";
+  }
+  if (acc.startsWith("0x") && acc.length === 42) {
+    address = acc;
+  }
+  if (acc.startsWith("evmos") && acc.length === 44) {
+    address = acc;
+  }
+  if (address === "") {
     return "There is no vesting account linked to this address.";
   }
 
-  const isValid = isValidAccount(account);
-  if (!isValid || isValid === undefined || typeof isValid !== "string") {
-    return "There is no vesting account linked to this address.";
-  }
   try {
-    const res = await fetch(`${EVMOS_STAGING_BACKEND}/v2/vesting/${isValid}`);
+    const res = await fetch(`${EVMOS_STAGING_BACKEND}/v2/vesting/${address}`);
     return res.json() as Promise<VestingResponse>;
   } catch (error) {
     return "Error while getting vesting account info";

@@ -6,7 +6,6 @@ import { Header } from "./header/Header";
 import { Navigation } from "ui-helpers";
 import { NAV_TO_VESTING } from "constants-helper";
 import { AccountDetails } from "./content/AccountDetails";
-import { isValidAccount } from "./helpers";
 
 interface RouterQuery {
   account?: string;
@@ -16,22 +15,20 @@ const Content = () => {
   const router = useRouter();
   const { account }: RouterQuery = router.query;
 
-  const sanitizedAccount = isValidAccount(account);
+  // const sanitizedAccount = isValidAccount(account);
 
   return (
     <>
-      {sanitizedAccount !== undefined && (
-        <Navigation href="/" text={NAV_TO_VESTING} />
-      )}
+      {account !== undefined && <Navigation href="/" text={NAV_TO_VESTING} />}
       <Header />
 
       <div className="mt-8 w-full font-[IBM] text-pearl">
-        {sanitizedAccount === undefined ? (
+        {account === undefined ? (
           <p className="flex justify-center ">
             A list of your vesting accounts will appear here in the next version
           </p>
         ) : (
-          <AccountDetails account={sanitizedAccount} />
+          <AccountDetails account={account} />
         )}
       </div>
     </>
