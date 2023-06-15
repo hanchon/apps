@@ -12,15 +12,17 @@ interface RouterQuery {
 }
 
 const isValidAccount = (account?: string) => {
-  console.log(account);
+  // console.log(account);
+
   if (account === undefined) {
-    return false;
+    return "undefined";
   }
-  if (account.startsWith("0x") && account.length === 42) {
-    return account;
+  const sanitizedAccount = account?.trim();
+  if (sanitizedAccount.startsWith("0x") && sanitizedAccount.length === 42) {
+    return sanitizedAccount;
   }
-  if (account.startsWith("evmos")) {
-    return account;
+  if (sanitizedAccount.startsWith("evmos")) {
+    return sanitizedAccount;
   }
   return false;
 };
@@ -29,18 +31,22 @@ const Content = () => {
   const router = useRouter();
   const { account }: RouterQuery = router.query;
 
+  const sanitizedAccount = isValidAccount(account);
+
   return (
     <>
-      {account !== undefined && <Navigation href="/" text={NAV_TO_VESTING} />}
+      {sanitizedAccount !== "undefined" && (
+        <Navigation href="/" text={NAV_TO_VESTING} />
+      )}
       <Header />
 
       <div className="mt-8 w-full font-[IBM] text-pearl">
-        {account === undefined ? (
+        {sanitizedAccount === "undefined" ? (
           <p className="flex justify-center ">
             A list of your vesting accounts will appear here in the next version
           </p>
         ) : (
-          <AccountDetails account={isValidAccount(account)} />
+          <AccountDetails account={sanitizedAccount} />
         )}
       </div>
     </>

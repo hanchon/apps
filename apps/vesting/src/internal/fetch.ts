@@ -8,7 +8,7 @@ import { VestingResponse } from "./types";
 const EVMOS_STAGING_BACKEND = "https://goapi-staging.evmos.org";
 
 export const getVesting = async (account: string | false) => {
-  if (account === false) {
+  if (account === false || account === "undefined") {
     return "There is no vesting account linked to this address.";
   }
   try {
