@@ -141,11 +141,14 @@ export interface VestingProps {
 }
 
 export const isEthereumAddressValid = (address: string): boolean => {
-  const ethereumAddressRegex = /^(0x)?[0-9a-fA-F]{40}$/;
+  const ethereumAddressRegex = /^0x[0-9a-fA-F]{42}$/;
   return ethereumAddressRegex.test(address);
 };
 
 export const isEvmosAddressValid = (address: string): boolean => {
+  if (!address.startsWith("evmos")) {
+    return false;
+  }
   try {
     const ethAddress = evmosToEth(address);
     return isEthereumAddressValid(ethAddress);
