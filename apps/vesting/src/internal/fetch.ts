@@ -7,6 +7,16 @@ import { VestingResponse } from "./types";
 // TODO: change EVMOS_STAGING_BACKEND to EVMOS_BACKEND
 const EVMOS_STAGING_BACKEND = "https://goapi-staging.evmos.org";
 
+const isEthereumAddressValid = (address: string): boolean => {
+  const ethereumAddressRegex = /^(0x)?[0-9a-fA-F]{40}$/;
+  return ethereumAddressRegex.test(address);
+};
+
+const isEvmosAddressValid = (address: string): boolean => {
+  const evmosAddressRegex = /^evmos[0-9a-zA-Z]{42}$/;
+  return evmosAddressRegex.test(address);
+};
+
 export const getVesting = async (account?: string) => {
   const acc = account?.trim();
   let address: string = "";
@@ -19,10 +29,10 @@ export const getVesting = async (account?: string) => {
   if (typeof acc !== "string") {
     return "There is no vesting account linked to this address.";
   }
-  if (acc.startsWith("0x") && acc.length === 42) {
+  if (isEthereumAddressValid(acc)) {
     address = acc;
   }
-  if (acc.startsWith("evmos") && acc.length === 44) {
+  if (isEvmosAddressValid(acc)) {
     address = acc;
   }
   if (address === "") {
