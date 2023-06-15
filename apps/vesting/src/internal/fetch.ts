@@ -3,24 +3,13 @@
 
 // import { EVMOS_BACKEND } from "evmos-wallet";
 import { VestingResponse } from "./types";
-import { DEFAULT_VESTING_VALUES } from "./helpers";
 
 // TODO: change EVMOS_STAGING_BACKEND to EVMOS_BACKEND
 const EVMOS_STAGING_BACKEND = "https://goapi-staging.evmos.org";
 
-const isValidAccount = (account: string) => {
-  if (account.startsWith("0x") && account.length === 42) {
-    return true;
-  }
-  if (account.startsWith("evmos")) {
-    return true;
-  }
-  return false;
-};
-
-export const getVesting = async (account?: string) => {
-  if (account === undefined || !isValidAccount(account)) {
-    return DEFAULT_VESTING_VALUES;
+export const getVesting = async (account: string | false) => {
+  if (account === false) {
+    return "There is no vesting account linked to this address.";
   }
   try {
     const res = await fetch(`${EVMOS_STAGING_BACKEND}/v2/vesting/${account}`);

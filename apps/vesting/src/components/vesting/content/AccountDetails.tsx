@@ -6,11 +6,7 @@ import { ClawbackModal } from "./modal/ClawbackModal";
 import { getVestingAccountNameLocalstorage } from "../helpers";
 import { useVestingAccounts } from "../../../internal/hooks/useVesting";
 
-export const AccountDetails = ({
-  account,
-}: {
-  account: string | undefined;
-}) => {
+export const AccountDetails = ({ account }: { account: string | false }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
 

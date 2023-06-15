@@ -11,6 +11,20 @@ interface RouterQuery {
   account?: string;
 }
 
+const isValidAccount = (account?: string) => {
+  console.log(account);
+  if (account === undefined) {
+    return false;
+  }
+  if (account.startsWith("0x") && account.length === 42) {
+    return account;
+  }
+  if (account.startsWith("evmos")) {
+    return account;
+  }
+  return false;
+};
+
 const Content = () => {
   const router = useRouter();
   const { account }: RouterQuery = router.query;
@@ -26,7 +40,7 @@ const Content = () => {
             A list of your vesting accounts will appear here in the next version
           </p>
         ) : (
-          <AccountDetails account={account} />
+          <AccountDetails account={isValidAccount(account)} />
         )}
       </div>
     </>
