@@ -140,12 +140,12 @@ export interface VestingProps {
   isVesting: boolean;
 }
 
-const isEthereumAddressValid = (address: string): boolean => {
+export const isEthereumAddressValid = (address: string): boolean => {
   const ethereumAddressRegex = /^(0x)?[0-9a-fA-F]{40}$/;
   return ethereumAddressRegex.test(address);
 };
 
-const isEvmosAddressValid = (address: string): boolean => {
+export const isEvmosAddressValid = (address: string): boolean => {
   try {
     const ethAddress = evmosToEth(address);
     return isEthereumAddressValid(ethAddress);

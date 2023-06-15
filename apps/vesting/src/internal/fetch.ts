@@ -3,16 +3,32 @@
 
 // import { EVMOS_BACKEND } from "evmos-wallet";
 
-import { isValidAccount } from "../components/vesting/helpers";
+import {
+  isEthereumAddressValid,
+  isEvmosAddressValid,
+} from "../components/vesting/helpers";
 import { VestingResponse } from "./types";
 
 // TODO: change EVMOS_STAGING_BACKEND to EVMOS_BACKEND
 const EVMOS_STAGING_BACKEND = "https://goapi-staging.evmos.org";
 
 export const getVesting = async (account?: string) => {
-  const address = isValidAccount(account);
+  const acc = account?.trim();
+  let address: string = "";
 
-  if (typeof address === "boolean" && address === false) {
+  if (acc === undefined) {
+    return "There is no vesting account linked to this address.";
+  }
+  if (typeof acc !== "string") {
+    return "There is no vesting account linked to this address.";
+  }
+  if (isEthereumAddressValid(acc)) {
+    address = acc;
+  }
+  if (acc.startsWith("evmos") && isEvmosAddressValid(acc)) {
+    address = acc;
+  }
+  if (address === "") {
     return "There is no vesting account linked to this address.";
   }
 
