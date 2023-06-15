@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { evmosToEth } from "@evmos/address-converter";
+
 export const getEndDate = (
   date: string | undefined,
   vestingDuration: string
@@ -141,40 +141,12 @@ export interface VestingProps {
 }
 
 export const isEthereumAddressValid = (address: string): boolean => {
-  const ethereumAddressRegex = /^0x[0-9a-fA-F]{42}$/;
+  const ethereumAddressRegex = /^0x[0-9a-fA-F]{40}$/;
   return ethereumAddressRegex.test(address);
 };
 
 export const isEvmosAddressValid = (address: string): boolean => {
-  if (!address.startsWith("evmos")) {
-    return false;
-  }
-  try {
-    const ethAddress = evmosToEth(address);
-    return isEthereumAddressValid(ethAddress);
-  } catch (error) {
-    return false;
-  }
-};
-
-export const isValidAccount = (account?: string) => {
-  const acc = account?.trim();
-  let address: string = "";
-
-  if (acc === undefined) {
-    return false;
-  }
-  if (typeof acc !== "string") {
-    return false;
-  }
-  if (isEthereumAddressValid(acc)) {
-    address = acc;
-  }
-  if (acc.startsWith("evmos") && isEvmosAddressValid(acc)) {
-    address = acc;
-  }
-  if (address === "") {
-    return false;
-  }
-  return address;
+  // TODO: are evmos wallet always 44 characters ?
+  const evmosAddressRegex = /^evmos[0-9a-zA-Z]{39}$/;
+  return evmosAddressRegex.test(address);
 };
