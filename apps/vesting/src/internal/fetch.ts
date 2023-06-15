@@ -14,9 +14,8 @@ const isValidAccount = (account: string) => {
   }
   if (account.startsWith("evmos")) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 };
 
 export const getVesting = async (account?: string) => {
