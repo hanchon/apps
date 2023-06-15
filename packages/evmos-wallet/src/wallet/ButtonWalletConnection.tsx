@@ -53,7 +53,7 @@ import {
 } from "tracker";
 // Components
 import { Button } from "ui-helpers";
-
+import { useRouter } from "next/router";
 export const ButtonWalletConnection = ({
   walletExtension,
   dispatch,
@@ -167,6 +167,8 @@ export const ButtonWalletConnection = ({
     }
     SaveWalletToLocalStorage(walletExtension.evmosAddressEthFormat);
   }, [walletExtension]);
+
+  const router = useRouter();
 
   return walletExtension.active === true ? (
     <>
@@ -298,6 +300,7 @@ export const ButtonWalletConnection = ({
                   });
                 }
               }}
+              disabled={router?.basePath === "/vesting"}
             >
               <ContentModalConnect>
                 <>
