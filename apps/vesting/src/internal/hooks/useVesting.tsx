@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import { getVesting } from "../fetch";
 import { VestingAccountDetail } from "../types";
 
-export const useVestingAccounts = (account: string | false) => {
+export const useVestingAccounts = (account?: string | false) => {
   const vestingResponse = useQuery({
     queryKey: ["vesting", account],
     queryFn: () => getVesting(account),
