@@ -139,3 +139,19 @@ export interface VestingProps {
   funderAddress: string;
   isVesting: boolean;
 }
+
+export const isValidAccount = (account?: string) => {
+  // console.log(account);
+
+  if (account === undefined) {
+    return "undefined";
+  }
+  const sanitizedAccount = account?.trim();
+  if (sanitizedAccount.startsWith("0x") && sanitizedAccount.length === 42) {
+    return sanitizedAccount;
+  }
+  if (sanitizedAccount.startsWith("evmos")) {
+    return sanitizedAccount;
+  }
+  return false;
+};

@@ -6,26 +6,11 @@ import { Header } from "./header/Header";
 import { Navigation } from "ui-helpers";
 import { NAV_TO_VESTING } from "constants-helper";
 import { AccountDetails } from "./content/AccountDetails";
+import { isValidAccount } from "./helpers";
 
 interface RouterQuery {
   account?: string;
 }
-
-const isValidAccount = (account?: string) => {
-  // console.log(account);
-
-  if (account === undefined) {
-    return "undefined";
-  }
-  const sanitizedAccount = account?.trim();
-  if (sanitizedAccount.startsWith("0x") && sanitizedAccount.length === 42) {
-    return sanitizedAccount;
-  }
-  if (sanitizedAccount.startsWith("evmos")) {
-    return sanitizedAccount;
-  }
-  return false;
-};
 
 const Content = () => {
   const router = useRouter();
