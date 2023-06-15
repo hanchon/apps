@@ -8,8 +8,19 @@ import { DEFAULT_VESTING_VALUES } from "./helpers";
 // TODO: change EVMOS_STAGING_BACKEND to EVMOS_BACKEND
 const EVMOS_STAGING_BACKEND = "https://goapi-staging.evmos.org";
 
+const isValidAccount = (account: string) => {
+  if (account.startsWith("0x") && account.length === 42) {
+    return true;
+  }
+  if (account.startsWith("evmos")) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 export const getVesting = async (account?: string) => {
-  if (account === undefined) {
+  if (account === undefined || !isValidAccount(account)) {
     return DEFAULT_VESTING_VALUES;
   }
   try {
