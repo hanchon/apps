@@ -18,7 +18,7 @@ export const getVesting = async (account: string | false) => {
     return "Invalid account parameter.";
   }
   try {
-    const res = await fetch(`${EVMOS_STAGING_BACKEND}/v2/vesting/${account}`);
+    const res = await fetch(`${EVMOS_STAGING_BACKEND}/v2/vesting/${isValid}`);
     return res.json() as Promise<VestingResponse>;
   } catch (error) {
     return "Error while getting vesting account info";
