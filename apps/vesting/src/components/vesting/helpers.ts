@@ -1,5 +1,5 @@
 import * as z from "zod";
-
+import { evmosToEth } from "@evmos/address-converter";
 export const getEndDate = (
   date: string | undefined,
   vestingDuration: string
@@ -140,19 +140,36 @@ export interface VestingProps {
   isVesting: boolean;
 }
 
-export const isValidAccount = (account?: string) => {
-  // console.log(account);
+const isEthereumAddressValid = (address: string): boolean => {
+  const ethereumAddressRegex = /^(0x)?[0-9a-fA-F]{40}$/;
+  return ethereumAddressRegex.test(address);
+};
 
-  if (account === undefined) {
-    // TODO: modify this
-    return undefined;
+const isEvmosAddressValid = (address: string): boolean => {
+  try {
+    const ethAddress = evmosToEth(address);
+    return isEthereumAddressValid(ethAddress);
+  } catch (error) {
+    return false;
   }
-  const sanitizedAccount = account?.trim();
-  if (sanitizedAccount.startsWith("0x") && sanitizedAccount.length === 42) {
-    return sanitizedAccount;
+};
+
+export const isValidAccount = (account?: string) => {
+  const acc = account?.trim();
+  let address: string = "";
+
+  if (acc === undefined) {
+    return false;
   }
-  if (sanitizedAccount.startsWith("evmos") && sanitizedAccount.length === 44) {
-    return sanitizedAccount;
+
+  if (isEthereumAddressValid(acc)) {
+    address = acc;
   }
-  return false;
+  if (isEvmosAddressValid(acc)) {
+    address = acc;
+  }
+  if (address === "") {
+    return false;
+  }
+  return address;
 };

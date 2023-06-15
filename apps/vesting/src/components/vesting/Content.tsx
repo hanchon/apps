@@ -15,8 +15,6 @@ const Content = () => {
   const router = useRouter();
   const { account }: RouterQuery = router.query;
 
-  // const sanitizedAccount = isValidAccount(account);
-
   return (
     <>
       {account !== undefined && <Navigation href="/" text={NAV_TO_VESTING} />}
