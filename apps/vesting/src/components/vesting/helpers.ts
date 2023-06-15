@@ -150,7 +150,7 @@ export const isValidAccount = (account?: string) => {
   if (sanitizedAccount.startsWith("0x") && sanitizedAccount.length === 42) {
     return sanitizedAccount;
   }
-  if (sanitizedAccount.startsWith("evmos")) {
+  if (sanitizedAccount.startsWith("evmos") && sanitizedAccount.length === 44) {
     return sanitizedAccount;
   }
   return false;
