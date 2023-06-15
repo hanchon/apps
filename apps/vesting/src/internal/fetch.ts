@@ -9,12 +9,12 @@ import { VestingResponse } from "./types";
 const EVMOS_STAGING_BACKEND = "https://goapi-staging.evmos.org";
 
 export const getVesting = async (account: string | false) => {
-  if (account === false || typeof account === "undefined") {
+  if (account === false || account === "undefined") {
     return "There is no vesting account linked to this address.";
   }
 
   const isValid = isValidAccount(account);
-  if (!isValid || typeof isValid === "undefined") {
+  if (!isValid || isValid === "undefined") {
     return "Invalid account parameter.";
   }
   try {
