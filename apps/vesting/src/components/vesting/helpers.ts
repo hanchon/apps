@@ -144,7 +144,8 @@ export const isValidAccount = (account?: string) => {
   // console.log(account);
 
   if (account === undefined) {
-    return "undefined";
+    // TODO: modify this
+    return undefined;
   }
   const sanitizedAccount = account?.trim();
   if (sanitizedAccount.startsWith("0x") && sanitizedAccount.length === 42) {

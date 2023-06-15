@@ -20,13 +20,13 @@ const Content = () => {
 
   return (
     <>
-      {sanitizedAccount !== "undefined" && (
+      {sanitizedAccount !== undefined && (
         <Navigation href="/" text={NAV_TO_VESTING} />
       )}
       <Header />
 
       <div className="mt-8 w-full font-[IBM] text-pearl">
-        {sanitizedAccount === "undefined" ? (
+        {sanitizedAccount === undefined ? (
           <p className="flex justify-center ">
             A list of your vesting accounts will appear here in the next version
           </p>
