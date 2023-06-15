@@ -161,7 +161,9 @@ export const isValidAccount = (account?: string) => {
   if (acc === undefined) {
     return false;
   }
-
+  if (typeof acc !== "string") {
+    return false;
+  }
   if (isEthereumAddressValid(acc)) {
     address = acc;
   }
