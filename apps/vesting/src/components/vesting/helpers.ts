@@ -167,7 +167,7 @@ export const isValidAccount = (account?: string) => {
   if (isEthereumAddressValid(acc)) {
     address = acc;
   }
-  if (isEvmosAddressValid(acc)) {
+  if (acc.startsWith("evmos") && isEvmosAddressValid(acc)) {
     address = acc;
   }
   if (address === "") {
