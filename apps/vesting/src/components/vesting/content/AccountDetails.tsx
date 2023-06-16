@@ -12,7 +12,7 @@ export const AccountDetails = ({ props }: { props: VestingProps }) => {
     setShowModal(true);
     setModalContent(<ClawbackModal />);
   };
-  const accountName = getVestingAccountNameLocalstorage();
+  const accountName = getVestingAccountNameLocalstorage(props?.accountAddress);
   const value = useSelector((state: StoreType) => state.wallet.value);
   return !props?.isVesting ? (
     <div className="flex items-center justify-center rounded-2xl bg-darkGray2 p-5">
