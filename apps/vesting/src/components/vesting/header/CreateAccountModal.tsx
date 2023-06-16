@@ -17,8 +17,8 @@ import {
 export const CreateAccountModal = () => {
   const handleOnClick = (d: FieldValues) => {
     // TODO: logic for create account modal
-    if (d.accountName !== "") {
-      setVestingAccountNameLocalstorage(d.accountName);
+    if (d.accountName !== "" && d.address) {
+      setVestingAccountNameLocalstorage(d.address, d.accountName);
     }
   };
   const {

@@ -17,14 +17,30 @@ export const getEndDate = (
   return [false, ""];
 };
 
-const VESTING_ACCOUNT_NAME_LOCALSTORAGE = "VESTING_ACCOUNT_NAME";
+const VESTING_ACCOUNTS_NAMES_LOCALSTORAGE = "VESTING_ACCOUNTS_NAMES";
 
-export const setVestingAccountNameLocalstorage = (accountName: string) => {
-  localStorage.setItem(VESTING_ACCOUNT_NAME_LOCALSTORAGE, accountName);
-};
+export function setVestingAccountNameLocalstorage(
+  walletAddress: string,
+  accountName: string
+) {
+  const storedData = localStorage.getItem(VESTING_ACCOUNTS_NAMES_LOCALSTORAGE);
+  let accounts = storedData ? JSON.parse(storedData) : [];
 
-export const getVestingAccountNameLocalstorage = () => {
-  return localStorage.getItem(VESTING_ACCOUNT_NAME_LOCALSTORAGE);
+  accounts.push({ walletAddress, accountName });
+  localStorage.setItem(
+    VESTING_ACCOUNTS_NAMES_LOCALSTORAGE,
+    JSON.stringify(accounts)
+  );
+}
+
+export const getVestingAccountNameLocalstorage = (address: string) => {
+  const accounts = localStorage.getItem(VESTING_ACCOUNTS_NAMES_LOCALSTORAGE);
+  let list: { walletAddress: string; accountName: string }[] = [];
+  if (accounts !== null) {
+    list = JSON.parse(accounts);
+  }
+  const filtered = list.filter((e) => e.walletAddress === address);
+  return filtered[0]?.accountName ?? "";
 };
 
 export enum Duration {
