@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { BannerMessages, ConfirmButton, Modal, ViewExplorer } from "ui-helpers";
-import { StoreType } from "evmos-wallet";
+import { KEPLR_KEY, StoreType } from "evmos-wallet";
 import { useCallback, useState } from "react";
 import { ClawbackModal } from "./modal/ClawbackModal";
 import { getVestingAccountNameLocalstorage } from "../helpers";
@@ -44,7 +44,9 @@ export const AccountDetails = ({ account }: { account?: string }) => {
               className="w-fit"
               disabled={
                 !value.active ||
-                value.evmosAddressCosmosFormat !== vestingDetails.funderAddress
+                value.evmosAddressCosmosFormat !==
+                  vestingDetails.funderAddress ||
+                value.extensionName === KEPLR_KEY
               }
             />
           </div>
