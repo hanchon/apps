@@ -14,11 +14,11 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { executeConvert } from "../../../../internal/asset/functionality/transactions/convert";
 import { TableDataElement } from "../../../../internal/asset/functionality/table/normalizeData";
 import { WEVMOS_CONTRACT_ADDRESS } from "../constants";
-import WETH_ABI from "./contracts/abis/WEVMOS/WEVMOS.json";
-import { createContract } from "./contracts/contractHelper";
+import { WEVMOSABI } from "evmos-wallet";
+import { createContract } from "evmos-wallet";
 
 import AddTokenMetamask from "./AddTokenMetamask";
-import { WEVMOS } from "./contracts/abis/WEVMOS/WEVMOS";
+import { WEVMOS } from "evmos-wallet";
 
 import {
   StoreType,
@@ -266,7 +266,7 @@ const Convert = ({
                 try {
                   const contract = await createContract(
                     WEVMOS,
-                    WETH_ABI,
+                    WEVMOSABI,
                     wallet.extensionName
                   );
                   if (contract === null) {
@@ -314,7 +314,7 @@ const Convert = ({
                 try {
                   const contract = await createContract(
                     WEVMOS,
-                    WETH_ABI,
+                    WEVMOSABI,
                     wallet.extensionName
                   );
                   if (contract === null) {

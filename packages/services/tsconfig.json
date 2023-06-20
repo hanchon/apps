@@ -1,4 +1,4 @@
 {
-  "include": ["."],
+  "include": [".", "../evmos-wallet/src/wallet/contracts"],
   "exclude": ["dist", "build", "node_modules"]
 }

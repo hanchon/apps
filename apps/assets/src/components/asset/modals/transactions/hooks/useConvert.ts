@@ -5,9 +5,9 @@ import { parseUnits } from "ethers/lib/utils.js";
 import { useDispatch, useSelector } from "react-redux";
 
 import { WEVMOS_CONTRACT_ADDRESS } from "../../constants";
-import { createContract } from "../contracts/contractHelper";
-import { WEVMOS } from "../contracts/abis/WEVMOS/WEVMOS";
-import WETH_ABI from "../contracts/abis/WEVMOS/WEVMOS.json";
+import { createContract } from "evmos-wallet";
+import { WEVMOS } from "evmos-wallet";
+import { WEVMOSABI } from "evmos-wallet";
 import { ConvertProps } from "../types";
 import { BigNumber } from "ethers";
 import {
@@ -72,7 +72,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
       try {
         const contract = await createContract(
           WEVMOS,
-          WETH_ABI,
+          WEVMOSABI,
           wallet.extensionName
         );
         if (contract === null) {
@@ -116,7 +116,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
       try {
         const contract = await createContract(
           WEVMOS,
-          WETH_ABI,
+          WEVMOSABI,
           wallet.extensionName
         );
         if (contract === null) {

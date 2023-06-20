@@ -1,5 +1,5 @@
 import { ModalTitle } from "ui-helpers";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatNumber } from "helpers";
@@ -14,9 +14,91 @@ import {
   vestingSettingsConfig,
 } from "../helpers";
 
+import {
+  createContract,
+  VESTING_CONTRACT_ADDRESS,
+  VestingABI,
+} from "evmos-wallet";
+import {
+  VestingI,
+  StoreType,
+  addSnackbar,
+  SNACKBAR_CONTENT_TYPES,
+  SNACKBAR_TYPES,
+  GENERATING_TX_NOTIFICATIONS,
+  BROADCASTED_NOTIFICATIONS,
+} from "evmos-wallet";
+import { useSelector, useDispatch } from "react-redux";
+import { generateVestingSchedule } from "../../../internal/helpers/generate-vesting-schedule";
+
 export const CreateAccountModal = () => {
-  const handleOnClick = (d: FieldValues) => {
-    // TODO: logic for create account modal
+  const [disabled, setDisabled] = useState(false);
+  const wallet = useSelector((state: StoreType) => state.wallet.value);
+  const dispatch = useDispatch();
+
+  const handleOnClick = async (d: FieldValues) => {
+    try {
+      setDisabled(true);
+      const contract = await createContract(
+        VESTING_CONTRACT_ADDRESS,
+        VestingABI,
+        wallet.extensionName
+      );
+      if (contract === null) {
+        dispatch(
+          addSnackbar({
+            id: 0,
+            content: {
+              type: SNACKBAR_CONTENT_TYPES.TEXT,
+              title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
+            },
+            type: SNACKBAR_TYPES.ERROR,
+          })
+        );
+        setDisabled(false);
+        return;
+      }
+
+      const { lockupPeriods, vestingPeriods, startTime } =
+        generateVestingSchedule(d.startDate, d.amount, "atevmos", {
+          fullVestingPeriod,
+          vestingCliff,
+          vestingInterval,
+          lockingPeriod,
+        });
+
+      const res = await (contract as VestingI).createClawbackVestingAccount(
+        wallet.evmosAddressEthFormat,
+        d.address,
+        d.startDate
+      );
+      dispatch(
+        addSnackbar({
+          id: 0,
+          content: {
+            type: SNACKBAR_CONTENT_TYPES.LINK,
+            title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
+            hash: res.hash,
+            explorerTxUrl: "www.mintscan.io/evmos/txs/",
+          },
+          type: SNACKBAR_TYPES.SUCCESS,
+        })
+      );
+      setDisabled(false);
+    } catch (e) {
+      // TODO: Add Sentry here!
+      dispatch(
+        addSnackbar({
+          id: 0,
+          content: {
+            type: SNACKBAR_CONTENT_TYPES.TEXT,
+            title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
+          },
+          type: SNACKBAR_TYPES.ERROR,
+        })
+      );
+    }
+
     if (d.accountName !== "") {
       setVestingAccountNameLocalstorage(d.accountName);
     }

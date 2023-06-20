@@ -3,6 +3,22 @@ import { ItemModal } from "./ItemModal";
 import { ExclamationIcon } from "icons";
 import { VestingAccountDetail } from "../../../../internal/types";
 import { convertFromAtto, formatNumber } from "helpers";
+import {
+  createContract,
+  VESTING_CONTRACT_ADDRESS,
+  VestingABI,
+} from "evmos-wallet";
+import {
+  VestingI,
+  StoreType,
+  addSnackbar,
+  SNACKBAR_CONTENT_TYPES,
+  SNACKBAR_TYPES,
+  GENERATING_TX_NOTIFICATIONS,
+  BROADCASTED_NOTIFICATIONS,
+} from "evmos-wallet";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 
 // TODO: format totalTokens and availableClawback depending on the response
 export const ClawbackModal = ({
@@ -10,8 +26,64 @@ export const ClawbackModal = ({
 }: {
   vestingDetails: VestingAccountDetail;
 }) => {
-  const handleOnClick = () => {
-    // TODO: logic for clawback
+  const wallet = useSelector((state: StoreType) => state.wallet.value);
+  const dispatch = useDispatch();
+  const [disabled, setDisabled] = useState(false);
+
+  const handleOnClick = async () => {
+    try {
+      setDisabled(true);
+      const contract = await createContract(
+        VESTING_CONTRACT_ADDRESS,
+        VestingABI,
+        wallet.extensionName
+      );
+      if (contract === null) {
+        dispatch(
+          addSnackbar({
+            id: 0,
+            content: {
+              type: SNACKBAR_CONTENT_TYPES.TEXT,
+              title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
+            },
+            type: SNACKBAR_TYPES.ERROR,
+          })
+        );
+        setDisabled(false);
+        return;
+      }
+      // setDisabled(true);
+      const res = await (contract as VestingI).clawback(
+        vestingDetails.funderAddress,
+        vestingDetails.accountAddress,
+        vestingDetails.funderAddress
+      );
+      dispatch(
+        addSnackbar({
+          id: 0,
+          content: {
+            type: SNACKBAR_CONTENT_TYPES.LINK,
+            title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
+            hash: res.hash,
+            explorerTxUrl: "www.mintscan.io/evmos/txs/",
+          },
+          type: SNACKBAR_TYPES.SUCCESS,
+        })
+      );
+      setDisabled(false);
+    } catch (e) {
+      // TODO: Add Sentry here!
+      dispatch(
+        addSnackbar({
+          id: 0,
+          content: {
+            type: SNACKBAR_CONTENT_TYPES.TEXT,
+            title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
+          },
+          type: SNACKBAR_TYPES.ERROR,
+        })
+      );
+    }
   };
 
   const totalTokens = () => {
@@ -50,7 +122,11 @@ export const ClawbackModal = ({
         Clawback cannot be undone! Please make sure you want to do this action.
       </div>
 
-      <ConfirmButton text="Clawback" onClick={handleOnClick} />
+      <ConfirmButton
+        disabled={disabled}
+        text="Clawback"
+        onClick={handleOnClick}
+      />
     </div>
   );
 };
