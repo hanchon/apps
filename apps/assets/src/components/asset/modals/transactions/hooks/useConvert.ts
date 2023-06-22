@@ -3,6 +3,7 @@
 
 import { parseUnits } from "ethers/lib/utils.js";
 import { useDispatch, useSelector } from "react-redux";
+import { JsonRpcProvider } from "@ethersproject/providers";
 
 import { WEVMOS_CONTRACT_ADDRESS } from "../../constants";
 import { createContract } from "../contracts/contractHelper";
@@ -23,6 +24,7 @@ import {
   UNSUCCESSFUL_WRAP_TX,
 } from "tracker";
 import { GENERATING_TX_NOTIFICATIONS } from "../../../../../internal/asset/functionality/transactions/errors";
+import { convertToKeplrTx, signKeplrTx } from "./keplr_utils";
 
 const wrapEvmos = "EVMOS <> WEVMOS";
 const unwrapEvmos = "WEVMOS <> EVMOS";
@@ -70,11 +72,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
     }
     if (useConvertProps.balance.isIBCBalance) {
       try {
-        const contract = await createContract(
-          WEVMOS,
-          WETH_ABI,
-          wallet.extensionName
-        );
+        const contract = await createContract(WEVMOS, WETH_ABI, "metamask");
         if (contract === null) {
           dispatch(snackErrorGeneratingTx());
           useConvertProps.setShow(false);
@@ -88,20 +86,39 @@ export const useConvert = (useConvertProps: ConvertProps) => {
           return;
         }
         useConvertProps.setDisabled(true);
-        const res = await (contract as WEVMOS).deposit({
+
+        const txraw = await (contract as WEVMOS).populateTransaction.deposit({
           value: amount,
         });
+        //conver to keplr transaction type
+
+        let customHttpProvider = new JsonRpcProvider(
+          "https://eth.bd.evmos.org:8545/"
+        );
+
+        let converted = await convertToKeplrTx(
+          customHttpProvider,
+          wallet.evmosAddressEthFormat,
+          txraw
+        );
+
+        const res = await signKeplrTx({ ...converted });
+
+        // console.log("trying to sendd ", mms);
+        await customHttpProvider.sendTransaction(res);
+
         dispatch(
-          snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
+          snackBroadcastSuccessful("todo", "www.mintscan.io/evmos/txs/")
         );
         successfulTx({
-          txHash: res.hash,
+          txHash: "todo",
           wallet: wallet?.evmosAddressEthFormat,
           provider: wallet?.extensionName,
           transaction: "successful",
           convert: wrapEvmos,
         });
       } catch (e) {
+        console.log("error", e);
         // TODO: Add Sentry here!
         dispatch(snackErrorGeneratingTx());
         unsuccessfulTx({
@@ -114,11 +131,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
       }
     } else {
       try {
-        const contract = await createContract(
-          WEVMOS,
-          WETH_ABI,
-          wallet.extensionName
-        );
+        const contract = await createContract(WEVMOS, WETH_ABI, "metamask");
         if (contract === null) {
           dispatch(snackErrorGeneratingTx());
           useConvertProps.setShow(false);
@@ -132,7 +145,27 @@ export const useConvert = (useConvertProps: ConvertProps) => {
           return;
         }
         useConvertProps.setDisabled(true);
-        const res = await (contract as WEVMOS).withdraw(amount);
+
+        const txraw = await (contract as WEVMOS).populateTransaction.withdraw(
+          amount
+        );
+
+        //conver to keplr transaction type
+
+        let customHttpProvider = new JsonRpcProvider(
+          "https://eth.bd.evmos.org:8545/"
+        );
+
+        let converted = await convertToKeplrTx(
+          customHttpProvider,
+          wallet.evmosAddressEthFormat,
+          txraw
+        );
+
+        const res = await signKeplrTx({ ...converted });
+
+        await customHttpProvider.sendTransaction(res);
+
         dispatch(
           snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
         );
@@ -144,6 +177,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
           convert: unwrapEvmos,
         });
       } catch (e) {
+        console.log("error", e);
         // TODO: Add Sentry here!
         dispatch(snackErrorGeneratingTx());
         unsuccessfulTx({
