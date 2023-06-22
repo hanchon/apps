@@ -2,6 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 export { convertFromAtto } from "./styles";
+export { convertToAtto } from "./styles";
 export { convertAndFormat } from "./styles";
 export { formatNumber } from "./styles";
 export { formatPercentage } from "./styles";

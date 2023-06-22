@@ -30,6 +30,7 @@ import {
 } from "evmos-wallet";
 import { useSelector, useDispatch } from "react-redux";
 import { generateVestingSchedule } from "../../../internal/helpers/generate-vesting-schedule";
+import { VestingSchedule } from "../../../internal/helpers/types";
 
 export const CreateAccountModal = () => {
   const [disabled, setDisabled] = useState(false);
@@ -37,48 +38,56 @@ export const CreateAccountModal = () => {
   const dispatch = useDispatch();
 
   const handleOnClick = async (d: FieldValues) => {
+    console.log("here");
     try {
       setDisabled(true);
-      const contract = await createContract(
-        VESTING_CONTRACT_ADDRESS,
-        VestingABI,
-        wallet.extensionName
-      );
-      if (contract === null) {
-        dispatch(
-          addSnackbar({
-            id: 0,
-            content: {
-              type: SNACKBAR_CONTENT_TYPES.TEXT,
-              title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-            },
-            type: SNACKBAR_TYPES.ERROR,
-          })
-        );
-        setDisabled(false);
-        return;
-      }
+      // const contract = await createContract(
+      //   VESTING_CONTRACT_ADDRESS,
+      //   VestingABI,
+      //   wallet.extensionName
+      // );
+      // if (contract === null) {
+      //   dispatch(
+      //     addSnackbar({
+      //       id: 0,
+      //       content: {
+      //         type: SNACKBAR_CONTENT_TYPES.TEXT,
+      //         title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
+      //       },
+      //       type: SNACKBAR_TYPES.ERROR,
+      //     })
+      //   );
+      //   setDisabled(false);
+      //   return;
+      // }
 
       const { lockupPeriods, vestingPeriods, startTime } =
         generateVestingSchedule(d.startDate, d.amount, "atevmos", {
-          fullVestingPeriod,
-          vestingCliff,
-          vestingInterval,
-          lockingPeriod,
+          fullVestingPeriod: d.fullVestingPeriod,
+          vestingInterval: d.vestingInterval,
+          vestingCliff: d.vestingCliff as VestingSchedule["vestingCliff"],
+          lockingPeriod: d.lockingPeriod,
         });
+      console.log(lockupPeriods, "lockupperidos");
+      console.log(vestingPeriods, "vestingPer");
+      console.log(startTime, "start");
 
-      const res = await (contract as VestingI).createClawbackVestingAccount(
-        wallet.evmosAddressEthFormat,
-        d.address,
-        d.startDate
-      );
+      // const res = await (contract as VestingI).createClawbackVestingAccount(
+      //   wallet.evmosAddressEthFormat,
+      //   d.address,
+      //   startTime,
+      //   lockupPeriods,
+      //   vestingPeriods,
+      //   // TODO: what value ??
+      //   true
+      // );
       dispatch(
         addSnackbar({
           id: 0,
           content: {
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
-            hash: res.hash,
+            // hash: res.hash,
             explorerTxUrl: "www.mintscan.io/evmos/txs/",
           },
           type: SNACKBAR_TYPES.SUCCESS,
@@ -86,6 +95,7 @@ export const CreateAccountModal = () => {
       );
       setDisabled(false);
     } catch (e) {
+      console.log("eee", e);
       // TODO: Add Sentry here!
       dispatch(
         addSnackbar({

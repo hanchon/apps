@@ -3,7 +3,7 @@
 
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits } from "ethers/lib/utils.js";
-
+import { utils } from "ethers";
 export type addAssetsType = {
   cosmosBalance: BigNumber;
   decimals: number;
@@ -29,6 +29,10 @@ export function convertFromAtto(
     });
   }
   return formatUnits(valueAsString.split(".")[0], exponent);
+}
+
+export function convertToAtto(value: BigNumberish) {
+  return utils.parseEther(value.toString());
 }
 
 export function convertAndFormat(
