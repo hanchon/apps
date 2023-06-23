@@ -63,7 +63,7 @@ export const CreateAccountModal = () => {
 
       const { lockupPeriods, vestingPeriods, startTime } =
         generateVestingSchedule(d.startDate, d.amount, "atevmos", {
-          fullVestingPeriod: d.fullVestingPeriod,
+          fullVestingPeriod: d.vestingDuration,
           vestingInterval: d.vestingInterval,
           vestingCliff: d.vestingCliff as VestingSchedule["vestingCliff"],
           lockingPeriod: d.lockingPeriod,

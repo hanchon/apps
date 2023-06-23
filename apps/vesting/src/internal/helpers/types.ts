@@ -1,5 +1,3 @@
-import dayjs from "dayjs";
-
 export enum Intervals {
   "month" = "month",
   "quarter" = "quarter",
@@ -9,20 +7,21 @@ export enum TimeWindow {
   "1-year" = "1-year",
   "1-month" = "1-month",
   "1-day" = "1-day",
+  "none" = "none",
 }
 
 export type VestingSchedule = {
   fullVestingPeriod: TimeWindow;
-  vestingCliff: TimeWindow | "none";
+  vestingCliff: TimeWindow;
   vestingInterval: Intervals;
-  lockingPeriod: TimeWindow | "none";
+  lockingPeriod: TimeWindow;
 };
 
 export type PlanType = {
   fullVestingPeriod: TimeWindow;
-  vestingCliff: TimeWindow | "none";
+  vestingCliff: TimeWindow;
   vestingInterval: Intervals;
-  lockingPeriod: TimeWindow | "none";
+  lockingPeriod: TimeWindow;
 };
 
 export type Period = {

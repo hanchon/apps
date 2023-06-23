@@ -28,16 +28,6 @@ export const getVestingAccountNameLocalstorage = () => {
   return localStorage.getItem(VESTING_ACCOUNT_NAME_LOCALSTORAGE);
 };
 
-export enum Duration {
-  // OneYear = "1 YEAR",
-  // FourYears = "4 YEARS",
-  None = "none",
-  // OneMonth = "1 MONTH",
-  // OneDay = "1 DAY",
-  // Monthly = "Monthly",
-  // Quarterly = "Quarterly",
-}
-
 export enum PlansType {
   Team = "Team",
   Grantee = "Grantee",
@@ -54,11 +44,11 @@ export const cliff = [
   TimeWindow["1-year"],
   TimeWindow["1-month"],
   TimeWindow["1-day"],
-  "none",
+  TimeWindow["none"],
 ] as const;
 export const schedule = [Intervals["month"], Intervals["quarter"]] as const;
 export const lockup = [
-  "none",
+  TimeWindow["none"],
   TimeWindow["1-year"],
   TimeWindow["1-month"],
 ] as const;
@@ -113,13 +103,13 @@ export const vestingSettingsConfig = {
   [PlansType.Custom]: {
     duration: [TimeWindow["4-years"], TimeWindow["1-year"]],
     cliff: [
-      "none",
+      TimeWindow["none"],
       TimeWindow["1-year"],
       TimeWindow["1-month"],
       TimeWindow["1-day"],
     ],
     schedule: [Intervals.month, Intervals.quarter],
-    lockup: ["none", , TimeWindow["1-year"], TimeWindow["1-month"]],
+    lockup: [TimeWindow["none"], TimeWindow["1-year"], TimeWindow["1-month"]],
     disabled: false,
   },
 };
