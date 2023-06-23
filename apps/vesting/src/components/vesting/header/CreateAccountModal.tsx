@@ -40,25 +40,25 @@ export const CreateAccountModal = () => {
   const handleOnClick = async (d: FieldValues) => {
     try {
       setDisabled(true);
-      // const contract = await createContract(
-      //   VESTING_CONTRACT_ADDRESS,
-      //   VestingABI,
-      //   wallet.extensionName
-      // );
-      // if (contract === null) {
-      //   dispatch(
-      //     addSnackbar({
-      //       id: 0,
-      //       content: {
-      //         type: SNACKBAR_CONTENT_TYPES.TEXT,
-      //         title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-      //       },
-      //       type: SNACKBAR_TYPES.ERROR,
-      //     })
-      //   );
-      //   setDisabled(false);
-      //   return;
-      // }
+      const contract = await createContract(
+        VESTING_CONTRACT_ADDRESS,
+        VestingABI,
+        wallet.extensionName
+      );
+      if (contract === null) {
+        dispatch(
+          addSnackbar({
+            id: 0,
+            content: {
+              type: SNACKBAR_CONTENT_TYPES.TEXT,
+              title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
+            },
+            type: SNACKBAR_TYPES.ERROR,
+          })
+        );
+        setDisabled(false);
+        return;
+      }
 
       const { lockupPeriods, vestingPeriods, startTime } =
         generateVestingSchedule(d.startDate, d.amount, "atevmos", {
@@ -67,19 +67,18 @@ export const CreateAccountModal = () => {
           vestingCliff: d.vestingCliff as VestingSchedule["vestingCliff"],
           lockingPeriod: d.lockupDuration,
         });
-      console.log(lockupPeriods, "lockupperidos");
-      console.log(vestingPeriods, "vestingPer");
-      console.log(startTime, "start");
 
-      // const res = await (contract as VestingI).createClawbackVestingAccount(
-      //   wallet.evmosAddressEthFormat,
-      //   d.address,
-      //   startTime,
-      //   lockupPeriods,
-      //   vestingPeriods,
-      //   // TODO: what value ??
-      //   true
-      // );
+      const res = await (contract as VestingI).createClawbackVestingAccount(
+        wallet.evmosAddressEthFormat,
+        d.address,
+        startTime,
+        lockupPeriods,
+        vestingPeriods,
+        // TODO: what value ??
+        true
+      );
+
+      console.log("ress", res);
       dispatch(
         addSnackbar({
           id: 0,
