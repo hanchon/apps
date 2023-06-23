@@ -22,9 +22,7 @@ export const generateVestingSchedule = (
   "startTime" | "vestingPeriods" | "lockupPeriods"
 > => {
   const start = dayjs(startDate);
-  console.log("fullVestingPer", fullVestingPeriod);
   const fullAmountAtto = convertToAtto(fullAmount);
-  console.log("fullAmountAtto", fullAmountAtto);
   const endDate = start.add(
     //@ts-ignore
     ...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[fullVestingPeriod]
@@ -44,7 +42,6 @@ export const generateVestingSchedule = (
       vestingPeriods
     );
   }
-  console.log("here 2");
   return {
     startTime: start.unix(),
     vestingPeriods: vestingPeriods,

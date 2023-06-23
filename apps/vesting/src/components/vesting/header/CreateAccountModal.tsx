@@ -38,7 +38,6 @@ export const CreateAccountModal = () => {
   const dispatch = useDispatch();
 
   const handleOnClick = async (d: FieldValues) => {
-    console.log("here");
     try {
       setDisabled(true);
       // const contract = await createContract(
@@ -64,9 +63,9 @@ export const CreateAccountModal = () => {
       const { lockupPeriods, vestingPeriods, startTime } =
         generateVestingSchedule(d.startDate, d.amount, "atevmos", {
           fullVestingPeriod: d.vestingDuration,
-          vestingInterval: d.vestingInterval,
+          vestingInterval: d.vestingSchedule,
           vestingCliff: d.vestingCliff as VestingSchedule["vestingCliff"],
-          lockingPeriod: d.lockingPeriod,
+          lockingPeriod: d.lockupDuration,
         });
       console.log(lockupPeriods, "lockupperidos");
       console.log(vestingPeriods, "vestingPer");
@@ -95,7 +94,6 @@ export const CreateAccountModal = () => {
       );
       setDisabled(false);
     } catch (e) {
-      console.log("eee", e);
       // TODO: Add Sentry here!
       dispatch(
         addSnackbar({

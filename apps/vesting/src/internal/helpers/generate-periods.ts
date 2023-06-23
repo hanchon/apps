@@ -13,10 +13,14 @@ export const generatePeriods = (
 ): Period[] => {
   let periods: number[] = [];
 
+  let subtractUnit = interval === "quarter" ? 3 : 1;
+  let _interval = "month";
+
   for (
     let date = endDate;
     date.isAfter(startDate);
-    date = date.subtract(1, interval)
+    // @ts-ignore
+    date = date.subtract(subtractUnit, _interval)
   ) {
     periods = [date.diff(startDate, "seconds"), ...periods];
   }
