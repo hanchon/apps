@@ -1,3 +1,5 @@
+/* eslint-disable */
+import { test, expect } from "vitest";
 // import mixpanel from "mixpanel-browser";
 // import {
 
