@@ -3,12 +3,7 @@
 
 import { parseUnits } from "ethers/lib/utils.js";
 import { useDispatch, useSelector } from "react-redux";
-import { JsonRpcProvider } from "@ethersproject/providers";
 
-import { WEVMOS_CONTRACT_ADDRESS } from "../../constants";
-import { createContract } from "../contracts/contractHelper";
-import { WEVMOS } from "../contracts/abis/WEVMOS/WEVMOS";
-import WETH_ABI from "../contracts/abis/WEVMOS/WEVMOS.json";
 import { ConvertProps } from "../types";
 import { BigNumber } from "ethers";
 import {
@@ -24,14 +19,15 @@ import {
   UNSUCCESSFUL_WRAP_TX,
 } from "tracker";
 import { GENERATING_TX_NOTIFICATIONS } from "../../../../../internal/asset/functionality/transactions/errors";
-import { convertToKeplrTx, signKeplrTx } from "./keplr_utils";
+import { useWEVMOS } from "../contracts/hooks/useWEVMOS";
 
 const wrapEvmos = "EVMOS <> WEVMOS";
 const unwrapEvmos = "WEVMOS <> EVMOS";
 export const useConvert = (useConvertProps: ConvertProps) => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
-  const WEVMOS = WEVMOS_CONTRACT_ADDRESS;
+
+  const { deposit, withdraw } = useWEVMOS(wallet?.extensionName);
 
   const { handlePreClickAction: clickConfirmWrapTx } = useTracker(
     CLICK_BUTTON_CONFIRM_WRAP_TX
@@ -72,46 +68,15 @@ export const useConvert = (useConvertProps: ConvertProps) => {
     }
     if (useConvertProps.balance.isIBCBalance) {
       try {
-        const contract = await createContract(WEVMOS, WETH_ABI, "metamask");
-        if (contract === null) {
-          dispatch(snackErrorGeneratingTx());
-          useConvertProps.setShow(false);
-          unsuccessfulTx({
-            errorMessage: "contract is null",
-            wallet: wallet?.evmosAddressEthFormat,
-            provider: wallet?.extensionName,
-            transaction: "unsuccessful",
-            convert: wrapEvmos,
-          });
-          return;
-        }
         useConvertProps.setDisabled(true);
 
-        const txraw = await (contract as WEVMOS).populateTransaction.deposit({
-          value: amount,
-        });
-        //conver to keplr transaction type
-
-        let customHttpProvider = new JsonRpcProvider(
-          "https://eth.bd.evmos.org:8545/"
-        );
-
-        let converted = await convertToKeplrTx(
-          customHttpProvider,
-          wallet.evmosAddressEthFormat,
-          txraw
-        );
-
-        const res = await signKeplrTx({ ...converted });
-
-        // console.log("trying to sendd ", mms);
-        await customHttpProvider.sendTransaction(res);
+        const res = await deposit(amount, wallet.evmosAddressEthFormat);
 
         dispatch(
-          snackBroadcastSuccessful("todo", "www.mintscan.io/evmos/txs/")
+          snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
         );
         successfulTx({
-          txHash: "todo",
+          txHash: res.hash,
           wallet: wallet?.evmosAddressEthFormat,
           provider: wallet?.extensionName,
           transaction: "successful",
@@ -131,40 +96,9 @@ export const useConvert = (useConvertProps: ConvertProps) => {
       }
     } else {
       try {
-        const contract = await createContract(WEVMOS, WETH_ABI, "metamask");
-        if (contract === null) {
-          dispatch(snackErrorGeneratingTx());
-          useConvertProps.setShow(false);
-          unsuccessfulTx({
-            errorMessage: "contract is null",
-            wallet: wallet?.evmosAddressEthFormat,
-            provider: wallet?.extensionName,
-            transaction: "unsuccessful",
-            convert: unwrapEvmos,
-          });
-          return;
-        }
         useConvertProps.setDisabled(true);
 
-        const txraw = await (contract as WEVMOS).populateTransaction.withdraw(
-          amount
-        );
-
-        //conver to keplr transaction type
-
-        let customHttpProvider = new JsonRpcProvider(
-          "https://eth.bd.evmos.org:8545/"
-        );
-
-        let converted = await convertToKeplrTx(
-          customHttpProvider,
-          wallet.evmosAddressEthFormat,
-          txraw
-        );
-
-        const res = await signKeplrTx({ ...converted });
-
-        await customHttpProvider.sendTransaction(res);
+        const res = await withdraw(amount, wallet.evmosAddressEthFormat);
 
         dispatch(
           snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")

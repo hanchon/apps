@@ -85,7 +85,13 @@ export const SubRowContent = ({
 
     return (
       <div className="flex w-full justify-end pr-8">
-        <Button disabled={false} onClick={openModalConvertEvmos}>
+        <Button
+          disabled={
+            !wallet.active ||
+            (wallet.extensionName === KEPLR_KEY && item.symbol === EVMOS_SYMBOL)
+          }
+          onClick={openModalConvertEvmos}
+        >
           <div className="flex w-16 flex-row items-center justify-center">
             <span className="px-2">{label}</span>
           </div>

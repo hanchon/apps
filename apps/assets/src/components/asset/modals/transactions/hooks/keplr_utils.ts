@@ -1,4 +1,5 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
+import { UnsignedTransaction } from "ethers";
 
 export async function signKeplrTx(tx: any): Promise<any> {
   const signer = await getKeplrBech32Account();
@@ -32,8 +33,10 @@ export async function convertToKeplrTx(
   provider: JsonRpcProvider,
   signer: string,
   tx: any
-): Promise<any> {
-  const gasLimit = await provider.estimateGas(tx);
+): Promise<UnsignedTransaction> {
+  const completeTx = { ...tx, from: signer };
+
+  const gasLimit = await provider.estimateGas(completeTx);
   const gasFee = await provider.getFeeData();
 
   if (!gasFee.maxPriorityFeePerGas || !gasFee.maxFeePerGas) {
@@ -43,9 +46,8 @@ export async function convertToKeplrTx(
   const nonce = await provider.getTransactionCount(signer);
 
   const newTx = {
-    ...tx,
+    ...completeTx,
     chainId: 9001,
-    value: tx.value ? tx.value.toHexString() : "0x0",
     nonce,
     gasLimit: gasLimit.toHexString(),
     maxPriorityFeePerGas: gasFee.maxPriorityFeePerGas.toHexString(),
