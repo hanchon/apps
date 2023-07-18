@@ -4,23 +4,23 @@ import { Dispatch, SetStateAction } from "react";
 
 export const handleInteractWithdApp = (
   url: string,
-  setShow?: Dispatch<SetStateAction<boolean>>
+  setShow: Dispatch<SetStateAction<boolean>>
 ) => {
-  setShow && setShow(false);
+  setShow(false);
   window.open(url, "_blank");
 };
 export const handleStakeWithEvmos = (
   url: string,
-  setShow?: Dispatch<SetStateAction<boolean>>
+  setShow: Dispatch<SetStateAction<boolean>>
 ) => {
-  setShow && setShow(false);
+  setShow(false);
   window.open(url, "_blank");
 };
 export const handleLearnMore = (
   url: string,
-  setShow?: Dispatch<SetStateAction<boolean>>
+  setShow: Dispatch<SetStateAction<boolean>>
 ) => {
-  setShow && setShow(false);
+  setShow(false);
   window.open(url, "_blank");
 };
 

@@ -1,17 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
+import { useContext } from "react";
 import { ModalWithTransitions } from "ui-helpers";
 import { Introduction } from "./Introduction";
 import { useCopilot } from "./useCopilot";
+import { StepsContext } from "./container/StepsContext";
 
-export const CopilotModal = ({
-  show,
-  setShow,
-}: {
-  show: boolean;
-  setShow: Dispatch<SetStateAction<boolean>>;
-}) => {
+export const CopilotModal = () => {
   const { componentToDraw, stepsToDraw } = useCopilot();
-
+  const { showModal, setShowModal } = useContext(StepsContext);
   const contentModal = (
     <div className="grid grid-rows-1 divide-y divide-[#DBD3D1] text-[#413836] md:grid-cols-3 md:grid-rows-none md:divide-y-0 md:divide-x">
       <div className="flex h-full flex-col justify-between px-4 pb-4 pt-5 sm:py-10 sm:px-6">
@@ -26,8 +21,8 @@ export const CopilotModal = ({
 
   return (
     <ModalWithTransitions
-      show={show}
-      setShow={setShow}
+      show={showModal}
+      setShow={setShowModal}
       content={contentModal}
       propClose={true}
     />

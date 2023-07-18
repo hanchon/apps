@@ -8,16 +8,13 @@ import {
 } from "./helpers";
 import { Button } from "./button/Button";
 import { TitleButton } from "./button/TitleButton";
-import { Dispatch, SetStateAction } from "react";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { StepsContext } from "../../container/StepsContext";
 
-export const NextSteps = ({
-  setShow,
-}: {
-  // TODO: It shouldn't be optional
-  setShow?: Dispatch<SetStateAction<boolean>>;
-}) => {
+export const NextSteps = () => {
   const { fireworksRef, portalContainer } = useFireworks();
+  const { setShowModal } = useContext(StepsContext);
   const { t } = useTranslation();
   return (
     <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -32,7 +29,7 @@ export const NextSteps = ({
       <div className="flex w-full items-center justify-between">
         <Button
           handleClick={() => {
-            handleInteractWithdApp(t("ecosystemUrl"), setShow);
+            handleInteractWithdApp(t("ecosystemUrl"), setShowModal);
           }}
         >
           <TitleButton text={t("nextsteps.interactWithdApp.title")} />
@@ -41,7 +38,7 @@ export const NextSteps = ({
 
         <Button
           handleClick={() => {
-            handleStakeWithEvmos(t("stakingUrl"), setShow);
+            handleStakeWithEvmos(t("stakingUrl"), setShowModal);
           }}
         >
           <TitleButton text={t("nextsteps.stakeEvmos.title")} />
@@ -55,7 +52,7 @@ export const NextSteps = ({
       <button
         className="w-full cursor-pointer rounded-lg border border-[#D1D5DB] py-3"
         onClick={() => {
-          handleLearnMore(t("academyFAQUrl"), setShow);
+          handleLearnMore(t("academyFAQUrl"), setShowModal);
         }}
       >
         <TitleButton text={t("nextsteps.learnMore.title")} />

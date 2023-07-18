@@ -1,4 +1,9 @@
-import React, { createContext, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useState,
+} from "react";
 
 import { STEP_STATUS } from "../steps/setUpAccount/buttons/utils";
 import { steps } from "./data";
@@ -11,6 +16,8 @@ type StepsPropsContext = {
     title: string;
   }[];
   updateStepsStatus: () => void;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
+  showModal: boolean;
 };
 
 const initialValue = steps.map((step, index) => ({
@@ -23,11 +30,13 @@ const initialValue = steps.map((step, index) => ({
 const StepsContext = createContext<StepsPropsContext>({
   stepsStatus: [],
   updateStepsStatus: () => {},
+  setShowModal: () => {},
+  showModal: false,
 });
 
 const StepsContextProvider = ({ children }: { children: JSX.Element }) => {
   const [stepsStatus, setStepsStatus] = useState(initialValue);
-
+  const [showModal, setShowModal] = useState(false);
   const updateStepsStatus = () => {
     const updatedState = [...stepsStatus];
     const currentElement = updatedState.find(
@@ -50,7 +59,9 @@ const StepsContextProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   return (
-    <StepsContext.Provider value={{ stepsStatus, updateStepsStatus }}>
+    <StepsContext.Provider
+      value={{ stepsStatus, updateStepsStatus, setShowModal, showModal }}
+    >
       {children}
     </StepsContext.Provider>
   );
