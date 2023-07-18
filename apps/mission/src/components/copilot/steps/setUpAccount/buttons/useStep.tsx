@@ -106,7 +106,7 @@ export const useStep = (
         );
       };
     }
-  }, [step, status, setGroupState]);
+  }, [step, status, setGroupState, successfullTrack]);
 
   const handleClick = async () => {
     setTextError("");
