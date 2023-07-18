@@ -21,7 +21,6 @@ export const StatefulHeader = ({
   const dispatch = useDispatch();
 
   const { handlePreClickAction } = useTracker(CLICK_EVMOS_LOGO);
-  // TODO: delete show and button
   return (
     <>
       <StepsContextProvider>
