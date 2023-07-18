@@ -34,7 +34,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 # Changelog
 
-## Unreleased
+## 1.0.13 - 2023-07-18
 
 - (feat) #fse-495 | packages/evmos-wallet 1.0.10 | Adding i18n with schummar library
 - (ci) #fse-668 | turbo.json | Updating config to be able to do a quick build using --filter for examample `yarn  build --filter mission-page`
