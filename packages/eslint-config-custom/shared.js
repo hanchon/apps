@@ -51,4 +51,11 @@ module.exports = {
       typescript: {},
     },
   },
+  ignorePatterns: [
+    "**/dist/**",
+    "tailwind.config.js",
+    "postcss.config.js",
+    "vitest.config.ts",
+    ".eslintrc.js",
+  ],
 };
