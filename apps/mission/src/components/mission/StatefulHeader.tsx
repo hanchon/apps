@@ -4,10 +4,11 @@
 import { WalletConnection, StoreType } from "evmos-wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { Header } from "ui-helpers";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { CLICK_EVMOS_LOGO, useTracker } from "tracker";
-import { CopilotModal } from "../copilot/CopilotModal";
+
 import { StepsContextProvider } from "../copilot/container/StepsContext";
+import { Copilot } from "../copilot/Copilot";
 
 export const StatefulHeader = ({
   pageName,
@@ -21,19 +22,10 @@ export const StatefulHeader = ({
 
   const { handlePreClickAction } = useTracker(CLICK_EVMOS_LOGO);
   // TODO: delete show and button
-  const [show, setShow] = useState(false);
   return (
     <>
-      <button
-        onClick={() => {
-          setShow(true);
-        }}
-        className="w-fit bg-red"
-      >
-        Copilot
-      </button>
       <StepsContextProvider>
-        <CopilotModal show={show} setShow={setShow} />
+        <Copilot />
       </StepsContextProvider>
 
       <Header

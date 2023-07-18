@@ -8,15 +8,26 @@ export const ModalWithTransitions = ({
   setShow,
   content,
   propClose,
+  handleCloseAction,
 }: {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
   content: React.ReactNode;
   propClose?: boolean;
+  handleCloseAction?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const handleCloseModal = () => {
+    // open a second modal if the user closes the first one.
+    if (handleCloseAction) {
+      handleCloseAction(true);
+    } else {
+      setShow(false);
+    }
+  };
+
   useEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Escape") {
-      setShow(false);
+      handleCloseModal();
     }
   });
   if (!show) {
@@ -68,14 +79,16 @@ export const ModalWithTransitions = ({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-[#FAF8F8] text-left shadow-xl transition-all min-w-[300px] max-w-[700px] md:min-w-[400px]">
                 <div className="absolute right-0 top-0 block pr-4 pt-4">
-                  <button
-                    type="button"
-                    className="focus-visible:outline-none"
-                    onClick={() => setShow(false)}
-                  >
-                    <span className="sr-only">Close</span>
-                    <CloseIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  {propClose && (
+                    <button
+                      type="button"
+                      className="focus-visible:outline-none"
+                      onClick={handleCloseModal}
+                    >
+                      <span className="sr-only">Close</span>
+                      <CloseIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+                  )}
                 </div>
                 {content}
               </Dialog.Panel>
