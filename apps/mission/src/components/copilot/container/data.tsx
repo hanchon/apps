@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { NextSteps } from "../steps/nextSteps/NextSteps";
 import { SetUpAccountContainer } from "../steps/setUpAccount/SetUpAccountContainer";
 import { STEP_STATUS } from "../steps/setUpAccount/buttons/utils";
