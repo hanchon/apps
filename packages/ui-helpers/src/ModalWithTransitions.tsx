@@ -27,7 +27,6 @@ export const ModalWithTransitions = ({
 
   useEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Escape") {
-      // mismo comportamiento que si apreto en la cruz
       handleCloseModal();
     }
   });
@@ -80,14 +79,16 @@ export const ModalWithTransitions = ({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-[#FAF8F8] text-left shadow-xl transition-all min-w-[300px] max-w-[700px] md:min-w-[400px]">
                 <div className="absolute right-0 top-0 block pr-4 pt-4">
-                  <button
-                    type="button"
-                    className="focus-visible:outline-none"
-                    onClick={handleCloseModal}
-                  >
-                    <span className="sr-only">Close</span>
-                    <CloseIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  {propClose && (
+                    <button
+                      type="button"
+                      className="focus-visible:outline-none"
+                      onClick={handleCloseModal}
+                    >
+                      <span className="sr-only">Close</span>
+                      <CloseIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+                  )}
                 </div>
                 {content}
               </Dialog.Panel>

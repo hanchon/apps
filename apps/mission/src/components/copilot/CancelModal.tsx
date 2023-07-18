@@ -31,7 +31,7 @@ export const CancelModal = () => {
         <div className="flex justify-end space-x-3">
           <button
             onClick={handleAccept}
-            className="color-[#D1D5DB] rounded border border-[#D1D5DB] px-8 py-2 font-[GreyCliff] text-[16px] font-normal"
+            className="color-[#D1D5DB] rounded border border-[#D1D5DB] px-8 py-2 font-[GreyCliff] text-[16px] font-normal focus-visible:outline-none"
           >
             {t("exitcopilot.accept")}
           </button>
@@ -50,7 +50,6 @@ export const CancelModal = () => {
         show={showCloseModal}
         setShow={setShowCloseModal}
         content={contentModal}
-        propClose={true}
       />
     </>
   );
