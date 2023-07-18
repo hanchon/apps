@@ -18,6 +18,9 @@ type StepsPropsContext = {
   updateStepsStatus: () => void;
   setShowModal: Dispatch<SetStateAction<boolean>>;
   showModal: boolean;
+  setShowCloseModal: Dispatch<SetStateAction<boolean>>;
+  showCloseModal: boolean;
+  resetSteps: () => void;
 };
 
 const initialValue = steps.map((step, index) => ({
@@ -32,11 +35,15 @@ const StepsContext = createContext<StepsPropsContext>({
   updateStepsStatus: () => {},
   setShowModal: () => {},
   showModal: false,
+  showCloseModal: false,
+  setShowCloseModal: () => {},
+  resetSteps: () => {},
 });
 
 const StepsContextProvider = ({ children }: { children: JSX.Element }) => {
   const [stepsStatus, setStepsStatus] = useState(initialValue);
   const [showModal, setShowModal] = useState(false);
+  const [showCloseModal, setShowCloseModal] = useState(false);
   const updateStepsStatus = () => {
     const updatedState = [...stepsStatus];
     const currentElement = updatedState.find(
@@ -58,9 +65,21 @@ const StepsContextProvider = ({ children }: { children: JSX.Element }) => {
     setStepsStatus(updatedState);
   };
 
+  const resetSteps = () => {
+    setStepsStatus(initialValue);
+  };
+
   return (
     <StepsContext.Provider
-      value={{ stepsStatus, updateStepsStatus, setShowModal, showModal }}
+      value={{
+        stepsStatus,
+        updateStepsStatus,
+        setShowModal,
+        showModal,
+        showCloseModal,
+        setShowCloseModal,
+        resetSteps,
+      }}
     >
       {children}
     </StepsContext.Provider>

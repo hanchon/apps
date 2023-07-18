@@ -8,15 +8,27 @@ export const ModalWithTransitions = ({
   setShow,
   content,
   propClose,
+  handleCloseAction,
 }: {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
   content: React.ReactNode;
   propClose?: boolean;
+  handleCloseAction?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const handleCloseModal = () => {
+    // open a second modal if the user closes the first one.
+    if (handleCloseAction) {
+      handleCloseAction(true);
+    } else {
+      setShow(false);
+    }
+  };
+
   useEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Escape") {
-      setShow(false);
+      // mismo comportamiento que si apreto en la cruz
+      handleCloseModal();
     }
   });
   if (!show) {
@@ -71,7 +83,7 @@ export const ModalWithTransitions = ({
                   <button
                     type="button"
                     className="focus-visible:outline-none"
-                    onClick={() => setShow(false)}
+                    onClick={handleCloseModal}
                   >
                     <span className="sr-only">Close</span>
                     <CloseIcon className="h-6 w-6" aria-hidden="true" />

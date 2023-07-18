@@ -14,7 +14,7 @@ import { StepsContext } from "../../container/StepsContext";
 
 export const NextSteps = () => {
   const { fireworksRef, portalContainer } = useFireworks();
-  const { setShowModal } = useContext(StepsContext);
+  const { setShowModal, resetSteps } = useContext(StepsContext);
   const { t } = useTranslation();
   return (
     <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -30,6 +30,7 @@ export const NextSteps = () => {
         <Button
           handleClick={() => {
             handleInteractWithdApp(t("ecosystemUrl"), setShowModal);
+            resetSteps();
           }}
         >
           <TitleButton text={t("nextsteps.interactWithdApp.title")} />
@@ -39,6 +40,7 @@ export const NextSteps = () => {
         <Button
           handleClick={() => {
             handleStakeWithEvmos(t("stakingUrl"), setShowModal);
+            resetSteps();
           }}
         >
           <TitleButton text={t("nextsteps.stakeEvmos.title")} />
@@ -53,6 +55,7 @@ export const NextSteps = () => {
         className="w-full cursor-pointer rounded-lg border border-[#D1D5DB] py-3"
         onClick={() => {
           handleLearnMore(t("academyFAQUrl"), setShowModal);
+          resetSteps();
         }}
       >
         <TitleButton text={t("nextsteps.learnMore.title")} />
