@@ -6,6 +6,7 @@ import { STEP_STATUS } from "./utils";
 import { GroupStateI, SetUpAccountI } from "../types";
 import { useTranslation } from "react-i18next";
 import { completeStep, handleStepError } from "../helpers";
+import { useTracker } from "tracker";
 
 export const useStep = (
   step: SetUpAccountI,
@@ -15,7 +16,13 @@ export const useStep = (
   const [status, setStatus] = useState(STEP_STATUS.CURRENT);
   const [textError, setTextError] = useState("");
   const { t } = useTranslation();
-
+  const { handlePreClickAction: initTracker } = useTracker(step.tracker.init);
+  const { handlePreClickAction: successfullTrack } = useTracker(
+    step.tracker.successful
+  );
+  const { handlePreClickAction: unsuccessfullTrack } = useTracker(
+    step.tracker.unsuccessful
+  );
   const callActions = async () => {
     setStatus(STEP_STATUS.PROCESSING);
     const len = step.actions.length;
@@ -40,11 +47,24 @@ export const useStep = (
           index,
           text: t("setupaccount.action.error"),
         });
+        unsuccessfullTrack({
+          provider: step.tracker.provider,
+          step: step.errorsText && step.errorsText[index],
+        });
         break;
       } else {
         if (index === len - 1) {
           // All actions have returned true
-          completeStep({ setStatus, setText, step, setGroupState });
+          completeStep({
+            setStatus,
+            setText,
+            step,
+            setGroupState,
+          });
+
+          successfullTrack({
+            provider: step.tracker.provider,
+          });
         }
       }
     }
@@ -54,7 +74,15 @@ export const useStep = (
   useEffect(() => {
     const check = async () => {
       if (await step.checkAction()) {
-        completeStep({ setStatus, setText, step, setGroupState });
+        completeStep({
+          setStatus,
+          setText,
+          step,
+          setGroupState,
+        });
+        successfullTrack({
+          provider: step.tracker.provider,
+        });
       }
     };
 
@@ -82,6 +110,7 @@ export const useStep = (
 
   const handleClick = async () => {
     setTextError("");
+    initTracker({ provider: step.tracker.provider });
     await callActions();
   };
   return { text, status, textError, handleClick };
