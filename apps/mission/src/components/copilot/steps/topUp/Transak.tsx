@@ -1,9 +1,12 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-export const TRANSAK_API_KEY = process.env.NEXT_PUBLIC_TRANSAK_API_KEY ?? "";
+import { StoreType } from "evmos-wallet";
+import { useSelector } from "react-redux";
 
+export const TRANSAK_API_KEY = process.env.NEXT_PUBLIC_TRANSAK_API_KEY ?? "";
 export default function Transak() {
+  const wallet = useSelector((state: StoreType) => state.wallet.value);
   return (
     <div
       style={{
@@ -18,7 +21,7 @@ export default function Transak() {
     >
       <iframe
         // eslint-disable-next-line no-secrets/no-secrets
-        src={`https://global-stg.transak.com?apiKey=${TRANSAK_API_KEY}&themeColor=ed4e33&cryptoCurrencyCode=EVMOS&network=evmos&defaultPaymentMethod=credit_debit_card`}
+        src={`https://global-stg.transak.com?apiKey=${TRANSAK_API_KEY}&themeColor=ed4e33&cryptoCurrencyCode=EVMOS&network=evmos&defaultPaymentMethod=credit_debit_card&disableWalletAddressForm=true&walletAddress=${wallet.evmosAddressEthFormat}`}
         allow="camera;microphone;fullscreen;payment"
         style={{ height: "100%", width: "100%", border: "none" }}
       ></iframe>
