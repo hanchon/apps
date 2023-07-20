@@ -19,9 +19,9 @@ export const SetUpAccount = ({
   return (
     <section className="space-y-3">
       <h3 className="font-bold">{t("setupaccount.title")}</h3>
-      <p className="font-sm text-[#413836]">{t("setupaccount.description")}</p>
-      <p className="font-sm text-[#413836]">{t("setupaccount.description2")}</p>
-      <nav aria-label="Progress">
+      <p className="text-sm text-[#413836]">{t("setupaccount.description")}</p>
+      <p className="text-sm text-[#413836]">{t("setupaccount.description2")}</p>
+      <nav aria-label="Progress" className="pt-5">
         <ol role="list" className="overflow-hidden">
           {stepsSetAccount.map((step, stepIdx) => {
             return (

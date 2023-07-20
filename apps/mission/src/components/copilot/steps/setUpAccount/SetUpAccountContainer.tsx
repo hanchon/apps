@@ -26,7 +26,7 @@ export const SetUpAccountContainer = () => {
       if (isSetUpDone) {
         setShowComponent(true);
       }
-    }, 400);
+    }, 800);
   }, [isSetUpDone]);
 
   return isSetUpDone && showComponent ? (

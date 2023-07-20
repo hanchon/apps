@@ -19,10 +19,10 @@ export const Intro = ({
         <p className="text-sm text-[#413836]">{t("topup.intro.body")}</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 text-sm font-medium">
+      <div className="grid grid-cols-1 gap-6 font-medium md:grid-cols-2 md:text-sm">
         <button
           onClick={() => setTopUpType("card")}
-          className="flex items-center justify-center gap-2 rounded-lg border border-[#DBD3D1] py-4 px-2"
+          className="flex items-center justify-center gap-2 rounded-lg border border-[#DBD3D1] py-4 px-2 shadow transition-all duration-300 hover:shadow-md"
         >
           <CreditCardsIcon />
           {t("topup.card.button")}

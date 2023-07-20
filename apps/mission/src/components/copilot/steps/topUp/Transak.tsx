@@ -8,17 +8,7 @@ export const TRANSAK_API_KEY = process.env.NEXT_PUBLIC_TRANSAK_API_KEY ?? "";
 export default function Transak() {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   return (
-    <div
-      style={{
-        position: "relative",
-        width: "400px",
-        height: "545px",
-        margin: "auto",
-        marginTop: "25px",
-        borderRadius: "15px",
-        overflow: "hidden",
-      }}
-    >
+    <div className="relative mx-auto mt-[25px] h-[700px] w-[300px] overflow-hidden rounded-[15px] md:h-[545px] md:w-[400px]">
       <iframe
         // eslint-disable-next-line no-secrets/no-secrets
         src={`https://global-stg.transak.com?apiKey=${TRANSAK_API_KEY}&themeColor=ed4e33&cryptoCurrencyCode=EVMOS&network=evmos&defaultPaymentMethod=credit_debit_card&disableWalletAddressForm=true&walletAddress=${wallet.evmosAddressEthFormat}`}

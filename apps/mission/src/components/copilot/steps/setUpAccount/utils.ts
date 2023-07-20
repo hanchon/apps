@@ -57,6 +57,7 @@ const checkConnectionMetamask = async () => {
     return false;
   }
 
+  await signPubkey();
   return true;
 };
 
@@ -87,7 +88,7 @@ export const stepsSetAccount = [
     loadingText: [
       "Approve on Metamask",
       "",
-      "Select accounts and press Connect",
+      "Press Next and Connect",
       "Press Sign",
     ],
     actions: [

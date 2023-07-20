@@ -11,7 +11,7 @@ import {
 } from "./helpers";
 import { Button } from "./button/Button";
 import { TitleButton } from "./button/TitleButton";
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { StepsContext } from "../../container/StepsContext";
 
@@ -19,17 +19,27 @@ export const NextSteps = () => {
   const { fireworksRef, portalContainer } = useFireworks();
   const { setShowModal, resetSteps } = useContext(StepsContext);
   const { t } = useTranslation();
+
+  const firstUpdate = useRef(true);
+  useEffect(() => {
+    setInterval(() => {
+      if (firstUpdate.current) {
+        firstUpdate.current = false;
+      }
+    }, 5000);
+  }, []);
   return (
-    <div className="flex flex-col items-center justify-center space-y-4 text-center">
-      {renderFireworksPortal(fireworksRef, portalContainer)}
-      <p className="mb-4 flex h-48 w-48 items-center justify-center rounded-full border border-[#FAF8F8] bg-[#FAF8F8] text-9xl">
+    <div className="flex flex-col items-center justify-center space-y-2 text-center">
+      {firstUpdate.current &&
+        renderFireworksPortal(fireworksRef, portalContainer)}
+      <p className="mb-4 flex h-56 w-56 items-center justify-center rounded-full border border-[#F0FDF4] bg-[#F0FDF4] text-9xl">
         <span role="img" aria-label="Celebration icon">
-          🎉
+          👏
         </span>
       </p>
       <h1 className="font-bold">{t("nextsteps.title")}</h1>
-      <p className="text-xs">{t("nextsteps.description")}</p>
-      <div className="flex w-full items-center justify-between">
+      <p className="text-sm">{t("nextsteps.description")}</p>
+      <div className="grid w-full grid-cols-1 space-y-3 pt-5 pb-3 md:grid-cols-2 md:space-y-0 md:space-x-4">
         <Button
           handleClick={() => {
             handleInteractWithdApp(t("ecosystemUrl"), setShowModal);
@@ -55,7 +65,7 @@ export const NextSteps = () => {
         </Button>
       </div>
       <button
-        className="w-full cursor-pointer rounded-lg border border-[#D1D5DB] py-3"
+        className="w-full cursor-pointer rounded-lg border border-[#D1D5DB] py-3 shadow transition-all duration-300 hover:shadow-md"
         onClick={() => {
           handleLearnMore(t("academyFAQUrl"), setShowModal);
           resetSteps();
