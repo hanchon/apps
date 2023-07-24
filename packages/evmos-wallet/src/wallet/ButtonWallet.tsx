@@ -13,7 +13,7 @@ const ButtonWallet = ({
   return (
     <button
       onClick={onClick}
-      className={`hover:bg-grayOpacity border border-darkPearl px-4 py-3 rounded capitalize w-full ${
+      className={`hover:bg-grayOpacity transition-all duration-300 border border-darkPearl px-4 py-3 rounded capitalize w-full shadow hover:shadow-md ${
         disabled ? "disabled" : ""
       }`}
     >

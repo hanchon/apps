@@ -32,7 +32,7 @@ const STYLE2 = {
 };
 
 const STYLE3 = {
-  [STEP_STATUS.CURRENT]: "bg-red hover:bg-red1",
+  [STEP_STATUS.CURRENT]: "bg-red hover:bg-red1 ",
   [STEP_STATUS.DONE]: "pointer-events-none bg-[#31B886]",
   [STEP_STATUS.PROCESSING]: "bg-red hover:bg-red1",
 };
@@ -42,7 +42,7 @@ export const ButtonCopilot = ({ props }: { props: ButtonProps }) => {
     <li
       key={props.id}
       className={classNames(
-        props.index !== props.stepsLength - 1 ? "pb-10" : "",
+        props.index !== props.stepsLength - 1 ? "pb-8" : "",
         "relative list-none"
       )}
     >
@@ -70,7 +70,7 @@ export const ButtonCopilot = ({ props }: { props: ButtonProps }) => {
           <button
             onClick={props.handleClick}
             className={`ml-4 w-full space-x-2 rounded-lg px-8
-            py-2 font-[GreyCliff] text-lg font-normal normal-case tracking-wider text-pearl 
+            py-2 font-normal normal-case  text-pearl shadow transition-all duration-300 hover:shadow-md
             ${
               props.statusButton === STEP_STATUS.NOT_PROCESSED
                 ? "pointer-events-none opacity-70"
@@ -87,7 +87,7 @@ export const ButtonCopilot = ({ props }: { props: ButtonProps }) => {
             <span>{props.name}</span>
             {props.status === STEP_STATUS.DONE && (
               <span role="img" aria-label="Celebration icon">
-                🎉
+                👏
               </span>
             )}
           </button>

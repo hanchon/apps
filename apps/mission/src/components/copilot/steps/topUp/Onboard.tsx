@@ -18,7 +18,7 @@ export default function Onboard({
     <section className="space-y-10">
       <div className="space-y-3">
         <h3 className="font-bold">{t("topup.onboard.title")}</h3>
-        <div className="grid grid-cols-2 gap-4 text-sm font-medium">
+        <div className="grid grid-cols-1 gap-4 text-sm font-medium md:grid-cols-2">
           <button
             className={`flex items-center justify-center gap-1 rounded-md px-3 py-1.5 ${
               topUpType === "card"
@@ -47,8 +47,8 @@ export default function Onboard({
           </button>
         </div>
       </div>
-      {children}
       <SuccessTopUp />
+      {children}
     </section>
   );
 }
