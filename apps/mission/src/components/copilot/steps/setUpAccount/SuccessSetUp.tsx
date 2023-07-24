@@ -6,11 +6,16 @@ import ConfettiExplosion from "react-confetti-explosion";
 import { useContext } from "react";
 import { StepsContext } from "../../container/StepsContext";
 import { useTranslation } from "react-i18next";
+import { CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT, useTracker } from "tracker";
 export const SuccessSetUp = () => {
   const { updateStepsStatus } = useContext(StepsContext);
+  const { handlePreClickAction } = useTracker(
+    CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT
+  );
 
   const handleClick = () => {
     updateStepsStatus();
+    handlePreClickAction();
   };
 
   const { t } = useTranslation();

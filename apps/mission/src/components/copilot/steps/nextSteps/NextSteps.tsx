@@ -14,11 +14,27 @@ import { TitleButton } from "./button/TitleButton";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { StepsContext } from "../../container/StepsContext";
+import {
+  CLICK_ON_INTERACT_WITH_DAPP_COPILOT,
+  CLICK_ON_LEARN_MORE_COPILOT,
+  CLICK_ON_STAKE_YOUR_EVMOS_COPILOT,
+  useTracker,
+} from "tracker";
 
 export const NextSteps = () => {
   const { fireworksRef, portalContainer } = useFireworks();
   const { setShowModal, resetSteps } = useContext(StepsContext);
   const { t } = useTranslation();
+
+  const { handlePreClickAction: trackInteractWithdAppClick } = useTracker(
+    CLICK_ON_INTERACT_WITH_DAPP_COPILOT
+  );
+  const { handlePreClickAction: trackStakeEvmosClick } = useTracker(
+    CLICK_ON_STAKE_YOUR_EVMOS_COPILOT
+  );
+  const { handlePreClickAction: trackLearnMoreClick } = useTracker(
+    CLICK_ON_LEARN_MORE_COPILOT
+  );
   return (
     <div className="flex flex-col items-center justify-center space-y-4 text-center">
       {renderFireworksPortal(fireworksRef, portalContainer)}
@@ -33,6 +49,7 @@ export const NextSteps = () => {
         <Button
           handleClick={() => {
             handleInteractWithdApp(t("ecosystemUrl"), setShowModal);
+            trackInteractWithdAppClick();
             resetSteps();
           }}
         >
@@ -43,6 +60,7 @@ export const NextSteps = () => {
         <Button
           handleClick={() => {
             handleStakeWithEvmos(t("stakingUrl"), setShowModal);
+            trackStakeEvmosClick();
             resetSteps();
           }}
         >
@@ -58,6 +76,7 @@ export const NextSteps = () => {
         className="w-full cursor-pointer rounded-lg border border-[#D1D5DB] py-3"
         onClick={() => {
           handleLearnMore(t("academyFAQUrl"), setShowModal);
+          trackLearnMoreClick();
           resetSteps();
         }}
       >
