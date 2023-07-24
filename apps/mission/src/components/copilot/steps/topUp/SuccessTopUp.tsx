@@ -5,12 +5,17 @@ import { useContext } from "react";
 import { StepsContext } from "../../container/StepsContext";
 import { useEvmosBalance } from "./useEvmosBalance";
 import { useTranslation } from "react-i18next";
+
 export const SuccessTopUp = () => {
   const { updateStepsStatus } = useContext(StepsContext);
   // when evmosBalance is different that 0, show the component
   const { evmosBalance } = useEvmosBalance();
 
   const { t } = useTranslation();
+
+  const handleOnClick = () => {
+    updateStepsStatus();
+  };
 
   return evmosBalance.isZero() ? (
     <></>
@@ -29,9 +34,7 @@ export const SuccessTopUp = () => {
           <h3 className="font-bold ">{t("topup.onboard.success.title")}</h3>
           <p className="text-sm">{t("topup.onboard.success.description")}</p>
           <button
-            onClick={() => {
-              updateStepsStatus();
-            }}
+            onClick={handleOnClick}
             // TODO: create reusable component
             className="mt-3 w-auto space-x-2 rounded-lg bg-red
             px-8 py-2 font-normal  normal-case text-pearl shadow transition-all duration-300 hover:bg-red1 hover:shadow-md "

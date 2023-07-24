@@ -56,9 +56,7 @@ const checkConnectionMetamask = async () => {
   if (pubkey === null) {
     return false;
   }
-
-  await signPubkey();
-  return true;
+  return await connectHandler([account]);
 };
 
 const connectMematMask = (href: string) => {
