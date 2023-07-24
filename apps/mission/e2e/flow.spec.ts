@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { web3Test } from "playwright-config-custom/helpers";
 
 test.beforeEach(async ({ page }) => {
@@ -24,10 +24,17 @@ test.describe("Mission page", () => {
   web3Test(
     "should let the user connect with MetaMask",
     async ({ page, wallet }) => {
-      await page.pause();
       await page.getByRole("button", { name: "Copilot" }).click();
-      await page.getByRole("button", { name: "Connect with MetaMask" }).click();
+      await page
+        .getByRole("button", {
+          name: "Connect with MetaMask",
+        })
+        .click();
+
       await wallet.approve();
+
+      await page.getByRole("button", { name: "Top up your account" }).click();
+      await page.getByRole("button", { name: "Debit/Credit card" }).click();
       await page.pause();
     }
   );
