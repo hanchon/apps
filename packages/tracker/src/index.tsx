@@ -88,3 +88,25 @@ export { UNSUCCESSFUL_CONVERT_TX } from "./constants";
 export { CLICK_BUTTON_CONFIRM_WRAP_TX } from "./constants";
 export { SUCCESSFUL_WRAP_TX } from "./constants";
 export { UNSUCCESSFUL_WRAP_TX } from "./constants";
+
+// copilot
+export { CLICK_EVMOS_COPILOT_START_FLOW } from "./constants";
+export { CLICK_ON_INSTALL_ACCOUNT_COPILOT } from "./constants";
+export { CLICK_ON_CONNECT_ACCOUNT_COPILOT } from "./constants";
+export { CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT } from "./constants";
+export { CLICK_ON_TOP_UP_WITH_CARD_COPILOT } from "./constants";
+export { CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT } from "./constants";
+export { CLICK_ON_BUY_NOW_COPILOT } from "./constants";
+export { CLICK_ON_NEXT_STEPS_COPILOT } from "./constants";
+export { CLICK_ON_INTERACT_WITH_DAPP_COPILOT } from "./constants";
+export { CLICK_ON_STAKE_YOUR_EVMOS_COPILOT } from "./constants";
+export { CLICK_ON_LEARN_MORE_COPILOT } from "./constants";
+export { SUCCESSFUL_WALLET_INSTALLATION_COPILOT } from "./constants";
+export { UNSUCCESSFUL_WALLET_INSTALLATION_COPILOT } from "./constants";
+export { SUCCESSFUL_WALLET_CONNECTION_COPILOT } from "./constants";
+export { UNSUCCESSFUL_WALLET_CONNECTION_COPILOT } from "./constants";
+export { EXIT_OUT_COPILOT } from "./constants";
+export { CREATED_ORDER_ON_TRANSAK } from "./constants";
+export { CANCELLED_ORDER_ON_TRANSAK } from "./constants";
+export { FAILED_ORDER_ON_TRANSAK } from "./constants";
+export { SUCCESSFUL_ORDER_ON_TRANSAK } from "./constants";

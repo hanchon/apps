@@ -4,6 +4,7 @@
 import { useTranslation } from "next-i18next";
 import { Dispatch, SetStateAction } from "react";
 import { CreditCardsIcon, EthereumIcon } from "icons";
+import { CLICK_ON_TOP_UP_WITH_CARD_COPILOT, useTracker } from "tracker";
 
 export const Intro = ({
   setTopUpType,
@@ -11,6 +12,14 @@ export const Intro = ({
   setTopUpType: Dispatch<SetStateAction<string>>;
 }) => {
   const { t } = useTranslation();
+  const { handlePreClickAction } = useTracker(
+    CLICK_ON_TOP_UP_WITH_CARD_COPILOT
+  );
+
+  const handleCardOnClick = () => {
+    setTopUpType("card");
+    handlePreClickAction();
+  };
 
   return (
     <section className="space-y-10">
@@ -19,10 +28,10 @@ export const Intro = ({
         <p className="text-sm text-[#413836]">{t("topup.intro.body")}</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 text-sm font-medium">
+      <div className="grid grid-cols-1 gap-6 font-medium md:grid-cols-2 md:text-sm">
         <button
-          onClick={() => setTopUpType("card")}
-          className="flex items-center justify-center gap-2 rounded-lg border border-[#DBD3D1] py-4 px-2"
+          onClick={handleCardOnClick}
+          className="flex items-center justify-center gap-2 rounded-lg border border-[#DBD3D1] py-4 px-2 shadow transition-all duration-300 hover:shadow-md"
         >
           <CreditCardsIcon />
           {t("topup.card.button")}
