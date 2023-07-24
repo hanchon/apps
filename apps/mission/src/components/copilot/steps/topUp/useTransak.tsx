@@ -70,7 +70,7 @@ export const useTransak = () => {
     return () => {
       window.removeEventListener("message", handleMessage);
     };
-  }, []);
+  }, [createdOrder, orderSuccessful, orderUnsuccessful, orderCancelled]);
 
   return {};
 };
