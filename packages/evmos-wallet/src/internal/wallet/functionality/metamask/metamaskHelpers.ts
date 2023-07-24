@@ -17,10 +17,7 @@ import { evmosToEth } from "@evmos/address-converter";
 import { queryPubKey } from "../pubkey";
 import { METAMASK_NOTIFICATIONS } from "../errors";
 import { MetaMaskInpageProvider } from "@metamask/providers";
-import {
-  GetProviderFromLocalStorage,
-  SaveProviderToLocalStorate,
-} from "../localstorage";
+import { SaveProviderToLocalStorate } from "../localstorage";
 import { Metamask } from "./metamask";
 import { store } from "../../../../redux/Store";
 import { ethToEvmos } from "@evmos/address-converter";
@@ -249,7 +246,6 @@ export async function addToken(token: Token) {
 
 export async function connectHandler(addresses: Maybe<string[]>) {
   const metamask = new Metamask(store);
-  const providerLocalStorage = GetProviderFromLocalStorage();
   if (addresses === undefined || addresses === null) {
     metamask.reset();
     return false;
@@ -276,12 +272,6 @@ export async function connectHandler(addresses: Maybe<string[]>) {
         accountName: null,
       })
     );
-    SaveProviderToLocalStorate(METAMASK_KEY);
-    // show the connect snackbar only if the user clicks on connect wallet
-    if (providerLocalStorage === METAMASK_KEY) {
-      return false;
-    }
-
     SaveProviderToLocalStorate(METAMASK_KEY);
     return true;
   }
