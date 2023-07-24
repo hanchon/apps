@@ -6,17 +6,40 @@ import { ModalWithTransitions } from "ui-helpers";
 import { AlertIcon } from "icons";
 import { useTranslation } from "react-i18next";
 import { StepsContext } from "./container/StepsContext";
-
+import { useTracker, EXIT_OUT_COPILOT } from "tracker";
+import { STEP_STATUS } from "./steps/setUpAccount/buttons/utils";
 export const CancelModal = () => {
   const { t } = useTranslation();
-  const { setShowModal, setShowCloseModal, showCloseModal, resetSteps } =
-    useContext(StepsContext);
+  const {
+    setShowModal,
+    setShowCloseModal,
+    showCloseModal,
+    resetSteps,
+    stepsStatus,
+  } = useContext(StepsContext);
 
+  const { handlePreClickAction } = useTracker(EXIT_OUT_COPILOT);
   const handleAccept = () => {
+    handlePreClickAction({
+      step: getCurrentStep()?.title,
+      exitConfirmation: "stay",
+    });
     setShowCloseModal(false);
   };
 
+  const getCurrentStep = () => {
+    // TODO: create a function to get the currentElement
+    const currentElement = stepsStatus.find(
+      (element) => element.status === STEP_STATUS.CURRENT
+    );
+    return currentElement;
+  };
+
   const handleReject = () => {
+    handlePreClickAction({
+      step: getCurrentStep()?.title,
+      exitConfirmation: "exit",
+    });
     resetSteps();
     setShowCloseModal(false);
     setShowModal(false);

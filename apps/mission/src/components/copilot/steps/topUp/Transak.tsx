@@ -1,12 +1,20 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+
 import { StoreType } from "evmos-wallet";
 import { useSelector } from "react-redux";
+import { useTransakEvents } from "./useTransakEvents";
+
+export const TRANSAK_API_KEY = process.env.NEXT_PUBLIC_TRANSAK_API_KEY ?? "";
+
 
 export const TRANSAK_API_KEY = process.env.NEXT_PUBLIC_TRANSAK_API_KEY ?? "";
 export default function Transak() {
+
   const wallet = useSelector((state: StoreType) => state.wallet.value);
+  useTransakEvents();
+
   return (
     <div className="relative mx-auto mt-[25px] h-[700px] w-[300px] overflow-hidden rounded-[15px] md:h-[545px] md:w-[400px]">
       <iframe

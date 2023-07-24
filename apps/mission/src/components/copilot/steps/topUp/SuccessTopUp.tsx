@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { StepsContext } from "../../container/StepsContext";
 import { useEvmosBalance } from "./useEvmosBalance";
 import { useTranslation } from "react-i18next";
+import { CLICK_ON_NEXT_STEPS_COPILOT, useTracker } from "tracker";
 
 export const SuccessTopUp = () => {
   const { updateStepsStatus } = useContext(StepsContext);
@@ -12,9 +13,11 @@ export const SuccessTopUp = () => {
   const { evmosBalance } = useEvmosBalance();
 
   const { t } = useTranslation();
+  const { handlePreClickAction } = useTracker(CLICK_ON_NEXT_STEPS_COPILOT);
 
   const handleOnClick = () => {
     updateStepsStatus();
+    handlePreClickAction();
   };
 
   return evmosBalance.isZero() ? (
