@@ -34,7 +34,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 # Changelog
 
-## Unreleased
+## 1.0.13 - 2023-07-18
 
 - (chore) #fse-681 | packages/evmos-wallet 1.0.10 apps/governance 1.0.16 | move useEvmosBalance to evmos-wallet
 - (feat) #fse-495 | packages/evmos-wallet 1.0.10 | Adding i18n with schummar library
