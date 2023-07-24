@@ -17,7 +17,7 @@ const TRANSAK_EVENTS = {
   TRANSAK_ORDER_CANCELLED: "TRANSAK_ORDER_CANCELLED",
   TRANSAK_ORDER_CREATED: "TRANSAK_ORDER_CREATED",
 };
-export const useTransak = () => {
+export const useTransakEvents = () => {
   const { handlePreClickAction: createdOrder } = useTracker(
     CREATED_ORDER_ON_TRANSAK
   );
