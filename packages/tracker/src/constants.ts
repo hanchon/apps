@@ -141,3 +141,7 @@ export const SUCCESSFUL_WALLET_CONNECTION_COPILOT =
 export const UNSUCCESSFUL_WALLET_CONNECTION_COPILOT =
   "Unsuccessful wallet connection inside Copilot";
 export const EXIT_OUT_COPILOT = "Exit out of Copilot";
+export const CREATED_ORDER_ON_TRANSAK = "Created order on Transak";
+export const CANCELLED_ORDER_ON_TRANSAK = "Cancelled order on Transak";
+export const FAILED_ORDER_ON_TRANSAK = "Failed order on Transak";
+export const SUCCESSFUL_ORDER_ON_TRANSAK = "Successful order on Transak";

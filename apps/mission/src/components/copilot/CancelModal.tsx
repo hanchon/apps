@@ -22,7 +22,7 @@ export const CancelModal = () => {
   const handleAccept = () => {
     handlePreClickAction({
       step: getCurrentStep()?.title,
-      exitConfirmation: "cancel",
+      exitConfirmation: "stay",
     });
     setShowCloseModal(false);
   };
@@ -38,7 +38,7 @@ export const CancelModal = () => {
   const handleReject = () => {
     handlePreClickAction({
       step: getCurrentStep()?.title,
-      exitConfirmation: "close copilot",
+      exitConfirmation: "exit",
     });
     resetSteps();
     setShowCloseModal(false);

@@ -106,3 +106,7 @@ export { UNSUCCESSFUL_WALLET_INSTALLATION_COPILOT } from "./constants";
 export { SUCCESSFUL_WALLET_CONNECTION_COPILOT } from "./constants";
 export { UNSUCCESSFUL_WALLET_CONNECTION_COPILOT } from "./constants";
 export { EXIT_OUT_COPILOT } from "./constants";
+export { CREATED_ORDER_ON_TRANSAK } from "./constants";
+export { CANCELLED_ORDER_ON_TRANSAK } from "./constants";
+export { FAILED_ORDER_ON_TRANSAK } from "./constants";
+export { SUCCESSFUL_ORDER_ON_TRANSAK } from "./constants";

@@ -1,9 +1,12 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+import { useTransak } from "./useTransak";
+
 export const TRANSAK_API_KEY = process.env.NEXT_PUBLIC_TRANSAK_API_KEY ?? "";
 
 export default function Transak() {
+  useTransak();
   return (
     <div
       style={{

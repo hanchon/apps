@@ -49,7 +49,7 @@ export const useStep = (
         });
         unsuccessfullTrack({
           provider: step.tracker.provider,
-          step: step.errorsText && step.errorsText[index],
+          errorMessage: step.errorsText && step.errorsText[index],
         });
         break;
       } else {
