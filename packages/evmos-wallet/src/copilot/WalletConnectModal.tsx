@@ -28,6 +28,7 @@ export const WalletConnectModal = ({
       show={show}
       setShow={setShow}
       content={contentModal}
+      propClose={true}
     />
   );
 };

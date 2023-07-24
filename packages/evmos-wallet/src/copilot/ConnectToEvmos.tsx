@@ -7,12 +7,12 @@ export const ConnectToEvmos = () => {
   return (
     <div className="space-y-3 px-4 pb-4 pt-5 sm:p-6">
       <EvmosRedIcon />
-      <h3 className="text-gray-900 text-base font-semibold leading-6">
+      <h3 className="text-[#271411] text-base font-semibold leading-6">
         Connect your account
       </h3>
 
-      <p>Get started with Evmos!</p>
-      <p>
+      <p className="text-sm text-[#413836]">Get started with Evmos!</p>
+      <p className="text-sm text-[#413836]">
         We recommend for first-time users to use
         <b> Evmos Copilot</b>.
       </p>

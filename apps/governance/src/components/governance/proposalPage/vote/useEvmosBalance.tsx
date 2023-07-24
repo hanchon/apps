@@ -3,9 +3,7 @@
 
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-
 import { StoreType } from "evmos-wallet";
-import { BalanceResponse } from "../types";
 import { BigNumber } from "ethers";
 import {
   EVMOS_BACKEND,
