@@ -34,7 +34,8 @@ const STYLE2 = {
 const STYLE3 = {
   [STEP_STATUS.CURRENT]: "bg-red hover:bg-red1 ",
   [STEP_STATUS.DONE]: "pointer-events-none bg-[#31B886]",
-  [STEP_STATUS.PROCESSING]: "bg-red hover:bg-red1",
+  [STEP_STATUS.PROCESSING]:
+    "bg-red hover:bg-red1 pointer-events-none opacity-70",
 };
 
 export const ButtonCopilot = ({ props }: { props: ButtonProps }) => {
