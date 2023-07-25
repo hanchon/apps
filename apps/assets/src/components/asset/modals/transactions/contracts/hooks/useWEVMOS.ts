@@ -2,7 +2,7 @@ import { BigNumber, ethers } from "ethers";
 import WETH_ABI from "../../contracts/abis/WEVMOS/WEVMOS.json";
 import { WEVMOS_CONTRACT_ADDRESS } from "../../../constants";
 import { KEPLR_KEY } from "evmos-wallet";
-import { useContractTransaction } from "./useContractTransaction";
+import { useContractTransaction } from "evmos-wallet";
 import { TransactionResponse } from "@ethersproject/providers";
 import { createContract } from "../contractHelper";
 import { WEVMOS } from "../../contracts/abis/WEVMOS/WEVMOS";

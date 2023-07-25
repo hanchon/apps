@@ -70,6 +70,8 @@ export { addToken } from "./internal/wallet/functionality/metamask/metamaskHelpe
 export type { Token } from "./internal/wallet/functionality/metamask/metamaskHelpers";
 export { Signer } from "./internal/wallet/functionality/signing/genericSigner";
 export { broadcastAminoBackendTxToBackend } from "./internal/wallet/functionality/signing";
+export { useContractTransaction } from "./internal/wallet/functionality/contracts/hooks/useContractTransaction";
+
 // Probably move it to assets
 export type { IBCChainParams } from "./notification/transactionsTypes";
 export type { IBCTransferResponse } from "./notification/transactionsTypes";

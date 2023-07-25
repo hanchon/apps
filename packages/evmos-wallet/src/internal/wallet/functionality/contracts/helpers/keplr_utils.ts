@@ -1,24 +1,32 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
+import { EthSignType } from "@keplr-wallet/types";
 import { UnsignedTransaction } from "ethers";
+import { TransactionRequest } from "@ethersproject/abstract-provider";
 
-export async function signKeplrTx(tx: any): Promise<any> {
+export async function signKeplrTx(
+  tx: UnsignedTransaction
+): Promise<Uint8Array> {
   const signer = await getKeplrBech32Account();
-  //@ts-ignore
-  const signedTx = await window.keplr.signEthereum(
-    "evmos_9001-2",
-    signer,
-    JSON.stringify(tx),
-    "transaction"
-  );
-  return signedTx;
+  if (window.keplr) {
+    const signedTx = await window.keplr.signEthereum(
+      "evmos_9001-2",
+      signer,
+      JSON.stringify(tx),
+      EthSignType.TRANSACTION
+    );
+    return signedTx;
+  }
+  return new Uint8Array();
 }
 
 export async function getKeplrBech32Account(): Promise<string> {
-  //@ts-ignore
-  const offlineSigner = window.getOfflineSigner("evmos_9001-2");
-  const wallets = await offlineSigner.getAccounts();
-  const signerAddressBech32 = wallets[0].address;
-  return signerAddressBech32;
+  if (window.getOfflineSigner) {
+    const offlineSigner = window.getOfflineSigner("evmos_9001-2");
+    const wallets = await offlineSigner.getAccounts();
+    const signerAddressBech32 = wallets[0].address;
+    return signerAddressBech32;
+  }
+  return "";
 }
 
 /**
@@ -32,11 +40,11 @@ export default function isZero(hexNumberString: string) {
 export async function convertToKeplrTx(
   provider: JsonRpcProvider,
   signer: string,
-  tx: any
+  tx: UnsignedTransaction
 ): Promise<UnsignedTransaction> {
   const completeTx = { ...tx, from: signer };
 
-  const gasLimit = await provider.estimateGas(completeTx);
+  const gasLimit = await provider.estimateGas(completeTx as TransactionRequest);
   const gasFee = await provider.getFeeData();
 
   if (!gasFee.maxPriorityFeePerGas || !gasFee.maxFeePerGas) {
