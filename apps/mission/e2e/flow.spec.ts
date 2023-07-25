@@ -24,17 +24,54 @@ test.describe("Mission page", () => {
   web3Test(
     "should let the user connect with MetaMask",
     async ({ page, wallet }) => {
-      await page.getByRole("button", { name: "Copilot" }).click();
+      await page.getByRole("button", { name: /Copilot/i }).click();
+
+      //
+
       await page
         .getByRole("button", {
-          name: "Connect with MetaMask",
+          name: /Connect with MetaMask/i,
         })
         .click();
 
+      await page
+        .getByRole("button", { name: /Press Next and Connect/i })
+        .isVisible();
+
       await wallet.approve();
 
-      await page.getByRole("button", { name: "Top up your account" }).click();
+      await page.getByRole("button", { name: /Top up your account/i }).click();
+      await page.route(
+        "*/**/BalanceByDenom/EVMOS/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/aevmos",
+        async (route) => {
+          const json = {
+            balance: {
+              denom: "aevmos",
+              amount: "0",
+            },
+          };
+          await route.fulfill({ json });
+        }
+      );
+
       await page.getByRole("button", { name: "Debit/Credit card" }).click();
+      await page.waitForTimeout(3000);
+      await page.getByRole("button", { name: /Next steps/i }).isHidden();
+
+      await page.route(
+        "*/**/BalanceByDenom/EVMOS/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/aevmos",
+        async (route) => {
+          const json = {
+            balance: {
+              denom: "aevmos",
+              amount: "100",
+            },
+          };
+          await route.fulfill({ json });
+        }
+      );
+
+      await page.getByRole("button", { name: /Next steps/i }).isVisible();
       await page.pause();
     }
   );
