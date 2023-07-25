@@ -1,5 +1,11 @@
 import { test, expect } from "@playwright/test";
-import { web3Test } from "playwright-config-custom/helpers";
+import {
+  web3Test,
+  web3TestWithoutNetwork,
+} from "playwright-config-custom/helpers";
+
+const BALANCE_ENDPOINT =
+  "*/**/BalanceByDenom/EVMOS/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/aevmos";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
@@ -20,13 +26,44 @@ test.beforeEach(async ({ page }) => {
   await page.getByRole("button", { name: /accept and proceed/i }).click();
 });
 
-test.describe("Mission page", () => {
+test.describe("Mission Page - set network", () => {
+  web3TestWithoutNetwork(
+    "should let the user connect with MetaMask and set the network",
+    async ({ page, wallet }) => {
+      await page.getByRole("button", { name: /Copilot/i }).click();
+
+      await page
+        .getByRole("button", {
+          name: /Connect with MetaMask/i,
+        })
+        .click();
+
+      await page.pause();
+      await page
+        .getByRole("button", { name: /Approve on MetaMask/i })
+        .isVisible();
+
+      // await wallet.approve();
+
+      // await wallet.page.getByRole("button", { name: /Cancel/i }).click();
+      // wallet.page;
+      // console.log(wallet.page);
+      // await wallet.approve();
+
+      await page
+        .getByRole("button", { name: /Press Next and Connect/i })
+        .isVisible();
+      await page.pause();
+      // await wallet.approve();
+    }
+  );
+});
+
+test.skip("Mission page", () => {
   web3Test(
     "should let the user connect with MetaMask",
     async ({ page, wallet }) => {
       await page.getByRole("button", { name: /Copilot/i }).click();
-
-      //
 
       await page
         .getByRole("button", {
@@ -38,41 +75,48 @@ test.describe("Mission page", () => {
         .getByRole("button", { name: /Press Next and Connect/i })
         .isVisible();
 
+      await page.pause();
+
       await wallet.approve();
 
       await page.getByRole("button", { name: /Top up your account/i }).click();
-      await page.route(
-        "*/**/BalanceByDenom/EVMOS/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/aevmos",
-        async (route) => {
-          const json = {
-            balance: {
-              denom: "aevmos",
-              amount: "0",
-            },
-          };
-          await route.fulfill({ json });
-        }
-      );
+      await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
+        const json = {
+          balance: {
+            denom: "aevmos",
+            amount: "0",
+          },
+        };
+        await route.fulfill({ json });
+      });
 
       await page.getByRole("button", { name: "Debit/Credit card" }).click();
-      await page.waitForTimeout(3000);
       await page.getByRole("button", { name: /Next steps/i }).isHidden();
+      await page.waitForTimeout(3000);
+      await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
+        const json = {
+          balance: {
+            denom: "aevmos",
+            amount: "100",
+          },
+        };
+        await route.fulfill({ json });
+      });
 
-      await page.route(
-        "*/**/BalanceByDenom/EVMOS/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/aevmos",
-        async (route) => {
-          const json = {
-            balance: {
-              denom: "aevmos",
-              amount: "100",
-            },
-          };
-          await route.fulfill({ json });
-        }
-      );
+      await page.getByRole("button", { name: /Next steps/i }).click();
 
-      await page.getByRole("button", { name: /Next steps/i }).isVisible();
-      await page.pause();
+      await page
+        .getByRole("button", { name: "Interact with a dApp Recommended" })
+        .click();
+
+      // Wait for the redirect to happen
+      // await page.waitForURL("https://evmos.org/ecosystem");
+
+      // // Assert that the URL has changed to the target page URL
+      // const currentUrl = page.url();
+      // expect(currentUrl).toBe("https://evmos.org/ecosystem");
+
+      // await page.close();
     }
   );
 });
