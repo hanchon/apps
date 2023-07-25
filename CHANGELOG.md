@@ -34,6 +34,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 # Changelog
 
+- (feat) #fse-690 | packages/evmos-wallet 1.0.11 apps/assets 1.0.19 | Enable keplr smart contract interactions
+
 ## 1.0.13 - 2023-07-18
 
 - (feat) #fse-495 | packages/evmos-wallet 1.0.10 | Adding i18n with schummar library
