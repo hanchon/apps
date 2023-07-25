@@ -26,9 +26,9 @@ test.beforeEach(async ({ page }) => {
   await page.getByRole("button", { name: /accept and proceed/i }).click();
 });
 
-test.describe("Mission Page - set network", () => {
+test.describe("Mission Page - Copilot", () => {
   web3TestWithoutNetwork(
-    "should let the user connect with MetaMask and set the network",
+    "should let the user connect with MetaMask, set the network, the accounts, top up the account and redirect to the ecosystem page",
     async ({ page, wallet }) => {
       await page.getByRole("button", { name: /Copilot/i }).click();
 
@@ -38,30 +38,101 @@ test.describe("Mission Page - set network", () => {
         })
         .click();
 
-      await page.pause();
       await page
         .getByRole("button", { name: /Approve on MetaMask/i })
         .isVisible();
 
-      // await wallet.approve();
+      const switchNetworkPopup = await page.context().waitForEvent("page");
+      await switchNetworkPopup.getByRole("button", { name: /Cancel/i }).click();
 
-      // await wallet.page.getByRole("button", { name: /Cancel/i }).click();
-      // wallet.page;
-      // console.log(wallet.page);
-      // await wallet.approve();
+      await page.getByText(/Approval Rejected, please try again/i).isVisible();
+      await page
+        .getByRole("button", {
+          name: /Try again/i,
+        })
+        .click();
+      const switchNetworkPopupRetry = await page.context().waitForEvent("page");
+      await switchNetworkPopupRetry
+        .getByRole("button", { name: /Approve/i })
+        .click();
+
+      await switchNetworkPopupRetry
+        .getByRole("button", { name: /Cancel/i })
+        .click();
+
+      await page
+        .getByText(/You need to switch the network to Evmos, please try again/i)
+        .isVisible();
+
+      await page
+        .getByRole("button", {
+          name: /Try again/i,
+        })
+        .click();
+
+      const switchNetworkPopupRetryAfterApprove = await page
+        .context()
+        .waitForEvent("page");
+
+      await switchNetworkPopupRetryAfterApprove
+        .getByRole("button", { name: /Switch Network/i })
+        .click();
 
       await page
         .getByRole("button", { name: /Press Next and Connect/i })
         .isVisible();
-      await page.pause();
-      // await wallet.approve();
+
+      const getAccountsPopup = await page.context().waitForEvent("page");
+      await getAccountsPopup.getByRole("button", { name: /Cancel/i }).click();
+
+      await page
+        .getByText(/Get accounts rejected, please try again/i)
+        .isVisible();
+
+      await page
+        .getByRole("button", {
+          name: /Try again/i,
+        })
+        .click();
+
+      await wallet.approve();
+
+      await page.getByRole("button", { name: /Top up your account/i }).click();
+      await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
+        const json = {
+          balance: {
+            denom: "aevmos",
+            amount: "0",
+          },
+        };
+        await route.fulfill({ json });
+      });
+
+      await page.getByRole("button", { name: "Debit/Credit card" }).click();
+      await page.getByRole("button", { name: /Next steps/i }).isHidden();
+      await page.waitForTimeout(3000);
+      await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
+        const json = {
+          balance: {
+            denom: "aevmos",
+            amount: "100",
+          },
+        };
+        await route.fulfill({ json });
+      });
+
+      await page.getByRole("button", { name: /Next steps/i }).click();
+
+      await page
+        .getByRole("button", { name: /Interact with a dApp Recommended/i })
+        .click();
     }
   );
 });
 
 test.skip("Mission page", () => {
   web3Test(
-    "should let the user connect with MetaMask",
+    "should let the user connect with MetaMask, set the accounts, top up the account and redirect to the ecosystem page. Network is already set up",
     async ({ page, wallet }) => {
       await page.getByRole("button", { name: /Copilot/i }).click();
 
@@ -74,8 +145,6 @@ test.skip("Mission page", () => {
       await page
         .getByRole("button", { name: /Press Next and Connect/i })
         .isVisible();
-
-      await page.pause();
 
       await wallet.approve();
 
