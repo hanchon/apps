@@ -13,12 +13,7 @@ import { parseUnits } from "@ethersproject/units";
 import { BigNumber } from "@ethersproject/bignumber";
 import { executeConvert } from "../../../../internal/asset/functionality/transactions/convert";
 import { TableDataElement } from "../../../../internal/asset/functionality/table/normalizeData";
-import { WEVMOS_CONTRACT_ADDRESS } from "../constants";
-import { WEVMOSABI } from "evmos-wallet";
-import { createContract } from "evmos-wallet";
-
 import AddTokenMetamask from "./AddTokenMetamask";
-import { WEVMOS } from "evmos-wallet";
 
 import {
   StoreType,
@@ -39,6 +34,7 @@ import {
   SUCCESSFUL_CONVERT_TX,
   UNSUCCESSFUL_CONVERT_TX,
 } from "tracker";
+import { useWEVMOS } from "./contracts/hooks/useWEVMOS";
 
 const IBC_ERC20 = "IBC<>ERC-20";
 const ERC20_IBC = "ERC-20 <> IBC";
@@ -70,6 +66,8 @@ const Convert = ({
     token: EVMOS_SYMBOL,
   });
 
+  const { deposit, withdraw } = useWEVMOS(wallet?.extensionName);
+
   useEffect(() => {
     if (!isERC20Selected) {
       setTypeSelected({
@@ -87,8 +85,6 @@ const Convert = ({
       });
     }
   }, [isERC20Selected, item]);
-
-  const WEVMOS = WEVMOS_CONTRACT_ADDRESS;
 
   const token: Token = {
     erc20Address: item.erc20Address,
@@ -268,27 +264,11 @@ const Convert = ({
             } else {
               if (isERC20Selected) {
                 try {
-                  const contract = await createContract(
-                    WEVMOS,
-                    WEVMOSABI,
-                    wallet.extensionName
-                  );
-                  if (contract === null) {
-                    dispatch(
-                      addSnackbar({
-                        id: 0,
-                        content: {
-                          type: SNACKBAR_CONTENT_TYPES.TEXT,
-                          title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-                        },
-                        type: SNACKBAR_TYPES.ERROR,
-                      })
-                    );
-                    setShow(false);
-                    return;
-                  }
                   setDisabled(true);
-                  const res = await (contract as WEVMOS).withdraw(amount);
+                  const res = await withdraw(
+                    amount,
+                    wallet.evmosAddressEthFormat
+                  );
                   dispatch(
                     addSnackbar({
                       id: 0,
@@ -316,29 +296,11 @@ const Convert = ({
                 }
               } else {
                 try {
-                  const contract = await createContract(
-                    WEVMOS,
-                    WEVMOSABI,
-                    wallet.extensionName
-                  );
-                  if (contract === null) {
-                    dispatch(
-                      addSnackbar({
-                        id: 0,
-                        content: {
-                          type: SNACKBAR_CONTENT_TYPES.TEXT,
-                          title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-                        },
-                        type: SNACKBAR_TYPES.ERROR,
-                      })
-                    );
-                    setShow(false);
-                    return;
-                  }
                   setDisabled(true);
-                  const res = await (contract as WEVMOS).deposit({
-                    value: amount,
-                  });
+                  const res = await deposit(
+                    amount,
+                    wallet.evmosAddressEthFormat
+                  );
                   dispatch(
                     addSnackbar({
                       id: 0,

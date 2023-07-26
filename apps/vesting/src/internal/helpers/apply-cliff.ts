@@ -7,7 +7,7 @@ export const applyCliff = (cliff: number, periods: Period[]): Period[] => {
   let coins: Coin[] = [];
 
   let totalLength = 0;
-  periods.forEach((period, index) => {
+  periods.forEach((period) => {
     totalLength += period.length;
     if (totalLength <= cliff) {
       coins = sumCoins([coins, period.amount]);

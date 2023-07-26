@@ -1,11 +1,11 @@
 import { MessageMsgCreateClawbackVestingAccount } from "@evmos/transactions";
 import dayjs from "dayjs";
 import { BigNumber } from "ethers";
-import { convertFromAtto, convertToAtto } from "helpers";
+import { convertToAtto } from "helpers";
 import { applyCliff } from "./apply-cliff";
 import { TIME_WINDOWS_TO_DAYJS_PARAMS_MAP } from "./constants";
 import { generatePeriods } from "./generate-periods";
-import { Intervals, TimeWindow, VestingSchedule } from "./types";
+import { VestingSchedule } from "./types";
 
 export const generateVestingSchedule = (
   startDate: dayjs.Dayjs,
@@ -37,6 +37,7 @@ export const generateVestingSchedule = (
   if (vestingCliff !== "none") {
     vestingPeriods = applyCliff(
       start
+        //@ts-ignore
         .add(...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[vestingCliff])
         .diff(start, "second"),
       vestingPeriods
@@ -57,6 +58,7 @@ export const generateVestingSchedule = (
                 },
               ],
               length: start
+                //@ts-ignore
                 .add(...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[lockingPeriod])
                 .diff(start, "seconds"),
             },

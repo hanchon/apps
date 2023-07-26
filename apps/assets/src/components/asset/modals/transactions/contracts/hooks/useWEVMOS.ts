@@ -1,16 +1,16 @@
 import { BigNumber, ethers } from "ethers";
-import WETH_ABI from "../../contracts/abis/WEVMOS/WEVMOS.json";
 import { WEVMOS_CONTRACT_ADDRESS } from "../../../constants";
 import { KEPLR_KEY } from "evmos-wallet";
 import { useContractTransaction } from "evmos-wallet";
 import { TransactionResponse } from "@ethersproject/providers";
-import { createContract } from "../contractHelper";
-import { WEVMOS } from "../../contracts/abis/WEVMOS/WEVMOS";
+import { createContract } from "evmos-wallet";
+import { WEVMOS } from "../abis/WEVMOS/WEVMOS";
+import { WEVMOSABI } from "../abis/WEVMOS/WEVMOSABI";
 
 export function useWEVMOS(provider: string) {
   const { executeKeplr } = useContractTransaction();
 
-  let iWEVMOS = new ethers.utils.Interface(WETH_ABI);
+  let iWEVMOS = new ethers.utils.Interface(WEVMOSABI);
 
   async function deposit(
     amount: BigNumber,
@@ -27,7 +27,7 @@ export function useWEVMOS(provider: string) {
     } else {
       const contract = await createContract(
         WEVMOS_CONTRACT_ADDRESS,
-        WETH_ABI,
+        WEVMOSABI,
         provider
       );
       return await (contract as WEVMOS).deposit({
@@ -51,7 +51,7 @@ export function useWEVMOS(provider: string) {
     } else {
       const contract = await createContract(
         WEVMOS_CONTRACT_ADDRESS,
-        WETH_ABI,
+        WEVMOSABI,
         provider
       );
       return await (contract as WEVMOS).withdraw(amount);

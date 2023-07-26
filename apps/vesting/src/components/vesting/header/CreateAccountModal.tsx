@@ -15,12 +15,6 @@ import {
 } from "../helpers";
 
 import {
-  createContract,
-  VESTING_CONTRACT_ADDRESS,
-  VestingABI,
-} from "evmos-wallet";
-import {
-  VestingI,
   StoreType,
   addSnackbar,
   SNACKBAR_CONTENT_TYPES,
@@ -31,34 +25,20 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { generateVestingSchedule } from "../../../internal/helpers/generate-vesting-schedule";
 import { VestingSchedule } from "../../../internal/helpers/types";
+import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 
 export const CreateAccountModal = () => {
   const [disabled, setDisabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
 
+  const { createClawbackVestingAccount } = useVestingPrecompile(
+    wallet?.extensionName
+  );
+
   const handleOnClick = async (d: FieldValues) => {
     try {
       setDisabled(true);
-      const contract = await createContract(
-        VESTING_CONTRACT_ADDRESS,
-        VestingABI,
-        wallet.extensionName
-      );
-      if (contract === null) {
-        dispatch(
-          addSnackbar({
-            id: 0,
-            content: {
-              type: SNACKBAR_CONTENT_TYPES.TEXT,
-              title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-            },
-            type: SNACKBAR_TYPES.ERROR,
-          })
-        );
-        setDisabled(false);
-        return;
-      }
 
       const { lockupPeriods, vestingPeriods, startTime } =
         generateVestingSchedule(d.startDate, d.amount, "atevmos", {
@@ -68,24 +48,22 @@ export const CreateAccountModal = () => {
           lockingPeriod: d.lockupDuration,
         });
 
-      const res = await (contract as VestingI).createClawbackVestingAccount(
+      const res = await createClawbackVestingAccount(
         wallet.evmosAddressEthFormat,
         d.address,
         startTime,
         lockupPeriods,
         vestingPeriods,
-        // TODO: what value ??
         true
       );
 
-      console.log("ress", res);
       dispatch(
         addSnackbar({
           id: 0,
           content: {
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
-            // hash: res.hash,
+            hash: res.hash,
             explorerTxUrl: "www.mintscan.io/evmos/txs/",
           },
           type: SNACKBAR_TYPES.SUCCESS,
@@ -306,6 +284,7 @@ export const CreateAccountModal = () => {
 
         <input
           type="submit"
+          disabled={disabled}
           style={{ backgroundColor: "#ed4e33" }}
           className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg font-bold uppercase text-pearl"
           value="Create"

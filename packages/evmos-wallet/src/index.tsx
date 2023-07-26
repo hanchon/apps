@@ -65,11 +65,6 @@ export { EVMOS_CHAIN_NAME } from "./internal/wallet/functionality/networkConfig"
 export { truncateAddress } from "./internal/wallet/style/format";
 export { fetchWithTimeout } from "./internal/wallet/functionality/fetch";
 export { createContract } from "./wallet/contracts/contractHelper";
-export type { WEVMOS } from "./wallet/contracts/abis/WEVMOS/WEVMOS";
-export type { VestingI } from "./wallet/contracts/abis/vesting/Vesting";
-export { VESTING_CONTRACT_ADDRESS } from "./wallet/contracts/constants/Vesting";
-export { VestingABI } from "./wallet/contracts/abis/vesting/VestingABI";
-export type { WEVMOSABI } from "./wallet/contracts/abis/WEVMOS/WEVMOSABI";
 
 // wallet
 export { getKeplrAddressByChain } from "./internal/wallet/functionality/keplr/keplrHelpers";

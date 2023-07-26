@@ -3,13 +3,8 @@ import { ItemModal } from "./ItemModal";
 import { ExclamationIcon } from "icons";
 import { VestingAccountDetail } from "../../../../internal/types";
 import { convertFromAtto, formatNumber } from "helpers";
+
 import {
-  createContract,
-  VESTING_CONTRACT_ADDRESS,
-  VestingABI,
-} from "evmos-wallet";
-import {
-  VestingI,
   StoreType,
   addSnackbar,
   SNACKBAR_CONTENT_TYPES,
@@ -19,6 +14,7 @@ import {
 } from "evmos-wallet";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import { useVestingPrecompile } from "../../../../internal/useVestingPrecompile";
 
 // TODO: format totalTokens and availableClawback depending on the response
 export const ClawbackModal = ({
@@ -30,30 +26,13 @@ export const ClawbackModal = ({
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(false);
 
+  const { clawback } = useVestingPrecompile(wallet?.extensionName);
+
   const handleOnClick = async () => {
     try {
       setDisabled(true);
-      const contract = await createContract(
-        VESTING_CONTRACT_ADDRESS,
-        VestingABI,
-        wallet.extensionName
-      );
-      if (contract === null) {
-        dispatch(
-          addSnackbar({
-            id: 0,
-            content: {
-              type: SNACKBAR_CONTENT_TYPES.TEXT,
-              title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-            },
-            type: SNACKBAR_TYPES.ERROR,
-          })
-        );
-        setDisabled(false);
-        return;
-      }
-      // setDisabled(true);
-      const res = await (contract as VestingI).clawback(
+
+      const res = await clawback(
         vestingDetails.funderAddress,
         vestingDetails.accountAddress,
         vestingDetails.funderAddress
