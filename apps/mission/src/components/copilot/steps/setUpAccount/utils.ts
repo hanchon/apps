@@ -76,9 +76,10 @@ const checkConnectionMetamask = async () => {
 };
 
 const connectMetaMask = (href: string) => {
-  if (!isMetamaskInstalled()) {
-    window.open(href, "_blank");
+  if (isMetamaskInstalled() === false) {
     setCopilotLocalStorage("true");
+    window.open(href, "_blank");
+
     return false;
   }
   return true;
@@ -86,13 +87,18 @@ const connectMetaMask = (href: string) => {
 
 const reloadPage = () => {
   // for chrome and brave we need to reload the page to know if the user has Metamask installed
-  if (
-    !isMetamaskInstalled() &&
-    getReloadFromLocalStorage() === null &&
-    getCopilotFromLocalStorage() === "true"
-  ) {
-    setReloadLocalStorage("true");
-    window.location.reload();
+  if (isMetamaskInstalled()) {
+    return true;
+  } else {
+    if (
+      isMetamaskInstalled() === false &&
+      getReloadFromLocalStorage() === null &&
+      getCopilotFromLocalStorage() === "true"
+    ) {
+      setReloadLocalStorage("true");
+      window.location.reload();
+      return false;
+    }
   }
 };
 

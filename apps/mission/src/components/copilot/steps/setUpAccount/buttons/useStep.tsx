@@ -96,7 +96,11 @@ export const useStep = (
     if (step.href !== undefined && status !== STEP_STATUS.DONE) {
       const handleVisibilityChange = async () => {
         if (document.visibilityState === "visible") {
-          step.hrefAction && step.hrefAction();
+          if (step.hrefAction !== undefined) {
+            if (step.hrefAction()) {
+              check();
+            }
+          }
         }
       };
       document.addEventListener("visibilitychange", handleVisibilityChange);
