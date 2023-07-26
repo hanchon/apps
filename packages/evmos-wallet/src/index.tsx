@@ -58,6 +58,8 @@ export { EVMOS_BACKEND } from "./internal/wallet/functionality/networkConfig";
 export { EVMOS_NETWORK_FOR_BACKEND } from "./internal/wallet/functionality/networkConfig";
 export { EVMOS_CHAIN } from "./internal/wallet/functionality/networkConfig";
 export { EVMOS_MINIMAL_COIN_DENOM } from "./internal/wallet/functionality/networkConfig";
+export { EVMOS_RPC_URL } from "./internal/wallet/functionality/networkConfig";
+export { EVMOS_CHAIN_NAME } from "./internal/wallet/functionality/networkConfig";
 
 // utils
 export { truncateAddress } from "./internal/wallet/style/format";
@@ -76,6 +78,8 @@ export { addToken } from "./internal/wallet/functionality/metamask/metamaskHelpe
 export type { Token } from "./internal/wallet/functionality/metamask/metamaskHelpers";
 export { Signer } from "./internal/wallet/functionality/signing/genericSigner";
 export { broadcastAminoBackendTxToBackend } from "./internal/wallet/functionality/signing";
+export { useContractTransaction } from "./internal/wallet/functionality/contracts/hooks/useContractTransaction";
+
 // Probably move it to assets
 export type { IBCChainParams } from "./notification/transactionsTypes";
 export type { IBCTransferResponse } from "./notification/transactionsTypes";

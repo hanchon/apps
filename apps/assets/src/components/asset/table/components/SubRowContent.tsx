@@ -5,12 +5,7 @@ import { BigNumber } from "ethers";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { amountToDollars, convertAndFormat } from "helpers";
-import {
-  snackWarningLedger,
-  EVMOS_SYMBOL,
-  KEPLR_KEY,
-  StoreType,
-} from "evmos-wallet";
+import { snackWarningLedger, EVMOS_SYMBOL, StoreType } from "evmos-wallet";
 import { Button, Tooltip } from "ui-helpers";
 import { QuestionMarkIcon } from "icons";
 import Convert from "../../modals/transactions/Convert";
@@ -18,7 +13,7 @@ import { ConvertSTR } from "../../modals/transactions/ConvertSTR";
 import { Description } from "./Description";
 import { SubRowProps } from "./types";
 import { useCallback } from "react";
-import { CLICK_BUTTON_CONVERT_AXELAR_BASED, useTracker } from "tracker";
+import { CLICK_BUTTON_CONVERT, useTracker } from "tracker";
 export const SubRowContent = ({
   item,
   setShow,
@@ -55,12 +50,14 @@ export const SubRowContent = ({
     );
   };
 
-  const { handlePreClickAction: clickConvertAxelarBased } = useTracker(
-    CLICK_BUTTON_CONVERT_AXELAR_BASED
-  );
+  const { handlePreClickAction: clickConvert } =
+    useTracker(CLICK_BUTTON_CONVERT);
+
   const openModalConvert = () => {
+    clickConvert({
+      chain: item.chainIdentifier,
+    });
     if (wallet.evmosAddressCosmosFormat !== "") {
-      clickConvertAxelarBased();
       setShow(true);
       setModalContent(
         <Convert
@@ -85,13 +82,7 @@ export const SubRowContent = ({
 
     return (
       <div className="flex w-full justify-end pr-8">
-        <Button
-          disabled={
-            !wallet.active ||
-            (wallet.extensionName === KEPLR_KEY && item.symbol === EVMOS_SYMBOL)
-          }
-          onClick={openModalConvertEvmos}
-        >
+        <Button disabled={!wallet.active} onClick={openModalConvertEvmos}>
           <div className="flex w-16 flex-row items-center justify-center">
             <span className="px-2">{label}</span>
           </div>
@@ -238,8 +229,10 @@ export const SubRowContent = ({
             createConvertButton()}
           {/* to withdraw axelar, the users need to convert
           the erc20 to ibc-balance */}
-          {item.symbol !== EVMOS_SYMBOL &&
-            item.handledByExternalUI !== null &&
+          {((item.symbol !== EVMOS_SYMBOL &&
+            item.handledByExternalUI !== null) ||
+            (item.symbol !== EVMOS_SYMBOL &&
+              item.chainIdentifier?.toLowerCase() === "gravity")) &&
             createConvertButton()}
         </div>
       </div>

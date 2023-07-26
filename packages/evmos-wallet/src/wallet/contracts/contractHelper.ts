@@ -16,7 +16,8 @@ export async function createContract(
     if (!provider) {
       return null;
     }
-    return new Contract(address, ABI, provider.getSigner(0));
+
+    return new Contract(address, ABI, provider.getSigner());
   } catch (error) {
     if (address !== "0x0000000000000000000000000000000000000000") {
       console.error("Failed to get contract", error);

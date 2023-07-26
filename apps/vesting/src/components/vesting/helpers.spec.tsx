@@ -1,5 +1,6 @@
-import { TimeWindow } from "../../internal/helpers/types";
+import { describe, expect, it } from "vitest";
 import {
+  Duration,
   getEndDate,
   isEthereumAddressValid,
   isEvmosAddressValid,
@@ -8,14 +9,14 @@ import {
 describe("Vesting UI helpers", () => {
   it("should return true and the end date formatted", () => {
     const date = "2023-05-01";
-    const vestingDuration = TimeWindow["4-years"];
+    const vestingDuration = Duration.FourYears;
     const msg = getEndDate(date, vestingDuration);
     expect(msg).toStrictEqual([true, "05/01/2027"]);
   });
 
   it("should return false and the end date formatted", () => {
     const date = undefined;
-    const vestingDuration = TimeWindow["4-years"];
+    const vestingDuration = Duration.FourYears;
     const msg = getEndDate(date, vestingDuration);
     expect(msg).toStrictEqual([false, ""]);
   });

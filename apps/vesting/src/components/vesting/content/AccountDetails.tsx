@@ -10,7 +10,6 @@ export const AccountDetails = ({ account }: { account?: string }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
 
-  const accountName = getVestingAccountNameLocalstorage();
   const value = useSelector((state: StoreType) => state.wallet.value);
 
   const { loading, error, vestingDetails } = useVestingAccounts(account);
@@ -21,6 +20,7 @@ export const AccountDetails = ({ account }: { account?: string }) => {
       setModalContent(<ClawbackModal vestingDetails={vestingDetails} />);
     }
   }, [vestingDetails]);
+
   const drawContentVesting = useCallback(() => {
     if (loading) {
       return <BannerMessages text="Loading..." spinner={true} />;
@@ -31,7 +31,9 @@ export const AccountDetails = ({ account }: { account?: string }) => {
     if (typeof vestingDetails === "string") {
       return <BannerMessages text={vestingDetails} />;
     }
-
+    const accountName = getVestingAccountNameLocalstorage(
+      vestingDetails.accountAddress
+    );
     return (
       <section className="break-words">
         <h1 className="text-2xl">Vesting Account Details</h1>
@@ -69,7 +71,7 @@ export const AccountDetails = ({ account }: { account?: string }) => {
         </div>
       </section>
     );
-  }, [error, loading, vestingDetails, accountName, handleClawbackClick, value]);
+  }, [error, loading, vestingDetails, handleClawbackClick, value]);
 
   return (
     <>
