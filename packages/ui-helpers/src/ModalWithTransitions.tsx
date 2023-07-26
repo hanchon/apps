@@ -33,12 +33,9 @@ export const ModalWithTransitions = ({
       handleCloseModal();
     }
   });
-  if (!show) {
-    return null;
-  }
 
   return (
-    <Transition.Root show={show} as={Fragment}>
+    <Transition appear show={show} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
@@ -49,14 +46,14 @@ export const ModalWithTransitions = ({
       >
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+          enter="transition duration-100 ease-in"
+          enterFrom="transform scale-95 opacity-0"
+          enterTo="transform scale-100 opacity-100"
+          leave="transition duration-100 ease-out"
+          leaveFrom="transform scale-100 opacity-100"
+          leaveTo="transform scale-95 opacity-0"
         >
-          <div className="bg-gray-500 fixed inset-0 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-black bg-opacity-25" />
         </Transition.Child>
 
         <div
@@ -73,12 +70,12 @@ export const ModalWithTransitions = ({
           >
             <Transition.Child
               as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enter="transition duration-100 ease-in"
+              enterFrom="transform scale-95 opacity-0"
+              enterTo="transform scale-100 opacity-100"
+              leave="transition duration-100 ease-out"
+              leaveFrom="transform scale-100 opacity-100"
+              leaveTo="transform scale-95 opacity-0"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-[#FAF8F8] text-left shadow-xl transition-all min-w-[300px] max-w-[700px] md:min-w-[400px]">
                 <div className="absolute right-0 top-0 block pr-4 pt-4">
@@ -102,6 +99,6 @@ export const ModalWithTransitions = ({
           </div>
         </div>
       </Dialog>
-    </Transition.Root>
+    </Transition>
   );
 };
