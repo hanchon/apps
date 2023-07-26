@@ -5,12 +5,7 @@ import { BigNumber } from "ethers";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { amountToDollars, convertAndFormat } from "helpers";
-import {
-  snackWarningLedger,
-  EVMOS_SYMBOL,
-  KEPLR_KEY,
-  StoreType,
-} from "evmos-wallet";
+import { snackWarningLedger, EVMOS_SYMBOL, StoreType } from "evmos-wallet";
 import { Button, Tooltip } from "ui-helpers";
 import { QuestionMarkIcon } from "icons";
 import Convert from "../../modals/transactions/Convert";
@@ -87,13 +82,7 @@ export const SubRowContent = ({
 
     return (
       <div className="flex w-full justify-end pr-8">
-        <Button
-          disabled={
-            !wallet.active ||
-            (wallet.extensionName === KEPLR_KEY && item.symbol === EVMOS_SYMBOL)
-          }
-          onClick={openModalConvertEvmos}
-        >
+        <Button disabled={!wallet.active} onClick={openModalConvertEvmos}>
           <div className="flex w-16 flex-row items-center justify-center">
             <span className="px-2">{label}</span>
           </div>
