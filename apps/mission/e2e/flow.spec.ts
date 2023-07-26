@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import {
   web3Test,
   web3TestWithoutNetwork,
@@ -37,12 +37,6 @@ test.describe("Mission Page - Copilot", () => {
       .click();
 
     await page.getByText(/Waiting for Metamask Setup/i).isVisible();
-
-    // how can I test that MM was installed ?
-    // await page.waitForURL("https://metamask.io/download/");
-
-    // // Assert that the URL has changed to the target page URL
-    // const currentUrl = page.url();
   });
 
   web3TestWithoutNetwork(
@@ -143,6 +137,55 @@ test.describe("Mission Page - Copilot", () => {
 
       await page
         .getByRole("button", { name: /Interact with a dApp Recommended/i })
+        .click();
+    }
+  );
+
+  web3Test(
+    "should let the user connect with MetaMask, set the accounts, top up the account and redirect to the ecosystem page. Network is already set up",
+    async ({ page, wallet }) => {
+      await page.getByRole("button", { name: /Copilot/i }).click();
+
+      await page
+        .getByRole("button", {
+          name: /Connect with MetaMask/i,
+        })
+        .click();
+
+      await page
+        .getByRole("button", { name: /Press Next and Connect/i })
+        .isVisible();
+
+      await wallet.approve();
+
+      await page.getByRole("button", { name: /Top up your account/i }).click();
+      await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
+        const json = {
+          balance: {
+            denom: "aevmos",
+            amount: "0",
+          },
+        };
+        await route.fulfill({ json });
+      });
+
+      await page.getByRole("button", { name: "Debit/Credit card" }).click();
+      await page.getByRole("button", { name: /Next steps/i }).isHidden();
+      await page.waitForTimeout(3000);
+      await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
+        const json = {
+          balance: {
+            denom: "aevmos",
+            amount: "100",
+          },
+        };
+        await route.fulfill({ json });
+      });
+
+      await page.getByRole("button", { name: /Next steps/i }).click();
+
+      await page
+        .getByRole("button", { name: "Interact with a dApp Recommended" })
         .click();
     }
   );
