@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import {
   web3Test,
   web3TestWithoutNetwork,
@@ -36,7 +36,7 @@ test.describe("Mission Page - Copilot", () => {
       })
       .click();
 
-    await page.getByText(/Waiting for Metamask Setup/i).isVisible();
+    await expect(page.getByText(/Waiting for Metamask Setup/i)).toBeVisible();
   });
 
   web3TestWithoutNetwork(
@@ -50,14 +50,15 @@ test.describe("Mission Page - Copilot", () => {
         })
         .click();
 
-      await page
-        .getByRole("button", { name: /Approve on MetaMask/i })
-        .isVisible();
+      await expect(page.getByText(/Approve on MetaMask/i)).toBeVisible();
 
       const switchNetworkPopup = await page.context().waitForEvent("page");
       await switchNetworkPopup.getByRole("button", { name: /Cancel/i }).click();
 
-      await page.getByText(/Approval Rejected, please try again/i).isVisible();
+      await expect(
+        page.getByText(/Approval Rejected, please try again/i)
+      ).toBeVisible();
+
       await page
         .getByRole("button", {
           name: /Try again/i,
@@ -72,9 +73,11 @@ test.describe("Mission Page - Copilot", () => {
         .getByRole("button", { name: /Cancel/i })
         .click();
 
-      await page
-        .getByText(/You need to switch the network to Evmos, please try again/i)
-        .isVisible();
+      await expect(
+        page.getByText(
+          /You need to switch the network to Evmos, please try again/i
+        )
+      ).toBeVisible();
 
       await page
         .getByRole("button", {
@@ -90,16 +93,14 @@ test.describe("Mission Page - Copilot", () => {
         .getByRole("button", { name: /Switch Network/i })
         .click();
 
-      await page
-        .getByRole("button", { name: /Press Next and Connect/i })
-        .isVisible();
+      await expect(page.getByText(/Press Next and Connect/i)).toBeVisible();
 
       const getAccountsPopup = await page.context().waitForEvent("page");
       await getAccountsPopup.getByRole("button", { name: /Cancel/i }).click();
 
-      await page
-        .getByText(/Get accounts rejected, please try again/i)
-        .isVisible();
+      await expect(
+        page.getByText(/Get accounts rejected, please try again/i)
+      ).toBeVisible();
 
       await page
         .getByRole("button", {
@@ -121,7 +122,10 @@ test.describe("Mission Page - Copilot", () => {
       });
 
       await page.getByRole("button", { name: "Debit/Credit card" }).click();
-      await page.getByRole("button", { name: /Next steps/i }).isHidden();
+      await expect(
+        page.getByRole("button", { name: /Next steps/i })
+      ).toBeHidden();
+
       await page.waitForTimeout(3000);
       await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
         const json = {
@@ -152,9 +156,7 @@ test.describe("Mission Page - Copilot", () => {
         })
         .click();
 
-      await page
-        .getByRole("button", { name: /Press Next and Connect/i })
-        .isVisible();
+      await expect(page.getByText(/Press Next and Connect/i)).toBeVisible();
 
       await wallet.approve();
 
@@ -170,7 +172,10 @@ test.describe("Mission Page - Copilot", () => {
       });
 
       await page.getByRole("button", { name: "Debit/Credit card" }).click();
-      await page.getByRole("button", { name: /Next steps/i }).isHidden();
+      await expect(
+        page.getByRole("button", { name: /Next steps/i })
+      ).toBeHidden();
+
       await page.waitForTimeout(3000);
       await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
         const json = {
