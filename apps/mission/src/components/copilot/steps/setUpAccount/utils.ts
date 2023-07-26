@@ -99,6 +99,7 @@ const reloadPage = () => {
       window.location.reload();
       return false;
     }
+    return false;
   }
 };
 

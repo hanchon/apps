@@ -83,9 +83,7 @@ export const useStep = (
         successfullTrack({
           provider: step.tracker.provider,
         });
-        return true;
       }
-      return false;
     };
 
     if (firstUpdate.current) {
