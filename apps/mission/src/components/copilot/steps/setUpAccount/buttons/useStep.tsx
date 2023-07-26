@@ -83,7 +83,9 @@ export const useStep = (
         successfullTrack({
           provider: step.tracker.provider,
         });
+        return true;
       }
+      return false;
     };
 
     if (firstUpdate.current) {
@@ -94,7 +96,7 @@ export const useStep = (
     if (step.href !== undefined && status !== STEP_STATUS.DONE) {
       const handleVisibilityChange = async () => {
         if (document.visibilityState === "visible") {
-          check();
+          step.hrefAction && step.hrefAction();
         }
       };
       document.addEventListener("visibilitychange", handleVisibilityChange);

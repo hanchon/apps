@@ -19,6 +19,14 @@ import {
   UNSUCCESSFUL_WALLET_CONNECTION_COPILOT,
   UNSUCCESSFUL_WALLET_INSTALLATION_COPILOT,
 } from "tracker";
+import {
+  getCopilotFromLocalStorage,
+  getReloadFromLocalStorage,
+  removeCopilotLocalStorage,
+  removeReloadLocalStorage,
+  setCopilotLocalStorage,
+  setReloadLocalStorage,
+} from "../../utils";
 
 const metamaskDownloadUrl = "https://metamask.io/download/";
 
@@ -70,20 +78,40 @@ const checkConnectionMetamask = async () => {
 const connectMetaMask = (href: string) => {
   if (!isMetamaskInstalled()) {
     window.open(href, "_blank");
+    setCopilotLocalStorage("true");
     return false;
   }
   return true;
+};
+
+const reloadPage = () => {
+  // for chrome and brave we need to reload the page to know if the user has Metamask installed
+  if (
+    !isMetamaskInstalled() &&
+    getReloadFromLocalStorage() === null &&
+    getCopilotFromLocalStorage() === "true"
+  ) {
+    setReloadLocalStorage("true");
+    window.location.reload();
+  }
+};
+
+const installMetamask = () => {
+  removeCopilotLocalStorage();
+  removeReloadLocalStorage();
+  return isMetamaskInstalled();
 };
 
 export const stepsSetAccount = [
   {
     id: "install",
     buttonText: "Install MetaMask",
-    checkAction: () => isMetamaskInstalled(),
+    checkAction: () => installMetamask(),
     loadingText: ["Waiting for MetaMask Setup"],
     doneText: "Metamask Installed",
     actions: [() => connectMetaMask(metamaskDownloadUrl)],
     href: metamaskDownloadUrl,
+    hrefAction: () => reloadPage(),
     status: STEP_STATUS.CURRENT,
     tracker: {
       init: CLICK_ON_INSTALL_ACCOUNT_COPILOT,
