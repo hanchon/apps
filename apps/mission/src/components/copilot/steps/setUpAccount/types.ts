@@ -1,5 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 export interface SetUpAccountI {
   // update the names
   id: string;
@@ -11,6 +12,12 @@ export interface SetUpAccountI {
   href?: string;
   status: string;
   errorsText?: string[];
+  tracker: {
+    init: string;
+    provider: string;
+    successful: string;
+    unsuccessful: string;
+  };
 }
 
 export interface GroupStateI {

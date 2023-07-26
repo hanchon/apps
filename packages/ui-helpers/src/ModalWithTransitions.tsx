@@ -60,7 +60,7 @@ export const ModalWithTransitions = ({
         </Transition.Child>
 
         <div
-          className="fixed inset-0 overflow-y-auto z-10 bg-blackOpacity "
+          className="fixed inset-0 z-10 overflow-y-auto bg-blackOpacity pt-8 pb-24"
           onClick={() => {
             setShow(false);
           }}
@@ -89,7 +89,10 @@ export const ModalWithTransitions = ({
                       onClick={handleCloseModal}
                     >
                       <span className="sr-only">Close</span>
-                      <CloseIcon className="h-6 w-6" aria-hidden="true" />
+                      <CloseIcon
+                        className="h-6 w-6 text-[#858B97]"
+                        aria-hidden="true"
+                      />
                     </button>
                   )}
                 </div>

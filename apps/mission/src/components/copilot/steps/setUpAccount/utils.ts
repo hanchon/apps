@@ -11,6 +11,14 @@ import {
   isWalletSelected,
 } from "evmos-wallet";
 import { STEP_STATUS } from "./buttons/utils";
+import {
+  CLICK_ON_CONNECT_ACCOUNT_COPILOT,
+  CLICK_ON_INSTALL_ACCOUNT_COPILOT,
+  SUCCESSFUL_WALLET_CONNECTION_COPILOT,
+  SUCCESSFUL_WALLET_INSTALLATION_COPILOT,
+  UNSUCCESSFUL_WALLET_CONNECTION_COPILOT,
+  UNSUCCESSFUL_WALLET_INSTALLATION_COPILOT,
+} from "tracker";
 
 const metamaskDownloadUrl = "https://metamask.io/download/";
 
@@ -56,11 +64,10 @@ const checkConnectionMetamask = async () => {
   if (pubkey === null) {
     return false;
   }
-
-  return true;
+  return await connectHandler([account]);
 };
 
-const connectMematMask = (href: string) => {
+const connectMetaMask = (href: string) => {
   if (!isMetamaskInstalled()) {
     window.open(href, "_blank");
     return false;
@@ -75,9 +82,15 @@ export const stepsSetAccount = [
     checkAction: () => isMetamaskInstalled(),
     loadingText: ["Waiting for MetaMask Setup"],
     doneText: "Metamask Installed",
-    actions: [() => connectMematMask(metamaskDownloadUrl)],
+    actions: [() => connectMetaMask(metamaskDownloadUrl)],
     href: metamaskDownloadUrl,
     status: STEP_STATUS.CURRENT,
+    tracker: {
+      init: CLICK_ON_INSTALL_ACCOUNT_COPILOT,
+      provider: "MetaMask",
+      successful: SUCCESSFUL_WALLET_INSTALLATION_COPILOT,
+      unsuccessful: UNSUCCESSFUL_WALLET_INSTALLATION_COPILOT,
+    },
   },
 
   {
@@ -87,7 +100,7 @@ export const stepsSetAccount = [
     loadingText: [
       "Approve on Metamask",
       "",
-      "Select accounts and press Connect",
+      "Press Next and Connect",
       "Press Sign",
     ],
     actions: [
@@ -104,5 +117,11 @@ export const stepsSetAccount = [
     ],
     doneText: "Metamask Connected",
     status: STEP_STATUS.NOT_PROCESSED,
+    tracker: {
+      init: CLICK_ON_CONNECT_ACCOUNT_COPILOT,
+      provider: "MetaMask",
+      successful: SUCCESSFUL_WALLET_CONNECTION_COPILOT,
+      unsuccessful: UNSUCCESSFUL_WALLET_CONNECTION_COPILOT,
+    },
   },
 ];
