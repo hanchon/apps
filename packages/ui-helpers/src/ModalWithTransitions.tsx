@@ -33,9 +33,6 @@ export const ModalWithTransitions = ({
       handleCloseModal();
     }
   });
-  if (!show) {
-    return null;
-  }
 
   return (
     <Transition appear show={show} as={Fragment}>
