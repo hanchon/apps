@@ -1,4 +1,4 @@
 {
-  "include": ["."],
+  "include": [".", ".eslintrc.js"],
   "exclude": ["dist", "build", "node_modules"]
 }
