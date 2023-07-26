@@ -27,6 +27,24 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Mission Page - Copilot", () => {
+  test("install Metamask", async ({ page }) => {
+    await page.getByRole("button", { name: /Copilot/i }).click();
+
+    await page
+      .getByRole("button", {
+        name: /Install MetaMask/i,
+      })
+      .click();
+
+    await page.getByText(/Waiting for Metamask Setup/i).isVisible();
+
+    // how can I test that MM was installed ?
+    // await page.waitForURL("https://metamask.io/download/");
+
+    // // Assert that the URL has changed to the target page URL
+    // const currentUrl = page.url();
+  });
+
   web3TestWithoutNetwork(
     "should let the user connect with MetaMask, set the network, the accounts, top up the account and redirect to the ecosystem page",
     async ({ page, wallet }) => {
@@ -126,66 +144,6 @@ test.describe("Mission Page - Copilot", () => {
       await page
         .getByRole("button", { name: /Interact with a dApp Recommended/i })
         .click();
-    }
-  );
-});
-
-test.skip("Mission page", () => {
-  web3Test(
-    "should let the user connect with MetaMask, set the accounts, top up the account and redirect to the ecosystem page. Network is already set up",
-    async ({ page, wallet }) => {
-      await page.getByRole("button", { name: /Copilot/i }).click();
-
-      await page
-        .getByRole("button", {
-          name: /Connect with MetaMask/i,
-        })
-        .click();
-
-      await page
-        .getByRole("button", { name: /Press Next and Connect/i })
-        .isVisible();
-
-      await wallet.approve();
-
-      await page.getByRole("button", { name: /Top up your account/i }).click();
-      await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
-        const json = {
-          balance: {
-            denom: "aevmos",
-            amount: "0",
-          },
-        };
-        await route.fulfill({ json });
-      });
-
-      await page.getByRole("button", { name: "Debit/Credit card" }).click();
-      await page.getByRole("button", { name: /Next steps/i }).isHidden();
-      await page.waitForTimeout(3000);
-      await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
-        const json = {
-          balance: {
-            denom: "aevmos",
-            amount: "100",
-          },
-        };
-        await route.fulfill({ json });
-      });
-
-      await page.getByRole("button", { name: /Next steps/i }).click();
-
-      await page
-        .getByRole("button", { name: "Interact with a dApp Recommended" })
-        .click();
-
-      // Wait for the redirect to happen
-      // await page.waitForURL("https://evmos.org/ecosystem");
-
-      // // Assert that the URL has changed to the target page URL
-      // const currentUrl = page.url();
-      // expect(currentUrl).toBe("https://evmos.org/ecosystem");
-
-      // await page.close();
     }
   );
 });
