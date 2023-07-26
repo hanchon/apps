@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (feat) #fse-690 | packages/evmos-wallet 1.0.11 apps/assets 1.0.19 | Enable keplr smart contract interactions
 - (fix) #fse-677 | apps/assets 1.0.19 apps/governance 1.0.16 apps/mission 1.0.16 apps/staking 1.0.16 apps/vesting 1.0.14 packages/constants-helper 1.0.3 packages/eslint-config-custom 1.0.2 packages/evmos-wallet 1.0.11 packages/helpers 1.0.6 packages/icons 1.0.3 packages/services 1.0.5 packages/tracker 1.0.4 packages/ui-helpers 1.0.10 | Updating eslint config to avoid Vscode errors
 
 ## 1.0.13 - 2023-07-18

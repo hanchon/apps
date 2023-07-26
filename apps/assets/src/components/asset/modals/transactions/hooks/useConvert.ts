@@ -4,10 +4,6 @@
 import { parseUnits } from "ethers/lib/utils.js";
 import { useDispatch, useSelector } from "react-redux";
 
-import { WEVMOS_CONTRACT_ADDRESS } from "../../constants";
-import { createContract } from "../contracts/contractHelper";
-import { WEVMOS } from "../contracts/abis/WEVMOS/WEVMOS";
-import WETH_ABI from "../contracts/abis/WEVMOS/WEVMOS.json";
 import { ConvertProps } from "../types";
 import { BigNumber } from "ethers";
 import {
@@ -23,13 +19,15 @@ import {
   UNSUCCESSFUL_WRAP_TX,
 } from "tracker";
 import { GENERATING_TX_NOTIFICATIONS } from "../../../../../internal/asset/functionality/transactions/errors";
+import { useWEVMOS } from "../contracts/hooks/useWEVMOS";
 
 const wrapEvmos = "EVMOS <> WEVMOS";
 const unwrapEvmos = "WEVMOS <> EVMOS";
 export const useConvert = (useConvertProps: ConvertProps) => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
-  const WEVMOS = WEVMOS_CONTRACT_ADDRESS;
+
+  const { deposit, withdraw } = useWEVMOS(wallet?.extensionName);
 
   const { handlePreClickAction: clickConfirmWrapTx } = useTracker(
     CLICK_BUTTON_CONFIRM_WRAP_TX
@@ -70,27 +68,10 @@ export const useConvert = (useConvertProps: ConvertProps) => {
     }
     if (useConvertProps.balance.isIBCBalance) {
       try {
-        const contract = await createContract(
-          WEVMOS,
-          WETH_ABI,
-          wallet.extensionName
-        );
-        if (contract === null) {
-          dispatch(snackErrorGeneratingTx());
-          useConvertProps.setShow(false);
-          unsuccessfulTx({
-            errorMessage: "contract is null",
-            wallet: wallet?.evmosAddressEthFormat,
-            provider: wallet?.extensionName,
-            transaction: "unsuccessful",
-            convert: wrapEvmos,
-          });
-          return;
-        }
         useConvertProps.setDisabled(true);
-        const res = await (contract as WEVMOS).deposit({
-          value: amount,
-        });
+
+        const res = await deposit(amount, wallet.evmosAddressEthFormat);
+
         dispatch(
           snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
         );
@@ -102,6 +83,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
           convert: wrapEvmos,
         });
       } catch (e) {
+        console.log("error", e);
         // TODO: Add Sentry here!
         dispatch(snackErrorGeneratingTx());
         unsuccessfulTx({
@@ -114,25 +96,10 @@ export const useConvert = (useConvertProps: ConvertProps) => {
       }
     } else {
       try {
-        const contract = await createContract(
-          WEVMOS,
-          WETH_ABI,
-          wallet.extensionName
-        );
-        if (contract === null) {
-          dispatch(snackErrorGeneratingTx());
-          useConvertProps.setShow(false);
-          unsuccessfulTx({
-            errorMessage: "contract is null",
-            wallet: wallet?.evmosAddressEthFormat,
-            provider: wallet?.extensionName,
-            transaction: "unsuccessful",
-            convert: unwrapEvmos,
-          });
-          return;
-        }
         useConvertProps.setDisabled(true);
-        const res = await (contract as WEVMOS).withdraw(amount);
+
+        const res = await withdraw(amount, wallet.evmosAddressEthFormat);
+
         dispatch(
           snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
         );
@@ -144,6 +111,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
           convert: unwrapEvmos,
         });
       } catch (e) {
+        console.log("error", e);
         // TODO: Add Sentry here!
         dispatch(snackErrorGeneratingTx());
         unsuccessfulTx({
