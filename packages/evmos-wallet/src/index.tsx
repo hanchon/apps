@@ -51,6 +51,7 @@ export {
 } from "../src/internal/wallet/functionality/walletconnect/walletconnectConstants";
 export { ButtonWalletConnection } from "./wallet/ButtonWalletConnection";
 export { WalletConnection } from "./copilot/WalletConnection";
+export { ButtonWallet } from "./wallet/ButtonWallet";
 // configs
 export { EVMOS_SYMBOL } from "./internal/wallet/functionality/networkConfig";
 export { EVMOS_DECIMALS } from "./internal/wallet/functionality/networkConfig";

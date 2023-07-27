@@ -11,15 +11,21 @@ export const WalletConnectModal = ({
   dispatch,
   show,
   setShow,
+  copilotModal,
 }: {
   dispatch: Dispatch<AnyAction>; // eslint-disable-next-line sonarjs/cognitive-complexity
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
+  copilotModal?: JSX.Element;
 }) => {
   const contentModal = (
     <div className="grid grid-rows-1 md:grid-rows-none md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#DBD3D1] text-[#413836]">
       <ConnectToEvmos />
-      <ConnectToEvmosWallets setShow={setShow} dispatch={dispatch} />
+      <ConnectToEvmosWallets
+        copilotModal={copilotModal}
+        setShow={setShow}
+        dispatch={dispatch}
+      />
     </div>
   );
 

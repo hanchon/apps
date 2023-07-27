@@ -23,13 +23,21 @@ import { WalletConnectModal } from "./WalletConnectModal";
 import { WalletProfileModal } from "./WalletProfileModal";
 import { ButtonConnectWallet } from "../wallet/buttons/Button.ConnectWallet";
 import { ButtonProfile } from "../wallet/buttons/Button.Profile";
+import { SetStateAction } from "react";
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export const WalletConnection = ({
   walletExtension,
   dispatch,
+  copilotModal,
 }: {
   walletExtension: WalletExtension;
-  dispatch: Dispatch<AnyAction>; // eslint-disable-next-line sonarjs/cognitive-complexity
+  dispatch: Dispatch<AnyAction>;
+  copilotModal?: ({
+    beforeStartHook,
+  }: {
+    beforeStartHook: Dispatch<SetStateAction<boolean>>;
+  }) => JSX.Element;
 }) => {
   const [show, setShow] = useState(false);
 
@@ -131,7 +139,16 @@ export const WalletConnection = ({
       {/* open connect modal */}
       <ButtonConnectWallet setShow={setShow} />
       {/* display connect modal */}
-      <WalletConnectModal dispatch={dispatch} show={show} setShow={setShow} />
+      <WalletConnectModal
+        copilotModal={
+          copilotModal
+            ? copilotModal({ beforeStartHook: () => setShow(false) })
+            : undefined
+        }
+        dispatch={dispatch}
+        show={show}
+        setShow={setShow}
+      />
     </div>
   );
 };

@@ -71,9 +71,9 @@ const StepsContextProvider = ({ children }: { children: JSX.Element }) => {
     setStepsStatus(updatedState);
   };
 
-  const resetSteps = () => {
+  function resetSteps() {
     setStepsStatus(initialValue);
-  };
+  }
 
   return (
     <StepsContext.Provider
