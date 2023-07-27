@@ -20,12 +20,12 @@ import {
   UNSUCCESSFUL_WALLET_INSTALLATION_COPILOT,
 } from "tracker";
 import {
-  getCopilotFromLocalStorage,
-  getReloadFromLocalStorage,
-  removeCopilotLocalStorage,
-  removeReloadLocalStorage,
-  setCopilotLocalStorage,
-  setReloadLocalStorage,
+  checkCopilotFlagToReloadModal,
+  checkReloadFlagToReloadModal,
+  removeCopilotFlagOnLoad,
+  removeReloadFlagOnLoad,
+  setCopilotFlagToReloadModal,
+  setReloadFlagToReloadModal,
 } from "../../utils";
 
 const metamaskDownloadUrl = "https://metamask.io/download/";
@@ -77,7 +77,7 @@ const checkConnectionMetamask = async () => {
 
 const connectMetaMask = (href: string) => {
   if (isMetamaskInstalled() === false) {
-    setCopilotLocalStorage("true");
+    setCopilotFlagToReloadModal("true");
     window.open(href, "_blank");
 
     return false;
@@ -92,10 +92,10 @@ const reloadPage = () => {
   } else {
     if (
       isMetamaskInstalled() === false &&
-      getReloadFromLocalStorage() === null &&
-      getCopilotFromLocalStorage() === "true"
+      checkReloadFlagToReloadModal() === null &&
+      checkCopilotFlagToReloadModal() === "true"
     ) {
-      setReloadLocalStorage("true");
+      setReloadFlagToReloadModal("true");
       window.location.reload();
       return false;
     }
@@ -104,8 +104,8 @@ const reloadPage = () => {
 };
 
 const installMetamask = () => {
-  removeCopilotLocalStorage();
-  removeReloadLocalStorage();
+  removeCopilotFlagOnLoad();
+  removeReloadFlagOnLoad();
   return isMetamaskInstalled();
 };
 

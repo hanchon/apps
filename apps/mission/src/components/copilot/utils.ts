@@ -1,20 +1,20 @@
 const RELOAD = "reload";
 const COPILOT = "copilot";
 
-export const getReloadFromLocalStorage = () =>
+export const checkReloadFlagToReloadModal = () =>
   window.localStorage.getItem(RELOAD);
 
-export const setReloadLocalStorage = (value: string) =>
+export const setReloadFlagToReloadModal = (value: string) =>
   window.localStorage.setItem(RELOAD, value);
 
-export const setCopilotLocalStorage = (value: string) =>
+export const setCopilotFlagToReloadModal = (value: string) =>
   window.localStorage.setItem(COPILOT, value);
 
-export const getCopilotFromLocalStorage = () =>
+export const checkCopilotFlagToReloadModal = () =>
   window.localStorage.getItem(COPILOT);
 
-export const removeCopilotLocalStorage = () =>
+export const removeCopilotFlagOnLoad = () =>
   window.localStorage.removeItem(COPILOT);
 
-export const removeReloadLocalStorage = () =>
+export const removeReloadFlagOnLoad = () =>
   window.localStorage.removeItem(RELOAD);
