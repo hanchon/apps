@@ -30,20 +30,12 @@ const initialValue = steps.map((step, index) => ({
 
 const StepsContext = createContext<StepsPropsContext>({
   stepsStatus: [],
-  updateStepsStatus: () => {
-    /**/
-  },
-  setShowModal: () => {
-    /**/
-  },
+  updateStepsStatus: () => {},
+  setShowModal: () => {},
   showModal: false,
   showCloseModal: false,
-  setShowCloseModal: () => {
-    /**/
-  },
-  resetSteps: () => {
-    /**/
-  },
+  setShowCloseModal: () => {},
+  resetSteps: () => {},
 });
 
 const StepsContextProvider = ({ children }: { children: JSX.Element }) => {
