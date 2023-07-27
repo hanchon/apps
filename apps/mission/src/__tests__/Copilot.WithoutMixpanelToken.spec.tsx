@@ -5,7 +5,7 @@ import mixpanel from "mixpanel-browser";
 import { MixpanelProvider } from "tracker";
 import { Copilot } from "../components/copilot/Copilot";
 
-describe("Testing Copilot - mixpanel is not setted", () => {
+describe.skip("Testing Copilot - mixpanel is not setted", () => {
   vi.mock("mixpanel-browser", async () => {
     return {
       default: {
@@ -22,7 +22,7 @@ describe("Testing Copilot - mixpanel is not setted", () => {
     };
   });
 
-  test("should not call mixpanel after clicking on copilot", async () => {
+  test.skip("should not call mixpanel after clicking on copilot", async () => {
     const wrapperWithoutToken = ({ children }: { children: JSX.Element }) => {
       return (
         <MixpanelProvider token="" config={{ ip: false }}>

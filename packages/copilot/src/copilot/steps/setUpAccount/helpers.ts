@@ -6,7 +6,9 @@ import { GroupStateI, CompleteStepI, HandleStepErrorsI } from "./types";
 
 export const checkAllDoneStatus = (groupState: GroupStateI[]) => {
   return groupState.every(
-    (obj) => obj.hasOwnProperty("status") && obj.status === STEP_STATUS.DONE
+    (obj) =>
+      Object.prototype.hasOwnProperty.call(obj, "status") &&
+      obj.status === STEP_STATUS.DONE
   );
 };
 

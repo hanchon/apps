@@ -30,7 +30,7 @@ export const handleLearnMore = (
 export const renderFireworksPortal = (
   fireworksRef: React.MutableRefObject<FireworksHandlers | null>,
   portalContainer: HTMLDivElement
-) => {
+): React.ReactPortal => {
   return ReactDOM.createPortal(
     <Fireworks
       ref={fireworksRef}

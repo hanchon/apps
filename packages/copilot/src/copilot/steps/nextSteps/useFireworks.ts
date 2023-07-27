@@ -15,8 +15,8 @@ export const useFireworks = () => {
   };
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      handleStopFireworks();
+    const timeout = setTimeout(async () => {
+      await handleStopFireworks();
     }, 5000);
 
     return () => clearTimeout(timeout);

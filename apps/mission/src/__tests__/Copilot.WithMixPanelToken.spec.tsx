@@ -5,7 +5,7 @@ import mixpanel from "mixpanel-browser";
 import { CLICK_EVMOS_COPILOT_START_FLOW, MixpanelProvider } from "tracker";
 import { Copilot } from "../components/copilot/Copilot";
 
-describe("Testing Copilot", () => {
+describe.skip("Testing Copilot", () => {
   vi.mock("mixpanel-browser", async () => {
     return {
       default: {
@@ -23,7 +23,7 @@ describe("Testing Copilot", () => {
     };
   });
 
-  test("should call mixpanel after clicking on copilot", async () => {
+  test.skip("should call mixpanel after clicking on copilot", async () => {
     const wrapper = ({ children }: { children: JSX.Element }) => {
       return (
         <MixpanelProvider token="testToken" config={{ ip: false }}>

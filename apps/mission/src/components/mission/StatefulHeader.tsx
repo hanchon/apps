@@ -7,8 +7,8 @@ import { Header } from "ui-helpers";
 import { Dispatch, SetStateAction } from "react";
 import { CLICK_EVMOS_LOGO, useTracker } from "tracker";
 
-import { StepsContextProvider } from "../copilot/container/StepsContext";
-import { Copilot } from "../copilot/Copilot";
+import { StepsContextProvider } from "copilot";
+import { Copilot } from "copilot";
 
 export const StatefulHeader = ({
   pageName,

@@ -4,7 +4,6 @@
 import { useEffect, useRef, useState } from "react";
 import { STEP_STATUS } from "./utils";
 import { GroupStateI, SetUpAccountI } from "../types";
-import { useTranslation } from "react-i18next";
 import { completeStep, handleStepError } from "../helpers";
 import { useTracker } from "tracker";
 
@@ -15,7 +14,7 @@ export const useStep = (
   const [text, setText] = useState(step.buttonText);
   const [status, setStatus] = useState(STEP_STATUS.CURRENT);
   const [textError, setTextError] = useState("");
-  const { t } = useTranslation();
+
   const { handlePreClickAction: initTracker } = useTracker(step.tracker.init);
   const { handlePreClickAction: successfullTrack } = useTracker(
     step.tracker.successful
@@ -45,7 +44,7 @@ export const useStep = (
           step,
           setTextError,
           index,
-          text: t("setupaccount.action.error"),
+          text: "Try again",
         });
         unsuccessfullTrack({
           provider: step.tracker.provider,
@@ -94,7 +93,7 @@ export const useStep = (
     if (step.href !== undefined && status !== STEP_STATUS.DONE) {
       const handleVisibilityChange = async () => {
         if (document.visibilityState === "visible") {
-          check();
+          await check();
         }
       };
       document.addEventListener("visibilitychange", handleVisibilityChange);
