@@ -23,7 +23,7 @@ export const handleStepError = ({
   setStatus(STEP_STATUS.CURRENT);
   setText(text);
   if (step.errorsText) {
-    setTextError(step.errorsText[index]);
+    setTextError(step.errorsText[`${index}`]);
   }
 };
 
@@ -55,9 +55,9 @@ export const updateCurrentStatus = (
   const updatedState = [...groupState];
   const prevStep = updatedState[currentIndex - 1];
   if (prevStep && prevStep.status === STEP_STATUS.DONE) {
-    const currentStep = updatedState[currentIndex];
+    const currentStep = updatedState[`${currentIndex}`];
     const updatedStep = { ...currentStep, status: STEP_STATUS.CURRENT };
-    updatedState[currentIndex] = updatedStep;
+    updatedState[`${currentIndex}`] = updatedStep;
   }
   return updatedState;
 };

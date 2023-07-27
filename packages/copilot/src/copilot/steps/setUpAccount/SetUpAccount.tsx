@@ -35,7 +35,8 @@ export const SetUpAccount = ({
                   index={stepIdx}
                   length={stepsSetAccount.length}
                   statusButton={
-                    updateCurrentStatus(groupState, stepIdx)[stepIdx].status
+                    updateCurrentStatus(groupState, stepIdx)[`${stepIdx}`]
+                      .status
                   }
                   setGroupState={setGroupState}
                 />

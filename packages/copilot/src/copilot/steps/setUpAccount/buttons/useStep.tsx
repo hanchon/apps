@@ -27,8 +27,8 @@ export const useStep = (
     const len = step.actions.length;
     for (let index = 0; index < len; index++) {
       // set loading text
-      const action = step.actions[index];
-      setText(step.loadingText[index]);
+      const action = step.actions[`${index}`];
+      setText(step.loadingText[`${index}`]);
 
       // for the cases that we have to redirect when the user clicks on the button
       if (step.href !== undefined) {
@@ -48,7 +48,7 @@ export const useStep = (
         });
         unsuccessfullTrack({
           provider: step.tracker.provider,
-          errorMessage: step.errorsText && step.errorsText[index],
+          errorMessage: step.errorsText && step.errorsText[`${index}`],
         });
         break;
       } else {
