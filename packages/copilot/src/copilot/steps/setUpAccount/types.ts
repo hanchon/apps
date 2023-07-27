@@ -10,6 +10,7 @@ export interface SetUpAccountI {
   doneText: string;
   actions: Array<() => boolean | Promise<boolean>>;
   href?: string;
+  hrefAction?: () => boolean;
   status: string;
   errorsText?: string[];
   tracker: {
