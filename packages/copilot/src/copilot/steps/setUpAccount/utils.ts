@@ -79,6 +79,7 @@ const connectMetaMask = (href: string) => {
   if (isMetamaskInstalled() === false) {
     setCopilotFlagToReloadModal("true");
     window.open(href, "_blank");
+
     return false;
   }
   return true;
