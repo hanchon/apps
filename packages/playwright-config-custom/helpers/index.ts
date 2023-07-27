@@ -41,4 +41,28 @@ export const web3Test = test.extend<{
   },
 });
 
-export const helpers = { web3Test };
+export const web3TestWithoutNetwork = test.extend<{
+  context: BrowserContext;
+  wallet: Dappwright;
+}>({
+  context: async ({}, use) => {
+    const [wallet, _, context] = await dappwright.bootstrap("", {
+      wallet: "metamask",
+      version: MetaMaskWallet.recommendedVersion,
+      seed:
+        process.env.E2E_TEST_SEED ??
+        "test test test test test test test test test test test junk",
+      headless: false,
+    });
+
+    await use(context);
+  },
+
+  wallet: async ({ context }, use) => {
+    const metamask = await dappwright.getWallet("metamask", context);
+
+    await use(metamask);
+  },
+});
+
+export const helpers = { web3Test, web3TestWithoutNetwork };

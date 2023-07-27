@@ -27,13 +27,13 @@ export const ButtonsNextSteps = () => {
   const { handlePreClickAction: trackLearnMoreClick } = useTracker(
     CLICK_ON_LEARN_MORE_COPILOT
   );
-
+  // TODO: use ecosystem, staking and academy link from locales
   return (
     <>
       <div className="grid w-full grid-cols-1 space-y-3 pt-5 pb-3 md:grid-cols-2 md:space-y-0 md:space-x-4">
         <Button
           handleClick={() => {
-            handleInteractWithdApp(t("ecosystemUrl") as string, setShowModal);
+            handleInteractWithdApp("https://evmos.org/ecosystem", setShowModal);
             trackInteractWithdAppClick();
             resetSteps();
           }}
@@ -44,7 +44,7 @@ export const ButtonsNextSteps = () => {
 
         <Button
           handleClick={() => {
-            handleStakeWithEvmos(t("stakingUrl") as string, setShowModal);
+            handleStakeWithEvmos("https://app.evmos.org/staking", setShowModal);
             trackStakeEvmosClick();
             resetSteps();
           }}
@@ -60,7 +60,7 @@ export const ButtonsNextSteps = () => {
       <button
         className="w-full cursor-pointer rounded-lg border border-[#D1D5DB] py-3 shadow transition-all duration-300 hover:shadow-md"
         onClick={() => {
-          handleLearnMore(t("academyFAQUrl") as string, setShowModal);
+          handleLearnMore("https://academy.evmos.org/faq", setShowModal);
           trackLearnMoreClick();
           resetSteps();
         }}
