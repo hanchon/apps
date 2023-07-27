@@ -19,6 +19,14 @@ import {
   UNSUCCESSFUL_WALLET_CONNECTION_COPILOT,
   UNSUCCESSFUL_WALLET_INSTALLATION_COPILOT,
 } from "tracker";
+import {
+  checkCopilotFlagToReloadModal,
+  checkReloadFlagToReloadModal,
+  removeCopilotFlagOnLoad,
+  removeReloadFlagOnLoad,
+  setCopilotFlagToReloadModal,
+  setReloadFlagToReloadModal,
+} from "../../utils";
 
 const metamaskDownloadUrl = "https://metamask.io/download/";
 
@@ -68,22 +76,49 @@ const checkConnectionMetamask = async () => {
 };
 
 const connectMetaMask = (href: string) => {
-  if (!isMetamaskInstalled()) {
+  if (isMetamaskInstalled() === false) {
+    setCopilotFlagToReloadModal("true");
     window.open(href, "_blank");
+
     return false;
   }
   return true;
+};
+
+const reloadPage = () => {
+  // for chrome and brave we need to reload the page to know if the user has Metamask installed
+  if (isMetamaskInstalled()) {
+    return true;
+  } else {
+    if (
+      isMetamaskInstalled() === false &&
+      checkReloadFlagToReloadModal() === null &&
+      checkCopilotFlagToReloadModal() === "true"
+    ) {
+      setReloadFlagToReloadModal("true");
+      window.location.reload();
+      return false;
+    }
+    return false;
+  }
+};
+
+const installMetamask = () => {
+  removeCopilotFlagOnLoad();
+  removeReloadFlagOnLoad();
+  return isMetamaskInstalled();
 };
 
 export const stepsSetAccount = [
   {
     id: "install",
     buttonText: "Install MetaMask",
-    checkAction: () => isMetamaskInstalled(),
+    checkAction: () => installMetamask(),
     loadingText: ["Waiting for MetaMask Setup"],
     doneText: "Metamask Installed",
     actions: [() => connectMetaMask(metamaskDownloadUrl)],
     href: metamaskDownloadUrl,
+    hrefAction: () => reloadPage(),
     status: STEP_STATUS.CURRENT,
     tracker: {
       init: CLICK_ON_INSTALL_ACCOUNT_COPILOT,

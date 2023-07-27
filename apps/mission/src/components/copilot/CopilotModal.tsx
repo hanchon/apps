@@ -1,17 +1,26 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ModalWithTransitions } from "ui-helpers";
 import { Introduction } from "./Introduction";
 import { useCopilot } from "./useCopilot";
 import { StepsContext } from "./container/StepsContext";
 import { CancelModal } from "./CancelModal";
+import { checkReloadFlagToReloadModal } from "./utils";
 
 export const CopilotModal = () => {
   const { componentToDraw, stepsToDraw } = useCopilot();
   const { showModal, setShowModal, setShowCloseModal } =
     useContext(StepsContext);
+
+  useEffect(() => {
+    const reload = checkReloadFlagToReloadModal();
+    if (reload) {
+      setShowModal(true);
+    }
+  }, [setShowModal]);
+
   const contentModal = (
     <>
       <CancelModal />
