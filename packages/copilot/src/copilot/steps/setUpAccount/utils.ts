@@ -117,6 +117,7 @@ export const stepsSetAccount = [
     loadingText: ["Waiting for MetaMask Setup"],
     doneText: "Metamask Installed",
     actions: [() => connectMetaMask(metamaskDownloadUrl)],
+    errorsText: ["Metamask not installed"],
     href: metamaskDownloadUrl,
     hrefAction: () => reloadPage(),
     status: STEP_STATUS.CURRENT,

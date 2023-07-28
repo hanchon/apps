@@ -1,12 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import React, {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, createContext, useState } from "react";
 
 import { STEP_STATUS } from "../steps/setUpAccount/buttons/utils";
 import { steps } from "./data";
@@ -35,12 +30,20 @@ const initialValue = steps.map((step, index) => ({
 
 const StepsContext = createContext<StepsPropsContext>({
   stepsStatus: [],
-  updateStepsStatus: () => {},
-  setShowModal: () => {},
+  updateStepsStatus: () => {
+    /**/
+  },
+  setShowModal: () => {
+    /**/
+  },
   showModal: false,
   showCloseModal: false,
-  setShowCloseModal: () => {},
-  resetSteps: () => {},
+  setShowCloseModal: () => {
+    /**/
+  },
+  resetSteps: () => {
+    /**/
+  },
 });
 
 const StepsContextProvider = ({ children }: { children: JSX.Element }) => {
@@ -68,9 +71,9 @@ const StepsContextProvider = ({ children }: { children: JSX.Element }) => {
     setStepsStatus(updatedState);
   };
 
-  const resetSteps = () => {
+  function resetSteps() {
     setStepsStatus(initialValue);
-  };
+  }
 
   return (
     <StepsContext.Provider

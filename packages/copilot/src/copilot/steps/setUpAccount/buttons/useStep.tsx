@@ -4,7 +4,6 @@
 import { useEffect, useRef, useState } from "react";
 import { STEP_STATUS } from "./utils";
 import { GroupStateI, SetUpAccountI } from "../types";
-import { useTranslation } from "react-i18next";
 import { completeStep, handleStepError } from "../helpers";
 import { useTracker } from "tracker";
 
@@ -15,7 +14,7 @@ export const useStep = (
   const [text, setText] = useState(step.buttonText);
   const [status, setStatus] = useState(STEP_STATUS.CURRENT);
   const [textError, setTextError] = useState("");
-  const { t } = useTranslation();
+
   const { handlePreClickAction: initTracker } = useTracker(step.tracker.init);
   const { handlePreClickAction: successfullTrack } = useTracker(
     step.tracker.successful
@@ -28,8 +27,11 @@ export const useStep = (
     const len = step.actions.length;
     for (let index = 0; index < len; index++) {
       // set loading text
-      const action = step.actions[index];
-      setText(step.loadingText[index]);
+      const action = step.actions.at(index);
+      if (action === undefined) {
+        break;
+      }
+      setText(step.loadingText.at(index) ?? "");
 
       // for the cases that we have to redirect when the user clicks on the button
       if (step.href !== undefined) {
@@ -45,11 +47,11 @@ export const useStep = (
           step,
           setTextError,
           index,
-          text: t("setupaccount.action.error"),
+          text: "Try again",
         });
         unsuccessfullTrack({
           provider: step.tracker.provider,
-          errorMessage: step.errorsText && step.errorsText[index],
+          errorMessage: step.errorsText && step.errorsText.at(index),
         });
         break;
       } else {
@@ -74,31 +76,41 @@ export const useStep = (
   useEffect(() => {
     const check = async () => {
       if (await step.checkAction()) {
-        completeStep({
-          setStatus,
-          setText,
-          step,
-          setGroupState,
-        });
-        successfullTrack({
-          provider: step.tracker.provider,
-        });
+        completeStepAndTrack();
       }
     };
 
+    const completeStepAndTrack = () => {
+      completeStep({
+        setStatus,
+        setText,
+        step,
+        setGroupState,
+      });
+      successfullTrack({
+        provider: step.tracker.provider,
+      });
+    };
+
     if (firstUpdate.current) {
-      check();
-      firstUpdate.current = false;
+      check()
+        .then(() => {
+          firstUpdate.current = false;
+        })
+        .catch((error) => {
+          // Handle the error if needed
+          console.error(error);
+        });
     }
 
     if (step.href !== undefined && status !== STEP_STATUS.DONE) {
       const handleVisibilityChange = async () => {
-        if (document.visibilityState === "visible") {
-          if (step.hrefAction !== undefined) {
-            if (step.hrefAction()) {
-              check();
-            }
-          }
+        if (
+          document.visibilityState === "visible" &&
+          step.hrefAction !== undefined &&
+          step.hrefAction()
+        ) {
+          await check();
         }
       };
       document.addEventListener("visibilitychange", handleVisibilityChange);

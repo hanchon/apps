@@ -4,12 +4,12 @@
 import { useContext } from "react";
 import { ModalWithTransitions } from "ui-helpers";
 import { AlertIcon } from "icons";
-import { useTranslation } from "react-i18next";
 import { StepsContext } from "./container/StepsContext";
 import { useTracker, EXIT_OUT_COPILOT } from "tracker";
 import { STEP_STATUS } from "./steps/setUpAccount/buttons/utils";
+import { TranslationContextProvider } from "schummar-translate/react";
+import { t } from "../locales/translate";
 export const CancelModal = () => {
-  const { t } = useTranslation();
   const {
     setShowModal,
     setShowCloseModal,
@@ -86,12 +86,12 @@ export const CancelModal = () => {
     </div>
   );
   return (
-    <>
+    <TranslationContextProvider locale="en">
       <ModalWithTransitions
         show={showCloseModal}
         setShow={setShowCloseModal}
         content={contentModal}
       />
-    </>
+    </TranslationContextProvider>
   );
 };

@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Header } from "ui-helpers";
 import { Dispatch, SetStateAction } from "react";
 import { CLICK_EVMOS_LOGO, useTracker } from "tracker";
+import { Copilot, CopilotButton, StepsContextProvider } from "copilot";
+
 export const StatefulHeader = ({
   pageName,
   setShowSidebar,
@@ -19,19 +21,32 @@ export const StatefulHeader = ({
   const { handlePreClickAction } = useTracker(CLICK_EVMOS_LOGO);
 
   return (
-    <Header
-      pageName={pageName}
-      setShowSidebar={setShowSidebar}
-      walletConnectionButton={
-        <WalletConnection dispatch={dispatch} walletExtension={wallet} />
-      }
-      onClick={() => {
-        handlePreClickAction({
-          wallet: wallet?.evmosAddressEthFormat,
-          provider: wallet?.extensionName,
-          page: pageName,
-        });
-      }}
-    />
+    <StepsContextProvider>
+      <>
+        <Copilot />
+        <Header
+          pageName={pageName}
+          setShowSidebar={setShowSidebar}
+          walletConnectionButton={
+            <WalletConnection
+              copilotModal={({
+                beforeStartHook,
+              }: {
+                beforeStartHook: Dispatch<SetStateAction<boolean>>;
+              }) => <CopilotButton beforeStartHook={beforeStartHook} />}
+              dispatch={dispatch}
+              walletExtension={wallet}
+            />
+          }
+          onClick={() => {
+            handlePreClickAction({
+              wallet: wallet?.evmosAddressEthFormat,
+              provider: wallet?.extensionName,
+              page: pageName,
+            });
+          }}
+        />
+      </>
+    </StepsContextProvider>
   );
 };

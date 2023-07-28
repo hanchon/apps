@@ -11,6 +11,15 @@ const ON_RAMP_TYPE = {
   TRANSAK: "transak",
 };
 
+type transakParams = {
+  event_id?: string;
+  data: {
+    onRampType: string;
+    cryptoAmount: number;
+    isBuyOrSell: string;
+  };
+};
+
 const TRANSAK_EVENTS = {
   TRANSAK_ORDER_FAILED: "TRANSAK_ORDER_FAILED",
   TRANSAK_ORDER_SUCCESSFUL: "TRANSAK_ORDER_SUCCESSFUL",
@@ -31,7 +40,7 @@ export const useTransakEvents = () => {
     CANCELLED_ORDER_ON_TRANSAK
   );
   useEffect(() => {
-    const handleMessage = ({ data }: { data: any }) => {
+    const handleMessage = ({ data }: { data: transakParams }) => {
       const eventId = data?.event_id;
       const dataEvent = data?.data;
       if (eventId) {

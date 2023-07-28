@@ -7,8 +7,8 @@ import { Header } from "ui-helpers";
 import { Dispatch, SetStateAction } from "react";
 import { CLICK_EVMOS_LOGO, useTracker } from "tracker";
 
-import { StepsContextProvider } from "../copilot/container/StepsContext";
-import { Copilot } from "../copilot/Copilot";
+import { StepsContextProvider } from "copilot";
+import { Copilot, CopilotButton } from "copilot";
 
 export const StatefulHeader = ({
   pageName,
@@ -22,25 +22,32 @@ export const StatefulHeader = ({
 
   const { handlePreClickAction } = useTracker(CLICK_EVMOS_LOGO);
   return (
-    <>
-      <StepsContextProvider>
+    <StepsContextProvider>
+      <>
         <Copilot />
-      </StepsContextProvider>
-
-      <Header
-        pageName={pageName}
-        setShowSidebar={setShowSidebar}
-        walletConnectionButton={
-          <WalletConnection dispatch={dispatch} walletExtension={wallet} />
-        }
-        onClick={() => {
-          handlePreClickAction({
-            wallet: wallet?.evmosAddressEthFormat,
-            provider: wallet?.extensionName,
-            page: pageName,
-          });
-        }}
-      />
-    </>
+        <Header
+          pageName={pageName}
+          setShowSidebar={setShowSidebar}
+          walletConnectionButton={
+            <WalletConnection
+              copilotModal={({
+                beforeStartHook,
+              }: {
+                beforeStartHook: Dispatch<SetStateAction<boolean>>;
+              }) => <CopilotButton beforeStartHook={beforeStartHook} />}
+              dispatch={dispatch}
+              walletExtension={wallet}
+            />
+          }
+          onClick={() => {
+            handlePreClickAction({
+              wallet: wallet?.evmosAddressEthFormat,
+              provider: wallet?.extensionName,
+              page: pageName,
+            });
+          }}
+        />
+      </>
+    </StepsContextProvider>
   );
 };
