@@ -20,7 +20,7 @@ export const ButtonConnectWallet = ({
     >
       <div className="flex items-center space-x-2 ">
         <WalletIcon />
-        <span>Connect wallet </span>
+        <span>Connect</span>
       </div>
     </Button>
   );
