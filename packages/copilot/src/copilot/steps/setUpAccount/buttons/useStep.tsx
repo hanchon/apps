@@ -27,8 +27,24 @@ export const useStep = (
     const len = step.actions.length;
     for (let index = 0; index < len; index++) {
       // set loading text
-      const action = step.actions[`${index}`];
-      setText(step.loadingText[`${index}`]);
+      const action = step.actions.filter((_, i) => i === index).shift();
+      const loadingText = step.loadingText
+        .filter((_, i) => i === index)
+        .shift();
+
+      const errorText =
+        step.errorsText &&
+        step.errorsText.filter((_, i) => i === index).shift();
+
+      if (
+        action === undefined ||
+        loadingText === undefined ||
+        errorText === undefined
+      ) {
+        break;
+      }
+
+      setText(loadingText);
 
       // for the cases that we have to redirect when the user clicks on the button
       if (step.href !== undefined) {
@@ -48,7 +64,7 @@ export const useStep = (
         });
         unsuccessfullTrack({
           provider: step.tracker.provider,
-          errorMessage: step.errorsText && step.errorsText[`${index}`],
+          errorMessage: errorText,
         });
         break;
       } else {
@@ -73,31 +89,41 @@ export const useStep = (
   useEffect(() => {
     const check = async () => {
       if (await step.checkAction()) {
-        completeStep({
-          setStatus,
-          setText,
-          step,
-          setGroupState,
-        });
-        successfullTrack({
-          provider: step.tracker.provider,
-        });
+        completeStepAndTrack();
       }
     };
 
+    const completeStepAndTrack = () => {
+      completeStep({
+        setStatus,
+        setText,
+        step,
+        setGroupState,
+      });
+      successfullTrack({
+        provider: step.tracker.provider,
+      });
+    };
+
     if (firstUpdate.current) {
-      check();
-      firstUpdate.current = false;
+      check()
+        .then(() => {
+          firstUpdate.current = false;
+        })
+        .catch((error) => {
+          // Handle the error if needed
+          console.error(error);
+        });
     }
 
     if (step.href !== undefined && status !== STEP_STATUS.DONE) {
       const handleVisibilityChange = async () => {
-        if (document.visibilityState === "visible") {
-          if (step.hrefAction !== undefined) {
-            if (step.hrefAction()) {
-              await check();
-            }
-          }
+        if (
+          document.visibilityState === "visible" &&
+          step.hrefAction !== undefined &&
+          step.hrefAction()
+        ) {
+          await check();
         }
       };
       document.addEventListener("visibilitychange", handleVisibilityChange);
