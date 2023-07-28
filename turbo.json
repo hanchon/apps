@@ -30,11 +30,11 @@
       "cache": false
     },
     "assets-page#build": {
-      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build"],
+      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build", "copilot#build"],
       "cache": false
     },
     "governance-page#build": {
-      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build"],
+      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build", "copilot#build"],
       "cache": false
     },
     "mission-page#build": {
@@ -42,11 +42,11 @@
       "cache": false
     },
     "staking-page#build": {
-      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build"],
+      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build", "copilot#build"],
       "cache": false
     },
     "vesting-page#build": {
-      "dependsOn": ["evmos-wallet#build", "helpers#build"],
+      "dependsOn": ["evmos-wallet#build", "helpers#build", "copilot#build"],
       "cache": false
     },
     "eslint-config-custom#build": {},
