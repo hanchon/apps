@@ -28,7 +28,12 @@ test.beforeEach(async ({ page }) => {
 
 test.describe("Mission Page - Copilot", () => {
   test("install Metamask", async ({ page }) => {
-    await page.getByRole("button", { name: /Copilot/i }).click();
+    await page.getByRole("button", { name: /Connect/i }).click();
+    await page
+      .getByRole("button", {
+        name: /Evmos Copilot Recommended for first time users New/i,
+      })
+      .click();
 
     await page
       .getByRole("button", {
@@ -42,7 +47,12 @@ test.describe("Mission Page - Copilot", () => {
   web3TestWithoutNetwork(
     "should let the user connect with MetaMask, set the network, the accounts, top up the account and redirect to the ecosystem page",
     async ({ page, wallet }) => {
-      await page.getByRole("button", { name: /Copilot/i }).click();
+      await page.getByRole("button", { name: /Connect/i }).click();
+      await page
+        .getByRole("button", {
+          name: /Evmos Copilot Recommended for first time users New/i,
+        })
+        .click();
 
       await page
         .getByRole("button", {
@@ -148,7 +158,12 @@ test.describe("Mission Page - Copilot", () => {
   web3Test(
     "should let the user connect with MetaMask, set the accounts, top up the account and redirect to the ecosystem page. Network is already set up",
     async ({ page, wallet }) => {
-      await page.getByRole("button", { name: /Copilot/i }).click();
+      await page.getByRole("button", { name: /Connect/i }).click();
+      await page
+        .getByRole("button", {
+          name: /Evmos Copilot Recommended for first time users New/i,
+        })
+        .click();
 
       await page
         .getByRole("button", {
