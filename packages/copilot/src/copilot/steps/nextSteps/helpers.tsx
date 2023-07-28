@@ -35,7 +35,7 @@ export const renderFireworksPortal = (
     <Fireworks
       ref={fireworksRef}
       className="pointer-events-none absolute inset-0 z-[99999] overflow-visible"
-      options={{ traceSpeed: 5 }}
+      options={{ traceSpeed: 5, delay: { min: 10, max: 20 }, explosion: 7 }}
     />,
     portalContainer
   );

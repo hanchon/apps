@@ -12,20 +12,19 @@ import {
 import { AnyAction } from "redux";
 import {
   GetProviderFromLocalStorage,
-  GetWalletFromLocalStorage,
   RemoveProviderFromLocalStorage,
-  SaveWalletToLocalStorage,
 } from "../internal/wallet/functionality/localstorage";
 import { Metamask } from "../internal/wallet/functionality/metamask/metamask";
 import { Keplr } from "../internal/wallet/functionality/keplr/keplr";
 import { SWITCH_BETWEEN_WALLETS, useTracker } from "tracker";
-import { WalletConnectModal } from "./WalletConnectModal";
-import { WalletProfileModal } from "./WalletProfileModal";
-import { ButtonConnectWallet } from "../wallet/buttons/Button.ConnectWallet";
-import { ButtonProfile } from "../wallet/buttons/Button.Profile";
 import { SetStateAction } from "react";
+import {
+  handleWalletInLocalStorage,
+  trackWallet,
+  drawWalletProfileModal,
+  drawConnectModal,
+} from "./utils";
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export const WalletConnection = ({
   walletExtension,
   dispatch,
@@ -81,74 +80,20 @@ export const WalletConnection = ({
   );
 
   useEffect(() => {
-    function trackWallet() {
-      const walletLocalStorage = GetWalletFromLocalStorage();
-      // walletExtension is not set
-      if (walletExtension.evmosAddressEthFormat === "") {
-        return;
-      }
-      // walletLocalStorage is not set
-      if (walletLocalStorage === null) {
-        return;
-      }
-      // track the wallet change if the wallets are different
-      if (walletExtension.evmosAddressEthFormat !== walletLocalStorage) {
-        trackChangeWallet({
-          provider: walletExtension.extensionName,
-          wallet: walletExtension.evmosAddressEthFormat,
-        });
-        SaveWalletToLocalStorage(walletExtension.evmosAddressEthFormat);
-      }
-    }
     // tracking address changes
-    if (METAMASK_KEY === GetProviderFromLocalStorage()) {
-      trackWallet();
-    }
-
-    if (KEPLR_KEY === GetProviderFromLocalStorage()) {
-      trackWallet();
+    if (
+      METAMASK_KEY === GetProviderFromLocalStorage() ||
+      KEPLR_KEY === GetProviderFromLocalStorage()
+    ) {
+      trackWallet(walletExtension, trackChangeWallet);
     }
   }, [walletExtension]);
 
   useEffect(() => {
-    const walletLocalStorage = GetWalletFromLocalStorage();
-    // avoid saving the evmos address if it is empty or is already stored.
-    if (walletExtension.evmosAddressEthFormat === "") {
-      return;
-    }
-    if (walletLocalStorage === walletExtension.evmosAddressEthFormat) {
-      return;
-    }
-    SaveWalletToLocalStorage(walletExtension.evmosAddressEthFormat);
+    handleWalletInLocalStorage(walletExtension);
   }, [walletExtension]);
 
-  return walletExtension.active === true ? (
-    <>
-      {/* open profile modal */}
-      <ButtonProfile setShow={setShow} walletExtension={walletExtension} />
-      {/* display profile modal */}
-      <WalletProfileModal
-        walletExtension={walletExtension}
-        dispatch={dispatch}
-        show={show}
-        setShow={setShow}
-      />
-    </>
-  ) : (
-    <div className="flex justify-center">
-      {/* open connect modal */}
-      <ButtonConnectWallet setShow={setShow} />
-      {/* display connect modal */}
-      <WalletConnectModal
-        copilotModal={
-          copilotModal
-            ? copilotModal({ beforeStartHook: () => setShow(false) })
-            : undefined
-        }
-        dispatch={dispatch}
-        show={show}
-        setShow={setShow}
-      />
-    </div>
-  );
+  return walletExtension.active === true
+    ? drawWalletProfileModal({ setShow, walletExtension, show, dispatch })
+    : drawConnectModal({ setShow, show, dispatch, copilotModal });
 };
