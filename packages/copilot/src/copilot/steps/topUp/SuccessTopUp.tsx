@@ -7,6 +7,7 @@ import { useEvmosBalance } from "./useEvmosBalance";
 import { CLICK_ON_NEXT_STEPS_COPILOT, useTracker } from "tracker";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
+import { PrimaryButton } from "../../PrimaryButton";
 
 export const SuccessTopUp = () => {
   const { updateStepsStatus } = useContext(StepsContext);
@@ -37,14 +38,11 @@ export const SuccessTopUp = () => {
           <div className="text-[#196235]">
             <h3 className="font-bold ">{t("topup.onboard.success.title")}</h3>
             <p className="text-sm">{t("topup.onboard.success.description")}</p>
-            <button
+            <PrimaryButton
               onClick={handleOnClick}
-              // TODO: create reusable component
-              className="mt-3 w-auto space-x-2 rounded-lg bg-red
-            px-8 py-2 font-normal  normal-case text-pearl shadow transition-all duration-300 hover:bg-red1 hover:shadow-md "
-            >
-              {t("topup.onboard.success.button.text")}
-            </button>
+              text={t("topup.onboard.success.button.text") as string}
+              className="mt-3 ml-0"
+            />
           </div>
         </div>
       </div>

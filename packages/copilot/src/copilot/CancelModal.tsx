@@ -9,6 +9,7 @@ import { useTracker, EXIT_OUT_COPILOT } from "tracker";
 import { STEP_STATUS } from "./steps/setUpAccount/buttons/utils";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../locales/translate";
+import { PrimaryButton } from "./PrimaryButton";
 export const CancelModal = () => {
   const {
     setShowModal,
@@ -73,14 +74,10 @@ export const CancelModal = () => {
             {t("exitcopilot.accept")}
           </button>
 
-          {/* TODO: create a reusable button for copilot */}
-          <button
+          <PrimaryButton
             onClick={handleReject}
-            className="ml-4 w-auto space-x-2 rounded-lg bg-red
-            px-8 py-2 font-normal  normal-case text-pearl shadow transition-all duration-300 hover:bg-red1 hover:shadow-md "
-          >
-            {t("exitcopilot.reject")}
-          </button>
+            text={t("exitcopilot.reject") as string}
+          />
         </div>
       </div>
     </div>
