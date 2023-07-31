@@ -5,11 +5,11 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useTranslation } from "next-i18next";
 
-const Content = dynamic(() => import("../mission/Content"));
 const SideBar = dynamic(() => import("./Sidebar/Sidebar"));
 const SidebarMobile = dynamic(() => import("./Sidebar/SidebarMobile"));
 import { StatefulHeader } from "./StatefulHeader";
 import { StatefulFooter } from "./StatefulFooter";
+import { ContentDappStore } from "./dappStore/ContentDappStore";
 
 const MainContainer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -33,7 +33,7 @@ const MainContainer = () => {
         </div>
         <div className="col-span-8 flex flex-1 flex-col lg:col-span-7">
           <div className="container mx-auto mb-auto overflow-auto">
-            <Content />
+            <ContentDappStore />
           </div>
           <StatefulFooter />
         </div>

@@ -1,4 +1,7 @@
 {
-    "appTitle": "Mission Control"
+    "appTitle": "Mission Control",
+    "dappStore.account.balance.title": "Total Balance",
+    "dappStore.account.balance.token": "EVMOS",
+    "dappStore.account.balance.topUp": "Top Up Account"
 
 }

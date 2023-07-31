@@ -45,5 +45,5 @@ export const useHeaderInfo = () => {
     return Number(convertStringFromAtto(total));
   }, [stakingInfo]);
 
-  return { totalStaked, totalRewards };
+  return { totalStaked, totalRewards, wallet: value };
 };
