@@ -8,6 +8,7 @@ import { CLICK_ON_NEXT_STEPS_COPILOT, useTracker } from "tracker";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { PrimaryButton } from "../../PrimaryButton";
+import { Confetti } from "../icons/ConfettiEmoji";
 
 export const SuccessTopUp = () => {
   const { updateStepsStatus } = useContext(StepsContext);
@@ -29,10 +30,10 @@ export const SuccessTopUp = () => {
         <div className=" flex items-start space-x-3">
           <span
             role="img"
-            aria-label="Celebration icon"
-            className="relative top-1 flex h-5 w-5 items-center justify-center rounded-full border border-lightYellow2 bg-lightYellow2 p-4"
+            aria-label="Confetti icon"
+            className="relative top-1 flex h-5 w-5 items-center justify-center rounded-full border border-lightYellow3 bg-lightYellow3 p-4"
           >
-            🎉
+            {Confetti}
           </span>
 
           <div className="text-[#196235]">
