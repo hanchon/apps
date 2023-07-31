@@ -19,7 +19,7 @@ export const WalletConnectModal = ({
   copilotModal?: JSX.Element;
 }) => {
   const contentModal = (
-    <div className="grid grid-rows-1 md:grid-rows-none md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#DBD3D1] text-[#413836]">
+    <div className="grid grid-rows-1 md:grid-rows-none md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-strokeGrey text-gray1">
       <ConnectToEvmos />
       <ConnectToEvmosWallets
         copilotModal={copilotModal}

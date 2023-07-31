@@ -53,12 +53,12 @@ export const ButtonsNextSteps = () => {
 
           <Badge
             text={t("nextsteps.stakeEvmos.badge") as string}
-            style="ring-[#F4E5BA] bg-[#FEFCE8] text-[#854D0E]"
+            style="ring-lightYellow bg-lightYellow1 text-brown"
           />
         </Button>
       </div>
       <button
-        className="w-full cursor-pointer rounded-lg border border-[#D1D5DB] py-3 shadow transition-all duration-300 hover:shadow-md"
+        className="w-full cursor-pointer rounded-lg border border-gray300 py-3 shadow transition-all duration-300 hover:shadow-md"
         onClick={() => {
           handleLearnMore("https://academy.evmos.org/faq", setShowModal);
           trackLearnMoreClick();

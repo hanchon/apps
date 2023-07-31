@@ -6,11 +6,11 @@ import { CheckIcon } from "icons";
 
 export const TEXT_STYLES = {
   [STEP_STATUS.CURRENT]: "text-red",
-  [STEP_STATUS.NOT_PROCESSED]: "text-[#806E6B]",
-  [STEP_STATUS.DONE]: "text-[#806E6B]",
+  [STEP_STATUS.NOT_PROCESSED]: "text-lightGrey",
+  [STEP_STATUS.DONE]: "text-lightGrey",
 };
 
-export const CIRCLE_STYLES = {
+export const STEPS_CIRCLE_STYLES = {
   [STEP_STATUS.DONE]: (
     <div className="flex h-4 w-4 items-center justify-center rounded-full bg-red text-pearl">
       <CheckIcon width={"14px"} height={"14px"} color="#fff" />
@@ -21,7 +21,7 @@ export const CIRCLE_STYLES = {
       className="flex h-4 w-4 items-center justify-center"
       aria-hidden="true"
     >
-      <span className="absolute h-4 w-4 rounded-full bg-[#FED2CA]" />
+      <span className="absolute h-4 w-4 rounded-full bg-pink" />
       <span className="relative block h-2 w-2 rounded-full bg-red" />
     </span>
   ),
@@ -30,7 +30,7 @@ export const CIRCLE_STYLES = {
       className="relative flex h-4 w-4 items-center justify-center"
       aria-hidden="true"
     >
-      <div className="h-2 w-2 rounded-full bg-[#DBD3D1]" />
+      <div className="h-2 w-2 rounded-full bg-strokeGrey" />
     </div>
   ),
 };

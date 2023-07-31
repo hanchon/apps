@@ -11,8 +11,8 @@ export const ConnectToEvmos = () => {
         Connect your account
       </h3>
 
-      <p className="text-sm text-[#413836]">Get started with Evmos!</p>
-      <p className="text-sm text-[#413836]">
+      <p className="text-sm text-gray1">Get started with Evmos!</p>
+      <p className="text-sm text-gray1">
         We recommend for first-time users to use
         <b> Evmos Copilot</b>.
       </p>
