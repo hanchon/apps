@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.1.1 - 2023-07-31
+
 - (fix) #fse-657 | packages/copilot 1.0.1 fix Transak url
 
 ## 1.1.0 - 2023-07-31
