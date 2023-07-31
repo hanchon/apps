@@ -1,6 +1,6 @@
 {
   "name": "staking-page",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3003",
@@ -17,6 +17,7 @@
   "dependencies": {
     "evmos-wallet": "*",
     "constants-helper": "*",
+    "copilot": "*",
     "ui-helpers": "*",
     "helpers": "*",
     "services": "*",

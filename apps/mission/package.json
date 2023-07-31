@@ -1,6 +1,6 @@
 {
   "name": "mission-page",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3004",
@@ -31,6 +31,7 @@
     "@web3modal/react": "=2.0.0-rc.2",
     "@web3modal/standalone": "=2.0.0-rc.2",
     "constants-helper": "*",
+    "copilot": "*",
     "ethers": "^5.7.2",
     "evmos-wallet": "*",
     "helpers": "*",
@@ -50,6 +51,7 @@
     "typescript": "4.9.4",
     "ui-helpers": "*",
     "wagmi": "=0.10.10"
+   
   },
   "devDependencies": {
     "@keplr-wallet/types": "^0.11.26",

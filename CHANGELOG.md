@@ -36,6 +36,10 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.1.0 - 2023-07-31
+
+- (feat) #fse-657 | packages/evmos-wallet 1.0.12 packages/ui-helpers 1.0.11 packages/copilot 1.0.0 packages/tailwind-config 1.0.1 apps/assets 1.0.20 apps/governance 1.0.17 apps/mission 1.0.17 apps/staking 1.0.17 apps/vesting 1.0.15 | Add Evmos Copilot for onboarding new users
+
 ## 1.0.14 - 2023-07-26
 
 - (feat) #fse-690 | packages/evmos-wallet 1.0.11 apps/assets 1.0.19 | Enable keplr smart contract interactions
@@ -43,6 +47,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## 1.0.13 - 2023-07-18
 
+- (chore) #fse-681 | packages/evmos-wallet 1.0.10 apps/governance 1.0.16 | move useEvmosBalance to evmos-wallet
 - (feat) #fse-495 | packages/evmos-wallet 1.0.10 | Adding i18n with schummar library
 - (ci) #fse-668 | turbo.json | Updating config to be able to do a quick build using --filter for examample `yarn  build --filter mission-page`
 - (ci) #fse-675 | packages/playwright-config-custom 1.0.1 packages/vitest-config-custom 1.0.1 apps/assets 1.0.18 apps/governance 1.0.15 apps/mission 1.0.15 apps/staking 1.0.15 apps/vesting 1.0.13 packages/evmos-wallet 1.0.9 apps/helpers 1.0.5 packages/services 1.0.4 packages/tracker 1.0.3 packages/ui-helpers 1.0.9 | Refactoring playwright & vitest config

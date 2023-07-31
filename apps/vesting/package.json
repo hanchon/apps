@@ -1,6 +1,6 @@
 {
   "name": "vesting-page",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3005",
@@ -17,6 +17,7 @@
   "dependencies": {
     "evmos-wallet": "*",
     "constants-helper": "*",
+    "copilot": "*",
     "icons": "*",
     "ui-helpers": "*",
     "helpers": "*",
