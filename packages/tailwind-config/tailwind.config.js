@@ -44,6 +44,7 @@ module.exports = {
         lightYellow: "#F4E5BA",
         lightYellow1: "#FEFCE8",
         lightYellow2: "#F0FDF4",
+        lightYellow3: "#DFF2E5",
         brown: "#854D0E",
       },
       fontSize: {

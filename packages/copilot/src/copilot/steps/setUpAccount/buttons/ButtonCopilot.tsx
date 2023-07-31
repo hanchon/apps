@@ -3,6 +3,7 @@
 
 import { CheckIcon, CloseBorderIcon } from "icons";
 import { STEP_STATUS } from "./utils";
+import { HandsEmoji } from "../../icons/HandsEmoji";
 
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(" ");
@@ -91,11 +92,7 @@ export const ButtonCopilot = ({ props }: { props: ButtonProps }) => {
               <span className="loader"></span>
             )}
             <span>{props.name}</span>
-            {props.status === STEP_STATUS.DONE && (
-              <span role="img" aria-label="Celebration icon">
-                👏
-              </span>
-            )}
+            {props.status === STEP_STATUS.DONE && <HandsEmoji />}
           </button>
         </div>
         {props.textError !== "" && (

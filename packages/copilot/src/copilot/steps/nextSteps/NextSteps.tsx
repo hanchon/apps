@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { ButtonsNextSteps } from "./ButtonsNextSteps";
+import { HandsEmoji } from "../icons/HandsEmoji";
 export const NextSteps = () => {
   const { fireworksRef, portalContainer } = useFireworks();
 
@@ -25,9 +26,7 @@ export const NextSteps = () => {
         {firstUpdate.current &&
           renderFireworksPortal(fireworksRef, portalContainer)}
         <p className="mb-4 flex h-56 w-56 items-center justify-center rounded-full border border-lightYellow2 bg-lightYellow2 text-9xl">
-          <span role="img" aria-label="Celebration icon">
-            👏
-          </span>
+          <HandsEmoji />
         </p>
         <h1 className="font-bold">{t("nextsteps.title")}</h1>
         <p className="text-sm">{t("nextsteps.description")}</p>
