@@ -19,21 +19,21 @@ type ButtonProps = {
   statusButton: string;
 };
 
-const STYLE1 = {
-  [STEP_STATUS.CURRENT]: "w-[1px] bg-[#DBD3D1]",
-  [STEP_STATUS.DONE]: "w-[1.2px] bg-[#31B886]",
-  [STEP_STATUS.PROCESSING]: "w-[1px] bg-[#DBD3D1]",
+const LINE_STYLES = {
+  [STEP_STATUS.CURRENT]: "w-[1px] bg-strokeGrey",
+  [STEP_STATUS.DONE]: "w-[1.2px] bg-green1",
+  [STEP_STATUS.PROCESSING]: "w-[1px] bg-strokeGrey",
 };
 
-const STYLE2 = {
+const CIRCLE_STYLES = {
   [STEP_STATUS.CURRENT]: "border border-red bg-white",
-  [STEP_STATUS.DONE]: "bg-[#31B886]",
-  [STEP_STATUS.PROCESSING]: "border border-[#DBD3D1] bg-white",
+  [STEP_STATUS.DONE]: "bg-green1",
+  [STEP_STATUS.PROCESSING]: "border border-strokeGrey bg-white",
 };
 
-const STYLE3 = {
+const BUTTON_STYLES = {
   [STEP_STATUS.CURRENT]: "bg-red hover:bg-red1 ",
-  [STEP_STATUS.DONE]: "pointer-events-none bg-[#31B886]",
+  [STEP_STATUS.DONE]: "pointer-events-none bg-green1",
   [STEP_STATUS.PROCESSING]:
     "bg-red hover:bg-red1 pointer-events-none opacity-70",
 };
@@ -51,7 +51,7 @@ export const ButtonCopilot = ({ props }: { props: ButtonProps }) => {
         {props.index !== props.stepsLength - 1 ? (
           <div
             className={`absolute left-4 top-4 -ml-px mt-0.5 h-full ${
-              STYLE1[props.status]
+              LINE_STYLES[props.status]
             }`}
             aria-hidden="true"
           />
@@ -60,7 +60,12 @@ export const ButtonCopilot = ({ props }: { props: ButtonProps }) => {
           <span className="flex h-9 items-center">
             <span
               className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full
-        ${STYLE2[props.status]}
+              ${
+                props.statusButton === STEP_STATUS.NOT_PROCESSED
+                  ? "border border-strokeGrey bg-white"
+                  : ""
+              }
+        ${CIRCLE_STYLES[props.status]}
         `}
             >
               {props.status === STEP_STATUS.DONE && (
@@ -76,10 +81,10 @@ export const ButtonCopilot = ({ props }: { props: ButtonProps }) => {
               props.statusButton === STEP_STATUS.NOT_PROCESSED
                 ? "pointer-events-none opacity-70"
                 : props.statusButton === STEP_STATUS.DONE
-                ? "pointer-events-none bg-[#31B886]"
+                ? "pointer-events-none bg-green1"
                 : ""
             }
-          ${STYLE3[props.status]}
+          ${BUTTON_STYLES[props.status]}
           `}
           >
             {props.status === STEP_STATUS.PROCESSING && (

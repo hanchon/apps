@@ -24,12 +24,12 @@ export const SuccessTopUp = () => {
     <></>
   ) : (
     <TranslationContextProvider locale="en">
-      <div className="space-y-4 rounded-lg bg-[#F0FDF4] p-4">
+      <div className="space-y-4 rounded-lg bg-lightYellow2 p-4">
         <div className=" flex items-start space-x-3">
           <span
             role="img"
             aria-label="Celebration icon"
-            className="relative top-1 flex h-5 w-5 items-center justify-center rounded-full border border-[#DFF2E5] bg-[#DFF2E5] p-4"
+            className="relative top-1 flex h-5 w-5 items-center justify-center rounded-full border border-lightYellow2 bg-lightYellow2 p-4"
           >
             🎉
           </span>

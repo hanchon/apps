@@ -22,7 +22,7 @@ export default function Onboard({
               className={`flex items-center justify-center gap-1 rounded-md px-3 py-1.5 ${
                 topUpType === "card"
                   ? "border-2 border-red"
-                  : "border border-[#DBD3D1]"
+                  : "border border-strokeGrey"
               }`}
             >
               <CreditCardsIcon />
@@ -38,7 +38,7 @@ export default function Onboard({
               className={`flex items-center justify-center gap-1 rounded-md px-3 py-1.5 opacity-50 ${
                 topUpType === "crypto"
                   ? "border-2 border-red"
-                  : "border border-[#DBD3D1]"
+                  : "border border-strokeGrey"
               }`}
             >
               <EthereumIcon />

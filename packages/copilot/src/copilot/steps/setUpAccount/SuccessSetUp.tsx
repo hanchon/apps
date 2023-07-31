@@ -22,7 +22,7 @@ export const SuccessSetUp = () => {
     <TranslationContextProvider locale="en">
       <section className=" h-full w-full space-y-1 overflow-hidden text-center">
         <div className="flex items-center justify-center ">
-          <p className="mb-4 flex h-56 w-56 items-center justify-center rounded-full border border-[#F0FDF4] bg-[#F0FDF4] text-9xl">
+          <p className="mb-4 flex h-56 w-56 items-center justify-center rounded-full border border-lightYellow2 bg-lightYellow2 text-9xl">
             <span role="img" aria-label="Celebration icon">
               🎉
             </span>

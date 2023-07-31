@@ -24,7 +24,7 @@ export const CopilotModal = () => {
   const contentModal = (
     <>
       <CancelModal />
-      <div className="grid grid-rows-1 divide-y divide-[#DBD3D1] text-[#413836] md:grid-cols-3 md:grid-rows-none md:divide-y-0 md:divide-x">
+      <div className="grid grid-rows-1 divide-y divide-strokeGrey text-gray1 md:grid-cols-3 md:grid-rows-none md:divide-y-0 md:divide-x">
         <div className="flex h-full flex-col justify-between px-4 pb-4 pt-5 sm:py-10 sm:px-6">
           <Introduction />
           <ol className="mt-4 space-y-3 md:mt-0">{stepsToDraw}</ol>

@@ -50,7 +50,7 @@ export const CancelModal = () => {
         <span
           role="img"
           aria-label="alert icon"
-          className="flex items-center justify-center rounded-full border border-[#fee2e2] bg-[#fee2e2] p-2"
+          className="flex items-center justify-center rounded-full border border-pink bg-pink p-2"
         >
           <AlertIcon
             width={24}
@@ -68,7 +68,7 @@ export const CancelModal = () => {
         <div className="flex justify-end space-x-3">
           <button
             onClick={handleAccept}
-            className="color-[#D1D5DB] rounded-lg border border-[#D1D5DB] px-8 py-2 font-normal shadow transition-all duration-300 hover:shadow-md focus-visible:outline-none"
+            className="color-gray300 rounded-lg border border-gray300 px-8 py-2 font-normal shadow transition-all duration-300 hover:shadow-md focus-visible:outline-none"
           >
             {t("exitcopilot.accept")}
           </button>

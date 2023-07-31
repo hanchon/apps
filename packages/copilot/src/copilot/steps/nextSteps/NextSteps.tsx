@@ -24,7 +24,7 @@ export const NextSteps = () => {
       <div className="flex flex-col items-center justify-center space-y-2 text-center">
         {firstUpdate.current &&
           renderFireworksPortal(fireworksRef, portalContainer)}
-        <p className="mb-4 flex h-56 w-56 items-center justify-center rounded-full border border-[#F0FDF4] bg-[#F0FDF4] text-9xl">
+        <p className="mb-4 flex h-56 w-56 items-center justify-center rounded-full border border-lightYellow2 bg-lightYellow2 text-9xl">
           <span role="img" aria-label="Celebration icon">
             👏
           </span>
