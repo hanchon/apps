@@ -10,12 +10,11 @@ import { VoteProps } from "../../common/types";
 import RadioElementContainer from "./RadioElementContainer";
 import { useSelector } from "react-redux";
 import { StoreType, MODAL_NOTIFICATIONS } from "evmos-wallet";
-import { useEvmosBalance } from "../../../../internal/common/functionality/hooks/useEvmosBalance";
 import { convertFromAtto, getReservedForFeeText } from "helpers";
 import { FEE_VOTE } from "constants-helper";
 import { BigNumber } from "ethers";
 import { CLICK_VOTE_BUTTON, useTracker } from "tracker";
-
+import { useEvmosBalance } from "./useEvmosBalance";
 const VoteButton = ({ voteProps }: { voteProps: VoteProps }) => {
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState("");

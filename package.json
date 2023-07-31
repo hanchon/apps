@@ -17,7 +17,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "turbo run test:e2e",
+    "test:e2e": "turbo run test:e2e --concurrency 1",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
     "clear-cache": "sh ./clear-cache.sh"
@@ -36,9 +36,12 @@
     "last 3 safari version"
   ],
   "dependencies": {
+    "@fireworks-js/react": "^2.10.7",
+    "@headlessui/react": "^1.7.15",
     "@hookform/resolvers": "^3.1.0",
     "@testing-library/user-event": "^14.4.3",
     "dotenv": "^16.3.1",
+    "react-confetti-explosion": "^2.1.2",
     "react-hook-form": "^7.44.3",
     "zod": "^3.21.4"
   }

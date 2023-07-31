@@ -11,9 +11,9 @@ export { CLICK_MISSION_CONTROL_VIEW_STAKING_BUTTON } from "./constants";
 export { CLICK_MISSION_CONTROL_TOTAL_STAKED_TOPBAR } from "./constants";
 
 // generics
-export { CLICK_WC_CONNECT_WALLET_BUTTON } from "./constants";
-export { CLICK_WC_DISCONNECT_WALLET_BUTTON } from "./constants";
-export { CLICK_WC_CONNECTED_WITH } from "./constants";
+export { CLICK_CONNECT_WALLET_BUTTON } from "./constants";
+export { CLICK_DISCONNECT_WALLET_BUTTON } from "./constants";
+export { CLICK_CONNECTED_WITH } from "./constants";
 export { CLICK_BACK_TO_MC } from "./constants";
 export { CLICK_EVMOS_LOGO } from "./constants";
 export { CLICK_FEEDBACK_FOOTER } from "./constants";
@@ -88,3 +88,25 @@ export { UNSUCCESSFUL_CONVERT_TX } from "./constants";
 export { CLICK_BUTTON_CONFIRM_WRAP_TX } from "./constants";
 export { SUCCESSFUL_WRAP_TX } from "./constants";
 export { UNSUCCESSFUL_WRAP_TX } from "./constants";
+
+// copilot
+export { CLICK_EVMOS_COPILOT_START_FLOW } from "./constants";
+export { CLICK_ON_INSTALL_ACCOUNT_COPILOT } from "./constants";
+export { CLICK_ON_CONNECT_ACCOUNT_COPILOT } from "./constants";
+export { CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT } from "./constants";
+export { CLICK_ON_TOP_UP_WITH_CARD_COPILOT } from "./constants";
+export { CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT } from "./constants";
+export { CLICK_ON_BUY_NOW_COPILOT } from "./constants";
+export { CLICK_ON_NEXT_STEPS_COPILOT } from "./constants";
+export { CLICK_ON_INTERACT_WITH_DAPP_COPILOT } from "./constants";
+export { CLICK_ON_STAKE_YOUR_EVMOS_COPILOT } from "./constants";
+export { CLICK_ON_LEARN_MORE_COPILOT } from "./constants";
+export { SUCCESSFUL_WALLET_INSTALLATION_COPILOT } from "./constants";
+export { UNSUCCESSFUL_WALLET_INSTALLATION_COPILOT } from "./constants";
+export { SUCCESSFUL_WALLET_CONNECTION_COPILOT } from "./constants";
+export { UNSUCCESSFUL_WALLET_CONNECTION_COPILOT } from "./constants";
+export { EXIT_OUT_COPILOT } from "./constants";
+export { CREATED_ORDER_ON_TRANSAK } from "./constants";
+export { CANCELLED_ORDER_ON_TRANSAK } from "./constants";
+export { FAILED_ORDER_ON_TRANSAK } from "./constants";
+export { SUCCESSFUL_ORDER_ON_TRANSAK } from "./constants";

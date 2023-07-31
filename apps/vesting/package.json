@@ -17,6 +17,7 @@
   "dependencies": {
     "evmos-wallet": "*",
     "constants-helper": "*",
+    "copilot": "*",
     "icons": "*",
     "ui-helpers": "*",
     "helpers": "*",

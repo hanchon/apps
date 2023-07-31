@@ -24,28 +24,29 @@
         "NEXT_PUBLIC_MIXPANEL_TOKEN",
         "NEXT_PUBLIC_EVMOS_APP_ENV",
         "NEXT_PUBLIC_COOKIE_POLICY_ID_IUBENDA",
-        "NEXT_PUBLIC_SITE_ID_IUBENDA"
+        "NEXT_PUBLIC_SITE_ID_IUBENDA",
+        "NEXT_PUBLIC_TRANSAK_API_KEY"
       ],
       "cache": false
     },
     "assets-page#build": {
-      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build"],
+      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build", "copilot#build"],
       "cache": false
     },
     "governance-page#build": {
-      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build"],
+      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build", "copilot#build"],
       "cache": false
     },
     "mission-page#build": {
-      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build"],
+      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build", "copilot#build"],
       "cache": false
     },
     "staking-page#build": {
-      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build"],
+      "dependsOn": ["evmos-wallet#build", "helpers#build", "services#build", "copilot#build"],
       "cache": false
     },
     "vesting-page#build": {
-      "dependsOn": ["evmos-wallet#build", "helpers#build"],
+      "dependsOn": ["evmos-wallet#build", "helpers#build", "copilot#build"],
       "cache": false
     },
     "eslint-config-custom#build": {},
@@ -86,6 +87,10 @@
         "NEXT_PUBLIC_SITE_ID_IUBENDA"
       ]
     },
+    "copilot#build": {
+      "dependsOn": ["icons#build", "evmos-wallet#build", "tracker#build", "ui-helpers#build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
     "eslint-config-custom#dev": {},
     "tailwind-config#dev": {},
     "tsconfig#dev": {},
@@ -99,6 +104,9 @@
     },
     "evmos-wallet#dev": {
       "dependsOn": ["icons#dev", "ui-helpers#dev", "tracker#dev"]
+    },
+    "copilot#dev": {
+      "dependsOn": ["icons#dev", "evmos-wallet#dev", "tracker#dev", "ui-helpers#dev"]
     },
     "lint": {
       "cache": false

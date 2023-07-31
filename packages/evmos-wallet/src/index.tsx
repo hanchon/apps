@@ -50,7 +50,8 @@ export {
   wagmiClient,
 } from "../src/internal/wallet/functionality/walletconnect/walletconnectConstants";
 export { ButtonWalletConnection } from "./wallet/ButtonWalletConnection";
-
+export { WalletConnection } from "./copilot/WalletConnection";
+export { ButtonWallet } from "./wallet/ButtonWallet";
 // configs
 export { EVMOS_SYMBOL } from "./internal/wallet/functionality/networkConfig";
 export { EVMOS_DECIMALS } from "./internal/wallet/functionality/networkConfig";
@@ -82,3 +83,17 @@ export type { executedTx } from "./notification/transactionsTypes";
 export { TransactionStatus } from "./notification/transactionsTypes";
 export type { txStatusErrorResponse } from "./notification/transactionsTypes";
 export type { txStatusResponse } from "./notification/transactionsTypes";
+
+export { disconnectWallets } from "./internal/wallet/functionality/disconnect";
+export { Metamask } from "./internal/wallet/functionality/metamask/metamask";
+export {
+  changeNetworkToEvmosMainnet,
+  switchEthereumChain,
+  isMetamaskInstalled,
+  connectHandler,
+  isWalletSelected,
+  isEvmosChain,
+} from "./internal/wallet/functionality/metamask/metamaskHelpers";
+
+export { queryPubKey } from "./internal/wallet/functionality/pubkey";
+export { useEvmosBalance } from "./internal/wallet/functionality/hooks/useEvmosBalance";
