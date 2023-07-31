@@ -7,6 +7,7 @@ import { StepsContext } from "../../container/StepsContext";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT, useTracker } from "tracker";
+import { PrimaryButton } from "../../PrimaryButton";
 export const SuccessSetUp = () => {
   const { updateStepsStatus } = useContext(StepsContext);
   const { handlePreClickAction } = useTracker(
@@ -30,14 +31,11 @@ export const SuccessSetUp = () => {
         </div>
         <h6 className="font-bold">{t("setupaccount.success")}</h6>
         <p className="pb-5 text-sm">{t("setupaccount.success.message")}</p>
-        {/* TODO: create a reusable button for copilot */}
-        <button
+
+        <PrimaryButton
           onClick={handleClick}
-          className="ml-4 w-auto space-x-2 rounded-lg bg-red
-            px-8 py-2 font-normal  normal-case text-pearl shadow transition-all duration-300 hover:bg-red1 hover:shadow-md "
-        >
-          {t("setupaccount.button.text")}
-        </button>
+          text={t("setupaccount.button.text") as string}
+        />
 
         <ConfettiExplosion
           zIndex={11}
