@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Header } from "ui-helpers";
 import { Dispatch, SetStateAction } from "react";
 import { CLICK_EVMOS_LOGO, useTracker } from "tracker";
-import { Copilot, CopilotButton, StepsContextProvider } from "copilot";
+import { Copilot, CopilotButton, StepsContextProvider, steps } from "copilot";
 
 export const StatefulHeader = ({
   pageName,
@@ -20,7 +20,7 @@ export const StatefulHeader = ({
 
   const { handlePreClickAction } = useTracker(CLICK_EVMOS_LOGO);
   return (
-    <StepsContextProvider>
+    <StepsContextProvider steps={steps}>
       <>
         <Copilot />
         <Header

@@ -11,7 +11,8 @@ import { PrimaryButton } from "../../PrimaryButton";
 import { Confetti } from "../icons/ConfettiEmoji";
 
 export const SuccessTopUp = () => {
-  const { updateStepsStatus } = useContext(StepsContext);
+  const { updateStepsStatus, hasSingleTopUpStep, setShowModal } =
+    useContext(StepsContext);
   // when evmosBalance is different that 0, show the component
   const { evmosBalance } = useEvmosBalance();
 
@@ -20,6 +21,30 @@ export const SuccessTopUp = () => {
   const handleOnClick = () => {
     updateStepsStatus();
     handlePreClickAction();
+  };
+
+  const handleOnClickTopUp = () => {
+    setShowModal(false);
+    // TODO: add tracking event
+  };
+
+  const drawButton = () => {
+    if (hasSingleTopUpStep) {
+      return (
+        <PrimaryButton
+          onClick={handleOnClickTopUp}
+          text={t("topup.onboard.success.step.topup.button.text") as string}
+          className="mt-3 ml-0"
+        />
+      );
+    }
+    return (
+      <PrimaryButton
+        onClick={handleOnClick}
+        text={t("topup.onboard.success.button.text") as string}
+        className="mt-3 ml-0"
+      />
+    );
   };
 
   return evmosBalance.isZero() ? (
@@ -39,11 +64,7 @@ export const SuccessTopUp = () => {
           <div className="text-[#196235]">
             <h3 className="font-bold ">{t("topup.onboard.success.title")}</h3>
             <p className="text-sm">{t("topup.onboard.success.description")}</p>
-            <PrimaryButton
-              onClick={handleOnClick}
-              text={t("topup.onboard.success.button.text") as string}
-              className="mt-3 ml-0"
-            />
+            {drawButton()}
           </div>
         </div>
       </div>

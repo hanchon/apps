@@ -4,7 +4,6 @@
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 
 import { STEP_STATUS } from "../steps/setUpAccount/buttons/utils";
-import { steps } from "./data";
 
 type StepsPropsContext = {
   stepsStatus: {
@@ -19,14 +18,8 @@ type StepsPropsContext = {
   setShowCloseModal: Dispatch<SetStateAction<boolean>>;
   showCloseModal: boolean;
   resetSteps: () => void;
+  hasSingleTopUpStep: boolean;
 };
-
-const initialValue = steps.map((step, index) => ({
-  status: step.status,
-  index,
-  component: step.component,
-  title: step.title,
-}));
 
 const StepsContext = createContext<StepsPropsContext>({
   stepsStatus: [],
@@ -44,9 +37,27 @@ const StepsContext = createContext<StepsPropsContext>({
   resetSteps: () => {
     /**/
   },
+  hasSingleTopUpStep: false,
 });
 
-const StepsContextProvider = ({ children }: { children: JSX.Element }) => {
+const StepsContextProvider = ({
+  children,
+  steps,
+}: {
+  children: JSX.Element;
+  steps: {
+    title: string;
+    component: JSX.Element;
+    status: string;
+  }[];
+}) => {
+  const initialValue = steps.map((step, index) => ({
+    status: step.status,
+    index,
+    component: step.component,
+    title: step.title,
+  }));
+
   const [stepsStatus, setStepsStatus] = useState(initialValue);
   const [showModal, setShowModal] = useState(false);
   const [showCloseModal, setShowCloseModal] = useState(false);
@@ -75,6 +86,13 @@ const StepsContextProvider = ({ children }: { children: JSX.Element }) => {
     setStepsStatus(initialValue);
   }
 
+  function hasSingleTopUpStep() {
+    if (steps.length === 1 && steps[0].title === "Top up your account") {
+      return true;
+    }
+    return false;
+  }
+
   return (
     <StepsContext.Provider
       value={{
@@ -85,6 +103,7 @@ const StepsContextProvider = ({ children }: { children: JSX.Element }) => {
         showCloseModal,
         setShowCloseModal,
         resetSteps,
+        hasSingleTopUpStep: hasSingleTopUpStep(),
       }}
     >
       {children}
