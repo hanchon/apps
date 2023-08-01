@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (fix) | apps/governance 1.0.18 | replace playwright waitForSelector deprecated method
+
 ## 1.1.2 - 2023-07-31
 
 - (fix) | packages/copilot 1.0.2 apps/mission 1.0.18 | Fixing ecosystem url
