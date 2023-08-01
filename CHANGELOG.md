@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) #fse-705 | apps/assets 1.0.21 | Add support for crescent network and token
+
 ## 1.1.2 - 2023-07-31
 
 - (fix) | packages/copilot 1.0.2 apps/mission 1.0.18 | Fixing ecosystem url
