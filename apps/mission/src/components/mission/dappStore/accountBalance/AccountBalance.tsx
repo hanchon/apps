@@ -2,7 +2,8 @@ import useAssetsTopBar from "../../../../internal/functionality/hooks/useAssetsT
 import { useHeaderInfo } from "../../../../internal/functionality/hooks/useHeaderInfo";
 import { convertFromAtto } from "helpers";
 import { Button } from "../Button";
-import { Copilot } from "copilot";
+import { Copilot, StepsContext } from "copilot";
+import { useContext } from "react";
 
 export const AccountBalance = () => {
   const { totalStaked, totalRewards, wallet } = useHeaderInfo();
@@ -31,6 +32,8 @@ export const AccountBalance = () => {
     return totalBalanceInDollars.toFixed(0);
   };
 
+  const { setShowModal } = useContext(StepsContext);
+
   return (
     <>
       <Copilot />
@@ -47,6 +50,7 @@ export const AccountBalance = () => {
             <Button
               handleOnClick={() => {
                 console.log("Top Up Account");
+                setShowModal(true);
               }}
               text="Top Up Account"
             />
