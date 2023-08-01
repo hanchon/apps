@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (fix) | apps/governance 1.0.18 | replace playwright waitForSelector deprecated method
 - (chore) #fse-705 | apps/assets 1.0.21 | Add support for crescent network and token
 
 ## 1.1.2 - 2023-07-31
