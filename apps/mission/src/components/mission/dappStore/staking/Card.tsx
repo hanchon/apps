@@ -18,6 +18,7 @@ import {
   getNumberBalanceInDollars,
 } from "./helpers";
 import { useRewards } from "./useRewards";
+import { useTranslation } from "next-i18next";
 
 export const StakingCard = () => {
   const router = useRouter();
@@ -31,17 +32,21 @@ export const StakingCard = () => {
   const { evmosPrice, totalEvmosAsset } = useAssetsTopBar();
   const { handleConfirmButton } = useRewards(wallet, totalRewards);
 
+  const { t } = useTranslation();
   return (
     <Card>
       <>
         <div>
-          <Title firstWord="Evmos" secondWord="Staking" />
-          <Description text="Earn rewards for participating in the network's security" />
+          <Title
+            firstWord={t("evmos.token")}
+            secondWord={t("dappStore.card.staking.title")}
+          />
+          <Description text={t("dappStore.card.staking.description")} />
         </div>
         {/* TODO: update values for the containers */}
         <div className="grid grid-cols-2">
           <BalanceContainer
-            title="Available Balance"
+            title={t("dappStore.card.staking.available")}
             amount={getBalance(totalEvmosAsset, wallet)}
             amountInDollars={getBalanceInDollars(
               totalEvmosAsset,
@@ -50,7 +55,7 @@ export const StakingCard = () => {
             )}
           />
           <BalanceContainer
-            title="Staked Balance"
+            title={t("dappStore.card.staking.staked")}
             amount={getBalance(totalDelegations, wallet)}
             amountInDollars={getBalanceInDollars(
               totalDelegations,
@@ -61,7 +66,7 @@ export const StakingCard = () => {
         </div>
         <div className="flex items-center justify-between rounded-lg bg-[#FFFFFF0F] p-3">
           <BalanceContainer
-            title="Claimeable Rewards"
+            title={t("dappStore.card.staking.rewards")}
             amount={getNumberBalance(totalRewards, wallet)}
             amountInDollars={getNumberBalanceInDollars(
               totalRewards,
@@ -79,11 +84,11 @@ export const StakingCard = () => {
           }
         `}
           >
-            Claim Rewards
+            {t("dappStore.card.staking.button.claim")}
           </button>
         </div>
         <Button
-          text="Stake & manage delegation"
+          text={t("dappStore.card.staking.button.text")}
           handleOnClick={handleOnClick}
         />
       </>

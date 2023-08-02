@@ -34,7 +34,7 @@ export const SuccessTopUp = () => {
         <PrimaryButton
           onClick={handleOnClickTopUp}
           text={t("topup.onboard.success.step.topup.button.text") as string}
-          className="mt-3 ml-0"
+          className="ml-0 mt-3"
         />
       );
     }
@@ -42,7 +42,7 @@ export const SuccessTopUp = () => {
       <PrimaryButton
         onClick={handleOnClick}
         text={t("topup.onboard.success.button.text") as string}
-        className="mt-3 ml-0"
+        className="ml-0 mt-3"
       />
     );
   };

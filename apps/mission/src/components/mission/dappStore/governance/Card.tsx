@@ -6,6 +6,7 @@ import { Button } from "../Button";
 import { Card } from "../card/Card";
 import { Description } from "../card/Description";
 import { Title } from "../card/Title";
+import { useTranslation } from "next-i18next";
 
 export const GovernanceCard = () => {
   const router = useRouter();
@@ -13,15 +14,19 @@ export const GovernanceCard = () => {
     router.push("/governance");
   };
 
+  const { t } = useTranslation();
   return (
     <Card>
       <>
         <div>
-          <Title firstWord="Evmos" secondWord="Governance" />
-          <Description text="Decide on the future of Evmos" />
+          <Title
+            firstWord={t("evmos.token")}
+            secondWord={t("dappStore.card.governance.title")}
+          />
+          <Description text={t("dappStore.card.governance.description")} />
         </div>
         <Button
-          text="Participate in Governance"
+          text={t("dappStore.card.governance.button.text")}
           handleOnClick={handleOnClick}
         />
       </>

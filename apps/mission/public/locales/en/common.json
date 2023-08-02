@@ -5,7 +5,9 @@
     "dappStore.ecosystem.title": "Featured Ecosystem dApps",
     "dappStore.ecosystem.description": "Interested in being a part of our ecosystem overview?",
     "dappStore.ecosystem.description2": "Click here!",
-    "evmos.token": "evmos",
+    "dappStore.ecosystem.button.text": "View all dApps",
+    "dappsStore.ecosystem.url": "https://altiplanic.notion.site/a188bd13dd114a88a7763fd2a8cc601e?v=403420ad21db41ce81f09b7e3f77e4e2",
+    "evmos.token": "Evmos",
     "dappStore.card.assets.title": "Assets",
     "dappStore.card.assets.description": "Manage your assets on Evmos",
     "dappStore.card.assets.button.text": "See Portfolio",
@@ -19,4 +21,5 @@
     "dappStore.card.staking.staked": "Staked Balance",
     "dappStore.card.staking.rewards": "Claimeable Rewards",
     "dappStore.card.staking.button.claim": "Claim Rewards"
+    
 }

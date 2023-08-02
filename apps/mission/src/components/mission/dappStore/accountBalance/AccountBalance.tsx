@@ -7,6 +7,7 @@ import { convertFromAtto } from "helpers";
 import { Button } from "../Button";
 import { Copilot, StepsContext } from "copilot";
 import { useContext } from "react";
+import { useTranslation } from "next-i18next";
 
 export const AccountBalance = () => {
   const { totalStaked, totalRewards, wallet } = useHeaderInfo();
@@ -40,16 +41,19 @@ export const AccountBalance = () => {
 
   const { setShowModal } = useContext(StepsContext);
 
+  const { t } = useTranslation();
   return (
     <>
       <Copilot />
       <section className="text-center md:text-left">
-        <p className="text-2xl text-pearl ">Total Balance</p>
-        <div className="flex flex-col items-center justify-center space-x-0 space-y-3 md:flex-row md:space-y-0 md:space-x-3">
+        <p className="text-2xl text-pearl ">
+          {t("dappStore.account.balance.title")}
+        </p>
+        <div className="flex flex-col items-center justify-center space-x-0 space-y-3 md:flex-row md:space-x-3 md:space-y-0">
           <h6 className="text-6xl font-bold text-white">
             {wallet.active ? drawTotalBalance() : "- "}
-            <span className="ml-2 text-6xl font-bold text-white opacity-50">
-              EVMOS
+            <span className="ml-2 text-6xl font-bold uppercase text-white opacity-50">
+              {t("evmos.token")}
             </span>
           </h6>
           {wallet.active && (
@@ -57,7 +61,7 @@ export const AccountBalance = () => {
               handleOnClick={() => {
                 setShowModal(true);
               }}
-              text="Top Up Account"
+              text={t("dappStore.account.balance.topUp")}
             />
           )}
         </div>

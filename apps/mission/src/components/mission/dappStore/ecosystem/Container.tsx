@@ -5,39 +5,43 @@ import Link from "next/link";
 import { Button } from "../Button";
 import { EcosystemCard } from "./Card";
 import { EcosystemProps, ecosystemData } from "./ecosystemData";
+import { useTranslation } from "next-i18next";
+import { ECOSYSTEM_URL, GOOGLE_FORM_URL } from "../constants";
 
-const ecosystemPage =
-  "https://altiplanic.notion.site/a188bd13dd114a88a7763fd2a8cc601e?v=403420ad21db41ce81f09b7e3f77e4e2";
-const googleFormUrl =
-  "https://docs.google.com/forms/d/e/1FAIpQLSc2O5HzjZMPbFD84O1513xJ0mggkSXihQy_a6IGskZq28l8yA/viewform";
 export const EcosystemContainer = () => {
   const handleViewAlldApps = () => {
-    // redirect
-    window.open(ecosystemPage, "_blank");
+    window.open(ECOSYSTEM_URL, "_blank");
   };
 
   const drawEcosystemdApps = (dApps: EcosystemProps[]) => {
     return dApps.map((dApp) => <EcosystemCard key={dApp.name} data={dApp} />);
   };
 
+  const { t } = useTranslation();
+
   return (
     <section className="space-y-6 pt-11">
       <div className="md:spacey-0 flex flex-col justify-between space-y-4 md:flex-row">
         <div className="space-y-1">
-          <h1 className="text-2xl text-pearl">Featured Ecosystem dApps</h1>
+          <h1 className="text-2xl text-pearl">
+            {t("dappStore.ecosystem.title")}
+          </h1>
           <h2 className="text-[#FFFFFFB2]">
-            Interested in being a part of our ecosystem overview?
+            {t("dappStore.ecosystem.description")}
             <Link
               className="ml-2 text-red"
-              href={googleFormUrl}
+              href={GOOGLE_FORM_URL}
               rel="noopener noreferrer"
               target="_blank"
             >
-              Click here!
+              {t("dappStore.ecosystem.description2")}
             </Link>
           </h2>
         </div>
-        <Button text="View all dApps" handleOnClick={handleViewAlldApps} />
+        <Button
+          text={t("dappStore.ecosystem.button.text")}
+          handleOnClick={handleViewAlldApps}
+        />
       </div>
       <div className="grid gap-8 md:grid-cols-4">
         {drawEcosystemdApps(ecosystemData)}

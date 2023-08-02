@@ -6,6 +6,7 @@ import { Button } from "../Button";
 import { Card } from "../card/Card";
 import { Description } from "../card/Description";
 import { Title } from "../card/Title";
+import { useTranslation } from "next-i18next";
 
 export const AssetsCard = () => {
   const router = useRouter();
@@ -13,14 +14,21 @@ export const AssetsCard = () => {
     router.push("/assets");
   };
 
+  const { t } = useTranslation();
   return (
     <Card>
       <>
         <div>
-          <Title firstWord="Evmos" secondWord="Assets" />
-          <Description text="Manage your assets on Evmos" />
+          <Title
+            firstWord={t("evmos.token")}
+            secondWord={t("dappStore.card.assets.title")}
+          />
+          <Description text={t("dappStore.card.assets.description")} />
         </div>
-        <Button text="See Portfolio" handleOnClick={handleOnClick} />
+        <Button
+          text={t("dappStore.card.assets.button.text")}
+          handleOnClick={handleOnClick}
+        />
       </>
     </Card>
   );
