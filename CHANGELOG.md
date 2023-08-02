@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.1.3 - 2023-08-01
+
 - (refactor) | Multiple Packages | Reconfigure build pipeline and review dependency graph
   - apps/assets 1.0.22
   - apps/governance 1.0.19
