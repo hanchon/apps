@@ -7,7 +7,7 @@ export const Button = ({
 }) => {
   return (
     <button
-      className="rounded bg-[#423D37] px-5 py-3 font-[IBM] text-sm font-bold text-pearl"
+      className="rounded bg-[#423D37] px-5 py-3 text-sm font-bold text-pearl"
       onClick={handleOnClick}
     >
       {text}

@@ -1,21 +1,21 @@
-import { AccountBalance } from "./accountBalance/AccountBalance";
-import { StepsContextProvider, topUpStep } from "copilot";
+import { StakingCard } from "./staking/Card";
+import { AssetsCard } from "./assets/Card";
+import { GovernanceCard } from "./governance/Card";
+import { EcosystemContainer } from "./ecosystem/Container";
+import { AccountBalanceContainer } from "./accountBalance/Container";
 export const ContentDappStore = () => {
   return (
-    <StepsContextProvider steps={topUpStep}>
-      <div className="space-y-8">
-        <div className="flex justify-between">
-          <AccountBalance />
-          <div className="bg-white"> onboard</div>
-        </div>
-        <div className="flex w-full justify-between bg-white">
-          <div>staking</div>
-          <div className="flex flex-col items-end">
-            <div>assets</div>
-            <div>governance</div>
-          </div>
+    <div className="space-y-8 px-3 text-[IBM] md:px-0">
+      <div className="flex flex-col justify-between md:flex-row">
+        <AccountBalanceContainer />
+      </div>
+      <div className="grid gap-8 md:grid-cols-2 ">
+        <StakingCard />
+        <div className="grid grid-rows-2 gap-y-8">
+          <AssetsCard /> <GovernanceCard />
         </div>
       </div>
-    </StepsContextProvider>
+      <EcosystemContainer />
+    </div>
   );
 };

@@ -16,6 +16,9 @@ export const AccountBalance = () => {
   const totalBalanceInDollars = totalBalance * Number(evmosPrice);
 
   const drawTotalBalance = () => {
+    if (totalBalance === 0) {
+      return 0;
+    }
     if (totalBalance < 1) {
       return totalBalance.toFixed(2);
     }
@@ -37,19 +40,18 @@ export const AccountBalance = () => {
   return (
     <>
       <Copilot />
-      <section className="text-[IBM]">
+      <section className="text-center md:text-left">
         <p className="text-2xl text-pearl ">Total Balance</p>
-        <div className="flex items-center justify-center space-x-3">
-          <span className="text-6xl font-bold text-white">
-            {wallet.active ? drawTotalBalance() : "-"}
-          </span>
-          <span className="text-6xl font-bold text-white opacity-50">
-            EVMOS
-          </span>
+        <div className="flex flex-col items-center justify-center space-x-0 space-y-3 md:flex-row md:space-y-0 md:space-x-3">
+          <h6 className="text-6xl font-bold text-white">
+            {wallet.active ? drawTotalBalance() : "- "}
+            <span className="ml-2 text-6xl font-bold text-white opacity-50">
+              EVMOS
+            </span>
+          </h6>
           {wallet.active && (
             <Button
               handleOnClick={() => {
-                console.log("Top Up Account");
                 setShowModal(true);
               }}
               text="Top Up Account"
