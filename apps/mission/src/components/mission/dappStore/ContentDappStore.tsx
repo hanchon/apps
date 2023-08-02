@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { StakingCard } from "./staking/Card";
 import { AssetsCard } from "./assets/Card";
 import { GovernanceCard } from "./governance/Card";

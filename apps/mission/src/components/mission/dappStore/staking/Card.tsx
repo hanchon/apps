@@ -1,15 +1,35 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { useRouter } from "next/router";
 import { Button } from "../Button";
 import { BalanceContainer } from "../card/BalanceContainer";
 import { Card } from "../card/Card";
 import { Description } from "../card/Description";
 import { Title } from "../card/Title";
+import { useStakingInfo } from "../../../../internal/functionality/hooks/useStakingInfo";
+import useAssetsTopBar from "../../../../internal/functionality/hooks/useAssetsTopBar";
+import { useSelector } from "react-redux";
+import { StoreType } from "evmos-wallet";
+import {
+  getBalance,
+  getBalanceInDollars,
+  getNumberBalance,
+  getNumberBalanceInDollars,
+} from "./helpers";
+import { useRewards } from "./useRewards";
 
 export const StakingCard = () => {
   const router = useRouter();
   const handleOnClick = () => {
     router.push("/staking");
   };
+
+  const wallet = useSelector((state: StoreType) => state.wallet.value);
+
+  const { totalDelegations, totalRewards } = useStakingInfo();
+  const { evmosPrice, totalEvmosAsset } = useAssetsTopBar();
+  const { handleConfirmButton } = useRewards(wallet, totalRewards);
 
   return (
     <Card>
@@ -22,25 +42,43 @@ export const StakingCard = () => {
         <div className="grid grid-cols-2">
           <BalanceContainer
             title="Available Balance"
-            amount="1"
-            amountInDollars="1"
+            amount={getBalance(totalEvmosAsset, wallet)}
+            amountInDollars={getBalanceInDollars(
+              totalEvmosAsset,
+              wallet,
+              evmosPrice
+            )}
           />
           <BalanceContainer
             title="Staked Balance"
-            amount="1"
-            amountInDollars="1"
+            amount={getBalance(totalDelegations, wallet)}
+            amountInDollars={getBalanceInDollars(
+              totalDelegations,
+              wallet,
+              evmosPrice
+            )}
           />
         </div>
         <div className="flex items-center justify-between rounded-lg bg-[#FFFFFF0F] p-3">
           <BalanceContainer
             title="Claimeable Rewards"
-            amount="7"
-            amountInDollars="1"
+            amount={getNumberBalance(totalRewards, wallet)}
+            amountInDollars={getNumberBalanceInDollars(
+              totalRewards,
+              wallet,
+              evmosPrice
+            )}
           />
-          {/* TODO: add claim reward action - now it's in staking */}
-          {/* disable button if the user is not connected or
-          has <0.005 as it is in staking */}
-          <button className="w-auto space-x-2 rounded bg-red px-4 py-2 text-sm font-bold normal-case text-pearl shadow transition-all duration-300 hover:bg-red1 hover:shadow-md">
+          <button
+            onClick={handleConfirmButton}
+            className={`w-auto space-x-2 rounded bg-red px-4 py-2 text-sm font-bold normal-case text-pearl shadow transition-all duration-300 hover:bg-red1 hover:shadow-md
+          ${
+            !wallet.active || !totalRewards || totalRewards < 0.005
+              ? "disabled"
+              : ""
+          }
+        `}
+          >
             Claim Rewards
           </button>
         </div>
