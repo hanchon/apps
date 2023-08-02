@@ -8,7 +8,7 @@ import { Dispatch, SetStateAction } from "react";
 import { CLICK_EVMOS_LOGO, useTracker } from "tracker";
 
 import { StepsContextProvider } from "copilot";
-import { Copilot, CopilotButton } from "copilot";
+import { Copilot, CopilotButton, steps } from "copilot";
 
 export const StatefulHeader = ({
   pageName,
@@ -22,7 +22,7 @@ export const StatefulHeader = ({
 
   const { handlePreClickAction } = useTracker(CLICK_EVMOS_LOGO);
   return (
-    <StepsContextProvider>
+    <StepsContextProvider steps={steps}>
       <>
         <Copilot />
         <Header

@@ -11,7 +11,8 @@ import { PrimaryButton } from "../../PrimaryButton";
 import { Confetti } from "../icons/ConfettiEmoji";
 
 export const SuccessTopUp = () => {
-  const { updateStepsStatus } = useContext(StepsContext);
+  const { updateStepsStatus, hasSingleTopUpStep, setShowModal } =
+    useContext(StepsContext);
   // when evmosBalance is different that 0, show the component
   const { evmosBalance } = useEvmosBalance();
 
@@ -22,16 +23,40 @@ export const SuccessTopUp = () => {
     handlePreClickAction();
   };
 
+  const handleOnClickTopUp = () => {
+    setShowModal(false);
+    // TODO: add tracking event
+  };
+
+  const drawButton = () => {
+    if (hasSingleTopUpStep) {
+      return (
+        <PrimaryButton
+          onClick={handleOnClickTopUp}
+          text={t("topup.onboard.success.step.topup.button.text") as string}
+          className="ml-0 mt-3"
+        />
+      );
+    }
+    return (
+      <PrimaryButton
+        onClick={handleOnClick}
+        text={t("topup.onboard.success.button.text") as string}
+        className="ml-0 mt-3"
+      />
+    );
+  };
+
   return evmosBalance.isZero() ? (
     <></>
   ) : (
     <TranslationContextProvider locale="en">
-      <div className="space-y-4 rounded-lg bg-lightYellow2 p-4">
+      <div className="bg-lightYellow2 space-y-4 rounded-lg p-4">
         <div className=" flex items-start space-x-3">
           <span
             role="img"
             aria-label="Confetti icon"
-            className="relative top-1 flex h-5 w-5 items-center justify-center rounded-full border border-lightYellow3 bg-lightYellow3 p-4"
+            className="border-lightYellow3 bg-lightYellow3 relative top-1 flex h-5 w-5 items-center justify-center rounded-full border p-4"
           >
             {Confetti}
           </span>
@@ -39,11 +64,7 @@ export const SuccessTopUp = () => {
           <div className="text-[#196235]">
             <h3 className="font-bold ">{t("topup.onboard.success.title")}</h3>
             <p className="text-sm">{t("topup.onboard.success.description")}</p>
-            <PrimaryButton
-              onClick={handleOnClick}
-              text={t("topup.onboard.success.button.text") as string}
-              className="mt-3 ml-0"
-            />
+            {drawButton()}
           </div>
         </div>
       </div>

@@ -23,3 +23,11 @@ export const steps = [
     status: STEP_STATUS.NOT_PROCESSED,
   },
 ];
+
+export const topUpStep = [
+  {
+    title: "Top up your account",
+    component: <TopUp />,
+    status: STEP_STATUS.CURRENT,
+  },
+];
