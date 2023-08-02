@@ -36,7 +36,34 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
-- (fix) #fse-657 | packages/copilot 1.0.1 fix Transak url
+- (refactor) | Multiple Packages | Reconfigure build pipeline and review dependency graph
+  - apps/assets 1.0.22
+  - apps/governance 1.0.19
+  - apps/mission 1.0.19
+  - apps/staking 1.0.18
+  - apps/vesting 1.0.16
+  - packages/constants-helper 1.0.4
+  - packages/eslint-config-custom 1.0.3
+  - packages/evmos-wallet 1.0.13
+  - packages/helpers 1.0.7
+  - packages/icons 1.0.4
+  - packages/playwright-config-custom 1.0.2
+  - packages/services 1.0.6
+  - packages/tailwind-config 1.0.2
+  - packages/tracker 1.0.5
+  - packages/tsconfig 1.0.1
+  - packages/ui-helpers 1.0.12
+  - packages/vitest-config-custom 1.0.2
+- (fix) | apps/governance 1.0.18 | replace playwright waitForSelector deprecated method
+- (chore) #fse-705 | apps/assets 1.0.21 | Add support for crescent network and token
+
+## 1.1.2 - 2023-07-31
+
+- (fix) | packages/copilot 1.0.2 apps/mission 1.0.18 | Fixing ecosystem url
+
+## 1.1.1 - 2023-07-31
+
+- (fix) #fse-657 | packages/copilot 1.0.1 | Fix Transak url
 
 ## 1.1.0 - 2023-07-31
 
