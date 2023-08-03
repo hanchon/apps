@@ -34,3 +34,7 @@ export { EthereumIcon } from "./Ethereum";
 export { CloseBorderIcon } from "./CloseBorderIcon";
 export { AlertIcon } from "./AlertIcon";
 export { LaunchIcon } from "./LaunchIcon";
+export { NutIcon } from "./NutIcon";
+export { CoinIcon } from "./CoinIcon";
+export { GovernanceIcon } from "./GovernanceIcon";
+export { CalculatorIcon } from "./CalculatorIcon";

@@ -47,7 +47,7 @@ export default function Home() {
                 <Container>
                   <>
                     <SnackbarsInternal />
-                    <StatefulHeader pageName="Assets" />
+                    <StatefulHeader />
                     <div className="container mx-auto mb-auto overflow-auto">
                       <AssetsTable />
                     </div>

@@ -2,17 +2,13 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import Link from "next/link";
-import { Dispatch, SetStateAction, useCallback } from "react";
-import { Logo, LaunchIcon } from "icons";
+import { Logo } from "icons";
 import { EVMOS_PAGE_URL } from "constants-helper";
+import { LaunchContainer } from "./launchPad/Container";
 export const Header = ({
-  pageName,
-  setShowSidebar,
   walletConnectionButton,
   onClick,
 }: {
-  pageName: string;
-  setShowSidebar?: Dispatch<SetStateAction<boolean>>;
   walletConnectionButton?: JSX.Element;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }) => {
@@ -31,11 +27,7 @@ export const Header = ({
         </Link>
       </div>
       <div className="flex items-center space-x-3">
-        {/* TODO: add logic */}
-
-        <div className="border-darGray800 bg-darGray800 flex  items-center justify-center rounded-full border p-2">
-          <LaunchIcon width={30} height={30} />
-        </div>
+        <LaunchContainer />
         {walletConnectionButton}
       </div>
     </div>
