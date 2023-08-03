@@ -7,7 +7,7 @@ export type LaunchPadItemsProps = {
 };
 
 export const launchPadItems = [
-  { icon: <NutIcon width="40" height="40" />, text: "Home", href: "/" },
+  { icon: <NutIcon width="40" height="40" />, text: "dAppStore", href: "/" },
   {
     icon: <CoinIcon width="40" height="40" />,
     text: "Assets",
