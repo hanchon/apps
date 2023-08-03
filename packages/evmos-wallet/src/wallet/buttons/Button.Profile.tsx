@@ -12,7 +12,9 @@ export const ButtonProfile = ({
 }) => {
   return (
     <button
-      className="flex items-center justify-center space-x-3"
+      className="font-sm text-pearl bg-darGray800 flex
+     items-center justify-center space-x-3 rounded-full px-10 py-2
+      font-bold"
       onClick={() => {
         setShow(true);
       }}
