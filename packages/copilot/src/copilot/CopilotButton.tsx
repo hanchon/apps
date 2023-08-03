@@ -1,6 +1,6 @@
 import { EvmosCopilotIcon } from "icons";
 import { DividerWithLabel, Badge } from "ui-helpers";
-import { ButtonWallet } from "evmos-wallet/src/wallet/ButtonWallet";
+import { ButtonWallet } from "evmos-wallet";
 import { StepsContext } from "./container/StepsContext";
 import { useTracker, CLICK_EVMOS_COPILOT_START_FLOW } from "tracker";
 import { useContext } from "react";

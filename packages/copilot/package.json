@@ -49,8 +49,7 @@
     "redux": "^4.2.0",
     "tracker": "*",
     "typescript": "4.9.4",
-    "ui-helpers": "*", 
-    "constants-helper": "*"
+    "ui-helpers": "*"
   },
   "browserslist": [
     "last 3 chrome version",
