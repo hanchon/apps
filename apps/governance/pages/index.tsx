@@ -49,7 +49,7 @@ export default function Home() {
                 <Container>
                   <>
                     <SnackbarsInternal />
-                    <StatefulHeader pageName="Governance" />
+                    <StatefulHeader />
                     <div className="container mx-auto mb-auto overflow-auto">
                       <Content />
                     </div>

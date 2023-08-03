@@ -1,7 +1,5 @@
-import { WalletIcon } from "icons";
 import { Dispatch, SetStateAction } from "react";
 import { CLICK_CONNECT_WALLET_BUTTON, useTracker } from "tracker";
-import { Button } from "ui-helpers";
 
 export const ButtonConnectWallet = ({
   setShow,
@@ -12,16 +10,14 @@ export const ButtonConnectWallet = ({
     CLICK_CONNECT_WALLET_BUTTON
   );
   return (
-    <Button
+    <button
       onClick={() => {
         setShow(true);
         trackClickConnectWallet();
       }}
+      className="font-sm text-pearl bg-red rounded-full px-10 py-2 font-bold"
     >
-      <div className="flex items-center space-x-2 ">
-        <WalletIcon />
-        <span>Connect</span>
-      </div>
-    </Button>
+      Connect
+    </button>
   );
 };

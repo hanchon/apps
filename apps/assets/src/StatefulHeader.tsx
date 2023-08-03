@@ -8,13 +8,7 @@ import { Dispatch, SetStateAction } from "react";
 import { CLICK_EVMOS_LOGO, useTracker } from "tracker";
 import { Copilot, CopilotButton, StepsContextProvider, steps } from "copilot";
 
-export const StatefulHeader = ({
-  pageName,
-  setShowSidebar,
-}: {
-  pageName: string;
-  setShowSidebar?: Dispatch<SetStateAction<boolean>>;
-}) => {
+export const StatefulHeader = () => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
 
@@ -24,8 +18,6 @@ export const StatefulHeader = ({
       <>
         <Copilot />
         <Header
-          pageName={pageName}
-          setShowSidebar={setShowSidebar}
           walletConnectionButton={
             <WalletConnection
               copilotModal={({
@@ -41,7 +33,7 @@ export const StatefulHeader = ({
             handlePreClickAction({
               wallet: wallet?.evmosAddressEthFormat,
               provider: wallet?.extensionName,
-              page: pageName,
+              page: "assets",
             });
           }}
         />
