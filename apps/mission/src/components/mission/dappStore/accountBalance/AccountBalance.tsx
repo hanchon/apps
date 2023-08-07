@@ -49,7 +49,7 @@ export const AccountBalance = () => {
         <p className="text-2xl text-pearl ">
           {t("dappStore.account.balance.title")}
         </p>
-        <div className="flex flex-col items-center justify-center space-x-0 space-y-3 md:flex-row md:space-x-3 md:space-y-0">
+        <div className="flex flex-col items-center space-x-0 space-y-3 md:flex-row md:space-x-3 md:space-y-0">
           <h6 className="text-6xl font-bold text-white">
             {wallet.active ? drawTotalBalance() : "- "}
             <span className="ml-2 text-6xl font-bold uppercase text-white opacity-50">
