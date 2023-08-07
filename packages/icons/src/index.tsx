@@ -38,3 +38,4 @@ export { NutIcon } from "./NutIcon";
 export { CoinIcon } from "./CoinIcon";
 export { GovernanceIcon } from "./GovernanceIcon";
 export { CalculatorIcon } from "./CalculatorIcon";
+export { EvmosCopilotWhiteIcon } from "./EvmosCopilotWhite";

@@ -11,6 +11,7 @@ type StepsPropsContext = {
     index: number;
     component: JSX.Element;
     title: string;
+    buttonDapp: JSX.Element;
   }[];
   updateStepsStatus: () => void;
   setShowModal: Dispatch<SetStateAction<boolean>>;
@@ -19,6 +20,15 @@ type StepsPropsContext = {
   showCloseModal: boolean;
   resetSteps: () => void;
   hasSingleTopUpStep: boolean;
+  dappStepStatus: {
+    status: string;
+    index: number;
+    component: JSX.Element;
+    title: string;
+    buttonDapp: JSX.Element;
+  }[];
+  updateStepsStatusDapp: () => void;
+  resetStepsDapp: () => void;
 };
 
 const StepsContext = createContext<StepsPropsContext>({
@@ -38,6 +48,13 @@ const StepsContext = createContext<StepsPropsContext>({
     /**/
   },
   hasSingleTopUpStep: false,
+  dappStepStatus: [],
+  updateStepsStatusDapp: () => {
+    /**/
+  },
+  resetStepsDapp: () => {
+    /**/
+  },
 });
 
 const StepsContextProvider = ({
@@ -49,6 +66,7 @@ const StepsContextProvider = ({
     title: string;
     component: JSX.Element;
     status: string;
+    buttonDapp: JSX.Element;
   }[];
 }) => {
   const initialValue = steps.map((step, index) => ({
@@ -56,11 +74,14 @@ const StepsContextProvider = ({
     index,
     component: step.component,
     title: step.title,
+    buttonDapp: step.buttonDapp,
   }));
 
   const [stepsStatus, setStepsStatus] = useState(initialValue);
+  const [dappStepStatus, setDappStepStatus] = useState(initialValue);
   const [showModal, setShowModal] = useState(false);
   const [showCloseModal, setShowCloseModal] = useState(false);
+
   const updateStepsStatus = () => {
     const updatedState = [...stepsStatus];
     const currentElement = updatedState.find(
@@ -74,16 +95,38 @@ const StepsContextProvider = ({
     const nextStep = updatedState[currentElement.index + 1];
     if (nextStep) {
       const nextStepUpdated = { ...nextStep, status: STEP_STATUS.CURRENT };
-
       updatedState[currentElement.index] = updatedStep;
       updatedState[currentElement.index + 1] = nextStepUpdated;
     }
-
     setStepsStatus(updatedState);
+    // setDappStepStatus(updatedState);
   };
 
   function resetSteps() {
     setStepsStatus(initialValue);
+  }
+
+  const updateStepsStatusDapp = () => {
+    const updatedState = [...stepsStatus];
+    const currentElement = updatedState.find(
+      (element) => element.status === STEP_STATUS.CURRENT
+    );
+    if (currentElement === undefined) {
+      return;
+    }
+    const currentStep = updatedState[currentElement.index];
+    const updatedStep = { ...currentStep, status: STEP_STATUS.DONE };
+    const nextStep = updatedState[currentElement.index + 1];
+    if (nextStep) {
+      const nextStepUpdated = { ...nextStep, status: STEP_STATUS.CURRENT };
+      updatedState[currentElement.index] = updatedStep;
+      updatedState[currentElement.index + 1] = nextStepUpdated;
+    }
+    setDappStepStatus(updatedState);
+  };
+
+  function resetStepsDapp() {
+    setDappStepStatus(initialValue);
   }
 
   function hasSingleTopUpStep() {
@@ -104,6 +147,9 @@ const StepsContextProvider = ({
         setShowCloseModal,
         resetSteps,
         hasSingleTopUpStep: hasSingleTopUpStep(),
+        dappStepStatus,
+        resetStepsDapp,
+        updateStepsStatusDapp,
       }}
     >
       {children}

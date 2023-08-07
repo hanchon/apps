@@ -8,8 +8,8 @@ import Link from "next/link";
 import { ECOSYSTEM_URL } from "constants-helper";
 export const LaunchContainer = () => {
   const drawItems = () => {
-    return launchPadItems.map((item) => {
-      return <Item itemProps={item} />;
+    return launchPadItems.map((item, index) => {
+      return <Item key={index} itemProps={item} />;
     });
   };
   return (

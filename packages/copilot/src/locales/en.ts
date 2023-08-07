@@ -36,4 +36,5 @@ export default {
     "We advise you finish all steps if you want to get started with Evmos for the first time.",
   "exitcopilot.reject": "Exit",
   "exitcopilot.accept": "Stay",
+  "dappStore.onboard.title": "Onboard to Evmos in 5 minutes",
 } as const;
