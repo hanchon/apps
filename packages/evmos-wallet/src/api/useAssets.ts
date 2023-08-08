@@ -4,50 +4,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { EVMOS_BACKEND } from "../internal/wallet/functionality/networkConfig";
 import { StoreType } from "../redux/Store";
-
-export const getAssets = async () => {
-  const res = await fetch(`${EVMOS_BACKEND}/ERC20ModuleBalance`);
-  return res.json() as Promise<ERC20BalanceResponse>;
-};
-export const getAssetsForAddress = async (
-  address: string,
-  hexAddress: string
-) => {
-  // If not wallet selected return everything empty
-  if (address === "" || hexAddress === "") {
-    return getAssets();
-  }
-
-  const res = await fetch(
-    `${EVMOS_BACKEND}/ERC20ModuleBalance/${address}/${hexAddress}`
-  );
-  return res.json() as Promise<ERC20BalanceResponse>;
-};
-
-export type ERC20Element = {
-  name: string;
-  cosmosBalance: string;
-  decimals: string;
-  description: string;
-  erc20Balance: string;
-  symbol: string;
-  tokenName: string;
-  chainId: string;
-  chainIdentifier: string;
-  // Currently only axelar assets are external actions
-  handledByExternalUI: null | { handlingAction: string; url: string }[];
-  coingeckoPrice: string;
-  prefix: string;
-  pngSrc: string;
-  erc20Address: string;
-  tokenIdentifier: string;
-};
-
-export type ERC20BalanceResponse = {
-  balance: ERC20Element[];
-};
+import { ERC20BalanceResponse } from "./types";
+import { getAssetsForAddress } from "./fetch";
 
 export const useAssets = () => {
   const value = useSelector((state: StoreType) => state.wallet.value);
