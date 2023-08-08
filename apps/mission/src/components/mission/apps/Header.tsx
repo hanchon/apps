@@ -19,7 +19,6 @@ const Header = () => {
         <Link
           target="_blank"
           rel="noreferrer"
-          // eslint-disable-next-line no-secrets/no-secrets
           href={ECOSYSTEM_URL}
           aria-label="docs"
         >

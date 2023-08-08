@@ -6,8 +6,7 @@ import { Button } from "../Button";
 import { EcosystemCard } from "./Card";
 import { EcosystemProps, ecosystemData } from "./ecosystemData";
 import { useTranslation } from "next-i18next";
-import { GOOGLE_FORM_URL } from "../constants";
-import { ECOSYSTEM_URL } from "constants-helper";
+import { ECOSYSTEM_URL, GOOGLE_FORM_URL } from "constants-helper";
 export const EcosystemContainer = () => {
   const handleViewAlldApps = () => {
     window.open(ECOSYSTEM_URL, "_blank");
