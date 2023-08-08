@@ -8,9 +8,11 @@ import { LaunchContainer } from "./launchPad/Container";
 export const Header = ({
   walletConnectionButton,
   onClick,
+  price,
 }: {
   walletConnectionButton?: JSX.Element;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  price?: string;
 }) => {
   return (
     <div className="text-pearl mx-5 mb-3 flex flex-col xl:mx-0 xl:h-32 xl:flex-row xl:items-center xl:justify-between">
@@ -33,8 +35,7 @@ export const Header = ({
       font-bold"
         >
           <EvmosRedIcon width={"20"} height={"20"} />
-          {/* TODO: add evmos price */}
-          <span>-</span>
+          <span>{price}</span>
         </div>
         <div className="flex items-center space-x-3">
           <LaunchContainer />

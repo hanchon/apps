@@ -56,6 +56,7 @@
     "schummar-translate": "^1.19.0",
     "tracker": "*",
     "ui-helpers": "*",
+    "helpers": "*",
     "valtio": "^1.2.0",
     "vitest": "^0.33.0",
     "wagmi": "=0.10.10"
