@@ -3,6 +3,7 @@ import { useCopilotDapp } from "./useCopilotDapp";
 
 export const CopilotCard = () => {
   const { stepsToDraw, componentToDraw } = useCopilotDapp();
+
   return (
     <div className="bg-red flex flex-col justify-start space-y-6 rounded-lg bg-cover p-5">
       <div className="flex items-center justify-between">

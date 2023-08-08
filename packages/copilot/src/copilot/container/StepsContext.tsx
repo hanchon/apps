@@ -99,7 +99,7 @@ const StepsContextProvider = ({
       updatedState[currentElement.index + 1] = nextStepUpdated;
     }
     setStepsStatus(updatedState);
-    // setDappStepStatus(updatedState);
+    setDappStepStatus(updatedState);
   };
 
   function resetSteps() {
