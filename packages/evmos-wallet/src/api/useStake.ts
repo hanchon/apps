@@ -6,7 +6,11 @@ import { BigNumber } from "ethers";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { convertStringFromAtto } from "helpers";
-import { StakingInfoResponse } from "./types";
+import {
+  DelegationsResponse,
+  StakingInfoResponse,
+  UndelegationsResponse,
+} from "./types";
 import { getStakingInfo } from "./fetch";
 import { StoreType } from "../redux/Store";
 
@@ -16,9 +20,10 @@ export const useStake = () => {
   const stakingInfo = useQuery<StakingInfoResponse, Error>({
     queryKey: ["stakingInfo", value.evmosAddressCosmosFormat],
     queryFn: () => getStakingInfo(value.evmosAddressCosmosFormat),
+    refetchInterval: 3000,
   });
 
-  const totalStaked = useMemo(() => {
+  const totalDelegations = useMemo(() => {
     let total = BigNumber.from(0);
     if (stakingInfo.data !== undefined) {
       const sum = stakingInfo.data.delegations.reduce((prev, curr) => {
@@ -29,6 +34,22 @@ export const useStake = () => {
       return total;
     }
 
+    return total;
+  }, [stakingInfo]);
+
+  const totalUndelegations = useMemo(() => {
+    let total = BigNumber.from(0);
+    if (stakingInfo.data !== undefined) {
+      // for each validator, get the undelegations balances
+      // that are in the entries array
+      stakingInfo.data.undelegations.forEach((validator) => {
+        const sum = validator.entries.reduce((prev, curr) => {
+          return prev.add(BigNumber.from(curr?.balance));
+        }, total);
+        total = sum ? sum : BigNumber.from(0);
+      });
+      return total;
+    }
     return total;
   }, [stakingInfo]);
 
@@ -43,8 +64,39 @@ export const useStake = () => {
       total = stakingInfo.data.rewards.total[0].amount;
     }
 
-    return Number(convertStringFromAtto(total));
+    return convertStringFromAtto(total);
   }, [stakingInfo]);
 
-  return { totalStaked, totalRewards, wallet: value };
+  const delegations = useMemo(() => {
+    let delegations: DelegationsResponse[] = [];
+    if (stakingInfo.data !== undefined) {
+      delegations = stakingInfo.data?.delegations;
+      delegations.sort((a, b) => {
+        return a.delegation.validator.rank > b.delegation.validator.rank
+          ? 1
+          : -1;
+      });
+    }
+    return delegations;
+  }, [stakingInfo]);
+
+  const undelegations = useMemo(() => {
+    let undelegations: UndelegationsResponse[] = [];
+    if (stakingInfo.data !== undefined) {
+      undelegations = stakingInfo.data?.undelegations;
+      undelegations.sort((a, b) => {
+        return a.validator.rank > b.validator.rank ? 1 : -1;
+      });
+    }
+    return undelegations;
+  }, [stakingInfo]);
+
+  return {
+    totalDelegations,
+    totalUndelegations,
+    totalRewards,
+    delegations,
+    undelegations,
+    rewards: stakingInfo?.data?.rewards,
+  };
 };
