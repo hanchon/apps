@@ -92,3 +92,4 @@ export {
 
 export { queryPubKey } from "./internal/wallet/functionality/pubkey";
 export { useEvmosBalance } from "./internal/wallet/functionality/hooks/useEvmosBalance";
+export { useAssets } from "./api/useAssets";

@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { StoreType, WalletConnection } from "evmos-wallet";
+import { StoreType, WalletConnection, useAssets } from "evmos-wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { Header } from "ui-helpers";
 import { Dispatch, SetStateAction } from "react";
@@ -12,6 +12,7 @@ export const StatefulHeader = () => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
   const { handlePreClickAction } = useTracker(CLICK_EVMOS_LOGO);
+  const { evmosPriceFixed } = useAssets();
   return (
     <StepsContextProvider steps={steps}>
       <>
@@ -35,6 +36,7 @@ export const StatefulHeader = () => {
               page: "governance",
             });
           }}
+          price={evmosPriceFixed}
         />
       </>
     </StepsContextProvider>
