@@ -2,15 +2,14 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import useAssetsTopBar from "../../../../internal/functionality/hooks/useAssetsTopBar";
-import { useHeaderInfo } from "../../../../internal/functionality/hooks/useHeaderInfo";
 import { convertFromAtto } from "helpers";
 import { Button } from "../Button";
 import { Copilot, StepsContext } from "copilot";
 import { useContext } from "react";
 import { useTranslation } from "next-i18next";
-
+import { useStake } from "evmos-wallet";
 export const AccountBalance = () => {
-  const { totalStaked, totalRewards, wallet } = useHeaderInfo();
+  const { totalStaked, totalRewards, wallet } = useStake();
   const { evmosPrice, totalEvmosAsset } = useAssetsTopBar();
 
   const totalEvmos = totalEvmosAsset.add(totalStaked);
