@@ -29,7 +29,7 @@ export const useAssets = () => {
       return "-";
     }
 
-    return Number(assets.data.balance[0].coingeckoPrice).toFixed(2);
+    return `$${Number(assets.data.balance[0].coingeckoPrice).toFixed(2)}`;
   }, [assets.data]);
 
   return {
