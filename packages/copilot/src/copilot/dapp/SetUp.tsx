@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { StepsContext } from "../container/StepsContext";
 import { Button } from "./Button";
 
-export const SetUpDapp = () => {
+export const SetUpDapp = ({ status }: { status: string }) => {
   const { setShowModal } = useContext(StepsContext);
   return (
     <Button
@@ -10,6 +10,7 @@ export const SetUpDapp = () => {
       onClick={() => {
         setShowModal(true);
       }}
+      status={status}
     />
   );
 };

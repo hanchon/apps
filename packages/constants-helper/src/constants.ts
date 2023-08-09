@@ -18,3 +18,4 @@ export const EVMOS_TOS_VERSION = "evmos-TOS-v2";
 export const ECOSYSTEM_URL =
   // eslint-disable-next-line no-secrets/no-secrets
   "https://altiplanic.notion.site/a188bd13dd114a88a7763fd2a8cc601e?v=403420ad21db41ce81f09b7e3f77e4e2";
+export const STAKING_URL = "https://app.evmos.org/staking";

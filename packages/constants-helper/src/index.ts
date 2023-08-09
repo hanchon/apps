@@ -15,3 +15,4 @@ export { COOKIE_POLICY_URL } from "./constants";
 export { EVMOS_TOS_VERSION } from "./constants";
 export { NAV_TO_VESTING } from "./constants";
 export { ECOSYSTEM_URL } from "./constants";
+export { STAKING_URL } from "./constants";

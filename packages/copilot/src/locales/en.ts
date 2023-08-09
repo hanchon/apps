@@ -29,7 +29,6 @@ export default {
   "nextsteps.stakeEvmos.badge": "Advanced",
   "nextsteps.learnMore.title": "Learn more",
   /* eslint-enable no-secrets/no-secrets */
-  stakingUrl: "https://app.evmos.org/staking",
   academyFAQUrl: "https://academy.evmos.org/faq",
   "exitcopilot.title": "Exit Copilot?",
   "exitcopilot.description":

@@ -2,10 +2,10 @@ import { StepsContextProvider } from "../container/StepsContext";
 import { wizardSteps } from "../container/data";
 import { TopUpDapp } from "./Topup";
 
-export const TopUpContainer = () => {
+export const TopUpContainer = ({ status }: { status: string }) => {
   return (
     <StepsContextProvider steps={wizardSteps}>
-      <TopUpDapp />
+      <TopUpDapp status={status} />
     </StepsContextProvider>
   );
 };
