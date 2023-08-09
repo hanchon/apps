@@ -33,3 +33,5 @@ export { CreditCardsIcon } from "./CreditCards";
 export { EthereumIcon } from "./Ethereum";
 export { CloseBorderIcon } from "./CloseBorderIcon";
 export { AlertIcon } from "./AlertIcon";
+export { TransakIcon } from "./TransakIcon";
+export { C14Icon } from "./C14Icon";

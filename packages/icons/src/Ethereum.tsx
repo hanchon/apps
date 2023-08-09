@@ -20,7 +20,7 @@ export const EthereumIcon: React.FC<EthereumIconProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       {...restProps}
     >
-      <g opacity="0.5">
+      <g opacity="1">
         <path
           d="M7 12L12 19L17 12M7 12L12 5M7 12L12 13M17 12L12 5M17 12L12 13M12 5V13"
           stroke={color}
