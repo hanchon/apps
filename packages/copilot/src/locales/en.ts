@@ -5,7 +5,6 @@ export default {
     "Now that you've set up your account, you'll need Evmos tokens to access and interact with a huge catalog of decentralized apps (dApps), such as games 🎮, marketplaces 🏪, decentralized finance (DeFi) 💸, and more!",
   "topup.card.button": "Debit/Credit Card",
   "topup.crypto.button": "Cryptocurrencies",
-  "topup.intro.crypto.button.comingsoon": "Coming soon",
   "topup.onboard.title": "Onboard to Evmos",
   "topup.onboard.success.title": "Congratulations",
   "topup.onboard.success.description": "You're now ready to use your Evmos!",

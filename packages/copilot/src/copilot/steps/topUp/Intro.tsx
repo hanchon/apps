@@ -20,6 +20,11 @@ export const Intro = ({
     handlePreClickAction();
   };
 
+  const handleCryptoOnClick = () => {
+    setTopUpType("crypto");
+    handlePreClickAction();
+  };
+
   return (
     <TranslationContextProvider locale="en">
       <section className="space-y-10">
@@ -37,16 +42,13 @@ export const Intro = ({
             {t("topup.card.button")}
           </button>
           <button
-            disabled={true}
-            className="border-strokeGrey flex flex-col items-center gap-2 rounded-lg border bg-[#F3F3F3] px-2 py-4 opacity-50"
+            onClick={handleCryptoOnClick}
+            className="border-strokeGrey flex flex-col items-center gap-2 rounded-lg border px-2 py-4"
           >
             <div className="flex  items-center justify-center gap-2">
               <EthereumIcon />
               {t("topup.crypto.button")}
             </div>
-            <span className="bg-strokeGrey rounded-full px-3 py-0.5 font-normal">
-              {t("topup.intro.crypto.button.comingsoon")}
-            </span>
           </button>
         </div>
       </section>
