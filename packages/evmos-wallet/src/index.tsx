@@ -92,4 +92,3 @@ export {
 
 export { queryPubKey } from "./internal/wallet/functionality/pubkey";
 export { useEvmosBalance } from "./internal/wallet/functionality/hooks/useEvmosBalance";
-export { GetProviderFromLocalStorage } from "./internal/wallet/functionality/localstorage";
