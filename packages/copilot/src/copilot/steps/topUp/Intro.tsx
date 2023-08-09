@@ -43,7 +43,7 @@ export const Intro = ({
           </button>
           <button
             onClick={handleCryptoOnClick}
-            className="border-strokeGrey flex flex-col items-center gap-2 rounded-lg border px-2 py-4"
+            className="border-strokeGrey flex items-center justify-center gap-2 rounded-lg border px-2 py-4 shadow transition-all duration-300 hover:shadow-md"
           >
             <div className="flex  items-center justify-center gap-2">
               <EthereumIcon />

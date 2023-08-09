@@ -40,7 +40,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## 1.1.4 - 2023-08-03
 
-- (chore) | apps/governance 1.0.20 | remove proposal number 156 
+- (chore) | apps/governance 1.0.20 | remove proposal number 156
 
 ## 1.1.3 - 2023-08-01
 

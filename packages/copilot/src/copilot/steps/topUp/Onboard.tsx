@@ -48,6 +48,11 @@ export default function Onboard({
             >
               <EthereumIcon />
               {t("topup.crypto.button")}
+              {topUpType === "crypto" && (
+                <div className="bg-red text-pearl flex h-5 w-5 items-center justify-center rounded-full">
+                  <CheckIcon width={"14px"} height={"14px"} color="#fff" />
+                </div>
+              )}
             </button>
           </div>
         </div>

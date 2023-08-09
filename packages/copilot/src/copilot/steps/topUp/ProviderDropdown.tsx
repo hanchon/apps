@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { DropdownArrow, TransakIcon, C14Icon } from "icons";
+import { t } from "../../../locales/translate";
 
 export type DropdownOption = {
   name: string;
@@ -54,7 +55,7 @@ export default function ProviderDropwdown({
         className="flex select-none items-center justify-between p-1"
       >
         {showMenu && (
-          <div className="border-gray300 absolute -right-1 top-2 z-[9999] max-h-40 w-36 translate-y-9 overflow-auto rounded-md border bg-white">
+          <div className="border-gray300 absolute -right-1 top-2 z-[9999] max-h-40 w-36 translate-y-9 overflow-auto rounded-md border bg-white md:w-60">
             {dropdownOptions?.map((option) => {
               return (
                 <button
@@ -75,9 +76,9 @@ export default function ProviderDropwdown({
           </div>
         )}
         <span className="text-sm text-[#374151]">
-          This onboarding service is provided by
+          {t("topup.onboard.card.provider")}
         </span>
-        <div className="border-gray300 -mr-2 flex w-36 items-center justify-between space-x-3 rounded-md border p-1.5 font-bold">
+        <div className="border-gray300 -mr-2 flex w-36 items-center justify-between space-x-3 rounded-md border p-1.5 font-bold md:w-60">
           <div className="flex items-center gap-1">
             {selectedValue?.image}
             <span className="text-sm"> {selectedValue?.name}</span>

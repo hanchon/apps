@@ -9,6 +9,7 @@ export default {
   "topup.onboard.success.title": "Congratulations",
   "topup.onboard.success.description": "You're now ready to use your Evmos!",
   "topup.onboard.success.button.text": "Next steps",
+  "topup.onboard.card.provider": "This onboarding service is provided by",
   "setupaccount.title": "Set up your account",
   "setupaccount.description":
     "Having an account allows you to use your Evmos to interact with any decentralized applications (dApps) on Evmos.",
