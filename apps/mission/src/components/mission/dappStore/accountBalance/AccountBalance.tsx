@@ -8,6 +8,7 @@ import { Button } from "../Button";
 import { Copilot, StepsContext } from "copilot";
 import { useContext } from "react";
 import { useTranslation } from "next-i18next";
+import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, useTracker } from "tracker";
 
 export const AccountBalance = () => {
   const { totalStaked, totalRewards, wallet } = useHeaderInfo();
@@ -42,6 +43,13 @@ export const AccountBalance = () => {
   const { setShowModal } = useContext(StepsContext);
 
   const { t } = useTranslation();
+
+  const { handlePreClickAction } = useTracker(CLICK_ON_TOP_UP_ACCOUNT_DAPP);
+
+  const handleClick = () => {
+    handlePreClickAction({ location: "On the main page" });
+    setShowModal(true);
+  };
   return (
     <>
       <Copilot />
@@ -58,9 +66,7 @@ export const AccountBalance = () => {
           </h6>
           {wallet.active && (
             <Button
-              handleOnClick={() => {
-                setShowModal(true);
-              }}
+              handleOnClick={handleClick}
               text={t("dappStore.account.balance.topUp")}
             />
           )}

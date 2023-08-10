@@ -5,9 +5,16 @@ import Image from "next/image";
 import { EcosystemProps } from "./ecosystemData";
 import { Badge } from "ui-helpers";
 import Link from "next/link";
+import { CLICK_ON_FEATURED_DAPP, useTracker } from "tracker";
 export const EcosystemCard = ({ data }: { data: EcosystemProps }) => {
+  const { handlePreClickAction } = useTracker(CLICK_ON_FEATURED_DAPP);
+
+  const handleClick = () => {
+    handlePreClickAction({ featured: data.name });
+  };
   return (
     <Link
+      onClick={handleClick}
       href={data.href}
       key={data.name}
       rel="noopener noreferrer"

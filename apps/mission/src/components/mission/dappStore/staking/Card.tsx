@@ -19,10 +19,15 @@ import {
 } from "./helpers";
 import { useRewards } from "./useRewards";
 import { useTranslation } from "next-i18next";
+import { CLICK_ON_STAKE_AND_MANAGE_DELEGATION, useTracker } from "tracker";
 
 export const StakingCard = () => {
   const router = useRouter();
+  const { handlePreClickAction } = useTracker(
+    CLICK_ON_STAKE_AND_MANAGE_DELEGATION
+  );
   const handleOnClick = () => {
+    handlePreClickAction();
     router.push("/staking");
   };
 
@@ -43,7 +48,6 @@ export const StakingCard = () => {
           />
           <Description text={t("dappStore.card.staking.description")} />
         </div>
-        {/* TODO: update values for the containers */}
         <div className="grid grid-cols-2">
           <BalanceContainer
             title={t("dappStore.card.staking.available")}
