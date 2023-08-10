@@ -18,7 +18,6 @@ export const NextStepsActionsDapp = ({ status }: { status: string }) => {
   );
 
   const handleStakeClick = () => {
-    console.log("asd");
     clickStake();
     window.open(STAKING_URL);
   };
