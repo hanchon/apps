@@ -5,10 +5,13 @@ import { EvmosCopilotWhiteIcon } from "icons";
 import { useCopilotCard } from "./useCopilotCard";
 
 export const CopilotCard = () => {
-  const { stepsToDraw, drawButton } = useCopilotCard();
-
+  const { stepsToDraw, drawButton, sequence } = useCopilotCard();
+  console.log(sequence);
+  if (sequence) {
+    return null;
+  }
   return (
-    <div className="bg-red flex flex-col justify-start space-y-6 rounded-lg bg-cover p-5">
+    <div className="bg-red flex  flex-col justify-start space-y-6 rounded-lg bg-cover p-5">
       <div className="flex items-center justify-between">
         <h1 className="text-pearl  text-2xl font-bold">
           Onboard to Evmos in 5 minutes

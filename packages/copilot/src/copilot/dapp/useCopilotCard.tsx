@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { StepsContainerDapp } from "./StepsContainarDapp";
-import { StoreType, useEvmosBalance } from "evmos-wallet";
+import { StoreType, getSequence, useEvmosBalance } from "evmos-wallet";
 import { useSelector } from "react-redux";
 import { steps } from "../container/data";
 import {
@@ -12,6 +12,7 @@ import {
 
 export const useCopilotCard = () => {
   const [copilotSteps, setCopilotSteps] = useState(steps);
+  const [sequence, setSequence] = useState(false);
   const value = useSelector((state: StoreType) => state.wallet.value);
   const { evmosBalance } = useEvmosBalance();
   const { handlePreClickAction } = useTracker(USER_NOT_CONNECTED);
@@ -77,5 +78,25 @@ export const useCopilotCard = () => {
     });
   }, [copilotSteps]);
 
-  return { stepsToDraw, drawButton };
+  useEffect(() => {
+    async function getSequenceNumber() {
+      if (value.evmosAddressCosmosFormat === "") {
+        setSequence(false);
+      }
+      const sequenceNumber = await getSequence(
+        "https://rest.bd.evmos.org:1317",
+        value.evmosAddressCosmosFormat
+      );
+      if (sequenceNumber === "0") {
+        setSequence(false);
+      }
+      setSequence(true);
+    }
+    // Execute the async function
+    // Can not await inside a useEffect
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    getSequenceNumber();
+  }, [sequence]);
+
+  return { stepsToDraw, drawButton, sequence };
 };

@@ -90,6 +90,9 @@ export {
   isEvmosChain,
 } from "./internal/wallet/functionality/metamask/metamaskHelpers";
 
-export { queryPubKey } from "./internal/wallet/functionality/pubkey";
+export {
+  queryPubKey,
+  getSequence,
+} from "./internal/wallet/functionality/pubkey";
 export { useEvmosBalance } from "./internal/wallet/functionality/hooks/useEvmosBalance";
 export { useAssets } from "./api/useAssets";
