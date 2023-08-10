@@ -4,16 +4,15 @@
 import { useContext } from "react";
 import { StepsContext } from "../container/StepsContext";
 import { Button } from "./Button";
+import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, useTracker } from "tracker";
 
 export const TopUpDapp = ({ status }: { status: string }) => {
   const { setShowModal } = useContext(StepsContext);
-  return (
-    <Button
-      text="Top up account"
-      onClick={() => {
-        setShowModal(true);
-      }}
-      status={status}
-    />
-  );
+  const { handlePreClickAction } = useTracker(CLICK_ON_TOP_UP_ACCOUNT_DAPP);
+
+  const handleClick = () => {
+    handlePreClickAction({ location: "Inside Copilot onboarding banner" });
+    setShowModal(true);
+  };
+  return <Button text="Top up account" onClick={handleClick} status={status} />;
 };
