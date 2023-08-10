@@ -15,7 +15,7 @@ import {
   CLICK_ON_STAKE_YOUR_EVMOS_COPILOT,
   useTracker,
 } from "tracker";
-import { ECOSYSTEM_URL } from "constants-helper";
+import { ECOSYSTEM_URL, STAKING_URL } from "constants-helper";
 
 export const ButtonsNextSteps = () => {
   const { setShowModal, resetSteps } = useContext(StepsContext);
@@ -46,7 +46,7 @@ export const ButtonsNextSteps = () => {
 
         <Button
           handleClick={() => {
-            handleStakeWithEvmos("https://app.evmos.org/staking", setShowModal);
+            handleStakeWithEvmos(STAKING_URL, setShowModal);
             trackStakeEvmosClick();
             resetSteps();
           }}

@@ -29,11 +29,11 @@ export default {
   "nextsteps.stakeEvmos.badge": "Advanced",
   "nextsteps.learnMore.title": "Learn more",
   /* eslint-enable no-secrets/no-secrets */
-  stakingUrl: "https://app.evmos.org/staking",
   academyFAQUrl: "https://academy.evmos.org/faq",
   "exitcopilot.title": "Exit Copilot?",
   "exitcopilot.description":
     "We advise you finish all steps if you want to get started with Evmos for the first time.",
   "exitcopilot.reject": "Exit",
   "exitcopilot.accept": "Stay",
+  "dappStore.onboard.title": "Onboard to Evmos in 5 minutes",
 } as const;
