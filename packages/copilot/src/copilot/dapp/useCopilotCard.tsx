@@ -5,53 +5,53 @@ import { useSelector } from "react-redux";
 import { steps } from "../container/data";
 
 export const useCopilotCard = () => {
-  const [local, setLocal] = useState(steps);
+  const [copilotSteps, setCopilotSteps] = useState(steps);
   const value = useSelector((state: StoreType) => state.wallet.value);
   const { evmosBalance } = useEvmosBalance();
   useEffect(() => {
-    if (local[0].status === "current" && value.active) {
-      setLocal((prev) => {
-        const copy = [...prev];
-        copy[0].status = "done";
-        copy[1].status = "current";
-        return copy;
+    if (copilotSteps[0].status === "current" && value.active) {
+      setCopilotSteps((prev) => {
+        const updatedState = [...prev];
+        updatedState[0].status = "done";
+        updatedState[1].status = "current";
+        return updatedState;
       });
     }
 
-    if (local[0].status === "done" && !value.active) {
-      setLocal((prev) => {
-        const copy = [...prev];
-        copy[0].status = "current";
-        copy[1].status = "not_processed";
-        copy[2].status = "not_processed";
-        return copy;
+    if (copilotSteps[0].status === "done" && !value.active) {
+      setCopilotSteps((prev) => {
+        const updatedState = [...prev];
+        updatedState[0].status = "current";
+        updatedState[1].status = "not_processed";
+        updatedState[2].status = "not_processed";
+        return updatedState;
       });
     }
 
-    if (local[1].status === "current" && !evmosBalance.isZero()) {
-      setLocal((prev) => {
-        const copy = [...prev];
-        copy[1].status = "done";
-        copy[2].status = "current";
-        return copy;
+    if (copilotSteps[1].status === "current" && !evmosBalance.isZero()) {
+      setCopilotSteps((prev) => {
+        const updatedState = [...prev];
+        updatedState[1].status = "done";
+        updatedState[2].status = "current";
+        return updatedState;
       });
     }
-  }, [local, value, evmosBalance]);
+  }, [copilotSteps, value, evmosBalance]);
 
   const stepsToDraw = useMemo(() => {
-    if (local.length === 1) {
+    if (copilotSteps.length === 1) {
       return;
     }
-    return local.map((step) => {
+    return copilotSteps.map((step) => {
       return <StepsContainerDapp key={step.title} step={step} />;
     });
-  }, [local]);
+  }, [copilotSteps]);
 
   const drawButton = useCallback(() => {
-    return local.map((item) => {
+    return copilotSteps.map((item) => {
       return <div key={item.index}>{item.buttonDapp(item.status)}</div>;
     });
-  }, [local]);
+  }, [copilotSteps]);
 
   return { stepsToDraw, drawButton };
 };
