@@ -6,7 +6,7 @@ import { useCopilotCard } from "./useCopilotCard";
 
 export const CopilotCard = () => {
   const { stepsToDraw, drawButton, sequence } = useCopilotCard();
-  console.log(sequence);
+
   if (sequence) {
     return null;
   }

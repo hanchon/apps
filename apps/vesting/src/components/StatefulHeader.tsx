@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Header } from "ui-helpers";
 import { Dispatch, SetStateAction } from "react";
 import { useTracker, CLICK_EVMOS_LOGO } from "tracker";
-import { Copilot, CopilotButton, StepsContextProvider, steps } from "copilot";
+import { CopilotButton, StepsContextProvider, steps } from "copilot";
+import dynamic from "next/dynamic";
+
+const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
 
 export const StatefulHeader = () => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
