@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { StepsContainerDapp } from "./StepsContainarDapp";
 import { StoreType, getSequence, useEvmosBalance } from "evmos-wallet";
 import { useSelector } from "react-redux";
@@ -9,13 +9,14 @@ import {
   USER_NOT_CONNECTED,
   useTracker,
 } from "tracker";
+import { StepsContext } from "../container/StepsContext";
 
 export const useCopilotCard = () => {
-  console.log("steps", steps);
   const [copilotSteps, setCopilotSteps] = useState(steps);
   const [sequence, setSequence] = useState(false);
   const value = useSelector((state: StoreType) => state.wallet.value);
   const { evmosBalance } = useEvmosBalance();
+  const { resetSteps } = useContext(StepsContext);
 
   const tempEvmosBalance = useMemo(() => {
     return evmosBalance.isZero();
@@ -57,6 +58,7 @@ export const useCopilotCard = () => {
   // Reset steps
   useEffect(() => {
     if (copilotSteps[0].status === "done" && !tempValue.active) {
+      resetSteps();
       setCopilotSteps((prev) => {
         const updatedState = [...prev];
         updatedState[0].status = "current";

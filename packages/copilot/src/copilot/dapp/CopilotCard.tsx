@@ -19,7 +19,7 @@ export const CopilotCard = () => {
         <EvmosCopilotWhiteIcon width={"50"} height={"50"} />
       </div>
       <ol className="mt-4 space-y-3 md:mt-0">{stepsToDraw}</ol>
-      {drawButton()}
+      {drawButton}
     </div>
   );
 };
