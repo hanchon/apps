@@ -167,3 +167,5 @@ export const USER_CONNECTED_AND_HAS_TOKENS =
   "User is connected to an account and has Evmos";
 export const USER_CONNECTED_AND_HAS_NO_TOKENS =
   "User is connected to an account but has no Evmos";
+export const CLICK_ON_CONTINUE_TO_THE_DASHBOARD =
+  "Click on 'Continue to the dashboard' after topping up from main page";
