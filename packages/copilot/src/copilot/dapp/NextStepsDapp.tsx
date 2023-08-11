@@ -8,6 +8,7 @@ import {
   CLICK_ON_USE_DAPP_COPILOT_BANNER,
   useTracker,
 } from "tracker";
+import { t } from "../../locales/translate";
 
 export const NextStepsActionsDapp = ({ status }: { status: string }) => {
   const { handlePreClickAction: clickStake } = useTracker(
@@ -28,10 +29,14 @@ export const NextStepsActionsDapp = ({ status }: { status: string }) => {
   };
   return (
     <div className="flex items-center space-x-4">
-      <Button text="Stake" onClick={handleStakeClick} status={status} />
+      <Button
+        text={t("dappStore.onboard.nextsteps.button.stake.title") as string}
+        onClick={handleStakeClick}
+        status={status}
+      />
       <Button
         onClick={handleUseDappClick}
-        text="Use a dApp"
+        text={t("dappStore.onboard.nextsteps.button.useDapp.title") as string}
         className="text-pearl bg-[#FAF1E442]"
         status={status}
       />

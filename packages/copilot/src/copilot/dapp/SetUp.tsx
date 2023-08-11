@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { StepsContext } from "../container/StepsContext";
 import { Button } from "./Button";
 import { CLICK_ON_START_COPILOT_MAIN_PAGE, useTracker } from "tracker";
+import { t } from "../../locales/translate";
 
 export const SetUpDapp = ({ status }: { status: string }) => {
   const { setShowModal } = useContext(StepsContext);
@@ -14,5 +15,11 @@ export const SetUpDapp = ({ status }: { status: string }) => {
     handlePreClickAction();
     setShowModal(true);
   };
-  return <Button text="Let's go" onClick={handleClick} status={status} />;
+  return (
+    <Button
+      text={t("dappStore.onboard.setup.button.title") as string}
+      onClick={handleClick}
+      status={status}
+    />
+  );
 };
