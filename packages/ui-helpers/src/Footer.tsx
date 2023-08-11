@@ -11,6 +11,7 @@ import {
   CommonWealthIcon,
 } from "icons";
 import { PRIVACY_POLICY_URL } from "constants-helper";
+import { FEEDBACK_URL } from "constants-helper";
 
 export const Footer = ({
   onClickFeedback,
@@ -99,7 +100,7 @@ export const Footer = ({
           <Link
             target="_blank"
             rel="noreferrer"
-            href="https://evmos.canny.io/feedback"
+            href={FEEDBACK_URL}
             aria-label="feedback"
             onClick={onClickFeedback}
           >

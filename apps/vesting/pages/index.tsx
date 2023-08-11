@@ -31,6 +31,7 @@ import { GoogleAnalytics } from "../src/components/GoogleAnalytics";
 import { StatefulFooter } from "../src/components/StatefulFooter";
 const Content = dynamic(() => import("../src/components/vesting/Content"));
 import { MixpanelProvider } from "tracker";
+import { GiveFeedback } from "../src/components/GiveFeedback";
 export default function Home() {
   const queryClient = new QueryClient();
   return (
@@ -46,6 +47,7 @@ export default function Home() {
               <GoogleAnalytics />
               <main>
                 <TermOfServices />
+                <GiveFeedback />
                 <Container>
                   <>
                     <SnackbarsInternal />

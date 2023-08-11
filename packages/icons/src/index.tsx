@@ -41,3 +41,4 @@ export { CalculatorIcon } from "./CalculatorIcon";
 export { EvmosCopilotWhiteIcon } from "./EvmosCopilotWhite";
 export { TransakIcon } from "./TransakIcon";
 export { C14Icon } from "./C14Icon";
+export { FeedbackIcon } from "./FeedbackIcon";
