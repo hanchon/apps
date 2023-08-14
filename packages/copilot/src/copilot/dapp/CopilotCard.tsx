@@ -14,7 +14,10 @@ export const CopilotCard = () => {
   }
   return (
     <TranslationContextProvider locale="en">
-      <div className="bg-red flex  flex-col justify-start space-y-6 rounded-lg bg-cover p-5">
+      <div
+        className="bg-red flex  flex-col justify-start space-y-6 rounded-lg bg-[url(/evmos_bg.png)] bg-contain bg-center bg-no-repeat 
+p-5"
+      >
         <div className="flex items-center justify-between">
           <h1 className="text-pearl  text-2xl font-bold">
             {t("dappStore.onboard.title")}
