@@ -8,14 +8,13 @@ import { Card } from "../card/Card";
 import { Description } from "../card/Description";
 import { Title } from "../card/Title";
 import { useSelector } from "react-redux";
-import { StoreType, useAssets, useStake } from "evmos-wallet";
+import { StoreType, useAssets, useStake, useRewards } from "evmos-wallet";
 import {
   getBalance,
   getBalanceInDollars,
   getNumberBalance,
   getNumberBalanceInDollars,
 } from "./helpers";
-import { useRewards } from "evmos-wallet";
 import { useTranslation } from "next-i18next";
 import { CLICK_ON_STAKE_AND_MANAGE_DELEGATION, useTracker } from "tracker";
 
