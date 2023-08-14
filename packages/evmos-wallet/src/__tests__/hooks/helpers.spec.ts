@@ -42,6 +42,11 @@ describe("Test Helpers for getting balances", () => {
     expect(balance).toBe("0.24");
   });
 
+  it("should return zero dollars balance (formatted) for string evmos price (unformatted)", () => {
+    const balance = getBalanceInDollars(BigNumber.from("0"), true, "--");
+    expect(balance).toBe("0");
+  });
+
   it("should return unavailable balance for zero balance (number - formatted)", () => {
     const balance = getNumberBalance(0, false);
     expect(balance).toBe("-");
@@ -64,6 +69,11 @@ describe("Test Helpers for getting balances", () => {
 
   it("should return zero dollars balance (formatted) for zero dollars balance (number - unformatted)", () => {
     const balance = getNumberBalanceInDollars(0, true, "0.08");
+    expect(balance).toBe("0");
+  });
+
+  it("should return zero dollars balance (formatted) for string evmos price (number - unformatted", () => {
+    const balance = getNumberBalanceInDollars(0, true, "--");
     expect(balance).toBe("0");
   });
 
