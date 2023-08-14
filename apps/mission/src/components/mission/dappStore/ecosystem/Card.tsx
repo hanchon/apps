@@ -21,13 +21,10 @@ export const EcosystemCard = ({ data }: { data: EcosystemProps }) => {
       target="_blank"
       className="relative space-y-5 rounded-lg bg-[#262017] pb-8"
     >
-      <Image
-        className=" aspect-[3/2] w-full rounded-2xl object-contain"
-        src={data.image}
-        alt={data.name}
-        width={250}
-        height={150}
-      />
+      <div className="flex h-[200px] w-full items-center justify-center ">
+        {/*   className=" aspect-[3/2] w-full rounded-2xl object-contain" */}
+        <Image src={data.image} alt={data.name} width={250} height={150} />
+      </div>
       <div className="flex space-x-8 px-5">
         <h3 className=" text-sm font-bold text-pearl">{data.name}</h3>
         <Badge
