@@ -2,10 +2,9 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { BigNumber } from "ethers";
-import { WalletExtension } from "evmos-wallet/src/internal/wallet/functionality/wallet";
 import { convertFromAtto } from "helpers";
-export const getBalance = (amount: BigNumber, wallet: WalletExtension) => {
-  if (!wallet.active) {
+export const getBalance = (amount: BigNumber, wallet: boolean) => {
+  if (!wallet) {
     return "-";
   }
   if (amount.isZero()) {
@@ -16,21 +15,25 @@ export const getBalance = (amount: BigNumber, wallet: WalletExtension) => {
 
 export const getBalanceInDollars = (
   amount: BigNumber,
-  wallet: WalletExtension,
+  wallet: boolean,
   evmosPrice: string
 ) => {
-  if (!wallet.active) {
+  if (!wallet) {
     return "-";
   }
 
   if (amount.isZero()) {
     return "0";
   }
+
+  if (isNaN(Number(evmosPrice))) {
+    return "0";
+  }
   return (Number(convertFromAtto(amount)) * Number(evmosPrice)).toFixed(2);
 };
 
-export const getNumberBalance = (amount: number, wallet: WalletExtension) => {
-  if (!wallet.active) {
+export const getNumberBalance = (amount: number, wallet: boolean) => {
+  if (!wallet) {
     return "-";
   }
   if (amount === 0) {
@@ -41,13 +44,16 @@ export const getNumberBalance = (amount: number, wallet: WalletExtension) => {
 
 export const getNumberBalanceInDollars = (
   amount: number,
-  wallet: WalletExtension,
+  wallet: boolean,
   evmosPrice: string
 ) => {
-  if (!wallet.active) {
+  if (!wallet) {
     return "-";
   }
   if (amount === 0) {
+    return "0";
+  }
+  if (isNaN(Number(evmosPrice))) {
     return "0";
   }
   return (amount * Number(evmosPrice)).toFixed(2);

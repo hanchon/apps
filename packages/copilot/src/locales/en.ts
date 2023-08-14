@@ -36,4 +36,10 @@ export default {
   "exitcopilot.reject": "Exit",
   "exitcopilot.accept": "Stay",
   "dappStore.onboard.title": "Onboard to Evmos in 5 minutes",
+  "dappStore.onboard.nextsteps.button.stake.title": "Stake",
+  "dappStore.onboard.nextsteps.button.useDapp.title": "Use a dApp",
+  "dappStore.onboard.setup.button.title": "Let's go",
+  "dappStore.onboard.topup.button.title": "Top up account",
+  "copilot.intro.title": "Evmos Copilot",
+  "copilot.intro.description": "Let's get started with Evmos in 5 minutes",
 } as const;

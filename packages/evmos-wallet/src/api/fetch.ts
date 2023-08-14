@@ -1,5 +1,5 @@
 import { EVMOS_BACKEND } from "../internal/wallet/functionality/networkConfig";
-import { ERC20BalanceResponse } from "./types";
+import { ERC20BalanceResponse, StakingInfoResponse } from "./types";
 
 export const getAssets = async () => {
   const res = await fetch(`${EVMOS_BACKEND}/ERC20ModuleBalance`);
@@ -18,4 +18,16 @@ export const getAssetsForAddress = async (
     `${EVMOS_BACKEND}/ERC20ModuleBalance/${address}/${hexAddress}`
   );
   return res.json() as Promise<ERC20BalanceResponse>;
+};
+
+export const getStakingInfo = async (address: string) => {
+  if (address === "" || address == undefined || address == null) {
+    return {
+      delegations: [],
+      undelegations: [],
+      rewards: { rewards: [], total: [] },
+    };
+  }
+  const res = await fetch(`${EVMOS_BACKEND}/stakingInfo/${address}`);
+  return res.json() as Promise<StakingInfoResponse>;
 };

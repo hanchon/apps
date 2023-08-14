@@ -125,3 +125,5 @@ export { CLICK_ON_USE_DAPP_COPILOT_BANNER } from "./constants";
 export { USER_NOT_CONNECTED } from "./constants";
 export { USER_CONNECTED_AND_HAS_TOKENS } from "./constants";
 export { USER_CONNECTED_AND_HAS_NO_TOKENS } from "./constants";
+export { CLICK_ON_CONTINUE_TO_THE_DASHBOARD } from "./constants";
+export { CLICK_ON_GIVE_FEEDBACK_MAIN_PAGE } from "./constants";

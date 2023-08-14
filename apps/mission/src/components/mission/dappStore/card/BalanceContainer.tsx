@@ -12,7 +12,7 @@ export const BalanceContainer = ({
 }) => {
   return (
     <div>
-      <h3 className="font-semibold text-[#FAF1E4]">{title}</h3>
+      <h3 className="font-semibold text-pearl">{title}</h3>
       <h4 className="text-3xl text-white">
         {amount} <span className="opacity-50">EVMOS</span>
       </h4>

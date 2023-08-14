@@ -38,7 +38,7 @@ export const EcosystemContainer = () => {
           <h1 className="text-2xl text-pearl">
             {t("dappStore.ecosystem.title")}
           </h1>
-          <h2 className="text-[#FFFFFFB2]">
+          <h2 className="text-grayOpacity2">
             {t("dappStore.ecosystem.description")}
             <Link
               className="ml-2 text-red"

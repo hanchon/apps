@@ -7,17 +7,17 @@ import { BalanceContainer } from "../card/BalanceContainer";
 import { Card } from "../card/Card";
 import { Description } from "../card/Description";
 import { Title } from "../card/Title";
-import { useStakingInfo } from "../../../../internal/functionality/hooks/useStakingInfo";
-import useAssetsTopBar from "../../../../internal/functionality/hooks/useAssetsTopBar";
 import { useSelector } from "react-redux";
-import { StoreType } from "evmos-wallet";
 import {
+  StoreType,
+  useAssets,
+  useStake,
+  useRewards,
   getBalance,
   getBalanceInDollars,
   getNumberBalance,
   getNumberBalanceInDollars,
-} from "./helpers";
-import { useRewards } from "./useRewards";
+} from "evmos-wallet";
 import { useTranslation } from "next-i18next";
 import { CLICK_ON_STAKE_AND_MANAGE_DELEGATION, useTracker } from "tracker";
 
@@ -33,8 +33,8 @@ export const StakingCard = () => {
 
   const wallet = useSelector((state: StoreType) => state.wallet.value);
 
-  const { totalDelegations, totalRewards } = useStakingInfo();
-  const { evmosPrice, totalEvmosAsset } = useAssetsTopBar();
+  const { totalDelegations, totalRewards } = useStake();
+  const { evmosPrice, totalEvmosAsset } = useAssets();
   const { handleConfirmButton } = useRewards(wallet, totalRewards);
 
   const { t } = useTranslation();
@@ -51,19 +51,19 @@ export const StakingCard = () => {
         <div className="grid grid-cols-2">
           <BalanceContainer
             title={t("dappStore.card.staking.available")}
-            amount={getBalance(totalEvmosAsset, wallet)}
+            amount={getBalance(totalEvmosAsset, wallet.active)}
             amountInDollars={getBalanceInDollars(
               totalEvmosAsset,
-              wallet,
+              wallet.active,
               evmosPrice
             )}
           />
           <BalanceContainer
             title={t("dappStore.card.staking.staked")}
-            amount={getBalance(totalDelegations, wallet)}
+            amount={getBalance(totalDelegations, wallet.active)}
             amountInDollars={getBalanceInDollars(
               totalDelegations,
-              wallet,
+              wallet.active,
               evmosPrice
             )}
           />
@@ -71,10 +71,10 @@ export const StakingCard = () => {
         <div className="flex items-center justify-between rounded-lg bg-[#FFFFFF0F] p-3">
           <BalanceContainer
             title={t("dappStore.card.staking.rewards")}
-            amount={getNumberBalance(totalRewards, wallet)}
+            amount={getNumberBalance(totalRewards, wallet.active)}
             amountInDollars={getNumberBalanceInDollars(
               totalRewards,
-              wallet,
+              wallet.active,
               evmosPrice
             )}
           />
