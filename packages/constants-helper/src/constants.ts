@@ -22,3 +22,4 @@ export const STAKING_URL = "https://app.evmos.org/staking";
 export const GOOGLE_FORM_URL =
   // eslint-disable-next-line no-secrets/no-secrets
   "https://docs.google.com/forms/d/e/1FAIpQLSc2O5HzjZMPbFD84O1513xJ0mggkSXihQy_a6IGskZq28l8yA/viewform";
+export const FEEDBACK_URL = "https://evmos.canny.io/feedback";

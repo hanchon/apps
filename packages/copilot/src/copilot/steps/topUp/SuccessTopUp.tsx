@@ -4,7 +4,11 @@
 import { useContext } from "react";
 import { StepsContext } from "../../container/StepsContext";
 import { useEvmosBalance } from "./useEvmosBalance";
-import { CLICK_ON_NEXT_STEPS_COPILOT, useTracker } from "tracker";
+import {
+  CLICK_ON_CONTINUE_TO_THE_DASHBOARD,
+  CLICK_ON_NEXT_STEPS_COPILOT,
+  useTracker,
+} from "tracker";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { PrimaryButton } from "../../PrimaryButton";
@@ -18,14 +22,17 @@ export const SuccessTopUp = () => {
 
   const { handlePreClickAction } = useTracker(CLICK_ON_NEXT_STEPS_COPILOT);
 
+  const { handlePreClickAction: clickContinue } = useTracker(
+    CLICK_ON_CONTINUE_TO_THE_DASHBOARD
+  );
   const handleOnClick = () => {
     updateStepsStatus();
     handlePreClickAction();
   };
 
   const handleOnClickTopUp = () => {
+    clickContinue();
     setShowModal(false);
-    // TODO: add tracking event
   };
 
   const drawButton = () => {

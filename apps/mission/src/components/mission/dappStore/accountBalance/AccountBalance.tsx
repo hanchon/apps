@@ -3,13 +3,14 @@
 
 import { convertFromAtto } from "helpers";
 import { Button } from "../Button";
-import { Copilot, StepsContext } from "copilot";
+import { StepsContext } from "copilot";
 import { useContext } from "react";
 import { useTranslation } from "next-i18next";
 import { StoreType, useAssets, useStake } from "evmos-wallet";
 import { useSelector } from "react-redux";
 import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, useTracker } from "tracker";
-
+import dynamic from "next/dynamic";
+const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
 export const AccountBalance = () => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const { totalDelegations, totalRewards } = useStake();

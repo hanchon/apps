@@ -17,3 +17,4 @@ export { NAV_TO_VESTING } from "./constants";
 export { ECOSYSTEM_URL } from "./constants";
 export { STAKING_URL } from "./constants";
 export { GOOGLE_FORM_URL } from "./constants";
+export { FEEDBACK_URL } from "./constants";

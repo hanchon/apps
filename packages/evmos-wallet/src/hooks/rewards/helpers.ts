@@ -25,6 +25,10 @@ export const getBalanceInDollars = (
   if (amount.isZero()) {
     return "0";
   }
+
+  if (isNaN(Number(evmosPrice))) {
+    return "0";
+  }
   return (Number(convertFromAtto(amount)) * Number(evmosPrice)).toFixed(2);
 };
 
@@ -47,6 +51,9 @@ export const getNumberBalanceInDollars = (
     return "-";
   }
   if (amount === 0) {
+    return "0";
+  }
+  if (isNaN(Number(evmosPrice))) {
     return "0";
   }
   return (amount * Number(evmosPrice)).toFixed(2);

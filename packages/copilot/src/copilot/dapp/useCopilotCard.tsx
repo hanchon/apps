@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { StepsContainerDapp } from "./StepsContainarDapp";
-import { StoreType, useEvmosBalance } from "evmos-wallet";
+import { StoreType, getSequence, useEvmosBalance } from "evmos-wallet";
 import { useSelector } from "react-redux";
 import { steps } from "../container/data";
 import {
@@ -9,12 +9,25 @@ import {
   USER_NOT_CONNECTED,
   useTracker,
 } from "tracker";
+import { StepsContext } from "../container/StepsContext";
 
 export const useCopilotCard = () => {
   const [copilotSteps, setCopilotSteps] = useState(steps);
+  const [sequence, setSequence] = useState(false);
   const value = useSelector((state: StoreType) => state.wallet.value);
   const { evmosBalance } = useEvmosBalance();
-  const { handlePreClickAction } = useTracker(USER_NOT_CONNECTED);
+  const { resetSteps } = useContext(StepsContext);
+
+  const tempEvmosBalance = useMemo(() => {
+    return evmosBalance.isZero();
+  }, [evmosBalance]);
+
+  const tempValue = useMemo(() => {
+    return value;
+  }, [value]);
+
+  const { handlePreClickAction: notConnected } = useTracker(USER_NOT_CONNECTED);
+
   const { handlePreClickAction: connectedWithTokensEvent } = useTracker(
     USER_CONNECTED_AND_HAS_TOKENS
   );
@@ -22,8 +35,17 @@ export const useCopilotCard = () => {
     USER_CONNECTED_AND_HAS_NO_TOKENS
   );
 
+  // Track if user is not connected to an account
   useEffect(() => {
-    if (copilotSteps[0].status === "current" && value.active) {
+    if (copilotSteps[0].status === "current" && !tempValue.active) {
+      //
+      notConnected();
+    }
+  }, [copilotSteps, tempValue]);
+
+  // Update status of the steps
+  useEffect(() => {
+    if (copilotSteps[0].status === "current" && tempValue.active) {
       setCopilotSteps((prev) => {
         const updatedState = [...prev];
         updatedState[0].status = "done";
@@ -31,13 +53,12 @@ export const useCopilotCard = () => {
         return updatedState;
       });
     }
+  }, [copilotSteps, tempValue]);
 
-    if (copilotSteps[0].status === "current" && !value.active) {
-      // User is not connected to an account
-      handlePreClickAction();
-    }
-
-    if (copilotSteps[0].status === "done" && !value.active) {
+  // Reset steps
+  useEffect(() => {
+    if (copilotSteps[0].status === "done" && !tempValue.active) {
+      resetSteps();
       setCopilotSteps((prev) => {
         const updatedState = [...prev];
         updatedState[0].status = "current";
@@ -46,12 +67,11 @@ export const useCopilotCard = () => {
         return updatedState;
       });
     }
+  }, [copilotSteps, tempValue]);
 
-    if (copilotSteps[1].status === "current" && evmosBalance.isZero()) {
-      connectedWithoutTokensEvent();
-    }
-    if (copilotSteps[1].status === "current" && !evmosBalance.isZero()) {
-      // User is connected to an account and has Evmos
+  // Trake if user is connected to an account and has Evmos
+  useEffect(() => {
+    if (copilotSteps[1].status === "current" && !tempEvmosBalance) {
       connectedWithTokensEvent();
       setCopilotSteps((prev) => {
         const updatedState = [...prev];
@@ -60,7 +80,18 @@ export const useCopilotCard = () => {
         return updatedState;
       });
     }
-  }, [copilotSteps, value, evmosBalance]);
+  }, [copilotSteps, tempEvmosBalance]);
+
+  // Track if user is connected to an account and has no Evmos
+  useEffect(() => {
+    if (
+      copilotSteps[1].status === "current" &&
+      tempEvmosBalance &&
+      tempValue.active
+    ) {
+      connectedWithoutTokensEvent();
+    }
+  }, [copilotSteps, tempEvmosBalance, tempValue]);
 
   const stepsToDraw = useMemo(() => {
     if (copilotSteps.length === 1) {
@@ -71,11 +102,35 @@ export const useCopilotCard = () => {
     });
   }, [copilotSteps]);
 
-  const drawButton = useCallback(() => {
+  const drawButton = useMemo(() => {
     return copilotSteps.map((item) => {
       return <div key={item.index}>{item.buttonDapp(item.status)}</div>;
     });
   }, [copilotSteps]);
 
-  return { stepsToDraw, drawButton };
+  useEffect(() => {
+    async function getSequenceNumber() {
+      if (tempValue.evmosAddressCosmosFormat === "") {
+        setSequence(false);
+        return;
+      }
+      const sequenceNumber = await getSequence(
+        "https://rest.bd.evmos.org:1317",
+        tempValue.evmosAddressCosmosFormat
+      );
+      if (sequenceNumber === "0" || sequenceNumber === null) {
+        setSequence(false);
+        return;
+      }
+      if (sequenceNumber !== "0") {
+        setSequence(true);
+      }
+    }
+    // Execute the async function
+    // Can not await inside a useEffect
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    getSequenceNumber();
+  }, [sequence, tempValue]);
+
+  return { stepsToDraw, drawButton, sequence };
 };

@@ -7,8 +7,12 @@ import { Header } from "ui-helpers";
 import { Dispatch, SetStateAction } from "react";
 import { CLICK_EVMOS_LOGO, useTracker } from "tracker";
 import { StepsContextProvider } from "copilot";
-import { Copilot, CopilotButton, steps } from "copilot";
+import { CopilotButton, steps } from "copilot";
 import { useAssets } from "evmos-wallet";
+import dynamic from "next/dynamic";
+
+const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
+
 export const StatefulHeader = () => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
