@@ -2,9 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useDispatch } from "react-redux";
-import { snackExecuteIBCTransfer } from "evmos-wallet";
-import { executeRewards } from "../../../../internal/staking/functionality/transactions/rewards";
-import { WalletExtension } from "evmos-wallet/src/internal/wallet/functionality/wallet";
+import { executeRewards } from "./rewards";
 import { useCallback } from "react";
 import {
   CLICK_CLAIM_REWARDS_TOPBAR,
@@ -12,6 +10,8 @@ import {
   SUCCESSFUL_TX_CLAIM_REWARDS,
   UNSUCCESSFUL_TX_CLAIM_REWARDS,
 } from "tracker";
+import { WalletExtension } from "../../internal/wallet/functionality/wallet";
+import { snackExecuteIBCTransfer } from "../../notification/helpers";
 
 export const useRewards = (value: WalletExtension, totalRewards: number) => {
   const dispatch = useDispatch();

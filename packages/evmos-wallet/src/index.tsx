@@ -93,3 +93,12 @@ export {
 export { queryPubKey } from "./internal/wallet/functionality/pubkey";
 export { useEvmosBalance } from "./internal/wallet/functionality/hooks/useEvmosBalance";
 export { useAssets } from "./api/useAssets";
+export { useStake } from "./api/useStake";
+export { useRewards } from "./hooks/rewards/useRewards";
+
+export {
+  getBalance,
+  getBalanceInDollars,
+  getNumberBalance,
+  getNumberBalanceInDollars,
+} from "./hooks/rewards/helpers";
