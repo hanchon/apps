@@ -1,21 +1,20 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import { StoreType } from "evmos-wallet";
-
-import { useMemo } from "react";
 import { BigNumber } from "ethers";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { convertStringFromAtto } from "helpers";
 import {
   DelegationsResponse,
   StakingInfoResponse,
   UndelegationsResponse,
-} from "../../types";
-import { convertStringFromAtto } from "helpers";
-import { getStakingInfo } from "../../fetch";
+} from "./types";
+import { getStakingInfo } from "./fetch";
+import { StoreType } from "../redux/Store";
 
-export const useStakingInfo = () => {
+export const useStake = () => {
   const value = useSelector((state: StoreType) => state.wallet.value);
 
   const stakingInfo = useQuery<StakingInfoResponse, Error>({
@@ -43,7 +42,7 @@ export const useStakingInfo = () => {
     if (stakingInfo.data !== undefined) {
       // for each validator, get the undelegations balances
       // that are in the entries array
-      stakingInfo.data.undelegations.map((validator) => {
+      stakingInfo.data.undelegations.forEach((validator) => {
         const sum = validator.entries.reduce((prev, curr) => {
           return prev.add(BigNumber.from(curr?.balance));
         }, total);
@@ -56,14 +55,15 @@ export const useStakingInfo = () => {
 
   const totalRewards = useMemo(() => {
     let total = "0";
-    if (stakingInfo.data !== undefined) {
-      if (stakingInfo.data.rewards !== undefined) {
-        if (stakingInfo.data.rewards.total.length !== 0) {
-          // the sum is already done in the backend
-          total = stakingInfo.data.rewards.total[0].amount;
-        }
-      }
+    if (
+      stakingInfo.data !== undefined &&
+      stakingInfo.data.rewards !== undefined &&
+      stakingInfo.data.rewards.total.length !== 0
+    ) {
+      // the sum is already done in the backend
+      total = stakingInfo.data.rewards.total[0].amount;
     }
+
     return convertStringFromAtto(total);
   }, [stakingInfo]);
 

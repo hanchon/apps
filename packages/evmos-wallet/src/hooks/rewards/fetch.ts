@@ -1,11 +1,9 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import {
-  GENERATING_TX_NOTIFICATIONS,
-  IBCTransferResponse,
-  EVMOS_BACKEND,
-} from "evmos-wallet";
+import { EVMOS_BACKEND } from "../../internal/wallet/functionality/networkConfig";
+import { GENERATING_TX_NOTIFICATIONS } from "../../notification/errors";
+import { IBCTransferResponse } from "../../notification/transactionsTypes";
 
 export async function rewardsBackendCall(
   pubkey: string,

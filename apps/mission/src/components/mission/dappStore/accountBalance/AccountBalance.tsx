@@ -1,21 +1,22 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import useAssetsTopBar from "../../../../internal/functionality/hooks/useAssetsTopBar";
-import { useHeaderInfo } from "../../../../internal/functionality/hooks/useHeaderInfo";
 import { convertFromAtto } from "helpers";
 import { Button } from "../Button";
 import { StepsContext } from "copilot";
 import { useContext } from "react";
 import { useTranslation } from "next-i18next";
+import { StoreType, useAssets, useStake } from "evmos-wallet";
+import { useSelector } from "react-redux";
 import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, useTracker } from "tracker";
 import dynamic from "next/dynamic";
 const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
 export const AccountBalance = () => {
-  const { totalStaked, totalRewards, wallet } = useHeaderInfo();
-  const { evmosPrice, totalEvmosAsset } = useAssetsTopBar();
+  const wallet = useSelector((state: StoreType) => state.wallet.value);
+  const { totalDelegations, totalRewards } = useStake();
+  const { evmosPrice, totalEvmosAsset } = useAssets();
 
-  const totalEvmos = totalEvmosAsset.add(totalStaked);
+  const totalEvmos = totalEvmosAsset.add(totalDelegations);
   // staked + evmos + rewards
   let totalBalance = Number(convertFromAtto(totalEvmos)) + totalRewards;
 

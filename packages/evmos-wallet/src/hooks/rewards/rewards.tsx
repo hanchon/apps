@@ -1,15 +1,14 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+import { EVMOS_NETWORK_FOR_BACKEND } from "../../internal/wallet/functionality/networkConfig";
+import { Signer } from "../../internal/wallet/functionality/signing/genericSigner";
+import { WalletExtension } from "../../internal/wallet/functionality/wallet";
 import {
   BROADCASTED_NOTIFICATIONS,
   GENERATING_TX_NOTIFICATIONS,
   SIGNING_NOTIFICATIONS,
-  EVMOS_NETWORK_FOR_BACKEND,
-  Signer,
-} from "evmos-wallet";
-
-import { WalletExtension } from "evmos-wallet/src/internal/wallet/functionality/wallet";
+} from "../../notification/errors";
 import { rewardsBackendCall } from "./fetch";
 
 export async function executeRewards(wallet: WalletExtension) {
