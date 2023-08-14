@@ -9,6 +9,7 @@ module.exports = {
   globals: {
     React: true,
     JSX: true,
+    Cypher: true
   },
   extends: [
     "plugin:react/recommended",

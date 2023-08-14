@@ -36,6 +36,15 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) | packages/copilot 1.0.4 packages/tracker 1.0.6 | Track card provider and crypto swap events
+- (chore) | apps/governance 1.0.21 apps/assets 1.0.23 apps/mission 1.0.20 apps/staking 1.0.19 apps/vesting 1.0.17 packages/icons 1.0.5 packages/copilot 1.0.3 packages/eslint-config-custom 1.0.4 | Add c14 and cypherD support
+
+## 1.1.4 - 2023-08-03
+
+- (chore) | apps/governance 1.0.20 | remove proposal number 156
+
+## 1.1.3 - 2023-08-01
+
 - (refactor) | Multiple Packages | Reconfigure build pipeline and review dependency graph
   - apps/assets 1.0.22
   - apps/governance 1.0.19

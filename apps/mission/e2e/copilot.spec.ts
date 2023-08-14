@@ -191,6 +191,26 @@ test.describe("Mission Page - Copilot", () => {
         page.getByRole("button", { name: /Next steps/i })
       ).toBeHidden();
 
+      let c14Widget = page.getByTestId("c14-widget");
+      await c14Widget.waitFor();
+
+      expect(await c14Widget.count()).toBe(1);
+
+      await page.getByTestId("card-provider-dropdown").click();
+      await page.getByRole("button", { name: /Transak/i }).click();
+
+      let transakWidget = page.getByTestId("transak-widget");
+      await transakWidget.waitFor();
+
+      expect(await transakWidget.count()).toBe(1);
+
+      await page.getByRole("button", { name: "Cryptocurrencies" }).click();
+
+      let cypherDWidget = page.getByTestId("cypher-onboading-sdk");
+      await cypherDWidget.waitFor();
+
+      expect(await cypherDWidget.count()).toBe(1);
+
       await page.waitForTimeout(3000);
       await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
         const json = {

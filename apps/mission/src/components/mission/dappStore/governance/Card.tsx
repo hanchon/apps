@@ -7,10 +7,15 @@ import { Card } from "../card/Card";
 import { Description } from "../card/Description";
 import { Title } from "../card/Title";
 import { useTranslation } from "next-i18next";
+import { CLICK_ON_PARTICIPATE_IN_GOVERNANCE, useTracker } from "tracker";
 
 export const GovernanceCard = () => {
   const router = useRouter();
+  const { handlePreClickAction } = useTracker(
+    CLICK_ON_PARTICIPATE_IN_GOVERNANCE
+  );
   const handleOnClick = () => {
+    handlePreClickAction();
     router.push("/governance");
   };
 

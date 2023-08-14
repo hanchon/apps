@@ -17,10 +17,15 @@ import {
 } from "./helpers";
 import { useRewards } from "evmos-wallet";
 import { useTranslation } from "next-i18next";
+import { CLICK_ON_STAKE_AND_MANAGE_DELEGATION, useTracker } from "tracker";
 
 export const StakingCard = () => {
   const router = useRouter();
+  const { handlePreClickAction } = useTracker(
+    CLICK_ON_STAKE_AND_MANAGE_DELEGATION
+  );
   const handleOnClick = () => {
+    handlePreClickAction();
     router.push("/staking");
   };
 

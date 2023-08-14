@@ -13,7 +13,12 @@ import {
   sumBigNumber,
 } from "helpers";
 import { getProposals } from "../fetch";
-import { ProposalDetailProps, ProposalProps } from "../types";
+import { Proposal, ProposalDetailProps, ProposalProps } from "../types";
+
+const PROPOSAL_TO_REMOVE = "156";
+const removeProposal = (id: string, proposals: Proposal[]) => {
+  return proposals.filter((proposal) => proposal.id !== id);
+};
 
 export const useProposals = (pid?: string) => {
   const proposalsResponse = useQuery({
@@ -24,7 +29,14 @@ export const useProposals = (pid?: string) => {
   const proposals = useMemo(() => {
     const temp: ProposalProps[] = [];
     if (proposalsResponse.data !== undefined) {
-      proposalsResponse.data.proposals.map((item) => {
+      const filtered = removeProposal(
+        PROPOSAL_TO_REMOVE,
+        proposalsResponse.data.proposals
+      );
+      filtered.map((item) => {
+        if (item.id === PROPOSAL_TO_REMOVE) {
+          return;
+        }
         const percents = getPercentage([
           item.final_tally_result.yes_count,
           item.final_tally_result.no_count,
@@ -75,7 +87,7 @@ export const useProposals = (pid?: string) => {
     };
     if (proposalsResponse.data !== undefined) {
       const filtered = proposalsResponse.data.proposals.filter(
-        (proposal) => proposal.id === pid
+        (proposal) => proposal.id === pid && proposal.id !== PROPOSAL_TO_REMOVE
       );
       if (filtered.length === 0) {
         return "Proposal not found, please try again";

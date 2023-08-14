@@ -6,7 +6,13 @@ import { launchPadItems } from "./data";
 import { Item } from "./Item";
 import Link from "next/link";
 import { ECOSYSTEM_URL } from "constants-helper";
+import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
 export const LaunchContainer = () => {
+  const { handlePreClickAction } = useTracker(CLICK_ON_DAPP_INSIDE_LAUNCHER);
+
+  const handleEcosystemButton = () => {
+    handlePreClickAction({ OtherActions: "View all dApps" });
+  };
   const drawItems = () => {
     return launchPadItems.map((item, index) => {
       return <Item key={index} itemProps={item} />;
@@ -32,6 +38,7 @@ export const LaunchContainer = () => {
             {drawItems()}
           </div>
           <Link
+            onClick={handleEcosystemButton}
             href={ECOSYSTEM_URL}
             target="_blank"
             rel="noopener noreferrer"

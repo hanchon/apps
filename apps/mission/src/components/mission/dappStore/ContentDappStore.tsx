@@ -6,11 +6,13 @@ import { AssetsCard } from "./assets/Card";
 import { GovernanceCard } from "./governance/Card";
 import { EcosystemContainer } from "./ecosystem/Container";
 import { AccountBalanceContainer } from "./accountBalance/Container";
+import { Onboard } from "./onboard/Onboard";
 export const ContentDappStore = () => {
   return (
     <div className="space-y-8 px-3 text-[IBM] md:px-0">
-      <div className="flex flex-col justify-between md:flex-row">
+      <div className="grid gap-8 md:grid-cols-2">
         <AccountBalanceContainer />
+        <Onboard />
       </div>
       <div className="grid gap-8 md:grid-cols-2 ">
         <StakingCard />

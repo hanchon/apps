@@ -8,6 +8,8 @@ import { useContext } from "react";
 import { useTranslation } from "next-i18next";
 import { StoreType, useAssets, useStake } from "evmos-wallet";
 import { useSelector } from "react-redux";
+import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, useTracker } from "tracker";
+
 export const AccountBalance = () => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const { totalDelegations, totalRewards } = useStake();
@@ -42,6 +44,13 @@ export const AccountBalance = () => {
   const { setShowModal } = useContext(StepsContext);
 
   const { t } = useTranslation();
+
+  const { handlePreClickAction } = useTracker(CLICK_ON_TOP_UP_ACCOUNT_DAPP);
+
+  const handleClick = () => {
+    handlePreClickAction({ location: "On the main page" });
+    setShowModal(true);
+  };
   return (
     <>
       <Copilot />
@@ -49,7 +58,7 @@ export const AccountBalance = () => {
         <p className="text-2xl text-pearl ">
           {t("dappStore.account.balance.title")}
         </p>
-        <div className="flex flex-col items-center justify-center space-x-0 space-y-3 md:flex-row md:space-x-3 md:space-y-0">
+        <div className="flex flex-col items-center space-x-0 space-y-3 md:flex-row md:space-x-3 md:space-y-0">
           <h6 className="text-6xl font-bold text-white">
             {wallet.active ? drawTotalBalance() : "- "}
             <span className="ml-2 text-6xl font-bold uppercase text-white opacity-50">
@@ -58,9 +67,7 @@ export const AccountBalance = () => {
           </h6>
           {wallet.active && (
             <Button
-              handleOnClick={() => {
-                setShowModal(true);
-              }}
+              handleOnClick={handleClick}
               text={t("dappStore.account.balance.topUp")}
             />
           )}

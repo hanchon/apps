@@ -7,10 +7,14 @@ import { Card } from "../card/Card";
 import { Description } from "../card/Description";
 import { Title } from "../card/Title";
 import { useTranslation } from "next-i18next";
+import { CLICK_ON_SEE_PORTFOLIO, useTracker } from "tracker";
 
 export const AssetsCard = () => {
+  const { handlePreClickAction } = useTracker(CLICK_ON_SEE_PORTFOLIO);
+
   const router = useRouter();
   const handleOnClick = () => {
+    handlePreClickAction();
     router.push("/assets");
   };
 

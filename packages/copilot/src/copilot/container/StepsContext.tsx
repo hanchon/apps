@@ -11,6 +11,7 @@ type StepsPropsContext = {
     index: number;
     component: JSX.Element;
     title: string;
+    buttonDapp: (status: string) => JSX.Element;
   }[];
   updateStepsStatus: () => void;
   setShowModal: Dispatch<SetStateAction<boolean>>;
@@ -49,6 +50,7 @@ const StepsContextProvider = ({
     title: string;
     component: JSX.Element;
     status: string;
+    buttonDapp: (status: string) => JSX.Element;
   }[];
 }) => {
   const initialValue = steps.map((step, index) => ({
@@ -56,11 +58,13 @@ const StepsContextProvider = ({
     index,
     component: step.component,
     title: step.title,
+    buttonDapp: step.buttonDapp,
   }));
 
   const [stepsStatus, setStepsStatus] = useState(initialValue);
   const [showModal, setShowModal] = useState(false);
   const [showCloseModal, setShowCloseModal] = useState(false);
+
   const updateStepsStatus = () => {
     const updatedState = [...stepsStatus];
     const currentElement = updatedState.find(
@@ -74,11 +78,9 @@ const StepsContextProvider = ({
     const nextStep = updatedState[currentElement.index + 1];
     if (nextStep) {
       const nextStepUpdated = { ...nextStep, status: STEP_STATUS.CURRENT };
-
       updatedState[currentElement.index] = updatedStep;
       updatedState[currentElement.index + 1] = nextStepUpdated;
     }
-
     setStepsStatus(updatedState);
   };
 

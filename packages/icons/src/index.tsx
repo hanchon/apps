@@ -38,3 +38,6 @@ export { NutIcon } from "./NutIcon";
 export { CoinIcon } from "./CoinIcon";
 export { GovernanceIcon } from "./GovernanceIcon";
 export { CalculatorIcon } from "./CalculatorIcon";
+export { EvmosCopilotWhiteIcon } from "./EvmosCopilotWhite";
+export { TransakIcon } from "./TransakIcon";
+export { C14Icon } from "./C14Icon";
