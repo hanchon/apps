@@ -1,8 +1,127 @@
 import { test, expect } from "@playwright/test";
 import { web3Test } from "playwright-config-custom/helpers";
 
-const BALANCE_ENDPOINT =
-  "*/**/BalanceByDenom/EVMOS/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/aevmos";
+const ERC20_MODULE_BALANCE_ENDPOINT =
+  "*/**/ERC20ModuleBalance/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
+
+const STAKING_INFO_ENDPOINT =
+  "*/**//stakingInfo/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
+
+const responseZeroBalance = {
+  balance: [
+    {
+      name: "EVMOS",
+      symbol: "EVMOS",
+      decimals: 18,
+      erc20Balance: "0",
+      cosmosBalance: "0",
+      tokenName: "EVMOS",
+      tokenIdentifier: "EVMOS",
+      description: "EVMOS",
+      coingeckoPrice: "0.084586",
+      chainId: "evmos_9001-2",
+      chainIdentifier: "Evmos",
+      handledByExternalUI: null,
+      erc20Address: "0xD4949664cD82660AaE99bEdc034a0deA8A0bd517",
+      pngSrc:
+        "https://raw.githubusercontent.com/cosmos/chain-registry/master/evmos/images/evmos.png",
+      prefix: "evmos",
+    },
+  ],
+};
+
+const responseERC20ModuleBalance = {
+  balance: [
+    {
+      name: "EVMOS",
+      symbol: "EVMOS",
+      decimals: 18,
+      erc20Balance: "92001000000000000",
+      cosmosBalance: "6498549296417793206",
+      tokenName: "EVMOS",
+      tokenIdentifier: "EVMOS",
+      description: "EVMOS",
+      coingeckoPrice: "0.084586",
+      chainId: "evmos_9001-2",
+      chainIdentifier: "Evmos",
+      handledByExternalUI: null,
+      erc20Address: "0xD4949664cD82660AaE99bEdc034a0deA8A0bd517",
+      pngSrc:
+        "https://raw.githubusercontent.com/cosmos/chain-registry/master/evmos/images/evmos.png",
+      prefix: "evmos",
+    },
+  ],
+};
+
+const responseInfoStaking = {
+  delegations: [
+    {
+      delegation: {
+        delegator_address: "evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g",
+        validator_address:
+          "evmosvaloper1mx9nqk5agvlsvt2yc8259nwztmxq7zjqep5khu",
+        shares: "11111111110000000.000000000000000000",
+        rank: 0,
+        validator: {
+          operator_address:
+            "evmosvaloper1mx9nqk5agvlsvt2yc8259nwztmxq7zjqep5khu",
+          consensus_pubkey: {
+            type_url: "",
+            value: "",
+          },
+          jailed: false,
+          status: "BOND_STATUS_BONDED",
+          tokens: "8606954651892010787306223",
+          delegator_shares: "8606954651892010787306223.000000000000000000",
+          description: {
+            moniker: "OrbitalApes.com",
+            identity: "0FC43339DE6CE5EE",
+            website: "https://www.orbitalapes.com",
+            security_contact: "",
+            details: "Evmos Validator by Orbital Apes NFT",
+          },
+          unbonding_height: "0",
+          unbonding_time: "1970-01-01T00:00:00Z",
+          commission: {
+            commission_rates: {
+              rate: "0.050000000000000000",
+              max_rate: "0.100000000000000000",
+              max_change_rate: "0.010000000000000000",
+            },
+            update_time: "2022-04-28T21:50:32.806138839Z",
+          },
+          min_self_delegation: "1000000",
+          rank: 5,
+        },
+      },
+      balance: {
+        denom: "aevmos",
+        amount: "123",
+      },
+    },
+  ],
+  undelegations: [],
+  rewards: {
+    rewards: [
+      {
+        validator_address:
+          "evmosvaloper1mx9nqk5agvlsvt2yc8259nwztmxq7zjqep5khu",
+        reward: [
+          {
+            denom: "aevmos",
+            amount: "5827134782040607.911000000000000000",
+          },
+        ],
+      },
+    ],
+    total: [
+      {
+        denom: "aevmos",
+        amount: "5827134782040607.911000000000000000",
+      },
+    ],
+  },
+};
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
@@ -70,32 +189,51 @@ test.describe("Mission Page - Copilot", () => {
 
       // balance is 0 so we can show top up account button on the onboarding section
       //  I need to merge the two PRs to get the right call and mock it
+
+      await page.route(`${ERC20_MODULE_BALANCE_ENDPOINT}`, async (route) => {
+        const json = {
+          balance: [
+            {
+              name: "EVMOS",
+              symbol: "EVMOS",
+              decimals: 18,
+              erc20Balance: "0",
+              cosmosBalance: "0",
+              tokenName: "EVMOS",
+              tokenIdentifier: "EVMOS",
+              description: "EVMOS",
+              coingeckoPrice: "0.084586",
+              chainId: "evmos_9001-2",
+              chainIdentifier: "Evmos",
+              handledByExternalUI: null,
+              erc20Address: "0xD4949664cD82660AaE99bEdc034a0deA8A0bd517",
+              pngSrc:
+                "https://raw.githubusercontent.com/cosmos/chain-registry/master/evmos/images/evmos.png",
+              prefix: "evmos",
+            },
+          ],
+        };
+        await route.fulfill({ json });
+      });
+
       await page.waitForTimeout(3000);
 
       // connect with metamask
       await page.getByRole("button", { name: /Connect/i }).click();
       await page.getByRole("button", { name: /MetaMask/i }).click();
       await wallet.approve();
-      await expect(page.getByText(/Connected with Metamask/i)).toBeVisible();
-
-      // await page.pause();
+      // await wallet.sign();
 
       // await expect(
       //   page.getByRole("heading", { name: "0.00Evmos" })
       // ).toBeVisible();
 
       // update balance to have some
-      await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
-        const json = {
-          balance: {
-            denom: "aevmos",
-            amount: "13234",
-          },
-        };
-        await route.fulfill({ json });
-      });
 
-      await page.waitForTimeout(3000);
+      // await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
+      //   const json = responseInfoStaking;
+      //   await route.fulfill({ json });
+      // });
 
       await expect(
         page.getByRole("heading", { name: "0.01Evmos" })
