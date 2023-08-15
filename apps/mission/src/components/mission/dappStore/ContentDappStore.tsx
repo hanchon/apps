@@ -10,11 +10,11 @@ import { Onboard } from "./onboard/Onboard";
 export const ContentDappStore = () => {
   return (
     <div className="space-y-8 px-3 text-[IBM] md:px-0">
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid items-center gap-x-8 gap-y-11 md:grid-cols-2">
         <AccountBalanceContainer />
         <Onboard />
       </div>
-      <div className="grid gap-8 md:grid-cols-2 ">
+      <div className="grid gap-8 md:grid-cols-2">
         <StakingCard />
         <div className="grid grid-rows-2 gap-y-8">
           <AssetsCard /> <GovernanceCard />

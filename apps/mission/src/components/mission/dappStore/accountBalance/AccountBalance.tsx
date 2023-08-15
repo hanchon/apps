@@ -55,7 +55,7 @@ export const AccountBalance = () => {
   return (
     <>
       <Copilot />
-      <section className="text-center md:text-left">
+      <section className="mb-7 text-center md:text-left">
         <p className="text-2xl text-pearl ">
           {t("dappStore.account.balance.title")}
         </p>
