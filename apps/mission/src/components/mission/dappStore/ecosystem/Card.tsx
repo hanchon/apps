@@ -19,7 +19,7 @@ export const EcosystemCard = ({ data }: { data: EcosystemProps }) => {
       key={data.name}
       rel="noopener noreferrer"
       target="_blank"
-      className="relative space-y-5 rounded-lg bg-[#262017] pb-8"
+      className="relative space-y-5 rounded-lg bg-[#262017] pb-8 transition-all duration-200 ease-in hover:scale-105"
     >
       <Image
         src={data.image}

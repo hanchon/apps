@@ -32,12 +32,13 @@ export const ecosystemData = [
     href: "https://tashi.finance/",
   },
   {
+    // update image
     image: "/ecosystem/orbitalApes.png",
-    name: "Orbital Apes",
+    name: "Orbit Market",
     type: dAppsTypes.NFT,
     description:
       "The largest NFT Marketplace in Evmos. Built by the community, for the community.",
-    href: "https://www.orbitalapes.com/",
+    href: "https://www.orbitmarket.io",
   },
   {
     image: "/ecosystem/stride.png",

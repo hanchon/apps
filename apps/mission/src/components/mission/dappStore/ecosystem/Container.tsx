@@ -56,7 +56,7 @@ export const EcosystemContainer = () => {
           handleOnClick={handleViewAlldApps}
         />
       </div>
-      <div className="grid gap-8 md:grid-cols-4">
+      <div className="grid gap-8 overflow-hidden md:grid-cols-4">
         {drawEcosystemdApps(ecosystemData)}
       </div>
     </section>
