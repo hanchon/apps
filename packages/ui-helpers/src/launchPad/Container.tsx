@@ -20,8 +20,8 @@ export const LaunchContainer = () => {
   };
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <Menu.Button className="border-darGray800 bg-darGray800 flex items-center justify-center rounded-full border p-2">
-        <LaunchIcon width={30} height={30} />
+      <Menu.Button className=" flex items-center justify-center rounded-full p-2">
+        <LaunchIcon />
       </Menu.Button>
 
       <Transition
