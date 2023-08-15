@@ -31,11 +31,7 @@ export const Header = ({
         </Link>
       </div>
       <div className="flex flex-col items-center space-y-3 md:flex-row md:space-x-16 md:space-y-0">
-        <div
-          className="font-sm text-pearl bg-darGray800 flex
-     items-center justify-center space-x-3 rounded-full px-10 py-2
-      font-bold"
-        >
+        <div className="font-sm text-pearl bg-darGray800 flex items-center justify-center space-x-3 rounded-full px-4 py-2 font-bold">
           <EvmosRedIcon width={"20"} height={"20"} />
           <span>{price}</span>
         </div>
