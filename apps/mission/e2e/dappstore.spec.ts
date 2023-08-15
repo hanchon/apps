@@ -1,11 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { web3Test } from "playwright-config-custom/helpers";
 
-const ERC20_MODULE_BALANCE_ENDPOINT =
-  "*/**/ERC20ModuleBalance/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-
 const STAKING_INFO_ENDPOINT =
-  "*/**//stakingInfo/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
+  "*/**/stakingInfo/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
+
+const ERC20_MODULE_BALANCE_ENDPOINT = `*/**/ERC20ModuleBalance/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266`;
 
 const responseZeroBalance = {
   balance: [
@@ -96,7 +95,7 @@ const responseInfoStaking = {
       },
       balance: {
         denom: "aevmos",
-        amount: "123",
+        amount: "1",
       },
     },
   ],
@@ -190,39 +189,23 @@ test.describe("Mission Page - Copilot", () => {
       // balance is 0 so we can show top up account button on the onboarding section
       //  I need to merge the two PRs to get the right call and mock it
 
-      await page.route(`${ERC20_MODULE_BALANCE_ENDPOINT}`, async (route) => {
-        const json = {
-          balance: [
-            {
-              name: "EVMOS",
-              symbol: "EVMOS",
-              decimals: 18,
-              erc20Balance: "0",
-              cosmosBalance: "0",
-              tokenName: "EVMOS",
-              tokenIdentifier: "EVMOS",
-              description: "EVMOS",
-              coingeckoPrice: "0.084586",
-              chainId: "evmos_9001-2",
-              chainIdentifier: "Evmos",
-              handledByExternalUI: null,
-              erc20Address: "0xD4949664cD82660AaE99bEdc034a0deA8A0bd517",
-              pngSrc:
-                "https://raw.githubusercontent.com/cosmos/chain-registry/master/evmos/images/evmos.png",
-              prefix: "evmos",
-            },
-          ],
-        };
+      await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
+        const json = responseInfoStaking;
         await route.fulfill({ json });
       });
 
-      await page.waitForTimeout(3000);
+      await page.route(ERC20_MODULE_BALANCE_ENDPOINT, async (route) => {
+        const json = responseZeroBalance;
+        await route.fulfill({ json });
+      });
 
       // connect with metamask
       await page.getByRole("button", { name: /Connect/i }).click();
       await page.getByRole("button", { name: /MetaMask/i }).click();
       await wallet.approve();
       // await wallet.sign();
+
+      await page.pause();
 
       // await expect(
       //   page.getByRole("heading", { name: "0.00Evmos" })
