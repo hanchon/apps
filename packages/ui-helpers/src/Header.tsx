@@ -9,10 +9,12 @@ export const Header = ({
   walletConnectionButton,
   onClick,
   price,
+  pageName,
 }: {
   walletConnectionButton?: JSX.Element;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
   price?: string;
+  pageName: string;
 }) => {
   return (
     <div className="text-pearl mx-5 mb-3 flex flex-col xl:mx-0 xl:h-32 xl:flex-row xl:items-center xl:justify-between">
@@ -25,7 +27,7 @@ export const Header = ({
           onClick={onClick}
         >
           <Logo className="h-20 w-32 xl:w-36" />{" "}
-          <span className="text-red text-2xl font-bold">Apps</span>
+          <span className="text-red text-3xl font-bold">{pageName}</span>
         </Link>
       </div>
       <div className="flex flex-col items-center space-y-3 md:flex-row md:space-x-16 md:space-y-0">

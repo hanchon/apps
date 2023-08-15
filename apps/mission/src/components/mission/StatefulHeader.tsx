@@ -10,6 +10,7 @@ import { StepsContextProvider } from "copilot";
 import { CopilotButton, steps } from "copilot";
 import { useAssets } from "evmos-wallet";
 import dynamic from "next/dynamic";
+import { useTranslation } from "next-i18next";
 
 const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
 
@@ -19,12 +20,14 @@ export const StatefulHeader = () => {
 
   const { handlePreClickAction } = useTracker(CLICK_EVMOS_LOGO);
   const { evmosPriceFixed } = useAssets();
-
+  const { t } = useTranslation();
   return (
     <StepsContextProvider steps={steps}>
       <>
         <Copilot />
+
         <Header
+          pageName={t("appTitle")}
           walletConnectionButton={
             <WalletConnection
               copilotModal={({
