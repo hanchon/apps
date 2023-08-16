@@ -16,7 +16,7 @@ enum dAppsTypes {
 
 export const ecosystemData = [
   {
-    image: "/ecosystem/forge.png",
+    image: "/ecosystem/forge.svg",
     name: "Forge",
     type: dAppsTypes.DEFI,
     description:
@@ -25,7 +25,7 @@ export const ecosystemData = [
   },
 
   {
-    image: "/ecosystem/tashi.png",
+    image: "/ecosystem/tashi.svg",
     name: "Tashi",
     type: dAppsTypes.DEFI,
     description: "Tashi is your path to Borrow Lend DeFi on Evmos.",
@@ -41,7 +41,7 @@ export const ecosystemData = [
     href: "https://www.orbitmarket.io",
   },
   {
-    image: "/ecosystem/stride.png",
+    image: "/ecosystem/stride.svg",
     name: "Stride",
     type: dAppsTypes.LIQUID_STAKING,
     description: "Liquid staking for Cosmos blockchains.",

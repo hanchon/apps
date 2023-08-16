@@ -26,10 +26,10 @@ export const EcosystemCard = ({ data }: { data: EcosystemProps }) => {
         alt={data.name}
         width={250}
         height={150}
-        className=" aspect-[3/2] w-full rounded-2xl object-contain"
+        className=" aspect-[3/2] w-full rounded-t-2xl object-cover"
       />
 
-      <div className="flex space-x-8 px-5">
+      <div className="flex space-x-8 p-5">
         <h3 className=" text-sm font-bold text-pearl">{data.name}</h3>
         <Badge
           text={data.type}
