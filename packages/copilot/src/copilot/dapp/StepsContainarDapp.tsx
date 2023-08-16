@@ -12,11 +12,7 @@ export const StepsContainerDapp = ({ step }: { step: stepsStatusI }) => {
     <li key={step.title}>
       <span className="flex cursor-default items-center">
         {STEPS_CIRCLE_STYLES_DAPP[step.status]}
-        <span
-          className={`${
-            TEXT_STYLES_DAPP[step.status]
-          }  ml-3 text-sm font-medium`}
-        >
+        <span className={`${TEXT_STYLES_DAPP[step.status]}  ml-3 font-medium`}>
           {step.title}
         </span>
       </span>

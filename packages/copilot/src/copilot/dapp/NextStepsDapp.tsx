@@ -37,7 +37,7 @@ export const NextStepsActionsDapp = ({ status }: { status: string }) => {
       <Button
         onClick={handleUseDappClick}
         text={t("dappStore.onboard.nextsteps.button.useDapp.title") as string}
-        className="text-pearl bg-[#FAF1E442]"
+        className="text-pearl bg-[#FAF1E442] hover:bg-[#FAF1E430] active:bg-[#FAF1E420]"
         status={status}
       />
     </div>

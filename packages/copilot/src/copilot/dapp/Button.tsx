@@ -21,8 +21,10 @@ export const Button = ({
       {status === STEP_STATUS.CURRENT && (
         <button
           onClick={onClick}
-          className={` w-fit rounded p-3 text-sm font-bold ${
-            className !== undefined ? className : "text-red bg-pearl"
+          className={` w-fit rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out ${
+            className !== undefined
+              ? className
+              : "text-red bg-pearl hover:bg-[#e3d6c3] active:bg-[#ccc0af]"
           } }`}
         >
           {text}
