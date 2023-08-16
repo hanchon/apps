@@ -212,7 +212,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Mission Page - Copilot", () => {
-  test("Redirct to assets page after clicking on see portfolio", async ({
+  test("should redirct to assets page after clicking on see portfolio", async ({
     page,
   }) => {
     await page.getByRole("button", { name: /See portfolio/i }).click();
@@ -220,7 +220,7 @@ test.describe("Mission Page - Copilot", () => {
     await page.goto("http://localhost:3004/assets");
   });
 
-  test("Redirct to governance page after clicking on participate in governance", async ({
+  test("should redirct to governance page after clicking on participate in governance", async ({
     page,
   }) => {
     await page
@@ -230,7 +230,7 @@ test.describe("Mission Page - Copilot", () => {
     await page.goto("http://localhost:3004/governance");
   });
 
-  test("Redirct to staking page after clicking on Stake & manage delegation", async ({
+  test("should redirct to staking page after clicking on Stake & manage delegation", async ({
     page,
   }) => {
     await page
@@ -239,6 +239,31 @@ test.describe("Mission Page - Copilot", () => {
     await page.waitForTimeout(1000);
     await page.goto("http://localhost:3004/staking");
   });
+
+  web3Test(
+    "should connect with MetaMask, trigger the Claim rewards hook and reject it",
+    async ({ page, wallet }) => {
+      await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
+        const json = responseInfoStaking;
+        await route.fulfill({ json });
+      });
+
+      await page.waitForTimeout(3000);
+
+      await page.getByRole("button", { name: /Connect/i }).click();
+      await page.getByRole("button", { name: /MetaMask/i }).click();
+      await wallet.approve();
+
+      await page
+        .getByRole("button", {
+          name: /Claim Rewards/i,
+        })
+        .click();
+
+      const switchNetworkPopup = await page.context().waitForEvent("page");
+      await switchNetworkPopup.getByRole("button", { name: /Reject/i }).click();
+    }
+  );
 
   web3Test(
     "should let the user connect with MetaMask",
