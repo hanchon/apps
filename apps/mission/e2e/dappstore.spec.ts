@@ -212,6 +212,34 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Mission Page - Copilot", () => {
+  test("Redirct to assets page after clicking on see portfolio", async ({
+    page,
+  }) => {
+    await page.getByRole("button", { name: /See portfolio/i }).click();
+    await page.waitForTimeout(1000);
+    await page.goto("http://localhost:3004/assets");
+  });
+
+  test("Redirct to governance page after clicking on participate in governance", async ({
+    page,
+  }) => {
+    await page
+      .getByRole("button", { name: /participate in governance/i })
+      .click();
+    await page.waitForTimeout(1000);
+    await page.goto("http://localhost:3004/governance");
+  });
+
+  test("Redirct to staking page after clicking on Stake & manage delegation", async ({
+    page,
+  }) => {
+    await page
+      .getByRole("button", { name: /Stake & manage delegation/i })
+      .click();
+    await page.waitForTimeout(1000);
+    await page.goto("http://localhost:3004/staking");
+  });
+
   web3Test(
     "should let the user connect with MetaMask",
     async ({ page, wallet }) => {
