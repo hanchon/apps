@@ -9,6 +9,7 @@ import {
   GithubIcon,
   DiscordIcon,
   CommonWealthIcon,
+  CodeIcon,
 } from "icons";
 import { PRIVACY_POLICY_URL } from "constants-helper";
 import { FEEDBACK_URL } from "constants-helper";
@@ -31,50 +32,56 @@ export const Footer = ({
   }
 
   return (
-    <footer className=" text-pearl mb-10 mt-10 flex w-full flex-col items-center space-y-2 xl:justify-between">
-      <div className="flex items-center space-x-5">
-        <Link
-          target="_blank"
-          rel="noreferrer"
-          href="https://github.com/tharsis/evmos"
-          aria-label="github evmos"
-        >
-          <GithubIcon />
+    <footer className=" text-pearl mb-10 mt-10 grid grid-cols-1 space-y-2 font-[IBM] md:grid-cols-3">
+      <div className=" flex w-full flex-col items-center space-y-3 md:flex-row md:space-x-36 md:space-y-0">
+        <Link href="" className="flex items-center space-x-3 ">
+          <CodeIcon width={30} height={30} />
+          <span className="text-sm"> Build With Us</span>
         </Link>
-        <Link
-          target="_blank"
-          rel="noreferrer"
-          href="https://twitter.com/evmosorg"
-          aria-label="twitter evmos"
-        >
-          <TwitterIcon />
-        </Link>
-        <Link
-          target="_blank"
-          rel="noreferrer"
-          href="https://discord.com/invite/evmos"
-          aria-label="discord evmos"
-        >
-          <DiscordIcon />
-        </Link>
-        <Link
-          target="_blank"
-          rel="noreferrer"
-          href="https://t.me/EvmosOrg"
-          aria-label="discord telegram"
-        >
-          <TelegramIcon />
-        </Link>
-        <Link
-          target="_blank"
-          rel="noreferrer"
-          href={COMMONWEALTH_URL}
-          aria-label="commonwealth evmos"
-        >
-          <CommonWealthIcon />
-        </Link>
+        <div className="flex items-center space-x-5 opacity-50">
+          <Link
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/tharsis/evmos"
+            aria-label="github evmos"
+          >
+            <GithubIcon />
+          </Link>
+          <Link
+            target="_blank"
+            rel="noreferrer"
+            href="https://twitter.com/evmosorg"
+            aria-label="twitter evmos"
+          >
+            <TwitterIcon />
+          </Link>
+          <Link
+            target="_blank"
+            rel="noreferrer"
+            href="https://discord.com/invite/evmos"
+            aria-label="discord evmos"
+          >
+            <DiscordIcon />
+          </Link>
+          <Link
+            target="_blank"
+            rel="noreferrer"
+            href="https://t.me/EvmosOrg"
+            aria-label="discord telegram"
+          >
+            <TelegramIcon />
+          </Link>
+          <Link
+            target="_blank"
+            rel="noreferrer"
+            href={COMMONWEALTH_URL}
+            aria-label="commonwealth evmos"
+          >
+            <CommonWealthIcon />
+          </Link>
+        </div>
       </div>
-      <div className="flex w-full items-center justify-center space-x-5 px-2">
+      <div className="flex w-full flex-col items-center justify-end space-y-2 opacity-50 md:col-span-2 md:flex-row md:space-x-5 md:space-y-0 md:px-2">
         <p>Version: {getVersion()}</p>
         <p>
           <Link
