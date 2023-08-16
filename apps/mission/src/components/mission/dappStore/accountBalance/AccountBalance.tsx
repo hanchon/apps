@@ -67,14 +67,16 @@ export const AccountBalance = () => {
             </span>
           </h6>
           {wallet.active && (
-            <Button
-              handleOnClick={handleClick}
-              text={t("dappStore.account.balance.topUp")}
-            />
+            <div className="relative left-[16px] top-[3px]">
+              <Button
+                handleOnClick={handleClick}
+                text={t("dappStore.account.balance.topUp")}
+              />
+            </div>
           )}
         </div>
         <p className="mt-4 text-xl text-white opacity-50">
-          $ {wallet.active ? drawTotalBalanceInDollars() : "-"}
+          ${wallet.active ? drawTotalBalanceInDollars() : "-"}
         </p>
       </section>
     </>

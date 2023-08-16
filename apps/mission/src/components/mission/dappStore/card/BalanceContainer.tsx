@@ -16,7 +16,7 @@ export const BalanceContainer = ({
       <h4 className="text-3xl text-white">
         {amount} <span className="opacity-50">EVMOS</span>
       </h4>
-      <h5 className="text-white opacity-50">$ {amountInDollars}</h5>
+      <h5 className="text-white opacity-50">${amountInDollars}</h5>
     </div>
   );
 };
