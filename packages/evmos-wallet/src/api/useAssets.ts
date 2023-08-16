@@ -8,8 +8,7 @@ import { StoreType } from "../redux/Store";
 import { ERC20BalanceResponse } from "./types";
 import { getAssetsForAddress } from "./fetch";
 import { addAssets, addDollarAssets, amountToDollars } from "helpers";
-import { BigNumber } from "ethers";
-
+import { BigNumber } from "@ethersproject/bignumber";
 export const useAssets = () => {
   const value = useSelector((state: StoreType) => state.wallet.value);
 
