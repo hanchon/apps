@@ -22,6 +22,7 @@ module.exports = {
         darkGray400: "#898175",
         darkGray300: "#6E675C",
         darGray800: "#262017",
+        darkGray700: "#3D372D",
         skinTan: "#F5E8D4",
         red: "#ed4e33",
         red1: "#AA2912",
