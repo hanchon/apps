@@ -3,7 +3,7 @@
 
 export const Card = ({ children }: { children: JSX.Element }) => {
   return (
-    <section className="space-y-8 rounded-lg bg-darGray800 px-5 py-7">
+    <section className="flex flex-col justify-between space-y-8 rounded-lg bg-darGray800 p-8">
       {children}
     </section>
   );
