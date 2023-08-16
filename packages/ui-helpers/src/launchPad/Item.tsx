@@ -15,7 +15,7 @@ export const Item = ({ itemProps }: { itemProps: LaunchPadItemsProps }) => {
       rel="noopener noreferrer"
       className="text-pearl flex flex-col items-center"
     >
-      <div className="bg-red flex w-fit items-center justify-center rounded-lg p-2">
+      <div className="bg-red hover:bg-red1 active:bg-red2 flex w-fit items-center justify-center rounded-lg p-2 transition-all duration-150 ease-in hover:scale-105">
         {itemProps.icon}
       </div>
       <p className="text-sm">{itemProps.text}</p>

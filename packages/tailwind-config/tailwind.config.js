@@ -25,6 +25,7 @@ module.exports = {
         skinTan: "#F5E8D4",
         red: "#ed4e33",
         red1: "#AA2912",
+        red2: "#6b1c0e",
         green: "#97ad11",
         gray: "#F0EEEC",
         whiteOpacity: "rgba(255, 255, 255, 0.1)",

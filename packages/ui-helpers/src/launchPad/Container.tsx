@@ -21,7 +21,7 @@ export const LaunchContainer = () => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <Menu.Button className=" flex items-center justify-center rounded-full p-2">
-        <LaunchIcon />
+        <LaunchIcon className="active:bg-darGray800 transtion-all rounded-full bg-[#3D372D] duration-200 ease-in-out hover:bg-[#423D37]" />
       </Menu.Button>
 
       <Transition
@@ -33,7 +33,7 @@ export const LaunchContainer = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute z-10 mt-2 w-64 origin-top-right divide-y divide-[#3D372D] rounded-md bg-[#262017] pb-6 pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none md:right-0 md:w-96">
+        <Menu.Items className="absolute z-10 mt-2 w-64 origin-top-right divide-y divide-[#3D372D] rounded-md bg-[#262017]  pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none md:right-0 md:w-96">
           <div className="grid grid-cols-3 gap-10  px-8 pb-8">
             {drawItems()}
           </div>
@@ -42,7 +42,7 @@ export const LaunchContainer = () => {
             href={ECOSYSTEM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-pearl flex justify-center pt-6 text-xs"
+            className="text-pearl bg-darkGray2Opacity flex justify-center py-5 text-xs transition-all duration-200 ease-in-out hover:bg-[#FFFFFF0F] active:bg-[#3D372D]"
           >
             View all DApps
           </Link>
