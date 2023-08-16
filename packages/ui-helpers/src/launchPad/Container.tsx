@@ -1,5 +1,4 @@
 import { LaunchIcon } from "icons";
-
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { launchPadItems } from "./data";
@@ -7,6 +6,7 @@ import { Item } from "./Item";
 import Link from "next/link";
 import { ECOSYSTEM_URL } from "constants-helper";
 import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
+import { PingIndicator } from "../PingIndicator";
 export const LaunchContainer = () => {
   const { handlePreClickAction } = useTracker(CLICK_ON_DAPP_INSIDE_LAUNCHER);
 
@@ -20,9 +20,15 @@ export const LaunchContainer = () => {
   };
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <Menu.Button className=" flex items-center justify-center rounded-full p-2">
-        <LaunchIcon className="transtion-all rounded-full bg-[#3D372D] duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]" />
-      </Menu.Button>
+      <PingIndicator>
+        <Menu.Button className="border-darGray800 bg-darGray800 flex items-center justify-center rounded-full border p-2">
+          <LaunchIcon
+            width={30}
+            height={30}
+            className="transtion-all rounded-full bg-[#3D372D] duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]"
+          />
+        </Menu.Button>
+      </PingIndicator>
 
       <Transition
         as={Fragment}
