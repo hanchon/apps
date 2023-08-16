@@ -2,9 +2,18 @@ import { test, expect } from "@playwright/test";
 import { web3Test } from "playwright-config-custom/helpers";
 
 const STAKING_INFO_ENDPOINT =
+  // eslint-disable-next-line no-secrets/no-secrets
   "*/**/stakingInfo/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
-
+// eslint-disable-next-line no-secrets/no-secrets
 const ERC20_MODULE_BALANCE_ENDPOINT = `*/**/ERC20ModuleBalance/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266`;
+
+const GET_ACCOUNT_ENDPOINT =
+  // eslint-disable-next-line no-secrets/no-secrets
+  "*/**/cosmos/auth/v1beta1/accounts/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
+
+const BALANCE_ENDPOINT =
+  // eslint-disable-next-line no-secrets/no-secrets
+  "*/**/BalanceByDenom/EVMOS/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/aevmos";
 
 const responseZeroBalance = {
   balance: [
@@ -35,8 +44,8 @@ const responseERC20ModuleBalance = {
       name: "EVMOS",
       symbol: "EVMOS",
       decimals: 18,
-      erc20Balance: "92001000000000000",
-      cosmosBalance: "6498549296417793206",
+      erc20Balance: "0",
+      cosmosBalance: "13234",
       tokenName: "EVMOS",
       tokenIdentifier: "EVMOS",
       description: "EVMOS",
@@ -52,17 +61,26 @@ const responseERC20ModuleBalance = {
   ],
 };
 
+const responseEmptyInfoStaking = {
+  delegations: [],
+  undelegations: [],
+  rewards: { rewards: [], total: [] },
+};
+
 const responseInfoStaking = {
   delegations: [
     {
       delegation: {
+        // eslint-disable-next-line no-secrets/no-secrets
         delegator_address: "evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g",
         validator_address:
+          // eslint-disable-next-line no-secrets/no-secrets
           "evmosvaloper1mx9nqk5agvlsvt2yc8259nwztmxq7zjqep5khu",
-        shares: "11111111110000000.000000000000000000",
+        shares: "3000000000000000.000000000000000000",
         rank: 0,
         validator: {
           operator_address:
+            // eslint-disable-next-line no-secrets/no-secrets
             "evmosvaloper1mx9nqk5agvlsvt2yc8259nwztmxq7zjqep5khu",
           consensus_pubkey: {
             type_url: "",
@@ -70,8 +88,8 @@ const responseInfoStaking = {
           },
           jailed: false,
           status: "BOND_STATUS_BONDED",
-          tokens: "8606954651892010787306223",
-          delegator_shares: "8606954651892010787306223.000000000000000000",
+          tokens: "8688840738941560826344849",
+          delegator_shares: "8688840738941560826344849.000000000000000000",
           description: {
             moniker: "OrbitalApes.com",
             identity: "0FC43339DE6CE5EE",
@@ -95,7 +113,7 @@ const responseInfoStaking = {
       },
       balance: {
         denom: "aevmos",
-        amount: "1",
+        amount: "3000000000000000",
       },
     },
   ],
@@ -104,11 +122,12 @@ const responseInfoStaking = {
     rewards: [
       {
         validator_address:
+          // eslint-disable-next-line no-secrets/no-secrets
           "evmosvaloper1mx9nqk5agvlsvt2yc8259nwztmxq7zjqep5khu",
         reward: [
           {
             denom: "aevmos",
-            amount: "5827134782040607.911000000000000000",
+            amount: "5833095455186144.841000000000000000",
           },
         ],
       },
@@ -116,12 +135,63 @@ const responseInfoStaking = {
     total: [
       {
         denom: "aevmos",
-        amount: "5827134782040607.911000000000000000",
+        amount: "5833095455186144.841000000000000000",
       },
     ],
   },
 };
 
+const responseEmptyAccount = {
+  account: {
+    "@type": "/ethermint.types.v1.EthAccount",
+    base_account: {
+      // eslint-disable-next-line no-secrets/no-secrets
+      address: "evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g",
+      pub_key: {
+        "@type": "/ethermint.crypto.v1.ethsecp256k1.PubKey",
+        // eslint-disable-next-line no-secrets/no-secrets
+        key: "A4MYU1tUEF1Keq5gwI/EX5aHGBtP38YlvRp1P6c5f+11",
+      },
+      account_number: "1938048",
+      sequence: "0",
+    },
+    code_hash:
+      "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+  },
+};
+
+const responseAccount = {
+  account: {
+    "@type": "/ethermint.types.v1.EthAccount",
+    base_account: {
+      // eslint-disable-next-line no-secrets/no-secrets
+      address: "evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g",
+      pub_key: {
+        "@type": "/ethermint.crypto.v1.ethsecp256k1.PubKey",
+        // eslint-disable-next-line no-secrets/no-secrets
+        key: "A4MYU1tUEF1Keq5gwI/EX5aHGBtP38YlvRp1P6c5f+11",
+      },
+      account_number: "1938048",
+      sequence: "23",
+    },
+    code_hash:
+      "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+  },
+};
+
+const responseEmptyBalance = {
+  balance: {
+    denom: "aevmos",
+    amount: "0",
+  },
+};
+
+const responseBalance = {
+  balance: {
+    denom: "aevmos",
+    amount: "13234",
+  },
+};
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
 
@@ -186,11 +256,10 @@ test.describe("Mission Page - Copilot", () => {
         })
         .isDisabled();
 
-      // balance is 0 so we can show top up account button on the onboarding section
-      //  I need to merge the two PRs to get the right call and mock it
+      // mocks: case where the user doesn't have any balance
 
       await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
-        const json = responseInfoStaking;
+        const json = responseEmptyInfoStaking;
         await route.fulfill({ json });
       });
 
@@ -199,24 +268,85 @@ test.describe("Mission Page - Copilot", () => {
         await route.fulfill({ json });
       });
 
+      await page.route(GET_ACCOUNT_ENDPOINT, async (route) => {
+        const json = responseEmptyAccount;
+        await route.fulfill({ json });
+      });
+
+      await page.route(BALANCE_ENDPOINT, async (route) => {
+        const json = responseEmptyBalance;
+        await route.fulfill({ json });
+      });
+
+      await page.waitForTimeout(3000);
+
       // connect with metamask
       await page.getByRole("button", { name: /Connect/i }).click();
       await page.getByRole("button", { name: /MetaMask/i }).click();
       await wallet.approve();
-      // await wallet.sign();
 
-      await page.pause();
+      await expect(page.getByRole("heading", { name: "0Evmos" })).toBeVisible();
 
-      // await expect(
-      //   page.getByRole("heading", { name: "0.00Evmos" })
-      // ).toBeVisible();
+      // total balance in dollars
+      await expect(
+        page.locator("p").filter({ hasText: "$ 0.00" })
+      ).toBeVisible();
 
-      // update balance to have some
+      await expect(
+        page
+          .locator("div")
+          .filter({ hasText: /^Available Balance0 EVMOS\$ 0$/ })
+          .locator("h5")
+      ).toBeVisible();
 
-      // await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
-      //   const json = responseInfoStaking;
-      //   await route.fulfill({ json });
-      // });
+      // staking - staked balance
+      await expect(
+        page
+          .locator("div")
+          .filter({ hasText: /^Staked Balance0 EVMOS\$ 0$/ })
+          .locator("h5")
+      ).toBeVisible();
+
+      // staking - claimable rewards
+      await expect(
+        page
+          .locator("div")
+          .filter({ hasText: /^Claimeable Rewards0 EVMOS\$ 0$/ })
+          .locator("h5")
+      ).toBeVisible();
+      await page
+        .getByRole("button", {
+          name: /Claim Rewards/i,
+        })
+        .isDisabled();
+
+      await expect(
+        page.getByRole("button", { name: "Top up account", exact: true })
+      ).toBeVisible();
+
+      // update values
+
+      await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
+        const json = responseInfoStaking;
+        await route.fulfill({ json });
+      });
+
+      await page.route(ERC20_MODULE_BALANCE_ENDPOINT, async (route) => {
+        const json = responseERC20ModuleBalance;
+        await route.fulfill({ json });
+      });
+
+      await page.route(GET_ACCOUNT_ENDPOINT, async (route) => {
+        const json = responseAccount;
+        await route.fulfill({ json });
+      });
+
+      await page.route(BALANCE_ENDPOINT, async (route) => {
+        const json = responseBalance;
+        await route.fulfill({ json });
+      });
+
+      await page.waitForTimeout(3000);
 
       await expect(
         page.getByRole("heading", { name: "0.01Evmos" })
@@ -231,7 +361,7 @@ test.describe("Mission Page - Copilot", () => {
       await expect(
         page
           .locator("div")
-          .filter({ hasText: /^Available Balance0\.00 EVMOS\$ 0\.00$/ })
+          .filter({ hasText: /^Available Balance0 EVMOS\$ 0$/ })
           .locator("h5")
       ).toBeVisible();
 
@@ -264,7 +394,6 @@ test.describe("Mission Page - Copilot", () => {
         page.getByRole("button", { name: /use a dApp/i })
       ).toBeVisible();
 
-      //   diferenciar del otro top up
       await page
         .getByRole("button", {
           name: "Top Up Account",
@@ -278,8 +407,6 @@ test.describe("Mission Page - Copilot", () => {
 
       await page.getByRole("button", { name: "Close" }).click();
       await page.getByRole("button", { name: "Exit" }).click();
-
-      //   clickearlo y ver que aparezca el modal correspondiente
     }
   );
 });
