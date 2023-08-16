@@ -2,7 +2,8 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import Link from "next/link";
-const COMMONWEALTH_URL = "https://commonwealth.im/evmos";
+import { DOCS_SMART_CONTRACTS_URL, COMMONWEALTH_URL } from "constants-helper";
+
 import {
   TwitterIcon,
   TelegramIcon,
@@ -34,7 +35,12 @@ export const Footer = ({
   return (
     <footer className=" text-pearl mb-10 mt-10 grid grid-cols-1 space-y-2 font-[IBM] md:grid-cols-3">
       <div className=" flex w-full flex-col items-center space-y-3 md:flex-row md:space-x-36 md:space-y-0">
-        <Link href="" className="flex items-center space-x-3 ">
+        <Link
+          href={DOCS_SMART_CONTRACTS_URL}
+          className="flex items-center space-x-3"
+          target="_blank"
+          rel="noreferrer"
+        >
           <CodeIcon width={30} height={30} />
           <span className="text-sm"> Build With Us</span>
         </Link>

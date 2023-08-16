@@ -18,3 +18,4 @@ export { ECOSYSTEM_URL } from "./constants";
 export { STAKING_URL } from "./constants";
 export { GOOGLE_FORM_URL } from "./constants";
 export { FEEDBACK_URL } from "./constants";
+export { DOCS_SMART_CONTRACTS_URL } from "./constants";

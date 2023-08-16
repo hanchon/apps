@@ -41,7 +41,7 @@ export const ecosystemData = [
     href: "https://www.orbitmarket.io",
   },
   {
-    image: "/ecosystem/stride.svg",
+    image: "/ecosystem/stride.png",
     name: "Stride",
     type: dAppsTypes.LIQUID_STAKING,
     description: "Liquid staking for Cosmos blockchains.",
