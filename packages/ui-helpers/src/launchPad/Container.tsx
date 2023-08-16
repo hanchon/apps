@@ -21,7 +21,7 @@ export const LaunchContainer = () => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <Menu.Button className=" flex items-center justify-center rounded-full p-2">
-        <LaunchIcon className="active:bg-darGray800 transtion-all rounded-full bg-[#3D372D] duration-200 ease-in-out hover:bg-[#423D37]" />
+        <LaunchIcon className="transtion-all rounded-full bg-[#3D372D] duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]" />
       </Menu.Button>
 
       <Transition
