@@ -55,19 +55,24 @@ export const AccountBalance = () => {
   return (
     <>
       <Copilot />
-      <section className="mb-7 text-center md:text-left">
-        <p className="text-2xl text-pearl ">
+      <section className="mb-7 text-left md:mx-0">
+        <p className="mb-2 text-xl text-pearl md:text-2xl ">
           {t("dappStore.account.balance.title")}
         </p>
-        <div className="flex flex-col items-center space-x-0 space-y-3 md:flex-row md:space-x-3 md:space-y-0">
-          <h6 className="text-6xl font-bold text-white">
-            {wallet.active ? drawTotalBalance() : "- "}
-            <span className="ml-2 text-6xl font-bold uppercase text-white opacity-50">
-              {t("evmos.token")}
-            </span>
-          </h6>
+        <div className="flex flex-col space-y-3 md:flex-row md:space-x-3 md:space-y-0 ">
+          <div>
+            <h6 className="text-4xl font-bold text-white md:text-6xl">
+              {wallet.active ? drawTotalBalance() : "- "}
+              <span className="ml-2 text-4xl font-bold uppercase text-white opacity-50 md:text-6xl">
+                {t("evmos.token")}
+              </span>
+            </h6>
+            <p className="mt-4 text-xl text-white opacity-50">
+              ${wallet.active ? drawTotalBalanceInDollars() : "-"}
+            </p>
+          </div>
           {wallet.active && (
-            <div className="relative left-[16px] top-[3px]">
+            <div className="md:relative md:left-[16px] md:top-[11px] ">
               <Button
                 handleOnClick={handleClick}
                 text={t("dappStore.account.balance.topUp")}
@@ -75,9 +80,6 @@ export const AccountBalance = () => {
             </div>
           )}
         </div>
-        <p className="mt-4 text-xl text-white opacity-50">
-          ${wallet.active ? drawTotalBalanceInDollars() : "-"}
-        </p>
       </section>
     </>
   );

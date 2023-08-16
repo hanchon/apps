@@ -41,7 +41,7 @@ export const EcosystemContainer = () => {
           <h2 className="text-grayOpacity2">
             {t("dappStore.ecosystem.description")}
             <Link
-              className="ml-2 text-red"
+              className="ml-2 text-red transition-all duration-200 ease-in-out hover:text-[#f26850] active:text-[#f0735d]"
               href={GOOGLE_FORM_URL}
               rel="noopener noreferrer"
               target="_blank"

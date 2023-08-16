@@ -9,7 +9,7 @@ export const Title = ({
   secondWord: string;
 }) => {
   return (
-    <h1 className="text-4xl font-bold text-[#FAF1E4] first-letter:uppercase">
+    <h1 className="mb-1 text-4xl font-bold text-[#FAF1E4] first-letter:uppercase">
       {firstWord} <span className="text-red">{secondWord}</span>
     </h1>
   );

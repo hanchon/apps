@@ -48,7 +48,7 @@ export const StakingCard = () => {
           />
           <Description text={t("dappStore.card.staking.description")} />
         </div>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-1 space-y-3 md:grid-cols-2 md:space-y-0">
           <BalanceContainer
             title={t("dappStore.card.staking.available")}
             amount={getBalance(totalEvmosAsset, wallet.active)}
@@ -68,7 +68,7 @@ export const StakingCard = () => {
             )}
           />
         </div>
-        <div className="flex items-center justify-between rounded-lg bg-[#FFFFFF0F] p-3">
+        <div className="flex flex-col items-start space-y-3 rounded-lg bg-[#FFFFFF0F] p-3 md:flex-row md:items-center md:justify-between md:space-y-0">
           <BalanceContainer
             title={t("dappStore.card.staking.rewards")}
             amount={getNumberBalance(totalRewards, wallet.active)}
@@ -80,7 +80,7 @@ export const StakingCard = () => {
           />
           <button
             onClick={handleConfirmButton}
-            className={`w-auto space-x-2 rounded bg-red px-4 py-2 text-sm font-bold normal-case text-pearl shadow transition-all duration-300 hover:bg-red1 hover:shadow-md
+            className={`w-auto space-x-2 rounded bg-red px-4 py-2 text-sm font-bold normal-case text-pearl shadow transition-all duration-300 hover:bg-red1 hover:shadow-md active:bg-red2 
           ${
             !wallet.active || !totalRewards || totalRewards < 0.005
               ? "disabled"
