@@ -19,7 +19,7 @@ export const EcosystemCard = ({ data }: { data: EcosystemProps }) => {
       key={data.name}
       rel="noopener noreferrer"
       target="_blank"
-      className="relative mx-5 mb-16 space-y-5 rounded-lg bg-[#262017] pb-8 transition-all duration-150 ease-out first:ml-0 last:mr-0 hover:scale-105"
+      className="relative mb-16 space-y-2 rounded-lg bg-[#262017] pb-8 transition-all duration-150 ease-out hover:scale-105"
     >
       <Image
         src={data.image}
@@ -29,7 +29,7 @@ export const EcosystemCard = ({ data }: { data: EcosystemProps }) => {
         className="aspect-[3/2] w-full rounded-t-2xl object-cover"
       />
 
-      <div className="flex space-x-8 px-5 pb-1 pt-5">
+      <div className="flex space-x-8 px-5 pt-5">
         <h3 className="text-sm font-bold text-pearl">{data.name}</h3>
         <Badge
           text={data.type}
