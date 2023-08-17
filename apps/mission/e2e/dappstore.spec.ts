@@ -212,7 +212,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Mission Page - Copilot", () => {
-  test("should redirct to assets page after clicking on see portfolio", async ({
+  test("should redirect to assets page after clicking on see portfolio", async ({
     page,
   }) => {
     await page.getByRole("button", { name: /See portfolio/i }).click();
@@ -220,7 +220,7 @@ test.describe("Mission Page - Copilot", () => {
     await page.goto("http://localhost:3004/assets");
   });
 
-  test("should redirct to governance page after clicking on participate in governance", async ({
+  test("should redirect to governance page after clicking on participate in governance", async ({
     page,
   }) => {
     await page
@@ -230,7 +230,7 @@ test.describe("Mission Page - Copilot", () => {
     await page.goto("http://localhost:3004/governance");
   });
 
-  test("should redirct to staking page after clicking on Stake & manage delegation", async ({
+  test("should redirect to staking page after clicking on Stake & manage delegation", async ({
     page,
   }) => {
     await page
