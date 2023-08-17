@@ -26,7 +26,7 @@ export const EcosystemContainer = () => {
     clickApply();
   };
   const drawEcosystemdApps = (dApps: EcosystemProps[]) => {
-    return dApps.map((dApp) => <EcosystemCard key={dApp.name} data={dApp} />);
+    return dApps.map((dApp) => <EcosystemCard data={dApp} key={dApp.name} />);
   };
 
   const { t } = useTranslation();
@@ -56,7 +56,7 @@ export const EcosystemContainer = () => {
           handleOnClick={handleViewAlldApps}
         />
       </div>
-      <div className="grid gap-8 overflow-hidden md:grid-cols-4">
+      <div className="grid md:grid-cols-4">
         {drawEcosystemdApps(ecosystemData)}
       </div>
     </section>
