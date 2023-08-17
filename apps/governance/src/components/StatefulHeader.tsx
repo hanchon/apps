@@ -21,6 +21,7 @@ export const StatefulHeader = () => {
       <>
         <Copilot />
         <Header
+          pageName="Governance"
           walletConnectionButton={
             <WalletConnection
               copilotModal={({

@@ -26,14 +26,14 @@ export const EcosystemContainer = () => {
     clickApply();
   };
   const drawEcosystemdApps = (dApps: EcosystemProps[]) => {
-    return dApps.map((dApp) => <EcosystemCard key={dApp.name} data={dApp} />);
+    return dApps.map((dApp) => <EcosystemCard data={dApp} key={dApp.name} />);
   };
 
   const { t } = useTranslation();
 
   return (
     <section className="space-y-6 pt-11">
-      <div className="md:spacey-0 flex flex-col justify-between space-y-4 md:flex-row">
+      <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
         <div className="space-y-1">
           <h1 className="text-2xl text-pearl">
             {t("dappStore.ecosystem.title")}
@@ -41,7 +41,7 @@ export const EcosystemContainer = () => {
           <h2 className="text-grayOpacity2">
             {t("dappStore.ecosystem.description")}
             <Link
-              className="ml-2 text-red"
+              className="ml-2 text-red transition-all duration-200 ease-in-out hover:text-[#f26850] active:text-[#f0735d]"
               href={GOOGLE_FORM_URL}
               rel="noopener noreferrer"
               target="_blank"
@@ -56,7 +56,7 @@ export const EcosystemContainer = () => {
           handleOnClick={handleViewAlldApps}
         />
       </div>
-      <div className="grid gap-8 md:grid-cols-4">
+      <div className="grid gap-x-8 md:grid-cols-4">
         {drawEcosystemdApps(ecosystemData)}
       </div>
     </section>

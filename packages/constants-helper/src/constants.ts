@@ -23,3 +23,9 @@ export const GOOGLE_FORM_URL =
   // eslint-disable-next-line no-secrets/no-secrets
   "https://docs.google.com/forms/d/e/1FAIpQLSc2O5HzjZMPbFD84O1513xJ0mggkSXihQy_a6IGskZq28l8yA/viewform";
 export const FEEDBACK_URL = "https://evmos.canny.io/feedback";
+export const DOCS_SMART_CONTRACTS_URL =
+  "https://docs.evmos.org/develop/smart-contracts";
+export const STRIDE_URL = "https://app.stride.zone/?chain=EVMOS";
+export const FORGE_URL = "https://forge.trade/";
+export const TASHI_URL = "https://tashi.finance/";
+export const ORBITAL_APES_URL = "https://www.orbitmarket.io";

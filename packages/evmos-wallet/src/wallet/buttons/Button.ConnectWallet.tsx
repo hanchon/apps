@@ -15,7 +15,7 @@ export const ButtonConnectWallet = ({
         setShow(true);
         trackClickConnectWallet();
       }}
-      className="font-sm text-pearl bg-red rounded-full px-10 py-2 font-bold"
+      className="font-sm text-pearl bg-red hover:bg-red1 active:bg-red2 rounded-full px-10 py-2 font-bold"
     >
       Connect
     </button>

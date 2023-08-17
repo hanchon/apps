@@ -14,7 +14,7 @@ export const Feedback = ({
       target="_blank"
       rel="noreferrer"
       href={FEEDBACK_URL}
-      className="bg-red text-pearl  fixed -right-[81px] top-1/2 hidden  -rotate-90 rounded-tl-lg rounded-tr-lg font-semibold md:block "
+      className="bg-red text-pearl hover:bg-red1 active:bg-red2 fixed -right-[81px] top-1/2 hidden -rotate-90 rounded-tl-lg rounded-tr-lg  font-semibold transition-all duration-200 ease-in-out lg:block "
       onClick={handleClick}
     >
       <div className="flex items-center space-x-2 px-5 py-2">
