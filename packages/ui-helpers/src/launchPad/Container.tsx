@@ -24,7 +24,7 @@ export const LaunchContainer = () => {
     });
   };
 
-  const { showPing, handlePingIndicator, showMessage } = usePingIndicator();
+  const { showPing, handlePingIndicator } = usePingIndicator();
 
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -51,7 +51,7 @@ export const LaunchContainer = () => {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className=" absolute z-10 mt-2 w-64 origin-top-right rounded-md bg-[#262017] pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none md:right-0 md:w-96">
-          {!showMessage && (
+          {showPing && (
             <div className="bg-darkGray700 mx-8 mb-8 cursor-default space-y-1 rounded-lg p-5">
               <div className="flex items-center justify-between">
                 <h1 className="text-xs font-bold">

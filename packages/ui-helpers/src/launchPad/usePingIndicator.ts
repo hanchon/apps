@@ -16,12 +16,12 @@ export const getFirstClickLauncherPad = () => {
 export const usePingIndicator = () => {
   const [showPing, setShowPing] = useState(false);
 
-  const [showMessage, setShowMessage] = useState(true);
-
   const handlePingIndicator = useCallback(() => {
     if (getFirstClickLauncherPad() === null) {
       setFirstClickLauncherPad("true");
-      setShowPing(false);
+      setTimeout(() => {
+        setShowPing(false);
+      }, 30000);
     }
   }, []);
 
@@ -32,13 +32,5 @@ export const usePingIndicator = () => {
     }
   }, [showPing]);
 
-  //   the message will disappear after setting the localstorage to true and the page is refreshed
-  useEffect(() => {
-    const firstClickLauncherPad = getFirstClickLauncherPad();
-    if (firstClickLauncherPad !== null) {
-      setShowMessage(false);
-    }
-  }, []);
-
-  return { showPing, handlePingIndicator, showMessage };
+  return { showPing, handlePingIndicator };
 };
