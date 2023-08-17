@@ -9,7 +9,7 @@ import { AccountBalanceContainer } from "./accountBalance/Container";
 import { Onboard } from "./onboard/Onboard";
 export const ContentDappStore = () => {
   return (
-    <div className="space-y-8 px-5 text-[IBM] md:px-0">
+    <div className="space-y-8 px-5 text-[IBM]">
       <div className="grid items-center gap-x-8 gap-y-11 md:grid-cols-2">
         <AccountBalanceContainer />
         <Onboard />

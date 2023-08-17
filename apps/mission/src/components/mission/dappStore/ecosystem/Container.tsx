@@ -33,7 +33,7 @@ export const EcosystemContainer = () => {
 
   return (
     <section className="space-y-6 pt-11">
-      <div className="md:spacey-0 flex flex-col justify-between space-y-4 md:flex-row">
+      <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
         <div className="space-y-1">
           <h1 className="text-2xl text-pearl">
             {t("dappStore.ecosystem.title")}
