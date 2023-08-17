@@ -22,7 +22,7 @@ enum dAppsTypes {
 
 export const ecosystemData = [
   {
-    image: "/ecosystem/forge.svg",
+    image: "/ecosystem/forge.png",
     name: "Forge",
     type: dAppsTypes.DEFI,
     description:
