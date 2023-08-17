@@ -25,3 +25,7 @@ export const GOOGLE_FORM_URL =
 export const FEEDBACK_URL = "https://evmos.canny.io/feedback";
 export const DOCS_SMART_CONTRACTS_URL =
   "https://docs.evmos.org/develop/smart-contracts";
+export const STRIDE_URL = "https://app.stride.zone/?chain=EVMOS";
+export const FORGE_URL = "https://forge.trade/";
+export const TASHI_URL = "https://tashi.finance/";
+export const ORBITAL_APES_URL = "https://www.orbitmarket.io";

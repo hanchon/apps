@@ -1,5 +1,11 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+import {
+  STRIDE_URL,
+  FORGE_URL,
+  TASHI_URL,
+  ORBITAL_APES_URL,
+} from "constants-helper";
 
 export type EcosystemProps = {
   image: string;
@@ -21,7 +27,7 @@ export const ecosystemData = [
     type: dAppsTypes.DEFI,
     description:
       "Swap, earn, and build on the premier Evmos community owned DEX.",
-    href: "https://forge.trade/",
+    href: FORGE_URL,
   },
 
   {
@@ -29,7 +35,7 @@ export const ecosystemData = [
     name: "Tashi",
     type: dAppsTypes.DEFI,
     description: "Tashi is your path to Borrow Lend DeFi on Evmos.",
-    href: "https://tashi.finance/",
+    href: TASHI_URL,
   },
   {
     // update image
@@ -38,13 +44,13 @@ export const ecosystemData = [
     type: dAppsTypes.NFT,
     description:
       "The largest NFT Marketplace in Evmos. Built by the community, for the community.",
-    href: "https://www.orbitmarket.io",
+    href: ORBITAL_APES_URL,
   },
   {
     image: "/ecosystem/stride.png",
     name: "Stride",
     type: dAppsTypes.LIQUID_STAKING,
     description: "Liquid staking for Cosmos blockchains.",
-    href: "https://app.stride.zone/",
+    href: STRIDE_URL,
   },
 ];
