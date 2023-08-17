@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useContext } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { StepsContext } from "../../container/StepsContext";
 import { useEvmosBalance } from "./useEvmosBalance";
 import {
@@ -19,7 +19,19 @@ export const SuccessTopUp = () => {
     useContext(StepsContext);
   // when evmosBalance is different that 0, show the component
   const { evmosBalance } = useEvmosBalance();
+  const [showMessage, setShowMessage] = useState(false);
 
+  const tempEvmosBalance = useMemo(() => {
+    return evmosBalance;
+  }, [evmosBalance]);
+
+  const myValueRef = useRef(evmosBalance);
+  useEffect(() => {
+    if (tempEvmosBalance.gt(myValueRef.current)) {
+      setShowMessage(true);
+      myValueRef.current = tempEvmosBalance;
+    }
+  }, [tempEvmosBalance]);
   const { handlePreClickAction } = useTracker(CLICK_ON_NEXT_STEPS_COPILOT);
 
   const { handlePreClickAction: clickContinue } = useTracker(
@@ -54,7 +66,7 @@ export const SuccessTopUp = () => {
     );
   };
 
-  return evmosBalance.isZero() ? (
+  return !showMessage ? (
     <></>
   ) : (
     <TranslationContextProvider locale="en">
@@ -67,7 +79,6 @@ export const SuccessTopUp = () => {
           >
             {Confetti}
           </span>
-
           <div className="text-[#196235]">
             <h3 className="font-bold ">{t("topup.onboard.success.title")}</h3>
             <p className="text-sm">{t("topup.onboard.success.description")}</p>
