@@ -212,6 +212,204 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Mission Page - Copilot", () => {
+  web3Test(
+    "should let the user connect with MetaMask",
+    async ({ page, wallet }) => {
+      await expect(
+        page.getByText(/Onboard to Evmos in 5 minutes/i)
+      ).toBeVisible();
+
+      // as we are not connected it should display let's go and all they balances with -
+      await expect(page.getByText(/Let's go/i)).toBeVisible();
+
+      // total balance
+      await expect(
+        page.getByRole("heading", { name: "- Evmos", exact: true })
+      ).toBeVisible();
+      await expect(page.locator("p").filter({ hasText: "$-" })).toBeVisible();
+
+      // staking - available balance
+      await expect(
+        page
+          .locator("div")
+          .filter({ hasText: /^Available Balance- EVMOS\$-$/ })
+          .locator("h5")
+      ).toBeVisible();
+
+      // staking - staked balance
+      await expect(
+        page
+          .locator("div")
+          .filter({ hasText: /^Staked Balance- EVMOS\$-$/ })
+          .locator("h5")
+      ).toBeVisible();
+
+      // staking - claimable rewards
+      await expect(
+        page
+          .locator("div")
+          .filter({ hasText: /^Claimeable Rewards- EVMOS\$-$/ })
+      ).toBeVisible();
+      await page
+        .getByRole("button", {
+          name: /Claim Rewards/i,
+        })
+        .isDisabled();
+
+      // mocks: case where the user doesn't have any balance
+
+      await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
+        const json = responseEmptyInfoStaking;
+        await route.fulfill({ json });
+      });
+
+      await page.route(ERC20_MODULE_BALANCE_ENDPOINT, async (route) => {
+        const json = responseZeroBalance;
+        await route.fulfill({ json });
+      });
+
+      await page.route(GET_ACCOUNT_ENDPOINT, async (route) => {
+        const json = responseEmptyAccount;
+        await route.fulfill({ json });
+      });
+
+      await page.route(BALANCE_ENDPOINT, async (route) => {
+        const json = responseEmptyBalance;
+        await route.fulfill({ json });
+      });
+
+      await page.waitForTimeout(3000);
+
+      // connect with metamask
+      await page.getByRole("button", { name: /Connect/i }).click();
+      await page.getByRole("button", { name: /MetaMask/i }).click();
+      await wallet.approve();
+
+      await expect(page.getByRole("heading", { name: "0Evmos" })).toBeVisible();
+
+      // total balance in dollars
+      await expect(
+        page.locator("p").filter({ hasText: "$0.00" })
+      ).toBeVisible();
+
+      await expect(
+        page
+          .locator("div")
+          .filter({ hasText: /^Available Balance0 EVMOS\$0$/ })
+          .locator("h5")
+      ).toBeVisible();
+
+      // staking - staked balance
+      await expect(
+        page
+          .locator("div")
+          .filter({ hasText: /^Staked Balance0 EVMOS\$0$/ })
+          .locator("h5")
+      ).toBeVisible();
+
+      // staking - claimable rewards
+      await expect(
+        page
+          .locator("div")
+          .filter({ hasText: /^Claimeable Rewards0 EVMOS\$0$/ })
+          .locator("h5")
+      ).toBeVisible();
+      await page
+        .getByRole("button", {
+          name: /Claim Rewards/i,
+        })
+        .isDisabled();
+
+      await expect(
+        page.getByRole("button", { name: "Top up account", exact: true })
+      ).toBeVisible();
+
+      // update values
+
+      await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
+        const json = responseInfoStaking;
+        await route.fulfill({ json });
+      });
+
+      await page.route(ERC20_MODULE_BALANCE_ENDPOINT, async (route) => {
+        const json = responseERC20ModuleBalance;
+        await route.fulfill({ json });
+      });
+
+      await page.route(GET_ACCOUNT_ENDPOINT, async (route) => {
+        const json = responseAccount;
+        await route.fulfill({ json });
+      });
+
+      await page.route(BALANCE_ENDPOINT, async (route) => {
+        const json = responseBalance;
+        await route.fulfill({ json });
+      });
+
+      await page.waitForTimeout(3000);
+
+      await expect(
+        page.getByRole("heading", { name: "0.01Evmos" })
+      ).toBeVisible();
+
+      // total balance in dollars
+      await expect(
+        page.locator("p").filter({ hasText: "$0.00" })
+      ).toBeVisible();
+
+      // staking - available balance
+      await expect(
+        page
+          .locator("div")
+          .filter({ hasText: /^Available Balance0 EVMOS\$0$/ })
+          .locator("h5")
+      ).toBeVisible();
+
+      // staking - staked balance
+      await expect(
+        page
+          .locator("div")
+          .filter({ hasText: /^Staked Balance0\.00 EVMOS\$0\.00$/ })
+          .locator("h5")
+      ).toBeVisible();
+
+      // staking - claimable rewards
+      await expect(
+        page
+          .locator("div")
+          .filter({ hasText: /^Claimeable Rewards0\.01 EVMOS\$0\.00$/ })
+          .locator("h5")
+      ).toBeVisible();
+      await page
+        .getByRole("button", {
+          name: /Claim Rewards/i,
+        })
+        .isEnabled();
+
+      await expect(
+        page.getByRole("button", { name: "Stake", exact: true })
+      ).toBeVisible();
+
+      await expect(
+        page.getByRole("button", { name: /use a dApp/i })
+      ).toBeVisible();
+
+      await page
+        .getByRole("button", {
+          name: "Top Up Account",
+          exact: true,
+        })
+        .click();
+
+      await expect(
+        page.getByRole("heading", { name: "Evmos Copilot" })
+      ).toBeVisible();
+
+      await page.getByRole("button", { name: "Close" }).click();
+      await page.getByRole("button", { name: "Exit" }).click();
+    }
+  );
+
   test("should redirect to assets page after clicking on see portfolio", async ({
     page,
   }) => {
@@ -262,204 +460,6 @@ test.describe("Mission Page - Copilot", () => {
 
       const switchNetworkPopup = await page.context().waitForEvent("page");
       await switchNetworkPopup.getByRole("button", { name: /Reject/i }).click();
-    }
-  );
-
-  web3Test(
-    "should let the user connect with MetaMask",
-    async ({ page, wallet }) => {
-      await expect(
-        page.getByText(/Onboard to Evmos in 5 minutes/i)
-      ).toBeVisible();
-
-      // as we are not connected it should display let's go and all they balances with -
-      await expect(page.getByText(/Let's go/i)).toBeVisible();
-
-      // total balance
-      await expect(
-        page.locator("div").filter({ hasText: /^- Evmos$/ })
-      ).toBeVisible();
-      await expect(page.locator("p").filter({ hasText: "$ -" })).toBeVisible();
-
-      // staking - available balance
-      await expect(
-        page
-          .locator("div")
-          .filter({ hasText: /^Available Balance- EVMOS\$ -$/ })
-          .locator("h5")
-      ).toBeVisible();
-
-      // staking - staked balance
-      await expect(
-        page
-          .locator("div")
-          .filter({ hasText: /^Staked Balance- EVMOS\$ -$/ })
-          .locator("h5")
-      ).toBeVisible();
-
-      // staking - claimable rewards
-      await expect(
-        page
-          .locator("div")
-          .filter({ hasText: /^Claimeable Rewards- EVMOS\$ -$/ })
-      ).toBeVisible();
-      await page
-        .getByRole("button", {
-          name: /Claim Rewards/i,
-        })
-        .isDisabled();
-
-      // mocks: case where the user doesn't have any balance
-
-      await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
-        const json = responseEmptyInfoStaking;
-        await route.fulfill({ json });
-      });
-
-      await page.route(ERC20_MODULE_BALANCE_ENDPOINT, async (route) => {
-        const json = responseZeroBalance;
-        await route.fulfill({ json });
-      });
-
-      await page.route(GET_ACCOUNT_ENDPOINT, async (route) => {
-        const json = responseEmptyAccount;
-        await route.fulfill({ json });
-      });
-
-      await page.route(BALANCE_ENDPOINT, async (route) => {
-        const json = responseEmptyBalance;
-        await route.fulfill({ json });
-      });
-
-      await page.waitForTimeout(3000);
-
-      // connect with metamask
-      await page.getByRole("button", { name: /Connect/i }).click();
-      await page.getByRole("button", { name: /MetaMask/i }).click();
-      await wallet.approve();
-
-      await expect(page.getByRole("heading", { name: "0Evmos" })).toBeVisible();
-
-      // total balance in dollars
-      await expect(
-        page.locator("p").filter({ hasText: "$ 0.00" })
-      ).toBeVisible();
-
-      await expect(
-        page
-          .locator("div")
-          .filter({ hasText: /^Available Balance0 EVMOS\$ 0$/ })
-          .locator("h5")
-      ).toBeVisible();
-
-      // staking - staked balance
-      await expect(
-        page
-          .locator("div")
-          .filter({ hasText: /^Staked Balance0 EVMOS\$ 0$/ })
-          .locator("h5")
-      ).toBeVisible();
-
-      // staking - claimable rewards
-      await expect(
-        page
-          .locator("div")
-          .filter({ hasText: /^Claimeable Rewards0 EVMOS\$ 0$/ })
-          .locator("h5")
-      ).toBeVisible();
-      await page
-        .getByRole("button", {
-          name: /Claim Rewards/i,
-        })
-        .isDisabled();
-
-      await expect(
-        page.getByRole("button", { name: "Top up account", exact: true })
-      ).toBeVisible();
-
-      // update values
-
-      await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
-        const json = responseInfoStaking;
-        await route.fulfill({ json });
-      });
-
-      await page.route(ERC20_MODULE_BALANCE_ENDPOINT, async (route) => {
-        const json = responseERC20ModuleBalance;
-        await route.fulfill({ json });
-      });
-
-      await page.route(GET_ACCOUNT_ENDPOINT, async (route) => {
-        const json = responseAccount;
-        await route.fulfill({ json });
-      });
-
-      await page.route(BALANCE_ENDPOINT, async (route) => {
-        const json = responseBalance;
-        await route.fulfill({ json });
-      });
-
-      await page.waitForTimeout(3000);
-
-      await expect(
-        page.getByRole("heading", { name: "0.01Evmos" })
-      ).toBeVisible();
-
-      // total balance in dollars
-      await expect(
-        page.locator("p").filter({ hasText: "$ 0.00" })
-      ).toBeVisible();
-
-      // staking - available balance
-      await expect(
-        page
-          .locator("div")
-          .filter({ hasText: /^Available Balance0 EVMOS\$ 0$/ })
-          .locator("h5")
-      ).toBeVisible();
-
-      // staking - staked balance
-      await expect(
-        page
-          .locator("div")
-          .filter({ hasText: /^Staked Balance0\.00 EVMOS\$ 0\.00$/ })
-          .locator("h5")
-      ).toBeVisible();
-
-      // staking - claimable rewards
-      await expect(
-        page
-          .locator("div")
-          .filter({ hasText: /^Claimeable Rewards0\.01 EVMOS\$ 0\.00$/ })
-          .locator("h5")
-      ).toBeVisible();
-      await page
-        .getByRole("button", {
-          name: /Claim Rewards/i,
-        })
-        .isEnabled();
-
-      await expect(
-        page.getByRole("button", { name: "Stake", exact: true })
-      ).toBeVisible();
-
-      await expect(
-        page.getByRole("button", { name: /use a dApp/i })
-      ).toBeVisible();
-
-      await page
-        .getByRole("button", {
-          name: "Top Up Account",
-          exact: true,
-        })
-        .click();
-
-      await expect(
-        page.getByRole("heading", { name: "Evmos Copilot" })
-      ).toBeVisible();
-
-      await page.getByRole("button", { name: "Close" }).click();
-      await page.getByRole("button", { name: "Exit" }).click();
     }
   );
 });
