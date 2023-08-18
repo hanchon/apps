@@ -92,10 +92,7 @@ export const useStep = (
     };
 
     if (firstUpdate.current) {
-      // Execute the async function
-      // Can not await inside a useEffect
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      check();
+      check().catch(console.error);
       firstUpdate.current = false;
     }
 
