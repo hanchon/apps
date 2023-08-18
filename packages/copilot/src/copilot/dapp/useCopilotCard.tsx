@@ -129,10 +129,8 @@ export const useCopilotCard = () => {
         setSequence(true);
       }
     }
-    // Execute the async function
-    // Can not await inside a useEffect
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    getSequenceNumber();
+
+    getSequenceNumber().catch(console.error);
   }, [sequence, tempValue]);
 
   return { stepsToDraw, drawButton, sequence };
