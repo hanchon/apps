@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { LaunchPadItemsProps } from "./data";
 import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
 
@@ -9,7 +8,7 @@ export const Item = ({ itemProps }: { itemProps: LaunchPadItemsProps }) => {
     handlePreClickAction({ dApp: itemProps.text });
   };
   return (
-    <Link
+    <a
       onClick={handleOnClick}
       href={itemProps.href}
       rel="noopener noreferrer"
@@ -19,6 +18,6 @@ export const Item = ({ itemProps }: { itemProps: LaunchPadItemsProps }) => {
         {itemProps.icon}
       </div>
       <p className="text-sm">{itemProps.text}</p>
-    </Link>
+    </a>
   );
 };
