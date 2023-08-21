@@ -4,9 +4,7 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useProposals } from "../../internal/governance/functionality/hooks/useProposals";
-import {
-  COMMONWEALTH_URL,
-} from "constants-helper";
+import { COMMONWEALTH_URL } from "constants-helper";
 const BannerBlack = dynamic(() => import("../common/banners/BannerBlack"));
 const ContainerProposals = dynamic(
   () => import("./proposals/ContainerProposals")
