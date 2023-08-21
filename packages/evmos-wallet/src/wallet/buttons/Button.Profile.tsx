@@ -24,7 +24,7 @@ export const ButtonProfile = ({
     >
       {ProvidersIcons[walletExtension.extensionName]}
 
-      <span className="text-lg font-bold">
+      <span className="font-bold">
         {formatProviderAddress(walletExtension, true)}
       </span>
     </button>
