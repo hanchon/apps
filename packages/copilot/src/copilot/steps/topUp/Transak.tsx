@@ -12,7 +12,10 @@ export default function Transak() {
   useTransakEvents();
 
   return (
-    <div className="relative mx-auto mt-[25px] h-[700px] w-[300px] overflow-hidden rounded-[15px] md:h-[545px] md:w-[400px]">
+    <div
+      data-testid="transak-widget"
+      className="relative mx-auto mt-[25px] h-[700px] w-[300px] overflow-hidden rounded-[15px] md:h-[545px] md:w-[400px]"
+    >
       <iframe
         // eslint-disable-next-line no-secrets/no-secrets
         src={`https://global.transak.com?apiKey=${TRANSAK_API_KEY}&themeColor=ed4e33&cryptoCurrencyCode=EVMOS&network=evmos&defaultPaymentMethod=credit_debit_card&disableWalletAddressForm=true&walletAddress=${wallet.evmosAddressEthFormat}`}

@@ -3,7 +3,11 @@
 
 import { Dispatch, SetStateAction } from "react";
 import { CreditCardsIcon, EthereumIcon } from "icons";
-import { CLICK_ON_TOP_UP_WITH_CARD_COPILOT, useTracker } from "tracker";
+import {
+  CLICK_ON_TOP_UP_WITH_CARD_COPILOT,
+  useTracker,
+  CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT,
+} from "tracker";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 export const Intro = ({
@@ -11,13 +15,22 @@ export const Intro = ({
 }: {
   setTopUpType: Dispatch<SetStateAction<string>>;
 }) => {
-  const { handlePreClickAction } = useTracker(
+  const { handlePreClickAction: trackCardTopUp } = useTracker(
     CLICK_ON_TOP_UP_WITH_CARD_COPILOT
+  );
+
+  const { handlePreClickAction: trackCryptoTopUp } = useTracker(
+    CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT
   );
 
   const handleCardOnClick = () => {
     setTopUpType("card");
-    handlePreClickAction();
+    trackCardTopUp();
+  };
+
+  const handleCryptoOnClick = () => {
+    setTopUpType("crypto");
+    trackCryptoTopUp();
   };
 
   return (
@@ -37,16 +50,13 @@ export const Intro = ({
             {t("topup.card.button")}
           </button>
           <button
-            disabled={true}
-            className="border-strokeGrey flex flex-col items-center gap-2 rounded-lg border bg-[#F3F3F3] px-2 py-4 opacity-50"
+            onClick={handleCryptoOnClick}
+            className="border-strokeGrey flex items-center justify-center gap-2 rounded-lg border px-2 py-4 shadow transition-all duration-300 hover:shadow-md"
           >
             <div className="flex  items-center justify-center gap-2">
               <EthereumIcon />
               {t("topup.crypto.button")}
             </div>
-            <span className="bg-strokeGrey rounded-full px-3 py-0.5 font-normal">
-              {t("topup.intro.crypto.button.comingsoon")}
-            </span>
           </button>
         </div>
       </section>
