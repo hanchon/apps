@@ -35,6 +35,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 # Changelog
 
 ## Unreleased
+- (refactor) | packages/config 1.0.0 packages/evmos-wallet 1.0.8 packages/evmos-wallet 1.0.15 | refactor wallet setup to use the latest Wagmi version, fixes Wallet Connect integration
 
 ## 1.2.0 - 2023-08-21
 

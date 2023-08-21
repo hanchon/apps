@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { ethToEvmos } from "@evmos/address-converter";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { parseUnits } from "@ethersproject/units";
 import { useDispatch, useSelector } from "react-redux";
 import { executeDeposit } from "../../../../../internal/asset/functionality/transactions/deposit";
@@ -12,6 +12,7 @@ import {
   snackbarWaitingBroadcast,
 } from "../../../../../internal/asset/style/format";
 import {
+  E,
   checkFormatAddress,
   checkMetaMaskFormatAddress,
   getChainIds,
@@ -27,6 +28,7 @@ import {
   getKeplrAddressByChain,
   EVMOS_SYMBOL,
   StoreType,
+  getKeplrAccountPubKey,
 } from "evmos-wallet";
 import {
   CLICK_DEPOSIT_CONFIRM_BUTTON,
@@ -50,7 +52,11 @@ export const useDeposit = (useDepositProps: DepositProps) => {
       provider: wallet?.extensionName,
     });
     useDepositProps.setConfirmClicked(true);
-    if (wallet.osmosisPubkey === null) {
+    const [, osmosisPubkey] = await E.try(() =>
+      getKeplrAccountPubKey("osmosis-1")
+    );
+
+    if (!osmosisPubkey) {
       dispatch(snackRequestRejected());
       useDepositProps.setShow(false);
       return;
@@ -131,10 +137,9 @@ export const useDeposit = (useDepositProps: DepositProps) => {
     }
     // create, sign and broadcast tx
     const res = await executeDeposit(
-      wallet.osmosisPubkey,
+      osmosisPubkey,
       keplrAddress,
       params,
-      wallet.extensionName,
       prefix,
       chainIds.chainIdentifier
     );

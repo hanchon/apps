@@ -1,10 +1,9 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { BigNumber } from "ethers";
 import { parseUnits } from "@ethersproject/units";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { TableDataElement } from "../../../../internal/asset/functionality/table/normalizeData";
 import { ConfirmButton, ModalTitle, ErrorMessage } from "ui-helpers";
 import { KeplrIcon, MetamaskIcon } from "icons";
@@ -26,7 +25,6 @@ import AddTokenMetamask from "./AddTokenMetamask";
 
 import {
   IBCChainParams,
-  StoreType,
   addSnackbar,
   getKeplrAddressByChain,
   getWallet,
@@ -41,7 +39,11 @@ import {
   METAMASK_NOTIFICATIONS,
   SNACKBAR_CONTENT_TYPES,
   SNACKBAR_TYPES,
+  getKeplrAccountPubKey,
 } from "evmos-wallet";
+import { BigNumber } from "@ethersproject/bignumber";
+import { E } from "helpers";
+
 const Deposit = ({
   item,
   feeBalance,
@@ -56,7 +58,6 @@ const Deposit = ({
   const [inputValue, setInputValue] = useState("");
   const [confirmClicked, setConfirmClicked] = useState(false);
   const [addressTo, setAddressTo] = useState("");
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
 
   const dispatch = useDispatch();
 
@@ -251,7 +252,11 @@ const Deposit = ({
           disabled={disabled}
           onClick={async () => {
             setConfirmClicked(true);
-            if (wallet.osmosisPubkey === null) {
+            const [, osmosisPubkey] = await E.try(() =>
+              getKeplrAccountPubKey("osmosis-1")
+            );
+
+            if (!osmosisPubkey) {
               dispatch(
                 addSnackbar({
                   id: 0,
@@ -317,12 +322,10 @@ const Deposit = ({
             );
             // create, sign and broadcast tx
             const res = await executeDeposit(
-              wallet.osmosisPubkey,
+              osmosisPubkey,
               keplrAddress,
               params,
-              wallet.extensionName,
-              item.prefix,
-              item.chainIdentifier
+              item.prefix
             );
             dispatch(
               addSnackbar({

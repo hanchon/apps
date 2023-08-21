@@ -16,7 +16,6 @@ const localPorts = {
 
 const getHref = (path: keyof typeof localPorts) => {
   if (process.env.NODE_ENV !== "development") return path;
-  // eslint-disable-next-line security/detect-object-injection
   return `http://localhost:${localPorts[path]}${path}`;
 };
 
