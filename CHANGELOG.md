@@ -36,6 +36,9 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.2.0 - 2023-08-21
+
+
 - (chore) | packages/copilot 1.0.4 packages/tracker 1.0.6 | Track card provider and crypto swap events
 - (chore) | apps/governance 1.0.21 apps/assets 1.0.23 apps/mission 1.0.20 apps/staking 1.0.19 apps/vesting 1.0.17 packages/icons 1.0.5 packages/copilot 1.0.3 packages/eslint-config-custom 1.0.4 | Add c14 and cypherD support
 - (chore) | apps/assets 1.0.24 apps/governance 1.0.22 apps/mission 1.0.21 apps/staking 1.0.20 apps/vesting 1.0.18 packages/constants-helper 1.0.5 packages/copilot 1.0.5 packages/evmos-wallet 1.0.14 packages/icons 1.0.6 packages/tracker 1.0.7 packages/ui-helpers 1.0.13 | Replace Mission control page for dAppStore. New navigation for all the apps. Remove mission control components.
