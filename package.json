@@ -4,7 +4,6 @@
   "license": "SEE LICENSE IN LICENSE",
   "author": "Tharsis Labs Ltd.(Evmos)",
   "private": true,
-  "type": "module",
   "scripts": {
     "build:production": "NEXT_PUBLIC_EVMOS_APP_ENV=production turbo run build --force --no-cache",
     "build": "dotenv -- turbo run build",
