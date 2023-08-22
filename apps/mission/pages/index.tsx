@@ -11,7 +11,7 @@ import {
   WalletProvider,
 } from "evmos-wallet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Container, TermOfServices } from "ui-helpers";
+import { Container, MavaWidget, TermOfServices } from "ui-helpers";
 import MainContainer from "../src/components/mission/MainContainer";
 import { HeadComponent } from "../src/components/mission/HeadComponent";
 import { GoogleAnalytics } from "../src/components/mission/GoogleAnalytics";
@@ -54,6 +54,7 @@ export default function Mission() {
                 <Container>
                   <>
                     <SnackbarsInternal />
+                    <MavaWidget />
                     <MainContainer />
                   </>
                 </Container>
