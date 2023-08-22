@@ -2,11 +2,10 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 // styles
-import "./styles.css";
 
-// libs
-export { WagmiConfig } from "wagmi";
-export { Web3Modal } from "@web3modal/react";
+export * from "./wallet";
+export * from "./api";
+export * from "./utils";
 
 // snackbars
 export { Snackbars } from "./notification/Snackbars";
@@ -35,22 +34,16 @@ export { snackWarningLedger } from "./notification/helpers";
 
 // redux
 export { store } from "./redux/Store";
-export { Provider } from "react-redux";
 export { KEPLR_KEY } from "./internal/wallet/functionality/wallet";
 export { METAMASK_KEY } from "./internal/wallet/functionality/wallet";
 export { WALLECT_CONNECT_KEY } from "./internal/wallet/functionality/wallet";
 export type { StoreType } from "./redux/Store";
 export type { AppDispatch } from "./redux/Store";
 export { getAllSnackbars } from "./notification/redux/notificationSlice";
-
+export * from "./internal/wallet/functionality/wallet";
 // components
-export {
-  ethereumClient,
-  projectId,
-  wagmiClient,
-} from "../src/internal/wallet/functionality/walletconnect/walletconnectConstants";
-export { ButtonWalletConnection } from "./wallet/ButtonWalletConnection";
-
+export { WalletConnection } from "./copilot/WalletConnection";
+export { ButtonWallet } from "./wallet/ButtonWallet";
 // configs
 export { EVMOS_SYMBOL } from "./internal/wallet/functionality/networkConfig";
 export { EVMOS_DECIMALS } from "./internal/wallet/functionality/networkConfig";
@@ -64,16 +57,13 @@ export { EVMOS_CHAIN_NAME } from "./internal/wallet/functionality/networkConfig"
 // utils
 export { truncateAddress } from "./internal/wallet/style/format";
 export { fetchWithTimeout } from "./internal/wallet/functionality/fetch";
-export { createContract } from "./wallet/contracts/contractHelper";
 
 // wallet
 export { getKeplrAddressByChain } from "./internal/wallet/functionality/keplr/keplrHelpers";
 export { getWallet } from "./internal/wallet/functionality/metamask/metamaskHelpers";
 export { addToken } from "./internal/wallet/functionality/metamask/metamaskHelpers";
 export type { Token } from "./internal/wallet/functionality/metamask/metamaskHelpers";
-export { Signer } from "./internal/wallet/functionality/signing/genericSigner";
 export { broadcastAminoBackendTxToBackend } from "./internal/wallet/functionality/signing";
-export { useContractTransaction } from "./internal/wallet/functionality/contracts/hooks/useContractTransaction";
 
 // Probably move it to assets
 export type { IBCChainParams } from "./notification/transactionsTypes";
@@ -83,3 +73,28 @@ export type { executedTx } from "./notification/transactionsTypes";
 export { TransactionStatus } from "./notification/transactionsTypes";
 export type { txStatusErrorResponse } from "./notification/transactionsTypes";
 export type { txStatusResponse } from "./notification/transactionsTypes";
+
+export {
+  changeNetworkToEvmosMainnet,
+  switchEthereumChain,
+  isMetamaskInstalled,
+  connectHandler,
+  isWalletSelected,
+  isEvmosChain,
+} from "./internal/wallet/functionality/metamask/metamaskHelpers";
+
+export {
+  queryPubKey,
+  getSequence,
+} from "./internal/wallet/functionality/pubkey";
+export { useEvmosBalance } from "./internal/wallet/functionality/hooks/useEvmosBalance";
+export { useAssets } from "./api/useAssets";
+export { useStake } from "./api/useStake";
+export { useRewards } from "./hooks/rewards/useRewards";
+
+export {
+  getBalance,
+  getBalanceInDollars,
+  getNumberBalance,
+  getNumberBalanceInDollars,
+} from "./hooks/rewards/helpers";

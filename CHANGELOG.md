@@ -36,11 +36,62 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) fse-735 | apps/assets 1.0.25 apps/governance 1.0.23 apps/mission 1.0.22 apps/staking 1.0.21 apps/vesting 1.0.19 packages/constants-helper 1.0.6 packages/ui-helpers 1.0.14 | Add Mava Widget to all apps.
+- (refactor) | packages/config 1.0.0 packages/evmos-wallet 1.0.8 packages/evmos-wallet 1.0.15 | refactor wallet setup to use the latest Wagmi version, fixes Wallet Connect integration
+
+## 1.2.0 - 2023-08-21
+
+- (chore) | packages/copilot 1.0.4 packages/tracker 1.0.6 | Track card provider and crypto swap events
+- (chore) | apps/governance 1.0.21 apps/assets 1.0.23 apps/mission 1.0.20 apps/staking 1.0.19 apps/vesting 1.0.17 packages/icons 1.0.5 packages/copilot 1.0.3 packages/eslint-config-custom 1.0.4 | Add c14 and cypherD support
+- (chore) | apps/assets 1.0.24 apps/governance 1.0.22 apps/mission 1.0.21 apps/staking 1.0.20 apps/vesting 1.0.18 packages/constants-helper 1.0.5 packages/copilot 1.0.5 packages/evmos-wallet 1.0.14 packages/icons 1.0.6 packages/tracker 1.0.7 packages/ui-helpers 1.0.13 | Replace Mission control page for dAppStore. New navigation for all the apps. Remove mission control components.
+
+## 1.1.4 - 2023-08-03
+
+- (chore) | apps/governance 1.0.20 | remove proposal number 156
+
+## 1.1.3 - 2023-08-01
+
+- (refactor) | Multiple Packages | Reconfigure build pipeline and review dependency graph
+  - apps/assets 1.0.22
+  - apps/governance 1.0.19
+  - apps/mission 1.0.19
+  - apps/staking 1.0.18
+  - apps/vesting 1.0.16
+  - packages/constants-helper 1.0.4
+  - packages/eslint-config-custom 1.0.3
+  - packages/evmos-wallet 1.0.13
+  - packages/helpers 1.0.7
+  - packages/icons 1.0.4
+  - packages/playwright-config-custom 1.0.2
+  - packages/services 1.0.6
+  - packages/tailwind-config 1.0.2
+  - packages/tracker 1.0.5
+  - packages/tsconfig 1.0.1
+  - packages/ui-helpers 1.0.12
+  - packages/vitest-config-custom 1.0.2
+- (fix) | apps/governance 1.0.18 | replace playwright waitForSelector deprecated method
+- (chore) #fse-705 | apps/assets 1.0.21 | Add support for crescent network and token
+
+## 1.1.2 - 2023-07-31
+
+- (fix) | packages/copilot 1.0.2 apps/mission 1.0.18 | Fixing ecosystem url
+
+## 1.1.1 - 2023-07-31
+
+- (fix) #fse-657 | packages/copilot 1.0.1 | Fix Transak url
+
+## 1.1.0 - 2023-07-31
+
+- (feat) #fse-657 | packages/evmos-wallet 1.0.12 packages/ui-helpers 1.0.11 packages/copilot 1.0.0 packages/tailwind-config 1.0.1 apps/assets 1.0.20 apps/governance 1.0.17 apps/mission 1.0.17 apps/staking 1.0.17 apps/vesting 1.0.15 | Add Evmos Copilot for onboarding new users
+
+## 1.0.14 - 2023-07-26
+
 - (feat) #fse-690 | packages/evmos-wallet 1.0.11 apps/assets 1.0.19 | Enable keplr smart contract interactions
 - (fix) #fse-677 | apps/assets 1.0.19 apps/governance 1.0.16 apps/mission 1.0.16 apps/staking 1.0.16 apps/vesting 1.0.14 packages/constants-helper 1.0.3 packages/eslint-config-custom 1.0.2 packages/evmos-wallet 1.0.11 packages/helpers 1.0.6 packages/icons 1.0.3 packages/services 1.0.5 packages/tracker 1.0.4 packages/ui-helpers 1.0.10 | Updating eslint config to avoid Vscode errors
 
 ## 1.0.13 - 2023-07-18
 
+- (chore) #fse-681 | packages/evmos-wallet 1.0.10 apps/governance 1.0.16 | move useEvmosBalance to evmos-wallet
 - (feat) #fse-495 | packages/evmos-wallet 1.0.10 | Adding i18n with schummar library
 - (ci) #fse-668 | turbo.json | Updating config to be able to do a quick build using --filter for examample `yarn  build --filter mission-page`
 - (ci) #fse-675 | packages/playwright-config-custom 1.0.1 packages/vitest-config-custom 1.0.1 apps/assets 1.0.18 apps/governance 1.0.15 apps/mission 1.0.15 apps/staking 1.0.15 apps/vesting 1.0.13 packages/evmos-wallet 1.0.9 apps/helpers 1.0.5 packages/services 1.0.4 packages/tracker 1.0.3 packages/ui-helpers 1.0.9 | Refactoring playwright & vitest config

@@ -1,4 +1,5 @@
 {
-  "include": ["."],
-  "exclude": ["dist", "build", "node_modules", ".eslintrc.js"]
+  "extends": "@evmos-apps/config/ts/react-library.json",
+  "include": [".", "../config/**/*"],
+  "exclude": ["dist", "build", "node_modules", "../config/node_modules"]
 }

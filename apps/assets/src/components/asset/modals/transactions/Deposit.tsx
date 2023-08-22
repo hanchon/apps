@@ -1,10 +1,9 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { BigNumber } from "ethers";
 import { parseUnits } from "@ethersproject/units";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { TableDataElement } from "../../../../internal/asset/functionality/table/normalizeData";
 import { ConfirmButton, ModalTitle, ErrorMessage } from "ui-helpers";
 import { KeplrIcon, MetamaskIcon } from "icons";
@@ -26,7 +25,6 @@ import AddTokenMetamask from "./AddTokenMetamask";
 
 import {
   IBCChainParams,
-  StoreType,
   addSnackbar,
   getKeplrAddressByChain,
   getWallet,
@@ -41,7 +39,11 @@ import {
   METAMASK_NOTIFICATIONS,
   SNACKBAR_CONTENT_TYPES,
   SNACKBAR_TYPES,
+  getKeplrAccountPubKey,
 } from "evmos-wallet";
+import { BigNumber } from "@ethersproject/bignumber";
+import { E } from "helpers";
+
 const Deposit = ({
   item,
   feeBalance,
@@ -56,7 +58,6 @@ const Deposit = ({
   const [inputValue, setInputValue] = useState("");
   const [confirmClicked, setConfirmClicked] = useState(false);
   const [addressTo, setAddressTo] = useState("");
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
 
   const dispatch = useDispatch();
 
@@ -77,7 +78,7 @@ const Deposit = ({
     async function getData() {
       const walletKeplr = await getKeplrAddressByChain(
         chainId,
-        chainIdentifier
+        chainIdentifier,
       );
       if (walletKeplr === null) {
         dispatch(
@@ -89,7 +90,7 @@ const Deposit = ({
               text: KEPLR_NOTIFICATIONS.RequestRejectedSubtext,
             },
             type: SNACKBAR_TYPES.ERROR,
-          })
+          }),
         );
         setShow(false);
         return;
@@ -100,13 +101,13 @@ const Deposit = ({
         balance = await getEvmosBalanceForDeposit(
           walletKeplr,
           chainIdentifier.toUpperCase(),
-          item.symbol
+          item.symbol,
         );
       } else {
         balance = await getBalance(
           walletKeplr,
           item.chainIdentifier.toUpperCase(),
-          item.symbol
+          item.symbol,
         );
       }
 
@@ -120,14 +121,14 @@ const Deposit = ({
             },
 
             type: SNACKBAR_TYPES.ERROR,
-          })
+          }),
         );
         setShow(false);
         return;
       }
 
       setBalance(
-        BigNumber.from(balance.data.balance ? balance.data.balance.amount : 0)
+        BigNumber.from(balance.data.balance ? balance.data.balance.amount : 0),
       );
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -174,7 +175,7 @@ const Deposit = ({
         <div className="mb-8 space-y-5 rounded-lg bg-skinTan px-8 py-4">
           <ToContainer token="EVMOS" img={`/assets/tokens/evmos.png`} />
           <div className="space-y-3">
-            <div className="flex items-center space-x-3 rounded-lg border border-darkGray5 bg-white pr-5 pl-2 focus-within:border-black hover:border-black focus-visible:border-black">
+            <div className="flex items-center space-x-3 rounded-lg border border-darkGray5 bg-white pl-2 pr-5 focus-within:border-black hover:border-black focus-visible:border-black">
               <input
                 className="w-full border-none p-3 hover:border-none focus-visible:outline-none"
                 value={addressTo}
@@ -200,7 +201,7 @@ const Deposit = ({
                 className="cursor-pointer"
                 onClick={async () => {
                   const wallet = await getKeplrAddressByChain(
-                    EVMOS_CHAIN.cosmosChainId
+                    EVMOS_CHAIN.cosmosChainId,
                   );
                   if (wallet === null) {
                     dispatch(
@@ -212,7 +213,7 @@ const Deposit = ({
                           text: KEPLR_NOTIFICATIONS.RequestRejectedSubtext,
                         },
                         type: SNACKBAR_TYPES.ERROR,
-                      })
+                      }),
                     );
                     setShow(false);
                     return;
@@ -236,7 +237,7 @@ const Deposit = ({
                           text: KEPLR_NOTIFICATIONS.RequestRejectedSubtext,
                         },
                         type: SNACKBAR_TYPES.ERROR,
-                      })
+                      }),
                     );
                     setShow(false);
                     return;
@@ -251,7 +252,11 @@ const Deposit = ({
           disabled={disabled}
           onClick={async () => {
             setConfirmClicked(true);
-            if (wallet.osmosisPubkey === null) {
+            const [, osmosisPubkey] = await E.try(() =>
+              getKeplrAccountPubKey("osmosis-1"),
+            );
+
+            if (!osmosisPubkey) {
               dispatch(
                 addSnackbar({
                   id: 0,
@@ -261,7 +266,7 @@ const Deposit = ({
                     text: KEPLR_NOTIFICATIONS.RequestRejectedSubtext,
                   },
                   type: SNACKBAR_TYPES.ERROR,
-                })
+                }),
               );
               setShow(false);
               return;
@@ -280,7 +285,7 @@ const Deposit = ({
             }
             const amount = parseUnits(
               inputValue,
-              BigNumber.from(item.decimals)
+              BigNumber.from(item.decimals),
             );
             if (amount.gt(balance)) {
               return;
@@ -313,16 +318,14 @@ const Deposit = ({
                   text: EXECUTED_NOTIFICATIONS.IBCTransferInformation.subtext,
                 },
                 type: SNACKBAR_TYPES.DEFAULT,
-              })
+              }),
             );
             // create, sign and broadcast tx
             const res = await executeDeposit(
-              wallet.osmosisPubkey,
+              osmosisPubkey,
               keplrAddress,
               params,
-              wallet.extensionName,
               item.prefix,
-              item.chainIdentifier
             );
             dispatch(
               addSnackbar({
@@ -344,7 +347,7 @@ const Deposit = ({
                   res.error === true
                     ? SNACKBAR_TYPES.ERROR
                     : SNACKBAR_TYPES.SUCCESS,
-              })
+              }),
             );
             setShow(false);
             // check if tx is executed
@@ -354,15 +357,15 @@ const Deposit = ({
                 await snackbarIncludedInBlock(
                   res.txHash,
                   chainIdentifier.toUpperCase(),
-                  res.explorerTxUrl
-                )
+                  res.explorerTxUrl,
+                ),
               );
 
               dispatch(
                 await snackbarExecutedTx(
                   res.txHash,
-                  chainIdentifier.toUpperCase()
-                )
+                  chainIdentifier.toUpperCase(),
+                ),
               );
             }
           }}

@@ -3,7 +3,7 @@
 
 import { evmosToEth } from "@evmos/address-converter";
 import { EIPToSign, Sender, TxGenerated } from "@evmos/transactions";
-import { MetaMaskInpageProvider } from "@metamask/providers";
+import type { MetaMaskInpageProvider } from "@metamask/providers";
 import { METAMASK_ERRORS, METAMASK_NOTIFICATIONS } from "../errors";
 import { EVMOS_CHAIN } from "../networkConfig";
 import {
@@ -26,8 +26,12 @@ export declare type BackendTxSignatureResponse = {
 
 export async function signEvmosjsTxWithMetamask(
   sender: Sender,
-  tx: TxGenerated
-) {
+  tx: TxGenerated,
+): Promise<{
+  result: boolean;
+  message: string;
+  transaction: RawTx | null;
+}> {
   if (!window.ethereum)
     return {
       result: false,
@@ -48,7 +52,7 @@ export async function signEvmosjsTxWithMetamask(
       EVMOS_CHAIN,
       sender,
       signature,
-      tx
+      tx,
     );
     return {
       result: true,
@@ -69,7 +73,7 @@ export async function signEvmosjsTxWithMetamask(
 
 export async function signBackendTxWithMetamask(
   sender: string,
-  tx: TxGeneratedByBackend
+  tx: TxGeneratedByBackend,
 ) {
   if (!window.ethereum)
     return {
@@ -81,7 +85,7 @@ export async function signBackendTxWithMetamask(
   try {
     const ethWallet = evmosToEth(sender);
     const eipToSignUTF8 = JSON.parse(
-      Buffer.from(tx.eipToSign, "base64").toString("utf-8")
+      Buffer.from(tx.eipToSign, "base64").toString("utf-8"),
     ) as EIPToSign;
 
     // NOTE: we need to convert the provider because wagmi dep is replacing our window type

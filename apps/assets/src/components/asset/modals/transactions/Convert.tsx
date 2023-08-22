@@ -13,6 +13,9 @@ import { parseUnits } from "@ethersproject/units";
 import { BigNumber } from "@ethersproject/bignumber";
 import { executeConvert } from "../../../../internal/asset/functionality/transactions/convert";
 import { TableDataElement } from "../../../../internal/asset/functionality/table/normalizeData";
+import { WEVMOS_CONTRACT_ADDRESS } from "../constants";
+import WETH_ABI from "./contracts/abis/WEVMOS/WEVMOS.json";
+
 import AddTokenMetamask from "./AddTokenMetamask";
 
 import {
@@ -34,7 +37,7 @@ import {
   SUCCESSFUL_CONVERT_TX,
   UNSUCCESSFUL_CONVERT_TX,
 } from "tracker";
-import { useWEVMOS } from "./contracts/hooks/useWEVMOS";
+import { prepareWriteContract, writeContract } from "wagmi/actions";
 
 const IBC_ERC20 = "IBC<>ERC-20";
 const ERC20_IBC = "ERC-20 <> IBC";
@@ -66,8 +69,6 @@ const Convert = ({
     token: EVMOS_SYMBOL,
   });
 
-  const { deposit, withdraw } = useWEVMOS(wallet?.extensionName);
-
   useEffect(() => {
     if (!isERC20Selected) {
       setTypeSelected({
@@ -94,15 +95,15 @@ const Convert = ({
   };
 
   const { handlePreClickAction: clickConfirmConvertTx } = useTracker(
-    CLICK_BUTTON_CONFIRM_CONVERT_TX
+    CLICK_BUTTON_CONFIRM_CONVERT_TX,
   );
 
   const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_CONVERT_TX
+    SUCCESSFUL_CONVERT_TX,
   );
 
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_CONVERT_TX
+    UNSUCCESSFUL_CONVERT_TX,
   );
 
   return (
@@ -145,7 +146,7 @@ const Convert = ({
             {getReservedForFeeText(
               BigNumber.from("300000000000000000"),
               EVMOS_SYMBOL,
-              EVMOS_SYMBOL
+              EVMOS_SYMBOL,
             )}
           </div>
         </div>
@@ -179,7 +180,7 @@ const Convert = ({
                     text: KEPLR_NOTIFICATIONS.RequestRejectedSubtext,
                   },
                   type: SNACKBAR_TYPES.ERROR,
-                })
+                }),
               );
               setShow(false);
               return;
@@ -195,7 +196,7 @@ const Convert = ({
             }
             const amount = parseUnits(
               inputValue,
-              BigNumber.from(item.decimals)
+              BigNumber.from(item.decimals),
             );
             if (amount.gt(typeSelected.amount)) {
               return;
@@ -211,12 +212,10 @@ const Convert = ({
               };
               setDisabled(true);
               const res = await executeConvert(
-                wallet.evmosPubkey,
-                wallet.evmosAddressCosmosFormat,
+                wallet,
                 params,
                 isERC20Selected,
                 feeBalance,
-                wallet.extensionName
               );
 
               dispatch(
@@ -239,7 +238,7 @@ const Convert = ({
                     res.error === true
                       ? SNACKBAR_TYPES.ERROR
                       : SNACKBAR_TYPES.SUCCESS,
-                })
+                }),
               );
 
               if (res.error) {
@@ -264,11 +263,30 @@ const Convert = ({
             } else {
               if (isERC20Selected) {
                 try {
+                  const contract = await prepareWriteContract({
+                    address: WEVMOS_CONTRACT_ADDRESS,
+                    abi: WETH_ABI,
+                    functionName: "withdraw",
+                    value: amount.toBigInt(),
+                  });
+
+                  if (contract === null) {
+                    dispatch(
+                      addSnackbar({
+                        id: 0,
+                        content: {
+                          type: SNACKBAR_CONTENT_TYPES.TEXT,
+                          title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
+                        },
+                        type: SNACKBAR_TYPES.ERROR,
+                      }),
+                    );
+                    setShow(false);
+                    return;
+                  }
                   setDisabled(true);
-                  const res = await withdraw(
-                    amount,
-                    wallet.evmosAddressEthFormat
-                  );
+                  const res = await writeContract(contract);
+
                   dispatch(
                     addSnackbar({
                       id: 0,
@@ -279,7 +297,7 @@ const Convert = ({
                         explorerTxUrl: "www.mintscan.io/evmos/txs/",
                       },
                       type: SNACKBAR_TYPES.SUCCESS,
-                    })
+                    }),
                   );
                 } catch (e) {
                   // TODO: Add Sentry here!
@@ -291,16 +309,33 @@ const Convert = ({
                         title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
                       },
                       type: SNACKBAR_TYPES.ERROR,
-                    })
+                    }),
                   );
                 }
               } else {
                 try {
+                  const contract = await prepareWriteContract({
+                    address: WEVMOS_CONTRACT_ADDRESS,
+                    abi: WETH_ABI,
+                    functionName: "deposit",
+                    value: amount.toBigInt(),
+                  });
+                  if (contract === null) {
+                    dispatch(
+                      addSnackbar({
+                        id: 0,
+                        content: {
+                          type: SNACKBAR_CONTENT_TYPES.TEXT,
+                          title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
+                        },
+                        type: SNACKBAR_TYPES.ERROR,
+                      }),
+                    );
+                    setShow(false);
+                    return;
+                  }
                   setDisabled(true);
-                  const res = await deposit(
-                    amount,
-                    wallet.evmosAddressEthFormat
-                  );
+                  const res = await writeContract(contract);
                   dispatch(
                     addSnackbar({
                       id: 0,
@@ -311,7 +346,7 @@ const Convert = ({
                         explorerTxUrl: "www.mintscan.io/evmos/txs/",
                       },
                       type: SNACKBAR_TYPES.SUCCESS,
-                    })
+                    }),
                   );
                 } catch (e) {
                   // TODO: Add Sentry here!
@@ -323,7 +358,7 @@ const Convert = ({
                         title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
                       },
                       type: SNACKBAR_TYPES.ERROR,
-                    })
+                    }),
                   );
                 }
               }

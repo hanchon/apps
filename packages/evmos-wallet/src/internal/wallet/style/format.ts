@@ -23,7 +23,7 @@ export function truncateAddress(address?: string) {
 
 export function formatProviderAddress(
   wallet: WalletExtension,
-  showName = false
+  showName = false,
 ) {
   const displayAddress =
     wallet.extensionName === KEPLR_KEY

@@ -1,11 +1,10 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { parseUnits } from "ethers/lib/utils.js";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ConvertProps } from "../types";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import {
   snackBroadcastSuccessful,
   snackErrorGeneratingTx,
@@ -20,6 +19,7 @@ import {
 } from "tracker";
 import { GENERATING_TX_NOTIFICATIONS } from "../../../../../internal/asset/functionality/transactions/errors";
 import { useWEVMOS } from "../contracts/hooks/useWEVMOS";
+import { parseUnits } from "@ethersproject/units";
 
 const wrapEvmos = "EVMOS <> WEVMOS";
 const unwrapEvmos = "WEVMOS <> EVMOS";
@@ -27,10 +27,10 @@ export const useConvert = (useConvertProps: ConvertProps) => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
 
-  const { deposit, withdraw } = useWEVMOS(wallet?.extensionName);
+  const { deposit, withdraw } = useWEVMOS();
 
   const { handlePreClickAction: clickConfirmWrapTx } = useTracker(
-    CLICK_BUTTON_CONFIRM_WRAP_TX
+    CLICK_BUTTON_CONFIRM_WRAP_TX,
   );
 
   const { handlePreClickAction: successfulTx } = useTracker(SUCCESSFUL_WRAP_TX);
@@ -61,7 +61,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
     }
     const amount = parseUnits(
       useConvertProps.inputValue,
-      BigNumber.from(useConvertProps.item.decimals)
+      BigNumber.from(useConvertProps.item.decimals),
     );
     if (amount.gt(useConvertProps.balance.balanceFrom)) {
       return;
@@ -73,7 +73,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
         const res = await deposit(amount, wallet.evmosAddressEthFormat);
 
         dispatch(
-          snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
+          snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/"),
         );
         successfulTx({
           txHash: res.hash,
@@ -101,7 +101,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
         const res = await withdraw(amount, wallet.evmosAddressEthFormat);
 
         dispatch(
-          snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
+          snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/"),
         );
         successfulTx({
           txHash: res.hash,

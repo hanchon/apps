@@ -1,6 +1,6 @@
 import { Period } from "@evmos/transactions";
 import dayjs from "dayjs";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { distributeCoinsEvenly } from "./distribute-coins-evenly";
 import { Intervals } from "./types";
 
@@ -9,27 +9,26 @@ export const generatePeriods = (
   endDate: dayjs.Dayjs,
   interval: Intervals,
   fullAmount: BigNumber,
-  denom: string
+  denom: string,
 ): Period[] => {
   let periods: number[] = [];
 
-  let subtractUnit = interval === "quarter" ? 3 : 1;
-  let _interval = "month";
+  const subtractUnit = interval === Intervals["quarter"] ? 3 : 1;
+  const _interval = "month";
 
   for (
     let date = endDate;
     date.isAfter(startDate);
-    // @ts-ignore
     date = date.subtract(subtractUnit, _interval)
   ) {
     periods = [date.diff(startDate, "seconds"), ...periods];
   }
   periods = periods.map((finalDate, i) =>
-    i === 0 ? finalDate : finalDate - periods[i - 1]
+    i === 0 ? finalDate : finalDate - periods[i - 1],
   );
   const divisions = distributeCoinsEvenly(
     BigNumber.from(fullAmount),
-    periods.length
+    periods.length,
   );
   return periods.map((period, i) => ({
     amount: [

@@ -38,7 +38,7 @@ const FromContainer = ({ fee, balance, input, style }: FromProps) => {
           <span className="opacity-80">{truncateAddress(style.address)}</span>
         )}
       </div>
-      <div className="flex items-center space-x-3 rounded-lg border border-darkGray5 bg-white pr-5 pl-2 focus-within:border-black hover:border-black focus-visible:border-black">
+      <div className="flex items-center space-x-3 rounded-lg border border-darkGray5 bg-white pl-2 pr-5 focus-within:border-black hover:border-black focus-visible:border-black">
         <input
           className="w-full border-none p-3 hover:border-none focus-visible:outline-none"
           type="text"
@@ -52,13 +52,13 @@ const FromContainer = ({ fee, balance, input, style }: FromProps) => {
           onClick={() => {
             if (style.tokenTo?.toUpperCase() !== fee.feeDenom.toUpperCase()) {
               input.setInputValue(
-                numericOnly(convertFromAtto(balance.amount, balance.decimals))
+                numericOnly(convertFromAtto(balance.amount, balance.decimals)),
               );
             } else {
               setMaxClicked(true);
               const val = safeSubstraction(balance.amount, fee.fee);
               input.setInputValue(
-                numericOnly(convertFromAtto(val, balance.decimals))
+                numericOnly(convertFromAtto(val, balance.decimals)),
               );
             }
           }}
@@ -78,13 +78,13 @@ const FromContainer = ({ fee, balance, input, style }: FromProps) => {
 
       {truncateNumber(input.value) >
         truncateNumber(
-          numericOnly(convertFromAtto(balance.amount, balance.decimals))
+          numericOnly(convertFromAtto(balance.amount, balance.decimals)),
         ) && <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorsAmountGt} />}
       <div>
         <span className="font-bold">Balance: </span>
         {convertAndFormat(balance.amount, balance.decimals, 6).replace(
           /\.?0+$/,
-          ""
+          "",
         )}{" "}
         {style.tokenTo}
       </div>

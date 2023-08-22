@@ -1,8 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { BigNumber } from "ethers";
-
 import {
   convertFromAtto,
   convertAndFormat,
@@ -20,6 +18,7 @@ import { TextSmall } from "../TextSmall";
 import { AmountWithdrawProps } from "../types";
 import { FEE_WITHDRAW } from "constants-helper";
 import { MODAL_NOTIFICATIONS, EVMOS_SYMBOL } from "evmos-wallet";
+import { BigNumber } from "@ethersproject/bignumber";
 
 const AmountWithdraw = ({
   amountProps,
@@ -37,12 +36,12 @@ const AmountWithdraw = ({
       }
       if (amountProps.token.symbol.toUpperCase() !== feeDenom.toUpperCase()) {
         amountProps.setValue(
-          numericOnly(convertFromAtto(balance, amountProps.token.decimals))
+          numericOnly(convertFromAtto(balance, amountProps.token.decimals)),
         );
       } else {
         const val = safeSubstraction(balance, BigNumber.from(FEE_WITHDRAW));
         amountProps.setValue(
-          numericOnly(convertFromAtto(val, amountProps.token.decimals))
+          numericOnly(convertFromAtto(val, amountProps.token.decimals)),
         );
       }
     }
@@ -130,7 +129,7 @@ const AmountWithdraw = ({
                 ? amountProps.token.cosmosBalance
                 : amountProps.token.erc20Balance,
               amountProps.token.decimals,
-              6
+              6,
             )}{" "}
             {amountProps.token.symbol}
           </span>
@@ -139,7 +138,7 @@ const AmountWithdraw = ({
           text={getReservedForFeeText(
             BigNumber.from(FEE_WITHDRAW),
             EVMOS_SYMBOL,
-            EVMOS_SYMBOL
+            EVMOS_SYMBOL,
           )}
         />
       </>
@@ -182,9 +181,9 @@ const AmountWithdraw = ({
                     amountProps.token.symbol === EVMOS_SYMBOL
                       ? amountProps.token.cosmosBalance
                       : amountProps.token.erc20Balance,
-                    amountProps.token.decimals
-                  )
-                )
+                    amountProps.token.decimals,
+                  ),
+                ),
               ) && <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorsAmountGt} />}
         </div>
         <div className="space-y-2">{createBalanceDiv()} </div>

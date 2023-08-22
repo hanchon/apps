@@ -14,7 +14,10 @@ const ProposalCard = ({ proposalProps }: { proposalProps: ProposalProps }) => {
         <IdContainer id={proposalProps.id} />
         <ProposalStatus status={proposalProps.status} />
       </div>
-      <TitleContainer title={proposalProps.title} />
+      <TitleContainer
+        title={proposalProps.title}
+        data-testid="proposal-card-title"
+      />
       <div className="flex text-pearl">
         <div className="space-y-1 pr-5 uppercase">
           <p className="text-sm font-bold opacity-80">

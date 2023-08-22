@@ -2,8 +2,8 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
-import { formatUnits } from "ethers/lib/utils.js";
-import { utils } from "ethers";
+import { formatUnits, parseEther } from "@ethersproject/units";
+
 export type addAssetsType = {
   cosmosBalance: BigNumber;
   decimals: number;
@@ -16,11 +16,12 @@ export interface addDolarsAssetsType extends addAssetsType {
 
 export function convertFromAtto(
   value: BigNumber | BigNumberish,
-  exponent = 18
+  exponent = 18,
 ) {
   // Convert to string and truncate past decimal
   // for appropriate conversion
   if (!value) return "0";
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
   let valueAsString = value.toString();
   if (typeof value === "number") {
     // Strip scientific notation
@@ -32,13 +33,14 @@ export function convertFromAtto(
 }
 
 export function convertToAtto(value: BigNumberish) {
-  return utils.parseEther(value.toString());
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
+  return parseEther(value.toString());
 }
 
 export function convertAndFormat(
   value: BigNumber,
   exponent = 18,
-  maxDigits = 2
+  maxDigits = 2,
 ) {
   return formatNumber(convertFromAtto(value, exponent), maxDigits);
 }
@@ -47,7 +49,7 @@ export function formatNumber(
   value: string | number | undefined,
   maxDigits = 2,
   options?: Intl.NumberFormatOptions,
-  notation: "standard" | "compact" = "standard"
+  notation: "standard" | "compact" = "standard",
 ) {
   if (value === undefined) {
     return "--";
@@ -97,12 +99,12 @@ export function truncateNumber(number: string) {
 export function getReservedForFeeText(
   amount: BigNumber,
   token: string,
-  network: string
+  network: string,
 ) {
   return `${convertAndFormat(
     amount,
     18,
-    6
+    6,
   )} ${token} is reserved for transaction fees on the ${network} network.`;
 }
 
@@ -129,6 +131,7 @@ export function convertStringFromAtto(value: BigNumberish, exponent = 18) {
   // value is a string with decimals.
   // it is the same as convertFromAtto but it receives a string and returns a number
   if (!value) return 0;
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
   let valueAsString = value.toString();
   if (typeof value === "number") {
     // Strip scientific notation
@@ -142,7 +145,7 @@ export function convertStringFromAtto(value: BigNumberish, exponent = 18) {
 export function amountToDollars(
   value: BigNumber,
   decimals: number,
-  coingeckoPrice: number
+  coingeckoPrice: number,
 ) {
   if (!value || !coingeckoPrice) {
     return "0";
@@ -163,15 +166,15 @@ export function addDollarAssets(assets: addDolarsAssetsType) {
       amountToDollars(
         assets.cosmosBalance,
         assets.decimals,
-        assets.coingeckoPrice
-      )
+        assets.coingeckoPrice,
+      ),
     ) +
     parseFloat(
       amountToDollars(
         assets.erc20Balance,
         assets.decimals,
-        assets.coingeckoPrice
-      )
+        assets.coingeckoPrice,
+      ),
     )
   );
 }
@@ -199,7 +202,7 @@ export const isVotingTimeWithinRange = (date: string) => {
     now.getUTCDate(),
     now.getUTCHours(),
     now.getUTCMinutes(),
-    now.getUTCSeconds()
+    now.getUTCSeconds(),
   );
   const endPeriodVote = new Date(date);
   const endPeriodVoteUTC = Date.UTC(
@@ -208,7 +211,7 @@ export const isVotingTimeWithinRange = (date: string) => {
     endPeriodVote.getUTCDate(),
     endPeriodVote.getUTCHours(),
     endPeriodVote.getUTCMinutes(),
-    endPeriodVote.getUTCSeconds()
+    endPeriodVote.getUTCSeconds(),
   );
 
   const canVote =
@@ -263,7 +266,7 @@ export function formatAttoNumber(
   value: BigNumberish | BigNumber,
   options?: Intl.NumberFormatOptions,
   notation: "standard" | "compact" = "compact",
-  maxDigits = 2
+  maxDigits = 2,
 ) {
   const converted = convertFromAtto(value);
   return formatNumber(converted, maxDigits, options, notation);
@@ -308,17 +311,17 @@ type TableData = {
 
 export function getTotalAssets(
   normalizedAssetsData: TableData,
-  staked: Staked
+  staked: Staked,
 ) {
   let totalAssets = 0;
   normalizedAssetsData?.table?.map((item) => {
     totalAssets =
       totalAssets +
       parseFloat(
-        amountToDollars(item.cosmosBalance, item.decimals, item.coingeckoPrice)
+        amountToDollars(item.cosmosBalance, item.decimals, item.coingeckoPrice),
       ) +
       parseFloat(
-        amountToDollars(item.erc20Balance, item.decimals, item.coingeckoPrice)
+        amountToDollars(item.erc20Balance, item.decimals, item.coingeckoPrice),
       );
   });
   if (
@@ -331,8 +334,8 @@ export function getTotalAssets(
       amountToDollars(
         BigNumber.from(staked.total),
         staked.decimals,
-        staked.coingeckoPrice
-      )
+        staked.coingeckoPrice,
+      ),
     );
     totalAssets = totalAssets + val;
   }
@@ -342,7 +345,7 @@ export function getTotalAssets(
 
 export const getChainIds = (
   token: TableDataElement | undefined,
-  chain: TableDataElement | undefined
+  chain: TableDataElement | undefined,
 ) => {
   let chainId = token?.chainId;
   let chainIdentifier = token?.chainIdentifier;
@@ -357,7 +360,7 @@ export const getChainIds = (
 export const getPrefix = (
   token: TableDataElement | undefined,
   chain: TableDataElement | undefined,
-  address: string
+  address: string,
 ) => {
   let prefix = token?.prefix;
   if (chain !== undefined && address.startsWith(chain?.prefix)) {
@@ -391,10 +394,8 @@ export function indexOfMax(arr: number[]) {
   let maxIndex = 0;
 
   for (let i = 1; i < arr.length; i++) {
-    // eslint-disable-next-line security/detect-object-injection
     if (arr[i] > max) {
       maxIndex = i;
-      // eslint-disable-next-line security/detect-object-injection
       max = arr[i];
     }
   }

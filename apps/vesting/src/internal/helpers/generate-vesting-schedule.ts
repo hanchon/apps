@@ -1,11 +1,11 @@
 import { MessageMsgCreateClawbackVestingAccount } from "@evmos/transactions";
 import dayjs from "dayjs";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { convertToAtto } from "helpers";
 import { applyCliff } from "./apply-cliff";
 import { TIME_WINDOWS_TO_DAYJS_PARAMS_MAP } from "./constants";
 import { generatePeriods } from "./generate-periods";
-import { VestingSchedule } from "./types";
+import { TimeWindow, VestingSchedule } from "./types";
 
 export const generateVestingSchedule = (
   startDate: dayjs.Dayjs,
@@ -16,7 +16,7 @@ export const generateVestingSchedule = (
     vestingInterval,
     vestingCliff,
     lockingPeriod,
-  }: VestingSchedule
+  }: VestingSchedule,
 ): Pick<
   MessageMsgCreateClawbackVestingAccount,
   "startTime" | "vestingPeriods" | "lockupPeriods"
@@ -24,30 +24,28 @@ export const generateVestingSchedule = (
   const start = dayjs(startDate);
   const fullAmountAtto = convertToAtto(fullAmount);
   const endDate = start.add(
-    //@ts-ignore
-    ...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[fullVestingPeriod]
+    ...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[fullVestingPeriod],
   );
   let vestingPeriods = generatePeriods(
     start,
     endDate,
     vestingInterval,
     fullAmountAtto,
-    coinDenom
+    coinDenom,
   );
-  if (vestingCliff !== "none") {
+  if (vestingCliff !== TimeWindow["none"]) {
     vestingPeriods = applyCliff(
       start
-        //@ts-ignore
         .add(...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[vestingCliff])
         .diff(start, "second"),
-      vestingPeriods
+      vestingPeriods,
     );
   }
   return {
     startTime: start.unix(),
     vestingPeriods: vestingPeriods,
     lockupPeriods:
-      lockingPeriod === "none"
+      lockingPeriod === TimeWindow["none"]
         ? []
         : [
             {
@@ -58,7 +56,6 @@ export const generateVestingSchedule = (
                 },
               ],
               length: start
-                //@ts-ignore
                 .add(...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[lockingPeriod])
                 .diff(start, "seconds"),
             },

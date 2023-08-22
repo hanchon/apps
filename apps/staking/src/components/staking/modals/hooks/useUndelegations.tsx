@@ -4,7 +4,7 @@
 import { useDispatch } from "react-redux";
 import { UndelegateProps } from "../types";
 import { parseUnits } from "@ethersproject/units";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { executeUndelegate } from "../../../../internal/staking/functionality/transactions/undelegate";
 import { snackExecuteIBCTransfer } from "evmos-wallet";
 
@@ -18,10 +18,10 @@ export const useUndelegation = (useUndelegateProps: UndelegateProps) => {
   const dispatch = useDispatch();
   const { handlePreClickAction } = useTracker(CLICK_BUTTON_CONFIRM_UNDELEGATE);
   const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_UNDELEGATE
+    SUCCESSFUL_TX_UNDELEGATE,
   );
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_UNDELEGATE
+    UNSUCCESSFUL_TX_UNDELEGATE,
   );
   const handleConfirmButton = async () => {
     handlePreClickAction({
@@ -48,7 +48,7 @@ export const useUndelegation = (useUndelegateProps: UndelegateProps) => {
     const res = await executeUndelegate(
       useUndelegateProps.wallet,
       useUndelegateProps.item.validatorAddress,
-      amount
+      amount,
     );
     dispatch(snackExecuteIBCTransfer(res));
     if (res.error === true) {

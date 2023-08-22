@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useQuery } from "@tanstack/react-query";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { useMemo } from "react";
 import {
   formatAttoNumber,
@@ -13,7 +13,12 @@ import {
   sumBigNumber,
 } from "helpers";
 import { getProposals } from "../fetch";
-import { ProposalDetailProps, ProposalProps } from "../types";
+import { Proposal, ProposalDetailProps, ProposalProps } from "../types";
+
+const PROPOSAL_TO_REMOVE = "156";
+const removeProposal = (id: string, proposals: Proposal[]) => {
+  return proposals.filter((proposal) => proposal.id !== id);
+};
 
 export const useProposals = (pid?: string) => {
   const proposalsResponse = useQuery({
@@ -24,7 +29,14 @@ export const useProposals = (pid?: string) => {
   const proposals = useMemo(() => {
     const temp: ProposalProps[] = [];
     if (proposalsResponse.data !== undefined) {
-      proposalsResponse.data.proposals.map((item) => {
+      const filtered = removeProposal(
+        PROPOSAL_TO_REMOVE,
+        proposalsResponse.data.proposals,
+      );
+      filtered.map((item) => {
+        if (item.id === PROPOSAL_TO_REMOVE) {
+          return;
+        }
         const percents = getPercentage([
           item.final_tally_result.yes_count,
           item.final_tally_result.no_count,
@@ -75,7 +87,7 @@ export const useProposals = (pid?: string) => {
     };
     if (proposalsResponse.data !== undefined) {
       const filtered = proposalsResponse.data.proposals.filter(
-        (proposal) => proposal.id === pid
+        (proposal) => proposal.id === pid && proposal.id !== PROPOSAL_TO_REMOVE,
       );
       if (filtered.length === 0) {
         return "Proposal not found, please try again";
@@ -132,7 +144,7 @@ export const useProposals = (pid?: string) => {
         totalDeposit:
           proposalFiltered.total_deposit.length > 0
             ? formatAttoNumber(
-                BigNumber.from(proposalFiltered.total_deposit[0].amount)
+                BigNumber.from(proposalFiltered.total_deposit[0].amount),
               )
             : "--",
         submitTime:
@@ -147,7 +159,7 @@ export const useProposals = (pid?: string) => {
           proposalFiltered.messages.length > 0
             ? proposalFiltered.messages[0].content.description?.replace(
                 /\\[rn]/g,
-                "\n"
+                "\n",
               )
             : "",
         total: sumBigNumber([
@@ -157,7 +169,7 @@ export const useProposals = (pid?: string) => {
           proposalFiltered.final_tally_result.no_with_veto_count,
         ]),
         isVotingTimeWithinRange: isVotingTimeWithinRange(
-          proposalFiltered.voting_end_time
+          proposalFiltered.voting_end_time,
         ),
       };
     }

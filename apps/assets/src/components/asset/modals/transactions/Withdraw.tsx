@@ -159,7 +159,7 @@ const Withdraw = ({
             }
           />
           <div className="space-y-3">
-            <div className="flex items-center space-x-3 rounded-lg border border-darkGray5 bg-white pr-5 pl-2 focus-within:border-black hover:border-black focus-visible:border-black">
+            <div className="flex items-center space-x-3 rounded-lg border border-darkGray5 bg-white pl-2 pr-5 focus-within:border-black hover:border-black focus-visible:border-black">
               <input
                 className="w-full border-none p-3 hover:border-none focus-visible:outline-none"
                 value={addressTo}
@@ -185,7 +185,7 @@ const Withdraw = ({
                 onClick={async () => {
                   const keplrAddress = await getKeplrAddressByChain(
                     chainId,
-                    chainIdentifier
+                    chainIdentifier,
                   );
                   if (keplrAddress === null) {
                     dispatch(
@@ -198,7 +198,7 @@ const Withdraw = ({
                         },
 
                         type: SNACKBAR_TYPES.ERROR,
-                      })
+                      }),
                     );
                     return;
                   }
@@ -224,7 +224,7 @@ const Withdraw = ({
                   },
 
                   type: SNACKBAR_TYPES.ERROR,
-                })
+                }),
               );
               setShow(false);
               return;
@@ -244,7 +244,7 @@ const Withdraw = ({
 
             const amount = parseUnits(
               inputValue,
-              BigNumber.from(item.decimals)
+              BigNumber.from(item.decimals),
             );
             if (amount.gt(typeSelected.amount)) {
               return;
@@ -270,17 +270,14 @@ const Withdraw = ({
                 },
 
                 type: SNACKBAR_TYPES.DEFAULT,
-              })
+              }),
             );
             // create, sign and broadcast tx
             const res = await executeWithdraw(
-              wallet.evmosPubkey,
-              wallet.evmosAddressCosmosFormat,
+              wallet,
               params,
               feeBalance,
-              wallet.extensionName,
-              item.prefix,
-              isERC20Selected
+              isERC20Selected,
             );
 
             dispatch(
@@ -303,7 +300,7 @@ const Withdraw = ({
                   res.error === true
                     ? SNACKBAR_TYPES.ERROR
                     : SNACKBAR_TYPES.SUCCESS,
-              })
+              }),
             );
             setShow(false);
             // check if tx is executed
@@ -313,8 +310,8 @@ const Withdraw = ({
                 await snackbarIncludedInBlock(
                   res.txHash,
                   EVMOS_SYMBOL,
-                  res.explorerTxUrl
-                )
+                  res.explorerTxUrl,
+                ),
               );
               dispatch(await snackbarExecutedTx(res.txHash, EVMOS_SYMBOL));
             }

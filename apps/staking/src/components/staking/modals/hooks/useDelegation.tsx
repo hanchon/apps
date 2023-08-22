@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { parseUnits } from "@ethersproject/units";
 import { useDispatch } from "react-redux";
 import { snackExecuteIBCTransfer } from "evmos-wallet";
@@ -18,10 +18,10 @@ export const useDelegation = (useDelegateProps: DelegateProps) => {
   const dispatch = useDispatch();
   const { handlePreClickAction } = useTracker(CLICK_BUTTON_CONFIRM_DELEGATE);
   const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_DELEGATE
+    SUCCESSFUL_TX_DELEGATE,
   );
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_DELEGATE
+    UNSUCCESSFUL_TX_DELEGATE,
   );
   const handleConfirmButton = async () => {
     handlePreClickAction({
@@ -48,7 +48,7 @@ export const useDelegation = (useDelegateProps: DelegateProps) => {
     const res = await executeDelegate(
       useDelegateProps.wallet,
       useDelegateProps.item.validatorAddress,
-      amount
+      amount,
     );
 
     dispatch(snackExecuteIBCTransfer(res));

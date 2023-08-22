@@ -3,7 +3,7 @@ import { Intervals, TimeWindow } from "../../internal/helpers/types";
 
 export const getEndDate = (
   date: string | undefined,
-  vestingDuration: string
+  vestingDuration: string,
 ) => {
   const duration = Number(vestingDuration?.split(" ")[0]);
   const year = Number(date?.split("-")[0]);
@@ -22,15 +22,20 @@ const VESTING_ACCOUNTS_NAMES_LOCALSTORAGE = "VESTING_ACCOUNTS_NAMES";
 
 export function setVestingAccountNameLocalstorage(
   walletAddress: string,
-  accountName: string
+  accountName: string,
 ) {
   const storedData = localStorage.getItem(VESTING_ACCOUNTS_NAMES_LOCALSTORAGE);
-  let accounts = storedData ? JSON.parse(storedData) : [];
+  const accounts = storedData
+    ? (JSON.parse(storedData) as {
+        walletAddress: string;
+        accountName: string;
+      }[])
+    : [];
 
   accounts.push({ walletAddress, accountName });
   localStorage.setItem(
     VESTING_ACCOUNTS_NAMES_LOCALSTORAGE,
-    JSON.stringify(accounts)
+    JSON.stringify(accounts),
   );
 }
 
@@ -38,7 +43,10 @@ export const getVestingAccountNameLocalstorage = (address: string) => {
   const accounts = localStorage.getItem(VESTING_ACCOUNTS_NAMES_LOCALSTORAGE);
   let list: { walletAddress: string; accountName: string }[] = [];
   if (accounts !== null) {
-    list = JSON.parse(accounts);
+    list = JSON.parse(accounts) as {
+      walletAddress: string;
+      accountName: string;
+    }[];
   }
   const filtered = list.filter((e) => e.walletAddress === address);
   return filtered[0]?.accountName ?? "";
@@ -85,8 +93,8 @@ export const schema = z.object({
             value.startsWith("evmos") || value.startsWith("0x"),
           {
             message: "Address must start with 'evmos' or '0x'",
-          }
-        )
+          },
+        ),
     ),
   accountName: z.string(),
   amount: z

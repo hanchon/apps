@@ -39,14 +39,14 @@ const AmountDeposit = ({
       ) {
         amountProps.setValue(
           numericOnly(
-            convertFromAtto(amountProps.balance, amountProps.token.decimals)
-          )
+            convertFromAtto(amountProps.balance, amountProps.token.decimals),
+          ),
         );
         setMaxClicked(true);
       } else {
         const val = safeSubstraction(amountProps.balance, amountProps.fee.fee);
         amountProps.setValue(
-          numericOnly(convertFromAtto(val, amountProps.token.decimals))
+          numericOnly(convertFromAtto(val, amountProps.token.decimals)),
         );
         setMaxClicked(true);
       }
@@ -126,7 +126,7 @@ const AmountDeposit = ({
             {convertAndFormat(
               amountProps.balance,
               amountProps.token?.decimals,
-              6
+              6,
             )}{" "}
             {amountProps.token?.symbol}
           </span>
@@ -171,9 +171,9 @@ const AmountDeposit = ({
                 numericOnly(
                   convertFromAtto(
                     amountProps.balance,
-                    amountProps.token.decimals
-                  )
-                )
+                    amountProps.token.decimals,
+                  ),
+                ),
               ) && <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorsAmountGt} />}
         </div>
         <div className="space-y-2">{createBalanceDiv()}</div>

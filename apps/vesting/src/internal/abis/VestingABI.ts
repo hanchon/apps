@@ -3,11 +3,178 @@
 
 export const VestingABI = [
   {
+    anonymous: false,
     inputs: [
       {
-        internalType: "string",
+        indexed: true,
+        internalType: "address",
+        name: "funderAddress",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "accountAddress",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "destAddress",
+        type: "address",
+      },
+    ],
+    name: "Clawback",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
         name: "vestingAddress",
-        type: "string",
+        type: "address",
+      },
+    ],
+    name: "ConvertVestingAccount",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "funderAddress",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "vestingAddress",
+        type: "address",
+      },
+    ],
+    name: "CreateClawbackVestingAccount",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "funderAddress",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "vestingAddress",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint64",
+        name: "startTime",
+        type: "uint64",
+      },
+      {
+        components: [
+          {
+            internalType: "int64",
+            name: "length",
+            type: "int64",
+          },
+          {
+            components: [
+              {
+                internalType: "string",
+                name: "denom",
+                type: "string",
+              },
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Coin[]",
+            name: "amount",
+            type: "tuple[]",
+          },
+        ],
+        indexed: false,
+        internalType: "struct Period[]",
+        name: "lockupPeriods",
+        type: "tuple[]",
+      },
+      {
+        components: [
+          {
+            internalType: "int64",
+            name: "length",
+            type: "int64",
+          },
+          {
+            components: [
+              {
+                internalType: "string",
+                name: "denom",
+                type: "string",
+              },
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Coin[]",
+            name: "amount",
+            type: "tuple[]",
+          },
+        ],
+        indexed: false,
+        internalType: "struct Period[]",
+        name: "vestingPeriods",
+        type: "tuple[]",
+      },
+    ],
+    name: "FundVestingAccount",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "funderAddress",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "vestingAddress",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "newFunderAddress",
+        type: "address",
+      },
+    ],
+    name: "UpdateVestingFunder",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "vestingAddress",
+        type: "address",
       },
     ],
     name: "balances",
@@ -70,27 +237,39 @@ export const VestingABI = [
   {
     inputs: [
       {
-        internalType: "string",
+        internalType: "address",
         name: "funderAddress",
-        type: "string",
+        type: "address",
       },
       {
-        internalType: "string",
+        internalType: "address",
         name: "accountAddress",
-        type: "string",
+        type: "address",
       },
       {
-        internalType: "string",
+        internalType: "address",
         name: "destAddress",
-        type: "string",
+        type: "address",
       },
     ],
     name: "clawback",
     outputs: [
       {
-        internalType: "bool",
-        name: "success",
-        type: "bool",
+        components: [
+          {
+            internalType: "string",
+            name: "denom",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct Coin[]",
+        name: "coins",
+        type: "tuple[]",
       },
     ],
     stateMutability: "nonpayable",
@@ -99,9 +278,9 @@ export const VestingABI = [
   {
     inputs: [
       {
-        internalType: "string",
+        internalType: "address",
         name: "vestingAddress",
-        type: "string",
+        type: "address",
       },
     ],
     name: "convertVestingAccount",
@@ -118,14 +297,43 @@ export const VestingABI = [
   {
     inputs: [
       {
-        internalType: "string",
-        name: "fromAddress",
-        type: "string",
+        internalType: "address",
+        name: "funderAddress",
+        type: "address",
       },
       {
-        internalType: "string",
-        name: "toAddress",
-        type: "string",
+        internalType: "address",
+        name: "vestingAddress",
+        type: "address",
+      },
+      {
+        internalType: "bool",
+        name: "enableGovClawback",
+        type: "bool",
+      },
+    ],
+    name: "createClawbackVestingAccount",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "success",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "funderAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "vestingAddress",
+        type: "address",
       },
       {
         internalType: "uint64",
@@ -135,9 +343,9 @@ export const VestingABI = [
       {
         components: [
           {
-            internalType: "uint64",
+            internalType: "int64",
             name: "length",
-            type: "uint64",
+            type: "int64",
           },
           {
             components: [
@@ -164,9 +372,9 @@ export const VestingABI = [
       {
         components: [
           {
-            internalType: "uint64",
+            internalType: "int64",
             name: "length",
-            type: "uint64",
+            type: "int64",
           },
           {
             components: [
@@ -190,13 +398,8 @@ export const VestingABI = [
         name: "vestingPeriods",
         type: "tuple[]",
       },
-      {
-        internalType: "bool",
-        name: "merge",
-        type: "bool",
-      },
     ],
-    name: "createClawbackVestingAccount",
+    name: "fundVestingAccount",
     outputs: [
       {
         internalType: "bool",
@@ -210,19 +413,19 @@ export const VestingABI = [
   {
     inputs: [
       {
-        internalType: "string",
+        internalType: "address",
         name: "funderAddress",
-        type: "string",
+        type: "address",
       },
       {
-        internalType: "string",
+        internalType: "address",
         name: "newFunderAddress",
-        type: "string",
+        type: "address",
       },
       {
-        internalType: "string",
+        internalType: "address",
         name: "vestingAddress",
-        type: "string",
+        type: "address",
       },
     ],
     name: "updateVestingFunder",

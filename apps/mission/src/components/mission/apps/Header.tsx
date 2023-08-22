@@ -1,12 +1,13 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+import { ECOSYSTEM_URL } from "constants-helper";
 import Link from "next/link";
 import { CLICK_MISSION_CONTROL_ECOSYSTEM_BUTTON, useTracker } from "tracker";
 
 const Header = () => {
   const { handlePreClickAction } = useTracker(
-    CLICK_MISSION_CONTROL_ECOSYSTEM_BUTTON
+    CLICK_MISSION_CONTROL_ECOSYSTEM_BUTTON,
   );
 
   return (
@@ -18,7 +19,7 @@ const Header = () => {
         <Link
           target="_blank"
           rel="noreferrer"
-          href="https://evmos.org/ecosystem"
+          href={ECOSYSTEM_URL}
           aria-label="docs"
         >
           {/* TODO: use button component */}

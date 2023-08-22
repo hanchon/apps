@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { amountToDollars, convertAndFormat } from "helpers";
@@ -46,7 +46,7 @@ export const SubRowContent = ({
         setShow={setShow}
         isIBCBalance={isIBCBalance}
         feeBalance={feeBalance}
-      />
+      />,
     );
   };
 
@@ -65,7 +65,7 @@ export const SubRowContent = ({
           feeBalance={feeBalance}
           address={wallet.evmosAddressCosmosFormat}
           setShow={setShow}
-        />
+        />,
       );
     } else {
       dispatch(snackWarningLedger());

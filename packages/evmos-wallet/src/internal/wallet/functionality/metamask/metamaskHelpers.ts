@@ -16,12 +16,26 @@ import { signatureToPubkey } from "@hanchon/signature-to-pubkey";
 import { evmosToEth } from "@evmos/address-converter";
 import { queryPubKey } from "../pubkey";
 import { METAMASK_NOTIFICATIONS } from "../errors";
-import { MetaMaskInpageProvider } from "@metamask/providers";
+import { SaveProviderToLocalStorate } from "../localstorage";
+import { Metamask } from "./metamask";
+import { store } from "../../../../redux/Store";
+import { ethToEvmos } from "@evmos/address-converter";
+import { setWallet } from "../../../../wallet/redux/WalletSlice";
+import { METAMASK_KEY } from "../wallet";
+import type { MetaMaskInpageProvider } from "@metamask/providers";
+export const getMetamaskProvider = () => {
+  if (typeof window === "undefined") return null;
+  if (!("ethereum" in window)) {
+    return null;
+  }
 
+  return window.ethereum as MetaMaskInpageProvider;
+};
 export async function switchEthereumChain(ethChainId: string) {
-  if (!window.ethereum) return false;
+  const mmProvider = getMetamaskProvider();
+  if (!mmProvider) return false;
   try {
-    await window.ethereum.request({
+    await mmProvider.request({
       method: "wallet_switchEthereumChain",
       params: [{ chainId: ethChainId }],
     });
@@ -31,14 +45,29 @@ export async function switchEthereumChain(ethChainId: string) {
   }
 }
 
+export const isEvmosChain = async () => {
+  const mmProvider = getMetamaskProvider();
+  if (!mmProvider) return false;
+  const chainId = await mmProvider.request({ method: "eth_chainId" });
+  if (chainId === EVMOS_ETH_CHAIN_ID) {
+    return true;
+  }
+  return false;
+};
+
+export function isMetamaskInstalled() {
+  return !!getMetamaskProvider();
+}
+
 export async function changeNetworkToEvmosMainnet(): Promise<boolean> {
-  if (!window.ethereum) return false;
+  const mmProvider = getMetamaskProvider();
+  if (!mmProvider) return false;
   const switched = await switchEthereumChain(EVMOS_ETH_CHAIN_ID);
   if (switched === true) {
     return true;
   }
   try {
-    await window.ethereum.request({
+    await mmProvider.request({
       method: "wallet_addEthereumChain",
       params: [
         {
@@ -62,16 +91,16 @@ export async function changeNetworkToEvmosMainnet(): Promise<boolean> {
 }
 
 export function subscribeToAccountChange(
-  handler: (a: Maybe<string[]>) => void
+  handler: (a: Maybe<string[]>) => void,
 ): boolean {
-  if (!window.ethereum) return false;
+  const mmProvider = getMetamaskProvider();
+  if (!mmProvider) return false;
+
   try {
-    // NOTE: we need to convert the provider because wagmi dep is replacing our window type
-    const extension = window.ethereum as unknown as MetaMaskInpageProvider;
-    extension.removeAllListeners("accountsChanged");
+    mmProvider.removeAllListeners("accountsChanged");
     // It expect unknown instead of string
     // @ts-expect-error type error
-    window.ethereum.on("accountsChanged", handler);
+    mmProvider.on("accountsChanged", handler);
     return true;
   } catch (e) {
     return false;
@@ -79,13 +108,13 @@ export function subscribeToAccountChange(
 }
 
 export function unsubscribeToEvents() {
-  if (!window.ethereum) return;
+  const mmProvider = getMetamaskProvider();
+  if (!mmProvider) return false;
+
   try {
-    // NOTE: we need to convert the provider because wagmi dep is replacing our window type
-    const extension = window.ethereum as unknown as MetaMaskInpageProvider;
-    extension.removeAllListeners("accountsChanged");
-    // eslint-disable-next-line  @typescript-eslint/no-unsafe-call
-    extension.removeAllListeners("chainChanged");
+    mmProvider.removeAllListeners("accountsChanged");
+
+    mmProvider.removeAllListeners("chainChanged");
     return;
   } catch (e) {
     return;
@@ -93,12 +122,11 @@ export function unsubscribeToEvents() {
 }
 
 export function subscribeToChainChanged(): boolean {
-  if (!window.ethereum) return false;
+  const mmProvider = getMetamaskProvider();
+  if (!mmProvider) return false;
   try {
-    // NOTE: we need to convert the provider because wagmi dep is replacing our window type
-    const extension = window.ethereum as unknown as MetaMaskInpageProvider;
-    extension.removeAllListeners("chainChanged");
-    extension.on("chainChanged", async () => {
+    mmProvider.removeAllListeners("chainChanged");
+    mmProvider.on("chainChanged", async () => {
       await switchEthereumChain(EVMOS_ETH_CHAIN_ID);
     });
     return true;
@@ -107,12 +135,20 @@ export function subscribeToChainChanged(): boolean {
   }
 }
 
+export function isWalletSelected() {
+  const mmProvider = getMetamaskProvider();
+  if (!mmProvider) return false;
+  if (mmProvider.selectedAddress === null) {
+    return false;
+  }
+  return true;
+}
+
 export async function getWallet() {
-  if (!window.ethereum) return null;
-  // NOTE: we need to convert the provider because wagmi dep is replacing our window type
-  const extension = window.ethereum as unknown as MetaMaskInpageProvider;
+  const mmProvider = getMetamaskProvider();
+  if (!mmProvider) return null;
   try {
-    const accounts = await extension.request({
+    const accounts = await mmProvider.request({
       method: "eth_requestAccounts",
       params: [],
     });
@@ -127,15 +163,14 @@ export async function getWallet() {
 }
 
 export async function generatePubkeyFromSignature(wallet: string) {
-  if (!window.ethereum) return null;
+  const mmProvider = getMetamaskProvider();
+  if (!mmProvider) return null;
   try {
     if (wallet.startsWith("evmos1")) {
       wallet = evmosToEth(wallet);
     }
-    // NOTE: we need to convert the provider because wagmi dep is replacing our window type
-    const extension = window.ethereum as unknown as MetaMaskInpageProvider;
     // Make the user sign the generate_pubkey message
-    const signature = await extension.request({
+    const signature = await mmProvider.request({
       method: "personal_sign",
       params: [wallet, "generate_pubkey"],
     });
@@ -158,7 +193,7 @@ export async function generatePubkeyFromSignature(wallet: string) {
 
 export async function generatePubKey(
   account: string,
-  evmosGRPCUrl = EVMOS_GRPC_URL
+  evmosGRPCUrl = EVMOS_GRPC_URL,
 ) {
   let pubkey = await queryPubKey(evmosGRPCUrl, account);
   if (pubkey === null) {
@@ -175,12 +210,12 @@ export type Token = {
 };
 
 export async function addToken(token: Token) {
-  if (window.ethereum) {
+  const mmProvider = getMetamaskProvider();
+
+  if (mmProvider) {
     try {
       if (token) {
-        // NOTE: we need to convert the provider because wagmi dep is replacing our window type
-        const extension = window.ethereum as unknown as MetaMaskInpageProvider;
-        const wasAdded = await extension.request({
+        const wasAdded = await mmProvider.request({
           method: "wallet_watchAsset",
           params: {
             type: "ERC20", // Initially only supports ERC20, but eventually more!
@@ -212,4 +247,39 @@ export async function addToken(token: Token) {
       };
     }
   }
+}
+
+export async function connectHandler(addresses: Maybe<string[]>) {
+  const metamask = new Metamask(store);
+  if (addresses === undefined || addresses === null) {
+    metamask.reset();
+    return false;
+  }
+  if (addresses.length > 0 && addresses[0]) {
+    metamask.addressEthFormat = addresses[0];
+    metamask.addressCosmosFormat = ethToEvmos(addresses[0]);
+    metamask.evmosPubkey = await generatePubKey(metamask.addressCosmosFormat);
+    // TODO: if the user did not sign the pubkey, pop up a message
+    if (metamask.evmosPubkey === null) {
+      metamask.reset();
+      return false;
+    }
+
+    metamask.active = true;
+    store.dispatch(
+      setWallet({
+        active: metamask.active,
+        extensionName: METAMASK_KEY,
+        evmosAddressEthFormat: metamask.addressEthFormat,
+        evmosAddressCosmosFormat: metamask.addressCosmosFormat,
+        evmosPubkey: metamask.evmosPubkey,
+        osmosisPubkey: null,
+        accountName: null,
+      }),
+    );
+    SaveProviderToLocalStorate(METAMASK_KEY);
+    return true;
+  }
+  metamask.reset();
+  return false;
 }

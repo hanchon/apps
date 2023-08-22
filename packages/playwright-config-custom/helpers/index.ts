@@ -6,7 +6,7 @@ const E2E_TEST_EVMOS_CHAIN_NAME =
 const E2E_TEST_EVMOS_RPC_URL =
   process.env.E2E_TEST_EVMOS_RPC_URL ?? "https://eth.bd.evmos.org:8545/";
 const E2E_TEST_EVMOS_CHAIN_ID = parseInt(
-  process.env.E2E_TEST_EVMOS_CHAIN_ID ?? "9001"
+  process.env.E2E_TEST_EVMOS_CHAIN_ID ?? "9001",
 );
 const E2E_TEST_EVMOS_SYMBOL = process.env.E2E_TEST_EVMOS_SYMBOL ?? "EVMOS";
 
@@ -15,7 +15,7 @@ export const web3Test = test.extend<{
   wallet: Dappwright;
 }>({
   context: async ({}, use) => {
-    const [wallet, _, context] = await dappwright.bootstrap("", {
+    const [wallet, , context] = await dappwright.bootstrap("", {
       wallet: "metamask",
       version: MetaMaskWallet.recommendedVersion,
       seed:
@@ -41,4 +41,28 @@ export const web3Test = test.extend<{
   },
 });
 
-export const helpers = { web3Test };
+export const web3TestWithoutNetwork = test.extend<{
+  context: BrowserContext;
+  wallet: Dappwright;
+}>({
+  context: async ({}, use) => {
+    const [, , context] = await dappwright.bootstrap("", {
+      wallet: "metamask",
+      version: MetaMaskWallet.recommendedVersion,
+      seed:
+        process.env.E2E_TEST_SEED ??
+        "test test test test test test test test test test test junk",
+      headless: false,
+    });
+
+    await use(context);
+  },
+
+  wallet: async ({ context }, use) => {
+    const metamask = await dappwright.getWallet("metamask", context);
+
+    await use(metamask);
+  },
+});
+
+export const helpers = { web3Test, web3TestWithoutNetwork };

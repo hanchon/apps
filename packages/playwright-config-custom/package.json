@@ -1,11 +1,11 @@
 {
   "name": "playwright-config-custom",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Playwright custom config",
   "main": "index.ts",
   "private": true,
   "devDependencies": {
-    "@playwright/test": "^1.35.1",
-    "@tenkeylabs/dappwright": "^2.3.3"
+    "@playwright/test": "^1.37.0",
+    "@tenkeylabs/dappwright": "^2.4.0"
   }
 }

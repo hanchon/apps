@@ -14,7 +14,7 @@ const DropdownChains = ({
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState<TableDataElement | null>(
-    null
+    null,
   );
   useEffect(() => {
     const handler = () => setShowMenu(false);

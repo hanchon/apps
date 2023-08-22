@@ -4,7 +4,7 @@
 import { useDispatch } from "react-redux";
 import { CancelUndelegationsProps } from "../types";
 import { parseUnits } from "@ethersproject/units";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { snackExecuteIBCTransfer } from "evmos-wallet";
 import { executeCancelUndelegations } from "../../../../internal/staking/functionality/transactions/cancelUndelegations";
 import {
@@ -15,17 +15,17 @@ import {
 } from "tracker";
 
 export const useCancelUndelegations = (
-  useCancelUndelegationProps: CancelUndelegationsProps
+  useCancelUndelegationProps: CancelUndelegationsProps,
 ) => {
   const dispatch = useDispatch();
   const { handlePreClickAction } = useTracker(
-    CLICK_CONFIRM_CANCEL_UNDELEGATION_BUTTON
+    CLICK_CONFIRM_CANCEL_UNDELEGATION_BUTTON,
   );
   const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_CANCEL_UNDELEGATION
+    SUCCESSFUL_TX_CANCEL_UNDELEGATION,
   );
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_CANCEL_UNDELEGATION
+    UNSUCCESSFUL_TX_CANCEL_UNDELEGATION,
   );
   //   async
   const handleConfirmButton = async () => {
@@ -44,7 +44,7 @@ export const useCancelUndelegations = (
     }
     const amount = parseUnits(
       useCancelUndelegationProps.value,
-      BigNumber.from(18)
+      BigNumber.from(18),
     );
 
     if (amount.gt(BigNumber.from(useCancelUndelegationProps.item.balance))) {
@@ -56,7 +56,7 @@ export const useCancelUndelegations = (
       useCancelUndelegationProps.wallet,
       useCancelUndelegationProps.item.validatorAddress,
       amount,
-      useCancelUndelegationProps.item.creationHeight
+      useCancelUndelegationProps.item.creationHeight,
     );
     dispatch(snackExecuteIBCTransfer(res));
     if (res.error === true) {

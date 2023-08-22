@@ -32,11 +32,11 @@ interface VestingIInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "balances", values: [string]): string;
   encodeFunctionData(
     functionFragment: "clawback",
-    values: [string, string, string]
+    values: [string, string, string],
   ): string;
   encodeFunctionData(
     functionFragment: "convertVestingAccount",
-    values: [string]
+    values: [string],
   ): string;
   encodeFunctionData(
     functionFragment: "createClawbackVestingAccount",
@@ -52,27 +52,27 @@ interface VestingIInterface extends ethers.utils.Interface {
         length: BigNumberish;
         amount: { denom: string; amount: BigNumberish }[];
       }[],
-      boolean
-    ]
+      boolean,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: "updateVestingFunder",
-    values: [string, string, string]
+    values: [string, string, string],
   ): string;
 
   decodeFunctionResult(functionFragment: "balances", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "clawback", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "convertVestingAccount",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "createClawbackVestingAccount",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "updateVestingFunder",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
 
   events: {};
@@ -94,7 +94,7 @@ export class VestingI extends Contract {
   functions: {
     balances(
       vestingAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<{
       locked: { denom: string; amount: BigNumber; 0: string; 1: BigNumber }[];
       unvested: { denom: string; amount: BigNumber; 0: string; 1: BigNumber }[];
@@ -106,7 +106,7 @@ export class VestingI extends Contract {
 
     "balances(string)"(
       vestingAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<{
       locked: { denom: string; amount: BigNumber; 0: string; 1: BigNumber }[];
       unvested: { denom: string; amount: BigNumber; 0: string; 1: BigNumber }[];
@@ -120,24 +120,24 @@ export class VestingI extends Contract {
       funderAddress: string,
       accountAddress: string,
       destAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     "clawback(string,string,string)"(
       funderAddress: string,
       accountAddress: string,
       destAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     convertVestingAccount(
       vestingAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     "convertVestingAccount(string)"(
       vestingAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     createClawbackVestingAccount(
@@ -153,7 +153,7 @@ export class VestingI extends Contract {
         amount: { denom: string; amount: BigNumberish }[];
       }[],
       merge: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     "createClawbackVestingAccount(string,string,uint64,tuple[],tuple[],bool)"(
@@ -169,27 +169,27 @@ export class VestingI extends Contract {
         amount: { denom: string; amount: BigNumberish }[];
       }[],
       merge: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     updateVestingFunder(
       funderAddress: string,
       newFunderAddress: string,
       vestingAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     "updateVestingFunder(string,string,string)"(
       funderAddress: string,
       newFunderAddress: string,
       vestingAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
   };
 
   balances(
     vestingAddress: string,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<{
     locked: { denom: string; amount: BigNumber; 0: string; 1: BigNumber }[];
     unvested: { denom: string; amount: BigNumber; 0: string; 1: BigNumber }[];
@@ -201,7 +201,7 @@ export class VestingI extends Contract {
 
   "balances(string)"(
     vestingAddress: string,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<{
     locked: { denom: string; amount: BigNumber; 0: string; 1: BigNumber }[];
     unvested: { denom: string; amount: BigNumber; 0: string; 1: BigNumber }[];
@@ -215,24 +215,24 @@ export class VestingI extends Contract {
     funderAddress: string,
     accountAddress: string,
     destAddress: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
   "clawback(string,string,string)"(
     funderAddress: string,
     accountAddress: string,
     destAddress: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
   convertVestingAccount(
     vestingAddress: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
   "convertVestingAccount(string)"(
     vestingAddress: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
   createClawbackVestingAccount(
@@ -248,7 +248,7 @@ export class VestingI extends Contract {
       amount: { denom: string; amount: BigNumberish }[];
     }[],
     merge: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
   "createClawbackVestingAccount(string,string,uint64,tuple[],tuple[],bool)"(
@@ -264,27 +264,27 @@ export class VestingI extends Contract {
       amount: { denom: string; amount: BigNumberish }[];
     }[],
     merge: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
   updateVestingFunder(
     funderAddress: string,
     newFunderAddress: string,
     vestingAddress: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
   "updateVestingFunder(string,string,string)"(
     funderAddress: string,
     newFunderAddress: string,
     vestingAddress: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
   callStatic: {
     balances(
       vestingAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<{
       locked: { denom: string; amount: BigNumber; 0: string; 1: BigNumber }[];
       unvested: { denom: string; amount: BigNumber; 0: string; 1: BigNumber }[];
@@ -296,7 +296,7 @@ export class VestingI extends Contract {
 
     "balances(string)"(
       vestingAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<{
       locked: { denom: string; amount: BigNumber; 0: string; 1: BigNumber }[];
       unvested: { denom: string; amount: BigNumber; 0: string; 1: BigNumber }[];
@@ -310,24 +310,24 @@ export class VestingI extends Contract {
       funderAddress: string,
       accountAddress: string,
       destAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     "clawback(string,string,string)"(
       funderAddress: string,
       accountAddress: string,
       destAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     convertVestingAccount(
       vestingAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     "convertVestingAccount(string)"(
       vestingAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     createClawbackVestingAccount(
@@ -343,7 +343,7 @@ export class VestingI extends Contract {
         amount: { denom: string; amount: BigNumberish }[];
       }[],
       merge: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     "createClawbackVestingAccount(string,string,uint64,tuple[],tuple[],bool)"(
@@ -359,21 +359,21 @@ export class VestingI extends Contract {
         amount: { denom: string; amount: BigNumberish }[];
       }[],
       merge: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     updateVestingFunder(
       funderAddress: string,
       newFunderAddress: string,
       vestingAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     "updateVestingFunder(string,string,string)"(
       funderAddress: string,
       newFunderAddress: string,
       vestingAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
   };
 
@@ -382,36 +382,36 @@ export class VestingI extends Contract {
   estimateGas: {
     balances(
       vestingAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "balances(string)"(
       vestingAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     clawback(
       funderAddress: string,
       accountAddress: string,
       destAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     "clawback(string,string,string)"(
       funderAddress: string,
       accountAddress: string,
       destAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     convertVestingAccount(
       vestingAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     "convertVestingAccount(string)"(
       vestingAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     createClawbackVestingAccount(
@@ -427,7 +427,7 @@ export class VestingI extends Contract {
         amount: { denom: string; amount: BigNumberish }[];
       }[],
       merge: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     "createClawbackVestingAccount(string,string,uint64,tuple[],tuple[],bool)"(
@@ -443,57 +443,57 @@ export class VestingI extends Contract {
         amount: { denom: string; amount: BigNumberish }[];
       }[],
       merge: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     updateVestingFunder(
       funderAddress: string,
       newFunderAddress: string,
       vestingAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     "updateVestingFunder(string,string,string)"(
       funderAddress: string,
       newFunderAddress: string,
       vestingAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     balances(
       vestingAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "balances(string)"(
       vestingAddress: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     clawback(
       funderAddress: string,
       accountAddress: string,
       destAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     "clawback(string,string,string)"(
       funderAddress: string,
       accountAddress: string,
       destAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     convertVestingAccount(
       vestingAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     "convertVestingAccount(string)"(
       vestingAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     createClawbackVestingAccount(
@@ -509,7 +509,7 @@ export class VestingI extends Contract {
         amount: { denom: string; amount: BigNumberish }[];
       }[],
       merge: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     "createClawbackVestingAccount(string,string,uint64,tuple[],tuple[],bool)"(
@@ -525,21 +525,21 @@ export class VestingI extends Contract {
         amount: { denom: string; amount: BigNumberish }[];
       }[],
       merge: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     updateVestingFunder(
       funderAddress: string,
       newFunderAddress: string,
       vestingAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     "updateVestingFunder(string,string,string)"(
       funderAddress: string,
       newFunderAddress: string,
       vestingAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
   };
 }

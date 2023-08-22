@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { Dispatch, SetStateAction, useMemo } from "react";
 import { TableDataElement } from "../../../internal/asset/functionality/table/normalizeData";
 import { addAssets, addDollarAssets, formatNumber } from "helpers";
@@ -23,7 +23,7 @@ const createSubRow = (
   setShow: Dispatch<SetStateAction<boolean>>,
   setModalContent: Dispatch<SetStateAction<JSX.Element>>,
   feeBalance: BigNumber,
-  isIBCBalance: boolean
+  isIBCBalance: boolean,
 ) => {
   return (
     <div
@@ -115,8 +115,8 @@ const ContentTable = ({
               setShow,
               setModalContent,
               tableData.feeBalance,
-              false
-            )
+              false,
+            ),
           );
           content?.unshift(
             createSubRow(
@@ -124,8 +124,8 @@ const ContentTable = ({
               setShow,
               setModalContent,
               tableData.feeBalance,
-              true
-            )
+              true,
+            ),
           );
         } else {
           content?.push(
@@ -134,8 +134,8 @@ const ContentTable = ({
               setShow,
               setModalContent,
               tableData.feeBalance,
-              false
-            )
+              false,
+            ),
           );
         }
         valueInTokens += addAssets({
@@ -167,7 +167,7 @@ const ContentTable = ({
               valueInDollars={valueInDollars.toFixed(2)}
             />
           }
-        />
+        />,
       );
     });
     return ret;

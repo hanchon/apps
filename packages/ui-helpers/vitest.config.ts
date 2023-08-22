@@ -1,6 +1,3 @@
-import { defineConfig } from "vitest/config";
-const { sharedConfig } = require("vitest-config-custom");
+import sharedConfig from "@evmos-apps/config/vitest/base.js";
 
-export default defineConfig({
-  ...sharedConfig,
-});
+export default sharedConfig;

@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { parseUnits } from "@ethersproject/units";
 import { useDispatch, useSelector } from "react-redux";
 import { executeWithdraw } from "../../../../../internal/asset/functionality/transactions/withdraw";
@@ -33,10 +33,10 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
   const dispatch = useDispatch();
   const { handlePreClickAction } = useTracker(CLICK_WITHDRAW_CONFIRM_BUTTON);
   const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_WITHDRAW
+    SUCCESSFUL_TX_WITHDRAW,
   );
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_WITHDRAW
+    UNSUCCESSFUL_TX_WITHDRAW,
   );
   const handleConfirmButton = async () => {
     handlePreClickAction({
@@ -67,7 +67,7 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
     }
     const amount = parseUnits(
       useWithdrawProps.inputValue,
-      BigNumber.from(useWithdrawProps.token.decimals)
+      BigNumber.from(useWithdrawProps.token.decimals),
     );
     let prefixTemp = useWithdrawProps.token.prefix;
     let chainIdentifier = useWithdrawProps.token.chainIdentifier;
@@ -107,7 +107,7 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
     const prefix = getPrefix(
       useWithdrawProps.token,
       useWithdrawProps.chain,
-      params.receiver
+      params.receiver,
     );
 
     if (prefix === undefined) {
@@ -116,13 +116,10 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
     }
     // create, sign and broadcast tx
     const res = await executeWithdraw(
-      wallet.evmosPubkey,
-      wallet.evmosAddressCosmosFormat,
+      wallet,
       params,
       useWithdrawProps.feeBalance,
-      wallet.extensionName,
-      prefix,
-      useERC20Denom
+      useERC20Denom,
     );
 
     dispatch(snackExecuteIBCTransfer(res));
@@ -142,8 +139,8 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
         await snackbarIncludedInBlock(
           res.txHash,
           EVMOS_SYMBOL,
-          res.explorerTxUrl
-        )
+          res.explorerTxUrl,
+        ),
       );
       dispatch(await snackbarExecutedTx(res.txHash, EVMOS_SYMBOL));
       successfulTx({

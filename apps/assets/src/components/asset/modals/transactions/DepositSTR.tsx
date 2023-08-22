@@ -1,7 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { BigNumber } from "ethers";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { TableDataElement } from "../../../../internal/asset/functionality/table/normalizeData";
@@ -22,6 +21,7 @@ import {
   snackErrorGettingBalanceExtChain,
   EVMOS_SYMBOL,
 } from "evmos-wallet";
+import { BigNumber } from "@ethersproject/bignumber";
 export type DepositElement = {
   chain: string;
   elements: TableDataElement[];
@@ -100,7 +100,7 @@ const DepositSTR = ({
       if (chain !== undefined) {
         const wallet = await getKeplrAddressByChain(
           chain.elements[0].chainId,
-          chain.elements[0].chainIdentifier
+          chain.elements[0].chainIdentifier,
         );
         if (wallet === null) {
           dispatch(snackErrorConnectingKeplr());
@@ -130,13 +130,13 @@ const DepositSTR = ({
           balance = await getEvmosBalanceForDeposit(
             walletToUse,
             chain.chain.toUpperCase(),
-            token.symbol
+            token.symbol,
           );
         } else {
           balance = await getBalance(
             walletToUse,
             token.chainIdentifier.toUpperCase(),
-            token.symbol
+            token.symbol,
           );
         }
       }
@@ -147,7 +147,7 @@ const DepositSTR = ({
       }
 
       setBalance(
-        BigNumber.from(balance?.data.balance ? balance.data.balance.amount : 0)
+        BigNumber.from(balance?.data.balance ? balance.data.balance.amount : 0),
       );
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises

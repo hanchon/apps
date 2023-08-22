@@ -75,7 +75,7 @@ export const Delegate = ({
               onClick={() => {
                 const val = safeSubstraction(
                   evmosBalance,
-                  BigNumber.from(FEE_STAKING_ACTIONS)
+                  BigNumber.from(FEE_STAKING_ACTIONS),
                 );
                 setValue(numericOnly(convertFromAtto(val, 18)));
               }}
@@ -96,7 +96,7 @@ export const Delegate = ({
           {getReservedForFeeText(
             BigNumber.from(FEE_STAKING_ACTIONS),
             "EVMOS",
-            "EVMOS"
+            "EVMOS",
           )}
         </p>
       </div>

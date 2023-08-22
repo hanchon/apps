@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useSelector } from "react-redux";
 import { MODAL_NOTIFICATIONS, StoreType } from "evmos-wallet";
@@ -47,7 +47,7 @@ export const CancelUndelegation = ({
   };
 
   const { handleConfirmButton } = useCancelUndelegations(
-    useCancelUndelegationsProps
+    useCancelUndelegationsProps,
   );
   return (
     <div className="space-y-4">
@@ -88,7 +88,7 @@ export const CancelUndelegation = ({
         {confirmClicked &&
           safeSubstraction(
             evmosBalance,
-            BigNumber.from(FEE_STAKING_ACTIONS)
+            BigNumber.from(FEE_STAKING_ACTIONS),
           ).lte(BigNumber.from(0)) && (
             <ErrorMessage
               text={MODAL_NOTIFICATIONS.ErrorInsufficientFeeSubtext}
@@ -101,16 +101,16 @@ export const CancelUndelegation = ({
                 item.balance !== ""
                   ? BigNumber.from(item.balance)
                   : BigNumber.from(0),
-                18
-              )
-            )
+                18,
+              ),
+            ),
           ) && <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorsAmountGt} />}
 
         <p className="text-sm">
           {getReservedForFeeText(
             BigNumber.from(FEE_STAKING_ACTIONS),
             "EVMOS",
-            "EVMOS"
+            "EVMOS",
           )}
         </p>
       </div>

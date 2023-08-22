@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { useMemo, useState, useCallback } from "react";
 import {
   SearchContext,
@@ -52,14 +52,14 @@ const Undelegations = () => {
       setShow(true);
       setModalContent(<CancelUndelegation item={item} setShow={setShow} />);
     },
-    [handlePreClickAction]
+    [handlePreClickAction],
   );
 
   const { value } = useSearchContext() as SearchContext;
   const filtered = useMemo(() => {
     // it filters by name
     const filteredData = undelegations.filter((i) =>
-      i.validator.description.moniker.toLowerCase().includes(value)
+      i.validator.description.moniker.toLowerCase().includes(value),
     );
     if (value !== "") {
       return filteredData;
@@ -132,7 +132,7 @@ const Undelegations = () => {
                 value: `${convertAndFormat(
                   BigNumber.from(item.balance),
                   EVMOS_DECIMALS,
-                  6
+                  6,
                 )} EVMOS`,
               }}
             />

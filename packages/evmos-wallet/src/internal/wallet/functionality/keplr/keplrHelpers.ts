@@ -1,34 +1,9 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { ChainInfo } from "@keplr-wallet/types";
+import type { ChainInfo } from "@keplr-wallet/types";
 import { networkConfigByName } from "./fetch";
-
-export function unsubscribeToKeplrEvents() {
-  if (!window.keplr) return;
-  try {
-    window.dispatchEvent(new Event("cleanUpEvents"));
-    return;
-  } catch (e) {
-    return;
-  }
-}
-
-export function subscribeToKeplrEvents(handler: () => Promise<boolean>) {
-  if (!window.keplr) return;
-  try {
-    const handlerInternal = async () => {
-      await handler();
-      window.addEventListener("cleanUpEvents", () => {
-        window.removeEventListener("keplr_keystorechange", handlerInternal);
-      });
-    };
-    window.addEventListener("keplr_keystorechange", handlerInternal);
-    return;
-  } catch (e) {
-    return;
-  }
-}
+import { getKeplrProvider } from "../../../../wallet";
 
 const networkInfo = async (network: string) => {
   const networkResponse = await networkConfigByName(network);
@@ -73,7 +48,7 @@ const networkInfo = async (network: string) => {
     stakeCurrency: currencyData,
     feeCurrencies: feeCurrencies,
     bip44: { coinType: Number(networkData?.bip44.coinType) },
-    coinType: Number(networkData?.bip44.coinType),
+    // coinType: Number(networkData?.bip44.coinType),
   };
   return chainInfo;
 };
@@ -81,13 +56,14 @@ const networkInfo = async (network: string) => {
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export async function getKeplrAddressByChain(
   chainId: string,
-  network?: string
+  network?: string,
 ) {
-  if (!window.keplr) return null;
   let accounts;
   let offlineSigner;
   try {
-    offlineSigner = window.keplr.getOfflineSigner(chainId);
+    const keplr = await getKeplrProvider();
+
+    offlineSigner = keplr.getOfflineSigner(chainId);
     try {
       accounts = await offlineSigner.getAccounts();
     } catch (e) {
@@ -95,9 +71,9 @@ export async function getKeplrAddressByChain(
         const chainInfo = await networkInfo(network.toUpperCase());
         if (chainInfo !== "") {
           try {
-            await window.keplr.experimentalSuggestChain(chainInfo);
+            await keplr.experimentalSuggestChain(chainInfo);
             // NOTE: keplr bug offlineSigner fails after expermintalSuggestChain
-            offlineSigner = window.keplr.getOfflineSignerOnlyAmino(chainId);
+            offlineSigner = keplr.getOfflineSignerOnlyAmino(chainId);
             accounts = await offlineSigner.getAccounts();
           } catch (e) {
             return null;

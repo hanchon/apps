@@ -24,37 +24,45 @@ import {
 } from "evmos-wallet";
 import { useSelector, useDispatch } from "react-redux";
 import { generateVestingSchedule } from "../../../internal/helpers/generate-vesting-schedule";
-import { VestingSchedule } from "../../../internal/helpers/types";
+import {
+  Intervals,
+  TimeWindow,
+  VestingSchedule,
+} from "../../../internal/helpers/types";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
+import { Dayjs } from "dayjs";
 
 export const CreateAccountModal = () => {
   const [disabled, setDisabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
 
-  const { createClawbackVestingAccount } = useVestingPrecompile(
-    wallet?.extensionName
-  );
+  const { createClawbackVestingAccount } = useVestingPrecompile();
 
   const handleOnClick = async (d: FieldValues) => {
     try {
       setDisabled(true);
 
       const { lockupPeriods, vestingPeriods, startTime } =
-        generateVestingSchedule(d.startDate, d.amount, "atevmos", {
-          fullVestingPeriod: d.vestingDuration,
-          vestingInterval: d.vestingSchedule,
-          vestingCliff: d.vestingCliff as VestingSchedule["vestingCliff"],
-          lockingPeriod: d.lockupDuration,
-        });
+        generateVestingSchedule(
+          d.startDate as Dayjs,
+          d.amount as string,
+          "atevmos",
+          {
+            fullVestingPeriod: d.vestingDuration as TimeWindow,
+            vestingInterval: d.vestingSchedule as Intervals,
+            vestingCliff: d.vestingCliff as VestingSchedule["vestingCliff"],
+            lockingPeriod: d.lockupDuration as TimeWindow,
+          },
+        );
 
       const res = await createClawbackVestingAccount(
         wallet.evmosAddressEthFormat,
-        d.address,
+        d.address as string,
         startTime,
         lockupPeriods,
         vestingPeriods,
-        true
+        true,
       );
 
       dispatch(
@@ -67,7 +75,7 @@ export const CreateAccountModal = () => {
             explorerTxUrl: "www.mintscan.io/evmos/txs/",
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        })
+        }),
       );
       setDisabled(false);
     } catch (e) {
@@ -80,12 +88,15 @@ export const CreateAccountModal = () => {
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        })
+        }),
       );
     }
 
     if (d.accountName !== "") {
-      setVestingAccountNameLocalstorage(d.address, d.accountName);
+      setVestingAccountNameLocalstorage(
+        d.address as string,
+        d.accountName as string,
+      );
     }
   };
   const {
@@ -113,9 +124,9 @@ export const CreateAccountModal = () => {
       <ModalTitle title="Create Vesting Account" />
 
       <form
-        onSubmit={handleSubmit((d) => {
+        onSubmit={handleSubmit(async (d) => {
           console.log(d);
-          handleOnClick(d);
+          await handleOnClick(d).then(() => {});
         })}
         className="flex flex-col space-y-3"
       >
@@ -125,21 +136,21 @@ export const CreateAccountModal = () => {
         <select
           id="planType"
           {...planTypeRegister}
-          onChange={(e) => {
+          onChange={async (e) => {
             const planType = e.target.value as "Team" | "Grantee" | "Custom";
-            planTypeRegister.onChange(e); // method from hook form register
+            await planTypeRegister.onChange(e).then(() => {}); // method from hook form register
             setValue(
               "vestingDuration",
-              vestingSettingsConfig[planType].duration[0]
+              vestingSettingsConfig[planType].duration[0],
             );
             setValue("vestingCliff", vestingSettingsConfig[planType].cliff[0]);
             setValue(
               "vestingSchedule",
-              vestingSettingsConfig[planType].schedule[0]
+              vestingSettingsConfig[planType].schedule[0],
             );
             setValue(
               "lockupDuration",
-              vestingSettingsConfig[planType].lockup[0]
+              vestingSettingsConfig[planType].lockup[0],
             );
           }}
         >

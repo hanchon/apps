@@ -35,7 +35,7 @@ const TabsDropdown = ({
       e.stopPropagation();
       setShowMenu(!showMenu);
     },
-    [showMenu]
+    [showMenu],
   );
 
   const getDisplay = useCallback(() => {
@@ -61,7 +61,7 @@ const TabsDropdown = ({
         tabSelected: option.title,
       });
     },
-    [setActiveTab, handlePreClickAction]
+    [setActiveTab, handlePreClickAction],
   );
 
   return (

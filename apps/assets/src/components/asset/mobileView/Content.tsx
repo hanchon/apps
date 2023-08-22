@@ -43,7 +43,7 @@ const ContentCard = ({
                   {amountToDollars(
                     item.erc20Balance,
                     item.decimals,
-                    item.coingeckoPrice
+                    item.coingeckoPrice,
                   )}
                 </p>
               </div>
@@ -60,7 +60,7 @@ const ContentCard = ({
                     {amountToDollars(
                       item.cosmosBalance,
                       item.decimals,
-                      item.coingeckoPrice
+                      item.coingeckoPrice,
                     )}
                   </p>
                 </div>

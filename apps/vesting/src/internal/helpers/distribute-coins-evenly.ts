@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 
 export const distributeCoinsEvenly = (total: BigNumber, parts: number) => {
   if (parts < 1) {

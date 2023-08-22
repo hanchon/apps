@@ -24,21 +24,21 @@ test.describe("Governance page", () => {
   test("should redirect on the right proposal when clicking", async ({
     page,
   }) => {
-    await page.waitForSelector("[data-testid='proposal']");
-    const thirdProposal = await page.getByTestId("proposal").nth(3);
+    const thirdProposal = page.getByTestId("proposal").nth(3);
+
+    await thirdProposal.waitFor();
     const proposalTitleLink = await thirdProposal
-      .getByTestId("proposal-title")
+      .getByTestId("proposal-card-title")
       .allInnerTexts();
 
     await thirdProposal.click();
-    await page.waitForSelector("h1");
-    const proposalTitle = await page
-      .getByTestId("proposal-title")
-      .allInnerTexts();
+
+    const proposalTitleElement = page.getByTestId("proposal-title");
+    await proposalTitleElement.waitFor();
+    const proposalTitle = await proposalTitleElement.allInnerTexts();
 
     expect(proposalTitleLink).toEqual(proposalTitle);
   });
-
   web3Test(
     "should let the user connect with MetaMask",
     async ({ page, wallet }) => {
@@ -46,6 +46,6 @@ test.describe("Governance page", () => {
       await page.getByRole("button", { name: /MetaMask/i }).click();
       await wallet.approve();
       await expect(page.getByText(/Connected with Metamask/i)).toBeVisible();
-    }
+    },
   );
 });
