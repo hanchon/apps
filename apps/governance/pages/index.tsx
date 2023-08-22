@@ -12,7 +12,7 @@ import {
   WalletProvider,
 } from "evmos-wallet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { TermOfServices, Container } from "ui-helpers";
+import { TermOfServices, Container, MavaWidget } from "ui-helpers";
 
 function SnackbarsInternal() {
   const valueRedux = useSelector((state: StoreType) => getAllSnackbars(state));
@@ -46,6 +46,7 @@ export default function Home() {
                   <>
                     <SnackbarsInternal />
                     <StatefulHeader />
+                    <MavaWidget />
                     <div className="container mx-auto mb-auto overflow-auto">
                       <Content />
                     </div>
