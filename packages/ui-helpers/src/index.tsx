@@ -36,3 +36,4 @@ export { DividerWithLabel } from "./divider/DividerWithLabel";
 export { Badge } from "./badges/Badge";
 export { ModalWithTransitions } from "./ModalWithTransitions";
 export { Feedback } from "./Feedback";
+export { MavaWidget } from "./widgets/Mava";

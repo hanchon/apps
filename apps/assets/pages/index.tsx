@@ -12,7 +12,7 @@ import {
   WalletProvider,
 } from "evmos-wallet";
 
-import { Container, TermOfServices } from "ui-helpers";
+import { Container, MavaWidget, TermOfServices } from "ui-helpers";
 import { Provider, useDispatch, useSelector } from "react-redux";
 
 import { StatefulHeader } from "../src/StatefulHeader";
@@ -47,6 +47,7 @@ export default function Home() {
                   <>
                     <SnackbarsInternal />
                     <StatefulHeader />
+                    <MavaWidget />
                     <div className="container mx-auto mb-auto overflow-auto">
                       <AssetsTable />
                     </div>
