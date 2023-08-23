@@ -37,3 +37,6 @@ export { Badge } from "./badges/Badge";
 export { ModalWithTransitions } from "./ModalWithTransitions";
 export { Feedback } from "./Feedback";
 export { MavaWidget } from "./widgets/Mava";
+export { PrimaryButton } from "./PrimaryButton";
+export { Title } from "./modal/Title";
+export { Description } from "./modal/Description";

@@ -48,6 +48,8 @@ const config = {
         lightYellow2: "#F0FDF4",
         lightYellow3: "#DFF2E5",
         brown: "#854D0E",
+        lightBlue: "#EFF6FF",
+        blue: "#1E429F",
       },
       fontSize: {
         h5: "1.36rem",
