@@ -3,7 +3,7 @@
 
 import { TopBarContainer, TopBarItem } from "ui-helpers";
 import { TopBarProps } from "./types";
-import { TransferButton } from "../../../topBarButtons/TransferButton";
+import { TransferButton } from "../../../topBarButtons/transfer/Button";
 import { RequestButton } from "../../../topBarButtons/RequestButton";
 
 
