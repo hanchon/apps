@@ -10,7 +10,7 @@ import {
   queryPubKey,
   isWalletSelected,
 } from "evmos-wallet";
-import { STEP_STATUS } from "./buttons/utils";
+import { STEP_STATUS } from "constants-helper";
 import {
   CLICK_ON_CONNECT_ACCOUNT_COPILOT,
   CLICK_ON_INSTALL_ACCOUNT_COPILOT,

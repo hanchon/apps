@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { Copilot } from "../Copilot";
-import { STEP_STATUS } from "../steps/setUpAccount/buttons/utils";
+import { STEP_STATUS } from "constants-helper";
 
 export const Button = ({
   text,
