@@ -15,7 +15,7 @@ import {
 import { getProposals } from "../fetch";
 import { Proposal, ProposalDetailProps, ProposalProps } from "../types";
 
-const PROPOSALS_TO_REMOVE = ["156", "160", "161", "162"]
+const PROPOSALS_TO_REMOVE = process.env.NEXT_PUBLIC_PROPOSALS_TO_REMOVE ?? "[]"
 
 const removeProposals = (proposals: Proposal[], proposalToRemove: string[]) => {
   return proposals.filter((proposal) => !proposalToRemove.includes(proposal.id));
@@ -27,12 +27,14 @@ export const useProposals = (pid?: string) => {
     queryFn: () => getProposals(),
   });
 
+  const parsedProposals = JSON.parse(PROPOSALS_TO_REMOVE) as string[]
+
   const proposals = useMemo(() => {
     const temp: ProposalProps[] = [];
     if (proposalsResponse.data !== undefined) {
       const filtered = removeProposals(
         proposalsResponse.data.proposals,
-        PROPOSALS_TO_REMOVE,
+        parsedProposals,
         
       );
       filtered.map((item) => {
@@ -86,7 +88,7 @@ export const useProposals = (pid?: string) => {
     };
     if (proposalsResponse.data !== undefined) {
       const filtered = proposalsResponse.data.proposals.filter(
-        (proposal) => proposal.id === pid && !PROPOSALS_TO_REMOVE.includes(proposal.id)
+        (proposal) => proposal.id === pid && !parsedProposals.includes(proposal.id)
       );
       if (filtered.length === 0) {
         return "Proposal not found, please try again";
