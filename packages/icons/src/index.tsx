@@ -45,3 +45,4 @@ export { FeedbackIcon } from "./FeedbackIcon";
 export { CodeIcon } from "./CodeIcon";
 export { TransferIcon } from "./TransferIcon";
 export { RequestIcon } from "./RequestIcon";
+export { InformationIcon } from "./InformationIcon";
