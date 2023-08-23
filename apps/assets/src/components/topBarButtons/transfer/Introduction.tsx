@@ -4,7 +4,13 @@ import { useSelector } from "react-redux";
 import { Description, Title } from "ui-helpers";
 import { CopyContainer } from "./CopyContainer";
 
-export const Introduction = () => {
+export const Introduction = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => {
   const copyToClipboard = async (wallet: string) => {
     await navigator.clipboard.writeText(wallet);
   };
@@ -23,10 +29,8 @@ export const Introduction = () => {
     <section className="flex flex-col space-y-4 text-gray1">
       <EvmosRedIcon />
       {/* add i18 */}
-      <Title>Transfer Assets</Title>
-      <Description>
-        Deposit and send assets to any account on any chain.
-      </Description>
+      <Title>{title}</Title>
+      <Description>{description}</Description>
       <div className="flex flex-col space-y-2 pt-8 text-[10px]">
         <div>
           <div className="flex items-center space-x-1">
