@@ -65,7 +65,7 @@ export const useProposals = (pid?: string) => {
       });
     }
     return temp;
-  }, [proposalsResponse]);
+  }, [proposalsResponse, parsedProposals]);
 
   const proposalDetail = useMemo(() => {
     let temp: ProposalDetailProps = {
@@ -175,7 +175,7 @@ export const useProposals = (pid?: string) => {
       };
     }
     return temp;
-  }, [proposalsResponse, pid]);
+  }, [proposalsResponse, pid, parsedProposals]);
 
   return {
     proposals,
