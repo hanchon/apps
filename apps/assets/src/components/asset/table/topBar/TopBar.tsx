@@ -2,15 +2,12 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { TopBarContainer, TopBarItem } from "ui-helpers";
-import ButtonsActions from "./ButtonsActions";
 import { TopBarProps } from "./types";
+import { TransferButton } from "../../../topBarButtons/TransferButton";
+import { RequestButton } from "../../../topBarButtons/RequestButton";
+
 
 const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
-  const actionsProps = {
-    setShow: topProps.setShow,
-    setModalContent: topProps.setModalContent,
-    tableData: topProps.tableData,
-  };
   return (
     <TopBarContainer>
       <>
@@ -23,7 +20,10 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
               : `$${topProps.evmosPrice.toString()}`
           }
         />
-        <ButtonsActions actionsProps={actionsProps} />
+           <div className="flex items-center justify-center space-x-2 lg:justify-end">
+        <TransferButton />
+        <RequestButton />
+        </div>
       </>
     </TopBarContainer>
   );
