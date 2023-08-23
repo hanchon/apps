@@ -46,3 +46,5 @@ export { CodeIcon } from "./CodeIcon";
 export { TransferIcon } from "./TransferIcon";
 export { RequestIcon } from "./RequestIcon";
 export { InformationIcon } from "./InformationIcon";
+export { DownloadIcon } from "./DownloadIcon";
+export { RightArrowIcon } from "./RightArrowIcon";
