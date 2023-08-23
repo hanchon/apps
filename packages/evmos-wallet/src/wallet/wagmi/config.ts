@@ -3,6 +3,7 @@ import { publicProvider } from "wagmi/providers/public";
 import {
   keplrConnector,
   metamaskConnector,
+  safeConnector,
   walletConnectConnector,
 } from "./connectors";
 import { getEvmosChainInfo } from "./chains";
@@ -14,6 +15,6 @@ const { publicClient } = configureChains(
 
 export const wagmiConfig = createConfig({
   autoConnect: true,
-  connectors: [metamaskConnector, walletConnectConnector, keplrConnector],
+  connectors: [metamaskConnector, walletConnectConnector, keplrConnector, safeConnector],
   publicClient,
 });
