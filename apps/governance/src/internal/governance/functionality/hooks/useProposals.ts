@@ -15,9 +15,10 @@ import {
 import { getProposals } from "../fetch";
 import { Proposal, ProposalDetailProps, ProposalProps } from "../types";
 
-const PROPOSAL_TO_REMOVE = "156";
-const removeProposal = (id: string, proposals: Proposal[]) => {
-  return proposals.filter((proposal) => proposal.id !== id);
+const PROPOSALS_TO_REMOVE = ["156", "160", "161", "162"]
+
+const removeProposals = (proposals: Proposal[], proposalToRemove: string[]) => {
+  return proposals.filter((proposal) => !proposalToRemove.includes(proposal.id));
 };
 
 export const useProposals = (pid?: string) => {
@@ -29,14 +30,12 @@ export const useProposals = (pid?: string) => {
   const proposals = useMemo(() => {
     const temp: ProposalProps[] = [];
     if (proposalsResponse.data !== undefined) {
-      const filtered = removeProposal(
-        PROPOSAL_TO_REMOVE,
-        proposalsResponse.data.proposals
+      const filtered = removeProposals(
+        proposalsResponse.data.proposals,
+        PROPOSALS_TO_REMOVE,
+        
       );
       filtered.map((item) => {
-        if (item.id === PROPOSAL_TO_REMOVE) {
-          return;
-        }
         const percents = getPercentage([
           item.final_tally_result.yes_count,
           item.final_tally_result.no_count,
@@ -87,7 +86,7 @@ export const useProposals = (pid?: string) => {
     };
     if (proposalsResponse.data !== undefined) {
       const filtered = proposalsResponse.data.proposals.filter(
-        (proposal) => proposal.id === pid && proposal.id !== PROPOSAL_TO_REMOVE
+        (proposal) => proposal.id === pid && !PROPOSALS_TO_REMOVE.includes(proposal.id)
       );
       if (filtered.length === 0) {
         return "Proposal not found, please try again";
