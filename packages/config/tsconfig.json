@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "allowJs": true,
+    "composite": true
+  },
+  "include": ["./**/*.js"],
+  "exclude": ["node_modules", "dist"]
+}

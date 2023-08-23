@@ -57,10 +57,9 @@ export const LaunchContainer = () => {
                 <h1 className="text-xs font-bold">
                   Discover our new navigation
                 </h1>
-                <Badge
-                  text="New"
-                  style="bg-red text-pearl ring-red uppercase"
-                />
+                <Badge variant="danger" className="uppercase">
+                  New
+                </Badge>
               </div>
               <p className="text-xs text-[#BDBCB9]">
                 Navigate across all Evmos dApps using our new app launcher!

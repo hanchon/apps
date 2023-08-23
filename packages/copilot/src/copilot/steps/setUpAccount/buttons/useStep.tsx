@@ -115,6 +115,15 @@ export const useStep = (
         );
       };
     }
+    // TODO: I'd rather not disable this role,
+    // as not having exhaustive deps is often the source of hard to track bugs
+    // but the useTracker hook is returning
+    // a new function at every render
+    // which itself depends on the parameters passed to it
+    // ideally we should address that issue there first
+    // and then remove the disable here
+    //
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, status, setGroupState]);
 
   const handleClick = async () => {

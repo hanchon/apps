@@ -5,7 +5,7 @@ import {
   getNumberBalance,
   getNumberBalanceInDollars,
 } from "../../hooks/rewards/helpers";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 
 describe("Test Helpers for getting balances", () => {
   it("should return unavailable balance for zero balance (formatted)", () => {

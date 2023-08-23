@@ -18,7 +18,7 @@ export const AccountBalance = () => {
 
   const totalEvmos = totalEvmosAsset.add(totalDelegations);
   // staked + evmos + rewards
-  let totalBalance = Number(convertFromAtto(totalEvmos)) + totalRewards;
+  const totalBalance = Number(convertFromAtto(totalEvmos)) + totalRewards;
 
   const totalBalanceInDollars = totalBalance * Number(evmosPrice);
 

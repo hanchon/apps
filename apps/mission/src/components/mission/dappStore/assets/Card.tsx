@@ -13,9 +13,9 @@ export const AssetsCard = () => {
   const { handlePreClickAction } = useTracker(CLICK_ON_SEE_PORTFOLIO);
 
   const router = useRouter();
-  const handleOnClick = () => {
+  const handleOnClick = async () => {
     handlePreClickAction();
-    router.push("/assets");
+    await router.push("/assets");
   };
 
   const { t } = useTranslation();

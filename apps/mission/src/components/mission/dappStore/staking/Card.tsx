@@ -26,9 +26,9 @@ export const StakingCard = () => {
   const { handlePreClickAction } = useTracker(
     CLICK_ON_STAKE_AND_MANAGE_DELEGATION
   );
-  const handleOnClick = () => {
+  const handleOnClick = async () => {
     handlePreClickAction();
-    router.push("/staking");
+    await router.push("/staking");
   };
 
   const wallet = useSelector((state: StoreType) => state.wallet.value);

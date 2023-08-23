@@ -14,9 +14,9 @@ export const GovernanceCard = () => {
   const { handlePreClickAction } = useTracker(
     CLICK_ON_PARTICIPATE_IN_GOVERNANCE
   );
-  const handleOnClick = () => {
+  const handleOnClick = async () => {
     handlePreClickAction();
-    router.push("/governance");
+    await router.push("/governance");
   };
 
   const { t } = useTranslation();

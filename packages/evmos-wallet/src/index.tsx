@@ -2,7 +2,10 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 // styles
-import "./styles.css";
+
+export * from "./wallet";
+export * from "./api";
+export * from "./utils";
 
 // snackbars
 export { Snackbars } from "./notification/Snackbars";
@@ -37,14 +40,8 @@ export { WALLECT_CONNECT_KEY } from "./internal/wallet/functionality/wallet";
 export type { StoreType } from "./redux/Store";
 export type { AppDispatch } from "./redux/Store";
 export { getAllSnackbars } from "./notification/redux/notificationSlice";
-
+export * from "./internal/wallet/functionality/wallet";
 // components
-export {
-  ethereumClient,
-  projectId,
-  wagmiClient,
-} from "../src/internal/wallet/functionality/walletconnect/walletconnectConstants";
-export { ButtonWalletConnection } from "./wallet/ButtonWalletConnection";
 export { WalletConnection } from "./copilot/WalletConnection";
 export { ButtonWallet } from "./wallet/ButtonWallet";
 // configs
@@ -66,9 +63,7 @@ export { getKeplrAddressByChain } from "./internal/wallet/functionality/keplr/ke
 export { getWallet } from "./internal/wallet/functionality/metamask/metamaskHelpers";
 export { addToken } from "./internal/wallet/functionality/metamask/metamaskHelpers";
 export type { Token } from "./internal/wallet/functionality/metamask/metamaskHelpers";
-export { Signer } from "./internal/wallet/functionality/signing/genericSigner";
 export { broadcastAminoBackendTxToBackend } from "./internal/wallet/functionality/signing";
-export { useContractTransaction } from "./internal/wallet/functionality/contracts/hooks/useContractTransaction";
 
 // Probably move it to assets
 export type { IBCChainParams } from "./notification/transactionsTypes";
@@ -79,8 +74,6 @@ export { TransactionStatus } from "./notification/transactionsTypes";
 export type { txStatusErrorResponse } from "./notification/transactionsTypes";
 export type { txStatusResponse } from "./notification/transactionsTypes";
 
-export { disconnectWallets } from "./internal/wallet/functionality/disconnect";
-export { Metamask } from "./internal/wallet/functionality/metamask/metamask";
 export {
   changeNetworkToEvmosMainnet,
   switchEthereumChain,
@@ -105,3 +98,4 @@ export {
   getNumberBalance,
   getNumberBalanceInDollars,
 } from "./hooks/rewards/helpers";
+
