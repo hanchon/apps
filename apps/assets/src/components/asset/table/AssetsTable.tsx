@@ -24,7 +24,6 @@ import HeadAssets from "./components/HeadAssets";
 import Guide from "./Guide";
 import { useStakedEvmos } from "../../../internal/common/api/hooks/useStakedEvmos";
 
-
 import { BigNumber } from "@ethersproject/bignumber";
 import {  CLICK_HIDE_ZERO_BALANCE, useTracker } from "tracker";
 

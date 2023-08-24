@@ -6,7 +6,7 @@ import { EvmosRedIcon } from "icons";
 export const ConnectToEvmos = () => {
   return (
     <div className="space-y-3 px-4 pb-4 pt-5 sm:p-6">
-      <EvmosRedIcon />
+      <EvmosRedIcon className="h-8 w-auto" />
       <h3 className="text-base font-semibold leading-6 text-[#271411]">
         Connect your account
       </h3>
