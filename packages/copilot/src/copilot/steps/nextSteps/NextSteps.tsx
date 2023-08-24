@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { ButtonsNextSteps } from "./ButtonsNextSteps";
-import { HandsEmoji } from "../icons/HandsEmoji";
+import { HandsEmoji } from "icons";
 export const NextSteps = () => {
   const { fireworksRef, portalContainer } = useFireworks();
 
