@@ -10,10 +10,10 @@ export const RequestButton = () => {
     //  TODO: add logic
   };
 
-  const { isConnected } = useAccount();
+  const { isDisconnected } = useAccount();
   return (
     <PrimaryButton
-      disabled={!isConnected}
+      disabled={isDisconnected}
       //   || wallet.extensionName === METAMASK_KEY ||
       //   wallet.extensionName === WALLECT_CONNECT_KEY
 

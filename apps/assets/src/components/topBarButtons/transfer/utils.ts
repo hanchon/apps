@@ -128,3 +128,8 @@ export const stepsSetAccountKeplr = [
     },
   },
 ];
+
+export const TRANSFER_TYPES = {
+  DEPOSIT: "Deposit",
+  SEND: "Send",
+};

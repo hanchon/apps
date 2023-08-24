@@ -14,7 +14,8 @@ export const TransferButton = () => {
     setShowModal(true);
   };
 
-  const { isConnected } = useAccount();
+  const { isDisconnected } = useAccount();
+
   const [showModal, setShowModal] = useState(false);
   const [showCloseModal, setShowCloseModal] = useState(false);
   useEffect(() => {
@@ -31,7 +32,7 @@ export const TransferButton = () => {
         setShowModal={setShowModal}
       />
       <PrimaryButton
-        disabled={!isConnected}
+        disabled={isDisconnected}
         //  || wallet.extensionName === METAMASK_KEY ||
         //   wallet.extensionName === WALLECT_CONNECT_KEY
 
