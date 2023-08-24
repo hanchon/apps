@@ -32,12 +32,12 @@ import {
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { Dayjs } from "dayjs";
 
-export const CreateAccountModal = () => {
+export const FundVestingAccount = () => {
   const [disabled, setDisabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
 
-  const { createClawbackVestingAccount } = useVestingPrecompile();
+  const { fundVestingAccount } = useVestingPrecompile();
 
   const handleOnClick = async (d: FieldValues) => {
     try {
@@ -56,13 +56,12 @@ export const CreateAccountModal = () => {
           },
         );
 
-      const res = await createClawbackVestingAccount(
+      const res = await fundVestingAccount(
         wallet.evmosAddressEthFormat,
         d.address as string,
         startTime,
         lockupPeriods,
         vestingPeriods,
-        true,
       );
 
       dispatch(
@@ -79,7 +78,9 @@ export const CreateAccountModal = () => {
       );
       setDisabled(false);
     } catch (e) {
+      console.log("catch", e)
       // TODO: Add Sentry here!
+      setDisabled(false);
       dispatch(
         addSnackbar({
           id: 0,
@@ -126,7 +127,7 @@ export const CreateAccountModal = () => {
       <form
         onSubmit={handleSubmit(async (d) => {
           console.log(d);
-          await handleOnClick(d).then(() => {});
+          await handleOnClick(d).then(() => { });
         })}
         className="flex flex-col space-y-3"
       >
@@ -138,7 +139,7 @@ export const CreateAccountModal = () => {
           {...planTypeRegister}
           onChange={async (e) => {
             const planType = e.target.value as "Team" | "Grantee" | "Custom";
-            await planTypeRegister.onChange(e).then(() => {}); // method from hook form register
+            await planTypeRegister.onChange(e).then(() => { }); // method from hook form register
             setValue(
               "vestingDuration",
               vestingSettingsConfig[planType].duration[0],

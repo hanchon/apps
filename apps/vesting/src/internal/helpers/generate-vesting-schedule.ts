@@ -24,6 +24,7 @@ export const generateVestingSchedule = (
   const start = dayjs(startDate);
   const fullAmountAtto = convertToAtto(fullAmount);
   const endDate = start.add(
+    //@ts-ignore
     ...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[fullVestingPeriod],
   );
   let vestingPeriods = generatePeriods(
@@ -36,6 +37,7 @@ export const generateVestingSchedule = (
   if (vestingCliff !== TimeWindow["none"]) {
     vestingPeriods = applyCliff(
       start
+        //@ts-ignore
         .add(...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[vestingCliff])
         .diff(start, "second"),
       vestingPeriods,
@@ -56,6 +58,7 @@ export const generateVestingSchedule = (
                 },
               ],
               length: start
+                //@ts-ignore
                 .add(...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[lockingPeriod])
                 .diff(start, "seconds"),
             },
