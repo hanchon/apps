@@ -4,6 +4,7 @@
 import { CheckIcon, DownloadIcon, RightArrowIcon } from "icons";
 import { useState } from "react";
 import { Deposit } from "./Deposit";
+import { Subtitle } from "ui-helpers";
 
 const TRANSFER_TYPES = {
   DEPOSIT: "Deposit",
@@ -23,7 +24,7 @@ export const Content = () => {
 
   return (
     <section className="space-y-3">
-      <h5 className="text-xs font-bold">Transfer Type</h5>
+      <Subtitle>Transfer Type</Subtitle>
       {/* TODO: make it reusable. It is on onboard too. */}
       <div className="grid grid-cols-1 gap-4 text-sm font-bold md:grid-cols-2">
         <button

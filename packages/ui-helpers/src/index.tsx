@@ -40,3 +40,5 @@ export { MavaWidget } from "./widgets/Mava";
 export { PrimaryButton } from "./PrimaryButton";
 export { Title } from "./modal/Title";
 export { Description } from "./modal/Description";
+export { Subtitle } from "./modal/Subtitle";
+export { CloseModal } from "./modal/CloseModal";
