@@ -32,7 +32,7 @@ const _evmosTestnet = {
 };
 
 export const evmosTestnet = {
-  ..._evmosTestnet,
+  ...chains.evmosTestnet,
   cosmosId: "evmos_9000-4",
 };
 
