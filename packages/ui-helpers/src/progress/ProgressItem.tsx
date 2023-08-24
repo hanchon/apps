@@ -1,10 +1,10 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { GroupStateI, SetUpAccountI } from "../types";
-import { ButtonCopilot } from "./ButtonCopilot";
+import { GroupStateI, SetUpAccountI } from "./types";
+import { Button } from "./Button";
 import { useStep } from "./useStep";
-export const ActionsMetaMask = ({
+export const ProgressItem = ({
   step,
   index,
   length,
@@ -30,5 +30,5 @@ export const ActionsMetaMask = ({
     statusButton,
   };
 
-  return <ButtonCopilot props={props} />;
+  return <Button props={props} />;
 };

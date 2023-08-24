@@ -2,8 +2,8 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { CheckIcon, CloseBorderIcon } from "icons";
-import { STEP_STATUS } from "./utils";
-import { HandsEmoji } from "../../icons/HandsEmoji";
+import { STEP_STATUS } from "constants-helper";
+import { HandsEmoji } from "icons";
 
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(" ");
@@ -39,7 +39,7 @@ const BUTTON_STYLES = {
     "bg-red hover:bg-red1 pointer-events-none opacity-70",
 };
 
-export const ButtonCopilot = ({ props }: { props: ButtonProps }) => {
+export const Button = ({ props }: { props: ButtonProps }) => {
   return (
     <li
       key={props.id}

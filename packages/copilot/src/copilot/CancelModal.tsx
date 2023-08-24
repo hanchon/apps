@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { CloseModal, ModalWithTransitions } from "ui-helpers";
 import { StepsContext } from "./container/StepsContext";
 import { useTracker, EXIT_OUT_COPILOT } from "tracker";
-import { STEP_STATUS } from "./steps/setUpAccount/buttons/utils";
+import { STEP_STATUS } from "constants-helper";
 import { TranslationContextProvider } from "schummar-translate/react";
 export const CancelModal = () => {
   const {

@@ -2,9 +2,9 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useEffect, useRef, useState } from "react";
-import { STEP_STATUS } from "./utils";
-import { GroupStateI, SetUpAccountI } from "../types";
-import { completeStep, handleStepError } from "../helpers";
+import { GroupStateI, SetUpAccountI } from "./types";
+import { completeStep, handleStepError } from "./helpers";
+import { STEP_STATUS } from "constants-helper";
 import { useTracker } from "tracker";
 
 export const useStep = (

@@ -5,7 +5,7 @@ import { TopUpContainer } from "../dapp/TopUpContainer";
 import { NextStepsActionsDapp } from "../dapp/NextStepsDapp";
 import { NextSteps } from "../steps/nextSteps/NextSteps";
 import { SetUpAccountContainer } from "../steps/setUpAccount/SetUpAccountContainer";
-import { STEP_STATUS } from "../steps/setUpAccount/buttons/utils";
+import { STEP_STATUS } from "constants-helper";
 import { TopUp } from "../steps/topUp/TopUp";
 import { SetUpContainer } from "../dapp/SteUpContainer";
 

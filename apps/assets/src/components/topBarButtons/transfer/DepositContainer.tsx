@@ -1,15 +1,15 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+import { stepsSetAccountKeplr } from "./utils";
 import { useEffect, useMemo, useState } from "react";
-import { stepsSetAccount } from "./utils";
-import { SuccessSetUp } from "./SuccessSetUp";
+import { ConnectKeplr } from "./ConnectKeplr";
+import { Deposit } from "./Deposit";
 import { checkAllDoneStatus } from "ui-helpers/src/progress/helpers";
-import { SetUpAccount } from "./SetUpAccount";
 
-export const SetUpAccountContainer = () => {
+export const DepositContainer = () => {
   const [groupState, setGroupState] = useState(
-    stepsSetAccount.map((step, index) => ({
+    stepsSetAccountKeplr.map((step, index) => ({
       id: step.id,
       index,
       status: step.status,
@@ -30,12 +30,9 @@ export const SetUpAccountContainer = () => {
   }, [isSetUpDone]);
 
   return isSetUpDone && showComponent ? (
-    <SuccessSetUp />
+    // TODO: add the content for deposit component
+    <Deposit />
   ) : (
-    <SetUpAccount
-      stepsSetAccount={stepsSetAccount}
-      groupState={groupState}
-      setGroupState={setGroupState}
-    />
+    <ConnectKeplr groupState={groupState} setGroupState={setGroupState} />
   );
 };

@@ -1,38 +1,45 @@
-import { StoreType } from "evmos-wallet";
-import { TransferIcon } from "icons";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import {  ModalWithTransitions, PrimaryButton } from "ui-helpers";
+import { TransferIcon } from "icons";
+import { useEffect, useState } from "react";
+import { ModalWithTransitions, PrimaryButton } from "ui-helpers";
 import { TransferModal } from "./Modal";
+import { checkReloadFlagToReloadKeplrModal } from "./utils";
+import { useAccount } from "wagmi";
 
 export const TransferButton = () => {
-    const handleOnClick = () => {
-        //  TODO: add logic
-        setShowModal(true)
-    }
+  const handleOnClick = () => {
+    setShowModal(true);
+  };
 
-    const wallet = useSelector((state: StoreType) => state.wallet.value);
-    const [showModal, setShowModal] = useState(false)
-    return (
-        <>
-        <PrimaryButton
-        disabled={!wallet.active}
+  const { isConnected } = useAccount();
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const reload = checkReloadFlagToReloadKeplrModal();
+    if (reload) {
+      setShowModal(true);
+    }
+  }, [setShowModal]);
+  return (
+    <>
+      <PrimaryButton
+        disabled={!isConnected}
         //  || wallet.extensionName === METAMASK_KEY ||
         //   wallet.extensionName === WALLECT_CONNECT_KEY
-        
+
         // add i18
         text="Transfer"
         icon={<TransferIcon />}
         onClick={handleOnClick}
       />
       <ModalWithTransitions
-      show={showModal}
-      setShow={setShowModal}
-      content={<TransferModal />}
-      propClose={true}
-    //   handleCloseAction={setShowCloseModal}
-    />
+        show={showModal}
+        setShow={setShowModal}
+        content={<TransferModal />}
+        propClose={true}
+      />
     </>
-    )
-}
+  );
+};
