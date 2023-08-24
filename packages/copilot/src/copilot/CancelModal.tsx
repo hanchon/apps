@@ -7,6 +7,7 @@ import { StepsContext } from "./container/StepsContext";
 import { useTracker, EXIT_OUT_COPILOT } from "tracker";
 import { STEP_STATUS } from "constants-helper";
 import { TranslationContextProvider } from "schummar-translate/react";
+import { t } from "../locales/translate";
 export const CancelModal = () => {
   const {
     setShowModal,
@@ -49,7 +50,12 @@ export const CancelModal = () => {
         show={showCloseModal}
         setShow={setShowCloseModal}
         content={
-          <CloseModal handleReject={handleReject} handleAccept={handleAccept} />
+          <CloseModal
+            handleReject={handleReject}
+            handleAccept={handleAccept}
+            description={t("exitcopilot.description") as string}
+            title={t("exitcopilot.title") as string}
+          />
         }
       />
     </TranslationContextProvider>

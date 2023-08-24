@@ -3,9 +3,8 @@
 
 import { TopBarContainer, TopBarItem } from "ui-helpers";
 import { TopBarProps } from "./types";
-import { TransferButton } from "../../../topBarButtons/transfer/Button";
+import { TransferButton } from "../../../topBarButtons/transfer/TransferButton";
 import { RequestButton } from "../../../topBarButtons/RequestButton";
-
 
 const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
   return (
@@ -20,9 +19,9 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
               : `$${topProps.evmosPrice.toString()}`
           }
         />
-           <div className="flex items-center justify-center space-x-2 lg:justify-end">
-        <TransferButton />
-        <RequestButton />
+        <div className="flex items-center justify-center space-x-2 lg:justify-end">
+          <TransferButton />
+          <RequestButton />
         </div>
       </>
     </TopBarContainer>

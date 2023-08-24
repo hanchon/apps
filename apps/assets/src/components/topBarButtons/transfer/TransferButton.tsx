@@ -7,6 +7,7 @@ import { ModalWithTransitions, PrimaryButton } from "ui-helpers";
 import { TransferModal } from "./Modal";
 import { checkReloadFlagToReloadKeplrModal } from "./utils";
 import { useAccount } from "wagmi";
+import { CancelModalTransfer } from "./CloseModal";
 
 export const TransferButton = () => {
   const handleOnClick = () => {
@@ -15,7 +16,7 @@ export const TransferButton = () => {
 
   const { isConnected } = useAccount();
   const [showModal, setShowModal] = useState(false);
-
+  const [showCloseModal, setShowCloseModal] = useState(false);
   useEffect(() => {
     const reload = checkReloadFlagToReloadKeplrModal();
     if (reload) {
@@ -24,6 +25,11 @@ export const TransferButton = () => {
   }, [setShowModal]);
   return (
     <>
+      <CancelModalTransfer
+        showCloseModal={showCloseModal}
+        setShowCloseModal={setShowCloseModal}
+        setShowModal={setShowModal}
+      />
       <PrimaryButton
         disabled={!isConnected}
         //  || wallet.extensionName === METAMASK_KEY ||
@@ -39,6 +45,7 @@ export const TransferButton = () => {
         setShow={setShowModal}
         content={<TransferModal />}
         propClose={true}
+        handleCloseAction={setShowCloseModal}
       />
     </>
   );

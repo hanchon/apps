@@ -20,7 +20,7 @@ export const PrimaryButton = ({
       ${disabled ? "disabled" : ""}
       `}
     >
-      <span>{icon}</span> <p>{text}</p>
+      {icon && <span>{icon}</span>} <p>{text}</p>
     </button>
   );
 };
