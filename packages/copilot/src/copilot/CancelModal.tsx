@@ -6,7 +6,7 @@ import { ModalWithTransitions } from "ui-helpers";
 import { AlertIcon } from "icons";
 import { StepsContext } from "./container/StepsContext";
 import { useTracker, EXIT_OUT_COPILOT } from "tracker";
-import { STEP_STATUS } from "./steps/setUpAccount/buttons/utils";
+import { STEP_STATUS } from "constants-helper";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../locales/translate";
 import { PrimaryButton } from "./PrimaryButton";

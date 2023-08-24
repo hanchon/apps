@@ -3,7 +3,7 @@
 
 import { CheckIcon, DownloadIcon, RightArrowIcon } from "icons";
 import { useState } from "react";
-import { Deposit } from "./Deposit";
+import { DepositContainer } from "./DepositContainer";
 
 const TRANSFER_TYPES = {
   DEPOSIT: "Deposit",
@@ -15,7 +15,7 @@ export const Content = () => {
 
   function renderScreen() {
     if (transferType === TRANSFER_TYPES.DEPOSIT) {
-      return <Deposit />;
+      return <DepositContainer />;
     }
 
     return <>{/* TODO: add logic for send */}</>;
@@ -49,7 +49,6 @@ export const Content = () => {
               : "border-strokeGrey border"
           }`}
         >
-          {/* <EthereumIcon /> */}
           <RightArrowIcon /> {TRANSFER_TYPES.SEND}
           {transferType === TRANSFER_TYPES.SEND && (
             <div className="bg-red text-pearl flex h-5 w-5 items-center justify-center rounded-full">

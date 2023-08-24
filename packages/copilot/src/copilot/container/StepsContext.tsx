@@ -3,7 +3,7 @@
 
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 
-import { STEP_STATUS } from "../steps/setUpAccount/buttons/utils";
+import { STEP_STATUS } from "constants-helper";
 
 type StepsPropsContext = {
   stepsStatus: {

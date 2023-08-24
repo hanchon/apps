@@ -1,16 +1,20 @@
-import { KeplrIcon } from "icons";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+import { WizardHelper } from "ui-helpers";
 
 export const Deposit = () => {
+  // TODO: add logic for deposit
   return (
-    <div className="">
-      {/* TODO: create a ui-helper for this and pass the h1 and h2 for each of the cases (and the icon too) */}
-      <div className="bg-lightBlue flex space-x-2 justify-start">
-        <KeplrIcon />
-        <div className="relative -top-[3px] text-blue text-sm">
-          <h1 className="font-bold">Keplr is required</h1>
-          <h2>Depositing assets can only be done with the Keplr extension.</h2>
-        </div>
-      </div>
-    </div>
+    <section>
+      <WizardHelper>
+        <p>
+          We prefilled the address of the recipient above with{" "}
+          <b>the Evmos address that you are logged in with</b>. If you are
+          depositing into a different address, you can make the changes
+          accordingly.
+        </p>
+      </WizardHelper>
+    </section>
   );
 };

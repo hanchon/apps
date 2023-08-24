@@ -40,3 +40,5 @@ export { MavaWidget } from "./widgets/Mava";
 export { PrimaryButton } from "./PrimaryButton";
 export { Title } from "./modal/Title";
 export { Description } from "./modal/Description";
+export { Progress } from "./progress/Progress";
+export { WizardHelper } from "./modal/WizardHelper";

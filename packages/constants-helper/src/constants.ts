@@ -30,3 +30,11 @@ export const FORGE_URL = "https://forge.trade/";
 export const TASHI_URL = "https://tashi.finance/";
 export const ORBITAL_APES_URL = "https://www.orbitmarket.io";
 export const MAVA_WIDGET_URL = "https://widget.mava.app";
+export const STEP_STATUS = {
+  DONE: "done",
+  PROCESSING: "processing",
+  CURRENT: "current",
+  NOT_PROCESSED: "not_processed",
+};
+export const METAMASK_DOWNLOAD_URL = "https://metamask.io/download/";
+export const KEPLR_DOWNLOAD_URL = "https://www.keplr.app/download";
