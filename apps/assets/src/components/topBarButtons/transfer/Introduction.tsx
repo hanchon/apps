@@ -1,12 +1,10 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { StoreType } from "evmos-wallet";
 import { EvmosRedIcon } from "icons";
-import { useSelector } from "react-redux";
 import { Description, Title } from "ui-helpers";
-import { CopyContainer } from "./CopyContainer";
 
+import { AddressesContainer } from "./AddressesContainer";
 export const Introduction = ({
   title,
   description,
@@ -14,20 +12,6 @@ export const Introduction = ({
   title: string;
   description: string;
 }) => {
-  const copyToClipboard = async (wallet: string) => {
-    await navigator.clipboard.writeText(wallet);
-  };
-
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
-
-  const handleCosmosFormat = async () => {
-    await copyToClipboard(wallet.evmosAddressCosmosFormat);
-  };
-
-  const handleEthFormat = async () => {
-    await copyToClipboard(wallet.evmosAddressEthFormat);
-  };
-
   return (
     <section className="flex flex-col space-y-4 text-gray1">
       <EvmosRedIcon />
@@ -51,17 +35,7 @@ export const Introduction = ({
           Below are your addresses based on the account you&apos;re logged into.
         </p>
 
-        <div className="flex flex-col space-y-1">
-          <CopyContainer
-            address={wallet.evmosAddressCosmosFormat}
-            handleOnClick={handleCosmosFormat}
-          />
-
-          <CopyContainer
-            address={wallet.evmosAddressEthFormat}
-            handleOnClick={handleEthFormat}
-          />
-        </div>
+        <AddressesContainer />
       </div>
     </section>
   );
