@@ -428,11 +428,11 @@ test.describe("Mission Page - Copilot", () => {
     await page.goto("http://localhost:3004/governance");
   });
 
-  test("should redirect to staking page after clicking on Stake & manage delegation", async ({
+  test("should redirect to staking page after clicking on Stake & manage delegations", async ({
     page,
   }) => {
     await page
-      .getByRole("button", { name: /Stake & manage delegation/i })
+      .getByRole("button", { name: /Stake & manage delegations/i })
       .click();
     await page.waitForTimeout(1000);
     await page.goto("http://localhost:3004/staking");
