@@ -3,19 +3,9 @@
 
 import { stepsSetAccountKeplr } from "./utils";
 import { useEffect, useMemo, useState } from "react";
-import { GroupStateI } from "ui-helpers/src/progress/types";
-import { STEP_STATUS } from "constants-helper";
 import { ConnectKeplr } from "./ConnectKeplr";
 import { Deposit } from "./Deposit";
-
-// TODO: move to a common utils file
-export const checkAllDoneStatus = (groupState: GroupStateI[]) => {
-  return groupState.every(
-    (obj) =>
-      Object.prototype.hasOwnProperty.call(obj, "status") &&
-      obj.status === STEP_STATUS.DONE
-  );
-};
+import { checkAllDoneStatus } from "ui-helpers/src/progress/helpers";
 
 export const DepositContainer = () => {
   const [groupState, setGroupState] = useState(

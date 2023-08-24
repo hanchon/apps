@@ -54,3 +54,11 @@ export const updateCurrentStatus = (
   }
   return updatedState;
 };
+
+export const checkAllDoneStatus = (groupState: GroupStateI[]) => {
+  return groupState.every(
+    (obj) =>
+      Object.prototype.hasOwnProperty.call(obj, "status") &&
+      obj.status === STEP_STATUS.DONE
+  );
+};
