@@ -10,7 +10,7 @@ import {
   queryPubKey,
   isWalletSelected,
 } from "evmos-wallet";
-import { STEP_STATUS } from "constants-helper";
+import { METAMASK_DOWNLOAD_URL, STEP_STATUS } from "constants-helper";
 import {
   CLICK_ON_CONNECT_ACCOUNT_COPILOT,
   CLICK_ON_INSTALL_ACCOUNT_COPILOT,
@@ -27,8 +27,6 @@ import {
   setCopilotFlagToReloadModal,
   setReloadFlagToReloadModal,
 } from "../../utils";
-
-const metamaskDownloadUrl = "https://metamask.io/download/";
 
 const getWalletLocal = async () => {
   // get wallet returns null or string but
@@ -116,9 +114,9 @@ export const stepsSetAccount = [
     checkAction: () => installMetamask(),
     loadingText: ["Waiting for MetaMask Setup"],
     doneText: "Metamask Installed",
-    actions: [() => connectMetaMask(metamaskDownloadUrl)],
+    actions: [() => connectMetaMask(METAMASK_DOWNLOAD_URL)],
     errorsText: ["Metamask not installed"],
-    href: metamaskDownloadUrl,
+    href: METAMASK_DOWNLOAD_URL,
     hrefAction: () => reloadPage(),
     status: STEP_STATUS.CURRENT,
     tracker: {

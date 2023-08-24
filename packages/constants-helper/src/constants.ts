@@ -36,3 +36,5 @@ export const STEP_STATUS = {
   CURRENT: "current",
   NOT_PROCESSED: "not_processed",
 };
+export const METAMASK_DOWNLOAD_URL = "https://metamask.io/download/";
+export const KEPLR_DOWNLOAD_URL = "https://www.keplr.app/download";
