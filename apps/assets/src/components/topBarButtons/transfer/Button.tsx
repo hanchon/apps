@@ -1,10 +1,11 @@
 import { StoreType } from "evmos-wallet";
 import { TransferIcon } from "icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { ModalWithTransitions, PrimaryButton } from "ui-helpers";
 import { TransferModal } from "./Modal";
+import { checkReloadFlagToReloadKeplrModal } from "./utils";
 
 export const TransferButton = () => {
   const handleOnClick = () => {
@@ -13,6 +14,13 @@ export const TransferButton = () => {
 
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const reload = checkReloadFlagToReloadKeplrModal();
+    if (reload) {
+      setShowModal(true);
+    }
+  }, [setShowModal]);
   return (
     <>
       <PrimaryButton
