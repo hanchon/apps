@@ -1,21 +1,19 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { StoreType } from "evmos-wallet";
 import { TransferIcon } from "icons";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-
 import { ModalWithTransitions, PrimaryButton } from "ui-helpers";
 import { TransferModal } from "./Modal";
 import { checkReloadFlagToReloadKeplrModal } from "./utils";
+import { useAccount } from "wagmi";
 
 export const TransferButton = () => {
   const handleOnClick = () => {
     setShowModal(true);
   };
 
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
+  const { isConnected } = useAccount();
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -27,7 +25,7 @@ export const TransferButton = () => {
   return (
     <>
       <PrimaryButton
-        disabled={!wallet.active}
+        disabled={!isConnected}
         //  || wallet.extensionName === METAMASK_KEY ||
         //   wallet.extensionName === WALLECT_CONNECT_KEY
 

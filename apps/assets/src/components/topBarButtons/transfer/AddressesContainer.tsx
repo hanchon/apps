@@ -6,25 +6,25 @@ export const AddressesContainer = () => {
     await navigator.clipboard.writeText(wallet);
   };
 
-  const wallet = useAccount();
+  const { address } = useAccount();
 
   const handleCosmosFormat = async () => {
-    await copyToClipboard(ethToEvmos(wallet.address as string));
+    await copyToClipboard(ethToEvmos(address as string));
   };
 
   const handleEthFormat = async () => {
-    await copyToClipboard(wallet.address as string);
+    await copyToClipboard(address as string);
   };
 
   return (
     <div className="flex flex-col space-y-1">
       <CopyContainer
-        address={ethToEvmos(wallet.address as string)}
+        address={ethToEvmos(address as string)}
         handleOnClick={handleCosmosFormat}
       />
 
       <CopyContainer
-        address={wallet.address as string}
+        address={address as string}
         handleOnClick={handleEthFormat}
       />
     </div>

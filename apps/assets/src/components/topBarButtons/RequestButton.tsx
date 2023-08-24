@@ -1,21 +1,19 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { StoreType } from "evmos-wallet";
 import { RequestIcon } from "icons";
-import { useSelector } from "react-redux";
-
 import { PrimaryButton } from "ui-helpers";
+import { useAccount } from "wagmi";
 
 export const RequestButton = () => {
   const handleOnClick = () => {
     //  TODO: add logic
   };
 
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
+  const { isConnected } = useAccount();
   return (
     <PrimaryButton
-      disabled={!wallet.active}
+      disabled={!isConnected}
       //   || wallet.extensionName === METAMASK_KEY ||
       //   wallet.extensionName === WALLECT_CONNECT_KEY
 
