@@ -7,6 +7,7 @@
   "scripts": {
     "build:production": "NEXT_PUBLIC_EVMOS_APP_ENV=production turbo run build --force --no-cache",
     "build": "dotenv -- turbo run build",
+    "build:analyse": "ANALYZE_NEXT_BUNDLE=true next build",
     "nibble": "eslint-nibble . -c eslint.config.js",
     "dev": "dotenv -- turbo run dev --concurrency=20",
     "lint": "turbo run lint",
@@ -45,7 +46,7 @@
     "eslint-interactive": "^10.8.0",
     "eslint-nibble": "^8.1.0",
     "kill-port": "^2.0.1",
-    "next": "^13.4.16",
+    "next": "^13.4.17",
     "nibble": "^0.0.2",
     "react-confetti-explosion": "^2.1.2",
     "react-hook-form": "^7.44.3",
