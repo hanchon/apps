@@ -2,6 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { ComponentProps } from "react";
+import { TextBox } from "./TextBox";
 
 export const Input = ({
   placeholder,
@@ -11,13 +12,15 @@ export const Input = ({
   ...rest
 }: ComponentProps<"input">) => {
   return (
-    <input
-      className="w-full focus-visible:outline-none border border-gray300 rounded-lg px-3 py-2 text-sm placeholder-gray2 text-darkGray900"
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      type={type}
-      {...rest}
-    />
+    <TextBox>
+      <input
+        className="w-full focus-visible:outline-none"
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        type={type}
+        {...rest}
+      />
+    </TextBox>
   );
 };

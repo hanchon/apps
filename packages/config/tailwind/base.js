@@ -13,6 +13,7 @@ const config = {
     extend: {
       colors: {
         pearl: "#faf1e4",
+        pearl1: "#FAF8F8",
         darkPearl: "#dad2c7",
         darkGray1: "#0b0a09",
         darkGray2: "#2D2925",

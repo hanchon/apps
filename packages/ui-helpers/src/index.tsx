@@ -48,3 +48,5 @@ export { Tabs } from "./modal/tabs/Tabs";
 export { ModalContainer } from "./modal/ModalContainer";
 export { IntroductionModal } from "./modal/Introduction";
 export { Input } from "./modal/Input";
+export { TokenCard } from "./modal/TokenCard";
+export { TextBox } from "./modal/TextBox";

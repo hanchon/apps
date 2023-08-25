@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useState } from "react";
-import { Input, Subtitle } from "ui-helpers";
+import { Input, Subtitle, TokenCard } from "ui-helpers";
 export const Content = () => {
   const [input, setInput] = useState("");
   return (
@@ -16,6 +16,7 @@ export const Content = () => {
         }}
       />
       <Subtitle>Asset and amount to request</Subtitle>
+      <TokenCard />
     </section>
   );
 };
