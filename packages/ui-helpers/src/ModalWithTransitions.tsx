@@ -87,7 +87,7 @@ export const ModalWithTransitions = ({
                     >
                       <span className="sr-only">Close</span>
                       <CloseIcon
-                        className="h-6 w-6 text-[#858B97]"
+                        className="h-6 w-6 text-gray2"
                         aria-hidden="true"
                       />
                     </button>

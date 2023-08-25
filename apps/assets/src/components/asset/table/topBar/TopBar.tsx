@@ -4,7 +4,7 @@
 import { TopBarContainer, TopBarItem } from "ui-helpers";
 import { TopBarProps } from "./types";
 import { TransferButton } from "../../../topBarButtons/transfer/TransferButton";
-import { RequestButton } from "../../../topBarButtons/RequestButton";
+import { RequestButton } from "../../../topBarButtons/request/RequestButton";
 
 const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
   return (

@@ -47,3 +47,4 @@ export { WizardHelper } from "./modal/WizardHelper";
 export { Tabs } from "./modal/tabs/Tabs";
 export { ModalContainer } from "./modal/ModalContainer";
 export { IntroductionModal } from "./modal/Introduction";
+export { Input } from "./modal/Input";
