@@ -1,17 +1,18 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { ModalContainer } from "ui-helpers";
+import { IntroductionModal, ModalContainer } from "ui-helpers";
 import { Content } from "./Content";
-import { Introduction } from "./Introduction";
+import { AccountInformation } from "./AccountInformation";
 
 export const TransferModal = () => {
   return (
     <ModalContainer
       introduction={
-        <Introduction
+        <IntroductionModal
           title="Transfer Assets"
           description="Deposit and send assets to any account on any chain."
+          content={<AccountInformation />}
         />
       }
       content={<Content />}
