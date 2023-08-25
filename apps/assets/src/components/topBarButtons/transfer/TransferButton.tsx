@@ -5,7 +5,7 @@ import { TransferIcon } from "icons";
 import { useEffect, useState } from "react";
 import { ModalWithTransitions, PrimaryButton } from "ui-helpers";
 import { TransferModal } from "./Modal";
-import { checkReloadFlagToReloadKeplrModal } from "./utils";
+import { getTransferModalState } from "./utils";
 import { useAccount } from "wagmi";
 import { CancelModalTransfer } from "./CloseModal";
 
@@ -19,7 +19,7 @@ export const TransferButton = () => {
   const [showModal, setShowModal] = useState(false);
   const [showCloseModal, setShowCloseModal] = useState(false);
   useEffect(() => {
-    const reload = checkReloadFlagToReloadKeplrModal();
+    const reload = getTransferModalState().reloadKeplr;
     if (reload) {
       setShowModal(true);
     }

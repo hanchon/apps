@@ -20,12 +20,9 @@ import {
   UNSUCCESSFUL_WALLET_INSTALLATION_COPILOT,
 } from "tracker";
 import {
-  checkCopilotFlagToReloadModal,
-  checkReloadFlagToReloadModal,
-  removeCopilotFlagOnLoad,
-  removeReloadFlagOnLoad,
-  setCopilotFlagToReloadModal,
-  setReloadFlagToReloadModal,
+  removeCopilotModalStateFromLocalStorage,
+  getCopilotModalState,
+  updateCopilotModalState,
 } from "../../utils";
 
 const getWalletLocal = async () => {
@@ -75,7 +72,7 @@ const checkConnectionMetamask = async () => {
 
 const connectMetaMask = (href: string) => {
   if (isMetamaskInstalled() === false) {
-    setCopilotFlagToReloadModal("true");
+    updateCopilotModalState({ modalCopilotFlag: true });
     window.open(href, "_blank");
 
     return false;
@@ -90,10 +87,10 @@ const reloadPage = () => {
   } else {
     if (
       isMetamaskInstalled() === false &&
-      checkReloadFlagToReloadModal() === null &&
-      checkCopilotFlagToReloadModal() === "true"
+      getCopilotModalState().reloadMetaMask === false &&
+      getCopilotModalState().modalCopilotFlag === true
     ) {
-      setReloadFlagToReloadModal("true");
+      updateCopilotModalState({ reloadMetaMask: true });
       window.location.reload();
       return false;
     }
@@ -102,8 +99,7 @@ const reloadPage = () => {
 };
 
 const installMetamask = () => {
-  removeCopilotFlagOnLoad();
-  removeReloadFlagOnLoad();
+  removeCopilotModalStateFromLocalStorage();
   return isMetamaskInstalled();
 };
 

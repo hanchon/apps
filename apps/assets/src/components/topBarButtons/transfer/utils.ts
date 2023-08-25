@@ -10,30 +10,33 @@ import {
 } from "evmos-wallet";
 import { E } from "helpers";
 
-const RELOAD_KEPLR = "reloadKeplr";
-const MODAL_KEPLR = "modalKeplr";
+const MODAL_STATE = "modalState";
+const MODAL_STATE_DEFAULTS = {
+  reloadKeplr: false,
+  modalFlag: false,
+};
+type TransferModalState = typeof MODAL_STATE_DEFAULTS;
 
-export const checkReloadFlagToReloadKeplrModal = () =>
-  window.localStorage.getItem(RELOAD_KEPLR);
+export const getTransferModalState = () => {
+  const state = localStorage.getItem(MODAL_STATE);
+  if (!state) {
+    return MODAL_STATE_DEFAULTS;
+  }
+  return JSON.parse(state) as TransferModalState;
+};
+const updateTransferModalState = (state: Partial<TransferModalState>) => {
+  const newState = { ...getTransferModalState(), ...state };
+  localStorage.setItem(MODAL_STATE, JSON.stringify(newState));
+  return newState;
+};
 
-export const setReloadFlagToReloadKeplrModal = (value: string) =>
-  window.localStorage.setItem(RELOAD_KEPLR, value);
-
-export const setKeplrFlagToReloadModal = (value: string) =>
-  window.localStorage.setItem(MODAL_KEPLR, value);
-
-export const checkKeplrFlagToReloadModal = () =>
-  window.localStorage.getItem(MODAL_KEPLR);
-
-export const removeKeplrFlagOnLoad = () =>
-  window.localStorage.removeItem(MODAL_KEPLR);
-
-export const removeReloadKeplrFlagOnLoad = () =>
-  window.localStorage.removeItem(RELOAD_KEPLR);
+const removeTransferModalStateFromLocalStorage = () => {
+  localStorage.removeItem(MODAL_STATE);
+};
 
 const connectKeplr = (href: string) => {
   if (getGlobalKeplrProvider() === null) {
-    setKeplrFlagToReloadModal("true");
+    updateTransferModalState({ modalFlag: true });
     window.open(href, "_blank");
 
     return false;
@@ -42,8 +45,7 @@ const connectKeplr = (href: string) => {
 };
 
 const installKeplr = () => {
-  removeKeplrFlagOnLoad();
-  removeReloadKeplrFlagOnLoad();
+  removeTransferModalStateFromLocalStorage();
   if (getGlobalKeplrProvider() === null) {
     return false;
   }
@@ -57,10 +59,10 @@ const reloadPage = () => {
   } else {
     if (
       getGlobalKeplrProvider() === null &&
-      checkReloadFlagToReloadKeplrModal() === null &&
-      checkKeplrFlagToReloadModal() === "true"
+      getTransferModalState().reloadKeplr === false &&
+      getTransferModalState().modalFlag === true
     ) {
-      setReloadFlagToReloadKeplrModal("true");
+      updateTransferModalState({ reloadKeplr: true });
 
       window.location.reload();
       return false;
