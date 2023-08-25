@@ -6,7 +6,7 @@ export const ModalContainer = ({
   content,
 }: {
   introduction: JSX.Element;
-  content: JSX.Element;
+  content: JSX.Element | undefined;
 }) => {
   return (
     <div className="divide-strokeGrey text-gray1 grid grid-rows-1 divide-y md:grid-cols-3 md:grid-rows-none md:divide-x md:divide-y-0">

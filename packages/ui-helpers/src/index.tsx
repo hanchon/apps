@@ -45,3 +45,4 @@ export { CloseModal } from "./modal/CloseModal";
 export { Progress } from "./progress/Progress";
 export { WizardHelper } from "./modal/WizardHelper";
 export { Tabs } from "./modal/tabs/Tabs";
+export { ModalContainer } from "./modal/ModalContainer";
