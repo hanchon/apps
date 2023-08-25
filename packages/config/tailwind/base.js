@@ -13,6 +13,7 @@ const config = {
     extend: {
       colors: {
         pearl: "#faf1e4",
+        pearl1: "#FAF8F8",
         darkPearl: "#dad2c7",
         darkGray1: "#0b0a09",
         darkGray2: "#2D2925",
@@ -23,12 +24,14 @@ const config = {
         darkGray300: "#6E675C",
         darGray800: "#262017",
         darkGray700: "#3D372D",
+        darkGray900: "#16110D",
         skinTan: "#F5E8D4",
         red: "#ed4e33",
         red1: "#AA2912",
         red2: "#6b1c0e",
         green: "#97ad11",
         gray: "#F0EEEC",
+        gray2: "#858B97",
         whiteOpacity: "rgba(255, 255, 255, 0.1)",
         blackOpacity: "rgba(0, 0, 0, 0.6)",
         grayOpacity: "rgba(0, 0, 0, 0.05)",

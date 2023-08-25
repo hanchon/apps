@@ -31,10 +31,9 @@ export const SuccessSetUp = () => {
         <h6 className="font-bold">{t("setupaccount.success")}</h6>
         <p className="pb-5 text-sm">{t("setupaccount.success.message")}</p>
 
-        <PrimaryButton
-          onClick={handleClick}
-          text={t("setupaccount.button.text") as string}
-        />
+        <PrimaryButton onClick={handleClick}>
+          {t("setupaccount.button.text") as string}
+        </PrimaryButton>
 
         <ConfettiExplosion
           zIndex={11}

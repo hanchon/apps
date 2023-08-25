@@ -1,20 +1,26 @@
-const RELOAD = "reload";
-const COPILOT = "copilot";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-export const checkReloadFlagToReloadModal = () =>
-  window.localStorage.getItem(RELOAD);
+const MODAL_STATE = "copilotState";
+const MODAL_STATE_DEFAULTS = {
+  reloadMetaMask: false,
+  modalCopilotFlag: false,
+};
+type CopilotModalState = typeof MODAL_STATE_DEFAULTS;
 
-export const setReloadFlagToReloadModal = (value: string) =>
-  window.localStorage.setItem(RELOAD, value);
+export const getCopilotModalState = () => {
+  const state = localStorage.getItem(MODAL_STATE);
+  if (!state) {
+    return MODAL_STATE_DEFAULTS;
+  }
+  return JSON.parse(state) as CopilotModalState;
+};
+export const updateCopilotModalState = (state: Partial<CopilotModalState>) => {
+  const newState = { ...getCopilotModalState(), ...state };
+  localStorage.setItem(MODAL_STATE, JSON.stringify(newState));
+  return newState;
+};
 
-export const setCopilotFlagToReloadModal = (value: string) =>
-  window.localStorage.setItem(COPILOT, value);
-
-export const checkCopilotFlagToReloadModal = () =>
-  window.localStorage.getItem(COPILOT);
-
-export const removeCopilotFlagOnLoad = () =>
-  window.localStorage.removeItem(COPILOT);
-
-export const removeReloadFlagOnLoad = () =>
-  window.localStorage.removeItem(RELOAD);
+export const removeCopilotModalStateFromLocalStorage = () => {
+  localStorage.removeItem(MODAL_STATE);
+};

@@ -9,13 +9,13 @@ import useEventListener from "./useEventListener";
 export const ModalWithTransitions = ({
   show,
   setShow,
-  content,
+  children,
   propClose,
   handleCloseAction,
 }: {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
-  content: React.ReactNode;
+  children: JSX.Element;
   propClose?: boolean;
   handleCloseAction?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
@@ -77,7 +77,7 @@ export const ModalWithTransitions = ({
               leaveFrom="transform scale-100 opacity-100"
               leaveTo="transform scale-95 opacity-0"
             >
-              <Dialog.Panel className="relative min-w-[300px] max-w-[850px] transform overflow-hidden rounded-lg bg-[#FAF8F8] text-left shadow-xl transition-all md:min-w-[400px]">
+              <Dialog.Panel className="relative min-w-[300px] max-w-[850px] transform overflow-hidden rounded-lg bg-pearl1 text-left shadow-xl transition-all md:min-w-[400px]">
                 <div className="absolute right-0 top-0 block pr-4 pt-4">
                   {propClose && (
                     <button
@@ -87,13 +87,13 @@ export const ModalWithTransitions = ({
                     >
                       <span className="sr-only">Close</span>
                       <CloseIcon
-                        className="h-6 w-6 text-[#858B97]"
+                        className="h-6 w-6 text-gray2"
                         aria-hidden="true"
                       />
                     </button>
                   )}
                 </div>
-                {content}
+                {children}
               </Dialog.Panel>
             </Transition.Child>
           </div>

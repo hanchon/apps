@@ -4,7 +4,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { ConnectToEvmos } from "./ConnectToEvmos";
 import { ConnectToEvmosWallets } from "./ConnectToEvmosWallets";
-import { ModalWithTransitions } from "ui-helpers";
+import { ModalContainer, ModalWithTransitions } from "ui-helpers";
 
 export const WalletConnectModal = ({
   show,
@@ -16,18 +16,17 @@ export const WalletConnectModal = ({
   copilotModal?: JSX.Element;
 }) => {
   const contentModal = (
-    <div className="divide-strokeGrey text-gray1 grid grid-rows-1 divide-y md:grid-cols-3 md:grid-rows-none md:divide-x md:divide-y-0">
-      <ConnectToEvmos />
-      <ConnectToEvmosWallets copilotModal={copilotModal} setShow={setShow} />
-    </div>
+    <ModalContainer
+      introduction={<ConnectToEvmos />}
+      content={
+        <ConnectToEvmosWallets copilotModal={copilotModal} setShow={setShow} />
+      }
+    />
   );
 
   return (
-    <ModalWithTransitions
-      show={show}
-      setShow={setShow}
-      content={contentModal}
-      propClose={true}
-    />
+    <ModalWithTransitions show={show} setShow={setShow} propClose={true}>
+      {contentModal}
+    </ModalWithTransitions>
   );
 };

@@ -78,10 +78,8 @@ export const WalletProfileModal = ({
     </div>
   );
   return (
-    <ModalWithTransitions
-      show={show}
-      setShow={setShow}
-      content={contentModal}
-    />
+    <ModalWithTransitions show={show} setShow={setShow}>
+      {contentModal}
+    </ModalWithTransitions>
   );
 };
