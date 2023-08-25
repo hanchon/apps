@@ -47,11 +47,9 @@ export const CloseModal = ({
             Stay
           </button>
 
-          <PrimaryButton
-            onClick={handleReject}
-            text="Exit"
-            className="w-auto px-8"
-          />
+          <PrimaryButton onClick={handleReject} className="w-auto px-8">
+            <p>Exit</p>
+          </PrimaryButton>
         </div>
       </div>
     </div>

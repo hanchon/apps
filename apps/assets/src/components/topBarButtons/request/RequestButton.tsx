@@ -30,11 +30,12 @@ export const RequestButton = () => {
         //  || wallet.extensionName === METAMASK_KEY ||
         //   wallet.extensionName === WALLECT_CONNECT_KEY
 
-        // add i18
-        text="Request"
         icon={<RequestIcon />}
         onClick={handleOnClick}
-      />
+      >
+        {/* add i18 */}
+        <p>Request</p>
+      </PrimaryButton>
       <ModalWithTransitions
         show={showModal}
         setShow={setShowModal}

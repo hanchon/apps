@@ -3,13 +3,13 @@
 
 export const PrimaryButton = ({
   onClick,
-  text,
+  children,
   className,
   icon,
   disabled,
 }: {
   onClick: () => void;
-  text: string;
+  children: JSX.Element | string;
   className?: string;
   icon?: JSX.Element;
   disabled?: boolean;
@@ -22,7 +22,7 @@ export const PrimaryButton = ({
        className ? className : ""
      } ${disabled ? "disabled" : ""}`}
     >
-      {icon && <span>{icon}</span>} <p>{text}</p>
+      {icon && <span>{icon}</span>} {children}
     </button>
   );
 };

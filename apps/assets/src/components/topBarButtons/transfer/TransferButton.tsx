@@ -36,11 +36,12 @@ export const TransferButton = () => {
         //  || wallet.extensionName === METAMASK_KEY ||
         //   wallet.extensionName === WALLECT_CONNECT_KEY
 
-        // add i18
-        text="Transfer"
         icon={<TransferIcon />}
         onClick={handleOnClick}
-      />
+      >
+        {/* // add i18 */}
+        <p>Transfer</p>
+      </PrimaryButton>
       <ModalWithTransitions
         show={showModal}
         setShow={setShowModal}

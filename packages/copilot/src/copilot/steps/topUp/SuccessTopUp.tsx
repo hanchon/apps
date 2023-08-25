@@ -50,19 +50,15 @@ export const SuccessTopUp = () => {
   const drawButton = () => {
     if (hasSingleTopUpStep) {
       return (
-        <PrimaryButton
-          onClick={handleOnClickTopUp}
-          text={t("topup.onboard.success.step.topup.button.text") as string}
-          className="ml-0 mt-3"
-        />
+        <PrimaryButton onClick={handleOnClickTopUp} className="ml-0 mt-3">
+          {t("topup.onboard.success.step.topup.button.text") as string}
+        </PrimaryButton>
       );
     }
     return (
-      <PrimaryButton
-        onClick={handleOnClick}
-        text={t("topup.onboard.success.button.text") as string}
-        className="ml-0 mt-3"
-      />
+      <PrimaryButton onClick={handleOnClick} className="ml-0 mt-3">
+        {t("topup.onboard.success.button.text") as string}
+      </PrimaryButton>
     );
   };
 
