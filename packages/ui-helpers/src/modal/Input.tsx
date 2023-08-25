@@ -7,7 +7,7 @@ export const Input = ({
   placeholder,
   value,
   onChange,
-  type,
+  type = "text",
   ...rest
 }: ComponentProps<"input">) => {
   return (
