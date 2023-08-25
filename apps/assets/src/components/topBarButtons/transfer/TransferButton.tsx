@@ -44,10 +44,11 @@ export const TransferButton = () => {
       <ModalWithTransitions
         show={showModal}
         setShow={setShowModal}
-        content={<TransferModal />}
         propClose={true}
         handleCloseAction={setShowCloseModal}
-      />
+      >
+        <TransferModal />
+      </ModalWithTransitions>
     </>
   );
 };

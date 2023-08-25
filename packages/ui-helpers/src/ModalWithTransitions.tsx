@@ -9,13 +9,13 @@ import useEventListener from "./useEventListener";
 export const ModalWithTransitions = ({
   show,
   setShow,
-  content,
+  children,
   propClose,
   handleCloseAction,
 }: {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
-  content: React.ReactNode;
+  children: JSX.Element;
   propClose?: boolean;
   handleCloseAction?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
@@ -93,7 +93,7 @@ export const ModalWithTransitions = ({
                     </button>
                   )}
                 </div>
-                {content}
+                {children}
               </Dialog.Panel>
             </Transition.Child>
           </div>

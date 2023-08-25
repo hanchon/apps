@@ -38,10 +38,11 @@ export const RequestButton = () => {
       <ModalWithTransitions
         show={showModal}
         setShow={setShowModal}
-        content={<RequestModal />}
         propClose={true}
         handleCloseAction={setShowCloseModal}
-      />
+      >
+        <RequestModal />
+      </ModalWithTransitions>
     </>
   );
 };

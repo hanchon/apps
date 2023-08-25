@@ -23,17 +23,13 @@ export const CancelModalRequest = ({
   };
 
   return (
-    <ModalWithTransitions
-      show={showCloseModal}
-      setShow={setShowCloseModal}
-      content={
-        <CloseModal
-          handleReject={handleReject}
-          handleAccept={handleAccept}
-          description="You started a request process. Do you really want to exit from the process?"
-          title="Cancel Request?"
-        />
-      }
-    />
+    <ModalWithTransitions show={showCloseModal} setShow={setShowCloseModal}>
+      <CloseModal
+        handleReject={handleReject}
+        handleAccept={handleAccept}
+        description="You started a request process. Do you really want to exit from the process?"
+        title="Cancel Request?"
+      />
+    </ModalWithTransitions>
   );
 };

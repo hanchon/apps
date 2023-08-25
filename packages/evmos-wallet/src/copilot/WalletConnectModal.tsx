@@ -25,11 +25,8 @@ export const WalletConnectModal = ({
   );
 
   return (
-    <ModalWithTransitions
-      show={show}
-      setShow={setShow}
-      content={contentModal}
-      propClose={true}
-    />
+    <ModalWithTransitions show={show} setShow={setShow} propClose={true}>
+      {contentModal}
+    </ModalWithTransitions>
   );
 };

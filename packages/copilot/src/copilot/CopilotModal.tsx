@@ -22,9 +22,10 @@ export const CopilotModal = () => {
     <ModalWithTransitions
       show={showModal}
       setShow={setShowModal}
-      content={<Content />}
       propClose={true}
       handleCloseAction={setShowCloseModal}
-    />
+    >
+      <Content />
+    </ModalWithTransitions>
   );
 };

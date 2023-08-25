@@ -46,18 +46,14 @@ export const CancelModal = () => {
 
   return (
     <TranslationContextProvider locale="en">
-      <ModalWithTransitions
-        show={showCloseModal}
-        setShow={setShowCloseModal}
-        content={
-          <CloseModal
-            handleReject={handleReject}
-            handleAccept={handleAccept}
-            description={t("exitcopilot.description") as string}
-            title={t("exitcopilot.title") as string}
-          />
-        }
-      />
+      <ModalWithTransitions show={showCloseModal} setShow={setShowCloseModal}>
+        <CloseModal
+          handleReject={handleReject}
+          handleAccept={handleAccept}
+          description={t("exitcopilot.description") as string}
+          title={t("exitcopilot.title") as string}
+        />
+      </ModalWithTransitions>
     </TranslationContextProvider>
   );
 };

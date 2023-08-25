@@ -23,17 +23,13 @@ export const CancelModalTransfer = ({
   };
 
   return (
-    <ModalWithTransitions
-      show={showCloseModal}
-      setShow={setShowCloseModal}
-      content={
-        <CloseModal
-          handleReject={handleReject}
-          handleAccept={handleAccept}
-          description="You started a transfer process. Do you really want to exit from the process?"
-          title="Cancel Transfer"
-        />
-      }
-    />
+    <ModalWithTransitions show={showCloseModal} setShow={setShowCloseModal}>
+      <CloseModal
+        handleReject={handleReject}
+        handleAccept={handleAccept}
+        description="You started a transfer process. Do you really want to exit from the process?"
+        title="Cancel Transfer"
+      />
+    </ModalWithTransitions>
   );
 };
