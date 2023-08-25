@@ -15,7 +15,7 @@ export const IntroductionModal = ({
   icon?: JSX.Element;
 }) => {
   return (
-    <section className="flex flex-col space-y-4 text-gray1 h-full">
+    <section className="flex flex-col space-y-3 text-gray1 h-full">
       {icon ? icon : <EvmosRedIcon height={70} />}
       <Title>{title}</Title>
       <Description>{description}</Description>

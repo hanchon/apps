@@ -2,15 +2,12 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useContext, useEffect } from "react";
-import { ModalContainer, ModalWithTransitions } from "ui-helpers";
-import { Introduction } from "./Introduction";
-import { useCopilot } from "./useCopilot";
+import { ModalWithTransitions } from "ui-helpers";
 import { StepsContext } from "./container/StepsContext";
-import { CancelModal } from "./CancelModal";
 import { getCopilotModalState } from "./utils";
 
+import { Content } from "./Content";
 export const CopilotModal = () => {
-  const { componentToDraw, stepsToDraw } = useCopilot();
   const { showModal, setShowModal, setShowCloseModal } =
     useContext(StepsContext);
 
@@ -21,26 +18,11 @@ export const CopilotModal = () => {
     }
   }, [setShowModal]);
 
-  const contentModal = (
-    <>
-      <CancelModal />
-      <ModalContainer
-        introduction={
-          <>
-            <Introduction />
-            <ol className="space-y-3 pt-4 md:pt-0">{stepsToDraw}</ol>{" "}
-          </>
-        }
-        content={componentToDraw?.component}
-      />
-    </>
-  );
-
   return (
     <ModalWithTransitions
       show={showModal}
       setShow={setShowModal}
-      content={contentModal}
+      content={<Content />}
       propClose={true}
       handleCloseAction={setShowCloseModal}
     />
