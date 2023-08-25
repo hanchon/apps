@@ -4,13 +4,10 @@
 import { Button } from "./Button";
 import { TabProps } from "./types";
 
-export const Tabs = ({ tabsProps }: { tabsProps: TabProps[] }) => {
-  const drawTabs = () => {
-    return tabsProps?.map((tab) => <Button key={tab.type} tab={tab} />);
-  };
-  return (
-    <div className="grid grid-cols-1 gap-4 text-sm font-medium md:grid-cols-2">
-      {drawTabs()}
-    </div>
-  );
-};
+export const Tabs = ({ tabsProps }: { tabsProps: TabProps[] }) => (
+  <div className="grid grid-cols-1 gap-4 text-sm font-medium md:grid-cols-2">
+    {tabsProps.map((tab) => (
+      <Button key={tab.type} tab={tab} />
+    ))}
+  </div>
+);

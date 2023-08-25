@@ -12,7 +12,7 @@ export const TokenCard = () => {
             <EvmosRedIcon height={20} />
             <p className="text-sm font-bold">TOKEN</p>
           </div>
-          <DownArrowIcon color="#000" height={5} />
+          <DownArrowIcon className="text-black" height={5} />
         </div>
       </TextBox>
 

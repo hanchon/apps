@@ -10,7 +10,7 @@ import {
 } from "evmos-wallet";
 import { E } from "helpers";
 
-const MODAL_STATE = "modalState";
+const MODAL_STATE = "modalTransferState";
 const MODAL_STATE_DEFAULTS = {
   reloadKeplr: false,
   modalFlag: false,
