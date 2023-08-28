@@ -12,6 +12,8 @@ import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
 import { PingIndicator } from "../PingIndicator";
 import { Badge } from "../badges/Badge";
 import { usePingIndicator } from "./usePingIndicator";
+import { t } from "../locales/translate";
+
 export const LaunchContainer = () => {
   const { handlePreClickAction } = useTracker(CLICK_ON_DAPP_INSIDE_LAUNCHER);
 
@@ -54,21 +56,17 @@ export const LaunchContainer = () => {
           {showPing && (
             <div className="bg-darkGray700 mx-8 mb-8 cursor-default space-y-1 rounded-lg p-5">
               <div className="flex items-center justify-between">
-                <h1 className="text-xs font-bold">
-                  Discover our new navigation
-                </h1>
+                <h1 className="text-xs font-bold">{t("launchPad.title")}</h1>
                 <Badge variant="danger" className="uppercase">
-                  New
+                  {t("launchPad.badge.text")}
                 </Badge>
               </div>
               <p className="text-xs text-[#BDBCB9]">
-                Navigate across all Evmos dApps using our new app launcher!
+                {t("launchPad.description")}
               </p>
             </div>
           )}
-          <div className="grid grid-cols-3 gap-10  px-8 pb-8">
-            {drawItems()}
-          </div>
+          <div className="grid grid-cols-3 gap-10 px-8 pb-8">{drawItems()}</div>
           <Link
             onClick={handleEcosystemButton}
             href={ECOSYSTEM_URL}
@@ -76,7 +74,7 @@ export const LaunchContainer = () => {
             rel="noopener noreferrer"
             className="border-t-darkGray700 text-pearl bg-darkGray2Opacity active:bg-darkGray700 flex justify-center border-t py-5 text-xs transition-all duration-200 ease-in-out hover:bg-[#FFFFFF0F]"
           >
-            View all dApps
+            {t("launchPad.button")}
           </Link>
         </Menu.Items>
       </Transition>
