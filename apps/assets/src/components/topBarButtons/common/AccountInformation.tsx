@@ -3,25 +3,25 @@
 
 import { Tooltip } from "ui-helpers";
 import { AddressesContainer } from "./AddressesContainer";
+import { useTranslation } from "next-i18next";
 import { InformationIcon } from "icons";
 
 export const AccountInformation = () => {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col space-y-2 text-[10px] h-full justify-end">
       <div>
         <div className="flex items-center space-x-1">
-          <h3 className="font-bold">Account information</h3>
+          <h3 className="font-bold">{t("account.information.title")}</h3>
           <Tooltip
             className="min-w-[10rem]"
             element={<InformationIcon width={15} height={15} />}
-            text="The addresses below are the same but in different formats. We provide this information for you to quickly refer to your address in instances like depositing assets into your account."
+            text={t("account.information.tooltip")}
           />
         </div>
       </div>
 
-      <p>
-        Below are your addresses based on the account you&apos;re logged into.
-      </p>
+      <p>{t("account.information.description")}</p>
 
       <AddressesContainer />
     </div>

@@ -8,6 +8,7 @@ import { Dispatch, SetStateAction } from "react";
 import { CLICK_EVMOS_LOGO, useTracker } from "tracker";
 import { CopilotButton, StepsContextProvider, steps } from "copilot";
 import dynamic from "next/dynamic";
+import { useTranslation } from "next-i18next";
 const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
 
 export const StatefulHeader = () => {
@@ -16,12 +17,13 @@ export const StatefulHeader = () => {
 
   const { handlePreClickAction } = useTracker(CLICK_EVMOS_LOGO);
   const { evmosPriceFixed } = useAssets();
+  const { t } = useTranslation();
   return (
     <StepsContextProvider steps={steps}>
       <>
         <Copilot />
         <Header
-          pageName="Portfolio"
+          pageName={t("appTitle")}
           walletConnectionButton={
             <WalletConnection
               copilotModal={({

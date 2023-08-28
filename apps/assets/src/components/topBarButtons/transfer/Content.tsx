@@ -6,9 +6,11 @@ import { useState } from "react";
 import { DepositContainer } from "./DepositContainer";
 import { Subtitle, Tabs } from "ui-helpers";
 import { TRANSFER_TYPES } from "./utils";
+import { useTranslation } from "next-i18next";
 
 export const Content = () => {
   const [transferType, setTransferType] = useState(TRANSFER_TYPES.DEPOSIT);
+  const { t } = useTranslation();
 
   function renderScreen() {
     if (transferType === TRANSFER_TYPES.DEPOSIT) {
@@ -37,7 +39,7 @@ export const Content = () => {
 
   return (
     <section className="space-y-3">
-      <Subtitle>Transfer Type</Subtitle>
+      <Subtitle>{t("transfer.subtitle")}</Subtitle>
       <Tabs tabsProps={transferTabs} />
       <div className="pt-7">{renderScreen()}</div>
     </section>

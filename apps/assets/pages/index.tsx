@@ -14,13 +14,22 @@ import {
 
 import { Container, MavaWidget, TermOfServices } from "ui-helpers";
 import { Provider, useDispatch, useSelector } from "react-redux";
-
 import { StatefulHeader } from "../src/StatefulHeader";
 import { HeadComponent } from "../src/components/asset/HeadComponent";
 import { GoogleAnalytics } from "../src/components/asset/GoogleAnalytics";
 import { StatefulFooter } from "../src/StatefulFooter";
 import { MixpanelProvider } from "tracker";
 import { GiveFeedback } from "../src/GiveFeedback";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common", "home"])),
+      // Will be passed to the page component as props
+    },
+  };
+}
 
 function SnackbarsInternal() {
   const valueRedux = useSelector((state: StoreType) => getAllSnackbars(state));

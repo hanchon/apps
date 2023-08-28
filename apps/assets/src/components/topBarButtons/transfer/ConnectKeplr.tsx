@@ -6,6 +6,7 @@ import { Progress, WizardHelper } from "ui-helpers";
 import { stepsSetAccountKeplr } from "./utils";
 import { GroupStateI } from "ui-helpers/src/progress/types";
 import { Dispatch, SetStateAction } from "react";
+import { useTranslation } from "next-i18next";
 
 export const ConnectKeplr = ({
   groupState,
@@ -14,12 +15,15 @@ export const ConnectKeplr = ({
   groupState: GroupStateI[];
   setGroupState: Dispatch<SetStateAction<GroupStateI[]>>;
 }) => {
+  const { t } = useTranslation();
   return (
     <div>
       <WizardHelper icon={<KeplrIcon />}>
         <>
-          <h1 className="font-bold">Keplr is required</h1>
-          <h2>Depositing assets can only be done with the Keplr extension.</h2>
+          <h1 className="font-bold">
+            {t("transfer.deposit.keplr.error.title")}
+          </h1>
+          <h2>{t("transfer.deposit.keplr.error.description")}</h2>
         </>
       </WizardHelper>
       <Progress

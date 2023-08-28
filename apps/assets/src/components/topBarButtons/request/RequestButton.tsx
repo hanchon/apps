@@ -7,6 +7,7 @@ import { ModalWithTransitions, PrimaryButton } from "ui-helpers";
 import { useAccount } from "wagmi";
 import { CancelModalRequest } from "./CloseModal";
 import { RequestModal } from "./Modal";
+import { useTranslation } from "next-i18next";
 
 export const RequestButton = () => {
   const handleOnClick = () => {
@@ -17,7 +18,7 @@ export const RequestButton = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [showCloseModal, setShowCloseModal] = useState(false);
-
+  const { t } = useTranslation();
   return (
     <>
       <CancelModalRequest
@@ -34,7 +35,7 @@ export const RequestButton = () => {
         onClick={handleOnClick}
       >
         {/* add i18 */}
-        <p>Request</p>
+        <p>{t("request.button")}</p>
       </PrimaryButton>
       <ModalWithTransitions
         show={showModal}
