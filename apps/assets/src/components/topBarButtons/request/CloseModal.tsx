@@ -1,6 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+import { useTranslation } from "next-i18next";
 import { Dispatch, SetStateAction } from "react";
 import { CloseModal, ModalWithTransitions } from "ui-helpers";
 
@@ -22,13 +23,14 @@ export const CancelModalRequest = ({
     setShowModal(false);
   };
 
+  const { t } = useTranslation();
   return (
     <ModalWithTransitions show={showCloseModal} setShow={setShowCloseModal}>
       <CloseModal
         handleReject={handleReject}
         handleAccept={handleAccept}
-        description="You started a request process. Do you really want to exit from the process?"
-        title="Cancel Request?"
+        description={t("request.modal.close.text")}
+        title={t("request.modal.close.title")}
       />
     </ModalWithTransitions>
   );

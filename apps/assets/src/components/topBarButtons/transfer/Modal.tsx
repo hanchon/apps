@@ -4,14 +4,16 @@
 import { IntroductionModal, ModalContainer } from "ui-helpers";
 import { Content } from "./Content";
 import { AccountInformation } from "../common/AccountInformation";
+import { useTranslation } from "next-i18next";
 
 export const TransferModal = () => {
+  const { t } = useTranslation();
   return (
     <ModalContainer
       introduction={
         <IntroductionModal
-          title="Transfer Assets"
-          description="Deposit and send assets to any account on any chain."
+          title={t("transfer.modal.title")}
+          description={t("transfer.modal.description")}
           content={<AccountInformation />}
         />
       }

@@ -8,6 +8,7 @@ import { TransferModal } from "./Modal";
 import { getTransferModalState } from "./utils";
 import { useAccount } from "wagmi";
 import { CancelModalTransfer } from "./CloseModal";
+import { useTranslation } from "next-i18next";
 
 export const TransferButton = () => {
   const handleOnClick = () => {
@@ -24,6 +25,8 @@ export const TransferButton = () => {
       setShowModal(true);
     }
   }, [setShowModal]);
+
+  const { t } = useTranslation();
   return (
     <>
       <CancelModalTransfer
@@ -40,7 +43,7 @@ export const TransferButton = () => {
         onClick={handleOnClick}
       >
         {/* // add i18 */}
-        <p>Transfer</p>
+        <p>{t("transfer.button")}</p>
       </PrimaryButton>
       <ModalWithTransitions
         show={showModal}
