@@ -3,7 +3,12 @@
 
 import { Dispatch } from "react";
 
-import { KeplrIcon, MetamaskIcon, WalletConnectIcon } from "icons";
+import {
+  EvmosRedIcon,
+  KeplrIcon,
+  MetamaskIcon,
+  WalletConnectIcon,
+} from "icons";
 import ButtonWallet from "../wallet/ButtonWallet";
 import {
   CLICK_CONNECTED_WITH,
@@ -34,7 +39,13 @@ const providers = [
     id: "walletConnect",
     icon: <WalletConnectIcon />,
   },
+  {
+    label: "Evmos Safe",
+    id: "safe",
+    icon: <EvmosRedIcon />,
+  },
 ] as const;
+
 export const ConnectToEvmosWallets = ({
   setShow,
   copilotModal,
