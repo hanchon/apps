@@ -42,5 +42,8 @@ export const ICONS_TYPES = {
   CHECK: "CHECK",
   CANCEL: "CANCEL",
   CONFETTI: "CONFETTI",
+  BIG_CONFETTI: "BIG_CONFETTI",
+  BIG_HANDS: "BIG_HANDS",
 };
 export const CONFETTI = "🎉";
+export const HANDS = "👏";

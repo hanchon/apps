@@ -1,6 +1,9 @@
 import { CheckIcon, CloseBorderIcon } from "icons";
 import { ComponentProps } from "react";
-import { CONFETTI, ICONS_TYPES } from "constants-helper";
+import { CONFETTI, HANDS, ICONS_TYPES } from "constants-helper";
+
+const BIG_ICONS_STYLE =
+  "border-lightYellow2 bg-lightYellow2 mb-4 h-56 w-56 border text-9xl";
 
 const ICONS_STYLES = {
   [ICONS_TYPES.CHECK]: {
@@ -15,6 +18,14 @@ const ICONS_STYLES = {
     style:
       "border-lightYellow3 bg-lightYellow3 relative top-1 h-5 w-5  border p-4",
     icon: CONFETTI,
+  },
+  [ICONS_TYPES.BIG_CONFETTI]: {
+    style: BIG_ICONS_STYLE,
+    icon: CONFETTI,
+  },
+  [ICONS_TYPES.BIG_HANDS]: {
+    style: BIG_ICONS_STYLE,
+    icon: HANDS,
   },
 };
 
