@@ -38,3 +38,9 @@ export const STEP_STATUS = {
 };
 export const METAMASK_DOWNLOAD_URL = "https://metamask.io/download/";
 export const KEPLR_DOWNLOAD_URL = "https://www.keplr.app/download";
+export const ICONS_TYPES = {
+  CHECK: "CHECK",
+  CANCEL: "CANCEL",
+  CONFETTI: "CONFETTI",
+};
+export const CONFETTI = "🎉";

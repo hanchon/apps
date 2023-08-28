@@ -27,3 +27,5 @@ export { MAVA_WIDGET_URL } from "./constants";
 export { STEP_STATUS } from "./constants";
 export { METAMASK_DOWNLOAD_URL } from "./constants";
 export { KEPLR_DOWNLOAD_URL } from "./constants";
+export { ICONS_TYPES } from "./constants";
+export { CONFETTI } from "./constants";

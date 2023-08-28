@@ -1,9 +1,9 @@
-export const Confetti = "🎉";
+import { CONFETTI } from "constants-helper";
 
 export const ConfettiEmoji = () => {
   return (
     <span role="img" aria-label="Confetti icon">
-      {Confetti}
+      {CONFETTI}
     </span>
   );
 };

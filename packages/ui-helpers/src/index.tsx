@@ -50,3 +50,5 @@ export { IntroductionModal } from "./modal/Introduction";
 export { Input } from "./modal/Input";
 export { TokenCard } from "./modal/TokenCard";
 export { TextBox } from "./modal/TextBox";
+export { ErrorContainer } from "./modal/ErrorContainer";
+export { IconContainer } from "./IconContainer";

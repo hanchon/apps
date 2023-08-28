@@ -14,6 +14,7 @@ const config = {
       colors: {
         pearl: "#faf1e4",
         pearl1: "#FAF8F8",
+        pearl2: "#FEF2F2",
         darkPearl: "#dad2c7",
         darkGray1: "#0b0a09",
         darkGray2: "#2D2925",
@@ -27,8 +28,8 @@ const config = {
         darkGray900: "#16110D",
         skinTan: "#F5E8D4",
         red: "#ed4e33",
-        red1: "#AA2912",
-        red2: "#6b1c0e",
+        red1: "#B91C1C",
+        red2: "#991B1B",
         green: "#97ad11",
         gray: "#F0EEEC",
         gray2: "#858B97",
