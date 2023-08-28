@@ -24,6 +24,8 @@ export const generateVestingSchedule = (
   const start = dayjs(startDate);
   const fullAmountAtto = convertToAtto(fullAmount);
   const endDate = start.add(
+    //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     ...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[fullVestingPeriod],
   );
   let vestingPeriods = generatePeriods(
@@ -36,6 +38,8 @@ export const generateVestingSchedule = (
   if (vestingCliff !== TimeWindow["none"]) {
     vestingPeriods = applyCliff(
       start
+        //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
         .add(...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[vestingCliff])
         .diff(start, "second"),
       vestingPeriods,
@@ -56,6 +60,8 @@ export const generateVestingSchedule = (
                 },
               ],
               length: start
+                //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-ignore
                 .add(...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[lockingPeriod])
                 .diff(start, "seconds"),
             },

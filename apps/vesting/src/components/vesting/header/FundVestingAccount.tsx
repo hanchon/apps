@@ -31,13 +31,14 @@ import {
 } from "../../../internal/helpers/types";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { Dayjs } from "dayjs";
+import { BigNumber } from "@ethersproject/bignumber";
 
-export const CreateAccountModal = () => {
+export const FundVestingAccount = () => {
   const [disabled, setDisabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
 
-  const { createClawbackVestingAccount } = useVestingPrecompile();
+  const { fundVestingAccount } = useVestingPrecompile();
 
   const handleOnClick = async (d: FieldValues) => {
     try {
@@ -46,7 +47,7 @@ export const CreateAccountModal = () => {
       const { lockupPeriods, vestingPeriods, startTime } =
         generateVestingSchedule(
           d.startDate as Dayjs,
-          d.amount as string,
+          BigNumber.from(d.amount),
           "atevmos",
           {
             fullVestingPeriod: d.vestingDuration as TimeWindow,
@@ -56,13 +57,12 @@ export const CreateAccountModal = () => {
           },
         );
 
-      const res = await createClawbackVestingAccount(
+      const res = await fundVestingAccount(
         wallet.evmosAddressEthFormat,
         d.address as string,
         startTime,
         lockupPeriods,
         vestingPeriods,
-        true,
       );
 
       dispatch(
@@ -80,6 +80,7 @@ export const CreateAccountModal = () => {
       setDisabled(false);
     } catch (e) {
       // TODO: Add Sentry here!
+      setDisabled(false);
       dispatch(
         addSnackbar({
           id: 0,

@@ -81,6 +81,23 @@ export const dummyProps = {
   available: "2000450.52",
 };
 
+export const enableAccountSchema = z.object({
+  address: z
+    .string()
+    .min(1, { message: "Required" })
+    .and(
+      z
+        .string()
+        .refine(
+          (value: string) =>
+            value.startsWith("evmos") || value.startsWith("0x"),
+          {
+            message: "Address must start with 'evmos' or '0x'",
+          },
+        ),
+    ),
+});
+
 export const schema = z.object({
   address: z
     .string()
