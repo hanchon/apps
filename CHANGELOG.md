@@ -37,6 +37,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 ## Unreleased
 
 - (fix) apps/assets 1.0.26 | packages/evmos-wallet 1.0.16 | Fix erc20 convert issue
+- (fix) apps/copilot 1.0.6 | Fixing copilot wallet connection issue
 
 ## 1.2.1 - 2023-08-23
 
