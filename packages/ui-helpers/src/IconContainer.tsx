@@ -1,6 +1,6 @@
 import { CheckIcon, CloseBorderIcon } from "icons";
 import { ComponentProps } from "react";
-import { CONFETTI, HANDS, ICONS_TYPES } from "constants-helper";
+import { EMOJIS, ICONS_TYPES } from "constants-helper";
 
 const BIG_ICONS_STYLE =
   "border-lightYellow2 bg-lightYellow2 mb-4 h-56 w-56 border text-9xl";
@@ -17,15 +17,31 @@ const ICONS_STYLES = {
   [ICONS_TYPES.CONFETTI]: {
     style:
       "border-lightYellow3 bg-lightYellow3 relative top-1 h-5 w-5  border p-4",
-    icon: CONFETTI,
+    icon: EMOJIS.CONFETTI,
   },
   [ICONS_TYPES.BIG_CONFETTI]: {
     style: BIG_ICONS_STYLE,
-    icon: CONFETTI,
+    icon: EMOJIS.CONFETTI,
   },
   [ICONS_TYPES.BIG_HANDS]: {
     style: BIG_ICONS_STYLE,
-    icon: HANDS,
+    icon: EMOJIS.HANDS,
+  },
+  [ICONS_TYPES.DOLLAR_BAG]: {
+    style: BIG_ICONS_STYLE,
+    icon: EMOJIS.DOLLAR_BAG,
+  },
+  [ICONS_TYPES.DOLLAR_WITH_WINGS]: {
+    style: BIG_ICONS_STYLE,
+    icon: EMOJIS.DOLLAR_WITH_WINGS,
+  },
+  [ICONS_TYPES.KEY]: {
+    style: BIG_ICONS_STYLE,
+    icon: EMOJIS.KEY,
+  },
+  [ICONS_TYPES.SHRUG]: {
+    style: BIG_ICONS_STYLE,
+    icon: EMOJIS.SHRUG,
   },
 };
 

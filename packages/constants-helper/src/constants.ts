@@ -44,6 +44,17 @@ export const ICONS_TYPES = {
   CONFETTI: "CONFETTI",
   BIG_CONFETTI: "BIG_CONFETTI",
   BIG_HANDS: "BIG_HANDS",
+  DOLLAR_BAG: "DOLLAR_BAG",
+  DOLLAR_WITH_WINGS: "DOLLAR_WITH_WINGS",
+  KEY: "KEY",
+  SHRUG: "SHRUG",
 };
-export const CONFETTI = "🎉";
-export const HANDS = "👏";
+
+export const EMOJIS = {
+  CONFETTI: "🎉",
+  HANDS: "👏",
+  DOLLAR_BAG: "💰",
+  DOLLAR_WITH_WINGS: "💸",
+  KEY: "🔑",
+  SHRUG: "🤷",
+};
