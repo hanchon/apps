@@ -8,11 +8,7 @@ const VESTING_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000803";
 
 import { Contract, ContractInterface } from "@ethersproject/contracts";
 
-async function createContract(
-  address: string,
-  ABI: ContractInterface,
-  walletExtension: string
-) {
+async function createContract(address: string, ABI: ContractInterface) {
   const provider = new Web3Provider(window.ethereum);
   if (!address || !ABI) return null;
   try {
@@ -26,21 +22,23 @@ async function createContract(
 }
 
 export function useVestingPrecompile() {
-  const {address} = useAccount()
+  const { address } = useAccount();
 
   async function createClawbackVestingAccount(
     funderAddress: string,
     vestingAddress: string,
     enableGovClawback: boolean
   ) {
-
     const contract = await createContract(
       VESTING_CONTRACT_ADDRESS,
       VestingABI,
       "metamask"
     );
-    return await (contract).createClawbackVestingAccount(funderAddress,vestingAddress, enableGovClawback);
-
+    return await contract.createClawbackVestingAccount(
+      funderAddress,
+      vestingAddress,
+      enableGovClawback
+    );
 
     // return await writeContract({
     //   address: VESTING_CONTRACT_ADDRESS,
@@ -55,15 +53,14 @@ export function useVestingPrecompile() {
     //   ],
     // });
   }
-  
+
   async function fundVestingAccount(
     funderAddress: string,
     vestingAddress: string,
     startTime: number,
     lockupPeriods: Period[],
-    vestingPeriods: Period[],
+    vestingPeriods: Period[]
   ) {
-
     const { request } = await prepareWriteContract({
       address: VESTING_CONTRACT_ADDRESS,
       abi: VestingABI,
@@ -84,7 +81,7 @@ export function useVestingPrecompile() {
   async function clawback(
     founderAddress: string,
     accountAddress: string,
-    destinationAddress: string,
+    destinationAddress: string
   ) {
     const { request } = await prepareWriteContract({
       address: VESTING_CONTRACT_ADDRESS,

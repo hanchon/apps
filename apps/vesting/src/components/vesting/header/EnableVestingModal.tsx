@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  DEFAULT_FORM_VALUES,
   enableAccountSchema,
   setVestingAccountNameLocalstorage,
 } from "../helpers";
@@ -21,7 +20,7 @@ import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 
 export const EnableVestingModal = () => {
   const [disabled, setDisabled] = useState(false);
-  const [govClawbackEnabled, setGovClawbackEnabled] = useState(false)
+  const [govClawbackEnabled, setGovClawbackEnabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
   const { createClawbackVestingAccount } = useVestingPrecompile();
@@ -46,11 +45,11 @@ export const EnableVestingModal = () => {
             explorerTxUrl: "www.mintscan.io/evmos/txs/",
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        }),
+        })
       );
       setDisabled(false);
     } catch (e) {
-      console.log("errored", e)
+      console.log("errored", e);
       setDisabled(false);
       // TODO: Add Sentry here!
       dispatch(
@@ -61,14 +60,14 @@ export const EnableVestingModal = () => {
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        }),
+        })
       );
     }
 
     if (d.accountName !== "") {
       setVestingAccountNameLocalstorage(
         d.address as string,
-        d.accountName as string,
+        d.accountName as string
       );
     }
   };
@@ -86,14 +85,12 @@ export const EnableVestingModal = () => {
       <ModalTitle title="Enable Vesting" />
 
       <form
-        onSubmit={handleSubmit((d) => {
+        onSubmit={handleSubmit(async (d) => {
           console.log(d);
-          handleOnClick(d).then(() => { });
+          await handleOnClick(d).then(() => {});
         })}
         className="flex flex-col space-y-3"
       >
-
-
         <label htmlFor="address" className="text-xs font-bold">
           ADDRESS
         </label>
@@ -112,7 +109,10 @@ export const EnableVestingModal = () => {
           <span className="flex gap-1">
             Clawback through governance <p className="font-bold">disallowed</p>
           </span>
-          <Toggle enabled={govClawbackEnabled} setEnabled={setGovClawbackEnabled} />
+          <Toggle
+            enabled={govClawbackEnabled}
+            setEnabled={setGovClawbackEnabled}
+          />
         </div>
 
         <input

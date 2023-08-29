@@ -16,7 +16,7 @@ export const generateVestingSchedule = (
     vestingInterval,
     vestingCliff,
     lockingPeriod,
-  }: VestingSchedule,
+  }: VestingSchedule
 ): Pick<
   MessageMsgCreateClawbackVestingAccount,
   "startTime" | "vestingPeriods" | "lockupPeriods"
@@ -25,14 +25,14 @@ export const generateVestingSchedule = (
   const fullAmountAtto = convertToAtto(fullAmount);
   const endDate = start.add(
     //@ts-ignore
-    ...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[fullVestingPeriod],
+    ...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[fullVestingPeriod]
   );
   let vestingPeriods = generatePeriods(
     start,
     endDate,
     vestingInterval,
     fullAmountAtto,
-    coinDenom,
+    coinDenom
   );
   if (vestingCliff !== TimeWindow["none"]) {
     vestingPeriods = applyCliff(
@@ -40,7 +40,7 @@ export const generateVestingSchedule = (
         //@ts-ignore
         .add(...TIME_WINDOWS_TO_DAYJS_PARAMS_MAP[vestingCliff])
         .diff(start, "second"),
-      vestingPeriods,
+      vestingPeriods
     );
   }
   return {
