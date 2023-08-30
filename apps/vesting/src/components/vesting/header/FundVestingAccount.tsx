@@ -185,6 +185,9 @@ export const FundVestingAccount = () => {
             onChange={(e: string) => {
               setValue("vestingCliff", e as TimeWindow);
             }}
+            tooltip={{
+              description: t("vesting.fund.cliff.tooltip.description"),
+            }}
           />
         </div>
 
@@ -208,6 +211,9 @@ export const FundVestingAccount = () => {
             disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
             onChange={(e: string) => {
               setValue("lockupDuration", e as TimeWindow);
+            }}
+            tooltip={{
+              description: t("vesting.fund.lockup.tooltip.description"),
             }}
           />
         </div>

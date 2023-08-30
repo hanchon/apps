@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, DropdownArrow } from "icons";
 
+import { Label } from "./Label";
+
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(" ");
 }
@@ -13,6 +15,9 @@ type SelectMenuProps = {
   onChange?: (e: string) => void;
   id: string;
   disabled?: boolean;
+  tooltip?: {
+    description: string;
+  };
 };
 
 export const SelectMenu = ({
@@ -22,14 +27,15 @@ export const SelectMenu = ({
   onChange,
   id,
   disabled,
+  tooltip,
 }: SelectMenuProps) => {
   return (
     <Listbox value={selected} onChange={onChange}>
       {({ open }) => (
         <div className="flex w-full flex-col space-y-2">
-          <Listbox.Label className="text-xs font-bold" htmlFor={id}>
+          <Label id={id} tooltip={tooltip}>
             {label}
-          </Listbox.Label>
+          </Label>
           <div className="relative mt-2" id={id}>
             <Listbox.Button
               className={`cursor-pointer textBoxStyle

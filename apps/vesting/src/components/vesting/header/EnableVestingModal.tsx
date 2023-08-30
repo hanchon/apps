@@ -1,4 +1,4 @@
-import { ModalTitle, Toggle } from "ui-helpers";
+import { ErrorMessage, Label, ModalTitle, Toggle } from "ui-helpers";
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -92,19 +92,22 @@ export const EnableVestingModal = () => {
         })}
         className="flex flex-col space-y-3"
       >
-        <label htmlFor="address" className="text-xs font-bold">
-          {t("enable.modal.address.title")}
-        </label>
-        <input id="address" {...register("address")} />
+        <Label id="address">{t("enable.modal.address.title")}</Label>
+        <input id="address" {...register("address")} className="textBoxStyle" />
         {errors.address?.message && (
-          <span className="text-xs text-red">
-            {errors.address.message.toString()}
-          </span>
+          <ErrorMessage text={errors.address.message.toString()} />
         )}
-
-        <label htmlFor="address" className="text-xs font-bold">
+        {/* TODO: check if this is the same component as Subtitle in v3 release.  */}
+        <Label
+          id="governanceClawback"
+          tooltip={{
+            description: t(
+              "enable.modal.governance.clawback.tooltip.description"
+            ),
+          }}
+        >
           {t("enable.modal.governance.clawback")}
-        </label>
+        </Label>
 
         <div className="flex text-xs justify-between">
           <p className="flex gap-1">
@@ -123,7 +126,7 @@ export const EnableVestingModal = () => {
           type="submit"
           disabled={disabled}
           style={{ backgroundColor: "#ed4e33" }}
-          className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg font-bold uppercase text-pearl"
+          className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg text-pearl"
           value={t("enable.button.action.title")}
         />
       </form>

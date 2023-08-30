@@ -38,6 +38,7 @@ export { ModalWithTransitions } from "./ModalWithTransitions";
 export { Feedback } from "./Feedback";
 export { MavaWidget } from "./widgets/Mava";
 export { Toggle } from "./Toggle";
-export { SelectMenu } from "./SelectMenu";
+export { SelectMenu } from "./selects/SelectMenu";
+export { Label } from "./selects/Label";
 export { WizardHelper } from "./modal/WizardHelper";
 export { ErrorContainer } from "./modal/ErrorContainer";
