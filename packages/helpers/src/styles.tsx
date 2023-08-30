@@ -3,7 +3,6 @@
 
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits } from "@ethersproject/units";
-import { formatBytes32String } from "@ethersproject/strings";
 
 export type addAssetsType = {
   cosmosBalance: BigNumber;
@@ -425,8 +424,4 @@ export const displayTopBarTooltip = (value: BigNumber) => {
     return false;
   }
   return true;
-};
-
-export const convertTextToBytes = (value: string) => {
-  return formatBytes32String(value);
 };

@@ -16,10 +16,9 @@ const { publicClient } = configureChains(
 export const wagmiConfig = createConfig({
   autoConnect: true,
   connectors: [
-    metamaskConnector,
-    walletConnectConnector,
-    keplrConnector,
-    safeConnector,
+    ...(safeConnector.ready
+      ? [safeConnector]
+      : [metamaskConnector, walletConnectConnector, keplrConnector]),
   ],
   publicClient,
 });

@@ -39,7 +39,6 @@
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",
     "@ethersproject/units": "^5.7.0",
-    "@ethersproject/strings": "^5.7.0",
     "vitest": "^0.34.1"
   }
 }

@@ -28,7 +28,7 @@ export async function signBackendTypedDataTransaction({
     "COULD_NOT_SIGN_TRANSACTION"
   );
 
-  const signature = await signTypedDataMessage(typedData, connector);
+  const signature = await signTypedDataMessage(typedData);
 
   return {
     signature,

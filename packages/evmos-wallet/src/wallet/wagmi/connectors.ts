@@ -23,6 +23,7 @@ export const keplrConnector = new KeplrConnector({
 });
 export const safeConnector = new SafeConnector({
   chains: [evmos],
+  options: { debug: false },
 });
 walletConnectConnector
   .getProvider()
