@@ -24,7 +24,9 @@ export const Header = () => {
           <ConfirmButton
             className="w-fit"
             text="Enable Vesting"
-            onClick={() => { setShowEnableModal(true) }}
+            onClick={() => {
+              setShowEnableModal(true);
+            }}
           />
           <ConfirmButton
             className="w-fit"
@@ -36,9 +38,10 @@ export const Header = () => {
         <SearchVesting />
       </div>
 
-      <Modal show={showEnableModal}
+      <Modal
+        show={showEnableModal}
         onClose={() => {
-          setShowEnableModal(false)
+          setShowEnableModal(false);
         }}
       >
         <EnableVestingModal />

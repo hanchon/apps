@@ -31,6 +31,7 @@ import {
 } from "../../../internal/helpers/types";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { Dayjs } from "dayjs";
+import { BigNumber } from "@ethersproject/bignumber";
 
 export const FundVestingAccount = () => {
   const [disabled, setDisabled] = useState(false);
@@ -46,7 +47,7 @@ export const FundVestingAccount = () => {
       const { lockupPeriods, vestingPeriods, startTime } =
         generateVestingSchedule(
           d.startDate as Dayjs,
-          d.amount as string,
+          BigNumber.from(d.amount),
           "atevmos",
           {
             fullVestingPeriod: d.vestingDuration as TimeWindow,
