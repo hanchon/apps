@@ -1,10 +1,11 @@
 {
   "name": "assets-page",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3002",
     "build": "next build",
+    "build:analyse": "ANALYZE_NEXT_BUNDLE=true next build",
     "start": "next start --port 3002",
     "lint": "eslint . -c eslint.config.mjs",
     "lintunix": "pnpm run lint -- --format unix",
@@ -65,6 +66,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/mixpanel-browser": "2.47.1",
     "dotenv": "^16.3.1",
+    "encoding": "^0.1.13",
     "mixpanel-browser": "^2.47.0",
     "tailwind-config": "workspace:*",
     "vitest": "^0.34.1"

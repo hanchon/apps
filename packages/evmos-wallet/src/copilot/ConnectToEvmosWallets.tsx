@@ -27,17 +27,17 @@ const providers = [
   {
     label: "Keplr",
     id: "keplr",
-    icon: <KeplrIcon />,
+    icon: <KeplrIcon className="h-8 w-auto" />,
   },
   {
     label: "MetaMask",
     id: "metaMask",
-    icon: <MetamaskIcon />,
+    icon: <MetamaskIcon className="h-8 w-auto" />,
   },
   {
     label: "WalletConnect",
     id: "walletConnect",
-    icon: <WalletConnectIcon />,
+    icon: <WalletConnectIcon className="h-8 w-auto" />,
   },
   {
     label: "Evmos Safe",

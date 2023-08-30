@@ -51,8 +51,8 @@ export const apiConvertERC20 = makeApiRequester(
     },
     message: {
       srcChain: params.srcChain.toUpperCase(),
-      sender: params.addressCosmos,
-      receiver: params.addressEth,
+      sender: params.addressEth,
+      receiver: params.addressCosmos,
       amount: params.amount,
       token: params.token,
     },

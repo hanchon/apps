@@ -5,12 +5,17 @@
   "types": "./src/index.ts",
   "type": "module",
   "license": "SEE LICENSE IN LICENSE",
+  "sideEffects": false,
   "scripts": {
     "check-types": "tsc --noEmit",
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest --passWithNoTests",
     "test:coverage": "vitest run --coverage --passWithNoTests",
     "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
   },
   "devDependencies": {
     "@evmos-apps/config": "workspace:*",
@@ -20,7 +25,6 @@
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.20",
     "prettier": "^3.0.1",
-    "react": "^18.2.0",
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0",
     "typescript": "^5.1.6"

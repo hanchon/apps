@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "next build",
+    "build:analyse": "ANALYZE_NEXT_BUNDLE=true next build",
     "start": "next start --port 3001",
     "lint": "eslint . -c eslint.config.mjs",
     "lintunix": "eslint . -c eslint.config.mjs --format unix",
@@ -37,7 +38,7 @@
     "evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
     "icons": "workspace:*",
-    "next": "13.4.16",
+    "next": "13.4.17",
     "playwright-config-custom": "workspace:*",
     "postcss": "^8.4.20",
     "react": "18.2.0",

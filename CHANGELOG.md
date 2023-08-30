@@ -36,7 +36,12 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
-- (fix) fse-738 | apps/governance 1.0.24 | Hide proposals: 160, 161, 162  
+- (fix) apps/assets 1.0.26 | packages/evmos-wallet 1.0.16 | Fix erc20 convert issue
+- (fix) apps/copilot 1.0.6 | Fixing copilot wallet connection issue
+
+## 1.2.1 - 2023-08-23
+
+- (fix) fse-738 | apps/governance 1.0.24 | Hide proposals: 160, 161, 162
 - (ci) | Adding PR review template
 - (chore) | packages/config 1.0.1 | Adding missing headers
 - (chore) fse-735 | apps/assets 1.0.25 apps/governance 1.0.23 apps/mission 1.0.22 apps/staking 1.0.21 apps/vesting 1.0.19 packages/constants-helper 1.0.6 packages/ui-helpers 1.0.14 | Add Mava Widget to all apps.
