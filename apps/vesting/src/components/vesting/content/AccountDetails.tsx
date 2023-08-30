@@ -1,17 +1,13 @@
-import { useSelector } from "react-redux";
-import { BannerMessages, ConfirmButton, Modal, ViewExplorer } from "ui-helpers";
-import { KEPLR_KEY, StoreType } from "evmos-wallet";
+import { BannerMessages, Modal } from "ui-helpers";
 import { useCallback, useState } from "react";
 import { ClawbackModal } from "./modal/ClawbackModal";
 import { getVestingAccountNameLocalstorage } from "../helpers";
 import { useVestingAccounts } from "../../../internal/hooks/useVesting";
-import { useTranslation } from "next-i18next";
+import { AccountContent } from "./modal/AccountContent";
 
 export const AccountDetails = ({ account }: { account?: string }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
-
-  const value = useSelector((state: StoreType) => state.wallet.value);
 
   const { loading, error, vestingDetails } = useVestingAccounts(account);
 
@@ -21,8 +17,6 @@ export const AccountDetails = ({ account }: { account?: string }) => {
       setModalContent(<ClawbackModal vestingDetails={vestingDetails} />);
     }
   }, [vestingDetails]);
-
-  const { t } = useTranslation();
 
   const drawContentVesting = useCallback(() => {
     if (loading) {
@@ -39,49 +33,13 @@ export const AccountDetails = ({ account }: { account?: string }) => {
     );
 
     return (
-      <section className="break-words">
-        <h1 className="text-2xl">{t("vesting.account.details.title")}</h1>
-        <div className="my-5 mr-1 space-y-5 rounded-2xl bg-darkGray2 p-5 font-[IBM] text-sm text-pearl xl:mx-0 ">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg uppercase">
-              {accountName} {t("vesting.account.details.account.name")}
-            </h2>
-            <ConfirmButton
-              text={t("clawback.button.action.title")}
-              onClick={handleClawbackClick}
-              className="w-fit"
-              disabled={
-                !value.active ||
-                value.evmosAddressCosmosFormat !==
-                  vestingDetails.funderAddress ||
-                value.extensionName === KEPLR_KEY
-              }
-            />
-          </div>
-          <div>
-            <h3 className="opacity-60">
-              {t("vesting.account.details.account.address.title")}
-            </h3>
-            <ViewExplorer
-              txHash={vestingDetails.accountAddress}
-              explorerTxUrl="https://www.mintscan.io/evmos/account"
-              text={vestingDetails.accountAddress}
-            />
-          </div>
-          <div>
-            <h3 className="opacity-60">
-              {t("vesting.account.details.funder.address.title")}
-            </h3>
-            <ViewExplorer
-              txHash={vestingDetails.funderAddress}
-              explorerTxUrl="https://www.mintscan.io/evmos/account"
-              text={vestingDetails.funderAddress}
-            />
-          </div>
-        </div>
-      </section>
+      <AccountContent
+        vestingDetails={vestingDetails}
+        accountName={accountName}
+        handleClawbackClick={handleClawbackClick}
+      />
     );
-  }, [error, loading, vestingDetails, handleClawbackClick, value, t]);
+  }, [error, loading, vestingDetails, handleClawbackClick]);
 
   return (
     <>

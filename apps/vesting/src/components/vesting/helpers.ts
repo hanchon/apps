@@ -77,6 +77,7 @@ export const lockup = [
   TimeWindow["1-month"],
 ] as const;
 
+// TODO: use the correct value
 export const dummyProps = {
   available: "2000450.52",
 };
@@ -139,6 +140,7 @@ export const schema = z.object({
   amount: z
     .number({ invalid_type_error: "Required" })
     .min(0)
+    // TODO: use the correct value
     .max(Number(dummyProps.available)),
   planType: z.enum(plans),
   vestingDuration: z.enum(duration),

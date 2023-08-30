@@ -290,6 +290,7 @@ export const FundVestingAccount = () => {
           <span className="font-bold">{t("vesting.fund.amount.title")}</span>
           <span>
             {t("vesting.fund.amount.description")}{" "}
+            {/* // TODO: use the correct value */}
             {formatNumber(dummyProps.available)} EVMOS
           </span>
         </label>

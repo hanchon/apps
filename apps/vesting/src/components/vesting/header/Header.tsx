@@ -21,7 +21,7 @@ export const Header = () => {
   const { t } = useTranslation();
   return (
     <header className="flex w-full flex-col items-center space-y-2 lg:flex-row lg:justify-end lg:space-x-2 lg:space-y-0">
-      <div className="flex w-full justify-between">
+      <div className="flex flex-col md:flex-row w-full justify-between space-y-3 md:space-y-0">
         <div className="flex gap-5">
           <ConfirmButton
             className="w-fit normal-case"

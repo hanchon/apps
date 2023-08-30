@@ -18,7 +18,7 @@ const Content = () => {
 
   const { t } = useTranslation();
   return (
-    <>
+    <div className="px-2 md:px-0">
       {account !== undefined && <Navigation href="/" text={NAV_TO_VESTING} />}
       <Header />
 
@@ -31,7 +31,7 @@ const Content = () => {
           <AccountDetails account={account} />
         )}
       </div>
-    </>
+    </div>
   );
 };
 
