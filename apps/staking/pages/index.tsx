@@ -23,7 +23,7 @@ function SnackbarsInternal() {
 import { StatefulHeader } from "../src/StatefulHeader";
 import { HeadComponent } from "../src/components/staking/HeadComponent";
 import { GoogleAnalytics } from "../src/components/GoogleAnalytics";
-import { StatefulFooter } from "../src/StatefulFooter";
+import { StatefulFooter } from "stateful-components";
 import { GiveFeedback } from "../src/GiveFeedback";
 
 const Content = dynamic(() => import("../src/components/staking/Content"));

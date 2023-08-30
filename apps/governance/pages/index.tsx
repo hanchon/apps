@@ -22,7 +22,7 @@ function SnackbarsInternal() {
 import { StatefulHeader } from "../src/components/StatefulHeader";
 import { HeadComponent } from "../src/components/governance/HeadComponent";
 import { GoogleAnalytics } from "../src/components/GoogleAnalytics";
-import { StatefulFooter } from "../src/components/StatefulFooter";
+import { StatefulFooter } from "stateful-components";
 const Content = dynamic(() => import("../src/components/governance/Content"));
 import { MixpanelProvider } from "tracker";
 import { GiveFeedback } from "../src/components/GiveFeedback";

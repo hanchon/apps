@@ -18,7 +18,7 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { StatefulHeader } from "../src/StatefulHeader";
 import { HeadComponent } from "../src/components/asset/HeadComponent";
 import { GoogleAnalytics } from "../src/components/asset/GoogleAnalytics";
-import { StatefulFooter } from "../src/StatefulFooter";
+import { StatefulFooter } from "stateful-components";
 import { MixpanelProvider } from "tracker";
 import { GiveFeedback } from "../src/GiveFeedback";
 
@@ -52,6 +52,7 @@ export default function Home() {
                       <AssetsTable />
                     </div>
                     <StatefulFooter />
+                    {/* <StatefulFooter /> */}
                   </>
                 </Container>
               </main>

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { StatefulHeader } from "./StatefulHeader";
-import { StatefulFooter } from "./StatefulFooter";
+import { StatefulFooter } from "stateful-components";
 import { ContentDappStore } from "./dappStore/ContentDappStore";
 
 const MainContainer = () => {

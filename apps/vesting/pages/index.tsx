@@ -19,10 +19,9 @@ function SnackbarsInternal() {
   const dispatch = useDispatch();
   return <Snackbars valueRedux={valueRedux} dispatch={dispatch} />;
 }
-import { StatefulHeader } from "../src/components/StatefulHeader";
 import { HeadComponent } from "../src/components/vesting/HeadComponent";
 import { GoogleAnalytics } from "../src/components/GoogleAnalytics";
-import { StatefulFooter } from "../src/components/StatefulFooter";
+import { StatefulFooter } from "stateful-components";
 const Content = dynamic(() => import("../src/components/vesting/Content"));
 import { MixpanelProvider } from "tracker";
 import { GiveFeedback } from "../src/components/GiveFeedback";
@@ -45,7 +44,6 @@ export default function Home() {
                 <Container>
                   <>
                     <SnackbarsInternal />
-                    <StatefulHeader />
                     <MavaWidget />
                     <div className="container mx-auto mb-auto overflow-auto">
                       <Content />
