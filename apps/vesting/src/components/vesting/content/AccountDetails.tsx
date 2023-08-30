@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import { ClawbackModal } from "./modal/ClawbackModal";
 import { getVestingAccountNameLocalstorage } from "../helpers";
 import { useVestingAccounts } from "../../../internal/hooks/useVesting";
+import { useTranslation } from "next-i18next";
 
 export const AccountDetails = ({ account }: { account?: string }) => {
   const [showModal, setShowModal] = useState(false);
@@ -21,6 +22,8 @@ export const AccountDetails = ({ account }: { account?: string }) => {
     }
   }, [vestingDetails]);
 
+  const { t } = useTranslation();
+
   const drawContentVesting = useCallback(() => {
     if (loading) {
       return <BannerMessages text="Loading..." spinner={true} />;
@@ -32,16 +35,19 @@ export const AccountDetails = ({ account }: { account?: string }) => {
       return <BannerMessages text={vestingDetails} />;
     }
     const accountName = getVestingAccountNameLocalstorage(
-      vestingDetails.accountAddress,
+      vestingDetails.accountAddress
     );
+
     return (
       <section className="break-words">
-        <h1 className="text-2xl">Vesting Account Details</h1>
+        <h1 className="text-2xl">{t("vesting.account.details.title")}</h1>
         <div className="my-5 mr-1 space-y-5 rounded-2xl bg-darkGray2 p-5 font-[IBM] text-sm text-pearl xl:mx-0 ">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg uppercase">{accountName} Account</h2>
+            <h2 className="text-lg uppercase">
+              {accountName} {t("vesting.account.details.account.name")}
+            </h2>
             <ConfirmButton
-              text="Clawback"
+              text={t("clawback.button.action.title")}
               onClick={handleClawbackClick}
               className="w-fit"
               disabled={
@@ -53,7 +59,9 @@ export const AccountDetails = ({ account }: { account?: string }) => {
             />
           </div>
           <div>
-            <h3 className="opacity-60">Account Address</h3>
+            <h3 className="opacity-60">
+              {t("vesting.account.details.account.address.title")}
+            </h3>
             <ViewExplorer
               txHash={vestingDetails.accountAddress}
               explorerTxUrl="https://www.mintscan.io/evmos/account"
@@ -61,7 +69,9 @@ export const AccountDetails = ({ account }: { account?: string }) => {
             />
           </div>
           <div>
-            <h3 className="opacity-60">Funder Address</h3>
+            <h3 className="opacity-60">
+              {t("vesting.account.details.funder.address.title")}
+            </h3>
             <ViewExplorer
               txHash={vestingDetails.funderAddress}
               explorerTxUrl="https://www.mintscan.io/evmos/account"
@@ -71,7 +81,7 @@ export const AccountDetails = ({ account }: { account?: string }) => {
         </div>
       </section>
     );
-  }, [error, loading, vestingDetails, handleClawbackClick, value]);
+  }, [error, loading, vestingDetails, handleClawbackClick, value, t]);
 
   return (
     <>

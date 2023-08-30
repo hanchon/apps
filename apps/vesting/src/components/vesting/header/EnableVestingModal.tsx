@@ -17,6 +17,7 @@ import {
 } from "evmos-wallet";
 import { useSelector, useDispatch } from "react-redux";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
+import { useTranslation } from "next-i18next";
 
 export const EnableVestingModal = () => {
   const [disabled, setDisabled] = useState(false);
@@ -80,19 +81,19 @@ export const EnableVestingModal = () => {
     defaultValues: { address: "" },
   });
 
+  const { t } = useTranslation();
   return (
     <div className="space-y-5">
-      <ModalTitle title="Enable Vesting" />
+      <ModalTitle title={t("enable.modal.title")} />
 
       <form
         onSubmit={handleSubmit(async (d) => {
-          console.log(d);
           await handleOnClick(d).then(() => {});
         })}
         className="flex flex-col space-y-3"
       >
         <label htmlFor="address" className="text-xs font-bold">
-          ADDRESS
+          {t("enable.modal.address.title")}
         </label>
         <input id="address" {...register("address")} />
         {errors.address?.message && (
@@ -101,14 +102,17 @@ export const EnableVestingModal = () => {
           </span>
         )}
 
-        <label htmlFor="address" className="text-sm font-bold">
-          GOVERNANCE CLAWBACK
+        <label htmlFor="address" className="text-xs font-bold">
+          {t("enable.modal.governance.clawback")}
         </label>
 
-        <div className="flex text-sm justify-between">
-          <span className="flex gap-1">
-            Clawback through governance <p className="font-bold">disallowed</p>
-          </span>
+        <div className="flex text-xs justify-between">
+          <p className="flex gap-1">
+            {t("enable.modal.toggle.description")}{" "}
+            <span className="font-bold">
+              {t("enable.modal.toggle.description.disabled")}
+            </span>
+          </p>
           <Toggle
             enabled={govClawbackEnabled}
             setEnabled={setGovClawbackEnabled}
@@ -120,7 +124,7 @@ export const EnableVestingModal = () => {
           disabled={disabled}
           style={{ backgroundColor: "#ed4e33" }}
           className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg font-bold uppercase text-pearl"
-          value="Create"
+          value={t("enable.button.action.title")}
         />
       </form>
     </div>

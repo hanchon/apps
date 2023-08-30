@@ -1,4 +1,10 @@
-import { ErrorMessage, ModalTitle, SelectMenu } from "ui-helpers";
+import {
+  // ErrorContainer,
+  ErrorMessage,
+  ModalTitle,
+  SelectMenu,
+  // WizardHelper,
+} from "ui-helpers";
 import React, { useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,6 +36,7 @@ import {
 } from "../../../internal/helpers/types";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { Dayjs } from "dayjs";
+import { useTranslation } from "next-i18next";
 
 export const FundVestingAccount = () => {
   const [disabled, setDisabled] = useState(false);
@@ -121,9 +128,10 @@ export const FundVestingAccount = () => {
     return getEndDate(selectedStartDate, selectedVestingDuration);
   }, [selectedStartDate, selectedVestingDuration]);
 
+  const { t } = useTranslation();
   return (
     <div className="space-y-5">
-      <ModalTitle title="Create Vesting Account" />
+      <ModalTitle title={t("vesting.fund.title")} />
 
       <form
         onSubmit={handleSubmit(async (d) => {
@@ -134,7 +142,7 @@ export const FundVestingAccount = () => {
       >
         <SelectMenu
           selected={selectedPlanType}
-          label="PLAN TYPE"
+          label={t("vesting.fund.plan.title")}
           id="planType"
           options={[PlansType.Custom, PlansType.Team, PlansType.Grantee]}
           onChange={(e: string) => {
@@ -159,7 +167,7 @@ export const FundVestingAccount = () => {
         <div className="flex items-center justify-between space-x-2">
           <SelectMenu
             selected={selectedVestingDuration}
-            label="VESTING DURATION"
+            label={t("vesting.fund.duration.title")}
             id="vestingDuration"
             options={vestingSettingsConfig[selectedPlanType]?.duration}
             disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
@@ -170,7 +178,7 @@ export const FundVestingAccount = () => {
 
           <SelectMenu
             selected={selectedVestingCliff}
-            label="VESTING CLIFF"
+            label={t("vesting.fund.cliff.title")}
             id="vestingCliff"
             options={vestingSettingsConfig[selectedPlanType]?.cliff}
             disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
@@ -183,7 +191,7 @@ export const FundVestingAccount = () => {
         <div className="flex items-center justify-between space-x-2">
           <SelectMenu
             selected={selectedVestingSchedule}
-            label="VESTING SCHEDULE"
+            label={t("vesting.fund.schedule.title")}
             id="vestingSchedule"
             options={vestingSettingsConfig[selectedPlanType]?.schedule}
             disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
@@ -194,7 +202,7 @@ export const FundVestingAccount = () => {
 
           <SelectMenu
             selected={selectedLockup}
-            label="LOCKUP DURATION"
+            label={t("vesting.fund.lockup.title")}
             id="lockupDuration"
             options={vestingSettingsConfig[selectedPlanType]?.lockup}
             disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
@@ -205,13 +213,15 @@ export const FundVestingAccount = () => {
         </div>
         <div className="flex justify-between">
           <label htmlFor="startDate" className="text-xs font-bold">
-            START DATE
+            {t("vesting.fund.start.date.title")}
           </label>
           <div className="text-right text-[10px]">
             {endDate !== undefined && endDate[0] && (
-              <p>END DATE: {endDate[1]}</p>
+              <p>
+                {t("vesting.fund.end.date.title")} {endDate[1]}
+              </p>
             )}
-            <p>(i) The start time will default to 0:00 UTC</p>
+            <p>{t("vesting.fund.end.date.description")}</p>
           </div>
         </div>
         <input
@@ -221,24 +231,45 @@ export const FundVestingAccount = () => {
           className="textBoxStyle"
         />
         {errors.startDate?.message && (
-          <span className="text-xs text-red">
-            {errors.startDate.message.toString()}
-          </span>
+          <ErrorMessage text={errors.startDate.message.toString()} />
         )}
 
         <label htmlFor="address" className="text-xs font-bold">
-          ADDRESS
+          {t("vesting.fund.address.title")}
         </label>
         <input id="address" {...register("address")} className="textBoxStyle" />
         {errors.address?.message && (
           <ErrorMessage text={errors.address.message.toString()} />
         )}
 
+        {/* TODO: show the correct message depending on the address */}
+        {/* <ErrorContainer description={t("enable.error")} />
+
+        <ErrorContainer description={t("fund.create.error")} />
+
+        <ErrorContainer description={t("fund.already.funded.error")} />
+
+        <WizardHelper>
+          <p>
+            {t("fund.alert.governance.clawback")}{" "}
+            <b>{t("fund.alert.governance.clawback.support")}</b>{" "}
+            {t("fund.alert.governance.clawback.description")}
+          </p>
+        </WizardHelper>
+
+        <WizardHelper>
+          <p>
+            {t("fund.alert.governance.clawback")}{" "}
+            <b>{t("fund.alert.governance.clawback.not.support")}</b>{" "}
+            {t("fund.alert.governance.clawback.description")}
+          </p>
+        </WizardHelper> */}
+
         <label
           htmlFor="accountName"
-          className="v flex justify-between text-xs font-bold"
+          className="flex justify-between text-xs font-bold"
         >
-          ACCOUNT NAME
+          {t("vesting.fund.account.name.title")}
         </label>
         <input
           id="accountName"
@@ -250,8 +281,11 @@ export const FundVestingAccount = () => {
         )}
 
         <label htmlFor="amount" className="flex justify-between text-xs">
-          <span className="font-bold">AMOUNT</span>
-          <span>Available: {formatNumber(dummyProps.available)} EVMOS</span>
+          <span className="font-bold">{t("vesting.fund.amount.title")}</span>
+          <span>
+            {t("vesting.fund.amount.description")}{" "}
+            {formatNumber(dummyProps.available)} EVMOS
+          </span>
         </label>
         <input
           type="number"
@@ -267,8 +301,8 @@ export const FundVestingAccount = () => {
           type="submit"
           disabled={disabled}
           style={{ backgroundColor: "#ed4e33" }}
-          className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg font-bold uppercase text-pearl"
-          value="Create"
+          className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg text-pearl"
+          value={t("vesting.fund.button.action.title")}
         />
       </form>
     </div>

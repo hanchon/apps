@@ -14,6 +14,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useVestingPrecompile } from "../../../../internal/useVestingPrecompile";
+import { useTranslation } from "next-i18next";
 
 // TODO: format totalTokens and availableClawback depending on the response
 export const ClawbackModal = ({
@@ -33,7 +34,7 @@ export const ClawbackModal = ({
       const res = await clawback(
         vestingDetails?.funderAddress ?? "",
         vestingDetails?.accountAddress ?? "",
-        vestingDetails?.funderAddress ?? "",
+        vestingDetails?.funderAddress ?? ""
       );
       dispatch(
         addSnackbar({
@@ -45,7 +46,7 @@ export const ClawbackModal = ({
             explorerTxUrl: "www.mintscan.io/evmos/txs/",
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        }),
+        })
       );
       setDisabled(false);
     } catch (e) {
@@ -58,7 +59,7 @@ export const ClawbackModal = ({
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        }),
+        })
       );
     }
   };
@@ -70,38 +71,40 @@ export const ClawbackModal = ({
   const availableClawback = () => {
     return formatNumber(
       convertFromAtto(vestingDetails.originalVestingAmount, 18),
-      6,
+      6
     );
   };
+
+  const { t } = useTranslation();
   return (
     <div className="space-y-5">
-      <ModalTitle title="Clawback Tokens" />
+      <ModalTitle title={t("clawback.title")} />
       <div className=" rounded border-2 border-darkGray2 p-4">
-        Clawback retrieves all unvested tokens from a vesting account.
+        {t("clawback.description")}
       </div>
       <ItemModal
-        title="Account Address"
+        title={t("clawback.info.account.title")}
         description={vestingDetails.accountAddress}
       />
       <ItemModal
-        title="Total Vesting Tokens"
-        description={`${totalTokens()} EVMOS `}
+        title={t("clawback.info.vesting.tokens.title")}
+        description={`${totalTokens()} EVMOS`}
       />
       <ItemModal
-        title="Available for Clawback"
-        description={`${availableClawback()} EVMOS `}
+        title={t("clawback.info.available.title")}
+        description={`${availableClawback()} EVMOS`}
       />
       <div>
         <div className="flex items-center space-x-1 ">
           <ExclamationIcon className="text-red" />
-          <span className="text-lg font-bold">CAUTION</span>
+          <span className="text-lg font-bold">{t("clawback.alert.title")}</span>
         </div>
-        Clawback cannot be undone! Please make sure you want to do this action.
+        {t("clawback.alert.description")}
       </div>
 
       <ConfirmButton
         disabled={disabled}
-        text="Clawback"
+        text={t("clawback.button.action.title")}
         onClick={handleOnClick}
       />
     </div>
