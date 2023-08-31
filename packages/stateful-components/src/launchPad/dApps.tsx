@@ -17,25 +17,25 @@ const getHref = (path: keyof typeof localPorts) => {
 export const launchPadItems = [
   {
     icon: <NutIcon width="40" height="40" />,
-    text: t("launchPad.dApp.title"),
+    text: t("launchPad.dApp.title") as string,
     href: getHref("/"),
     mixpanelId: "dAppStore",
   },
   {
     icon: <CoinIcon width="40" height="40" />,
-    text: t("launchPad.assets.title"),
+    text: t("launchPad.assets.title") as string,
     href: getHref("/assets"),
     mixpanelId: "Assets",
   },
   {
     icon: <CalculatorIcon width="40" height="40" />,
-    text: t("launchPad.staking.title"),
+    text: t("launchPad.staking.title") as string,
     href: getHref("/staking"),
     mixpanelId: "Staking",
   },
   {
     icon: <GovernanceIcon width="40" height="40" />,
-    text: t("launchPad.governance.title"),
+    text: t("launchPad.governance.title") as string,
     href: getHref("/governance"),
     mixpanelId: "Governance",
   },
