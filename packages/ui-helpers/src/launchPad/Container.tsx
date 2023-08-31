@@ -35,7 +35,8 @@ export const LaunchContainer = ({
     <Menu as="div" className="relative inline-block text-left">
       <PingIndicator showPing={showPing}>
         <Menu.Button
-          className=" flex items-center justify-center rounded-full p-2"
+          name="launchpad"
+          className="flex items-center justify-center rounded-full p-2"
           onClick={handlePingIndicator}
         >
           <LaunchIcon
