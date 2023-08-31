@@ -35,7 +35,7 @@ export const LaunchContainer = ({
     <Menu as="div" className="relative inline-block text-left">
       <PingIndicator showPing={showPing}>
         <Menu.Button
-          name="launchpad"
+          aria-label="launchpad"
           className="flex items-center justify-center rounded-full p-2"
           onClick={handlePingIndicator}
         >
@@ -74,7 +74,7 @@ export const LaunchContainer = ({
             href={ECOSYSTEM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="border-t-darkGray700 text-pearl bg-darkGray2Opacity active:bg-darkGray700 flex justify-center border-t py-5 text-xs transition-all duration-200 ease-in-out hover:bg-[#FFFFFF0F]"
+            className="border-t-darkGray700 text-pearl bg-darkGray2Opacity active:bg-darkGray700 flex justify-center border-t py-5 transition-all duration-200 ease-in-out hover:bg-[#FFFFFF0F]"
           >
             {launchPad.button}
           </Link>

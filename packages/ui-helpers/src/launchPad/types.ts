@@ -5,6 +5,7 @@ export type dAppsProps = {
   icon: JSX.Element;
   text: string;
   href: string;
+  mixpanelId: string;
 };
 
 export type LaunchPadProps = {

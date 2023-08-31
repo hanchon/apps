@@ -5,11 +5,12 @@ import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { MixpanelProvider } from "tracker";
 
-describe("Testing Header - mixpanel is not setted", () => {
+describe("Testing Header with mixpanel token", () => {
   vi.mock("mixpanel-browser", () => {
     return {
       default: {
         init: vi.fn(),
+        config: {},
         track: vi.fn(),
       },
     };
@@ -33,10 +34,10 @@ describe("Testing Header - mixpanel is not setted", () => {
     };
   });
 
-  test("should not call mixpanel after clicking on launchPad - dApp Store", async () => {
-    const wrapperWithoutToken = ({ children }: { children: JSX.Element }) => {
+  test("should call mixpanel after clicking on launchPad - dApp Store", async () => {
+    const wrapper = ({ children }: { children: JSX.Element }) => {
       return (
-        <MixpanelProvider token="" config={{ ip: false }}>
+        <MixpanelProvider token="testToken" config={{ ip: false }}>
           {children}
         </MixpanelProvider>
       );
@@ -44,9 +45,7 @@ describe("Testing Header - mixpanel is not setted", () => {
 
     const { getByText, getByRole } = render(
       <StatefulHeader pageName="Portfolio" page="assets" />,
-      {
-        wrapper: wrapperWithoutToken,
-      }
+      { wrapper }
     );
     const element = getByText("Portfolio");
     expect(element).toBeDefined();
@@ -55,7 +54,13 @@ describe("Testing Header - mixpanel is not setted", () => {
     await userEvent.click(launchPadButton);
     const dAppStore = getByText(/dapp store/i);
     expect(dAppStore).toBeDefined();
+    await userEvent.click(dAppStore);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalled();
+    expect(mixpanel.track).toHaveBeenCalledWith(
+      "Click on dApp inside the Launcher",
+      {
+        dApp: "dAppStore",
+      }
+    );
   });
 });
