@@ -1238,6 +1238,9 @@ importers:
 
   packages/stateful-components:
     dependencies:
+      '@reduxjs/toolkit':
+        specifier: ^1.9.5
+        version: 1.9.5(react-redux@8.1.2)(react@18.2.0)
       '@testing-library/react':
         specifier: ^14.0.0
         version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
@@ -1250,9 +1253,12 @@ importers:
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
-      constants-helper:
+      copilot:
         specifier: workspace:*
-        version: link:../constants-helper
+        version: link:../copilot
+      evmos-wallet:
+        specifier: workspace:*
+        version: link:../evmos-wallet
       icons:
         specifier: workspace:*
         version: link:../icons
@@ -1271,6 +1277,9 @@ importers:
       tracker:
         specifier: workspace:*
         version: link:../tracker
+      ui-helpers:
+        specifier: workspace:*
+        version: link:../ui-helpers
       vitest:
         specifier: ^0.34.1
         version: 0.34.1(jsdom@22.1.0)
@@ -1296,6 +1305,12 @@ importers:
       prettier:
         specifier: ^3.0.1
         version: 3.0.1
+      react-redux:
+        specifier: ^8.1.2
+        version: 8.1.2(@types/react-dom@18.0.9)(@types/react@18.0.26)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
+      redux:
+        specifier: ^4.2.1
+        version: 4.2.1
       schummar-translate:
         specifier: ^1.18.0
         version: 1.19.0(@types/react@18.0.26)(react@18.2.0)
@@ -1421,9 +1436,6 @@ importers:
       prettier:
         specifier: ^3.0.1
         version: 3.0.1
-      schummar-translate:
-        specifier: ^1.18.0
-        version: 1.19.0(@types/react@18.0.26)(react@18.2.0)
       tailwind-config:
         specifier: workspace:*
         version: link:../tailwind-config

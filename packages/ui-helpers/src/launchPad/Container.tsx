@@ -4,7 +4,6 @@
 import { LaunchIcon } from "icons";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { launchPadItems } from "./data";
 import { Item } from "./Item";
 import Link from "next/link";
 import { ECOSYSTEM_URL } from "constants-helper";
@@ -12,16 +11,20 @@ import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
 import { PingIndicator } from "../PingIndicator";
 import { Badge } from "../badges/Badge";
 import { usePingIndicator } from "./usePingIndicator";
-import { t } from "../locales/translate";
+import { LaunchPadProps } from "./types";
 
-export const LaunchContainer = () => {
+export const LaunchContainer = ({
+  launchPad,
+}: {
+  launchPad: LaunchPadProps;
+}) => {
   const { handlePreClickAction } = useTracker(CLICK_ON_DAPP_INSIDE_LAUNCHER);
 
   const handleEcosystemButton = () => {
     handlePreClickAction({ OtherActions: "View all dApps" });
   };
   const drawItems = () => {
-    return launchPadItems.map((item, index) => {
+    return launchPad.dApps.map((item, index) => {
       return <Item key={index} itemProps={item} />;
     });
   };
@@ -56,14 +59,12 @@ export const LaunchContainer = () => {
           {showPing && (
             <div className="bg-darkGray700 mx-8 mb-8 cursor-default space-y-1 rounded-lg p-5">
               <div className="flex items-center justify-between">
-                <h1 className="text-xs font-bold">{t("launchPad.title")}</h1>
+                <h1 className="text-xs font-bold">{launchPad.title}</h1>
                 <Badge variant="danger" className="uppercase">
-                  {t("launchPad.badge.text")}
+                  {launchPad.badge}
                 </Badge>
               </div>
-              <p className="text-xs text-[#BDBCB9]">
-                {t("launchPad.description")}
-              </p>
+              <p className="text-xs text-[#BDBCB9]">{launchPad.description}</p>
             </div>
           )}
           <div className="grid grid-cols-3 gap-10 px-8 pb-8">{drawItems()}</div>
@@ -74,7 +75,7 @@ export const LaunchContainer = () => {
             rel="noopener noreferrer"
             className="border-t-darkGray700 text-pearl bg-darkGray2Opacity active:bg-darkGray700 flex justify-center border-t py-5 text-xs transition-all duration-200 ease-in-out hover:bg-[#FFFFFF0F]"
           >
-            {t("launchPad.button")}
+            {launchPad.button}
           </Link>
         </Menu.Items>
       </Transition>

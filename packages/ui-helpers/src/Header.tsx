@@ -5,17 +5,20 @@ import Link from "next/link";
 import { EvmosRedIcon, Logo } from "icons";
 import { EVMOS_PAGE_URL } from "constants-helper";
 import { LaunchContainer } from "./launchPad/Container";
-import { TranslationContextProvider } from "schummar-translate/react";
+import { LaunchPadProps } from "./launchPad/types";
+
 export const Header = ({
   walletConnectionButton,
   onClick,
   price,
   pageName,
+  launchPad,
 }: {
   walletConnectionButton?: JSX.Element;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
   price?: string;
   pageName: string;
+  launchPad: LaunchPadProps;
 }) => {
   return (
     <div className="text-pearl mb-3 flex flex-col md:mx-0 md:h-32 md:flex-row md:items-center md:justify-between">
@@ -37,9 +40,7 @@ export const Header = ({
           <span>{price}</span>
         </div>
         <div className="flex items-center space-x-3">
-          <TranslationContextProvider locale="en">
-            <LaunchContainer />
-          </TranslationContextProvider>
+          <LaunchContainer launchPad={launchPad} />
           {walletConnectionButton}
         </div>
       </div>

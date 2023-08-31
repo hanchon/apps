@@ -21,7 +21,7 @@ function SnackbarsInternal() {
 }
 import { HeadComponent } from "../src/components/vesting/HeadComponent";
 import { GoogleAnalytics } from "../src/components/GoogleAnalytics";
-import { StatefulFooter } from "stateful-components";
+import { StatefulFooter, StatefulHeader } from "stateful-components";
 const Content = dynamic(() => import("../src/components/vesting/Content"));
 import { MixpanelProvider } from "tracker";
 import { GiveFeedback } from "../src/components/GiveFeedback";
@@ -44,6 +44,7 @@ export default function Home() {
                 <Container>
                   <>
                     <SnackbarsInternal />
+                    <StatefulHeader pageName="Vesting" page="vesting" />
                     <MavaWidget />
                     <div className="container mx-auto mb-auto overflow-auto">
                       <Content />

@@ -1,10 +1,5 @@
 import { NutIcon, CoinIcon, CalculatorIcon, GovernanceIcon } from "icons";
-
-export type LaunchPadItemsProps = {
-  icon: JSX.Element;
-  text: string;
-  href: string;
-};
+import { t } from "../locales/translate";
 
 const localPorts = {
   "/": 3004,
@@ -22,22 +17,22 @@ const getHref = (path: keyof typeof localPorts) => {
 export const launchPadItems = [
   {
     icon: <NutIcon width="40" height="40" />,
-    text: "launchPad.dApp.title",
+    text: t("launchPad.dApp.title") as string,
     href: getHref("/"),
   },
   {
     icon: <CoinIcon width="40" height="40" />,
-    text: "launchPad.assets.title",
+    text: t("launchPad.assets.title") as string,
     href: getHref("/assets"),
   },
   {
     icon: <CalculatorIcon width="40" height="40" />,
-    text: "launchPad.staking.title",
+    text: t("launchPad.staking.title") as string,
     href: getHref("/staking"),
   },
   {
     icon: <GovernanceIcon width="40" height="40" />,
-    text: "launchPad.governance.title",
+    text: t("launchPad.governance.title") as string,
     href: getHref("/governance"),
   },
 ];

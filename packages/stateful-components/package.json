@@ -14,12 +14,14 @@
     "lint": "eslint ."
   },
   "peerDependencies": {
-    "constants-helper": "workspace:*",
-    "icons": "workspace:*",
     "next": ">=13",
     "react": ">=18",
     "react-dom": ">=18",
-    "tracker": "workspace:*"
+    "tracker": "workspace:*",
+    "evmos-wallet": "workspace:*",
+    "copilot": "workspace:*",
+    "ui-helpers": "workspace:*",
+    "icons": "workspace:*"
   },
   "devDependencies": {
     "@evmos-apps/config": "workspace:*",
@@ -32,7 +34,9 @@
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0",
     "typescript": "^5.1.6",
-    "schummar-translate": "^1.18.0"
+    "schummar-translate": "^1.18.0",
+    "react-redux": "^8.1.2",
+    "redux": "^4.2.1"
   },
   "dependencies": {
     "@testing-library/react": "^14.0.0",
@@ -40,7 +44,8 @@
     "@types/mixpanel-browser": "2.47.1",
     "clsx": "^2.0.0",
     "mixpanel-browser": "^2.47.0",
-    "vitest": "^0.34.1"
+    "vitest": "^0.34.1",
+    "@reduxjs/toolkit": "^1.9.5"
   },
   "browserslist": [
     "last 3 chrome version",

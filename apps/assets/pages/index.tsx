@@ -3,7 +3,6 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AssetsTable from "../src/components/asset/table/AssetsTable";
-
 import {
   store,
   Snackbars,
@@ -11,11 +10,9 @@ import {
   getAllSnackbars,
   WalletProvider,
 } from "evmos-wallet";
-
 import { Container, MavaWidget, TermOfServices } from "ui-helpers";
 import { Provider, useDispatch, useSelector } from "react-redux";
-
-import { StatefulHeader } from "../src/StatefulHeader";
+import { StatefulHeader } from "stateful-components";
 import { HeadComponent } from "../src/components/asset/HeadComponent";
 import { GoogleAnalytics } from "../src/components/asset/GoogleAnalytics";
 import { StatefulFooter } from "stateful-components";
@@ -46,13 +43,12 @@ export default function Home() {
                 <Container>
                   <>
                     <SnackbarsInternal />
-                    <StatefulHeader />
+                    <StatefulHeader pageName="Portfolio" page="assets" />
                     <MavaWidget />
                     <div className="container mx-auto mb-auto overflow-auto">
                       <AssetsTable />
                     </div>
                     <StatefulFooter />
-                    {/* <StatefulFooter /> */}
                   </>
                 </Container>
               </main>
