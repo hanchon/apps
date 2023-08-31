@@ -1,4 +1,10 @@
-import { ModalTitle } from "ui-helpers";
+import {
+  // ErrorContainer,
+  ErrorMessage,
+  ModalTitle,
+  SelectMenu,
+  // WizardHelper,
+} from "ui-helpers";
 import React, { useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +14,6 @@ import {
   PlansType,
   dummyProps,
   getEndDate,
-  plans,
   schema,
   setVestingAccountNameLocalstorage,
   vestingSettingsConfig,
@@ -31,6 +36,7 @@ import {
 } from "../../../internal/helpers/types";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { Dayjs } from "dayjs";
+import { useTranslation } from "next-i18next";
 import { BigNumber } from "@ethersproject/bignumber";
 
 export const FundVestingAccount = () => {
@@ -54,7 +60,7 @@ export const FundVestingAccount = () => {
             vestingInterval: d.vestingSchedule as Intervals,
             vestingCliff: d.vestingCliff as VestingSchedule["vestingCliff"],
             lockingPeriod: d.lockupDuration as TimeWindow,
-          },
+          }
         );
 
       const res = await fundVestingAccount(
@@ -62,7 +68,7 @@ export const FundVestingAccount = () => {
         d.address as string,
         startTime,
         lockupPeriods,
-        vestingPeriods,
+        vestingPeriods
       );
 
       dispatch(
@@ -75,11 +81,11 @@ export const FundVestingAccount = () => {
             explorerTxUrl: "www.mintscan.io/evmos/txs/",
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        }),
+        })
       );
       setDisabled(false);
     } catch (e) {
-      console.log("catch", e)
+      console.log("catch", e);
       // TODO: Add Sentry here!
       setDisabled(false);
       dispatch(
@@ -90,14 +96,14 @@ export const FundVestingAccount = () => {
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        }),
+        })
       );
     }
 
     if (d.accountName !== "") {
       setVestingAccountNameLocalstorage(
         d.address as string,
-        d.accountName as string,
+        d.accountName as string
       );
     }
   };
@@ -115,192 +121,196 @@ export const FundVestingAccount = () => {
   const selectedPlanType: PlansType = watch("planType");
   const selectedStartDate = watch("startDate");
   const selectedVestingDuration = watch("vestingDuration");
+  const selectedVestingCliff = watch("vestingCliff");
+  const selectedVestingSchedule = watch("vestingSchedule");
+  const selectedLockup = watch("lockupDuration");
 
   const endDate = useMemo(() => {
     return getEndDate(selectedStartDate, selectedVestingDuration);
   }, [selectedStartDate, selectedVestingDuration]);
 
-  const planTypeRegister = register("planType");
+  const { t } = useTranslation();
   return (
     <div className="space-y-5">
-      <ModalTitle title="Create Vesting Account" />
+      <ModalTitle title={t("vesting.fund.title")} />
 
       <form
         onSubmit={handleSubmit(async (d) => {
           console.log(d);
-          await handleOnClick(d).then(() => { });
+          await handleOnClick(d).then(() => {});
         })}
         className="flex flex-col space-y-3"
       >
-        <label htmlFor="planType" className="text-xs font-bold">
-          PLAN TYPE
-        </label>
-        <select
+        <SelectMenu
+          selected={selectedPlanType}
+          label={t("vesting.fund.plan.title")}
           id="planType"
-          {...planTypeRegister}
-          onChange={async (e) => {
-            const planType = e.target.value as "Team" | "Grantee" | "Custom";
-            await planTypeRegister.onChange(e).then(() => { }); // method from hook form register
+          options={[PlansType.Custom, PlansType.Team, PlansType.Grantee]}
+          onChange={(e: string) => {
+            const planType = e as PlansType;
+            setValue("planType", planType);
             setValue(
               "vestingDuration",
-              vestingSettingsConfig[planType].duration[0],
+              vestingSettingsConfig[planType].duration[0]
             );
             setValue("vestingCliff", vestingSettingsConfig[planType].cliff[0]);
             setValue(
               "vestingSchedule",
-              vestingSettingsConfig[planType].schedule[0],
+              vestingSettingsConfig[planType].schedule[0]
             );
             setValue(
               "lockupDuration",
-              vestingSettingsConfig[planType].lockup[0],
+              vestingSettingsConfig[planType].lockup[0]
             );
           }}
-        >
-          {plans.map((elt) => (
-            <option key={elt} value={elt}>
-              {elt}
-            </option>
-          ))}
-        </select>
+        />
 
         <div className="flex items-center justify-between space-x-2">
-          <div className="flex w-full flex-col space-y-2">
-            <label htmlFor="vestingDuration" className="text-xs font-bold">
-              VESTING DURATION
-            </label>
+          <SelectMenu
+            selected={selectedVestingDuration}
+            label={t("vesting.fund.duration.title")}
+            id="vestingDuration"
+            options={vestingSettingsConfig[selectedPlanType]?.duration}
+            disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
+            onChange={(e: string) => {
+              setValue("vestingDuration", e as TimeWindow);
+            }}
+          />
 
-            <select
-              id="vestingDuration"
-              {...register("vestingDuration")}
-              disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
-              value={selectedVestingDuration}
-            >
-              {vestingSettingsConfig[selectedPlanType]?.duration.map((elt) => (
-                <option key={elt} value={elt}>
-                  {elt}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="flex  w-full  flex-col space-y-2">
-            <label htmlFor="vestingCliff" className="text-xs font-bold">
-              VESTING CLIFF
-            </label>
-
-            <select
-              id="vestingCliff"
-              {...register("vestingCliff")}
-              disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
-            >
-              {vestingSettingsConfig[selectedPlanType]?.cliff.map((elt) => (
-                <option key={elt} value={elt}>
-                  {elt}
-                </option>
-              ))}
-            </select>
-          </div>
+          <SelectMenu
+            selected={selectedVestingCliff}
+            label={t("vesting.fund.cliff.title")}
+            id="vestingCliff"
+            options={vestingSettingsConfig[selectedPlanType]?.cliff}
+            disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
+            onChange={(e: string) => {
+              setValue("vestingCliff", e as TimeWindow);
+            }}
+            tooltip={{
+              description: t("vesting.fund.cliff.tooltip.description"),
+            }}
+          />
         </div>
 
         <div className="flex items-center justify-between space-x-2">
-          <div className="flex  w-full  flex-col space-y-2">
-            <label htmlFor="vestingSchedule" className="text-xs font-bold">
-              VESTING SCHEDULE
-            </label>
+          <SelectMenu
+            selected={selectedVestingSchedule}
+            label={t("vesting.fund.schedule.title")}
+            id="vestingSchedule"
+            options={vestingSettingsConfig[selectedPlanType]?.schedule}
+            disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
+            onChange={(e: string) => {
+              setValue("vestingSchedule", e as Intervals);
+            }}
+          />
 
-            <select
-              id="vestingSchedule"
-              {...register("vestingSchedule")}
-              disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
-            >
-              {vestingSettingsConfig[selectedPlanType]?.schedule.map((elt) => (
-                <option key={elt} value={elt}>
-                  {elt}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="flex  w-full  flex-col space-y-2">
-            <label htmlFor="lockupDuration" className="text-xs font-bold">
-              LOCKUP DURATION
-            </label>
-
-            <select
-              id="lockupDuration"
-              {...register("lockupDuration")}
-              disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
-            >
-              {vestingSettingsConfig[selectedPlanType]?.lockup.map((elt) => (
-                <option key={elt} value={elt}>
-                  {elt}
-                </option>
-              ))}
-            </select>
-          </div>
+          <SelectMenu
+            selected={selectedLockup}
+            label={t("vesting.fund.lockup.title")}
+            id="lockupDuration"
+            options={vestingSettingsConfig[selectedPlanType]?.lockup}
+            disabled={vestingSettingsConfig[selectedPlanType]?.disabled}
+            onChange={(e: string) => {
+              setValue("lockupDuration", e as TimeWindow);
+            }}
+            tooltip={{
+              description: t("vesting.fund.lockup.tooltip.description"),
+            }}
+          />
         </div>
         <div className="flex justify-between">
           <label htmlFor="startDate" className="text-xs font-bold">
-            START DATE
+            {t("vesting.fund.start.date.title")}
           </label>
           <div className="text-right text-[10px]">
             {endDate !== undefined && endDate[0] && (
-              <p>END DATE: {endDate[1]}</p>
+              <p>
+                {t("vesting.fund.end.date.title")} {endDate[1]}
+              </p>
             )}
-            <p>(i) The start time will default to 0:00 UTC</p>
+            <p>{t("vesting.fund.end.date.description")}</p>
           </div>
         </div>
-        <input id="startDate" type="date" {...register("startDate")} />
+        <input
+          id="startDate"
+          type="date"
+          {...register("startDate")}
+          className="textBoxStyle"
+        />
         {errors.startDate?.message && (
-          <span className="text-xs text-red">
-            {errors.startDate.message.toString()}
-          </span>
+          <ErrorMessage text={errors.startDate.message.toString()} />
         )}
 
         <label htmlFor="address" className="text-xs font-bold">
-          ADDRESS
+          {t("vesting.fund.address.title")}
         </label>
-        <input id="address" {...register("address")} />
+        <input id="address" {...register("address")} className="textBoxStyle" />
         {errors.address?.message && (
-          <span className="text-xs text-red">
-            {errors.address.message.toString()}
-          </span>
+          <ErrorMessage text={errors.address.message.toString()} />
         )}
+
+        {/* TODO: show the correct message depending on the address */}
+        {/* <ErrorContainer description={t("enable.error")} />
+
+        <ErrorContainer description={t("fund.create.error")} />
+
+        <ErrorContainer description={t("fund.already.funded.error")} />
+
+        <WizardHelper>
+          <p>
+            {t("fund.alert.governance.clawback")}{" "}
+            <b>{t("fund.alert.governance.clawback.support")}</b>{" "}
+            {t("fund.alert.governance.clawback.description")}
+          </p>
+        </WizardHelper>
+
+        <WizardHelper>
+          <p>
+            {t("fund.alert.governance.clawback")}{" "}
+            <b>{t("fund.alert.governance.clawback.not.support")}</b>{" "}
+            {t("fund.alert.governance.clawback.description")}
+          </p>
+        </WizardHelper> */}
 
         <label
           htmlFor="accountName"
-          className="v flex justify-between text-xs font-bold"
+          className="flex justify-between text-xs font-bold"
         >
-          ACCOUNT NAME
+          {t("vesting.fund.account.name.title")}
         </label>
-        <input id="accountName" {...register("accountName")} />
+        <input
+          id="accountName"
+          {...register("accountName")}
+          className="textBoxStyle"
+        />
         {errors.accountName?.message && (
-          <span className="text-xs text-red">
-            {errors.accountName.message.toString()}
-          </span>
+          <ErrorMessage text={errors.accountName.message.toString()} />
         )}
 
-        <label htmlFor="amount" className="flex justify-between text-xs ">
-          <span className="font-bold">AMOUNT</span>
-          <span>Available: {formatNumber(dummyProps.available)} EVMOS</span>
+        <label htmlFor="amount" className="flex justify-between text-xs">
+          <span className="font-bold">{t("vesting.fund.amount.title")}</span>
+          <span>
+            {t("vesting.fund.amount.description")}{" "}
+            {/* // TODO: use the correct value */}
+            {formatNumber(dummyProps.available)} EVMOS
+          </span>
         </label>
         <input
           type="number"
           id="amount"
           {...register("amount", { valueAsNumber: true })}
+          className="textBoxStyle"
         />
         {errors.amount?.message && (
-          <span className="text-xs text-red">
-            {errors.amount.message.toString()}
-          </span>
+          <ErrorMessage text={errors.amount.message.toString()} />
         )}
 
         <input
           type="submit"
           disabled={disabled}
           style={{ backgroundColor: "#ed4e33" }}
-          className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg font-bold uppercase text-pearl"
-          value="Create"
+          className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg text-pearl"
+          value={t("vesting.fund.button.action.title")}
         />
       </form>
     </div>

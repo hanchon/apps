@@ -13,12 +13,13 @@ const config = {
     extend: {
       colors: {
         pearl: "#faf1e4",
+        pearl2: "#FEF2F2",
         darkPearl: "#dad2c7",
         darkGray1: "#0b0a09",
         darkGray2: "#2D2925",
         darkGray3: "#4f4740",
         darkGray4: "#70655c",
-        darkGray5: "#918378",
+        darkGray5: "#A2958B",
         darkGray400: "#898175",
         darkGray300: "#6E675C",
         darGray800: "#262017",
@@ -48,6 +49,8 @@ const config = {
         lightYellow2: "#F0FDF4",
         lightYellow3: "#DFF2E5",
         brown: "#854D0E",
+        blue: "#1E429F",
+        lightBlue: "#EFF6FF",
       },
       fontSize: {
         h5: "1.36rem",

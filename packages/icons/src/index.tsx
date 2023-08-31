@@ -43,3 +43,4 @@ export { TransakIcon } from "./TransakIcon";
 export { C14Icon } from "./C14Icon";
 export { FeedbackIcon } from "./FeedbackIcon";
 export { CodeIcon } from "./CodeIcon";
+export { InformationIcon } from "./InformationIcon";

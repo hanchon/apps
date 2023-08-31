@@ -30,3 +30,23 @@ export const FORGE_URL = "https://forge.trade/";
 export const TASHI_URL = "https://tashi.finance/";
 export const ORBITAL_APES_URL = "https://www.orbitmarket.io";
 export const MAVA_WIDGET_URL = "https://widget.mava.app";
+export const ICONS_TYPES = {
+  CHECK: "CHECK",
+  CANCEL: "CANCEL",
+  CONFETTI: "CONFETTI",
+  BIG_CONFETTI: "BIG_CONFETTI",
+  BIG_HANDS: "BIG_HANDS",
+  DOLLAR_BAG: "DOLLAR_BAG",
+  DOLLAR_WITH_WINGS: "DOLLAR_WITH_WINGS",
+  KEY: "KEY",
+  SHRUG: "SHRUG",
+};
+
+export const EMOJIS = {
+  CONFETTI: "🎉",
+  HANDS: "👏",
+  DOLLAR_BAG: "💰",
+  DOLLAR_WITH_WINGS: "💸",
+  KEY: "🔑",
+  SHRUG: "🤷",
+};

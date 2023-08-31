@@ -5,6 +5,7 @@ import { KEPLR_KEY, StoreType } from "evmos-wallet";
 import { useState } from "react";
 import { FundVestingAccount } from "./FundVestingAccount";
 import { EnableVestingModal } from "./EnableVestingModal";
+import { useTranslation } from "next-i18next";
 export const Header = () => {
   const handleConfirmClick = () => {
     // TODO: open modal for creating vesting account
@@ -17,20 +18,21 @@ export const Header = () => {
   const [showEnableModal, setShowEnableModal] = useState(false);
 
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
+  const { t } = useTranslation();
   return (
     <header className="flex w-full flex-col items-center space-y-2 lg:flex-row lg:justify-end lg:space-x-2 lg:space-y-0">
-      <div className="flex w-full justify-between">
+      <div className="flex flex-col md:flex-row w-full justify-between space-y-3 md:space-y-0">
         <div className="flex gap-5">
           <ConfirmButton
-            className="w-fit"
-            text="Enable Vesting"
+            className="w-fit normal-case"
+            text={t("enable.header.button.title")}
             onClick={() => {
               setShowEnableModal(true);
             }}
           />
           <ConfirmButton
-            className="w-fit"
-            text="Fund vesting account"
+            className="w-fit normal-case"
+            text={t("fund.header.button.title")}
             onClick={handleConfirmClick}
             disabled={!value.active || value.extensionName === KEPLR_KEY}
           />

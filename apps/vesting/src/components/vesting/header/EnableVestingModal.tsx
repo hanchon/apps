@@ -1,4 +1,4 @@
-import { ModalTitle, Toggle } from "ui-helpers";
+import { ErrorMessage, Label, ModalTitle, Toggle } from "ui-helpers";
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +17,7 @@ import {
 } from "evmos-wallet";
 import { useSelector, useDispatch } from "react-redux";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
+import { useTranslation } from "next-i18next";
 
 export const EnableVestingModal = () => {
   const [disabled, setDisabled] = useState(false);
@@ -79,34 +80,41 @@ export const EnableVestingModal = () => {
     defaultValues: { address: "" },
   });
 
+  const { t } = useTranslation();
   return (
     <div className="space-y-5">
-      <ModalTitle title="Enable Vesting" />
+      <ModalTitle title={t("enable.modal.title")} />
 
       <form
-        onSubmit={handleSubmit((d) => {
-          handleOnClick(d).catch(() => {});
+        onSubmit={handleSubmit(async (d) => {
+          await handleOnClick(d).then(() => {});
         })}
         className="flex flex-col space-y-3"
       >
-        <label htmlFor="address" className="text-xs font-bold">
-          ADDRESS
-        </label>
-        <input id="address" {...register("address")} />
+        <Label id="address">{t("enable.modal.address.title")}</Label>
+        <input id="address" {...register("address")} className="textBoxStyle" />
         {errors.address?.message && (
-          <span className="text-xs text-red">
-            {errors.address.message.toString()}
-          </span>
+          <ErrorMessage text={errors.address.message.toString()} />
         )}
+        {/* TODO: check if this is the same component as Subtitle in v3 release.  */}
+        <Label
+          id="governanceClawback"
+          tooltip={{
+            description: t(
+              "enable.modal.governance.clawback.tooltip.description"
+            ),
+          }}
+        >
+          {t("enable.modal.governance.clawback")}
+        </Label>
 
-        <label htmlFor="address" className="text-sm font-bold">
-          GOVERNANCE CLAWBACK
-        </label>
-
-        <div className="flex text-sm justify-between">
-          <span className="flex gap-1">
-            Clawback through governance <p className="font-bold">disallowed</p>
-          </span>
+        <div className="flex text-xs justify-between">
+          <p className="flex gap-1">
+            {t("enable.modal.toggle.description")}{" "}
+            <span className="font-bold">
+              {t("enable.modal.toggle.description.disabled")}
+            </span>
+          </p>
           <Toggle
             enabled={govClawbackEnabled}
             setEnabled={setGovClawbackEnabled}
@@ -117,8 +125,8 @@ export const EnableVestingModal = () => {
           type="submit"
           disabled={disabled}
           style={{ backgroundColor: "#ed4e33" }}
-          className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg font-bold uppercase text-pearl"
-          value="Create"
+          className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg text-pearl"
+          value={t("enable.button.action.title")}
         />
       </form>
     </div>

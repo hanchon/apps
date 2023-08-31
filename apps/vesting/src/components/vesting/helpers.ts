@@ -77,6 +77,7 @@ export const lockup = [
   TimeWindow["1-month"],
 ] as const;
 
+// TODO: use the correct value
 export const dummyProps = {
   available: "2000450.52",
 };
@@ -93,6 +94,17 @@ export const enableAccountSchema = z.object({
             value.startsWith("evmos") || value.startsWith("0x"),
           {
             message: "Address must start with 'evmos' or '0x'",
+          }
+        )
+    )
+    .and(
+      z
+        .string()
+        .refine(
+          (value: string) =>
+            isEthereumAddressValid(value) || isEvmosAddressValid(value),
+          {
+            message: "Incorrect format for address",
           }
         )
     ),
@@ -112,11 +124,23 @@ export const schema = z.object({
             message: "Address must start with 'evmos' or '0x'",
           }
         )
+    )
+    .and(
+      z
+        .string()
+        .refine(
+          (value: string) =>
+            isEthereumAddressValid(value) || isEvmosAddressValid(value),
+          {
+            message: "Incorrect format for address",
+          }
+        )
     ),
   accountName: z.string(),
   amount: z
     .number({ invalid_type_error: "Required" })
     .min(0)
+    // TODO: use the correct value
     .max(Number(dummyProps.available)),
   planType: z.enum(plans),
   vestingDuration: z.enum(duration),

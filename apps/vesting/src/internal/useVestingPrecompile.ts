@@ -7,11 +7,7 @@ const VESTING_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000803";
 
 import { Contract, ContractInterface } from "@ethersproject/contracts";
 
-async function createContract(
-  address: string,
-  ABI: ContractInterface,
-  walletExtension: string
-) {
+async function createContract(address: string, ABI: ContractInterface) {
   const provider = new Web3Provider(window.ethereum);
   if (!address || !ABI) return null;
   try {
