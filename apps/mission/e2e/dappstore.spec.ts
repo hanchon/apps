@@ -295,8 +295,8 @@ test.describe("Mission Page - Copilot", () => {
       await expect(
         page
           .locator("div")
-          .filter({ hasText: /^Available Balance0 EVMOS\$0$/ })
-          .locator("h5"),
+          .filter({ hasText: /^Available Balance0.00 EVMOS\$0.00$/ })
+          .locator("h5")
       ).toBeVisible();
 
       // staking - staked balance
@@ -361,8 +361,8 @@ test.describe("Mission Page - Copilot", () => {
       await expect(
         page
           .locator("div")
-          .filter({ hasText: /^Available Balance0 EVMOS\$0$/ })
-          .locator("h5"),
+          .filter({ hasText: /^Available Balance0.00 EVMOS\$0.00$/ })
+          .locator("h5")
       ).toBeVisible();
 
       // staking - staked balance

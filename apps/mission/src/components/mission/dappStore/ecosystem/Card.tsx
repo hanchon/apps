@@ -31,10 +31,7 @@ export const EcosystemCard = ({ data }: { data: EcosystemProps }) => {
 
       <div className="flex space-x-8 px-5 pt-5">
         <h3 className="text-sm font-bold text-pearl">{data.name}</h3>
-        <Badge
-          text={data.type}
-          style="text-darkGray300 text-[8px] ring-darkGray300"
-        />
+        <Badge className="text-[8px]">{data.type}</Badge>
       </div>
       <p className="px-5 text-sm text-white opacity-70">{data.description}</p>
     </Link>

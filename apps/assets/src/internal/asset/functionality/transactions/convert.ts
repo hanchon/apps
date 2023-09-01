@@ -39,7 +39,7 @@ export const executeConvert = async (
     });
   }
 
-  const apiFn = isERC20Selected ? apiConvertCoin : apiConvertERC20;
+  const apiFn = isERC20Selected ? apiConvertERC20 : apiConvertCoin;
   const { apiResponse, error, hash } = await executeApiTransaction(() =>
     apiFn({
       address: wallet.evmosAddressCosmosFormat,

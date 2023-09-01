@@ -41,7 +41,9 @@ export const ButtonsNextSteps = () => {
           }}
         >
           <TitleButton text={t("nextsteps.interactWithdApp.title") as string} />
-          <Badge text={t("nextsteps.interactWithdApp.badge") as string} />
+          <Badge variant="success">
+            {t("nextsteps.interactWithdApp.badge")}
+          </Badge>
         </Button>
 
         <Button
@@ -53,10 +55,7 @@ export const ButtonsNextSteps = () => {
         >
           <TitleButton text={t("nextsteps.stakeEvmos.title") as string} />
 
-          <Badge
-            text={t("nextsteps.stakeEvmos.badge") as string}
-            style="ring-lightYellow bg-lightYellow1 text-brown"
-          />
+          <Badge variant="warning">{t("nextsteps.stakeEvmos.badge")}</Badge>
         </Button>
       </div>
       <button

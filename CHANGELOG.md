@@ -36,6 +36,15 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (fix) | apps/assets 1.0.27 apps/vesting 1.0.20 apps/governance 1.0.25 apps/mission 1.0.23 apps/staking 1.0.22 | Remove semicolon
+- (fix) apps/assets 1.0.26 | packages/evmos-wallet 1.0.16 | Fix erc20 convert issue
+- (fix) apps/copilot 1.0.6 | Fixing copilot wallet connection issue
+
+## 1.2.1 - 2023-08-23
+
+- (fix) fse-738 | apps/governance 1.0.24 | Hide proposals: 160, 161, 162
+- (ci) | Adding PR review template
+- (chore) | packages/config 1.0.1 | Adding missing headers
 - (chore) fse-735 | apps/assets 1.0.25 apps/governance 1.0.23 apps/mission 1.0.22 apps/staking 1.0.21 apps/vesting 1.0.19 packages/constants-helper 1.0.6 packages/ui-helpers 1.0.14 | Add Mava Widget to all apps.
 - (refactor) | packages/config 1.0.0 packages/evmos-wallet 1.0.8 packages/evmos-wallet 1.0.15 | refactor wallet setup to use the latest Wagmi version, fixes Wallet Connect integration
 
@@ -165,7 +174,6 @@ Ref: https://keepachangelog.com/en/1.0.0/
 ## 1.0.3 - 2023-05-10
 
 - (chore) #fse-142 | evmos-wallet 1.0.6 | Env vars prefixes
-
 - (workflow) #fse-511 | packages/tracker 1.0.1 | Adding lint
 - (workflow) #fse-511 | packages/constants-helper 1.0.1 packages/eslint-config-custom 1.0.1 packages/evmos-wallet 1.0.5 packages/helpers 1.0.3 packages/icons 1.0.1 packages/services 1.0.2 packages/ui-helpers 1.0.2 | Deleting eslint related dependencies, setting new linting rules, fixing linting issues
 - (workflow) #fse-511 | apps/assets 1.0.3 apps/governance 1.0.3 apps/staking 1.0.3 apps/mission 1.0.3 | Moving husky to the mono repo level

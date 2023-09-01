@@ -23,22 +23,20 @@ export const apiIBCTransfer = makeApiRequester(
     address: string;
     params: IBCChainParams;
     useERC20Denom?: boolean;
-  }) => {
-    return {
-      transaction: {
-        pubKey: pubkey,
-        sender: address,
-      },
-      message: {
-        srcChain: params.srcChain.toUpperCase(),
-        dstChain: params.dstChain.toUpperCase(),
-        sender: params.sender,
-        receiver: params.receiver,
-        amount: params.amount,
-        token: params.token,
-        useERC20Denom,
-      },
-    };
-  },
-  ApiPresignTxSchema,
+  }) => ({
+    transaction: {
+      pubKey: pubkey,
+      sender: address,
+    },
+    message: {
+      srcChain: params.srcChain.toUpperCase(),
+      dstChain: params.dstChain.toUpperCase(),
+      sender: params.sender,
+      receiver: params.receiver,
+      amount: params.amount,
+      token: params.token,
+      useERC20Denom,
+    },
+  }),
+  ApiPresignTxSchema
 );

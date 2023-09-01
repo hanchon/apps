@@ -18,6 +18,7 @@ export const CopilotButton = ({
     <>
       <div className="md:mt-5">
         <ButtonWallet
+          className="text-left flex "
           onClick={() => {
             setShowModal(true);
             handlePreClickAction();
@@ -26,16 +27,13 @@ export const CopilotButton = ({
             }
           }}
         >
-          <div className="flex items-center justify-between  ">
-            <div className="flex items-center space-x-3 text-left">
-              <EvmosCopilotIcon />
-              <div className="flex flex-col text-sm">
-                <p className="font-bold">Evmos Copilot</p>
-                <p className="normal-case">Recommended for first time users</p>
-              </div>
-            </div>
-            <Badge text="New" />
+          <EvmosCopilotIcon />
+          <div className="flex flex-col text-sm grow">
+            <p className="">Evmos Copilot</p>
+            <p className="font-normal">Recommended for first time users</p>
           </div>
+
+          <Badge variant="success">New</Badge>
         </ButtonWallet>
       </div>
       <DividerWithLabel label="or" />

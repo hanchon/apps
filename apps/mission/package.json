@@ -1,10 +1,11 @@
 {
   "name": "mission-page",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3004",
     "build": "sh setup-redirects.sh && next build",
+    "build:analyse": "ANALYZE_NEXT_BUNDLE=true next build",
     "start": "next start --port 3004",
     "lint": "eslint . -c eslint.config.mjs",
     "lintunix": "pnpm run lint -- --format unix",
@@ -38,7 +39,7 @@
     "helpers": "workspace:*",
     "i18next": "^23.4.4",
     "icons": "workspace:*",
-    "next": "13.4.16",
+    "next": "13.4.17",
     "next-i18next": "^14.0.0",
     "playwright-config-custom": "workspace:*",
     "postcss": "^8.4.20",
@@ -54,7 +55,8 @@
     "tailwindcss": "^3.3.3",
     "tracker": "workspace:*",
     "typescript": "5.1.6",
-    "ui-helpers": "workspace:*"
+    "ui-helpers": "workspace:*",
+    "stateful-components": "workspace:*"
   },
   "browserslist": [
     "last 3 chrome version",
