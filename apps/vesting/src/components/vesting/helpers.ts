@@ -3,7 +3,7 @@ import { Intervals, TimeWindow } from "../../internal/helpers/types";
 
 export const getEndDate = (
   date: string | undefined,
-  vestingDuration: string
+  vestingDuration: string,
 ) => {
   const duration = Number(vestingDuration?.split(" ")[0]);
   const year = Number(date?.split("-")[0]);
@@ -22,7 +22,7 @@ const VESTING_ACCOUNTS_NAMES_LOCALSTORAGE = "VESTING_ACCOUNTS_NAMES";
 
 export function setVestingAccountNameLocalstorage(
   walletAddress: string,
-  accountName: string
+  accountName: string,
 ) {
   const storedData = localStorage.getItem(VESTING_ACCOUNTS_NAMES_LOCALSTORAGE);
   const accounts = storedData
@@ -35,7 +35,7 @@ export function setVestingAccountNameLocalstorage(
   accounts.push({ walletAddress, accountName });
   localStorage.setItem(
     VESTING_ACCOUNTS_NAMES_LOCALSTORAGE,
-    JSON.stringify(accounts)
+    JSON.stringify(accounts),
   );
 }
 
@@ -94,8 +94,8 @@ export const enableAccountSchema = z.object({
             value.startsWith("evmos") || value.startsWith("0x"),
           {
             message: "Address must start with 'evmos' or '0x'",
-          }
-        )
+          },
+        ),
     )
     .and(
       z
@@ -105,8 +105,8 @@ export const enableAccountSchema = z.object({
             isEthereumAddressValid(value) || isEvmosAddressValid(value),
           {
             message: "Incorrect format for address",
-          }
-        )
+          },
+        ),
     ),
 });
 
@@ -122,8 +122,8 @@ export const schema = z.object({
             value.startsWith("evmos") || value.startsWith("0x"),
           {
             message: "Address must start with 'evmos' or '0x'",
-          }
-        )
+          },
+        ),
     )
     .and(
       z
@@ -133,8 +133,8 @@ export const schema = z.object({
             isEthereumAddressValid(value) || isEvmosAddressValid(value),
           {
             message: "Incorrect format for address",
-          }
-        )
+          },
+        ),
     ),
   accountName: z.string(),
   amount: z

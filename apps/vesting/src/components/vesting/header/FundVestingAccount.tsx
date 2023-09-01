@@ -60,7 +60,7 @@ export const FundVestingAccount = () => {
             vestingInterval: d.vestingSchedule as Intervals,
             vestingCliff: d.vestingCliff as VestingSchedule["vestingCliff"],
             lockingPeriod: d.lockupDuration as TimeWindow,
-          }
+          },
         );
 
       const res = await fundVestingAccount(
@@ -68,7 +68,7 @@ export const FundVestingAccount = () => {
         d.address as string,
         startTime,
         lockupPeriods,
-        vestingPeriods
+        vestingPeriods,
       );
 
       dispatch(
@@ -81,7 +81,7 @@ export const FundVestingAccount = () => {
             explorerTxUrl: "www.mintscan.io/evmos/txs/",
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        })
+        }),
       );
       setDisabled(false);
     } catch (e) {
@@ -96,14 +96,14 @@ export const FundVestingAccount = () => {
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        })
+        }),
       );
     }
 
     if (d.accountName !== "") {
       setVestingAccountNameLocalstorage(
         d.address as string,
-        d.accountName as string
+        d.accountName as string,
       );
     }
   };
@@ -151,16 +151,16 @@ export const FundVestingAccount = () => {
             setValue("planType", planType);
             setValue(
               "vestingDuration",
-              vestingSettingsConfig[planType].duration[0]
+              vestingSettingsConfig[planType].duration[0],
             );
             setValue("vestingCliff", vestingSettingsConfig[planType].cliff[0]);
             setValue(
               "vestingSchedule",
-              vestingSettingsConfig[planType].schedule[0]
+              vestingSettingsConfig[planType].schedule[0],
             );
             setValue(
               "lockupDuration",
-              vestingSettingsConfig[planType].lockup[0]
+              vestingSettingsConfig[planType].lockup[0],
             );
           }}
         />

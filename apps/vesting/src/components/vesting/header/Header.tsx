@@ -29,6 +29,7 @@ export const Header = () => {
             onClick={() => {
               setShowEnableModal(true);
             }}
+            disabled={!value.active || value.extensionName === KEPLR_KEY}
           />
           <ConfirmButton
             className="w-fit normal-case"

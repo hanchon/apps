@@ -6,6 +6,8 @@ import { VestingAccountDetail } from "../../../../internal/types";
 import { evmosToEth } from "@evmos/address-converter";
 import { AmountItem } from "./AmountItem";
 import { AddresItem } from "./AddressItem";
+import { ethers } from "ethers";
+
 type AccountContentProps = {
   vestingDetails: VestingAccountDetail;
   accountName: string;
@@ -19,6 +21,10 @@ export const AccountContent = ({
 }: AccountContentProps) => {
   const { t } = useTranslation();
   const value = useSelector((state: StoreType) => state.wallet.value);
+
+  const vestedEvmos = ethers.formatEther(vestingDetails?.originalVestingAmount);
+  const unvestedEvmos = ethers.formatEther(vestingDetails?.unvestedAmount);
+
   return (
     <section className="break-words">
       <h1 className="text-2xl">{t("vesting.account.details.title")}</h1>
@@ -51,21 +57,22 @@ export const AccountContent = ({
           </div>
         </div>
         <div className="my-5 mr-1 space-y-5 rounded-2xl bg-darkGray2 p-5 font-[IBM] text-sm text-pearl xl:mx-0 ">
-          {/* TODO: add correct value here */}
           <AmountItem
             text={t("vesting.account.details.total.vesting.title")}
-            amount="1,000,000"
+            amount={vestedEvmos}
           />
           {/* TODO: add correct value here */}
           <AmountItem
             text={t("vesting.account.details.vested.title")}
-            amount="1,000,000"
+            amount={(
+              parseFloat(vestedEvmos) - parseFloat(unvestedEvmos)
+            ).toString()}
           />
 
           <div className="flex md:flex-row flex-col justify-between space-y-3 md:space-y-0 flex-shrink-0">
             <AmountItem
               text={t("vesting.account.details.not.vested.title")}
-              amount="1,000,000"
+              amount={unvestedEvmos}
             />
             <ConfirmButton
               text={t("clawback.button.action.title")}

@@ -14,9 +14,11 @@ const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
 export const StatefulHeader = () => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
+
   const { handlePreClickAction } = useTracker(CLICK_EVMOS_LOGO);
   const { evmosPriceFixed } = useAssets();
   const { t } = useTranslation();
+
   return (
     <StepsContextProvider steps={steps}>
       <>

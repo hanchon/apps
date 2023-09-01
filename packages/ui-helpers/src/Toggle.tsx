@@ -24,7 +24,7 @@ export function Toggle({
         aria-hidden="true"
         className={classNames(
           enabled ? "translate-x-5" : "translate-x-0",
-          "pointer-events-none inline-block md:h-5 md:w-5 h-3 w-3 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+          "pointer-events-none inline-block md:h-5 md:w-5 h-3 w-3 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out",
         )}
       />
     </Switch>

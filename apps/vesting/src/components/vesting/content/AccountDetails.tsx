@@ -29,7 +29,7 @@ export const AccountDetails = ({ account }: { account?: string }) => {
       return <BannerMessages text={vestingDetails} />;
     }
     const accountName = getVestingAccountNameLocalstorage(
-      vestingDetails.accountAddress
+      vestingDetails.accountAddress,
     );
 
     return (

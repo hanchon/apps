@@ -33,7 +33,7 @@ export const EnableVestingModal = () => {
       const res = await createClawbackVestingAccount(
         d.address as string,
         wallet.evmosAddressEthFormat,
-        govClawbackEnabled
+        govClawbackEnabled,
       );
 
       dispatch(
@@ -46,7 +46,7 @@ export const EnableVestingModal = () => {
             explorerTxUrl: "www.mintscan.io/evmos/txs/",
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        })
+        }),
       );
       setDisabled(false);
     } catch (e) {
@@ -60,14 +60,14 @@ export const EnableVestingModal = () => {
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        })
+        }),
       );
     }
 
     if (d.accountName !== "") {
       setVestingAccountNameLocalstorage(
         d.address as string,
-        d.accountName as string
+        d.accountName as string,
       );
     }
   };
@@ -101,7 +101,7 @@ export const EnableVestingModal = () => {
           id="governanceClawback"
           tooltip={{
             description: t(
-              "enable.modal.governance.clawback.tooltip.description"
+              "enable.modal.governance.clawback.tooltip.description",
             ),
           }}
         >
