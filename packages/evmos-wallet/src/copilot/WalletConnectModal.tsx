@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction } from "react";
 import { ConnectToEvmos } from "./ConnectToEvmos";
 import { ConnectToEvmosWallets } from "./ConnectToEvmosWallets";
 import { ModalContainer, ModalWithTransitions } from "ui-helpers";
+import { useConnect } from "wagmi";
 
 export const WalletConnectModal = ({
   show,
@@ -15,11 +16,17 @@ export const WalletConnectModal = ({
   setShow: Dispatch<SetStateAction<boolean>>;
   copilotModal?: JSX.Element;
 }) => {
+  const { connectors } = useConnect();
+  const connectorIds = connectors.map((c) => c.id);
   const contentModal = (
     <ModalContainer
       introduction={<ConnectToEvmos />}
       content={
-        <ConnectToEvmosWallets copilotModal={copilotModal} setShow={setShow} />
+        <ConnectToEvmosWallets
+        copilotModal={copilotModal}
+        setShow={setShow}
+        connectorIds={connectorIds}
+      />
       }
     />
   );

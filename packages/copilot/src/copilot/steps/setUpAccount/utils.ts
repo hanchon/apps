@@ -9,6 +9,7 @@ import {
   connectHandler,
   queryPubKey,
   isWalletSelected,
+  connectWith,
 } from "evmos-wallet";
 import { METAMASK_DOWNLOAD_URL, STEP_STATUS } from "constants-helper";
 import {
@@ -24,6 +25,7 @@ import {
   getCopilotModalState,
   updateCopilotModalState,
 } from "../../utils";
+import { E } from "helpers";
 
 const getWalletLocal = async () => {
   // get wallet returns null or string but
@@ -67,7 +69,9 @@ const checkConnectionMetamask = async () => {
   if (pubkey === null) {
     return false;
   }
-  return await connectHandler([account]);
+  const [err] = await E.try(() => connectWith("metaMask"));
+  if (err) return false;
+  return true;
 };
 
 const connectMetaMask = (href: string) => {
