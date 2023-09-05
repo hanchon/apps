@@ -26,6 +26,7 @@ export default {
         "svg": "statics/EEUR.svg"
       },
       "denom": "EEUR",
+      "channel": "channel-24",
       "minCoinDenom": "eeur",
       "cosmosDenom": "ibc/AB40F54CC4BAF9C4FDB5CB5BDFC4D6CDB475BFE84BCEAF4F72F02EDAEED60F05",
       "category": "stablecoin",
@@ -35,6 +36,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-75",
+  "source": {
+    "sourceChannel": "channel-28",
+    "destinationChannel": "channel-24",
+    "sourceIBCDenomToEvmos": "ibc/10E2FD6A073F2746143FFF978B61C3813B773CBC0647E850A4A562FFFA8F9732",
+    "tendermintRest": {
+      "http": [
+        "https://rpc-emoney.keplr.app"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://lcd-emoney.keplr.app",

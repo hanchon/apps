@@ -22,10 +22,10 @@ export default {
       "name": "Teritori",
       "description": "The native staking and governance token of the Teritori chain",
       "images": {
-        "png": "statics/TORI.png",
-        "svg": "statics/TORI.svg"
+        "png": "statics/TORI.png"
       },
       "denom": "TORI",
+      "channel": "channel-35",
       "minCoinDenom": "utori",
       "cosmosDenom": "ibc/18D5C3CDDF1DEE108CE4BF0A7E0262D94D11AB06A37F68EA38F70CC92C5D894F",
       "category": "cosmos",
@@ -35,6 +35,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-89",
+  "source": {
+    "sourceChannel": "channel-1",
+    "destinationChannel": "channel-35",
+    "sourceIBCDenomToEvmos": "ibc/6993F2B27985C9363D3B94D702111940055833A2BA86DA93F33A67D03E4D1B7D",
+    "tendermintRest": {
+      "http": [
+        "https://rpc.mainnet.teritori.com"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://teritori-api.lavenderfive.com:443",

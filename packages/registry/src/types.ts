@@ -8,6 +8,7 @@ export type Token = {
     png: string;
     svg?: string;
   };
+  channel: string;
   decimals: number;
   denom: string;
   minCoinDenom: string;
@@ -33,5 +34,16 @@ export interface Chain {
   cosmosRest: NetworkUrls;
   cosmosGRPC: NetworkUrls | null;
   evmRest: NetworkUrls | null;
+
   tendermint: NetworkUrls | null;
+
+  source: {
+    sourceChannel: string;
+
+    sourceIBCDenomToEvmos: string;
+
+    destinationChannel: string;
+
+    tendermintRest: NetworkUrls | null;
+  } | null;
 }

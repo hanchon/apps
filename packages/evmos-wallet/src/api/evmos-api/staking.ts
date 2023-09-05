@@ -1,5 +1,5 @@
-import { ApiPresignTxSchema } from "../utils";
-import { makeApiRequester } from "./utils/makeApiRequester";
+import { ApiPresignTxSchema } from "../../utils";
+import { makeApiRequester } from "../utils/makeApiRequester";
 
 export const apiStakingDelegate = makeApiRequester(
   "/delegate",

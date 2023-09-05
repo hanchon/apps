@@ -4,10 +4,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { StoreType } from "evmos-wallet";
+import { StoreType, useAccountBalances } from "evmos-wallet";
 import { ERC20BalanceResponse } from "./types";
 import { getAssetsForAddress } from "../../../internal/asset/functionality/fetch";
 import dynamic from "next/dynamic";
+import { useAccount } from "wagmi";
 
 const ModalAsset = dynamic(() => import("../modals/ModalAsset"));
 import { MessageTable, Switch } from "ui-helpers";
@@ -25,7 +26,7 @@ import Guide from "./Guide";
 import { useStakedEvmos } from "../../../internal/common/api/hooks/useStakedEvmos";
 
 import { BigNumber } from "@ethersproject/bignumber";
-import {  CLICK_HIDE_ZERO_BALANCE, useTracker } from "tracker";
+import { CLICK_HIDE_ZERO_BALANCE, useTracker } from "tracker";
 
 const AssetsTable = () => {
   const [show, setShow] = useState(false);
@@ -105,7 +106,9 @@ const AssetsTable = () => {
       feeBalance: normalizedAssetsData.feeBalance,
     },
   };
-
+  const { address } = useAccount();
+  const { data: balances } = useAccountBalances(address);
+  console.log(balances);
   return (
     <>
       <TopBar topProps={topProps} />
@@ -119,6 +122,7 @@ const AssetsTable = () => {
           checked={hideZeroBalance}
         />
       </div>
+      aaa
       <div className="xl:scrollbar-hide mt-5 w-full font-[IBM] text-pearl">
         <table className="w-full">
           {tableData?.length === 0 && <HeadTable />}

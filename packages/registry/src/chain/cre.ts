@@ -26,6 +26,7 @@ export default {
         "svg": "statics/CRE.svg"
       },
       "denom": "CRE",
+      "channel": "channel-11",
       "minCoinDenom": "ucre",
       "cosmosDenom": "ibc/B5AB26FB63C08E1C14B91B4DDC15CA4FE59737052B4432D8A3B328B66F6FE7A1",
       "category": "cosmos",
@@ -35,6 +36,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-38",
+  "source": {
+    "sourceChannel": "channel-7",
+    "destinationChannel": "channel-11",
+    "sourceIBCDenomToEvmos": "ibc/73E97EB411B29C6F989C35D277D1A7FC65083572F102AC6BD101884EE9FB2C9F",
+    "tendermintRest": {
+      "http": [
+        "https://mainnet.crescent.network:26657/"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://mainnet.crescent.network:1317",

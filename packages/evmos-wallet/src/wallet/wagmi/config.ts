@@ -7,14 +7,16 @@ import {
   walletConnectConnector,
 } from "./connectors";
 import { getEvmosChainInfo } from "./chains";
-
+const evmos = getEvmosChainInfo();
 const { publicClient } = configureChains(
   [getEvmosChainInfo()],
   [publicProvider()]
 );
-
+export const evmosClient = publicClient({
+  chainId: evmos.id,
+});
 export const wagmiConfig = createConfig({
-  autoConnect: true,
+  autoConnect: false,
   connectors: [
     ...(safeConnector.ready
       ? [safeConnector]

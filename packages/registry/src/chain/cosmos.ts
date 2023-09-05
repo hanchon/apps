@@ -26,6 +26,7 @@ export default {
         "svg": "statics/ATOM.svg"
       },
       "denom": "ATOM",
+      "channel": "channel-3",
       "minCoinDenom": "uatom",
       "cosmosDenom": "ibc/A4DB47A9D3CF9A068D454513891B526702455D3EF08FB9EB558C561F9DC2B701",
       "category": "cosmos",
@@ -35,6 +36,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-3",
+  "source": {
+    "sourceChannel": "channel-292",
+    "destinationChannel": "channel-3",
+    "sourceIBCDenomToEvmos": "ibc/19DD710119533524061885A6F190B18AF28D9537E2BAE37F32A62C1A25979287",
+    "tendermintRest": {
+      "http": [
+        "https://cosmoshub-rpc.stakely.io/"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://cosmos-lcd.quickapi.com:443",

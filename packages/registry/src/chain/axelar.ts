@@ -26,6 +26,7 @@ export default {
         "svg": "statics/AXL.svg"
       },
       "denom": "AXL",
+      "channel": "channel-21",
       "minCoinDenom": "uaxl",
       "cosmosDenom": "ibc/473351B37CC9D7BA7B247800EF04D255E442C4C9C93976E3631B190A8F3C5570",
       "category": "cosmos",
@@ -41,6 +42,7 @@ export default {
         "svg": "statics/axlDAI.svg"
       },
       "denom": "axlDAI",
+      "channel": "channel-21",
       "minCoinDenom": "dai-wei",
       "cosmosDenom": "ibc/CBA4784581AD4BEF308C536A3CD44D4A940A520E61B0D1E4FB115C539F61DEE5",
       "category": "stablecoin",
@@ -56,6 +58,7 @@ export default {
         "svg": "statics/axlPEPE.jpeg"
       },
       "denom": "axlPEPE",
+      "channel": "channel-21",
       "minCoinDenom": "pepe-wei",
       "cosmosDenom": "ibc/26E6508A1757E12B15A087E951F5D35E73CF036F0D97BC809E1598D1DD870BED",
       "category": "ethereum",
@@ -71,6 +74,7 @@ export default {
         "svg": "statics/axlRETH.png"
       },
       "denom": "axlRETH",
+      "channel": "channel-21",
       "minCoinDenom": "reth-wei",
       "cosmosDenom": "ibc/6A3538834873D16F00D0268B295A8D6FD9B005952787AA14726D0013A51042AC",
       "category": "ethereum",
@@ -86,6 +90,7 @@ export default {
         "svg": "statics/axlUSDC.svg"
       },
       "denom": "axlUSDC",
+      "channel": "channel-21",
       "minCoinDenom": "uusdc",
       "cosmosDenom": "ibc/63C53CBDF471D4E867366ABE2E631197257118D1B2BEAD1946C8A408F96464C3",
       "category": "stablecoin",
@@ -101,6 +106,7 @@ export default {
         "svg": "statics/axlUSDT.svg"
       },
       "denom": "axlUSDT",
+      "channel": "channel-21",
       "minCoinDenom": "uusdt",
       "cosmosDenom": "ibc/F11C8CB7743E4B5FDCEA7C97F3B2C115E1931C5614B84C183DAC439B4C919D94",
       "category": "stablecoin",
@@ -115,6 +121,7 @@ export default {
         "png": "statics/axlWBTC.png"
       },
       "denom": "axlWBTC",
+      "channel": "channel-21",
       "minCoinDenom": "wbtc-satoshi",
       "cosmosDenom": "ibc/C834CD421B4FD910BBC97E06E86B5E6F64EA2FE36D6AE0E4304C2E1FB1E7333C",
       "category": "bitcoin",
@@ -129,6 +136,7 @@ export default {
         "png": "statics/axlWETH.png"
       },
       "denom": "axlWETH",
+      "channel": "channel-21",
       "minCoinDenom": "weth-wei",
       "cosmosDenom": "ibc/356EDE917394B2AEF7F915EB24FA683A0CCB8D16DD4ECCEDC2AD0CEC6B66AC81",
       "category": "ethereum",
@@ -144,6 +152,7 @@ export default {
         "svg": "statics/axlWSTETH.png"
       },
       "denom": "axlWSTETH",
+      "channel": "channel-21",
       "minCoinDenom": "wsteth-wei",
       "cosmosDenom": "ibc/43BD3A576550CDCD183BC093AEB610B3C2057AD12BA3C27D67AE9F4BCA74F2C8",
       "category": "ethereum",
@@ -153,6 +162,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-69",
+  "source": {
+    "sourceChannel": "channel-22",
+    "destinationChannel": "channel-21",
+    "sourceIBCDenomToEvmos": "ibc/73D370D177CC659EA123B423D1AC194F0733537E5A346ECEA1DCBC8FEBB45FD3",
+    "tendermintRest": {
+      "http": [
+        "https://axelar-mainnet-rpc.allthatnode.com:26657"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://lcd-axelar.imperator.co:443",

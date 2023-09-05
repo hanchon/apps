@@ -25,6 +25,7 @@ export default {
         "png": "statics/INJ.png"
       },
       "denom": "INJ",
+      "channel": "channel-10",
       "minCoinDenom": "inj",
       "cosmosDenom": "ibc/ADF401C952ADD9EE232D52C8303B8BE17FE7953C8D420F20769AF77240BD0C58",
       "category": "cosmos",
@@ -34,6 +35,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-19",
+  "source": {
+    "sourceChannel": "channel-83",
+    "destinationChannel": "channel-10",
+    "sourceIBCDenomToEvmos": "ibc/16618B7F7AC551F48C057A13F4CA5503693FBFF507719A85BC6876B8BD75F821",
+    "tendermintRest": {
+      "http": [
+        "https://tm.injective.network"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://lcd.injective.network",

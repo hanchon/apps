@@ -42,6 +42,7 @@ async function generateTokens(tokenRegistries: TokenRegistry[]) {
         description: token.description,
         images: images,
         denom: token.coinDenom,
+        channel: token.channel,
         minCoinDenom:
           token.minCoinDenom === "EVMOS" ? "aevmos" : token.minCoinDenom,
         cosmosDenom: token.cosmosDenom,
@@ -120,6 +121,7 @@ export const generateChainConfigs = async () => {
         );
         continue;
       }
+
       chains[key] = {
         prefix,
         name,
@@ -129,6 +131,18 @@ export const generateChainConfigs = async () => {
         nativeCurrency,
         currencies,
         clientId: configuration.clientId || null,
+        source:
+          prefix === "evmos"
+            ? null
+            : {
+                sourceChannel: configuration.source.sourceChannel,
+                destinationChannel: configuration.source.destinationChannel,
+                sourceIBCDenomToEvmos:
+                  configuration.source.sourceIBCDenomToEvmos,
+                tendermintRest: normalizeNetworkUrls(
+                  configuration.source.jsonRPC
+                ),
+              },
         cosmosRest,
         cosmosGRPC: normalizeNetworkUrls(configuration.rpc),
         evmRest: normalizeNetworkUrls(configuration.web3),
