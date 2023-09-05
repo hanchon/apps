@@ -26,6 +26,7 @@ export default {
         "svg": "statics/QCK.svg"
       },
       "denom": "QCK",
+      "channel": "channel-37",
       "minCoinDenom": "uqck",
       "cosmosDenom": "ibc/FCA18B0C0D1236E203D1AE09634A3F33E8AC31707CD59A74A437A903231C653C",
       "category": "cosmos",
@@ -41,6 +42,7 @@ export default {
         "svg": "statics/qATOM.svg"
       },
       "denom": "qATOM",
+      "channel": "channel-37",
       "minCoinDenom": "uqatom",
       "cosmosDenom": "ibc/28F9F0420534AE42F7D220B04518A3A45A7F40A0855A1C353CB4BB7223A70F5A",
       "category": "cosmos",
@@ -56,6 +58,7 @@ export default {
         "svg": "statics/qOSMO.svg"
       },
       "denom": "qOSMO",
+      "channel": "channel-37",
       "minCoinDenom": "uqosmo",
       "cosmosDenom": "ibc/6230C2923C20C318C1002CE04856118621FE2A220F99EBA0EC2066D5DDFF2152",
       "category": "cosmos",
@@ -65,6 +68,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-92",
+  "source": {
+    "sourceChannel": "channel-7",
+    "destinationChannel": "channel-37",
+    "sourceIBCDenomToEvmos": "ibc/73E97EB411B29C6F989C35D277D1A7FC65083572F102AC6BD101884EE9FB2C9F",
+    "tendermintRest": {
+      "http": [
+        "https://quicksilver-rpc.polkachu.com:443"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://quicksilver-api.polkachu.com",

@@ -4,3 +4,4 @@ export * from "./isObject";
 export * from "./isString";
 export * from "./isUndefined";
 export * from "./isBigInt";
+export * from "./contains";

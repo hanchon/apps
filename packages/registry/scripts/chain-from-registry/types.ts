@@ -121,7 +121,6 @@ export interface ChainRegistry {
      */
     explorerTxUrl?: string;
   }[];
-  [k: string]: unknown;
 }
 
 /**

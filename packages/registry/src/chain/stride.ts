@@ -26,6 +26,7 @@ export default {
         "svg": "statics/STRD.svg"
       },
       "denom": "STRD",
+      "channel": "channel-25",
       "minCoinDenom": "ustrd",
       "cosmosDenom": "ibc/21C0C3E238D48E370841635ADC3322F5D3D26342679102D5865DA8A56BD9524E",
       "category": "cosmos",
@@ -41,6 +42,7 @@ export default {
         "svg": "statics/stATOM.svg"
       },
       "denom": "stATOM",
+      "channel": "channel-25",
       "minCoinDenom": "stuatom",
       "cosmosDenom": "ibc/0830AFFC2F4F7CD24F9CEC07024FEA64CE3C5ABBC520DBD803BFA97BC3DCCA85",
       "category": "cosmos",
@@ -56,6 +58,7 @@ export default {
         "svg": "statics/stEVMOS.svg"
       },
       "denom": "stEVMOS",
+      "channel": "channel-25",
       "minCoinDenom": "staevmos",
       "cosmosDenom": "ibc/C49FDA9CB980D813492E2DFFF255B01C46E629C73B2B468131F6FE6E14F55754",
       "category": "cosmos",
@@ -71,6 +74,7 @@ export default {
         "svg": "statics/stINJ.svg"
       },
       "denom": "stINJ",
+      "channel": "channel-25",
       "minCoinDenom": "stinj",
       "cosmosDenom": "ibc/4FCDD6D71CAB4F6BBEAB781D036977E1158075297671345055BC342D46819640",
       "category": "cosmos",
@@ -86,6 +90,7 @@ export default {
         "svg": "statics/stJUNO.svg"
       },
       "denom": "stJUNO",
+      "channel": "channel-25",
       "minCoinDenom": "stujuno",
       "cosmosDenom": "ibc/D9C9DFD2B4021D16B01AC16ECD5A7933383C38F8331160583E0A5F34B30E1BA9",
       "category": "cosmos",
@@ -101,6 +106,7 @@ export default {
         "svg": "statics/stOSMO.svg"
       },
       "denom": "stOSMO",
+      "channel": "channel-25",
       "minCoinDenom": "stuosmo",
       "cosmosDenom": "ibc/C9364B2C453F0428D04FD40B6CF486BA138FA462FE43A116268A7B695AFCFE7F",
       "category": "cosmos",
@@ -116,6 +122,7 @@ export default {
         "svg": "statics/stSTARS.svg"
       },
       "denom": "stSTARS",
+      "channel": "channel-25",
       "minCoinDenom": "stustars",
       "cosmosDenom": "ibc/1464C6BD4C7ADB0A15BE85F48EE1E04A5371F4727F609FBAB788CF5137FDAAB7",
       "category": "cosmos",
@@ -125,6 +132,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-77",
+  "source": {
+    "sourceChannel": "channel-9",
+    "destinationChannel": "channel-25",
+    "sourceIBCDenomToEvmos": "ibc/A3643FAA80C7DA7E72B23853340F6EAD4F3A698CDC39CE42FBF23F3A4A6E3803",
+    "tendermintRest": {
+      "http": [
+        "https://stride-rpc.polkachu.com:443"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://stride-api.polkachu.com",

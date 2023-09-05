@@ -26,6 +26,7 @@ export default {
         "svg": "statics/GRAV.svg"
       },
       "denom": "GRAV",
+      "channel": "channel-8",
       "minCoinDenom": "ugraviton",
       "cosmosDenom": "ibc/7F0C2CB6E79CC36D29DA7592899F98E3BEFD2CF77A94340C317032A78812393D",
       "category": "cosmos",
@@ -40,6 +41,7 @@ export default {
         "png": "statics/USDC.grv.png"
       },
       "denom": "USDC.grv",
+      "channel": "channel-8",
       "minCoinDenom": "uusdc",
       "cosmosDenom": "ibc/693989F95CF3279ADC113A6EF21B02A51EC054C95A9083F2E290126668149433",
       "category": "stablecoin",
@@ -54,6 +56,7 @@ export default {
         "png": "statics/gDAI.png"
       },
       "denom": "gDAI",
+      "channel": "channel-8",
       "minCoinDenom": "dai-wei",
       "cosmosDenom": "ibc/F96A7F81E8F82E4EE81F94D507CD257319EFB70FE46E23B4953F63B62E855603",
       "category": "stablecoin",
@@ -68,6 +71,7 @@ export default {
         "png": "statics/gUSDT.png"
       },
       "denom": "gUSDT",
+      "channel": "channel-8",
       "minCoinDenom": "uusdt",
       "cosmosDenom": "ibc/DF63978F803A2E27CA5CC9B7631654CCF0BBC788B3B7F0A10200508E37C70992",
       "category": "stablecoin",
@@ -82,6 +86,7 @@ export default {
         "png": "statics/gWBTC.png"
       },
       "denom": "gWBTC",
+      "channel": "channel-8",
       "minCoinDenom": "satoshi",
       "cosmosDenom": "ibc/350B6DC0FF48E3BDB856F40A8259909E484259ED452B3F4F39A0FEF874F30F61",
       "category": "bitcoin",
@@ -96,6 +101,7 @@ export default {
         "png": "statics/gWETH.png"
       },
       "denom": "gWETH",
+      "channel": "channel-8",
       "minCoinDenom": "wei",
       "cosmosDenom": "ibc/6B3FCE336C3465D3B72F7EFB4EB92FC521BC480FE9653F627A0BD0237DF213F3",
       "category": "ethereum",
@@ -105,6 +111,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-3",
+  "source": {
+    "sourceChannel": "channel-65",
+    "destinationChannel": "channel-8",
+    "sourceIBCDenomToEvmos": "ibc/6B207CDA2448604B83A0674AADD830C490C1AAB7D568135E52589E96A00B6EEF",
+    "tendermintRest": {
+      "http": [
+        "https://gravitychain.io:26657/"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://gravitychain.io:1317",

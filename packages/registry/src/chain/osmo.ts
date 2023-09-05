@@ -26,6 +26,7 @@ export default {
         "svg": "statics/OSMO.svg"
       },
       "denom": "OSMO",
+      "channel": "channel-0",
       "minCoinDenom": "uosmo",
       "cosmosDenom": "ibc/ED07A3391A112B175915CD8FAF43A2DA8E4790EDE12566649D0C2F97716B8518",
       "category": "cosmos",
@@ -35,6 +36,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-0",
+  "source": {
+    "sourceChannel": "channel-204",
+    "destinationChannel": "channel-0",
+    "sourceIBCDenomToEvmos": "ibc/6AE98883D4D5D5FF9E50D7130F1305DA2FFA0C652D1DD9C123657C6B4EB2DF8A",
+    "tendermintRest": {
+      "http": [
+        "https://rpc-osmosis.blockapsis.com/"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://osmosis-lcd.quickapi.com:443",

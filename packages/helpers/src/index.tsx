@@ -3,3 +3,5 @@
 
 export * from "./styles";
 export * from "./error-handling";
+export * from "./assertions";
+export * from "./hash";

@@ -26,6 +26,7 @@ export default {
         "svg": "statics/JUNO.svg"
       },
       "denom": "JUNO",
+      "channel": "channel-5",
       "minCoinDenom": "ujuno",
       "cosmosDenom": "ibc/448C1061CE97D86CC5E86374CD914870FB8EBA16C58661B5F1D3F46729A2422D",
       "category": "cosmos",
@@ -35,6 +36,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-14",
+  "source": {
+    "sourceChannel": "channel-70",
+    "destinationChannel": "channel-5",
+    "sourceIBCDenomToEvmos": "ibc/9B990F95D85E7CA8C46544975776CAA20A3DEE3507EEA829A4000D8D65617F6D",
+    "tendermintRest": {
+      "http": [
+        "https://rpc-juno.whispernode.com"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://lcd-juno.itastakers.com",

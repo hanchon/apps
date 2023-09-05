@@ -1,5 +1,5 @@
-import { ApiPresignTxSchema } from "../utils/validation/api-presign-tx-schema";
-import { makeApiRequester } from "./utils";
+import { ApiPresignTxSchema } from "../../utils/validation/api-presign-tx-schema";
+import { makeApiRequester } from "../utils";
 
 interface IBCChainParams {
   sender: string;

@@ -25,6 +25,7 @@ export default {
         "png": "statics/REGEN.png"
       },
       "denom": "REGEN",
+      "channel": "channel-20",
       "minCoinDenom": "uregen",
       "cosmosDenom": "ibc/36DCDCDFB1D0D723546878E241BC5800D27214E1E1DA31A4E424DE2280B0B0EE",
       "category": "cosmos",
@@ -34,6 +35,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-67",
+  "source": {
+    "sourceChannel": "channel-44",
+    "destinationChannel": "channel-20",
+    "sourceIBCDenomToEvmos": "ibc/3F0E005C3822C1BBA60E7CC368630441B1F5055FBD58A004F729A98FE1AA17B0",
+    "tendermintRest": {
+      "http": [
+        "https://rpc-regen.ecostake.com"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://rest-regen.ecostake.com",

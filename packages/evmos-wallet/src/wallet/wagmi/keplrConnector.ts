@@ -27,6 +27,7 @@ import {
 import { isHex, parseAccount } from "viem/utils";
 import { isString } from "helpers/src/assertions";
 import { z } from "zod";
+import Long from "long";
 
 const evmosInfo = getEvmosChainInfo();
 
@@ -125,11 +126,12 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     });
   }
 
-  async getPubkey() {
-    const signer = await this.getSigner();
-    const [account] = await signer.getAccounts();
-    assertIf(account, "ACCOUNT_NOT_FOUND");
-    return account.pubkey;
+  async getPubkey({ cosmosChainId }: { cosmosChainId?: string } = {}) {
+    const provider = await this.getProvider();
+    const { pubKey } = await provider.getKey(
+      cosmosChainId ?? (await this.getCosmosId())
+    );
+    return pubKey;
   }
   async getProvider() {
     if (this.provider) return this.provider;
