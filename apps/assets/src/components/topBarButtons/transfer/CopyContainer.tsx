@@ -4,10 +4,10 @@
 import { CopyIcon } from "icons";
 
 export const CopyContainer = ({
-  address,
+  address = "",
   handleOnClick,
 }: {
-  address: string;
+  address?: string;
   handleOnClick: () => void;
 }) => {
   return (

@@ -1,10 +1,20 @@
 import { normalizeError } from "./normalizeError";
 
-export const tryCatch = async <T>(fn: (() => T) | (() => Promise<T>)) => {
+export function tryCatch<T extends Promise<unknown>>(
+  fn: () => T
+): Promise<[null, T] | [Error, null]>;
+export function tryCatch<T>(fn: () => T): [null, T] | [Error, null];
+export function tryCatch<T>(fn: () => T) {
   try {
-    return [null, await fn()] as const;
+    const result = fn();
+    if (result instanceof Promise) {
+      return result
+        .then((value) => [null, value] as const)
+        .catch((error) => [normalizeError(error), null] as const);
+    }
+    return [null, fn()] as const;
   } catch (error) {
     console.error(error);
     return [normalizeError(error), null] as const;
   }
-};
+}
