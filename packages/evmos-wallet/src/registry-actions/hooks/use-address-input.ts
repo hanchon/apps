@@ -16,6 +16,7 @@ import { getPrefixes } from "../get-prefixes";
 import { isValidRegistryPrefix } from "../is-valid-registry-prefix";
 import { Prefix } from "../types";
 
+export type AddressInputErrors = "INVALID_ADDRESS" | "INVALID_PREFIX";
 /**
  * This hook is used to facilitate address input handling and validation
  *
@@ -115,7 +116,7 @@ export const useAddressInput = <TPrefix extends Prefix>(
       return [];
     }
 
-    const errors: ("INVALID_ADDRESS" | "INVALID_PREFIX")[] = [];
+    const errors: AddressInputErrors[] = [];
 
     if (prefix && !isAllowedPrefix) {
       errors.push("INVALID_PREFIX");

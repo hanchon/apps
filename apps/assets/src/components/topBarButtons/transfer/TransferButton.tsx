@@ -9,11 +9,13 @@ import { getTransferModalState } from "./utils";
 import { useAccount } from "wagmi";
 import { CancelModalTransfer } from "./CloseModal";
 import { useTranslation } from "next-i18next";
+import { useTransferModal } from "./hooks/useTransferModal";
 
 export const TransferButton = () => {
   const handleOnClick = () => {
     setShowModal(true);
   };
+  const { setShow } = useTransferModal();
 
   const { isDisconnected } = useAccount();
 
@@ -40,19 +42,19 @@ export const TransferButton = () => {
         //   wallet.extensionName === WALLECT_CONNECT_KEY
 
         icon={<TransferIcon />}
-        onClick={handleOnClick}
+        onClick={() => setShow(true)}
       >
         {/* // add i18 */}
         <p>{t("transfer.button")}</p>
       </PrimaryButton>
-      <ModalWithTransitions
+      {/* <ModalWithTransitions
         show={showModal}
         setShow={setShowModal}
         propClose={true}
         handleCloseAction={setShowCloseModal}
       >
         <TransferModal />
-      </ModalWithTransitions>
+      </ModalWithTransitions> */}
     </>
   );
 };
