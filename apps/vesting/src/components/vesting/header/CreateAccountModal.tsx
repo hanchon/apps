@@ -41,8 +41,8 @@ export const CreateAccountModal = () => {
 
       <form
         onSubmit={handleSubmit((d) => {
-          // TODO: logic for create account modal
           if (d.accountName !== "" && d.address) {
+            // TODO: logic for create account modal
             setVestingAccountNameLocalstorage(d.address, d.accountName);
           }
         })}

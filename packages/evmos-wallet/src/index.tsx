@@ -98,4 +98,3 @@ export {
   getNumberBalance,
   getNumberBalanceInDollars,
 } from "./hooks/rewards/helpers";
-
