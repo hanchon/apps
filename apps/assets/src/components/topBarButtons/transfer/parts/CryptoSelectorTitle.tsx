@@ -4,10 +4,5 @@
 import { ComponentProps } from "react";
 
 export const CryptoSelectorTitle = ({ ...rest }: ComponentProps<"h3"> & {}) => {
-  return (
-    <h1
-      className="text-xs font-medium text-gray-400 mb-1 flex items-start"
-      {...rest}
-    />
-  );
+  return <h1 className="text-xs font-medium text-gray-400 pb-1" {...rest} />;
 };

@@ -30,7 +30,7 @@ export const AccountSelector = ({
     }
   }, [address]);
   return (
-    <div className="flex flex-col space-y-3">
+    <div className="flex flex-col space-y-3 mb-8">
       <div>
         <CryptoSelector value={chain.prefix} onChange={() => {}}>
           <CryptoSelector.Button src={"/assets/tokens/evmos.png"}>

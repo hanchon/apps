@@ -61,14 +61,16 @@ export const Content = () => {
           />
 
           {sender && receiver && (
-            <>
-              <h2 className="text-gray-300 text-xs font-bold">Sending</h2>
+            <div className="space-y-3">
+              <h2 className="text-gray-300 text-xs font-bold my-2">
+                {t("transfer.section.summary.title")}
+              </h2>
               <TransferSummary
                 sender={sender}
                 receiver={receiver}
                 token={{ denom, amount }}
               />
-            </>
+            </div>
           )}
         </section>
       </form>

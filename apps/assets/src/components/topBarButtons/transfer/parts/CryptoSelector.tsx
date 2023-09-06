@@ -37,7 +37,7 @@ CryptoSelector.Button = ({
         width={variant === "default" ? 24 : 34}
         height={variant === "default" ? 24 : 34}
       />
-      <span className="text-sm text-white">{children}</span>
+      <span className="text-sm text-white capitalize">{children}</span>
       <DropdownArrow
         className="h-5 w-5 pointer-events-none text-red"
         aria-hidden="true"
