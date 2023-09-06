@@ -36,7 +36,7 @@ export const AmountInput = ({
       <input
         value={internalValueState}
         className={cn(
-          "w-full font-bold py-3 px-4 text-sm leading-5 text-gray-900 focus:ring-1 border rounded",
+          "w-full font-bold py-3 px-4 text-sm leading-5 text-gray-900 focus:ring-1 border-2 border-pink-300 rounded bg-pink-200 text-black focus-visible:outline-none",
           className
         )}
         onChange={(e) => {
@@ -76,7 +76,7 @@ export const AmountInput = ({
 
       <button
         className={cn(
-          "absolute right-2 p-2 leading-none top-1/2 -translate-y-1/2 border",
+          "absolute right-2 py-2 px-2.5 leading-none top-1/2 -translate-y-1/2 rounded-md bg-pink-400 text-black-900 text-sm",
           maxButtonClassName
         )}
         onClick={(e) => {
@@ -85,7 +85,7 @@ export const AmountInput = ({
           onChange?.(max ?? 0n);
         }}
       >
-        Max
+        Max.
       </button>
     </div>
   );

@@ -5,19 +5,21 @@ import { Dispatch, Fragment, SetStateAction } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CloseIcon } from "icons";
 import useEventListener from "./useEventListener";
-
+import cx from "clsx";
 export const ModalWithTransitions = ({
   show,
   setShow,
   children,
   propClose,
   handleCloseAction,
+  variant = "default",
 }: {
   show: boolean;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setShow: (show: boolean) => void;
   children: JSX.Element;
   propClose?: boolean;
   handleCloseAction?: React.Dispatch<React.SetStateAction<boolean>>;
+  variant?: "default" | "modal-black";
 }) => {
   const handleCloseModal = () => {
     // open a second modal if the user closes the first one.
@@ -77,7 +79,17 @@ export const ModalWithTransitions = ({
               leaveFrom="transform scale-100 opacity-100"
               leaveTo="transform scale-95 opacity-0"
             >
-              <Dialog.Panel className="relative min-w-[300px] max-w-[850px] transform overflow-hidden rounded-lg bg-pearl1 text-left shadow-xl transition-all md:min-w-[400px]">
+              <Dialog.Panel
+                className={cx(
+                  "relative min-w-[300px] max-w-[850px] transform overflow-hidden rounded-lg text-left  transition-all md:min-w-[400px]",
+                  {
+                    "bg-pearl1 shadow-xl": variant === "default",
+
+                    "bg-black-900 shadow-custom-sm shadow-custom px-6 pt-6 pb-16 text-white":
+                      variant === "modal-black",
+                  }
+                )}
+              >
                 <div className="absolute right-0 top-0 block pr-4 pt-4">
                   {propClose && (
                     <button
@@ -87,7 +99,10 @@ export const ModalWithTransitions = ({
                     >
                       <span className="sr-only">Close</span>
                       <CloseIcon
-                        className="h-6 w-6 text-gray2"
+                        className={cx("h-6 w-auto", {
+                          "text-gray2": variant === "default",
+                          "text-pink-300": variant === "modal-black",
+                        })}
                         aria-hidden="true"
                       />
                     </button>

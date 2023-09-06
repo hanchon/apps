@@ -49,3 +49,5 @@ export { InformationIcon } from "./InformationIcon";
 export { DownloadIcon } from "./DownloadIcon";
 export { RightArrowIcon } from "./RightArrowIcon";
 export { HandsEmoji } from "./HandsEmoji";
+export { SendIcon } from "./SendIcon";
+export { CopyPasteIcon } from "./CopyPasteIcon";

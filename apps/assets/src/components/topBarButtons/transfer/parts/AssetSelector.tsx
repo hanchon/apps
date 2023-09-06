@@ -4,6 +4,8 @@ import { chains } from "@evmos-apps/registry";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "./CryptoSelector";
 import { getTokenByMinDenom } from "evmos-wallet";
+import { CryptoSelectorTitle } from "./CryptoSelectorTitle";
+import { useTranslation } from "next-i18next";
 type Asset = {
   denom: TokenMinDenom;
   amount: bigint;
@@ -15,6 +17,7 @@ export const AssetSelector = ({
   value: Asset;
   onChange: (value: Asset) => void;
 }>) => {
+  const { t } = useTranslation();
   const [network, setNetwork] = useState<Prefix>("evmos");
   const selectedChain = chains[network];
   const selectedToken = getTokenByMinDenom(value.denom);
@@ -35,10 +38,12 @@ export const AssetSelector = ({
     return [...nativeNetworkTokens, ...evmosTokens];
   }, [network]);
   return (
-    <>
+    <div className="bg-gray-600 p-3 rounded-md space-y-3">
       <div className="flex justify-between relative">
-        <div>
-          <h3>Token</h3>
+        <div className="h-auto justify-between flex flex-col">
+          <CryptoSelectorTitle>
+            {t("transfer.section.asset.token")}
+          </CryptoSelectorTitle>
           <CryptoSelector
             value={value.denom}
             onChange={(denom) =>
@@ -48,7 +53,10 @@ export const AssetSelector = ({
               })
             }
           >
-            <CryptoSelector.Button src={"/assets/tokens/evmos.png"}>
+            <CryptoSelector.Button
+              src={"/assets/tokens/evmos.png"}
+              variant="black"
+            >
               {selectedToken.name}
             </CryptoSelector.Button>
             <CryptoSelector.Options>
@@ -66,8 +74,10 @@ export const AssetSelector = ({
             </CryptoSelector.Options>
           </CryptoSelector>
         </div>
-        <div>
-          <h3>Network</h3>
+        <div className="h-auto justify-between flex flex-col">
+          <CryptoSelectorTitle>
+            {t("transfer.section.asset.network")}
+          </CryptoSelectorTitle>
           <CryptoSelector value={network} onChange={setNetwork}>
             <CryptoSelector.Button src={"/assets/tokens/evmos.png"}>
               {selectedChain.name}
@@ -98,6 +108,6 @@ export const AssetSelector = ({
           });
         }}
       />
-    </>
+    </div>
   );
 };
