@@ -2,7 +2,7 @@ import { normalizeError } from "./normalizeError";
 
 export function tryCatch<T extends Promise<unknown>>(
   fn: () => T
-): Promise<[null, T] | [Error, null]>;
+): Promise<[null, Awaited<T>] | [Error, null]>;
 export function tryCatch<T>(fn: () => T): [null, T] | [Error, null];
 export function tryCatch<T>(fn: () => T) {
   try {

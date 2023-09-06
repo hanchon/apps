@@ -8,13 +8,13 @@ import { getTransferModalState } from "./utils";
 import { useAccount } from "wagmi";
 import { CancelModalTransfer } from "./CloseModal";
 import { useTranslation } from "next-i18next";
-import { useTransferModal } from "./hooks/useTransferModal";
+import { useModal } from "./hooks/useModal";
 
 export const TransferButton = () => {
   const handleOnClick = () => {
     setShowModal(true);
   };
-  const { setShow } = useTransferModal();
+  const { setShow } = useModal("transfer");
 
   const { isDisconnected } = useAccount();
 

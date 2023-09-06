@@ -3,7 +3,7 @@ import { Fragment, PropsWithChildren } from "react";
 import Image from "next/image";
 import { DropdownArrow } from "icons";
 import { cn } from "helpers";
-import cx from "clsx";
+
 export function CryptoSelector<T extends string>(
   props: PropsWithChildren<{
     value: T;
@@ -23,7 +23,7 @@ CryptoSelector.Button = ({
 }>) => {
   return (
     <Listbox.Button
-      className={cx(
+      className={cn(
         "flex space-x-2 items-center py-1 pl-1 pr-3 rounded-3xl justify-end",
         {
           "bg-gray-500": variant === "default",

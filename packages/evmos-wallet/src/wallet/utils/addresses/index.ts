@@ -7,3 +7,4 @@ export * from "./types";
 export * from "./get-prefix";
 export * from "./is-evmos-address";
 export * from "./is-valid-hex-address";
+export * from "./is-valid-cosmos-address";

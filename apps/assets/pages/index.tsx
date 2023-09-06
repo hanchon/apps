@@ -26,6 +26,7 @@ import { GiveFeedback } from "../src/GiveFeedback";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Content } from "../src/components/topBarButtons/transfer/Content";
 import { useTransferModal } from "../src/components/topBarButtons/transfer/hooks/useTransferModal";
+import { useModal } from "../src/components/topBarButtons/transfer/hooks/useModal";
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -78,16 +79,18 @@ export default function Home() {
   );
 }
 function Modals() {
-  const { show, setShow } = useTransferModal();
+  const { show, setShow } = useModal("transfer");
 
   return (
-    <ModalWithTransitions
-      show={show}
-      setShow={setShow}
-      propClose={true}
-      variant="modal-black"
-    >
-      <Content />
-    </ModalWithTransitions>
+    <>
+      <ModalWithTransitions
+        show={show}
+        setShow={setShow}
+        propClose={true}
+        variant="modal-black"
+      >
+        <Content />
+      </ModalWithTransitions>
+    </>
   );
 }

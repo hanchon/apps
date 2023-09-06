@@ -27,7 +27,6 @@ import {
 import { isHex, parseAccount } from "viem/utils";
 import { isString } from "helpers/src/assertions";
 import { z } from "zod";
-import Long from "long";
 
 const evmosInfo = getEvmosChainInfo();
 

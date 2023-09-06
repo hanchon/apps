@@ -1,4 +1,4 @@
-import { writeContract } from "wagmi/dist/actions";
+import { writeContract } from "wagmi/actions";
 import { Address, isEvmosAddress } from "../../wallet";
 import { Prefix, TokenMinDenom } from "../types";
 import { prepareContractERC20Transfer } from "./prepare-contract-erc20-transfer";

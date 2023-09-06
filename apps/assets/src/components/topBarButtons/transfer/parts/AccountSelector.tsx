@@ -1,10 +1,16 @@
 import { useAccount } from "wagmi";
 import React, { PropsWithChildren, useEffect, useMemo } from "react";
-import { Address, useAddressInput } from "evmos-wallet";
+import {
+  Address,
+  getPrefix,
+  normalizeToCosmosAddress,
+  useAddressInput,
+} from "evmos-wallet";
 import { chains } from "@evmos-apps/registry";
 import { CryptoSelector } from "./CryptoSelector";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { CopyPasteIcon } from "icons";
+import { useAccountByPrefix } from "../hooks/useAccountByPrefix";
 
 export const AccountSelector = ({
   value,
@@ -13,14 +19,29 @@ export const AccountSelector = ({
   value?: Address<Prefix>;
   onChange: (value?: Address<Prefix>) => void;
 }>) => {
-  const account = useAccount();
-  const { prefix, address, inputProps, errors } = useAddressInput(
-    account.address
-  );
+  const { address, inputProps, errors, setValue } = useAddressInput(value);
   const networkOptions = useMemo(
     () => Object.values(chains).map(({ prefix }) => prefix),
     []
   );
+  const [prefix, setChainPrefix] = React.useState<Prefix>("evmos");
+  const [requestedPrefix, setRequestedPrefix] = React.useState<
+    Prefix | undefined
+  >(undefined);
+
+  const { data, error } = useAccountByPrefix(requestedPrefix);
+
+  useEffect(() => {
+    setRequestedPrefix(undefined);
+    if (data) setValue(data.bech32Address);
+  }, [data, error]);
+
+  useEffect(() => {
+    if (!address) {
+      return;
+    }
+    setChainPrefix(getPrefix(normalizeToCosmosAddress(address)));
+  }, [address]);
 
   const chain = prefix ? chains[prefix] : chains.evmos;
 
@@ -29,11 +50,17 @@ export const AccountSelector = ({
       onChange?.(address);
     }
   }, [address]);
+
   return (
     <div className="flex flex-col space-y-3 mb-8">
       <div>
-        <CryptoSelector value={chain.prefix} onChange={() => {}}>
-          <CryptoSelector.Button src={"/assets/tokens/evmos.png"}>
+        <CryptoSelector
+          value={prefix}
+          onChange={(value) => {
+            setRequestedPrefix(value);
+          }}
+        >
+          <CryptoSelector.Button src={`/assets/chains/${chain.prefix}.png`}>
             {chain.name}
           </CryptoSelector.Button>
           <CryptoSelector.Options>
@@ -41,7 +68,7 @@ export const AccountSelector = ({
               const chain = chains[value];
               return (
                 <CryptoSelector.Option
-                  src={"/assets/tokens/evmos.png"}
+                  src={`/assets/chains/${value}.png`}
                   key={value}
                   value={value}
                 >

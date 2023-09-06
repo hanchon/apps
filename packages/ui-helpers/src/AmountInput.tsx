@@ -1,6 +1,7 @@
 import { ComponentProps, useState, useEffect } from "react";
 import { formatUnits, parseUnits } from "viem";
 import { cn, clamp, E } from "helpers";
+
 export const AmountInput = ({
   value,
   decimals,
@@ -22,8 +23,13 @@ export const AmountInput = ({
   const formattedValue = formatUnits(value ?? 0n, decimalsUnit);
   const [internalValueState, setValue] = useState(formattedValue);
 
+  const isInternalSync = parseUnits(internalValueState, decimalsUnit) === value;
   useEffect(() => {
-    // amount = clamp(amount, min ?? 0n, max ?? amount);
+    if (isInternalSync) return;
+    setValue(formattedValue);
+  }, [isInternalSync]);
+
+  useEffect(() => {
     setValue((prev) => {
       const parsed = parseUnits(prev, decimalsUnit);
       const amount = clamp(parsed, min, max ?? parsed);
@@ -40,11 +46,12 @@ export const AmountInput = ({
           className
         )}
         onChange={(e) => {
-          if (e.target.value.split(".").length > 2) {
+          const inputValue = e.target.value.replace(/^(0+)(?=[1-9])/, "");
+          if (inputValue.split(".").length > 2) {
             return;
           }
           const [error, parsed] = E.try(() =>
-            parseUnits(e.target.value, decimalsUnit)
+            parseUnits(inputValue, decimalsUnit)
           );
 
           if (error) {
@@ -54,7 +61,7 @@ export const AmountInput = ({
           if (max || min) {
             amount = clamp(amount, min ?? 0n, max ?? amount);
           }
-          setValue(e.target.value);
+          setValue(inputValue);
           if (amount !== value) {
             onChange?.(amount);
           }

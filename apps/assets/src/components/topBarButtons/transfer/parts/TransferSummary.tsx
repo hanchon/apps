@@ -36,7 +36,7 @@ export const TransferSummary = ({
         <div className="flex flex-col space-y-2">
           <Image
             className="h-12 w-12"
-            src={`/assets/chains/${senderChain.name}.png`}
+            src={`/assets/chains/${senderChain.prefix}.png`}
             width={48}
             height={48}
             alt={senderChain.name}
@@ -48,12 +48,12 @@ export const TransferSummary = ({
         <h3 className="text-xs font-bold flex justify-center items-center gap-x-2 text-white">
           <Image
             className="h-6 w-6"
-            src={`/assets/tokens/${name}.png`}
+            src={`/assets/tokens/${denom}.png`}
             width={18}
             height={18}
             alt={name}
           />
-          {formatUnits(token.amount, parseInt(String(decimals)))} {denom}
+          {formatUnits(token.amount, decimals)} {denom}
         </h3>
 
         <hr
@@ -74,7 +74,7 @@ export const TransferSummary = ({
         <div className="flex flex-col space-y-2">
           <Image
             className="h-12 w-12"
-            src={`/assets/chains/${receiverChain.name}.png`}
+            src={`/assets/chains/${receiverChain.prefix}.png`}
             width={48}
             height={48}
             alt={receiverChain.name}
