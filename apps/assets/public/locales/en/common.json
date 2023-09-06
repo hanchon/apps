@@ -20,6 +20,7 @@
   "transfer.section.asset.token": "Token",
   "transfer.section.asset.network": "Network",
   "transfer.section.to": "To",
+  "transfer.section.summary.title": "Sending",
   "transfer.deposit.helper.description": "We prefilled the address of the recipient above with",
   "transfer.deposit.helper.description2": "the Evmos address that you are logged in with",
   "transfer.deposit.helper.description3": ". If you are depositing into a different address, you can make the changes accordingly.",

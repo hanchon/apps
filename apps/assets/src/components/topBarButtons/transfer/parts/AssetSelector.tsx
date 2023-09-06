@@ -38,9 +38,9 @@ export const AssetSelector = ({
     return [...nativeNetworkTokens, ...evmosTokens];
   }, [network]);
   return (
-    <div className="bg-gray-600 p-3 rounded-md space-y-3">
-      <div className="flex justify-between relative">
-        <div className="h-auto justify-between flex flex-col">
+    <div className="bg-gray-600 p-3 rounded-md space-y-3 mb-8">
+      <div className="flex justify-between h-full relative">
+        <div className="justify-center flex flex-col h-full">
           <CryptoSelectorTitle>
             {t("transfer.section.asset.token")}
           </CryptoSelectorTitle>
@@ -57,7 +57,7 @@ export const AssetSelector = ({
               src={"/assets/tokens/evmos.png"}
               variant="black"
             >
-              {selectedToken.name}
+              {selectedToken.name.toLowerCase()}
             </CryptoSelector.Button>
             <CryptoSelector.Options>
               {tokenOptions.map((token) => {
@@ -74,7 +74,7 @@ export const AssetSelector = ({
             </CryptoSelector.Options>
           </CryptoSelector>
         </div>
-        <div className="h-auto justify-between flex flex-col">
+        <div className="justify-center flex flex-col h-full">
           <CryptoSelectorTitle>
             {t("transfer.section.asset.network")}
           </CryptoSelectorTitle>

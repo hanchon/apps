@@ -31,18 +31,21 @@ export const TransferSummary = ({
   const { name, decimals, denom } = getTokenByMinDenom(token.denom);
 
   return (
-    <div className="flex items-center ">
+    <div className="flex items-stretch">
       {senderChain && (
-        <Image
-          className="h-12 w-12"
-          src={`/assets/chains/${senderChain.name}.png`}
-          width={48}
-          height={48}
-          alt={senderChain.name}
-        />
+        <div className="flex flex-col space-y-2">
+          <Image
+            className="h-12 w-12"
+            src={`/assets/chains/${senderChain.name}.png`}
+            width={48}
+            height={48}
+            alt={senderChain.name}
+          />
+          <p className="text-xxs text-gray-200">Account 1</p>
+        </div>
       )}
-      <div className="grow px-4 justify-center flex flex-col items-center">
-        <h3 className="text-xs font-bold flex justify-center items-center gap-x-2 text-white mb-2">
+      <div className="px-4 h-full justify-center flex flex-col items-center flex-grow">
+        <h3 className="text-xs font-bold flex justify-center items-center gap-x-2 text-white">
           <Image
             className="h-6 w-6"
             src={`/assets/tokens/${name}.png`}
@@ -50,18 +53,16 @@ export const TransferSummary = ({
             height={18}
             alt={name}
           />
-          {formatUnits(token.amount, parseInt(String(decimals)))}
-          {denom}
+          {formatUnits(token.amount, parseInt(String(decimals)))} {denom}
         </h3>
 
         <hr
           className={cn(
-            "relative h-1 bg-slate-500 overflow-visible border-0 w-full",
+            "relative h-[2px] bg-gradient-to-r to-[#FCDBD6CC] from-[#FF745DCC] overflow-visible border-0 w-full my-2",
             // arrow
             "after:absolute after:block after:right-0",
-            "after:h-4 after:w-4",
-            "after:border-t-4 after:border-r-4",
-            "after:border-slate-500",
+            "after:h-2 after:w-2",
+            "after:border-t-2 after:border-r-2 after:border-t-gradient-to-r after:border-t-[#FCDBD6CC] after:border-r-[#FCDBD6CC]",
             "after:rotate-45 after:top-1/2 after:-translate-y-1/2"
           )}
         />
@@ -70,13 +71,16 @@ export const TransferSummary = ({
         </p>
       </div>
       {receiverChain && (
-        <Image
-          className="h-12 w-12"
-          src={`/assets/chains/${receiverChain.name}.png`}
-          width={48}
-          height={48}
-          alt={receiverChain.name}
-        />
+        <div className="flex flex-col space-y-2">
+          <Image
+            className="h-12 w-12"
+            src={`/assets/chains/${receiverChain.name}.png`}
+            width={48}
+            height={48}
+            alt={receiverChain.name}
+          />
+          <p className="text-xxs text-gray-200">Account 2</p>
+        </div>
       )}
     </div>
   );
