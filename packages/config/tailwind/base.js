@@ -11,6 +11,10 @@ const config = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        custom: "0px 4px 30px 0px rgba(98, 87, 85, 0.6)",
+        "custom-sm": "0px 4px 15px 0px rgba(156, 132, 129, 0.6)",
+      },
       colors: {
         pearl: "#faf1e4",
         pearl1: "#FAF8F8",
@@ -29,6 +33,7 @@ const config = {
         red: "#ed4e33",
         red1: "#AA2912",
         red2: "#6b1c0e",
+        "red-300": "#FF6565",
         green: "#97ad11",
         gray: "#F0EEEC",
         gray2: "#858B97",
@@ -46,6 +51,11 @@ const config = {
         pink: "#FED2CA",
         gray1: "#413836",
         gray300: "#D1D5DB",
+        "gray-200": "#F3F3F3",
+        "gray-300": "#C9C9C9",
+        "gray-400": "#919191",
+        "gray-500": "#F3F3F333",
+        "gray-600": "#FFE6E233",
         lightYellow: "#F4E5BA",
         lightYellow1: "#FEFCE8",
         lightYellow2: "#F0FDF4",
@@ -53,9 +63,14 @@ const config = {
         brown: "#854D0E",
         lightBlue: "#EFF6FF",
         blue: "#1E429F",
+        "black-900": "#121212",
+        "pink-200": "#FFE6E2",
+        "pink-300": "#FF745D",
+        "pink-400": "#FF745D80",
       },
       fontSize: {
         h5: "1.36rem",
+        xxs: "10px",
       },
     },
   },

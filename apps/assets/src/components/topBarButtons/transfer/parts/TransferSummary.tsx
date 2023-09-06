@@ -31,23 +31,23 @@ export const TransferSummary = ({
   const { name, decimals, denom } = getTokenByMinDenom(token.denom);
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center ">
       {senderChain && (
         <Image
           className="h-12 w-12"
           src={`/assets/chains/${senderChain.name}.png`}
-          width={45}
-          height={45}
+          width={48}
+          height={48}
           alt={senderChain.name}
         />
       )}
       <div className="grow px-4 justify-center flex flex-col items-center">
-        <h3 className="text-lg font-bold flex justify-center  gap-x-2">
+        <h3 className="text-xs font-bold flex justify-center items-center gap-x-2 text-white mb-2">
           <Image
             className="h-6 w-6"
             src={`/assets/tokens/${name}.png`}
-            width={25}
-            height={25}
+            width={18}
+            height={18}
             alt={name}
           />
           {formatUnits(token.amount, parseInt(String(decimals)))}
@@ -65,14 +65,16 @@ export const TransferSummary = ({
             "after:rotate-45 after:top-1/2 after:-translate-y-1/2"
           )}
         />
-        <p>Fee: </p>
+        <p className="text-white text-xxs">
+          Fee: <span className="text-pink-300">0.005 EVMOS</span>
+        </p>
       </div>
       {receiverChain && (
         <Image
           className="h-12 w-12"
           src={`/assets/chains/${receiverChain.name}.png`}
-          width={25}
-          height={25}
+          width={48}
+          height={48}
           alt={receiverChain.name}
         />
       )}

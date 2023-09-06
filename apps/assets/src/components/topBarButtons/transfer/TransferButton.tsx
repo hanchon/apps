@@ -3,8 +3,7 @@
 
 import { TransferIcon } from "icons";
 import { useEffect, useState } from "react";
-import { ModalWithTransitions, PrimaryButton } from "ui-helpers";
-import { TransferModal } from "./Modal";
+import { PrimaryButton } from "ui-helpers";
 import { getTransferModalState } from "./utils";
 import { useAccount } from "wagmi";
 import { CancelModalTransfer } from "./CloseModal";

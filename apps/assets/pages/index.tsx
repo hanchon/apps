@@ -24,7 +24,7 @@ import { StatefulFooter } from "stateful-components";
 import { MixpanelProvider } from "tracker";
 import { GiveFeedback } from "../src/GiveFeedback";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { TransferModal } from "../src/components/topBarButtons/transfer/Modal";
+import { Content } from "../src/components/topBarButtons/transfer/Content";
 import { useTransferModal } from "../src/components/topBarButtons/transfer/hooks/useTransferModal";
 
 export async function getStaticProps({ locale }: { locale: string }) {
@@ -81,8 +81,13 @@ function Modals() {
   const { show, setShow } = useTransferModal();
 
   return (
-    <ModalWithTransitions show={show} setShow={setShow} propClose={true}>
-      <TransferModal />
+    <ModalWithTransitions
+      show={show}
+      setShow={setShow}
+      propClose={true}
+      variant="modal-black"
+    >
+      <Content />
     </ModalWithTransitions>
   );
 }

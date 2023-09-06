@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import React from "react";
-import { Subtitle } from "ui-helpers";
+import { Subtitle, Title } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "./parts/AssetSelector";
@@ -10,8 +10,8 @@ import { useAccount } from "wagmi";
 import { Address, normalizeToCosmosAddress } from "evmos-wallet";
 import { AccountSelector } from "./parts/AccountSelector";
 import { useURLState } from "./hooks/useURLState";
-
 import { TransferSummary } from "./parts/TransferSummary";
+import { SendIcon } from "icons";
 export const Content = () => {
   const { t } = useTranslation();
 
@@ -34,10 +34,15 @@ export const Content = () => {
 
   return (
     <section className="space-y-3">
-      <Subtitle>{t("transfer.subtitle")}</Subtitle>
+      <Title variant="modal-black" icon={<SendIcon />}>
+        {t("transfer.title")}
+      </Title>
+
       <form>
         <section>
-          <h2 className="font-bold">Asset</h2>
+          <Subtitle variant="modal-black">
+            {t("transfer.section.asset")}
+          </Subtitle>
           <AssetSelector
             value={{ denom, amount }}
             onChange={({ denom, amount }) =>
@@ -49,7 +54,7 @@ export const Content = () => {
             }
           />
 
-          <h2 className="font-bold">To</h2>
+          <Subtitle variant="modal-black">{t("transfer.section.to")}</Subtitle>
           <AccountSelector
             value={receiver}
             onChange={(receiver) => setState((prev) => ({ ...prev, receiver }))}
@@ -57,7 +62,7 @@ export const Content = () => {
 
           {sender && receiver && (
             <>
-              <h2 className="font-bold">Sending</h2>
+              <h2 className="text-gray-300 text-xs font-bold">Sending</h2>
               <TransferSummary
                 sender={sender}
                 receiver={receiver}
