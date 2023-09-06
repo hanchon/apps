@@ -1,5 +1,5 @@
-import { ApiPresignTxSchema } from "../utils/validation";
-import { makeApiRequester } from "./utils";
+import { ApiPresignTxSchema } from "../../utils/validation";
+import { makeApiRequester } from "../utils";
 
 export type ConvertMsg = {
   addressEth: string;

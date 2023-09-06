@@ -1,47 +1,72 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { DownloadIcon, RightArrowIcon } from "icons";
-import { useState } from "react";
-import { DepositContainer } from "./DepositContainer";
-import { Subtitle, Tabs } from "ui-helpers";
-import { TRANSFER_TYPES } from "./utils";
+import React from "react";
+import { Subtitle } from "ui-helpers";
 import { useTranslation } from "next-i18next";
+import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
+import { AssetSelector } from "./parts/AssetSelector";
+import { useAccount } from "wagmi";
+import { Address, normalizeToCosmosAddress } from "evmos-wallet";
+import { AccountSelector } from "./parts/AccountSelector";
+import { useURLState } from "./hooks/useURLState";
 
+import { TransferSummary } from "./parts/TransferSummary";
 export const Content = () => {
-  const [transferType, setTransferType] = useState(TRANSFER_TYPES.DEPOSIT);
   const { t } = useTranslation();
 
-  function renderScreen() {
-    if (transferType === TRANSFER_TYPES.DEPOSIT) {
-      return <DepositContainer />;
-    }
+  const [{ receiver, denom, ...rest }, setState] = useURLState<{
+    action: "TRANSFER";
+    receiver?: Address<Prefix>;
+    denom: TokenMinDenom;
+    amount: string;
+  }>({
+    action: "TRANSFER",
+    denom: "aevmos",
+    amount: "0",
+  });
 
-    return <>{/* TODO: add logic for send */}</>;
-  }
-
-  const transferTabs = [
-    {
-      onClick: () => setTransferType(TRANSFER_TYPES.DEPOSIT),
-      icon: <DownloadIcon />,
-      text: TRANSFER_TYPES.DEPOSIT,
-      option: transferType,
-      type: TRANSFER_TYPES.DEPOSIT,
-    },
-    {
-      onClick: () => setTransferType(TRANSFER_TYPES.SEND),
-      icon: <RightArrowIcon />,
-      text: TRANSFER_TYPES.SEND,
-      option: transferType,
-      type: TRANSFER_TYPES.SEND,
-    },
-  ];
+  const account = useAccount();
+  const amount = BigInt(rest.amount);
+  const sender = account.address
+    ? normalizeToCosmosAddress(account.address)
+    : undefined;
 
   return (
     <section className="space-y-3">
       <Subtitle>{t("transfer.subtitle")}</Subtitle>
-      <Tabs tabsProps={transferTabs} />
-      <div className="pt-7">{renderScreen()}</div>
+      <form>
+        <section>
+          <h2 className="font-bold">Asset</h2>
+          <AssetSelector
+            value={{ denom, amount }}
+            onChange={({ denom, amount }) =>
+              setState((prev) => ({
+                ...prev,
+                denom,
+                amount: amount.toString(),
+              }))
+            }
+          />
+
+          <h2 className="font-bold">To</h2>
+          <AccountSelector
+            value={receiver}
+            onChange={(receiver) => setState((prev) => ({ ...prev, receiver }))}
+          />
+
+          {sender && receiver && (
+            <>
+              <h2 className="font-bold">Sending</h2>
+              <TransferSummary
+                sender={sender}
+                receiver={receiver}
+                token={{ denom, amount }}
+              />
+            </>
+          )}
+        </section>
+      </form>
     </section>
   );
 };

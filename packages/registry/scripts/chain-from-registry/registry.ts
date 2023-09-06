@@ -31,6 +31,7 @@ export const loadChainDir = async () => {
       return chain;
     })
   );
+
   return chains.reduce<Record<string, ChainRegistry>>((acc, chain) => {
     acc[chain.prefix] = chain;
     return acc;

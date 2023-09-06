@@ -25,6 +25,7 @@ export default {
         "png": "statics/STARS.png"
       },
       "denom": "STARS",
+      "channel": "channel-13",
       "minCoinDenom": "ustars",
       "cosmosDenom": "ibc/7564B7F838579DD4517A225978C623504F852A6D0FF7984AFB28F10D36022BE8",
       "category": "cosmos",
@@ -34,6 +35,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-41",
+  "source": {
+    "sourceChannel": "channel-46",
+    "destinationChannel": "channel-13",
+    "sourceIBCDenomToEvmos": "ibc/F9C792DF71F960BB9EF698493B61E29C1EBB8FCD56B1F8BB08C86871F5F497C0",
+    "tendermintRest": {
+      "http": [
+        "stargaze-grpc.polkachu.com:13790"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://rest.stargaze-apis.com",

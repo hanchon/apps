@@ -22,14 +22,11 @@ export const AddressesContainer = () => {
   return (
     <div className="flex flex-col space-y-1">
       <CopyContainer
-        address={ethToEvmos(address as string)}
+        address={address && ethToEvmos(address)}
         handleOnClick={handleCosmosFormat}
       />
 
-      <CopyContainer
-        address={address as string}
-        handleOnClick={handleEthFormat}
-      />
+      <CopyContainer address={address} handleOnClick={handleEthFormat} />
     </div>
   );
 };

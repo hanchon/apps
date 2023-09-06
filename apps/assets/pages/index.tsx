@@ -10,7 +10,12 @@ import {
   getAllSnackbars,
   WalletProvider,
 } from "evmos-wallet";
-import { Container, MavaWidget, TermOfServices } from "ui-helpers";
+import {
+  Container,
+  MavaWidget,
+  ModalWithTransitions,
+  TermOfServices,
+} from "ui-helpers";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { StatefulHeader } from "stateful-components";
 import { HeadComponent } from "../src/components/asset/HeadComponent";
@@ -19,6 +24,8 @@ import { StatefulFooter } from "stateful-components";
 import { MixpanelProvider } from "tracker";
 import { GiveFeedback } from "../src/GiveFeedback";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { TransferModal } from "../src/components/topBarButtons/transfer/Modal";
+import { useTransferModal } from "../src/components/topBarButtons/transfer/hooks/useTransferModal";
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -59,6 +66,7 @@ export default function Home() {
                       <AssetsTable />
                     </div>
                     <StatefulFooter />
+                    <Modals />
                   </>
                 </Container>
               </main>
@@ -67,5 +75,14 @@ export default function Home() {
         </WalletProvider>
       </QueryClientProvider>
     </Provider>
+  );
+}
+function Modals() {
+  const { show, setShow } = useTransferModal();
+
+  return (
+    <ModalWithTransitions show={show} setShow={setShow} propClose={true}>
+      <TransferModal />
+    </ModalWithTransitions>
   );
 }

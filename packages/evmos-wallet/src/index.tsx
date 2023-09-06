@@ -1,11 +1,11 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-// styles
-
 export * from "./wallet";
 export * from "./api";
 export * from "./utils";
+export * from "./registry-actions";
+export * from "./ibc";
 
 // snackbars
 export { Snackbars } from "./notification/Snackbars";

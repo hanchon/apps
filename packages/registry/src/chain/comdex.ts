@@ -26,6 +26,7 @@ export default {
         "svg": "statics/CMDX.svg"
       },
       "denom": "CMDX",
+      "channel": "channel-26",
       "minCoinDenom": "ucmdx",
       "cosmosDenom": "ibc/61DF64ADF65230540C14C63D64897BE08A3DC9A516A91425913F01240E2F432F",
       "category": "cosmos",
@@ -41,6 +42,7 @@ export default {
         "svg": "statics/CMST.svg"
       },
       "denom": "CMST",
+      "channel": "channel-26",
       "minCoinDenom": "ucmst",
       "cosmosDenom": "ibc/9EC8A1701813BB7B73BFED2496009ABB2C8BF187E6CDFA788D77F68E08BC05CD",
       "category": "stablecoin",
@@ -50,6 +52,16 @@ export default {
     }
   ],
   "clientId": "07-tendermint-79",
+  "source": {
+    "sourceChannel": "channel-35",
+    "destinationChannel": "channel-26",
+    "sourceIBCDenomToEvmos": "ibc/D01562AB9C4CC84E06A84FFA213C7592508120C3F91EFFB1E62117D5932C2B1F",
+    "tendermintRest": {
+      "http": [
+        "https://rpc.comdex.one"
+      ]
+    }
+  },
   "cosmosRest": {
     "http": [
       "https://rest.comdex.one",

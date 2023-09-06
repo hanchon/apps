@@ -19,6 +19,7 @@
   "devDependencies": {
     "@ethersproject/bignumber": "^5.7.0",
     "@evmos-apps/config": "workspace:*",
+    "@evmos-apps/registry": "workspace:*",
     "@evmos/address-converter": "^0.1.9",
     "@evmos/proto": "^0.1.26",
     "@evmos/provider": "^0.2.8",
@@ -71,7 +72,9 @@
     "dotenv": "^16.3.1",
     "mixpanel-browser": "^2.47.0",
     "tailwind-config": "workspace:*",
+    "viem": "^1.10.3",
     "vitest": "^0.34.1",
-    "wagmi": "~1.3.11"
+    "wagmi": "~1.4.1",
+    "zod": "^3.22.1"
   }
 }
