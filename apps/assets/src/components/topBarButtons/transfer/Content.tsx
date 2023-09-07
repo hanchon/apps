@@ -2,7 +2,13 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import React, { useEffect } from "react";
-import { Label, Subtitle, Title } from "ui-helpers";
+import {
+  ErrorMessage,
+  Label,
+  PrimaryButton,
+  Subtitle,
+  Title,
+} from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
@@ -155,8 +161,24 @@ export const Content = () => {
                 receiver={receiver}
                 token={token}
               />
+              {/* TODO: this should appear when we add the opacity to the transfer summary because the user doesn't have enough evmos to pay the fee */}
+              <ErrorMessage className="text-center pl-0">
+                {t("transfer.section.summary.error.insufficient.balance")} 0
+                Evmos
+              </ErrorMessage>
             </div>
           )}
+
+          <PrimaryButton
+            // TODO: change variant to outline-primary if the user doesn't have enough balance to pay the fee
+            // variant="outline-primary"
+            onClick={() => {}}
+            className="w-full text-lg rounded-md capitalize mt-5"
+            // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
+            // "transfer.swap.button.text" - "transfer.bridge.button.text"
+          >
+            {t("transfer.send.button.text")}
+          </PrimaryButton>
         </section>
       </form>
     </section>
