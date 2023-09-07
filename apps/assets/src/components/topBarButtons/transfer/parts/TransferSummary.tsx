@@ -32,7 +32,8 @@ export const TransferSummary = ({
   const { name, decimals, denom } = getTokenByMinDenom(token.denom);
 
   return (
-    <div className="flex items-stretch">
+    // TODO: we need to add opacity-50 in the div below if the user doesn't have enough balance to pay the fee
+    <div className="flex items-stretch ">
       {senderChain && (
         <div className="flex flex-col space-y-2">
           <Image
