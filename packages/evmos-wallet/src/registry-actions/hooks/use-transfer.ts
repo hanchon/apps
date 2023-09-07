@@ -5,6 +5,7 @@ import { getTokenByDenom } from "../get-token-by-denom";
 import { prepareTransfer } from "../transfers/prepare-transfer";
 import { Prefix, TokenMinDenom } from "../types";
 import { useQuery } from "@tanstack/react-query";
+import { multiply } from "helpers";
 export const usePrepareTransfer = ({
   sender,
   receiver,
@@ -38,24 +39,15 @@ export const usePrepareTransfer = ({
       const senderChain = getChainByAddress(sender);
       const feeToken = getTokenByDenom(senderChain.nativeCurrency);
 
-      const estimatedFee =
-        prepared.estimatedGas *
-        BigInt(Math.round(parseFloat(senderChain.gasPriceStep.average)));
-
-      console.log(
-        "senderChain",
-        prepared.estimatedGas,
-        senderChain.gasPriceStep.average,
-        estimatedFee
-      );
-      const fee = {
-        amount: estimatedFee,
-        denom: feeToken.minCoinDenom,
-      };
-
       return {
         ...prepared,
-        fee,
+        fee: {
+          amount: multiply(
+            prepared.estimatedGas,
+            senderChain.gasPriceStep.average
+          ),
+          denom: feeToken.minCoinDenom,
+        },
       };
     },
     enabled: !!sender && !!receiver && !!token,

@@ -73,11 +73,11 @@ export const Content = () => {
   const sender = data?.bech32Address;
 
   // In progress:
-  // const { data: preparedTransaction } = usePrepareTransfer({
-  //   sender,
-  //   receiver,
-  //   token,
-  // });
+  const { data: preparedTransaction } = usePrepareTransfer({
+    sender,
+    receiver: receiver,
+    token,
+  });
   //  {preparedTransaction &&
   //       formatUnits(preparedTransaction.fee.amount, 18)}
   return (
@@ -160,6 +160,7 @@ export const Content = () => {
                 sender={sender}
                 receiver={receiver}
                 token={token}
+                fee={preparedTransaction?.fee}
               />
               {/* TODO: this should appear when we add the opacity to the transfer summary because the user doesn't have enough evmos to pay the fee */}
               <ErrorMessage className="text-center pl-0">

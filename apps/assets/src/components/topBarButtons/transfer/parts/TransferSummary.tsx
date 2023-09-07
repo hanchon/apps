@@ -16,10 +16,16 @@ export const TransferSummary = ({
   sender,
   receiver,
   token,
+  fee,
 }: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
   token: {
+    denom: TokenMinDenom;
+    amount: bigint;
+  };
+
+  fee?: {
     denom: TokenMinDenom;
     amount: bigint;
   };
@@ -30,7 +36,7 @@ export const TransferSummary = ({
   const receiverChain = chains[receiverPrefix];
 
   const { name, decimals, denom } = getTokenByMinDenom(token.denom);
-
+  const feeToken = fee ? getTokenByMinDenom(fee.denom) : null;
   return (
     // TODO: we need to add opacity-50 in the div below if the user doesn't have enough balance to pay the fee
     <div className="flex items-stretch ">
@@ -59,9 +65,14 @@ export const TransferSummary = ({
         </h3>
 
         <Arrow />
-        <p className="text-white text-xxs">
-          Fee: <span className="text-pink-300">0.005 EVMOS</span>
-        </p>
+        {fee && feeToken && (
+          <p className="text-white text-xxs">
+            Fee:{" "}
+            <span className="text-pink-300">
+              {formatUnits(fee.amount, feeToken.decimals)} {feeToken.denom}
+            </span>
+          </p>
+        )}
       </div>
       {receiverChain && (
         <div className="flex flex-col space-y-2">

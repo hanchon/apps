@@ -33,7 +33,7 @@ import {
   PrepareWriteContractConfig,
   prepareWriteContract,
 } from "wagmi/actions";
-import { assertIf } from "helpers";
+import { assertIf, multiply } from "helpers";
 import { erc20ABI } from "wagmi";
 import { ics20Abi } from "@evmos-apps/registry";
 
@@ -295,7 +295,7 @@ export const createProtobufTransaction = async ({
   });
 };
 
-export const buffGasEstimate = (gas: bigint) => gas + gas / 3n;
+export const buffGasEstimate = (gas: bigint) => multiply(gas, 1.5);
 export const simulateTransaction = async ({
   sender,
   tx,
@@ -326,16 +326,10 @@ export const prepareIBCMsgTransfer = async (params: {
     tx.authInfo.fee.gasLimit = estimatedGas;
     const chain = getChainByAddress(params.sender);
     const average = chain.gasPriceStep.average;
-    let feeAmount = estimatedGas;
-    try {
-      feeAmount = estimatedGas * BigInt(average);
-    } catch (e) {
-      // if it throws, its probably a float
-      feeAmount =
-        (estimatedGas * BigInt(~~(parseFloat(average) * 1000))) / 1000n;
-    }
-
-    tx.authInfo.fee.amount[0].amount = feeAmount.toString();
+    tx.authInfo.fee.amount[0].amount = multiply(
+      estimatedGas,
+      average
+    ).toString();
   }
   return {
     estimatedGas,
