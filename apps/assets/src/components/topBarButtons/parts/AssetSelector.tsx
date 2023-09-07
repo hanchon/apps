@@ -9,18 +9,12 @@ import {
 import { chains } from "@evmos-apps/registry";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "ui-helpers";
-import {
-  Address,
-  getPrefix,
-  getTokenByMinDenom,
-  normalizeToCosmosAddress,
-  useAccountBalances,
-  useAssets,
-} from "evmos-wallet";
+import { Address, getTokenByMinDenom, useTokenBalance } from "evmos-wallet";
 import { CryptoSelectorTitle } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
+import { max } from "helpers";
 type Asset = {
   chainPrefix: Prefix;
   denom: TokenMinDenom;
@@ -38,6 +32,7 @@ const tokenToUSD = (amount: bigint, price: number, decimals: number) => {
 };
 
 export const AssetSelector = ({
+  fee,
   value,
   onChange,
   address,
@@ -45,6 +40,10 @@ export const AssetSelector = ({
   value: Asset;
   onChange: (value: Asset) => void;
   address?: Address<Prefix>;
+  fee?: {
+    amount: bigint;
+    denom: TokenMinDenom;
+  };
 }>) => {
   const { t } = useTranslation();
   // const [selectedChainPrefix, setSelectedChainPrefix] =
@@ -85,20 +84,25 @@ export const AssetSelector = ({
     });
   }, [tokenOptions]);
 
-  const { assets } = useAssets();
   const price = useTokenPrice(value.denom);
 
-  const {
-    data: balances,
-    isFetching: isFetchingBalance,
-    status,
-  } = useAccountBalances(address);
-
-  const balance = balances?.find(({ minDenom }) => minDenom === value.denom);
+  const { balance, isFetching: isFetchingBalance } = useTokenBalance(
+    address,
+    value?.denom
+  );
 
   const amountInUsd = price
     ? tokenToUSD(value.amount, Number(price), selectedToken.decimals)
     : null;
+
+  const isFeeTokenAndSelectedTokenEqual = fee && fee.denom === value.denom;
+  const maxAllowedTransferAmount = useMemo(() => {
+    if (!balance) return 0n;
+    if (isFeeTokenAndSelectedTokenEqual) {
+      return max(balance.value - fee.amount, 0n);
+    }
+    return balance.value;
+  }, [balance, fee, isFeeTokenAndSelectedTokenEqual]);
   return (
     <CryptoSelectorBox>
       <div className="flex justify-between">
@@ -176,7 +180,7 @@ export const AssetSelector = ({
       </div>
       <AmountInput
         value={value.amount}
-        max={balance?.value ?? 0n}
+        max={maxAllowedTransferAmount}
         onChange={(amount) => {
           onChange({
             ...value,
@@ -196,10 +200,12 @@ export const AssetSelector = ({
           )}
           {balance && (
             <>
-              <CryptoSelectorBalanceText>
-                {t("transfer.section.asset.balance")}{" "}
-              </CryptoSelectorBalanceText>
-              {balance?.formattedLong ?? "0"} {selectedToken.denom}
+              <div>
+                <CryptoSelectorBalanceText>
+                  {t("transfer.section.asset.balance")}{" "}
+                </CryptoSelectorBalanceText>
+                {balance?.formattedLong ?? "0"} {selectedToken.denom}
+              </div>
             </>
           )}
         </div>

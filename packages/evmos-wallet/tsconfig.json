@@ -1,5 +1,8 @@
 {
   "extends": "@evmos-apps/config/ts/react-library.json",
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext", "ESNext"]
+  },
   "include": [".", "../config/**/*"],
   "exclude": ["dist", "build", "node_modules", "../config/node_modules"]
 }

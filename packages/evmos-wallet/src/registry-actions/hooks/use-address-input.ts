@@ -91,9 +91,7 @@ export const useAddressInput = <TPrefix extends Prefix>(
    * It also normalizes hex addresses as being evmos prefixed
    */
   const prefix = useMemo(() => {
-    if (value.startsWith("0x")) return "evmos";
-
-    const prefix = getPrefix(value as CosmosAddress);
+    const prefix = getPrefix(value as Address<Prefix>);
     if (isValidRegistryPrefix(prefix)) {
       return prefix;
     }

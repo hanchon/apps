@@ -10,7 +10,7 @@ import { chains } from "@evmos-apps/registry";
 import { CryptoSelector, ErrorMessage, TextInput } from "ui-helpers";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { CopyPasteIcon } from "icons";
-import { useAccountByPrefix } from "../hooks/useAccountByPrefix";
+import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { useTranslation } from "next-i18next";
 
 export const AccountSelector = ({
@@ -30,7 +30,7 @@ export const AccountSelector = ({
     undefined
   );
 
-  const { data, error } = useAccountByPrefix(requestedPrefix);
+  const { data, error } = useWalletAccountByPrefix(requestedPrefix);
 
   useEffect(() => {
     if (!requestedPrefix) {

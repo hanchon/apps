@@ -21,7 +21,8 @@ import {
   getTokenMinDenomList,
   isValidCosmosAddress,
   isValidHexAddress,
-  usePrepareTransfer,
+  useAccountExists,
+  useFee,
 } from "evmos-wallet";
 import { AccountSelector } from "../parts/AccountSelector";
 import { useModalState } from "../hooks/useModal";
@@ -30,7 +31,7 @@ import { SendIcon } from "icons";
 import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
-import { useAccountByPrefix } from "../hooks/useAccountByPrefix";
+import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { formatUnits } from "viem";
 
 const TransferModalSchema = z.object({
@@ -68,7 +69,7 @@ export const Content = () => {
   });
 
   const { connector } = useAccount();
-  const { data, error, refetch } = useAccountByPrefix(token.chainPrefix);
+  const { data, error, refetch } = useWalletAccountByPrefix(token.chainPrefix);
 
   const sender = data?.bech32Address;
 
@@ -87,6 +88,7 @@ export const Content = () => {
           <Subtitle variant="modal-black">
             {t("transfer.section.asset")}
           </Subtitle>
+
           <AssetSelector
             value={token}
             address={sender}
@@ -119,6 +121,7 @@ export const Content = () => {
               </button>
             </div>
           )}
+
           {E.match.byPattern(error, /NETWORK_NOT_SUPPORTED_BY_WALLET/) && (
             <div className="text-center space-y-2">
               <p>

@@ -6,11 +6,40 @@ import {
   createProtobufTransaction,
   buffGasEstimate,
 } from "../../ibc";
-import { Address, normalizeToCosmosAddress } from "../../wallet";
+import { Address, getPrefix, normalizeToCosmosAddress } from "../../wallet";
 import { getChainByAddress } from "../get-chain-by-account";
 import { Prefix, TokenMinDenom } from "../types";
-import { getTimeoutTimestamp } from "../utils";
+import {
+  getIBCChannelId,
+  getIBCDenomOnNetwork,
+  getTimeoutTimestamp,
+} from "../utils";
 import { assignGasEstimateToProtoTx } from "../utils/assign-gas-estimate-to-proto-tx";
+import { getTokenByMinDenom } from "../get-token-by-min-denom";
+import { getChainByTokenDenom } from "../get-chain-by-token-min-denom";
+import { toIBCDenom } from "helpers";
+export const getIBCDenom = ({
+  sender,
+  receiver,
+  minDenom,
+}: {
+  sender: Address<Prefix>;
+  receiver: Address<Prefix>;
+  minDenom: TokenMinDenom;
+}) => {
+  const chain = getChainByTokenDenom(minDenom);
+  if (chain.prefix === getPrefix(sender)) {
+    return minDenom;
+  }
+  return toIBCDenom(
+    "transfer",
+    getIBCChannelId({
+      sender,
+      receiver,
+    }),
+    minDenom
+  );
+};
 
 export const createProtobufIBCTransferMsg = async ({
   sender,
@@ -27,6 +56,11 @@ export const createProtobufIBCTransferMsg = async ({
   };
   mode?: keyof typeof SignMode;
 }) => {
+  const ibcDenom = getIBCDenom({
+    sender,
+    receiver,
+    minDenom: token.denom,
+  });
   const message = new MsgTransfer({
     sender: normalizeToCosmosAddress(sender),
     receiver: normalizeToCosmosAddress(receiver),
@@ -39,7 +73,7 @@ export const createProtobufIBCTransferMsg = async ({
     memo: "",
     token: {
       amount: token.amount.toString(),
-      denom: token.denom,
+      denom: ibcDenom,
     },
     ...rest,
   });

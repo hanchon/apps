@@ -120,6 +120,6 @@ export const useAssets = () => {
     evmosPrice: getEvmosPrice,
     evmosPriceFixed,
     loading: assets.isLoading,
-    error: assets.error,
+    error: assets.walletRequestError,
   };
 };
