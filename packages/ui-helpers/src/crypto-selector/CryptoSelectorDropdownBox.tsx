@@ -3,6 +3,8 @@
 
 import { ComponentProps } from "react";
 
-export function ErrorMessage({ ...rest }: ComponentProps<"p"> & {}) {
-  return <p className="text-red-300 text-xs font-medium pl-4" {...rest} />;
+export function CryptoSelectorDropdownBox({
+  ...rest
+}: ComponentProps<"div"> & {}) {
+  return <div className="justify-center flex flex-col h-full" {...rest} />;
 }

@@ -83,14 +83,16 @@ export const Delegate = ({
           </>
         </ContainerInput>
         {truncateNumber(value) === 0 && (
-          <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext} />
+          <ErrorMessage>
+            {MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext}
+          </ErrorMessage>
         )}
         {confirmClicked && value === "" && (
-          <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorAmountEmpty} />
+          <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorAmountEmpty}</ErrorMessage>
         )}
         {truncateNumber(value) >
           truncateNumber(numericOnly(convertFromAtto(evmosBalance, 18))) && (
-          <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorsAmountGt} />
+          <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorsAmountGt}</ErrorMessage>
         )}
         <p className="text-sm">
           {getReservedForFeeText(

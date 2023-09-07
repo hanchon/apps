@@ -3,6 +3,6 @@
 
 import { ComponentProps } from "react";
 
-export function ErrorMessage({ ...rest }: ComponentProps<"p"> & {}) {
-  return <p className="text-red-300 text-xs font-medium pl-4" {...rest} />;
+export function CryptoSelectorTitle({ ...rest }: ComponentProps<"h1"> & {}) {
+  return <h1 className="text-xs font-medium text-gray-400 pb-1" {...rest} />;
 }

@@ -10,6 +10,7 @@ import {
   normalizeToCosmosAddress,
 } from "evmos-wallet";
 import { chains } from "@evmos-apps/registry";
+import { Arrow } from "ui-helpers";
 
 export const TransferSummary = ({
   sender,
@@ -56,16 +57,7 @@ export const TransferSummary = ({
           {formatUnits(token.amount, decimals)} {denom}
         </h3>
 
-        <hr
-          className={cn(
-            "relative h-[2px] bg-gradient-to-r to-[#FCDBD6CC] from-[#FF745DCC] overflow-visible border-0 w-full my-2",
-            // arrow
-            "after:absolute after:block after:right-0",
-            "after:h-2 after:w-2",
-            "after:border-t-2 after:border-r-2 after:border-t-gradient-to-r after:border-t-[#FCDBD6CC] after:border-r-[#FCDBD6CC]",
-            "after:rotate-45 after:top-1/2 after:-translate-y-1/2"
-          )}
-        />
+        <Arrow />
         <p className="text-white text-xxs">
           Fee: <span className="text-pink-300">0.005 EVMOS</span>
         </p>
