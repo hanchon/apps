@@ -71,9 +71,9 @@ const VoteButton = ({ voteProps }: { voteProps: VoteProps }) => {
             )}
           </p>
           {isSmallBalance && (
-            <ErrorMessage
-              text={MODAL_NOTIFICATIONS.ErrorInsufficientFeeSubtext}
-            />
+            <ErrorMessage>
+              {MODAL_NOTIFICATIONS.ErrorInsufficientFeeSubtext}
+            </ErrorMessage>
           )}
 
           <ConfirmButton

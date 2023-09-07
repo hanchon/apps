@@ -185,7 +185,7 @@ const Deposit = ({
               />
             </div>
             {confirmClicked && addressTo === "" && (
-              <ErrorMessage text="Address can not be empty" />
+              <ErrorMessage>Address can not be empty</ErrorMessage>
             )}
             <h6 className="text-sm font-bold italic">
               IMPORTANT: Transferring to an incorrect address will result in

@@ -169,7 +169,9 @@ const Withdraw = ({
               />
             </div>
             {confirmClicked && addressTo === "" && (
-              <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorAddressEmpty} />
+              <ErrorMessage>
+                {MODAL_NOTIFICATIONS.ErrorAddressEmpty}
+              </ErrorMessage>
             )}
             <h6 className="text-sm font-bold italic">
               IMPORTANT: Transferring to an incorrect address will result in

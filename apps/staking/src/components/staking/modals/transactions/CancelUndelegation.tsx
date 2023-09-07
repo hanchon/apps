@@ -80,19 +80,21 @@ export const CancelUndelegation = ({
           </>
         </ContainerInput>
         {truncateNumber(value) === 0 && (
-          <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext} />
+          <ErrorMessage>
+            {MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext}
+          </ErrorMessage>
         )}
         {confirmClicked && value === "" && (
-          <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorAmountEmpty} />
+          <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorAmountEmpty}</ErrorMessage>
         )}
         {confirmClicked &&
           safeSubstraction(
             evmosBalance,
             BigNumber.from(FEE_STAKING_ACTIONS)
           ).lte(BigNumber.from(0)) && (
-            <ErrorMessage
-              text={MODAL_NOTIFICATIONS.ErrorInsufficientFeeSubtext}
-            />
+            <ErrorMessage>
+              {MODAL_NOTIFICATIONS.ErrorInsufficientFeeSubtext}
+            </ErrorMessage>
           )}
         {truncateNumber(value) >
           truncateNumber(
@@ -104,7 +106,9 @@ export const CancelUndelegation = ({
                 18
               )
             )
-          ) && <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorsAmountGt} />}
+          ) && (
+          <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorsAmountGt}</ErrorMessage>
+        )}
 
         <p className="text-sm">
           {getReservedForFeeText(

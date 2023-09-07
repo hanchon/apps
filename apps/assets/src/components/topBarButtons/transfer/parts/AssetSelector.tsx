@@ -1,8 +1,14 @@
 import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { AmountInput } from "ui-helpers";
+import {
+  AmountInput,
+  CryptoSelectorBalanceBox,
+  CryptoSelectorBalanceText,
+  CryptoSelectorBox,
+  CryptoSelectorDropdownBox,
+} from "ui-helpers";
 import { chains } from "@evmos-apps/registry";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
-import { CryptoSelector } from "./CryptoSelector";
+import { CryptoSelector } from "ui-helpers";
 import {
   Address,
   getPrefix,
@@ -11,7 +17,7 @@ import {
   useAccountBalances,
   useAssets,
 } from "evmos-wallet";
-import { CryptoSelectorTitle } from "./CryptoSelectorTitle";
+import { CryptoSelectorTitle } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
@@ -94,9 +100,9 @@ export const AssetSelector = ({
     ? tokenToUSD(value.amount, Number(price), selectedToken.decimals)
     : null;
   return (
-    <div className="bg-gray-600 p-3 rounded-md space-y-3 mb-8">
-      <div className="flex justify-between h-full relative">
-        <div className="justify-center flex flex-col h-full">
+    <CryptoSelectorBox>
+      <div className="flex justify-between">
+        <CryptoSelectorDropdownBox>
           <CryptoSelectorTitle>
             {t("transfer.section.asset.token")}
           </CryptoSelectorTitle>
@@ -131,8 +137,8 @@ export const AssetSelector = ({
               })}
             </CryptoSelector.Options>
           </CryptoSelector>
-        </div>
-        <div className="justify-center flex flex-col h-full">
+        </CryptoSelectorDropdownBox>
+        <CryptoSelectorDropdownBox>
           <CryptoSelectorTitle>
             {t("transfer.section.asset.network")}
           </CryptoSelectorTitle>
@@ -166,7 +172,7 @@ export const AssetSelector = ({
               })}
             </CryptoSelector.Options>
           </CryptoSelector>
-        </div>
+        </CryptoSelectorDropdownBox>
       </div>
       <AmountInput
         value={value.amount}
@@ -180,20 +186,24 @@ export const AssetSelector = ({
         decimals={selectedToken.decimals}
       />
 
-      <div className="text-xs flex justify-between pl-4">
+      <CryptoSelectorBalanceBox>
         <div>{amountInUsd !== null && `≈${amountInUsd}`}</div>
         <div>
           {!balance && isFetchingBalance && (
-            <span className="opacity-50">Loading balance...</span>
+            <CryptoSelectorBalanceText>
+              {t("transfer.section.asset.balance.loading")}
+            </CryptoSelectorBalanceText>
           )}
           {balance && (
             <>
-              <span className="opacity-50">Balance: </span>
+              <CryptoSelectorBalanceText>
+                {t("transfer.section.asset.balance")}{" "}
+              </CryptoSelectorBalanceText>
               {balance?.formattedLong ?? "0"} {selectedToken.denom}
             </>
           )}
         </div>
-      </div>
-    </div>
+      </CryptoSelectorBalanceBox>
+    </CryptoSelectorBox>
   );
 };
