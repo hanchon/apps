@@ -12,7 +12,7 @@ import {
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
-import { AssetSelector } from "./parts/AssetSelector";
+import { AssetSelector } from "../parts/AssetSelector";
 import { useAccount } from "wagmi";
 import {
   Address,
@@ -23,14 +23,14 @@ import {
   isValidHexAddress,
   usePrepareTransfer,
 } from "evmos-wallet";
-import { AccountSelector } from "./parts/AccountSelector";
-import { useModalState } from "./hooks/useModal";
-import { TransferSummary } from "./parts/TransferSummary";
+import { AccountSelector } from "../parts/AccountSelector";
+import { useModalState } from "../hooks/useModal";
+import { TransferSummary } from "../parts/TransferSummary";
 import { SendIcon } from "icons";
 import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
-import { useAccountByPrefix } from "./hooks/useAccountByPrefix";
+import { useAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { formatUnits } from "viem";
 
 const TransferModalSchema = z.object({

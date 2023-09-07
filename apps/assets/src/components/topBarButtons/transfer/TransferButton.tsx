@@ -8,7 +8,7 @@ import { getTransferModalState } from "./utils";
 import { useAccount } from "wagmi";
 import { CancelModalTransfer } from "./CloseModal";
 import { useTranslation } from "next-i18next";
-import { useModal } from "./hooks/useModal";
+import { useModal } from "../hooks/useModal";
 
 export const TransferButton = () => {
   const handleOnClick = () => {

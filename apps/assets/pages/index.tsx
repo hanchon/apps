@@ -24,9 +24,10 @@ import { StatefulFooter } from "stateful-components";
 import { MixpanelProvider } from "tracker";
 import { GiveFeedback } from "../src/GiveFeedback";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { Content } from "../src/components/topBarButtons/transfer/Content";
-import { useTransferModal } from "../src/components/topBarButtons/transfer/hooks/useTransferModal";
-import { useModal } from "../src/components/topBarButtons/transfer/hooks/useModal";
+import { Content as TransferContent } from "../src/components/topBarButtons/transfer/Content";
+import { Content as RequestContent } from "../src/components/topBarButtons/request/Content";
+
+import { useModal } from "../src/components/topBarButtons/hooks/useModal";
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -79,17 +80,26 @@ export default function Home() {
   );
 }
 function Modals() {
-  const { show, setShow } = useModal("transfer");
+  const transferModal = useModal("transfer");
+  const requestModal = useModal("request");
 
   return (
     <>
       <ModalWithTransitions
-        show={show}
-        setShow={setShow}
+        show={transferModal.show}
+        setShow={transferModal.setShow}
         propClose={true}
         variant="modal-black"
       >
-        <Content />
+        <TransferContent />
+      </ModalWithTransitions>
+      <ModalWithTransitions
+        show={requestModal.show}
+        setShow={requestModal.setShow}
+        propClose={true}
+        variant="modal-black"
+      >
+        <RequestContent />
       </ModalWithTransitions>
     </>
   );
