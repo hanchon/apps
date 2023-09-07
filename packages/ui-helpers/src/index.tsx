@@ -60,3 +60,4 @@ export * from "./inputs/TextInput";
 export * from "./crypto-selector/CryptoSelectorBalanceBox";
 export * from "./crypto-selector/CryptoSelectorBalanceText";
 export * from "./arrows/Arrow";
+export * from "./labels/Label";

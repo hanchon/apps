@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import React, { useEffect } from "react";
-import { Subtitle, Title } from "ui-helpers";
+import { Label, Subtitle, Title } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
@@ -149,9 +149,7 @@ export const Content = () => {
 
           {sender && receiver && (
             <div className="space-y-3">
-              <h2 className="text-gray-300 text-xs font-bold my-2">
-                {t("transfer.section.summary.title")}
-              </h2>
+              <Label>{t("transfer.section.summary.title")}</Label>
               <TransferSummary
                 sender={sender}
                 receiver={receiver}
