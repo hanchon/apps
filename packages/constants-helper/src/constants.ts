@@ -48,6 +48,8 @@ export const ICONS_TYPES = {
   DOLLAR_WITH_WINGS: "DOLLAR_WITH_WINGS",
   KEY: "KEY",
   SHRUG: "SHRUG",
+  METAMASK: "METAMASK",
+  KEPLR: "KEPLR",
 };
 
 export const EMOJIS = {

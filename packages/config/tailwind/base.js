@@ -12,8 +12,8 @@ const config = {
   theme: {
     extend: {
       boxShadow: {
-        custom: "0px 4px 30px 0px rgba(98, 87, 85, 0.6)",
-        "custom-sm": "0px 4px 15px 0px rgba(156, 132, 129, 0.6)",
+        custom: "0px 4px 30px 0px #62575599",
+        "custom-sm": "0px 4px 15px 0px #9C848199",
         "custom-pink": "4px 4px 8px 2px #CE250040 inset",
       },
       colors: {

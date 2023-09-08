@@ -11,6 +11,7 @@ import { CryptoSelector, ErrorMessage, Tabs, TextInput } from "ui-helpers";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { useTranslation } from "next-i18next";
+import { ICONS_TYPES } from "constants-helper";
 
 export const AccountSelector = ({
   value,
@@ -69,13 +70,13 @@ export const AccountSelector = ({
       onClick: () => setWalletTab(WALLET_TAB_TYPES.WALLET),
       type: WALLET_TAB_TYPES.WALLET,
       option: walletTab,
-      text: "My Wallet",
+      text: t("transfer.section.to.wallet"),
     },
     {
       onClick: () => setWalletTab(WALLET_TAB_TYPES.OTHER),
       type: WALLET_TAB_TYPES.OTHER,
       option: walletTab,
-      text: "Other",
+      text: t("transfer.section.to.wallet.other"),
     },
   ];
 
@@ -111,23 +112,32 @@ export const AccountSelector = ({
           </CryptoSelector>
         </div>
       </div>
-      {walletTab === WALLET_TAB_TYPES.WALLET && (
-        <div className="space-y-2">
-          <TextInput
-            placeholder={t("transfer.section.to.placeholder")}
-            {...inputProps}
-          />
-          {errors?.map((error, index) => {
-            return (
-              <ErrorMessage key={index}>
-                {error === "INVALID_ADDRESS" && <>Invalid Address</>}
-                {error === "INVALID_PREFIX" && <>Network not supported</>}
-              </ErrorMessage>
-            );
-          })}
-        </div>
-      )}
-      {walletTab === WALLET_TAB_TYPES.OTHER && <></>}
+      <div className="space-y-2">
+        {/* TODO: add the prefilled address to the input */}
+        <TextInput
+          placeholder={
+            walletTab !== WALLET_TAB_TYPES.WALLET
+              ? t("transfer.section.to.placeholder")
+              : ""
+          }
+          // TODO: change it Keplr depending on the wallet: ICONS_TYPES.KEPLR
+          extensionIcon={
+            walletTab === WALLET_TAB_TYPES.WALLET
+              ? ICONS_TYPES.METAMASK
+              : undefined
+          }
+          disabled={walletTab === WALLET_TAB_TYPES.WALLET}
+          {...inputProps}
+        />
+        {errors?.map((error, index) => {
+          return (
+            <ErrorMessage key={index}>
+              {error === "INVALID_ADDRESS" && <>Invalid Address</>}
+              {error === "INVALID_PREFIX" && <>Network not supported</>}
+            </ErrorMessage>
+          );
+        })}
+      </div>
     </div>
   );
 };

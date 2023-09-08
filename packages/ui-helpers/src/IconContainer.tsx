@@ -1,4 +1,4 @@
-import { CheckIcon, CloseBorderIcon } from "icons";
+import { CheckIcon, CloseBorderIcon, KeplrIcon, MetamaskIcon } from "icons";
 import { ComponentProps } from "react";
 import { EMOJIS, ICONS_TYPES } from "constants-helper";
 
@@ -42,6 +42,14 @@ const ICONS_STYLES = {
   [ICONS_TYPES.SHRUG]: {
     style: BIG_ICONS_STYLE,
     icon: EMOJIS.SHRUG,
+  },
+  [ICONS_TYPES.METAMASK]: {
+    style: "bg-gray-600 text-pearl flex h-9 w-9 shrink-0",
+    icon: <MetamaskIcon width={"20px"} height={"20px"} />,
+  },
+  [ICONS_TYPES.KEPLR]: {
+    style: "bg-gray-600 text-pearl flex h-9 w-9 shrink-0",
+    icon: <KeplrIcon width={"20px"} height={"20px"} />,
   },
 };
 
