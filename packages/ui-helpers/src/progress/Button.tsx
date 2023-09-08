@@ -1,9 +1,10 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { CheckIcon, CloseBorderIcon } from "icons";
+import { CheckIcon } from "icons";
 import { STEP_STATUS } from "constants-helper";
 import { HandsEmoji } from "icons";
+import { ErrorMessage } from "../modal/ErrorMessage";
 
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(" ");
@@ -96,10 +97,9 @@ export const Button = ({ props }: { props: ButtonProps }) => {
           </button>
         </div>
         {props.textError !== "" && (
-          <div className="text-red ml-4 flex items-center  space-x-2 px-8 py-2 text-sm">
-            <CloseBorderIcon />
+          <ErrorMessage>
             <p>{props.textError}</p>
-          </div>
+          </ErrorMessage>
         )}
       </>
     </li>

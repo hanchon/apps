@@ -61,3 +61,5 @@ export * from "./crypto-selector/CryptoSelectorBalanceBox";
 export * from "./crypto-selector/CryptoSelectorBalanceText";
 export * from "./arrows/Arrow";
 export * from "./labels/Label";
+export { ErrorContainer } from "./modal/ErrorContainer";
+export { IconContainer } from "./IconContainer";

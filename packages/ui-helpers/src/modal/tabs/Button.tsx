@@ -1,9 +1,10 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { CheckIcon } from "icons";
 import { TabProps } from "./types";
 import cx from "clsx";
+import { IconContainer } from "../../IconContainer";
+import { ICONS_TYPES } from "constants-helper";
 
 export const Button = ({
   tab,
@@ -32,9 +33,7 @@ export const Button = ({
     >
       {tab.icon} {tab.text}
       {tab.option === tab.type && variant === "default" && (
-        <div className="bg-red text-pearl flex h-5 w-5 items-center justify-center rounded-full">
-          <CheckIcon width={"14px"} height={"14px"} color="#fff" />
-        </div>
+        <IconContainer type={ICONS_TYPES.CHECK} />
       )}
     </button>
   );
