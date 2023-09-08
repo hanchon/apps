@@ -24,9 +24,8 @@ export const Button = ({
           "border-strokeGrey border":
             variant === "default" && tab.option !== tab.type,
           "border-[#FFA1A1] border-2 bg-[#FF9E90] shadow-custom-pink text-black  font-medium":
-            // #CE250040
             variant === "pink" && tab.option === tab.type,
-          "bg-pearl text-black font-light":
+          "bg-pink-200 text-black font-light":
             variant === "pink" && tab.option !== tab.type,
         }
       )}

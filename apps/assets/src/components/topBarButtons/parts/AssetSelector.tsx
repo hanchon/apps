@@ -164,7 +164,10 @@ export const AssetSelector = ({
             >
               {selectedChain.name}
             </CryptoSelector.Button>
-            <CryptoSelector.Options label={t("transfer.section.network.label")}>
+            <CryptoSelector.Options
+              label={t("transfer.section.network.label")}
+              className="right-0"
+            >
               {networkOptions.map((value) => {
                 const chain = chains[value];
                 return (

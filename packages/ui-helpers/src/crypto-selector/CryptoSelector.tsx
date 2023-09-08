@@ -68,16 +68,18 @@ CryptoSelector.Options = ({
     >
       <div
         className={cn(
-          // the default position for the dropdown will be right. To change it to left, add the following className to the CryptoSelector.Options component: left:0
-          "absolute w-52 z-10 bg-gradient-to-br from-[#FFDDD880] to-[#FF8F7EB2] p-[1px] rounded-2xl right-0 text-sm ",
+          // add the following className to the CryptoSelector.Options component: left:0 or right:0
+          "absolute z-10 bg-gradient-to-br from-[#FFDDD880] to-[#FF8F7EB2] p-[1px] rounded-2xl text-sm ",
           className
         )}
       >
         <div className="pr-3 py-5 bg-black rounded-2xl">
-          <Listbox.Label className="px-3 text-xs ">{label}</Listbox.Label>
+          <Listbox.Label className="px-3 text-xs text-[#9A7873CC]">
+            {label}
+          </Listbox.Label>
           <Listbox.Options
             {...props}
-            className="capitalize px-3 bg-[#262017] h-full text-black mt-1 scrollbar overflow-auto max-h-48 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer"
+            className="capitalize px-3 bg-black h-full text-black mt-1 scrollbar overflow-auto max-h-44 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer"
           >
             {children}
           </Listbox.Options>
@@ -99,10 +101,9 @@ CryptoSelector.Option = ({
     <Listbox.Option
       className={({ active, selected }) =>
         cn(
-          "flex font-bold items-center space-x-2 p-2 bg-pink-600 rounded-md mb-1 text-black text-sm border-l-[3px] border-l-pink-200",
+          "flex font-medium items-center space-x-2 p-2 w-full  bg-black rounded-md mb-1 text-white text-sm",
           {
-            "bg-pink-500": active,
-            "bg-pink-500 border-l-[3px] border-l-pink-300": selected,
+            "bg-pink-600 text-black ": active || selected,
           }
         )
       }

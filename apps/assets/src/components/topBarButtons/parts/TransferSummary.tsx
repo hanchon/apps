@@ -46,7 +46,7 @@ export const TransferSummary = ({
       {senderChain && (
         <div className="flex flex-col space-y-2 items-center">
           <Image
-            className="h-12 w-12"
+            className="h-12 w-12 bg-white rounded-full"
             src={`/assets/chains/${senderChain.prefix}.png`}
             width={48}
             height={48}
@@ -87,7 +87,7 @@ export const TransferSummary = ({
       {receiverChain && (
         <div className="flex flex-col space-y-2 items-center">
           <Image
-            className="h-12 w-12"
+            className="h-12 w-12 bg-white rounded-full"
             src={`/assets/chains/${receiverChain.prefix}.png`}
             width={48}
             height={48}
