@@ -4,10 +4,16 @@
 import { Button } from "./Button";
 import { TabProps } from "./types";
 
-export const Tabs = ({ tabsProps }: { tabsProps: TabProps[] }) => (
-  <div className="grid grid-cols-1 gap-4 text-sm font-medium md:grid-cols-2">
+export const Tabs = ({
+  tabsProps,
+  variant = "default",
+}: {
+  tabsProps: TabProps[];
+  variant: "default" | "pink";
+}) => (
+  <div className="grid grid-cols-1 gap-4 text-sm font-medium md:grid-cols-2 shrink-0">
     {tabsProps.map((tab) => (
-      <Button key={tab.type} tab={tab} />
+      <Button key={tab.type} tab={tab} variant={variant} />
     ))}
   </div>
 );

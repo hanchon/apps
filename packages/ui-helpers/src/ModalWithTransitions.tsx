@@ -87,7 +87,7 @@ export const ModalWithTransitions = ({
 
                   {
                     "bg-pearl1 shadow-xl": variant === "default",
-                    "bg-black-900 shadow-custom px-6 pt-6 pb-16 text-white":
+                    "bg-black-900 shadow-custom-sm px-6 pt-6 pb-16 text-white":
                       variant === "modal-black",
                   }
                 )}

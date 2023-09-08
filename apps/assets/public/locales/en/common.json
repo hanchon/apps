@@ -22,6 +22,8 @@
   "transfer.section.asset.balance.loading": "Loading balance...",
   "transfer.section.asset.balance": "Balance:",
   "transfer.section.to": "To",
+  "transfer.section.to.wallet": "My Wallet",
+  "transfer.section.to.wallet.other": "Other",
   "transfer.section.to.placeholder": "Paste other recipient's wallet address here",
   "transfer.section.summary.title": "Sending",
   "transfer.section.summary.error.insufficient.balance": "Insufficient Balance:",

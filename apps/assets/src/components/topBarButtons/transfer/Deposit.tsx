@@ -2,13 +2,21 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useTranslation } from "next-i18next";
-import { WizardHelper } from "ui-helpers";
+import { ErrorContainer, Input, Subtitle, WizardHelper } from "ui-helpers";
 
 export const Deposit = () => {
   // TODO: add logic for deposit
   const { t } = useTranslation();
   return (
-    <section>
+    <section className="space-y-3">
+      <Subtitle>Account address of receipient </Subtitle>
+      {/* TODO: add props */}
+      <Input />
+      <ErrorContainer
+        text="Incompatible address"
+        description="Deposit can only be made to evmos accounts."
+      />
+
       <WizardHelper>
         <p>
           {t("transfer.deposit.helper.description")}

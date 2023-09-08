@@ -38,3 +38,25 @@ export const STEP_STATUS = {
 };
 export const METAMASK_DOWNLOAD_URL = "https://metamask.io/download/";
 export const KEPLR_DOWNLOAD_URL = "https://www.keplr.app/download";
+export const ICONS_TYPES = {
+  CHECK: "CHECK",
+  CANCEL: "CANCEL",
+  CONFETTI: "CONFETTI",
+  BIG_CONFETTI: "BIG_CONFETTI",
+  BIG_HANDS: "BIG_HANDS",
+  DOLLAR_BAG: "DOLLAR_BAG",
+  DOLLAR_WITH_WINGS: "DOLLAR_WITH_WINGS",
+  KEY: "KEY",
+  SHRUG: "SHRUG",
+  METAMASK: "METAMASK",
+  KEPLR: "KEPLR",
+};
+
+export const EMOJIS = {
+  CONFETTI: "🎉",
+  HANDS: "👏",
+  DOLLAR_BAG: "💰",
+  DOLLAR_WITH_WINGS: "💸",
+  KEY: "🔑",
+  SHRUG: "🤷",
+};
