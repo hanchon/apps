@@ -7,9 +7,8 @@ import {
   useAddressInput,
 } from "evmos-wallet";
 import { chains } from "@evmos-apps/registry";
-import { CryptoSelector, ErrorMessage, TextInput } from "ui-helpers";
+import { CryptoSelector, ErrorMessage, Tabs, TextInput } from "ui-helpers";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
-import { CopyPasteIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { useTranslation } from "next-i18next";
 
@@ -59,48 +58,76 @@ export const AccountSelector = ({
 
   const { t } = useTranslation();
 
+  const WALLET_TAB_TYPES = {
+    WALLET: "wallet",
+    OTHER: "other",
+  };
+
+  const [walletTab, setWalletTab] = useState(WALLET_TAB_TYPES.WALLET);
+  const walletProps = [
+    {
+      onClick: () => setWalletTab(WALLET_TAB_TYPES.WALLET),
+      type: WALLET_TAB_TYPES.WALLET,
+      option: walletTab,
+      text: "My Wallet",
+    },
+    {
+      onClick: () => setWalletTab(WALLET_TAB_TYPES.OTHER),
+      type: WALLET_TAB_TYPES.OTHER,
+      option: walletTab,
+      text: "Other",
+    },
+  ];
+
   return (
     <div className="flex flex-col space-y-3 mb-8">
-      <div>
-        <CryptoSelector
-          value={prefix}
-          onChange={(value) => {
-            setRequestedPrefix(value);
-          }}
-        >
-          <CryptoSelector.Button src={`/assets/chains/${chain.prefix}.png`}>
-            {chain.name}
-          </CryptoSelector.Button>
-          <CryptoSelector.Options>
-            {networkOptions.map((value) => {
-              const chain = chains[value];
-              return (
-                <CryptoSelector.Option
-                  src={`/assets/chains/${value}.png`}
-                  key={value}
-                  value={value}
-                >
-                  {chain.name}
-                </CryptoSelector.Option>
-              );
-            })}
-          </CryptoSelector.Options>
-        </CryptoSelector>
+      <div className="flex justify-between">
+        <Tabs tabsProps={walletProps} variant="pink" />
+
+        <div>
+          <CryptoSelector
+            value={prefix}
+            onChange={(value) => {
+              setRequestedPrefix(value);
+            }}
+          >
+            <CryptoSelector.Button src={`/assets/chains/${chain.prefix}.png`}>
+              {chain.name}
+            </CryptoSelector.Button>
+            <CryptoSelector.Options>
+              {networkOptions.map((value) => {
+                const chain = chains[value];
+                return (
+                  <CryptoSelector.Option
+                    src={`/assets/chains/${value}.png`}
+                    key={value}
+                    value={value}
+                  >
+                    {chain.name}
+                  </CryptoSelector.Option>
+                );
+              })}
+            </CryptoSelector.Options>
+          </CryptoSelector>
+        </div>
       </div>
-      <div className="space-y-2">
-        <TextInput
-          placeholder={t("transfer.section.to.placeholder")}
-          {...inputProps}
-        />
-        {errors?.map((error) => {
-          return (
-            <ErrorMessage>
-              {error === "INVALID_ADDRESS" && <>Invalid Address</>}
-              {error === "INVALID_PREFIX" && <>Network not supported</>}
-            </ErrorMessage>
-          );
-        })}
-      </div>
+      {walletTab === WALLET_TAB_TYPES.WALLET && (
+        <div className="space-y-2">
+          <TextInput
+            placeholder={t("transfer.section.to.placeholder")}
+            {...inputProps}
+          />
+          {errors?.map((error, index) => {
+            return (
+              <ErrorMessage key={index}>
+                {error === "INVALID_ADDRESS" && <>Invalid Address</>}
+                {error === "INVALID_PREFIX" && <>Network not supported</>}
+              </ErrorMessage>
+            );
+          })}
+        </div>
+      )}
+      {walletTab === WALLET_TAB_TYPES.OTHER && <></>}
     </div>
   );
 };
