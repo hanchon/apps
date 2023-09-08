@@ -1,63 +1,74 @@
 import { useMemo } from "react";
-import { Address } from "../../wallet";
+import { Address, CosmosAddress, HexAddress } from "../../wallet";
 import { getChainByAddress } from "../get-chain-by-account";
 import { getTokenByDenom } from "../get-token-by-denom";
 import { prepareTransfer } from "../transfers/prepare-transfer";
 import { Prefix, TokenMinDenom } from "../types";
 import { useQuery } from "@tanstack/react-query";
-export const usePrepareTransfer = ({
+import { E, multiply } from "helpers";
+import { bech32 } from "bech32";
+import { useAccountExists } from "./use-account-exists";
+
+/**
+ * this is used to simulate a transfer before the user has entered the receiver address
+ * so we can show the estimated gas fee early on. THIS IS ONLY FOR THE SIMULATION
+ */
+const fakeWalletAddress = "0x0000000000000000000000000000000000000001";
+
+const ethToBech32 = <T extends Prefix>(address: HexAddress, prefix: T) => {
+  const words = bech32.toWords(Buffer.from(address.slice(2), "hex"));
+  return bech32.encode(prefix, words) as CosmosAddress<T>;
+};
+
+export const useFee = ({
   sender,
-  receiver,
-  token,
+  receiverChainPrefix,
+  denom,
 }: {
   sender?: Address<Prefix>;
-  receiver?: Address<Prefix>;
-  token?: {
-    denom: TokenMinDenom;
-    amount: bigint;
-  };
+  receiverChainPrefix?: Prefix;
+  denom?: TokenMinDenom;
 }) => {
-  return useQuery({
-    queryKey: [
-      "transfer",
-      sender,
-      receiver,
-      token?.denom,
-      token?.amount.toString(),
-    ],
+  const { data: accountExists } = useAccountExists(sender);
+  const { data, ...rest } = useQuery({
+    queryKey: ["transfer", sender, receiverChainPrefix, denom],
     queryFn: async () => {
-      if (!sender || !receiver || !token) {
+      if (!sender || !receiverChainPrefix || !denom) {
         return null;
       }
-      const prepared = await prepareTransfer({
-        sender,
-        receiver,
-        token,
-      });
+      const [err, prepared] = await E.try(() =>
+        prepareTransfer({
+          sender,
+          receiver: ethToBech32(fakeWalletAddress, receiverChainPrefix),
+          token: {
+            denom,
+            amount: 1n,
+          },
+        })
+      );
+      if (err) {
+        if (E.match.byPattern(err, /NotFound/g)) {
+          throw new Error("ACCOUNT_NOT_FOUND");
+        }
+        throw new Error("UNKNOWN_ERROR", { cause: err });
+      }
 
+      const { estimatedGas } = prepared;
       const senderChain = getChainByAddress(sender);
       const feeToken = getTokenByDenom(senderChain.nativeCurrency);
 
-      const estimatedFee =
-        prepared.estimatedGas *
-        BigInt(Math.round(parseFloat(senderChain.gasPriceStep.average)));
-
-      console.log(
-        "senderChain",
-        prepared.estimatedGas,
-        senderChain.gasPriceStep.average,
-        estimatedFee
-      );
-      const fee = {
-        amount: estimatedFee,
-        denom: feeToken.minCoinDenom,
-      };
-
       return {
-        ...prepared,
-        fee,
+        gas: estimatedGas,
+        token: {
+          amount: multiply(estimatedGas, senderChain.gasPriceStep.average),
+          denom: feeToken.minCoinDenom,
+        },
       };
     },
-    enabled: !!sender && !!receiver && !!token,
+    enabled: !!sender && !!receiverChainPrefix && !!denom && accountExists,
   });
+  return {
+    ...rest,
+    fee: data,
+  };
 };

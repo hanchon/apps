@@ -1,5 +1,5 @@
 import { useAccount } from "wagmi";
-import React, { PropsWithChildren, useEffect, useMemo } from "react";
+import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import {
   Address,
   getPrefix,
@@ -10,7 +10,7 @@ import { chains } from "@evmos-apps/registry";
 import { CryptoSelector, ErrorMessage, TextInput } from "ui-helpers";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { CopyPasteIcon } from "icons";
-import { useAccountByPrefix } from "../hooks/useAccountByPrefix";
+import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { useTranslation } from "next-i18next";
 
 export const AccountSelector = ({
@@ -25,15 +25,20 @@ export const AccountSelector = ({
     () => Object.values(chains).map(({ prefix }) => prefix),
     []
   );
-  const [prefix, setChainPrefix] = React.useState<Prefix>("evmos");
-  const [requestedPrefix, setRequestedPrefix] = React.useState<
-    Prefix | undefined
-  >(undefined);
+  const [prefix, setChainPrefix] = useState<Prefix>("evmos");
+  const [requestedPrefix, setRequestedPrefix] = useState<Prefix | undefined>(
+    undefined
+  );
 
-  const { data, error } = useAccountByPrefix(requestedPrefix);
+  const { data, error } = useWalletAccountByPrefix(requestedPrefix);
 
   useEffect(() => {
+    if (!requestedPrefix) {
+      return;
+    }
+    console.log("requested", requestedPrefix, data, error);
     setRequestedPrefix(undefined);
+
     if (data) setValue(data.bech32Address);
   }, [data, error]);
 
@@ -84,8 +89,8 @@ export const AccountSelector = ({
       </div>
       <div className="space-y-2">
         <TextInput
-          inputProps={inputProps}
           placeholder={t("transfer.section.to.placeholder")}
+          {...inputProps}
         />
         {errors?.map((error) => {
           return (

@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   ErrorMessage,
   Label,
@@ -10,28 +10,32 @@ import {
   Title,
 } from "ui-helpers";
 import { useTranslation } from "next-i18next";
-import Image from "next/image";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
-import { AssetSelector } from "./parts/AssetSelector";
+import { AssetSelector } from "../parts/AssetSelector";
 import { useAccount } from "wagmi";
 import {
-  Address,
   connectWith,
+  getPrefix,
   getPrefixes,
+  getTokenByDenom,
   getTokenMinDenomList,
   isValidCosmosAddress,
   isValidHexAddress,
-  usePrepareTransfer,
+  normalizeToCosmosAddress,
+  useAccountExists,
+  useFee,
+  useTokenBalance,
 } from "evmos-wallet";
-import { AccountSelector } from "./parts/AccountSelector";
-import { useModalState } from "./hooks/useModal";
-import { TransferSummary } from "./parts/TransferSummary";
+import { AccountSelector } from "../parts/AccountSelector";
+import { useModalState } from "../hooks/useModal";
+import { TransferSummary } from "../parts/TransferSummary";
 import { SendIcon } from "icons";
 import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
-import { useAccountByPrefix } from "./hooks/useAccountByPrefix";
-import { formatUnits } from "viem";
+import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
+import { getChainByTokenDenom } from "evmos-wallet/src/registry-actions/get-chain-by-token-min-denom";
+import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
 const TransferModalSchema = z.object({
   receiver: z.string().transform((v) => {
@@ -68,20 +72,107 @@ export const Content = () => {
   });
 
   const { connector } = useAccount();
-  const { data, error, refetch } = useAccountByPrefix(token.chainPrefix);
+  const {
+    data,
+    error: walletRequestError,
+    refetch,
+  } = useWalletAccountByPrefix(token.chainPrefix);
 
   const sender = data?.bech32Address;
 
-  // In progress:
-  // const { data: preparedTransaction } = usePrepareTransfer({
-  //   sender,
-  //   receiver,
-  //   token,
-  // });
-  //  {preparedTransaction &&
-  //       formatUnits(preparedTransaction.fee.amount, 18)}
+  const { data: accountExists } = useAccountExists(sender);
+
+  const { fee, error: feeError } = useFee({
+    sender,
+    receiverChainPrefix: receiver ? getPrefix(receiver) : "evmos",
+    denom: token.denom,
+  });
+
+  const { balance } = useTokenBalance(sender, token.denom);
+  const feeChainNativeCurrency = chains[token.chainPrefix].nativeCurrency;
+  const feeToken = getTokenByDenom(feeChainNativeCurrency);
+
+  const { balance: feeTokenbalance } = useTokenBalance(
+    sender,
+    feeToken.minCoinDenom
+  );
+
+  /**
+   * Centralizing errors
+   * We could consider moving this out of the component if it's starts to grow too much
+   */
+  const errors = useMemo(() => {
+    const errors = new Set<
+      | "accountDoesntExist"
+      | "insufficientBalance"
+      | "insufficientBalanceForFee"
+      | "userRejectedEnablingNetwork"
+      | "networkNotSupportedByConnectedWallet"
+    >();
+
+    /**
+     * Account doesn't exist
+     */
+    if (accountExists === false) {
+      errors.add("accountDoesntExist");
+    }
+
+    /**
+     * Balance checks
+     */
+    const isFeeTokenAndSelectedTokenEqual =
+      fee && fee.token.denom === token.denom;
+
+    if (
+      accountExists === false ||
+      // Checks if the balance is 0 (undefined means balance might be loading so it's not an error)
+      balance?.value === 0n ||
+      // Checks if the balance is enough to pay for transfer and fee
+      (balance &&
+        isFeeTokenAndSelectedTokenEqual &&
+        fee.token.amount + token.amount > balance.value) ||
+      // check if balance is enough without considering fee (when fee is paid in a different token)
+      (balance && token.amount > balance.value)
+    ) {
+      errors.add("insufficientBalance");
+    }
+
+    /**
+     * Balance check exclusive for fee token
+     * Note: The simulation will fail if the user doesn't have enough balance to pay the fee
+     * so we will not even know how much the fee would be to begin with
+     *
+     * so we only check if the balance is 0
+     */
+    if (feeTokenbalance?.value === 0n) {
+      errors.add("insufficientBalanceForFee");
+    }
+    /**
+     * Wallet checks
+     */
+    if (E.match.byPattern(walletRequestError, /USER_REJECTED_REQUEST/)) {
+      errors.add("userRejectedEnablingNetwork");
+    }
+
+    if (
+      E.match.byPattern(walletRequestError, /NETWORK_NOT_SUPPORTED_BY_WALLET/)
+    ) {
+      errors.add("networkNotSupportedByConnectedWallet");
+    }
+
+    return errors;
+  }, [
+    balance,
+    fee,
+    feeError,
+    walletRequestError,
+    feeTokenbalance,
+    accountExists,
+    token,
+  ]);
+
   return (
-    <section className="space-y-3">
+    <section className="space-y-3 w-full">
       <Title variant="modal-black" icon={<SendIcon />}>
         {t("transfer.title")}
       </Title>
@@ -98,6 +189,7 @@ export const Content = () => {
           <AssetSelector
             value={token}
             address={sender}
+            fee={fee?.token}
             onChange={(token) =>
               setState((prev) => ({
                 ...prev,
@@ -107,8 +199,8 @@ export const Content = () => {
           />
 
           {/* TODO: Some error messages. This is not in the specs, so we need to check with Mian how to display those */}
-          {E.match.byPattern(error, /USER_REJECTED_REQUEST/) && (
-            <div className="text-center space-y-2">
+          {errors.has("userRejectedEnablingNetwork") && (
+            <div className="text-center text-sm space-y-2">
               <p>
                 I see you're trying to send tokens from{" "}
                 <strong>{chains[token.chainPrefix].name}</strong> using{" "}
@@ -127,8 +219,8 @@ export const Content = () => {
               </button>
             </div>
           )}
-          {E.match.byPattern(error, /NETWORK_NOT_SUPPORTED_BY_WALLET/) && (
-            <div className="text-center space-y-2">
+          {errors.has("networkNotSupportedByConnectedWallet") && (
+            <div className="text-center text-sm space-y-2">
               <p>
                 I see you're trying to send tokens from{" "}
                 <strong>{chains[token.chainPrefix].name}</strong> using{" "}
@@ -146,6 +238,19 @@ export const Content = () => {
               </button>
             </div>
           )}
+          {errors.has("accountDoesntExist") && (
+            <div className="text-center text-sm space-y-2">
+              <p>
+                The connected account doesn't have a balance in the selected
+                network.
+              </p>
+              <p>
+                It also seems it has never been used in{" "}
+                <strong>{chains[token.chainPrefix].name}</strong> network, are
+                you sure you're connected to the right account?
+              </p>
+            </div>
+          )}
 
           <Subtitle variant="modal-black">{t("transfer.section.to")}</Subtitle>
           <AccountSelector
@@ -161,12 +266,21 @@ export const Content = () => {
                 receiver={receiver}
                 token={token}
               />
-              {/* TODO: this should appear when we add the opacity to the transfer summary because the user doesn't have enough evmos to pay the fee */}
-              <ErrorMessage className="text-center pl-0">
-                {t("transfer.section.summary.error.insufficient.balance")} 0
-                Evmos
-              </ErrorMessage>
             </div>
+          )}
+          {/* TODO: this should appear when we add the opacity to the transfer summary because the user doesn't have enough evmos to pay the fee */}
+          {errors.has("insufficientBalance") && (
+            <ErrorMessage className="text-center pl-0">
+              {t("transfer.section.summary.error.insufficient.balance")}{" "}
+              {balance?.formattedLong ?? "0"} {token.denom}
+            </ErrorMessage>
+          )}
+          {errors.has("insufficientBalanceForFee") && feeTokenbalance && (
+            <ErrorMessage className="text-center pl-0">
+              {/* TODO: the message might be different if the insufficient token is the fee token? */}
+              {t("transfer.section.summary.error.insufficient.balance")}{" "}
+              {feeTokenbalance.formattedLong} {feeTokenbalance.denom}
+            </ErrorMessage>
           )}
 
           <PrimaryButton
@@ -174,6 +288,7 @@ export const Content = () => {
             // variant="outline-primary"
             onClick={() => {}}
             className="w-full text-lg rounded-md capitalize mt-5"
+            disabled={errors.size > 0 || !sender || !receiver}
             // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
             // "transfer.swap.button.text" - "transfer.bridge.button.text"
           >

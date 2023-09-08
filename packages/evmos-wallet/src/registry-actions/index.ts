@@ -10,3 +10,4 @@ export * from "./get-token-by-min-denom";
 export * from "./is-valid-registry-prefix";
 export * from "./get-prefixes";
 export * from "./get-token-min-denom-list";
+export * from "./get-account-info";

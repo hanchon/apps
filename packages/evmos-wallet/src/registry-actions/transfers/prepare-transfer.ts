@@ -4,6 +4,7 @@ import { Prefix, TokenMinDenom } from "../types";
 import { prepareContractERC20Transfer } from "./prepare-contract-erc20-transfer";
 import { prepareContractIBCTransfer } from "./prepare-contract-ibc-transfer";
 import { prepareCosmosIBCTransfer } from "./prepare-cosmos-ibc-transfer";
+import { E } from "helpers";
 
 export const prepareTransfer = async ({
   sender,
@@ -72,7 +73,7 @@ export const prepareTransfer = async ({
    * Cosmos -> Cosmos
    * Unsupported
    */
-  throw new Error("Unsupported transfer");
+  throw new Error("UNSUPPORTED_TRANSFER_METHOD");
 };
 
 // type Transfer = Awaited<ReturnType<typeof prepareTransfer>>[""];
@@ -91,6 +92,6 @@ export const transfer = async ({
     case "ibc-transfer":
     // return await transferCosmosIBC(params);
     default:
-      throw new Error("Unsupported transfer");
+      throw new Error("UNSUPPORTED_TRANSFER_METHOD");
   }
 };

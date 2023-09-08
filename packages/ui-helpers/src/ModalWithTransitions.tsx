@@ -65,7 +65,7 @@ export const ModalWithTransitions = ({
           }}
         >
           <div
-            className="flex min-h-full items-center justify-center p-4 text-center sm:p-0"
+            className="flex min-h-full items-center justify-center sm:p-4 text-center p-0"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -81,7 +81,10 @@ export const ModalWithTransitions = ({
             >
               <Dialog.Panel
                 className={cx(
-                  "relative min-w-[300px] max-w-[850px] transform overflow-hidden rounded-lg text-left  transition-all md:min-w-[400px]",
+                  "relative transform overflow-hidden rounded-lg text-left transition-all",
+                  // " md:min-w-[400px] min-w-[300px] max-w-[850px]",
+                  "w-full max-w-md",
+
                   {
                     "bg-pearl1 shadow-xl": variant === "default",
                     "bg-black-900 shadow-custom px-6 pt-6 pb-16 text-white":
