@@ -12,7 +12,8 @@ import {
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { PrimaryButton } from "../../PrimaryButton";
-import { Confetti } from "../icons/ConfettiEmoji";
+import { IconContainer } from "ui-helpers";
+import { ICONS_TYPES } from "constants-helper";
 
 export const SuccessTopUp = () => {
   const { updateStepsStatus, hasSingleTopUpStep, setShowModal } =
@@ -68,13 +69,7 @@ export const SuccessTopUp = () => {
     <TranslationContextProvider locale="en">
       <div className="bg-lightYellow2 space-y-4 rounded-lg p-4">
         <div className=" flex items-start space-x-3">
-          <span
-            role="img"
-            aria-label="Confetti icon"
-            className="border-lightYellow3 bg-lightYellow3 relative top-1 flex h-5 w-5 items-center justify-center rounded-full border p-4"
-          >
-            {Confetti}
-          </span>
+          <IconContainer type={ICONS_TYPES.CONFETTI} />
           <div className="text-[#196235]">
             <h3 className="font-bold ">{t("topup.onboard.success.title")}</h3>
             <p className="text-sm">{t("topup.onboard.success.description")}</p>

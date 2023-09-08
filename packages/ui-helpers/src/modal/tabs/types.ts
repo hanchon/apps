@@ -3,7 +3,7 @@
 
 export type TabProps = {
   onClick: () => void;
-  icon: JSX.Element;
+  icon?: JSX.Element;
   type: string;
   text: string;
   option: string;
