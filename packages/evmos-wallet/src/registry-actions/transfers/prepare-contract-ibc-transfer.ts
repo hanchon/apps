@@ -1,6 +1,6 @@
 import { ics20Abi } from "@evmos-apps/registry";
 import { assertIf } from "helpers";
-import { buffGasEstimate, getTimeoutTimestamp } from "../../ibc";
+
 import {
   Address,
   evmosClient,
@@ -8,7 +8,10 @@ import {
   normalizeToEth,
 } from "../../wallet";
 import { Prefix, TokenMinDenom } from "../types";
-import { getIBCChannelId } from "../utils";
+import { getIBCChannelId, getTimeoutTimestamp } from "../utils";
+import { writeContract } from "wagmi/actions";
+import { getIBCDenom } from "../utils/get-ibc-denom";
+import { buffGasEstimate } from "../utils/buff-gas-estimate";
 
 export const prepareContractIBCTransfer = async <T extends Prefix>({
   token,
@@ -26,6 +29,7 @@ export const prepareContractIBCTransfer = async <T extends Prefix>({
     isEvmosAddress(sender),
     "Sender must be an EVMOS address to transfer through ICS20 contract"
   );
+
   const senderAddressAsHex = normalizeToEth(sender);
   const args = {
     abi: ics20Abi,
@@ -38,7 +42,11 @@ export const prepareContractIBCTransfer = async <T extends Prefix>({
         sender,
         receiver,
       }),
-      token.denom,
+      getIBCDenom({
+        sender,
+        receiver,
+        minDenom: token.denom,
+      }),
       token.amount,
       senderAddressAsHex,
       receiver,
@@ -57,4 +65,25 @@ export const prepareContractIBCTransfer = async <T extends Prefix>({
     tx: request,
     estimatedGas: buffGasEstimate(await evmosClient.estimateContractGas(args)),
   };
+};
+
+export const writeContractIBCTransfer = async <T extends Prefix>({
+  token,
+  sender,
+  receiver,
+}: {
+  sender: Address<T>;
+  receiver: Address<Exclude<Prefix, T>>; // Can't IBC transfer to the same network
+  token: {
+    denom: TokenMinDenom;
+    amount: bigint;
+  };
+}) => {
+  const prepared = await prepareContractIBCTransfer({
+    sender,
+    receiver,
+    token,
+  });
+
+  return writeContract(prepared.tx);
 };

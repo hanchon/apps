@@ -1,11 +1,13 @@
 import { MsgSend } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/bank/v1beta1/tx_pb";
 import { SignMode } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/signing/v1beta1/signing_pb";
-import { buffGasEstimate, createProtobufTransaction } from "../../ibc";
+
 import { Address, normalizeToCosmosAddress } from "../../wallet";
 import { Prefix, TokenMinDenom } from "../types";
 import { apiCosmosTxSimulate } from "../../api/cosmos-rest/api-cosmos-tx-simulate";
 import { getChainByAddress } from "../get-chain-by-account";
 import { assignGasEstimateToProtoTx } from "../utils/assign-gas-estimate-to-proto-tx";
+import { buffGasEstimate } from "../utils/buff-gas-estimate";
+import { createProtobufTransaction } from "../utils/create-protobuf-transaction";
 
 export const createProtobufMsgSend = async ({
   sender,

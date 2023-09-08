@@ -1,37 +1,24 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import React, { useEffect } from "react";
-import {
-  ErrorMessage,
-  Label,
-  PrimaryButton,
-  Subtitle,
-  Title,
-} from "ui-helpers";
+import React from "react";
+import { PrimaryButton, Subtitle, Title } from "ui-helpers";
 import { useTranslation } from "next-i18next";
-import Image from "next/image";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../parts/AssetSelector";
 import { useAccount } from "wagmi";
 import {
-  Address,
   connectWith,
   getPrefixes,
   getTokenMinDenomList,
   isValidCosmosAddress,
   isValidHexAddress,
-  useAccountExists,
-  useFee,
 } from "evmos-wallet";
-import { AccountSelector } from "../parts/AccountSelector";
 import { useModalState } from "../hooks/useModal";
-import { TransferSummary } from "../parts/TransferSummary";
 import { SendIcon } from "icons";
 import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
-import { formatUnits } from "viem";
 
 const TransferModalSchema = z.object({
   receiver: z.string().transform((v) => {

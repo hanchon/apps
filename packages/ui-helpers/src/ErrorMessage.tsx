@@ -8,7 +8,7 @@ export function ErrorMessage({
   className,
   variant = "error",
   ...rest
-}: ComponentProps<"p"> & { variant: "error" | "info" }) {
+}: ComponentProps<"p"> & { variant?: "error" | "info" }) {
   return (
     <p
       className={cn(" text-xs font-medium pl-4", className, {

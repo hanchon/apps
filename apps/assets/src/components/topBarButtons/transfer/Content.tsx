@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import {
   ErrorMessage,
   Label,
@@ -22,10 +22,10 @@ import {
   getTokenMinDenomList,
   isValidCosmosAddress,
   isValidHexAddress,
-  normalizeToCosmosAddress,
   useAccountExists,
   useFee,
   useTokenBalance,
+  useTransfer,
 } from "evmos-wallet";
 import { AccountSelector } from "../parts/AccountSelector";
 import { useModalState } from "../hooks/useModal";
@@ -35,8 +35,6 @@ import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
-import { getChainByTokenDenom } from "evmos-wallet/src/registry-actions/get-chain-by-token-min-denom";
-import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
 const TransferModalSchema = z.object({
   receiver: z.string().transform((v) => {
@@ -89,7 +87,22 @@ export const Content = () => {
     denom: token.denom,
   });
 
+  const { transfer, isReady } = useTransfer({
+    sender,
+    receiver,
+    token: {
+      amount: token.amount,
+      denom: token.denom,
+    },
+    fee: fee
+      ? {
+          token: fee.token,
+          gasLimit: fee.gas,
+        }
+      : undefined,
+  });
   const { balance } = useTokenBalance(sender, token.denom);
+
   const feeChainNativeCurrency = chains[token.chainPrefix].nativeCurrency;
   const feeToken = getTokenByDenom(feeChainNativeCurrency);
 
@@ -295,9 +308,11 @@ export const Content = () => {
           <PrimaryButton
             // TODO: change variant to outline-primary if the user doesn't have enough balance to pay the fee
             // variant="outline-primary"
-            onClick={() => {}}
+            onClick={() => {
+              transfer();
+            }}
             className="w-full text-lg rounded-md capitalize mt-5"
-            disabled={errors.size > 0 || !sender || !receiver}
+            disabled={errors.size > 0 || !isReady}
             // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
             // "transfer.swap.button.text" - "transfer.bridge.button.text"
           >

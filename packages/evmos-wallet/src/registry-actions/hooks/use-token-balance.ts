@@ -7,9 +7,16 @@ export const useTokenBalance = (
   denom?: TokenMinDenom
 ) => {
   const { data, ...rest } = useAccountBalances(address);
-
   const balance =
-    data && denom ? data.find(({ minDenom }) => minDenom === denom) : undefined;
+    data && denom
+      ? data.find(({ minDenom, type }) => {
+          if (denom === "aevmos") {
+            return minDenom === denom && type === "ICS20";
+          }
+          return minDenom === denom;
+        })
+      : undefined;
+
   return {
     ...rest,
     balance,

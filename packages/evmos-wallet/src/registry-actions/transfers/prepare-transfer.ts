@@ -1,12 +1,21 @@
 import { writeContract } from "wagmi/actions";
 import { Address, isEvmosAddress } from "../../wallet";
 import { Prefix, TokenMinDenom } from "../types";
-import { prepareContractERC20Transfer } from "./prepare-contract-erc20-transfer";
-import { prepareContractIBCTransfer } from "./prepare-contract-ibc-transfer";
-import { prepareCosmosIBCTransfer } from "./prepare-cosmos-ibc-transfer";
+import {
+  prepareContractERC20Transfer,
+  writeContractERC20Transfer,
+} from "./prepare-contract-erc20-transfer";
+import {
+  prepareContractIBCTransfer,
+  writeContractIBCTransfer,
+} from "./prepare-contract-ibc-transfer";
+import {
+  executeCosmosIBCTransfer,
+  prepareCosmosIBCTransfer,
+} from "./prepare-cosmos-ibc-transfer";
 import { E } from "helpers";
 
-export const prepareTransfer = async ({
+export const simulateTransfer = async ({
   sender,
   receiver,
   token,
@@ -24,6 +33,7 @@ export const prepareTransfer = async ({
   /**
    * Evmos -> Evmos
    */
+
   if (senderIsEvmos && receiverIsEvmos) {
     return {
       method: "erc20-extension-transfer",
@@ -76,22 +86,51 @@ export const prepareTransfer = async ({
   throw new Error("UNSUPPORTED_TRANSFER_METHOD");
 };
 
-// type Transfer = Awaited<ReturnType<typeof prepareTransfer>>[""];
 export const transfer = async ({
-  method,
-  tx,
-  ...params
-}: Awaited<ReturnType<typeof prepareTransfer>>) => {
-  switch (method) {
-    case "erc20-extension-transfer":
-    case "ics20-extension-transfer":
-      tx;
-      return await writeContract(
-        tx as Extract<typeof tx, { type: "contract" }>
-      );
-    case "ibc-transfer":
-    // return await transferCosmosIBC(params);
-    default:
-      throw new Error("UNSUPPORTED_TRANSFER_METHOD");
+  sender,
+  receiver,
+  token,
+  fee,
+}: {
+  sender: Address<Prefix>;
+  receiver: Address<Prefix>;
+  token: {
+    denom: TokenMinDenom;
+    amount: bigint;
+  };
+  fee?: {
+    gasLimit: bigint;
+    token: {
+      denom: TokenMinDenom;
+      amount: bigint;
+    };
+  };
+}) => {
+  const senderIsEvmos = isEvmosAddress(sender);
+  const receiverIsEvmos = isEvmosAddress(receiver);
+
+  if (senderIsEvmos && receiverIsEvmos) {
+    return await writeContractERC20Transfer({
+      sender,
+      receiver,
+      token,
+    });
   }
+  if (senderIsEvmos && !receiverIsEvmos) {
+    return await writeContractIBCTransfer({
+      sender,
+      receiver,
+      token,
+    });
+  }
+  if (!senderIsEvmos && receiverIsEvmos) {
+    return await executeCosmosIBCTransfer({
+      sender,
+      receiver,
+      token,
+      fee,
+    });
+  }
+
+  throw new Error("UNSUPPORTED_TRANSFER_METHOD");
 };

@@ -5,7 +5,6 @@ export * from "./wallet";
 export * from "./api";
 export * from "./utils";
 export * from "./registry-actions";
-export * from "./ibc";
 
 // snackbars
 export { Snackbars } from "./notification/Snackbars";

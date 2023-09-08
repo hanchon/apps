@@ -40,6 +40,7 @@ CryptoSelector.Button = ({
     >
       <Image
         src={src}
+        className="rounded-full"
         alt=""
         width={variant === "default" ? 24 : 34}
         height={variant === "default" ? 24 : 34}
@@ -109,7 +110,13 @@ CryptoSelector.Option = ({
       }
       {...props}
     >
-      <Image className="h-5 w-5" src={src} alt="" width={30} height={30} />
+      <Image
+        className="h-5 w-5 rounded-full"
+        src={src}
+        alt=""
+        width={30}
+        height={30}
+      />
       <div className="whitespace-nowrap">{children}</div>
     </Listbox.Option>
   );

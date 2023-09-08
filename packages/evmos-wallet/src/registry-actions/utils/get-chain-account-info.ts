@@ -3,8 +3,8 @@ import { Prefix } from "../types";
 import { Address, getPubkey, normalizeToEvmos } from "../../wallet";
 import { apiCosmosAccountByAddress } from "../../api";
 import { isValidCosmosAddress } from "../../wallet/utils/addresses/is-valid-cosmos-address";
-import secp256k1 from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/crypto/secp256k1/keys_pb";
-import ethsecp256k1 from "@buf/evmos_evmos.bufbuild_es/ethermint/crypto/v1/ethsecp256k1/keys_pb";
+import * as secp256k1 from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/crypto/secp256k1/keys_pb";
+import * as ethsecp256k1 from "@buf/evmos_evmos.bufbuild_es/ethermint/crypto/v1/ethsecp256k1/keys_pb";
 
 export const getChainAccountInfo = async (address: Address<Prefix>) => {
   const cosmosAddress = isValidCosmosAddress(address)

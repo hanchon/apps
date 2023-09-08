@@ -1,74 +1,59 @@
 import { useMemo } from "react";
-import { Address, CosmosAddress, HexAddress } from "../../wallet";
+import {
+  Address,
+  CosmosAddress,
+  HexAddress,
+  getPrefix,
+  isValidCosmosAddress,
+} from "../../wallet";
 import { getChainByAddress } from "../get-chain-by-account";
 import { getTokenByDenom } from "../get-token-by-denom";
-import { prepareTransfer } from "../transfers/prepare-transfer";
+import { simulateTransfer, transfer } from "../transfers/prepare-transfer";
 import { Prefix, TokenMinDenom } from "../types";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { E, multiply } from "helpers";
 import { bech32 } from "bech32";
 import { useAccountExists } from "./use-account-exists";
+import { useFee } from "./use-fee";
 
-/**
- * this is used to simulate a transfer before the user has entered the receiver address
- * so we can show the estimated gas fee early on. THIS IS ONLY FOR THE SIMULATION
- */
-const fakeWalletAddress = "0x0000000000000000000000000000000000000001";
-
-const ethToBech32 = <T extends Prefix>(address: HexAddress, prefix: T) => {
-  const words = bech32.toWords(Buffer.from(address.slice(2), "hex"));
-  return bech32.encode(prefix, words) as CosmosAddress<T>;
-};
-
-export const useFee = ({
+export const useTransfer = ({
   sender,
-  receiverChainPrefix,
-  denom,
+  receiver,
+  token,
+  fee,
 }: {
   sender?: Address<Prefix>;
-  receiverChainPrefix?: Prefix;
-  denom?: TokenMinDenom;
+  receiver?: Address<Prefix>;
+  token?: {
+    denom: TokenMinDenom;
+    amount: bigint;
+  };
+  fee?: {
+    gasLimit: bigint;
+    token: {
+      denom: TokenMinDenom;
+      amount: bigint;
+    };
+  };
 }) => {
-  const { data: accountExists } = useAccountExists(sender);
-  const { data, ...rest } = useQuery({
-    queryKey: ["transfer", sender, receiverChainPrefix, denom],
-    queryFn: async () => {
-      if (!sender || !receiverChainPrefix || !denom) {
-        return null;
+  const isReady = sender && receiver && token && fee;
+  const { mutate, ...rest } = useMutation({
+    mutationFn: () => {
+      if (!isReady) {
+        throw new Error("NOT_READY_TO_TRANSFER");
       }
-      const [err, prepared] = await E.try(() =>
-        prepareTransfer({
-          sender,
-          receiver: ethToBech32(fakeWalletAddress, receiverChainPrefix),
-          token: {
-            denom,
-            amount: 1n,
-          },
-        })
-      );
-      if (err) {
-        if (E.match.byPattern(err, /NotFound/g)) {
-          throw new Error("ACCOUNT_NOT_FOUND");
-        }
-        throw new Error("UNKNOWN_ERROR", { cause: err });
-      }
-
-      const { estimatedGas } = prepared;
-      const senderChain = getChainByAddress(sender);
-      const feeToken = getTokenByDenom(senderChain.nativeCurrency);
-
-      return {
-        gas: estimatedGas,
-        token: {
-          amount: multiply(estimatedGas, senderChain.gasPriceStep.average),
-          denom: feeToken.minCoinDenom,
-        },
-      };
+      return transfer({
+        sender,
+        receiver,
+        token,
+        fee,
+      });
     },
-    enabled: !!sender && !!receiverChainPrefix && !!denom && accountExists,
   });
+
   return {
+    transfer: mutate,
+    isReady,
     ...rest,
-    fee: data,
   };
 };

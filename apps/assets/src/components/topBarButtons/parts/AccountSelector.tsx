@@ -1,4 +1,3 @@
-import { useAccount } from "wagmi";
 import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import {
   Address,
@@ -36,7 +35,6 @@ export const AccountSelector = ({
     if (!requestedPrefix) {
       return;
     }
-    console.log("requested", requestedPrefix, data, error);
     setRequestedPrefix(undefined);
 
     if (data) setValue(data.bech32Address);

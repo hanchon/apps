@@ -150,7 +150,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
 
     const cosmosId =
       this.chainId in COSMOS_ID_MAP
-        ? COSMOS_ID_MAP[this.chainId as keyof typeof COSMOS_ID_MAP]
+        ? COSMOS_ID_MAP[this.chainId ]
         : evmosInfo.cosmosId;
 
     assertIf(cosmosId, "UNSUPPORTED_NETWORK");
@@ -210,7 +210,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     assertIf(this.isChainUnsupported(chainId), "UNSUPPORTED_NETWORK");
 
     const cosmosId =
-      COSMOS_ID_MAP[chainId as keyof typeof COSMOS_ID_MAP] ??
+      COSMOS_ID_MAP[chainId ] ??
       raise("UNSUPPORTED_NETWORK");
     return cosmosId;
   }
@@ -261,7 +261,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
 
     const cosmosId = await this.getCosmosId(chainId);
     const bech32Address =
-      ADDRESS_ENCODERS[chainId as keyof typeof ADDRESS_ENCODERS](account);
+      ADDRESS_ENCODERS[chainId ](account);
 
     switch (method) {
       case "eth_sendTransaction": {

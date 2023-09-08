@@ -9,12 +9,18 @@ import {
 import { chains } from "@evmos-apps/registry";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "ui-helpers";
-import { Address, getTokenByMinDenom, useTokenBalance } from "evmos-wallet";
+import {
+  Address,
+  getTokenByMinDenom,
+  getTokens,
+  useTokenBalance,
+} from "evmos-wallet";
 import { CryptoSelectorTitle } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
 import { max } from "helpers";
+import { getChainByTokenDenom } from "evmos-wallet/src/registry-actions/get-chain-by-token-min-denom";
 type Asset = {
   chainPrefix: Prefix;
   denom: TokenMinDenom;
@@ -52,25 +58,19 @@ export const AssetSelector = ({
   const selectedChain = chains[value.chainPrefix];
   const selectedToken = getTokenByMinDenom(value.denom);
 
-  const networkOptions = useMemo(
-    () => Object.values(chains).map(({ prefix }) => prefix),
-    []
-  );
-
-  /**
-   * token options are equal to the native network tokens + evmos tokens
-   */
   const tokenOptions = useMemo(() => {
-    const nativeNetworkTokens = selectedChain.currencies.map(
-      ({ minCoinDenom }) => minCoinDenom
-    );
-    if (selectedChain.prefix === "evmos") return nativeNetworkTokens;
+    return getTokens()
+      .sort(({ denom: a }, { denom: b }) => (a > b ? 1 : -1))
+      .map(({ minCoinDenom }) => minCoinDenom);
+  }, []);
 
-    const evmosTokens = chains.evmos.currencies.map(
-      ({ minCoinDenom }) => minCoinDenom
-    );
-    return [...nativeNetworkTokens, ...evmosTokens];
-  }, [value.chainPrefix]);
+  const networkOptions = useMemo(() => {
+    const chain = getChainByTokenDenom(selectedToken.minCoinDenom);
+    if (chain.prefix === "evmos")
+      return Object.values(chains).map(({ prefix }) => prefix);
+
+    return [chain.prefix, "evmos"] as Prefix[];
+  }, [selectedToken]);
 
   /**
    * When network changes, check if the selected token is available on the new network.
@@ -114,7 +114,7 @@ export const AssetSelector = ({
             value={value.denom}
             onChange={(denom) =>
               onChange({
-                ...value,
+                chainPrefix: getChainByTokenDenom(denom).prefix,
                 amount: 0n,
                 denom,
               })
@@ -124,21 +124,21 @@ export const AssetSelector = ({
               src={`/assets/tokens/${selectedToken.denom}.png`}
               variant="black"
             >
-              {selectedToken.name.toLowerCase()}
+              {selectedToken.denom}
             </CryptoSelector.Button>
             <CryptoSelector.Options
               className="left-0"
               label={t("transfer.section.token.label")}
             >
               {tokenOptions.map((token) => {
-                const { denom, name } = getTokenByMinDenom(token);
+                const { denom } = getTokenByMinDenom(token);
                 return (
                   <CryptoSelector.Option
                     src={`/assets/tokens/${denom}.png`}
                     key={token}
                     value={token}
                   >
-                    {name}
+                    {denom}
                   </CryptoSelector.Option>
                 );
               })}

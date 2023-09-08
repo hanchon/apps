@@ -13,11 +13,21 @@ export const createProtobufTransaction = async ({
   messages,
   memo = "",
   mode = "DIRECT",
+  fee,
 }: {
   sender: Address<Prefix>;
   messages: Message[];
   memo?: string;
   mode?: keyof typeof SignMode;
+  fee?: {
+    amount: [
+      {
+        amount: string;
+        denom: string;
+      },
+    ];
+    gasLimit: bigint;
+  };
 }) => {
   const chain = getChainByAddress(sender);
   const { publicKey, sequence } = await getChainAccountInfo(sender);
@@ -52,7 +62,7 @@ export const createProtobufTransaction = async ({
           sequence,
         },
       ],
-      fee: {
+      fee: fee ?? {
         amount: [
           {
             amount: "0",

@@ -11,6 +11,7 @@ export const getIBCChannelId = ({
 }) => {
   const senderChain = getChainByAddress(sender);
   const receiverChain = getChainByAddress(receiver);
+
   if (senderChain.prefix !== "evmos") {
     return senderChain.source.sourceChannel;
   }
