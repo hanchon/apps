@@ -283,6 +283,15 @@ export const Content = () => {
             </ErrorMessage>
           )}
 
+          {/* TODO: show it correctly */}
+          <ErrorMessage className="text-center pl-0" variant="info">
+            {t("error.send.axelar.assets.text")}{" "}
+            <span className="text-red-300">
+              {t("error.send.axelar.assets.text2")}
+            </span>{" "}
+            {t("error.send.axelar.assets.text3")}
+          </ErrorMessage>
+
           <PrimaryButton
             // TODO: change variant to outline-primary if the user doesn't have enough balance to pay the fee
             // variant="outline-primary"
