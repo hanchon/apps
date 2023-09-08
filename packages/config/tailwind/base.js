@@ -67,6 +67,8 @@ const config = {
         "pink-200": "#FFE6E2",
         "pink-300": "#FF745D",
         "pink-400": "#FF745D80",
+        "pink-500": "#FFD6D0",
+        "pink-600": "#FCDBD6B2",
       },
       fontSize: {
         h5: "1.36rem",

@@ -13,7 +13,11 @@ export function CryptoSelector<T extends string>(
     onChange: (value: T) => void;
   }>
 ) {
-  return <Listbox {...props} />;
+  return (
+    <div className="relative">
+      <Listbox {...props} />
+    </div>
+  );
 }
 
 CryptoSelector.Button = ({
@@ -59,7 +63,12 @@ CryptoSelector.Options = ({ children, ...props }: PropsWithChildren<{}>) => {
     >
       <Listbox.Options
         {...props}
-        className="absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+        // md:left-0 has to be different depending on the option
+        className={cn(
+          "capitalize absolute z-10 mt-1 overflow-auto max-h-60 py-1 w-52 px-2 text-black text-sm rounded-md bg-[#262017] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        )}
+        // w-64 md:w-96
+        // className="overflow-auto shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
       >
         {children}
       </Listbox.Options>
@@ -78,10 +87,13 @@ CryptoSelector.Option = ({
   return (
     <Listbox.Option
       className={({ active, selected }) =>
-        cn("flex items-center space-x-2 p-2 hover:bg-gray", {
-          "bg-gray": active,
-          "font-bold": selected,
-        })
+        cn(
+          "flex font-bold items-center space-x-2 p-2 bg-pink-600 rounded-md mb-1 text-black text-sm border-l-[3px] border-l-pink-200",
+          {
+            "bg-pink-500": active,
+            "bg-pink-500 border-l-[3px] border-l-pink-300": selected,
+          }
+        )
       }
       {...props}
     >

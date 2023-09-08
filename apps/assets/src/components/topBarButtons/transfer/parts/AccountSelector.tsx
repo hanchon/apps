@@ -55,8 +55,8 @@ export const AccountSelector = ({
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col space-y-3 mb-8">
-      <div>
+    <div className="flex flex-col relative space-y-3 mb-8">
+      <div className="relative">
         <CryptoSelector
           value={prefix}
           onChange={(value) => {
