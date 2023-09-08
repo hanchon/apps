@@ -188,6 +188,13 @@
   scrollbar-color: #ff9a7b #ffe6e280;
   scrollbar-width: thin;
 }
+.gradient {
+  /* TODO: use tailwind */
+  background-image: -webkit-linear-gradient(270deg, #ff745d 15%, #edbfbb 50%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 /* Custom */
 ::selection {
   background-color: #f5e8d4;
