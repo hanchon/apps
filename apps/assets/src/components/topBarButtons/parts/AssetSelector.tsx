@@ -126,7 +126,10 @@ export const AssetSelector = ({
             >
               {selectedToken.name.toLowerCase()}
             </CryptoSelector.Button>
-            <CryptoSelector.Options>
+            <CryptoSelector.Options
+              className="left-0"
+              label={t("transfer.section.token.label")}
+            >
               {tokenOptions.map((token) => {
                 const { denom, name } = getTokenByMinDenom(token);
                 return (
@@ -161,7 +164,7 @@ export const AssetSelector = ({
             >
               {selectedChain.name}
             </CryptoSelector.Button>
-            <CryptoSelector.Options>
+            <CryptoSelector.Options label={t("transfer.section.network.label")}>
               {networkOptions.map((value) => {
                 const chain = chains[value];
                 return (

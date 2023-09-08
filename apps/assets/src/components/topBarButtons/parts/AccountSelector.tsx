@@ -71,7 +71,7 @@ export const AccountSelector = ({
           <CryptoSelector.Button src={`/assets/chains/${chain.prefix}.png`}>
             {chain.name}
           </CryptoSelector.Button>
-          <CryptoSelector.Options>
+          <CryptoSelector.Options label={t("transfer.section.network.label")}>
             {networkOptions.map((value) => {
               const chain = chains[value];
               return (

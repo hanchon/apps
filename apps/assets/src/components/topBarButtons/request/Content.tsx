@@ -1,6 +1,5 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-
 import React, { useEffect } from "react";
 import {
   ErrorMessage,
@@ -55,10 +54,8 @@ const TransferModalSchema = z.object({
   }),
   amount: z.coerce.bigint().default(0n),
 });
-
 export const Content = () => {
   const { t } = useTranslation();
-
   const {
     state: { receiver, ...token },
     setState,
@@ -78,7 +75,6 @@ export const Content = () => {
       <Title variant="modal-black" icon={<SendIcon />}>
         {t("transfer.title")}
       </Title>
-
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -99,7 +95,6 @@ export const Content = () => {
               }))
             }
           />
-
           {/* TODO: Some error messages. This is not in the specs, so we need to check with Mian how to display those */}
           {E.match.byPattern(error, /USER_REJECTED_REQUEST/) && (
             <div className="text-center space-y-2">
@@ -141,7 +136,6 @@ export const Content = () => {
               </button>
             </div>
           )}
-
           <PrimaryButton
             // TODO: change variant to outline-primary if the user doesn't have enough balance to pay the fee
             // variant="outline-primary"

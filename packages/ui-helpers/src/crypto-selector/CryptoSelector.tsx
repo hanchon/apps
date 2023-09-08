@@ -53,7 +53,12 @@ CryptoSelector.Button = ({
   );
 };
 
-CryptoSelector.Options = ({ children, ...props }: PropsWithChildren<{}>) => {
+CryptoSelector.Options = ({
+  children,
+  className,
+  label,
+  ...props
+}: PropsWithChildren<{ className?: string; label: string }>) => {
   return (
     <Transition
       as={Fragment}
@@ -61,17 +66,23 @@ CryptoSelector.Options = ({ children, ...props }: PropsWithChildren<{}>) => {
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <Listbox.Options
-        {...props}
-        // md:left-0 has to be different depending on the option
+      <div
         className={cn(
-          "capitalize absolute z-10 mt-1 overflow-auto max-h-60 py-1 w-52 px-2 text-black text-sm rounded-md bg-[#262017] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          // the default position for the dropdown will be right. To change it to left, add the following className to the CryptoSelector.Options component: left:0
+          "absolute w-52 z-10 bg-gradient-to-br from-[#FFDDD880] to-[#FF8F7EB2] p-[1px] rounded-2xl right-0 text-sm ",
+          className
         )}
-        // w-64 md:w-96
-        // className="overflow-auto shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
       >
-        {children}
-      </Listbox.Options>
+        <div className="pr-3 py-5 bg-black rounded-2xl">
+          <Listbox.Label className="px-3 text-xs ">{label}</Listbox.Label>
+          <Listbox.Options
+            {...props}
+            className="capitalize px-3 bg-[#262017] h-full text-black mt-1 scrollbar overflow-auto max-h-48 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer"
+          >
+            {children}
+          </Listbox.Options>
+        </div>
+      </div>
     </Transition>
   );
 };
