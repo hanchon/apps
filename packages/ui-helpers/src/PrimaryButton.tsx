@@ -27,13 +27,10 @@ export const PrimaryButton = ({
         {
           "bg-red text-pearl hover:bg-red1 active:bg-red2":
             variant === "primary",
-          // TODO: add the color for the text
           "border-2 border-pink-300 gradient": variant === "outline-primary",
         },
         disabled ? "disabled" : ""
       )}
-      // style={{ textShadow: "0px 2px 5px #fff" }}
-      // box-shadow: 4px 4px 8px 0px #C52B114D inset;
     >
       {icon && <span>{icon}</span>} {children}
     </button>
