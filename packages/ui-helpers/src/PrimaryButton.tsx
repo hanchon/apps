@@ -22,13 +22,12 @@ export const PrimaryButton = ({
     <button
       onClick={onClick}
       className={cn(
-        "w-fit text-sm font-bold px-4 py-2  rounded-lg shadow transition-all duration-300 hover:shadow-md flex items-center justify-center space-x-3",
+        "w-fit text-sm font-bold px-4 py-2  rounded-lg transition-all duration-300 hover:shadow-md flex items-center justify-center space-x-3",
         className,
         {
           "bg-red text-pearl hover:bg-red1 active:bg-red2":
             variant === "primary",
-          // TODO: add the color for the text
-          "border-2 border-pink-300": variant === "outline-primary",
+          "border-2 border-pink-300 gradient": variant === "outline-primary",
         },
         disabled ? "disabled" : ""
       )}

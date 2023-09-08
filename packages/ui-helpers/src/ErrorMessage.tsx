@@ -4,10 +4,17 @@
 import { cn } from "helpers";
 import { ComponentProps } from "react";
 
-export function ErrorMessage({ className, ...rest }: ComponentProps<"p"> & {}) {
+export function ErrorMessage({
+  className,
+  variant = "error",
+  ...rest
+}: ComponentProps<"p"> & { variant: "error" | "info" }) {
   return (
     <p
-      className={cn("text-red-300 text-xs font-medium pl-4", className)}
+      className={cn(" text-xs font-medium pl-4", className, {
+        "text-red-300": variant === "error",
+        "text-purple-200": variant === "info",
+      })}
       {...rest}
     />
   );

@@ -13,7 +13,11 @@ export function CryptoSelector<T extends string>(
     onChange: (value: T) => void;
   }>
 ) {
-  return <Listbox {...props} />;
+  return (
+    <div className="relative">
+      <Listbox {...props} />
+    </div>
+  );
 }
 
 CryptoSelector.Button = ({
@@ -49,7 +53,12 @@ CryptoSelector.Button = ({
   );
 };
 
-CryptoSelector.Options = ({ children, ...props }: PropsWithChildren<{}>) => {
+CryptoSelector.Options = ({
+  children,
+  className,
+  label,
+  ...props
+}: PropsWithChildren<{ className?: string; label: string }>) => {
   return (
     <Transition
       as={Fragment}
@@ -57,12 +66,25 @@ CryptoSelector.Options = ({ children, ...props }: PropsWithChildren<{}>) => {
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <Listbox.Options
-        {...props}
-        className="absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+      <div
+        className={cn(
+          // add the following className to the CryptoSelector.Options component: left:0 or right:0
+          "absolute z-10 bg-gradient-to-br from-[#FFDDD880] to-[#FF8F7EB2] p-[1px] rounded-2xl text-sm ",
+          className
+        )}
       >
-        {children}
-      </Listbox.Options>
+        <div className="pr-3 py-5 bg-black rounded-2xl">
+          <Listbox.Label className="px-3 text-xs text-[#9A7873CC]">
+            {label}
+          </Listbox.Label>
+          <Listbox.Options
+            {...props}
+            className="capitalize px-3 bg-black h-full text-black mt-1 scrollbar overflow-auto max-h-44 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer"
+          >
+            {children}
+          </Listbox.Options>
+        </div>
+      </div>
     </Transition>
   );
 };
@@ -78,10 +100,12 @@ CryptoSelector.Option = ({
   return (
     <Listbox.Option
       className={({ active, selected }) =>
-        cn("flex items-center space-x-2 p-2 hover:bg-gray", {
-          "bg-gray": active,
-          "font-bold": selected,
-        })
+        cn(
+          "flex font-medium items-center space-x-2 p-2 w-full  bg-black rounded-md mb-1 text-white text-sm",
+          {
+            "bg-pink-600 text-black ": active || selected,
+          }
+        )
       }
       {...props}
     >

@@ -8,6 +8,7 @@ import {
   PrimaryButton,
   Subtitle,
   Title,
+  WizardHelper,
 } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
@@ -200,56 +201,55 @@ export const Content = () => {
 
           {/* TODO: Some error messages. This is not in the specs, so we need to check with Mian how to display those */}
           {errors.has("userRejectedEnablingNetwork") && (
-            <div className="text-center text-sm space-y-2">
-              <p>
-                I see you're trying to send tokens from{" "}
-                <strong>{chains[token.chainPrefix].name}</strong> using{" "}
-                {connector?.name}.
-              </p>
-              <p>
-                For that we need access to your account address. If you want to
-                proceed with this transaction, please authorize the request in
-                your wallet.
-              </p>
-              <button
-                className="bg-gray-500 text-white rounded-md px-3 py-2"
-                onClick={() => refetch()}
-              >
-                Try again
-              </button>
-            </div>
+            <WizardHelper>
+              <div className="text-sm space-y-2">
+                <p>
+                  {t("error.user.rejected.network.title")}{" "}
+                  <strong>{chains[token.chainPrefix].name}</strong>{" "}
+                  {t("error.user.rejected.network.title2")} {connector?.name}.
+                </p>
+                <p>{t("error.user.rejected.network.authorize.request")}</p>
+                <button
+                  className="bg-gray-500 text-white rounded-md px-3 py-2"
+                  onClick={() => refetch()}
+                >
+                  {t("button.authorize.request.button.text")}
+                </button>
+              </div>
+            </WizardHelper>
           )}
           {errors.has("networkNotSupportedByConnectedWallet") && (
-            <div className="text-center text-sm space-y-2">
-              <p>
-                I see you're trying to send tokens from{" "}
-                <strong>{chains[token.chainPrefix].name}</strong> using{" "}
-                {connector?.name}.
-              </p>
-              <p>
-                Currently, only Keplr supports supports sending tokens from
-                other networks than Evmos.
-              </p>
-              <button
-                className="bg-gray-500 text-white rounded-md px-3 py-2"
-                onClick={() => connectWith("keplr")}
-              >
-                Connect with Keplr
-              </button>
-            </div>
+            <WizardHelper>
+              <div className="text-sm space-y-2">
+                <p>
+                  {t("error.network.not.support.by.wallet.title")}{" "}
+                  <strong>{chains[token.chainPrefix].name}</strong>{" "}
+                  {t("error.network.not.support.by.wallet.title2")}{" "}
+                  {connector?.name}.
+                </p>
+                <p>
+                  {t("error.network.not.support.by.wallet.connect.with.keplr")}
+                </p>
+                <button
+                  className="bg-pink-200 text-black rounded-md px-3 py-2"
+                  onClick={() => connectWith("keplr")}
+                >
+                  {t("button.connect.with.keplr")}
+                </button>
+              </div>
+            </WizardHelper>
           )}
           {errors.has("accountDoesntExist") && (
-            <div className="text-center text-sm space-y-2">
-              <p>
-                The connected account doesn't have a balance in the selected
-                network.
-              </p>
-              <p>
-                It also seems it has never been used in{" "}
-                <strong>{chains[token.chainPrefix].name}</strong> network, are
-                you sure you're connected to the right account?
-              </p>
-            </div>
+            <WizardHelper>
+              <div className="text-sm space-y-2">
+                <p>{t("error.account.not.exist.title")}</p>
+                <p>
+                  {t("error.account.not.exist.description")}{" "}
+                  <strong>{chains[token.chainPrefix].name}</strong>{" "}
+                  {t("error.account.not.exist.description2")}
+                </p>
+              </div>
+            </WizardHelper>
           )}
 
           <Subtitle variant="modal-black">{t("transfer.section.to")}</Subtitle>
@@ -282,6 +282,15 @@ export const Content = () => {
               {feeTokenbalance.formattedLong} {feeTokenbalance.denom}
             </ErrorMessage>
           )}
+
+          {/* TODO: show it correctly */}
+          <ErrorMessage className="text-center pl-0" variant="info">
+            {t("error.send.axelar.assets.text")}{" "}
+            <span className="text-red-300">
+              {t("error.send.axelar.assets.text2")}
+            </span>{" "}
+            {t("error.send.axelar.assets.text3")}
+          </ErrorMessage>
 
           <PrimaryButton
             // TODO: change variant to outline-primary if the user doesn't have enough balance to pay the fee

@@ -82,7 +82,7 @@ export const ModalWithTransitions = ({
               <Dialog.Panel
                 className={cx(
                   "relative transform overflow-hidden rounded-lg text-left transition-all",
-                  // " md:min-w-[400px] min-w-[300px] max-w-[850px]",
+                  // " md:min-w-[400px] max-w-[850px]",
                   "w-full max-w-md",
 
                   {
