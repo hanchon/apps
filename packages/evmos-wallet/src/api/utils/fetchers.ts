@@ -21,12 +21,12 @@ export const apiFetch = async <
 ): Promise<z.output<TSuccess>> => {
   // try {
   const fetchResponse = await fetch(url, init);
-  console.log("over fetch", url, fetchResponse);
+
   const parsedResponse = (await fetchResponse.json()) as unknown;
-  console.log("parsedResponse", parsedResponse);
+
   if (fetchResponse.ok) {
     const validated = successSchema.parse(parsedResponse);
-    console.log("validated", validated);
+
     return validated;
   }
   const parsedError = errorSchema.safeParse(parsedResponse);
@@ -231,6 +231,4 @@ type SingleHostConfig = CommonRequesterConfig & {
 
 type RequesterConfig = MultiHostConfig | SingleHostConfig;
 
-const makeRequester = <const T extends RequesterConfig>(config: T) => {
-  
-};
+const makeRequester = <const T extends RequesterConfig>(config: T) => {};

@@ -103,6 +103,7 @@ export const AssetSelector = ({
     }
     return balance.value;
   }, [balance, fee, isFeeTokenAndSelectedTokenEqual]);
+
   return (
     <CryptoSelectorBox>
       <div className="flex justify-between">

@@ -36,7 +36,7 @@ export const useTransfer = ({
     };
   };
 }) => {
-  const isReady = sender && receiver && token && fee;
+  const isReady = sender && receiver && token && fee && token.amount > 0n;
   const { mutate, ...rest } = useMutation({
     mutationFn: () => {
       if (!isReady) {

@@ -7,7 +7,7 @@ import {
 } from "evmos-wallet";
 import { chains } from "@evmos-apps/registry";
 import { CryptoSelector, ErrorMessage, Tabs, TextInput } from "ui-helpers";
-import { Prefix } from "evmos-wallet/src/registry-actions/types";
+import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { useTranslation } from "next-i18next";
 import { ICONS_TYPES } from "constants-helper";
@@ -15,15 +15,14 @@ import { ICONS_TYPES } from "constants-helper";
 export const AccountSelector = ({
   value,
   onChange,
+  networkOptions,
 }: PropsWithChildren<{
   value?: Address<Prefix>;
   onChange: (value?: Address<Prefix>) => void;
+  networkOptions: Prefix[];
 }>) => {
   const { address, inputProps, errors, setValue } = useAddressInput(value);
-  const networkOptions = useMemo(
-    () => Object.values(chains).map(({ prefix }) => prefix),
-    []
-  );
+
   const [prefix, setChainPrefix] = useState<Prefix>("evmos");
   const [requestedPrefix, setRequestedPrefix] = useState<Prefix | undefined>(
     undefined
@@ -61,6 +60,11 @@ export const AccountSelector = ({
     WALLET: "wallet",
     OTHER: "other",
   };
+
+  useEffect(() => {
+    if (networkOptions.includes(chain.prefix)) return;
+    setChainPrefix(networkOptions[0]);
+  }, [networkOptions]);
 
   const [walletTab, setWalletTab] = useState(WALLET_TAB_TYPES.WALLET);
   const walletProps = [

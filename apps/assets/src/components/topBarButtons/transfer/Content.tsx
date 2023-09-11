@@ -35,6 +35,17 @@ import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
+import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
+import { getChainByTokenDenom } from "evmos-wallet/src/registry-actions/get-chain-by-token-min-denom";
+
+const sortedChains = Object.values(chains)
+  .map(({ prefix }) => prefix)
+  .sort((a, b) => {
+    if (a === "evmos") return -1;
+    if (b === "evmos") return 1;
+
+    return a > b ? 1 : -1;
+  });
 
 const TransferModalSchema = z.object({
   receiver: z.string().transform((v) => {
@@ -87,7 +98,12 @@ export const Content = () => {
     denom: token.denom,
   });
 
-  const { transfer, isReady } = useTransfer({
+  const {
+    transfer,
+    isReady: isReadyToTransfer,
+    isLoading: isTransferring,
+    data: transferData,
+  } = useTransfer({
     sender,
     receiver,
     token: {
@@ -102,7 +118,8 @@ export const Content = () => {
       : undefined,
   });
   const { balance } = useTokenBalance(sender, token.denom);
-
+  const senderChain = sender ? getChainByAddress(sender) : chains["evmos"];
+  const tokenChain = getChainByTokenDenom(token.denom);
   const feeChainNativeCurrency = chains[token.chainPrefix].nativeCurrency;
   const feeToken = getTokenByDenom(feeChainNativeCurrency);
 
@@ -110,6 +127,21 @@ export const Content = () => {
     sender,
     feeToken.minCoinDenom
   );
+
+  const destinationNetworkOptions = useMemo((): Prefix[] => {
+    // If asset is being held on an EVMOS ACCOUNT
+    if (senderChain.prefix === "evmos") {
+      // if it's an EVMOS NATIVE TOKEN it can go anywhere
+      if (tokenChain.prefix === "evmos") return sortedChains;
+      // if it's NOT native to Evmos,than it can go to:
+      // - other evmos accounts
+      // - its native network
+      return ["evmos", tokenChain.prefix];
+    }
+
+    // if it's held somewhere else, it can only go to evmos
+    return ["evmos"];
+  }, [sender, token.denom, token.chainPrefix, senderChain, tokenChain]);
 
   /**
    * Centralizing errors
@@ -255,7 +287,10 @@ export const Content = () => {
               </div>
             </WizardHelper>
           )}
-          {errors.has("accountDoesntExist") && (
+          {/**
+           * TODO: I disabled this error message, It's not specced anyway and I feel it makes things more confusing to the user, maybe just showing "no balance" error is already enough
+           */}
+          {/* {errors.has("accountDoesntExist") && (
             <WizardHelper>
               <div className="text-sm space-y-2">
                 <p>{t("error.account.not.exist.title")}</p>
@@ -266,12 +301,13 @@ export const Content = () => {
                 </p>
               </div>
             </WizardHelper>
-          )}
+          )} */}
 
           <Subtitle variant="modal-black">{t("transfer.section.to")}</Subtitle>
           <AccountSelector
             value={receiver}
             onChange={(receiver) => setState((prev) => ({ ...prev, receiver }))}
+            networkOptions={destinationNetworkOptions}
           />
 
           {sender && receiver && (
@@ -315,12 +351,16 @@ export const Content = () => {
               transfer();
             }}
             className="w-full text-lg rounded-md capitalize mt-5"
-            disabled={errors.size > 0 || !isReady}
+            disabled={errors.size > 0 || !isReadyToTransfer || isTransferring}
             // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
             // "transfer.swap.button.text" - "transfer.bridge.button.text"
           >
             {t("transfer.send.button.text")}
           </PrimaryButton>
+
+          {isTransferring && (
+            <p>Please, check your wallet to sign your transaction</p>
+          )}
         </section>
       </form>
     </section>

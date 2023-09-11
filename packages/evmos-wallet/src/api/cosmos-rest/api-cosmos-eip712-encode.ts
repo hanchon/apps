@@ -7,7 +7,6 @@ export const apiCosmosEip712Encode = (
   urls: Readonly<[string, ...string[]]>,
   tx: Tx
 ) => {
-  console.log(Buffer.from(tx.toBinary()).toString("base64"));
   return apiCosmosFetch(
     z
       .object({

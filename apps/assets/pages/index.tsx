@@ -26,8 +26,11 @@ import { GiveFeedback } from "../src/GiveFeedback";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Content as TransferContent } from "../src/components/topBarButtons/transfer/Content";
 import { Content as RequestContent } from "../src/components/topBarButtons/request/Content";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { useModal } from "../src/components/topBarButtons/hooks/useModal";
+import { createPortal } from "react-dom";
+import { Confirmation } from "../src/components/topBarButtons/Confirmation";
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -69,13 +72,18 @@ export default function Home() {
                       <AssetsTable />
                     </div>
                     <StatefulFooter />
-                    <Modals />
                   </>
                 </Container>
               </main>
             </>
+            <Modals />
           </MixpanelProvider>
         </WalletProvider>
+        {typeof document !== "undefined" &&
+          createPortal(
+            <ReactQueryDevtools initialIsOpen={false} />,
+            document.body
+          )}
       </QueryClientProvider>
     </Provider>
   );
@@ -83,6 +91,7 @@ export default function Home() {
 function Modals() {
   const transferModal = useModal("transfer");
   const requestModal = useModal("request");
+  const confirmationModal = useModal("receipt");
 
   return (
     <>
@@ -101,6 +110,14 @@ function Modals() {
         variant="modal-black"
       >
         <RequestContent />
+      </ModalWithTransitions>
+      <ModalWithTransitions
+        show={confirmationModal.show}
+        setShow={confirmationModal.setShow}
+        propClose={true}
+        variant="modal-black"
+      >
+        <Confirmation />
       </ModalWithTransitions>
     </>
   );

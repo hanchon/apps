@@ -12,8 +12,38 @@ import {
   ContainerItem,
   ConfirmationText,
 } from "ui-helpers";
+import { useModalState } from "./hooks/useModal";
+import { z } from "zod";
+import { useTransaction } from "wagmi";
+import { Hex, decodeFunctionData } from "viem";
+import { getAbi } from "evmos-wallet";
+import { useMemo } from "react";
 
 export const Confirmation = () => {
+  const {
+    state: { hash },
+  } = useModalState(
+    "receipt",
+    z.object({
+      hash: z.string(),
+    }),
+    {
+      hash: "",
+    }
+  );
+  // WIP
+  const { data, isError, isLoading } = useTransaction({
+    hash: hash as Hex,
+    enabled: !!hash,
+  });
+  const decoded = useMemo(() => {
+    if (!data) return null;
+    decodeFunctionData({
+      abi: getAbi("ics20"),
+      data: data.input,
+    });
+  }, [data]);
+  console.log(hash, decoded);
   const { t } = useTranslation();
   return (
     <>

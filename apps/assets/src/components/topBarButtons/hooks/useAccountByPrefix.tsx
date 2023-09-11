@@ -1,4 +1,4 @@
-import { Prefix } from "evmos-wallet/src/registry-actions/types";
+import { Chain, Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
 import {
   CosmosAddress,
@@ -7,8 +7,9 @@ import {
   normalizeToCosmosAddress,
 } from "evmos-wallet";
 import { chains } from "@evmos-apps/registry";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { E } from "helpers";
+import { useId } from "react";
 
 const suggestChain = async (prefix: Prefix) => {
   const keplr = await getKeplrProvider();
@@ -86,3 +87,36 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
     enabled: !!address && !!prefix,
   });
 };
+
+// export const useWalletAddressess = () => {
+//   const id = useId();
+//   return useMutation({
+//     mutationKey: ["wallet_address_request", id],
+//     mutationFn: async () => {
+//       const activeProvider = await getActiveProviderKey();
+//       if (!activeProvider) return;
+//       const keplr = await getKeplrProvider();
+//       const allChains = Object.values(chains);
+
+//       const [needSuggesting, keplrSupported] = allChains.reduce(
+//         (acc: [Chain[], Chain[]], chain) => {
+//           const [needSuggesting, keplrSupported] = acc;
+//           if (["cre", "emoney", "tori", "comdex"].includes(chain.prefix)) {
+//             needSuggesting.push(chain);
+//             return acc;
+//           }
+//           keplrSupported.push(chain);
+//           return acc;
+//         },
+//         [[], []]
+//       );
+//       const [suggestChainErr] = await E.try(() => {
+//         return Promise.all([
+//           ...needSuggesting.map((chain) => suggestChain(chain.prefix)),
+//           keplr.enable(keplrSupported.map((chain) => chain.cosmosId)),
+//         ]);
+//       });
+//       // const accounts = await keplr.getKeysSettled([]);
+//     },
+//   });
+// };

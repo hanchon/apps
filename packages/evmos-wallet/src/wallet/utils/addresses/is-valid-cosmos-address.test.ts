@@ -1,6 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { isValidCosmosAddress } from "./is-valid-cosmos-address";
 import { bech32 } from "bech32";
+import { sha256 } from "@noble/hashes/sha256";
+import { toHex } from "viem";
 
 /**
  * Real address extracted from https://www.mintscan.io/
@@ -71,7 +73,7 @@ describe("isValidCosmosAddress", () => {
     REAL_ACCOUNTS.forEach((address, i) => {
       // swap random digit
       address = address.replace(/[123]/g, "r");
-      console.log(address);
+
       expect(isValidCosmosAddress(address)).toBe(false);
     });
     REAL_ACCOUNTS.forEach((address, i) => {

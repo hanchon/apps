@@ -38,7 +38,7 @@ const AssetsTable = () => {
   const { stakedData } = useStakedEvmos();
 
   const { data, error, isLoading } = useQuery<ERC20BalanceResponse, Error>({
-    refetchInterval: 3000,
+    refetchInterval: 15_000,
     queryKey: [
       "assets",
       value.evmosAddressCosmosFormat,
