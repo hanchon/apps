@@ -28,6 +28,7 @@ export const Confirmation = () => {
           {t("transfer.confirmation.message.successful.description2")}
         </ConfirmationMessage>
         <Divider variant="info" className="w-full">
+          {/* TODO: add correct values */}
           <ViewExplorer
             txHash="txhash"
             explorerTxUrl="txurl"
