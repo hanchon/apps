@@ -187,7 +187,10 @@ export const Content = () => {
 
   return (
     <section className="space-y-3 w-full">
-      <Title variant="modal-black" icon={<SendIcon />}>
+      <Title
+        variant="modal-black"
+        icon={<SendIcon className="text-pink-300" />}
+      >
         {t("transfer.title")}
       </Title>
 

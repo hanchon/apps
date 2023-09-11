@@ -75,7 +75,7 @@ CryptoSelector.Options = ({
       <div
         className={cn(
           // add the following className to the CryptoSelector.Options component: left:0 or right:0
-          "absolute z-10 bg-gradient-to-br from-[#ED4E33] to-[#FFDDD880] p-[1px] rounded-2xl text-sm",
+          "absolute z-10 bg-gradient-to-br from-red to-[#FFDDD880] p-[1px] rounded-2xl text-sm",
           className
         )}
       >

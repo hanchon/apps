@@ -12,10 +12,10 @@ export const Subtitle = ({
 }) => {
   return (
     <h5
-      className={cx("font-bold my-2", {
-        "text-darkGray900 text-xs ": variant === "default",
+      className={cx("my-2", {
+        "text-darkGray900 font-bold text-xs ": variant === "default",
 
-        "text-white": variant === "modal-black",
+        "text-white tracking-wider": variant === "modal-black",
       })}
       {...rest}
     />

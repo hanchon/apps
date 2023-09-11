@@ -15,7 +15,8 @@ export const Tabs = ({
   <div
     className={cn(" text-sm font-medium  shrink-0", {
       "grid grid-cols-1 md:grid-cols-2 gap-4": variant === "default",
-      "grid grid-cols-2 gap-4 w-fit md:w-auto": variant === "pink",
+      "grid grid-cols-2 gap-4 w-fit md:w-auto tracking-wider":
+        variant === "pink",
     })}
   >
     {tabsProps.map((tab) => (

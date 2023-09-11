@@ -6,6 +6,9 @@ export function CryptoSelectorBalanceBox({
   ...rest
 }: ComponentProps<"div"> & {}) {
   return (
-    <div className="text-xs flex justify-between pl-4 text-white" {...rest} />
+    <div
+      className="text-xs flex justify-between pl-4 text-white tracking-wider"
+      {...rest}
+    />
   );
 }
