@@ -3,6 +3,7 @@
 
 import { Button } from "./Button";
 import { TabProps } from "./types";
+import { cn } from "helpers";
 
 export const Tabs = ({
   tabsProps,
@@ -11,7 +12,12 @@ export const Tabs = ({
   tabsProps: TabProps[];
   variant: "default" | "pink";
 }) => (
-  <div className="grid grid-cols-1 gap-4 text-sm font-medium md:grid-cols-2 shrink-0">
+  <div
+    className={cn(" text-sm font-medium  shrink-0", {
+      "grid grid-cols-1 md:grid-cols-2 gap-4": variant === "default",
+      "grid grid-cols-2 gap-4 w-fit md:w-auto": variant === "pink",
+    })}
+  >
     {tabsProps.map((tab) => (
       <Button key={tab.type} tab={tab} variant={variant} />
     ))}
