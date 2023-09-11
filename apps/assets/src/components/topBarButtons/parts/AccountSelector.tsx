@@ -80,10 +80,10 @@ export const AccountSelector = ({
 
   return (
     <div className="flex flex-col space-y-3 mb-8">
-      <div className="flex justify-between">
+      <div className="flex md:justify-between md:flex-row flex-col space-y-4 md:space-y-0">
         <Tabs tabsProps={walletProps} variant="pink" />
 
-        <div>
+        <div className="flex justify-end">
           <CryptoSelector
             value={prefix}
             onChange={(value) => {
@@ -96,6 +96,7 @@ export const AccountSelector = ({
             <CryptoSelector.Options
               label={t("transfer.section.network.label")}
               className="right-0"
+              variant="multiple"
             >
               {networkOptions.map((value) => {
                 const chain = chains[value];

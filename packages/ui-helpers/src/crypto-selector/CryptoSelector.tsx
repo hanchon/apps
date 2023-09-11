@@ -6,7 +6,7 @@ import { Fragment, PropsWithChildren } from "react";
 import Image from "next/image";
 import { DropdownArrow } from "icons";
 import { cn } from "helpers";
-
+import cx from "clsx";
 export function CryptoSelector<T extends string>(
   props: PropsWithChildren<{
     value: T;
@@ -58,8 +58,13 @@ CryptoSelector.Options = ({
   children,
   className,
   label,
+  variant = "default",
   ...props
-}: PropsWithChildren<{ className?: string; label: string }>) => {
+}: PropsWithChildren<{
+  className?: string;
+  label: string;
+  variant?: "default" | "multiple";
+}>) => {
   return (
     <Transition
       as={Fragment}
@@ -70,7 +75,7 @@ CryptoSelector.Options = ({
       <div
         className={cn(
           // add the following className to the CryptoSelector.Options component: left:0 or right:0
-          "absolute z-10 bg-gradient-to-br from-[#FFDDD880] to-[#FF8F7EB2] p-[1px] rounded-2xl text-sm ",
+          "absolute z-10 bg-gradient-to-br from-[#ED4E33] to-[#FFDDD880] p-[1px] rounded-2xl text-sm",
           className
         )}
       >
@@ -80,7 +85,13 @@ CryptoSelector.Options = ({
           </Listbox.Label>
           <Listbox.Options
             {...props}
-            className="capitalize px-3 bg-black h-full text-black mt-1 scrollbar overflow-auto max-h-44 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer"
+            className={cx(
+              "capitalize px-3 bg-black h-full text-black mt-1 scrollbar overflow-auto max-h-44 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer",
+              {
+                "w-52": variant === "default",
+                "w-80 grid grid-cols-2": variant === "multiple",
+              }
+            )}
           >
             {children}
           </Listbox.Options>
@@ -102,9 +113,9 @@ CryptoSelector.Option = ({
     <Listbox.Option
       className={({ active, selected }) =>
         cn(
-          "flex font-medium items-center space-x-2 p-2 w-full  bg-black rounded-md mb-1 text-white text-sm",
+          "flex items-center space-x-2 p-2 w-full  bg-black rounded-md mb-1 text-white text-sm",
           {
-            "bg-pink-600 text-black ": active || selected,
+            "bg-pink-600 text-black font-medium": active || selected,
           }
         )
       }
@@ -117,7 +128,9 @@ CryptoSelector.Option = ({
         width={30}
         height={30}
       />
-      <div className="whitespace-nowrap">{children}</div>
+      <div className="whitespace-nowrap overflow-hidden text-ellipsis">
+        {children}
+      </div>
     </Listbox.Option>
   );
 };
