@@ -22,7 +22,7 @@ export const PrimaryButton = ({
     <button
       onClick={onClick}
       className={cn(
-        "w-fit text-sm font-bold px-4 py-2  rounded-lg transition-all duration-300 hover:shadow-md flex items-center justify-center space-x-3",
+        "w-fit text-sm px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-md flex items-center justify-center space-x-3 tracking-wider",
         className,
         {
           "bg-red text-pearl hover:bg-red1 active:bg-red2":

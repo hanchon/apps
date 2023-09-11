@@ -190,7 +190,7 @@
 }
 .gradient {
   /* TODO: use tailwind */
-  background-image: -webkit-linear-gradient(270deg, #ff745d 15%, #edbfbb 50%);
+  background-image: -webkit-linear-gradient(270deg, #efc5be 50%, #f3d5d0 50%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

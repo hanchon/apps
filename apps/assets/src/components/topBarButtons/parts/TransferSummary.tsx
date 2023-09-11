@@ -52,14 +52,13 @@ export const TransferSummary = ({
             height={48}
             alt={senderChain.name}
           />
-          <p className="text-xxs text-gray-200">
-            {" "}
+          <p className="text-xxs text-gray-200 tracking-wide">
             <AddressDisplay address={sender} fallback="Account 1" />
           </p>
         </div>
       )}
-      <div className="px-4 h-full justify-center flex flex-col items-center flex-grow">
-        <h3 className="text-xs font-bold flex justify-center items-center gap-x-2 text-white">
+      <div className="px-4 h-full justify-center flex flex-col items-center flex-grow tracking-wider">
+        <h3 className="text-xs flex justify-center items-center gap-x-2 text-white">
           <Image
             className="h-6 w-6"
             src={`/assets/tokens/${denom}.png`}

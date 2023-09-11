@@ -3,11 +3,8 @@
 
 import { ComponentProps } from "react";
 
-export function Label({ ...rest }: ComponentProps<"label">) {
+export function ConfirmationMessage({ ...rest }: ComponentProps<"p"> & {}) {
   return (
-    <label
-      className="text-gray-300 text-xs font-bold my-2 tracking-wider"
-      {...rest}
-    />
+    <p className="text-xs tracking-wider text-gray-300 text-center" {...rest} />
   );
 }

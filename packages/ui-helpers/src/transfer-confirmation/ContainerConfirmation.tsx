@@ -3,11 +3,13 @@
 
 import { ComponentProps } from "react";
 
-export function Label({ ...rest }: ComponentProps<"label">) {
+export const ContainerConfirmation = ({
+  ...rest
+}: ComponentProps<"div"> & {}) => {
   return (
-    <label
-      className="text-gray-300 text-xs font-bold my-2 tracking-wider"
+    <div
+      className="flex items-center justify-center flex-col text-xl tracking-wider space-y-3"
       {...rest}
     />
   );
-}
+};
