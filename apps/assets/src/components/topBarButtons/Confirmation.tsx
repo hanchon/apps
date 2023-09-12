@@ -18,6 +18,8 @@ import { useTransaction } from "wagmi";
 import { Hex, decodeFunctionData } from "viem";
 import { getAbi } from "evmos-wallet";
 import { useMemo } from "react";
+import SuccessIcon from "evmos-wallet/src/notification/icons/SuccessIcon";
+import { SuccessTxIcon } from "icons";
 
 export const Confirmation = () => {
   const {
@@ -48,7 +50,8 @@ export const Confirmation = () => {
   return (
     <>
       <ContainerConfirmation>
-        <IconContainer type={ICONS_TYPES.BIG_CONFETTI} />
+        {/* PaymentTxIcon FailTxIcon */}
+        <SuccessTxIcon />
         <ConfirmationTitle>
           {t("transfer.confirmation.message.successful")}
         </ConfirmationTitle>

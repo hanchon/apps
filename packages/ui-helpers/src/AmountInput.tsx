@@ -87,7 +87,7 @@ export const AmountInput = ({
         element={
           <button
             className={cn(
-              "py-2 px-2.5 leading-none rounded-md bg-pink-400 text-black-900 text-sm tracking-wider",
+              "py-2 px-2.5 leading-none rounded-md bg-pink-400 text-black-900 text-sm tracking-wider font-normal",
               maxButtonClassName
             )}
             onClick={(e) => {

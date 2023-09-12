@@ -272,7 +272,7 @@ export const Content = () => {
                   </span>
                 </p>
                 <PrimaryButton
-                  className="font-normal "
+                  className="font-normal w-full"
                   onClick={() => refetch()}
                 >
                   {t("button.authorize.request.button.text")}
@@ -306,7 +306,7 @@ export const Content = () => {
                   </span>
                 </p>
                 <PrimaryButton
-                  className="font-normal"
+                  className="font-normal w-full"
                   // TODO: If the user rejects the connection, it's connecting with MetaMask. Check why.
                   onClick={async () => {
                     // TODO: I created the ConnectKeplr component, maybe we can reuse something from there.
