@@ -17,13 +17,13 @@ export const Button = ({
     <button
       onClick={tab.onClick}
       className={cx(
-        "flex items-center justify-center gap-1 rounded-md px-3 py-1.5",
+        "flex items-center justify-center gap-1 rounded-md py-1 px-3",
         {
           "border-red border-2":
             variant === "default" && tab.option === tab.type,
           "border-strokeGrey border":
             variant === "default" && tab.option !== tab.type,
-          "border-[#FFA1A1] border-2 bg-[#FF9E90] shadow-custom-pink text-black font-medium":
+          "border-[#FFA1A1] border-2 bg-[#FF9E90] shadow-custom-pink text-black font-medium ":
             variant === "pink" && tab.option === tab.type,
           "bg-pink-200 text-black font-light":
             variant === "pink" && tab.option !== tab.type,
