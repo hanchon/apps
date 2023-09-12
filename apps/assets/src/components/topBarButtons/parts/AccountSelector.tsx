@@ -7,7 +7,7 @@ import {
 } from "evmos-wallet";
 import { chains } from "@evmos-apps/registry";
 import { CryptoSelector, ErrorMessage, Tabs, TextInput } from "ui-helpers";
-import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
+import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { useTranslation } from "next-i18next";
 import { ICONS_TYPES } from "constants-helper";

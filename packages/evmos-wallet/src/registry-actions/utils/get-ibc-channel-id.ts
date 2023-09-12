@@ -1,16 +1,18 @@
+import { chains } from "@evmos-apps/registry";
 import { Address } from "../../wallet";
-import { getChainByAddress } from "../get-chain-by-account";
+
 import { Prefix } from "../types";
+import { normalizeToPrefix } from "./normalize-to-prefix";
 
 export const getIBCChannelId = ({
   sender,
   receiver,
 }: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address<Prefix> | Prefix;
+  receiver: Address<Prefix> | Prefix;
 }) => {
-  const senderChain = getChainByAddress(sender);
-  const receiverChain = getChainByAddress(receiver);
+  const senderChain = chains[normalizeToPrefix(sender)];
+  const receiverChain = chains[normalizeToPrefix(receiver)];
 
   if (senderChain.prefix !== "evmos") {
     return senderChain.source.sourceChannel;

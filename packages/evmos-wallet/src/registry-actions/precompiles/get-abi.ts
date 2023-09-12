@@ -11,3 +11,5 @@ export type ABIKey = keyof typeof ABI;
 export function getAbi(abiKey: ABIKey) {
   return ABI[abiKey];
 }
+
+export const ICS20_ADDRESS = "0x0000000000000000000000000000000000000802";

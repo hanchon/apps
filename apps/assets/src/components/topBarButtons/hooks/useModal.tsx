@@ -62,6 +62,16 @@ export const useModalState = <
   return {
     state: searchParams,
     setState: setSearchParams,
+    setShow: (show: boolean) => {
+      return push({
+        query: show
+          ? {
+              action: id,
+              ...sanitize(searchParams),
+            }
+          : null,
+      });
+    },
   };
 };
 

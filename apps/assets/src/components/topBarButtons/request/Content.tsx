@@ -3,13 +3,11 @@
 import React from "react";
 import { PrimaryButton, Subtitle, Title } from "ui-helpers";
 import { useTranslation } from "next-i18next";
-import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../parts/AssetSelector";
 import { useAccount } from "wagmi";
 import {
   connectWith,
   getPrefixes,
-  getTokenMinDenomList,
   isValidCosmosAddress,
   isValidHexAddress,
 } from "evmos-wallet";
@@ -19,6 +17,10 @@ import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
+import {
+  ChainPrefixSchema,
+  MinDenomSchema,
+} from "evmos-wallet/src/registry-actions/utils";
 
 const TransferModalSchema = z.object({
   receiver: z.string().transform((v) => {
@@ -27,18 +29,8 @@ const TransferModalSchema = z.object({
     }
     return undefined;
   }),
-  chainPrefix: z.custom<Prefix>((v) => {
-    if (Object.keys(chains).includes(v as Prefix)) {
-      return v;
-    }
-    return undefined;
-  }),
-  denom: z.custom<TokenMinDenom>((v) => {
-    if (getTokenMinDenomList().includes(v as TokenMinDenom)) {
-      return v;
-    }
-    return undefined;
-  }),
+  chainPrefix: ChainPrefixSchema,
+  denom: MinDenomSchema,
   amount: z.coerce.bigint().default(0n),
 });
 export const Content = () => {

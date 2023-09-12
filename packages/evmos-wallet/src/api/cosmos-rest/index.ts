@@ -6,3 +6,5 @@ export * from "./api-cosmos-eip712-encode";
 export * from "./api-cosmos-node-info";
 export * from "./api-cosmos-block-latest";
 export * from "./validation";
+export * from "./api-cosmos-tx-by-hash";
+export * from "./api-cosmos-block-by-height";
