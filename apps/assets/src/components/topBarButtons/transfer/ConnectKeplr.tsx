@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { KeplrIcon } from "icons";
-import { Progress, WizardHelper } from "ui-helpers";
+import { Progress, InfoPanel } from "ui-helpers";
 import { stepsSetAccountKeplr } from "./utils";
 import { GroupStateI } from "ui-helpers/src/progress/types";
 import { Dispatch, SetStateAction } from "react";
@@ -18,14 +18,14 @@ export const ConnectKeplr = ({
   const { t } = useTranslation();
   return (
     <div>
-      <WizardHelper icon={<KeplrIcon />}>
+      <InfoPanel icon={<KeplrIcon />}>
         <>
           <h1 className="font-bold">
             {t("transfer.deposit.keplr.error.title")}
           </h1>
           <h2>{t("transfer.deposit.keplr.error.description")}</h2>
         </>
-      </WizardHelper>
+      </InfoPanel>
       <Progress
         steps={stepsSetAccountKeplr}
         groupState={groupState}

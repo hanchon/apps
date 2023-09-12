@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useTranslation } from "next-i18next";
-import { ErrorContainer, Input, Subtitle, WizardHelper } from "ui-helpers";
+import { ErrorContainer, Input, Subtitle, InfoPanel } from "ui-helpers";
 
 export const Deposit = () => {
   // TODO: add logic for deposit
@@ -17,13 +17,13 @@ export const Deposit = () => {
         description="Deposit can only be made to evmos accounts."
       />
 
-      <WizardHelper>
+      <InfoPanel>
         <p>
           {t("transfer.deposit.helper.description")}
           <b>{t("transfer.deposit.helper.description2")}</b>
           {t("transfer.deposit.helper.description3")}
         </p>
-      </WizardHelper>
+      </InfoPanel>
     </section>
   );
 };

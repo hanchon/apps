@@ -31,7 +31,7 @@ CryptoSelector.Button = ({
   return (
     <Listbox.Button
       className={cn(
-        "flex space-x-2 items-center py-1 pl-1 pr-3 rounded-3xl justify-end",
+        "flex space-x-2 items-center py-1 pl-1 pr-3 rounded-3xl justify-end tracking-wider",
         {
           "bg-gray-500": variant === "default",
           "bg-black-900": variant === "black",
