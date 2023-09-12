@@ -4,11 +4,12 @@
 import React, { useMemo } from "react";
 import {
   ErrorMessage,
+  IconContainer,
   Label,
   PrimaryButton,
   Subtitle,
   Title,
-  WizardHelper,
+  InfoPanel,
 } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
@@ -37,6 +38,7 @@ import { E } from "helpers";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 import { getChainByTokenDenom } from "evmos-wallet/src/registry-actions/get-chain-by-token-min-denom";
+import { ICONS_TYPES } from "constants-helper";
 
 const sortedChains = Object.values(chains)
   .map(({ prefix }) => prefix)
@@ -249,49 +251,71 @@ export const Content = () => {
 
           {/* TODO: Some error messages. This is not in the specs, so we need to check with Mian how to display those */}
           {errors.has("userRejectedEnablingNetwork") && (
-            <WizardHelper>
-              <div className="text-sm space-y-2">
-                <p>
+            <InfoPanel icon={<IconContainer type={ICONS_TYPES.KEPLR} />}>
+              <div>
+                <p className="pb-4">
                   {t("error.user.rejected.network.title")}{" "}
                   <strong>{chains[token.chainPrefix].name}</strong>{" "}
                   {t("error.user.rejected.network.title2")} {connector?.name}.
                 </p>
-                <p>{t("error.user.rejected.network.authorize.request")}</p>
-                <button
-                  className="bg-gray-500 text-white rounded-md px-3 py-2"
+                <p className="pb-8">
+                  {t("error.user.rejected.network.authorize.request")}
+                </p>
+                <PrimaryButton
+                  className="font-normal "
                   onClick={() => refetch()}
                 >
                   {t("button.authorize.request.button.text")}
-                </button>
+                </PrimaryButton>
               </div>
-            </WizardHelper>
+            </InfoPanel>
           )}
           {errors.has("networkNotSupportedByConnectedWallet") && (
-            <WizardHelper>
-              <div className="text-sm space-y-2">
-                <p>
-                  {t("error.network.not.support.by.wallet.title")}{" "}
-                  <strong>{chains[token.chainPrefix].name}</strong>{" "}
-                  {t("error.network.not.support.by.wallet.title2")}{" "}
-                  {connector?.name}.
-                </p>
-                <p>
+            <InfoPanel icon={<IconContainer type={ICONS_TYPES.METAMASK} />}>
+              <div>
+                <p className="pb-4">
                   {t("error.network.not.support.by.wallet.connect.with.keplr")}
+                  <span className="text-pink-300">
+                    {t(
+                      "error.network.not.support.by.wallet.connect.with.keplr2"
+                    )}
+                  </span>
                 </p>
-                <button
-                  className="bg-pink-200 text-black rounded-md px-3 py-2"
-                  onClick={() => connectWith("keplr")}
+                <p className="pb-8">
+                  {t("error.network.not.support.by.wallet.connect.with.keplr3")}
+                  <span className="text-pink-300">
+                    {t(
+                      "error.network.not.support.by.wallet.connect.with.keplr4"
+                    )}
+                  </span>
+                  {t("error.network.not.support.by.wallet.connect.with.keplr5")}
+                  <span className="text-pink-300">
+                    {t(
+                      "error.network.not.support.by.wallet.connect.with.keplr6"
+                    )}
+                  </span>
+                </p>
+                <PrimaryButton
+                  className="font-normal"
+                  // TODO: If the user rejects the connection, it's connecting with MetaMask. Check why.
+                  onClick={async () => {
+                    // TODO: I created the ConnectKeplr component, maybe we can reuse something from there.
+                    // We should check if the user has Keplr installed and if not, show a message to install it
+                    const [err] = await E.try(() => connectWith("keplr"));
+                    // TODO: handle error when user rejects the connection
+                    if (err) return false;
+                  }}
                 >
                   {t("button.connect.with.keplr")}
-                </button>
+                </PrimaryButton>
               </div>
-            </WizardHelper>
+            </InfoPanel>
           )}
           {/**
            * TODO: I disabled this error message, It's not specced anyway and I feel it makes things more confusing to the user, maybe just showing "no balance" error is already enough
            */}
           {/* {errors.has("accountDoesntExist") && (
-            <WizardHelper>
+            <InfoPanel>
               <div className="text-sm space-y-2">
                 <p>{t("error.account.not.exist.title")}</p>
                 <p>
@@ -300,7 +324,7 @@ export const Content = () => {
                   {t("error.account.not.exist.description2")}
                 </p>
               </div>
-            </WizardHelper>
+            </InfoPanel>
           )} */}
 
           <Subtitle variant="modal-black">{t("transfer.section.to")}</Subtitle>
@@ -322,13 +346,13 @@ export const Content = () => {
           )}
           {/* TODO: this should appear when we add the opacity to the transfer summary because the user doesn't have enough evmos to pay the fee */}
           {errors.has("insufficientBalance") && (
-            <ErrorMessage className="text-center pl-0">
+            <ErrorMessage className="justify-center pl-0">
               {t("transfer.section.summary.error.insufficient.balance")}{" "}
               {balance?.formattedLong ?? "0"} {token.denom}
             </ErrorMessage>
           )}
           {errors.has("insufficientBalanceForFee") && feeTokenbalance && (
-            <ErrorMessage className="text-center pl-0">
+            <ErrorMessage className="justify-center pl-0">
               {/* TODO: the message might be different if the insufficient token is the fee token? */}
               {t("transfer.section.summary.error.insufficient.balance")}{" "}
               {feeTokenbalance.formattedLong} {feeTokenbalance.denom}
@@ -336,7 +360,7 @@ export const Content = () => {
           )}
 
           {/* TODO: show it correctly */}
-          <ErrorMessage className="text-center pl-0" variant="info">
+          <ErrorMessage className="justify-center pl-0" variant="info">
             {t("error.send.axelar.assets.text")}{" "}
             <span className="text-red-300">
               {t("error.send.axelar.assets.text2")}

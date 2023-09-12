@@ -128,6 +128,7 @@ export const AssetSelector = ({
               {selectedToken.denom.toLowerCase()}
             </CryptoSelector.Button>
             <CryptoSelector.Options
+              variant="multiple"
               className="left-0"
               label={t("transfer.section.token.label")}
             >

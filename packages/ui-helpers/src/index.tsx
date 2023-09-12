@@ -43,7 +43,7 @@ export { Description } from "./modal/Description";
 export { Subtitle } from "./modal/Subtitle";
 export { CloseModal } from "./modal/CloseModal";
 export { Progress } from "./progress/Progress";
-export { WizardHelper } from "./modal/WizardHelper";
+export { InfoPanel } from "./InfoPanel";
 export { Tabs } from "./modal/tabs/Tabs";
 export { ModalContainer } from "./modal/ModalContainer";
 export { IntroductionModal } from "./modal/Introduction";

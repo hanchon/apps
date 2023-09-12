@@ -100,7 +100,6 @@ export const AccountSelector = ({
             <CryptoSelector.Options
               label={t("transfer.section.network.label")}
               className="right-0"
-              variant="multiple"
             >
               {networkOptions.map((value) => {
                 const chain = chains[value];
