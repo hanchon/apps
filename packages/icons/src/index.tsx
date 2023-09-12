@@ -52,3 +52,4 @@ export { HandsEmoji } from "./HandsEmoji";
 export { SendIcon } from "./SendIcon";
 export { CopyPasteIcon } from "./CopyPasteIcon";
 export { ErrorIcon } from "./ErrorIcon";
+export { WizardIcon } from "./WizardICon";

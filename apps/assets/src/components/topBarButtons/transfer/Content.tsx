@@ -31,7 +31,7 @@ import {
 import { AccountSelector } from "../parts/AccountSelector";
 import { useModalState } from "../hooks/useModal";
 import { TransferSummary } from "../parts/TransferSummary";
-import { SendIcon } from "icons";
+import { SendIcon, WizardIcon } from "icons";
 import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
@@ -251,15 +251,25 @@ export const Content = () => {
 
           {/* TODO: Some error messages. This is not in the specs, so we need to check with Mian how to display those */}
           {errors.has("userRejectedEnablingNetwork") && (
-            <InfoPanel icon={<IconContainer type={ICONS_TYPES.KEPLR} />}>
+            <InfoPanel icon={<WizardIcon className="shrink-0" />}>
               <div>
                 <p className="pb-4">
-                  {t("error.user.rejected.network.title")}{" "}
-                  <strong>{chains[token.chainPrefix].name}</strong>{" "}
-                  {t("error.user.rejected.network.title2")} {connector?.name}.
+                  {t("error.user.rejected.network.title")}
+                  <span className="text-pink-300">
+                    {chains[token.chainPrefix].name}
+                    {t("error.user.rejected.network.title2")}
+                  </span>
+                  {t("error.user.rejected.network.title3")}
                 </p>
                 <p className="pb-8">
                   {t("error.user.rejected.network.authorize.request")}
+                  <span className="text-pink-300">
+                    {t("error.user.rejected.network.authorize.request2")}
+                  </span>
+                  {t("error.user.rejected.network.authorize.request3")}
+                  <span className="text-pink-300">
+                    {t("error.user.rejected.network.authorize.request4")}
+                  </span>
                 </p>
                 <PrimaryButton
                   className="font-normal "
