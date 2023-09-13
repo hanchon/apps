@@ -197,7 +197,6 @@ export const AssetSelector = ({
         }}
         decimals={selectedToken.decimals}
       />
-
       <CryptoSelectorBalanceBox>
         <div>{amountInUsd !== null && `≈${amountInUsd}`}</div>
         <div>
@@ -218,6 +217,15 @@ export const AssetSelector = ({
           )}
         </div>
       </CryptoSelectorBalanceBox>
+      {/* TODO: show it when the user clicks on max amount */}
+      {/* <ErrorMessage variant="info" displayIcon={false}>
+        {t("message.gas.fee.reserved.amount")}
+      </ErrorMessage> */}
+      {/* TODO: show it when the balance is not enough. We are showing it below the sending 
+      Remove that one and show it here. */}
+      {/* <ErrorMessage displayIcon={false}>
+        {t("message.insufficient.balance")}
+      </ErrorMessage> */}
     </CryptoSelectorBox>
   );
 };
