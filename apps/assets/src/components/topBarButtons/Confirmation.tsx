@@ -33,6 +33,8 @@ import {
 } from "evmos-wallet/src/registry-actions/utils";
 import { useQuery } from "@tanstack/react-query";
 import { chains } from "@evmos-apps/registry";
+import { AddressDisplay } from "./parts/AddressDisplay";
+import { SkeletonLoading } from "./parts/SkeletonLoading";
 const generateReceipt = ({
   sender,
   receiver,
@@ -177,13 +179,18 @@ export const Confirmation = () => {
     }),
     {}
   );
-  const { receipt } = useReceipt(hash, chainPrefix);
+  let { receipt, isLoading: isReceiptLoading } = useReceipt(hash, chainPrefix);
+  // isReceiptLoading = true;
+  // receipt = undefined;
   const { t } = useTranslation();
   const token = receipt?.token.denom
     ? getTokenByMinDenom(receipt.token.denom)
     : undefined;
 
-  const { data: block } = useBlock(chainPrefix, receipt?.height);
+  const { data: block, isLoading: isFetchingBlock } = useBlock(
+    chainPrefix,
+    receipt?.height
+  );
   const chain = chains[chainPrefix ?? "evmos"];
   const blockDate = block?.block?.header?.time
     ? new Date(block.block.header.time)
@@ -199,14 +206,27 @@ export const Confirmation = () => {
     <>
       <ContainerConfirmation>
         {/* PaymentTxIcon FailTxIcon */}
-        <SuccessTxIcon />
+        {receipt && <SuccessTxIcon />}
+        {isReceiptLoading && (
+          <div className="animate-pulse bg-white/10 rounded-full h-56 w-56" />
+        )}
+
         <ConfirmationTitle>
-          {t("transfer.confirmation.message.successful")}
+          <SkeletonLoading loading={isReceiptLoading}>
+            {receipt && t("transfer.confirmation.message.successful")}
+          </SkeletonLoading>
         </ConfirmationTitle>
+
         <ConfirmationMessage>
-          {t("transfer.confirmation.message.successful.description")}
-          <br />
-          {t("transfer.confirmation.message.successful.description2")}
+          <SkeletonLoading loading={isReceiptLoading}>
+            {receipt && (
+              <>
+                {t("transfer.confirmation.message.successful.description")}
+                <br />
+                {t("transfer.confirmation.message.successful.description2")}
+              </>
+            )}
+          </SkeletonLoading>
         </ConfirmationMessage>
         <Divider variant="info" className="w-full">
           <ViewExplorer
@@ -221,12 +241,14 @@ export const Confirmation = () => {
             {t("transfer.confirmation.total.amount.sent")}
           </ConfirmationText>
 
-          {receipt && (
-            <p>
-              {formatUnits(receipt.token.amount, token?.decimals ?? 0)}{" "}
-              {token?.denom ?? receipt?.token.denom}
-            </p>
-          )}
+          <p>
+            <SkeletonLoading loading={isReceiptLoading}>
+              {receipt &&
+                `${formatUnits(receipt.token.amount, token?.decimals ?? 0)} ${
+                  token?.denom ?? receipt?.token.denom
+                }`}
+            </SkeletonLoading>
+          </p>
         </ContainerItem>
         <ContainerItem>
           <ConfirmationText>
@@ -234,13 +256,19 @@ export const Confirmation = () => {
           </ConfirmationText>
 
           <p>
-            {receipt?.receiver?.slice(0, 10)}...{receipt?.receiver?.slice(-6)}
+            <SkeletonLoading className="w-24" loading={isReceiptLoading}>
+              {receipt && <AddressDisplay address={receipt.receiver} />}
+            </SkeletonLoading>
           </p>
         </ContainerItem>
         <ContainerItem>
           <ConfirmationText>{t("transfer.confirmation.date")}</ConfirmationText>
 
-          <p>{blockDate && blockDate.toDateString()}</p>
+          <p>
+            <SkeletonLoading loading={isReceiptLoading || isFetchingBlock}>
+              {blockDate && blockDate.toDateString()}
+            </SkeletonLoading>
+          </p>
         </ContainerItem>
       </ContainerConfirmation>
       <PrimaryButton

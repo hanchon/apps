@@ -48,7 +48,13 @@ export default {
       "category": "stablecoin",
       "type": "IBC",
       "decimals": 18,
-      "erc20Address": "0x4A2a90D444DbB7163B5861b772f882BbA394Ca67"
+      "erc20Address": "0x4A2a90D444DbB7163B5861b772f882BbA394Ca67",
+      "handledByExternalUI": [
+        {
+          "url": "https://satellite.money/",
+          "handlingAction": "Deposit and Withdraw"
+        }
+      ]
     },
     {
       "name": "Pepe by Axelar",
@@ -64,7 +70,13 @@ export default {
       "category": "ethereum",
       "type": "IBC",
       "decimals": 18,
-      "erc20Address": "0xc76A204AEA61a68a3B1f97B8E70286CD42B020D2"
+      "erc20Address": "0xc76A204AEA61a68a3B1f97B8E70286CD42B020D2",
+      "handledByExternalUI": [
+        {
+          "url": "https://satellite.money/",
+          "handlingAction": "Deposit and Withdraw"
+        }
+      ]
     },
     {
       "name": "Rocket Pool staked ETH by Axelar",
@@ -80,7 +92,13 @@ export default {
       "category": "ethereum",
       "type": "IBC",
       "decimals": 18,
-      "erc20Address": "0xE60CE2dfa6D4Ad37Ade1dcB7aC4D6C3A093b3A7E"
+      "erc20Address": "0xE60CE2dfa6D4Ad37Ade1dcB7aC4D6C3A093b3A7E",
+      "handledByExternalUI": [
+        {
+          "url": "https://satellite.money/",
+          "handlingAction": "Deposit and Withdraw"
+        }
+      ]
     },
     {
       "name": "USD Coin by Axelar",
@@ -96,7 +114,13 @@ export default {
       "category": "stablecoin",
       "type": "IBC",
       "decimals": 6,
-      "erc20Address": "0x15C3Eb3B621d1Bff62CbA1c9536B7c1AE9149b57"
+      "erc20Address": "0x15C3Eb3B621d1Bff62CbA1c9536B7c1AE9149b57",
+      "handledByExternalUI": [
+        {
+          "url": "https://satellite.money/",
+          "handlingAction": "Deposit and Withdraw"
+        }
+      ]
     },
     {
       "name": "USDT by Axelar",
@@ -112,7 +136,13 @@ export default {
       "category": "stablecoin",
       "type": "IBC",
       "decimals": 6,
-      "erc20Address": "0xe01C6D4987Fc8dCE22988DADa92d56dA701d0Fe0"
+      "erc20Address": "0xe01C6D4987Fc8dCE22988DADa92d56dA701d0Fe0",
+      "handledByExternalUI": [
+        {
+          "url": "https://satellite.money/",
+          "handlingAction": "Deposit and Withdraw"
+        }
+      ]
     },
     {
       "name": "Wrapped Bitcoin on Axelar",
@@ -127,7 +157,13 @@ export default {
       "category": "bitcoin",
       "type": "IBC",
       "decimals": 8,
-      "erc20Address": "0xF5b24c0093b65408ACE53df7ce86a02448d53b25"
+      "erc20Address": "0xF5b24c0093b65408ACE53df7ce86a02448d53b25",
+      "handledByExternalUI": [
+        {
+          "url": "https://satellite.money/",
+          "handlingAction": "Deposit and Withdraw"
+        }
+      ]
     },
     {
       "name": "Wrapped Ether on Axelar",
@@ -142,7 +178,13 @@ export default {
       "category": "ethereum",
       "type": "IBC",
       "decimals": 18,
-      "erc20Address": "0x50dE24B3f0B3136C50FA8A3B8ebc8BD80a269ce5"
+      "erc20Address": "0x50dE24B3f0B3136C50FA8A3B8ebc8BD80a269ce5",
+      "handledByExternalUI": [
+        {
+          "url": "https://satellite.money/",
+          "handlingAction": "Deposit and Withdraw"
+        }
+      ]
     },
     {
       "name": "Lido staked ETH by Axelar",
@@ -158,7 +200,13 @@ export default {
       "category": "ethereum",
       "type": "IBC",
       "decimals": 18,
-      "erc20Address": "0xA2A4B12EF81E7A26C5a1E0be9340b1972F85E44A"
+      "erc20Address": "0xA2A4B12EF81E7A26C5a1E0be9340b1972F85E44A",
+      "handledByExternalUI": [
+        {
+          "url": "https://satellite.money/",
+          "handlingAction": "Deposit and Withdraw"
+        }
+      ]
     }
   ],
   "clientId": "07-tendermint-69",

@@ -12,6 +12,7 @@ import {
 } from "evmos-wallet";
 import { chains } from "@evmos-apps/registry";
 import { Arrow } from "ui-helpers";
+import { AddressDisplay } from "./AddressDisplay";
 
 export const TransferSummary = ({
   sender,
@@ -99,20 +100,4 @@ export const TransferSummary = ({
       )}
     </div>
   );
-};
-
-const AddressDisplay = ({
-  address,
-  fallback,
-}: {
-  address: Address<Prefix>;
-  fallback: string;
-}) => {
-  if (!address) fallback;
-  if (address.startsWith("0x")) {
-    return `0x${address.slice(2, 6)}…${address.slice(-4)}`;
-  }
-
-  const [prefix, tail] = address.split("1");
-  return `${prefix}…${tail.slice(-4)}`;
 };

@@ -16,6 +16,21 @@ export type Token = {
   type: "IBC" | "ERC20";
   erc20Address: string;
   category: "bitcoin" | "ethereum" | "stablecoin" | "cosmos" | "polygon" | null;
+  handledByExternalUI?: {
+    /**
+     * Link to the external UI site
+     */
+    url: string;
+    /**
+     * Specify if the external UI is for Deposit, Withdraw, Convert, or others.
+     */
+    handlingAction:
+      | "Deposit"
+      | "Withdraw"
+      | "Convert"
+      | "Deposit and Withdraw"
+      | "All";
+  }[];
 };
 export interface Chain {
   prefix: string;

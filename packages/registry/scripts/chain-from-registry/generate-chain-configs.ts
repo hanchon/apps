@@ -50,6 +50,7 @@ async function generateTokens(tokenRegistries: TokenRegistry[]) {
         type: token.type === "IBC" ? "IBC" : "ERC20",
         decimals: Number(token.exponent),
         erc20Address: token.erc20Address,
+        handledByExternalUI: token.handledByExternalUI,
       };
     })
   )) as [Token, ...Token[]];
