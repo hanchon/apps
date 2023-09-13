@@ -46,7 +46,8 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
   return useQuery({
     queryKey: ["wallet_account_request", prefix, connector?.id],
     retry: false,
-    staleTime: 0,
+    staleTime: Infinity,
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       if (!chain) {
         throw new Error("NETWORK_NOT_SUPPORTED_BY_WALLET");
