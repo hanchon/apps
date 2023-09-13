@@ -26,7 +26,6 @@
   "transfer.section.to.wallet.other": "Other",
   "transfer.section.to.placeholder": "Paste other recipient's wallet address here",
   "transfer.section.summary.title": "Sending",
-  "transfer.section.summary.error.insufficient.balance": "Insufficient Balance:",
   "transfer.send.button.text": "Send",
   "transfer.swap.button.text": "Swap for Evmos",
   "transfer.bridge.button.text": "Send from Axelar",
@@ -73,5 +72,7 @@
   "pay.confirmation.message.successful.description2": "Check details below.",
   "pay.confirmation.total.amount.paid": "Total amount paid",
   "pay.confirmation.paid.to": "Paid to",
-  "pay.confirmation.date": "Transaction Date(UTC+0)"
+  "pay.confirmation.date": "Transaction Date(UTC+0)",
+  "message.gas.fee.reserved.amount": "Gas fee reserved in the max amount",
+  "message.insufficient.balance": "Insufficient Balance"
 }

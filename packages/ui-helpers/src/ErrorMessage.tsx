@@ -8,8 +8,12 @@ import { ComponentProps } from "react";
 export function ErrorMessage({
   className,
   variant = "error",
+  displayIcon = true,
   ...rest
-}: ComponentProps<"p"> & { variant?: "error" | "info" }) {
+}: ComponentProps<"p"> & {
+  variant?: "error" | "info";
+  displayIcon?: boolean;
+}) {
   return (
     <div
       className={cn(
@@ -21,7 +25,7 @@ export function ErrorMessage({
         }
       )}
     >
-      <ErrorIcon />
+      {displayIcon && <ErrorIcon />}
       <p {...rest} />
     </div>
   );

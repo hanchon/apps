@@ -357,14 +357,14 @@ export const Content = () => {
           {/* TODO: this should appear when we add the opacity to the transfer summary because the user doesn't have enough evmos to pay the fee */}
           {errors.has("insufficientBalance") && (
             <ErrorMessage className="justify-center pl-0">
-              {t("transfer.section.summary.error.insufficient.balance")}{" "}
+              {t("message.insufficient.balance")}{" "}
               {balance?.formattedLong ?? "0"} {token.denom}
             </ErrorMessage>
           )}
           {errors.has("insufficientBalanceForFee") && feeTokenbalance && (
             <ErrorMessage className="justify-center pl-0">
               {/* TODO: the message might be different if the insufficient token is the fee token? */}
-              {t("transfer.section.summary.error.insufficient.balance")}{" "}
+              {t("message.insufficient.balance")}{" "}
               {feeTokenbalance.formattedLong} {feeTokenbalance.denom}
             </ErrorMessage>
           )}

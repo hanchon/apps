@@ -1,7 +1,7 @@
 import { ComponentProps, useState, useEffect } from "react";
 import { formatUnits, parseUnits } from "viem";
 import { cn, clamp, E } from "helpers";
-import { Tooltip } from "./Tooltip";
+import cx from "clsx";
 
 export const AmountInput = ({
   value,
@@ -11,6 +11,7 @@ export const AmountInput = ({
   min = 0n,
   className,
   maxButtonClassName,
+  variant = "default",
   ...props
 }: Omit<ComponentProps<"input">, "value" | "onChange" | "max" | "min"> & {
   maxButtonClassName?: string;
@@ -19,6 +20,7 @@ export const AmountInput = ({
   value?: bigint;
   max?: bigint;
   min?: bigint;
+  variant?: "default" | "error" | "info";
 }) => {
   const decimalsUnit = parseInt(String(decimals ?? 18));
   const formattedValue = formatUnits(value ?? 0n, decimalsUnit);
@@ -39,11 +41,23 @@ export const AmountInput = ({
   }, [max, min, decimalsUnit]);
 
   return (
-    <div className="flex w-full tracking-wider font-bold py-2 px-4 text-sm leading-5 text-gray-900 focus:ring-1 border-2 border-pink-300 rounded bg-pink-200 text-black focus-visible:outline-none">
+    <div
+      className={cx(
+        "flex w-full tracking-wider font-bold py-2 px-4 text-sm leading-5 text-gray-900 focus:ring-1 border-2 border-pink-300 rounded bg-pink-200 text-black focus-visible:outline-none",
+        {
+          "bg-pink-700": variant === "error",
+          "bg-purple-200": variant === "info",
+        }
+      )}
+    >
       <input
         value={internalValueState}
-        className={cn(
+        className={cx(
           "w-full border-none bg-pink-200 focus-visible:outline-none",
+          {
+            "bg-pink-700": variant === "error",
+            "bg-purple-200": variant === "info",
+          },
           className
         )}
         onChange={(e) => {
@@ -82,26 +96,19 @@ export const AmountInput = ({
         {...props}
       />
 
-      <Tooltip
-        className="w-32 py-0 tracking-tight leading-4"
-        element={
-          <button
-            className={cn(
-              "py-2 px-2.5 leading-none rounded-md bg-pink-400 text-black-900 text-sm tracking-wider font-normal",
-              maxButtonClassName
-            )}
-            onClick={(e) => {
-              e.preventDefault();
-              setValue(formatUnits(max ?? 0n, decimalsUnit));
-              onChange?.(max ?? 0n);
-            }}
-          >
-            Max.
-          </button>
-        }
-        // TODO: where can I get the token ?
-        text={`Clicking on Max reserves some ... to pay for transaction fees.`}
-      />
+      <button
+        className={cn(
+          "py-2 px-2.5 leading-none rounded-md bg-pink-400 text-black-900 text-sm tracking-wider font-normal",
+          maxButtonClassName
+        )}
+        onClick={(e) => {
+          e.preventDefault();
+          setValue(formatUnits(max ?? 0n, decimalsUnit));
+          onChange?.(max ?? 0n);
+        }}
+      >
+        Max.
+      </button>
     </div>
   );
 };
