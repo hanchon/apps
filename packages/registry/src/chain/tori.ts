@@ -16,7 +16,7 @@ export default {
     "average": "0.025",
     "high": "0.03"
   },
-  "nativeCurrency": "TORI",
+  "feeToken": "utori",
   "currencies": [
     {
       "name": "Teritori",
@@ -26,6 +26,8 @@ export default {
       },
       "denom": "TORI",
       "channel": "channel-35",
+      "sourcePrefix": "tori",
+      "baseDenom": "utori",
       "minCoinDenom": "utori",
       "cosmosDenom": "ibc/18D5C3CDDF1DEE108CE4BF0A7E0262D94D11AB06A37F68EA38F70CC92C5D894F",
       "category": "cosmos",

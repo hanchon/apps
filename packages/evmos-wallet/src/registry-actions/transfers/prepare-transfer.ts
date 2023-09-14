@@ -13,7 +13,8 @@ import {
   executeCosmosIBCTransfer,
   prepareCosmosIBCTransfer,
 } from "./prepare-cosmos-ibc-transfer";
-import { E } from "helpers";
+import { E, raise } from "helpers";
+import { getToken } from "../get-token";
 
 export const simulateTransfer = async ({
   sender,
@@ -23,13 +24,15 @@ export const simulateTransfer = async ({
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
   token: {
+    sourcePrefix: Prefix;
     denom: TokenMinDenom;
     amount: bigint;
   };
 }) => {
   const senderIsEvmos = isEvmosAddress(sender);
   const receiverIsEvmos = isEvmosAddress(receiver);
-
+  const tokenConfig =
+    getToken(token.sourcePrefix, token.denom) ?? raise("TOKEN_NOT_FOUND");
   /**
    * Evmos -> Evmos
    */
@@ -43,7 +46,8 @@ export const simulateTransfer = async ({
       ...(await prepareContractERC20Transfer({
         sender,
         receiver,
-        token,
+        token: tokenConfig,
+        amount: token.amount,
       })),
     } as const;
   }
@@ -59,7 +63,8 @@ export const simulateTransfer = async ({
       ...(await prepareContractIBCTransfer({
         sender,
         receiver,
-        token,
+        token: tokenConfig,
+        amount: token.amount,
       })),
     } as const;
   }
@@ -75,7 +80,8 @@ export const simulateTransfer = async ({
       ...(await prepareCosmosIBCTransfer({
         sender,
         receiver,
-        token,
+        token: tokenConfig,
+        amount: token.amount,
       })),
     } as const;
   }
@@ -95,6 +101,7 @@ export const transfer = async ({
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
   token: {
+    sourcePrefix: Prefix;
     denom: TokenMinDenom;
     amount: bigint;
   };
@@ -108,26 +115,31 @@ export const transfer = async ({
 }) => {
   const senderIsEvmos = isEvmosAddress(sender);
   const receiverIsEvmos = isEvmosAddress(receiver);
+  const tokenConfig =
+    getToken(token.sourcePrefix, token.denom) ?? raise("TOKEN_NOT_FOUND");
 
   if (senderIsEvmos && receiverIsEvmos) {
     return await writeContractERC20Transfer({
       sender,
       receiver,
-      token,
+      token: tokenConfig,
+      amount: token.amount,
     });
   }
   if (senderIsEvmos && !receiverIsEvmos) {
     return await writeContractIBCTransfer({
       sender,
       receiver,
-      token,
+      token: tokenConfig,
+      amount: token.amount,
     });
   }
   if (!senderIsEvmos && receiverIsEvmos) {
     return await executeCosmosIBCTransfer({
       sender,
       receiver,
-      token,
+      token: tokenConfig,
+      amount: token.amount,
       fee,
     });
   }

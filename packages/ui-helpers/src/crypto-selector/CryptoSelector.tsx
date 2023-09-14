@@ -7,7 +7,7 @@ import Image from "next/image";
 import { DropdownArrow } from "icons";
 import { cn } from "helpers";
 import cx from "clsx";
-export function CryptoSelector<T extends string>(
+export function CryptoSelector<T>(
   props: PropsWithChildren<{
     value: T;
     onChange: (value: T) => void;
@@ -101,13 +101,13 @@ CryptoSelector.Options = ({
   );
 };
 
-CryptoSelector.Option = ({
+CryptoSelector.Option = <T,>({
   children,
   src,
   ...props
 }: PropsWithChildren<{
   src: string;
-  value: string;
+  value: T;
 }>) => {
   return (
     <Listbox.Option

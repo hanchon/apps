@@ -9,21 +9,17 @@ import {
 import { chains } from "@evmos-apps/registry";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "ui-helpers";
-import {
-  Address,
-  getTokenByMinDenom,
-  getTokens,
-  useTokenBalance,
-} from "evmos-wallet";
+import { Address, getToken, getTokens, useTokenBalance } from "evmos-wallet";
 import { CryptoSelectorTitle } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
 import { max } from "helpers";
-import { getChainByTokenDenom } from "evmos-wallet/src/registry-actions/get-chain-by-token-min-denom";
+
 type Asset = {
-  chainPrefix: Prefix;
+  networkPrefix: Prefix;
   denom: TokenMinDenom;
+  tokenSourcePrefix: Prefix;
   amount: bigint;
 };
 
@@ -52,24 +48,20 @@ export const AssetSelector = ({
   };
 }>) => {
   const { t } = useTranslation();
-  // const [selectedChainPrefix, setSelectedChainPrefix] =
-  //   useState<Prefix>("evmos");
 
-  const selectedChain = chains[value.chainPrefix];
-  const selectedToken = getTokenByMinDenom(value.denom);
+  const selectedChain = chains[value.networkPrefix];
+
+  const selectedToken = getToken(value.tokenSourcePrefix, value.denom);
 
   const tokenOptions = useMemo(() => {
-    return getTokens()
-      .sort(({ denom: a }, { denom: b }) => (a > b ? 1 : -1))
-      .map(({ minCoinDenom }) => minCoinDenom);
+    return getTokens().sort(({ denom: a }, { denom: b }) => (a > b ? 1 : -1));
   }, []);
 
   const networkOptions = useMemo(() => {
-    const chain = getChainByTokenDenom(selectedToken.minCoinDenom);
-    if (chain.prefix === "evmos")
+    if (selectedToken.sourcePrefix === "evmos")
       return Object.values(chains).map(({ prefix }) => prefix);
 
-    return [chain.prefix, "evmos"] as Prefix[];
+    return [selectedToken.sourcePrefix, "evmos"] as Prefix[];
   }, [selectedToken]);
 
   /**
@@ -77,19 +69,21 @@ export const AssetSelector = ({
    * If not, set the first available token as the selected token.
    */
   useEffect(() => {
-    if (tokenOptions.includes(value.denom)) return;
+    if (tokenOptions.includes(getToken(value.tokenSourcePrefix, value.denom)))
+      return;
     onChange({
       ...value,
-      denom: tokenOptions[0],
+      tokenSourcePrefix: tokenOptions[0].sourcePrefix,
+      denom: tokenOptions[0].minCoinDenom,
     });
   }, [tokenOptions]);
 
   const price = useTokenPrice(value.denom);
 
-  const { balance, isFetching: isFetchingBalance } = useTokenBalance(
-    address,
-    value?.denom
-  );
+  const { balance, isFetching: isFetchingBalance } = useTokenBalance(address, {
+    minCoinDenom: value.denom,
+    sourcePrefix: value.tokenSourcePrefix,
+  });
 
   const amountInUsd = price
     ? tokenToUSD(value.amount, Number(price), selectedToken.decimals)
@@ -112,14 +106,15 @@ export const AssetSelector = ({
             {t("transfer.section.asset.token")}
           </CryptoSelectorTitle>
           <CryptoSelector
-            value={value.denom}
-            onChange={(denom) =>
+            value={selectedToken}
+            onChange={(token) => {
               onChange({
-                chainPrefix: getChainByTokenDenom(denom).prefix,
+                networkPrefix: token.sourcePrefix,
+                tokenSourcePrefix: token.sourcePrefix,
                 amount: 0n,
-                denom,
-              })
-            }
+                denom: token.minCoinDenom,
+              });
+            }}
           >
             <CryptoSelector.Button
               src={`/assets/tokens/${selectedToken.denom}.png`}
@@ -133,14 +128,13 @@ export const AssetSelector = ({
               label={t("transfer.section.token.label")}
             >
               {tokenOptions.map((token) => {
-                const { denom } = getTokenByMinDenom(token);
                 return (
                   <CryptoSelector.Option
-                    src={`/assets/tokens/${denom}.png`}
-                    key={token}
+                    src={`/assets/tokens/${token.denom}.png`}
+                    key={`${token.sourcePrefix}-${token.minCoinDenom}`}
                     value={token}
                   >
-                    {denom}
+                    {token.denom}
                   </CryptoSelector.Option>
                 );
               })}
@@ -152,17 +146,17 @@ export const AssetSelector = ({
             {t("transfer.section.asset.network")}
           </CryptoSelectorTitle>
           <CryptoSelector
-            value={value.chainPrefix}
+            value={value.networkPrefix}
             onChange={(prefix) => {
               onChange({
                 ...value,
                 amount: 0n,
-                chainPrefix: prefix,
+                networkPrefix: prefix,
               });
             }}
           >
             <CryptoSelector.Button
-              src={`/assets/chains/${value.chainPrefix}.png`}
+              src={`/assets/chains/${value.networkPrefix}.png`}
             >
               {selectedChain.name}
             </CryptoSelector.Button>

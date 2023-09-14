@@ -23,12 +23,7 @@ export async function getERC20TokenBalances({
   return response
     .map((response, index) => {
       const token = tokens[index];
-      return makeBalance(
-        token.denom,
-        evmosAddress,
-        response.result ?? "0",
-        "ERC20"
-      );
+      return makeBalance(token, evmosAddress, response.result ?? "0", "ERC20");
     })
     .filter(({ value }) => value > 0n);
 }

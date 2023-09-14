@@ -6,13 +6,14 @@ import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import {
   Address,
   getPrefix,
-  getTokenByMinDenom,
+  getToken,
   normalizeToCosmosAddress,
   useFee,
 } from "evmos-wallet";
 import { chains } from "@evmos-apps/registry";
 import { Arrow } from "ui-helpers";
 import { AddressDisplay } from "./AddressDisplay";
+import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
 export const TransferSummary = ({
   sender,
@@ -22,6 +23,7 @@ export const TransferSummary = ({
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
   token: {
+    sourcePrefix: Prefix;
     denom: TokenMinDenom;
     amount: bigint;
   };
@@ -31,16 +33,17 @@ export const TransferSummary = ({
   const senderChain = chains[senderPrefix];
   const receiverChain = chains[receiverPrefix];
 
-  const { name, decimals, denom } = getTokenByMinDenom(token.denom);
+  const { name, decimals, denom } = getToken(token.sourcePrefix, token.denom);
 
   const { fee, isFetching, error } = useFee({
     sender,
     receiverChainPrefix: receiver
       ? getPrefix(normalizeToCosmosAddress(receiver))
       : "evmos",
-    denom: token.denom,
+    token,
   });
-  const feeToken = fee ? getTokenByMinDenom(fee.token.denom) : null;
+  const feeChain = getChainByAddress(sender);
+  const feeToken = getToken(feeChain.prefix, feeChain.feeToken);
   return (
     // TODO: we need to add opacity-50 in the div below if the user doesn't have enough balance to pay the fee
     <div className="flex items-stretch ">

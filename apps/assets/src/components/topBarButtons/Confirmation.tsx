@@ -21,39 +21,39 @@ import {
   apiCosmosBlockByHeight,
   apiCosmosTxByHash,
   getAbi,
-  getTokenByMinDenom,
+  getTokens,
   normalizeToCosmosAddress,
 } from "evmos-wallet";
-import { SuccessTxIcon } from "icons";
-import { Prefix } from "evmos-wallet/src/registry-actions/types";
+import { FailTxIcon, SuccessTxIcon } from "icons";
+import { Prefix, Token } from "evmos-wallet/src/registry-actions/types";
 import {
   ChainPrefixSchema,
   HexSchema,
-  normalizeToMinDenom,
+  findToken,
 } from "evmos-wallet/src/registry-actions/utils";
 import { useQuery } from "@tanstack/react-query";
 import { chains } from "@evmos-apps/registry";
 import { AddressDisplay } from "./parts/AddressDisplay";
 import { SkeletonLoading } from "./parts/SkeletonLoading";
+import { E, raise } from "helpers";
 const generateReceipt = ({
   sender,
   receiver,
   amount,
-  denom,
+  token,
   height,
 }: {
   sender: string;
   receiver: string;
   amount: bigint | number | string;
-  denom: string;
+  token: Token;
   height: string | number | bigint;
 }) => ({
   sender: normalizeToCosmosAddress(sender as Address<Prefix>),
   receiver: normalizeToCosmosAddress(receiver as Address<Prefix>),
-  token: {
-    denom: normalizeToMinDenom(denom) ?? denom,
-    amount: BigInt(amount),
-  },
+  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${
+    token.denom
+  }`,
   height: BigInt(height),
 });
 
@@ -67,11 +67,15 @@ const generateICS20TransferReceipt = async (result: FetchTransactionResult) => {
   const [, , denom, amount, sender, receiver] = args;
   if (!denom || !amount || !sender || !receiver)
     throw new Error("Missing args");
+
   return generateReceipt({
     sender,
     receiver,
     amount,
-    denom,
+    token:
+      findToken({
+        denom,
+      }) ?? raise("Token not found"),
     height: result.blockNumber,
   });
 };
@@ -86,11 +90,15 @@ const generateERC20TransferReceipt = async (result: FetchTransactionResult) => {
   const [receiver, amount] = args;
 
   if (!amount || !amount || !receiver) throw new Error("Missing args");
+  const token =
+    getTokens().find((token) => token.erc20Address === result.to) ??
+    raise("Token not found");
+
   return generateReceipt({
     sender: result.from,
     receiver,
     amount,
-    denom: "aevmos",
+    token,
     height: result.blockNumber,
   });
 };
@@ -108,6 +116,8 @@ const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
   const { data, ...rest } = useQuery({
     queryKey: ["receipt", hash],
     enabled: !!hash && !!chainPrefix,
+    retry: 0,
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       if (!hash || !chainPrefix) throw new Error("Missing parameters");
       /**
@@ -132,14 +142,22 @@ const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
 
       const result = await apiCosmosTxByHash(chainConfig.cosmosRest.http, hash);
       const message = { ...result.tx.body.messages[0] } as const;
+
+      if (result.tx_response.code !== 0) {
+        throw new Error(`Transaction failed: ${result.tx_response.raw_log}`);
+      }
       if (!isIBCMsgTransfer(message)) {
         throw new Error("Unsupported transaction type");
       }
+      const token =
+        findToken({
+          denom: message.token.denom,
+        }) ?? raise("Token not found");
       return generateReceipt({
         sender: message.sender,
         receiver: message.receiver,
         amount: message.token.amount,
-        denom: message.token.denom,
+        token,
         height: result.tx_response.height,
       });
     },
@@ -179,13 +197,13 @@ export const Confirmation = () => {
     }),
     {}
   );
-  let { receipt, isLoading: isReceiptLoading } = useReceipt(hash, chainPrefix);
-  // isReceiptLoading = true;
-  // receipt = undefined;
+  let {
+    receipt,
+    isLoading: isReceiptLoading,
+    error,
+  } = useReceipt(hash, chainPrefix);
+
   const { t } = useTranslation();
-  const token = receipt?.token.denom
-    ? getTokenByMinDenom(receipt.token.denom)
-    : undefined;
 
   const { data: block, isLoading: isFetchingBlock } = useBlock(
     chainPrefix,
@@ -206,14 +224,16 @@ export const Confirmation = () => {
     <>
       <ContainerConfirmation>
         {/* PaymentTxIcon FailTxIcon */}
+        {!!error && <FailTxIcon />}
         {receipt && <SuccessTxIcon />}
         {isReceiptLoading && (
           <div className="animate-pulse bg-white/10 rounded-full h-56 w-56" />
         )}
 
-        <ConfirmationTitle>
+        <ConfirmationTitle variant={error ? "error" : "success"}>
           <SkeletonLoading loading={isReceiptLoading}>
             {receipt && t("transfer.confirmation.message.successful")}
+            {!!error && t("transfer.confirmation.message.unsuccessful")}
           </SkeletonLoading>
         </ConfirmationTitle>
 
@@ -226,6 +246,7 @@ export const Confirmation = () => {
                 {t("transfer.confirmation.message.successful.description2")}
               </>
             )}
+            {!!error && <>{E.ensureError(error).message}</>}
           </SkeletonLoading>
         </ConfirmationMessage>
         <Divider variant="info" className="w-full">
@@ -235,42 +256,45 @@ export const Confirmation = () => {
             text={`Transaction ID: ${hash?.slice(0, 10)}...`}
           />
         </Divider>
+        {!error && (
+          <>
+            <ContainerItem>
+              <ConfirmationText>
+                {t("transfer.confirmation.total.amount.sent")}
+              </ConfirmationText>
 
-        <ContainerItem>
-          <ConfirmationText>
-            {t("transfer.confirmation.total.amount.sent")}
-          </ConfirmationText>
+              <p>
+                <SkeletonLoading loading={isReceiptLoading}>
+                  {receipt && receipt.formattedAmount}
+                </SkeletonLoading>
+              </p>
+            </ContainerItem>
+            <ContainerItem>
+              <ConfirmationText>
+                {t("transfer.confirmation.recipient.address")}
+              </ConfirmationText>
 
-          <p>
-            <SkeletonLoading loading={isReceiptLoading}>
-              {receipt &&
-                `${formatUnits(receipt.token.amount, token?.decimals ?? 0)} ${
-                  token?.denom ?? receipt?.token.denom
-                }`}
-            </SkeletonLoading>
-          </p>
-        </ContainerItem>
-        <ContainerItem>
-          <ConfirmationText>
-            {t("transfer.confirmation.recipient.address")}
-          </ConfirmationText>
+              <p>
+                <SkeletonLoading className="w-24" loading={isReceiptLoading}>
+                  {receipt && <AddressDisplay address={receipt.receiver} />}
+                </SkeletonLoading>
+              </p>
+            </ContainerItem>
+            <ContainerItem>
+              <ConfirmationText>
+                {t("transfer.confirmation.date")}
+              </ConfirmationText>
 
-          <p>
-            <SkeletonLoading className="w-24" loading={isReceiptLoading}>
-              {receipt && <AddressDisplay address={receipt.receiver} />}
-            </SkeletonLoading>
-          </p>
-        </ContainerItem>
-        <ContainerItem>
-          <ConfirmationText>{t("transfer.confirmation.date")}</ConfirmationText>
-
-          <p>
-            <SkeletonLoading loading={isReceiptLoading || isFetchingBlock}>
-              {blockDate && blockDate.toDateString()}
-            </SkeletonLoading>
-          </p>
-        </ContainerItem>
+              <p>
+                <SkeletonLoading loading={isReceiptLoading || isFetchingBlock}>
+                  {blockDate && blockDate.toDateString()}
+                </SkeletonLoading>
+              </p>
+            </ContainerItem>
+          </>
+        )}
       </ContainerConfirmation>
+
       <PrimaryButton
         onClick={() => {
           setShow(false);

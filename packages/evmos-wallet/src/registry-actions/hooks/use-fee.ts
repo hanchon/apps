@@ -23,18 +23,27 @@ const ethToBech32 = <T extends Prefix>(address: HexAddress, prefix: T) => {
 export const useFee = ({
   sender,
   receiverChainPrefix,
-  denom,
+  token,
 }: {
   sender?: Address<Prefix>;
   receiverChainPrefix?: Prefix;
-  denom?: TokenMinDenom;
+  token?: {
+    sourcePrefix: Prefix;
+    denom: TokenMinDenom;
+  };
 }) => {
   const { data: accountExists } = useAccountExists(sender);
   const { data, ...rest } = useQuery({
     staleTime: 1000 * 30,
-    queryKey: ["use-fee", sender, receiverChainPrefix, denom],
+    queryKey: [
+      "use-fee",
+      sender,
+      receiverChainPrefix,
+      token?.sourcePrefix,
+      token?.denom,
+    ],
     queryFn: async () => {
-      if (!sender || !receiverChainPrefix || !denom) {
+      if (!sender || !receiverChainPrefix || !token) {
         return null;
       }
 
@@ -43,7 +52,7 @@ export const useFee = ({
           sender,
           receiver: ethToBech32(fakeWalletAddress, receiverChainPrefix),
           token: {
-            denom,
+            ...token,
             amount: 1n,
           },
         })
@@ -57,17 +66,16 @@ export const useFee = ({
 
       const { estimatedGas } = prepared;
       const senderChain = getChainByAddress(sender);
-      const feeToken = getTokenByDenom(senderChain.nativeCurrency);
 
       return {
         gas: estimatedGas,
         token: {
           amount: multiply(estimatedGas, senderChain.gasPriceStep.average),
-          denom: feeToken.minCoinDenom,
+          denom: senderChain.feeToken,
         },
       };
     },
-    enabled: !!sender && !!receiverChainPrefix && !!denom && accountExists,
+    enabled: !!sender && !!receiverChainPrefix && !!token && accountExists,
   });
   return {
     ...rest,

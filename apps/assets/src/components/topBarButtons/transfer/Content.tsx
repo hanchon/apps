@@ -19,8 +19,7 @@ import {
   connectWith,
   getPrefix,
   getPrefixes,
-  getTokenByDenom,
-  getTokenMinDenomList,
+  getToken,
   isValidCosmosAddress,
   isValidHexAddress,
   useAccountExists,
@@ -37,8 +36,12 @@ import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
-import { getChainByTokenDenom } from "evmos-wallet/src/registry-actions/get-chain-by-token-min-denom";
+
 import { ICONS_TYPES } from "constants-helper";
+import {
+  ChainPrefixSchema,
+  MinDenomSchema,
+} from "evmos-wallet/src/registry-actions/utils";
 
 const sortedChains = Object.values(chains)
   .map(({ prefix }) => prefix)
@@ -56,18 +59,9 @@ const TransferModalSchema = z.object({
     }
     return undefined;
   }),
-  chainPrefix: z.custom<Prefix>((v) => {
-    if (Object.keys(chains).includes(v as Prefix)) {
-      return v;
-    }
-    return undefined;
-  }),
-  denom: z.custom<TokenMinDenom>((v) => {
-    if (getTokenMinDenomList().includes(v as TokenMinDenom)) {
-      return v;
-    }
-    return undefined;
-  }),
+  networkPrefix: ChainPrefixSchema,
+  tokenSourcePrefix: ChainPrefixSchema,
+  denom: MinDenomSchema,
   amount: z.coerce.bigint().default(0n),
 });
 
@@ -75,29 +69,36 @@ export const Content = () => {
   const { t } = useTranslation();
 
   const {
-    state: { receiver, ...token },
+    state: { receiver, tokenSourcePrefix, denom, networkPrefix, amount },
     setState,
   } = useModalState("transfer", TransferModalSchema, {
-    chainPrefix: "evmos",
+    networkPrefix: "evmos",
+    tokenSourcePrefix: "evmos",
     denom: "aevmos",
     amount: 0n,
   });
-
-  const { connector } = useAccount();
+  const feeChain = chains[networkPrefix];
+  const feeToken = getToken(feeChain.prefix, feeChain.feeToken);
   const {
     data,
     error: walletRequestError,
     refetch,
-  } = useWalletAccountByPrefix(token.chainPrefix);
+  } = useWalletAccountByPrefix(networkPrefix);
 
   const sender = data?.bech32Address;
+  const token = getToken(tokenSourcePrefix, denom);
+  const senderChain = sender ? getChainByAddress(sender) : chains["evmos"];
+  const tokenChain = chains[token.sourcePrefix];
 
   const { data: accountExists } = useAccountExists(sender);
 
   const { fee, error: feeError } = useFee({
     sender,
     receiverChainPrefix: receiver ? getPrefix(receiver) : "evmos",
-    denom: token.denom,
+    token: token && {
+      denom: token.minCoinDenom,
+      sourcePrefix: tokenSourcePrefix,
+    },
   });
 
   const {
@@ -109,8 +110,9 @@ export const Content = () => {
     sender,
     receiver,
     token: {
-      amount: token.amount,
-      denom: token.denom,
+      amount: amount,
+      denom: denom,
+      sourcePrefix: tokenSourcePrefix,
     },
     fee: fee
       ? {
@@ -119,16 +121,9 @@ export const Content = () => {
         }
       : undefined,
   });
-  const { balance } = useTokenBalance(sender, token.denom);
-  const senderChain = sender ? getChainByAddress(sender) : chains["evmos"];
-  const tokenChain = getChainByTokenDenom(token.denom);
-  const feeChainNativeCurrency = chains[token.chainPrefix].nativeCurrency;
-  const feeToken = getTokenByDenom(feeChainNativeCurrency);
+  const { balance } = useTokenBalance(sender, token);
 
-  const { balance: feeTokenbalance } = useTokenBalance(
-    sender,
-    feeToken.minCoinDenom
-  );
+  const { balance: feeTokenbalance } = useTokenBalance(sender, feeToken);
 
   const destinationNetworkOptions = useMemo((): Prefix[] => {
     // If asset is being held on an EVMOS ACCOUNT
@@ -143,7 +138,7 @@ export const Content = () => {
 
     // if it's held somewhere else, it can only go to evmos
     return ["evmos"];
-  }, [sender, token.denom, token.chainPrefix, senderChain, tokenChain]);
+  }, [senderChain, tokenChain]);
 
   /**
    * Centralizing errors
@@ -168,8 +163,7 @@ export const Content = () => {
     /**
      * Balance checks
      */
-    const isFeeTokenAndSelectedTokenEqual =
-      fee && fee.token.denom === token.denom;
+    const isFeeTokenAndSelectedTokenEqual = feeToken === token;
 
     if (
       accountExists === false ||
@@ -177,10 +171,11 @@ export const Content = () => {
       balance?.value === 0n ||
       // Checks if the balance is enough to pay for transfer and fee
       (balance &&
+        fee &&
         isFeeTokenAndSelectedTokenEqual &&
-        fee.token.amount + token.amount > balance.value) ||
+        fee.token.amount + amount > balance.value) ||
       // check if balance is enough without considering fee (when fee is paid in a different token)
-      (balance && token.amount > balance.value)
+      (balance && amount > balance.value)
     ) {
       errors.add("insufficientBalance");
     }
@@ -238,15 +233,20 @@ export const Content = () => {
             {t("transfer.section.asset")}
           </Subtitle>
           <AssetSelector
-            value={token}
+            value={{
+              networkPrefix,
+              tokenSourcePrefix,
+              denom,
+              amount,
+            }}
             address={sender}
             fee={fee?.token}
-            onChange={(token) =>
+            onChange={(token) => {
               setState((prev) => ({
                 ...prev,
                 ...token,
-              }))
-            }
+              }));
+            }}
           />
 
           {/* TODO: Some error messages. This is not in the specs, so we need to check with Mian how to display those */}
@@ -256,7 +256,7 @@ export const Content = () => {
                 <p className="pb-4">
                   {t("error.user.rejected.network.title")}
                   <span className="text-pink-300">
-                    {chains[token.chainPrefix].name}
+                    {chains[networkPrefix].name}
                     {t("error.user.rejected.network.title2")}
                   </span>
                   {t("error.user.rejected.network.title3")}
@@ -350,7 +350,11 @@ export const Content = () => {
               <TransferSummary
                 sender={sender}
                 receiver={receiver}
-                token={token}
+                token={{
+                  amount,
+                  denom,
+                  sourcePrefix: tokenSourcePrefix,
+                }}
               />
             </div>
           )}

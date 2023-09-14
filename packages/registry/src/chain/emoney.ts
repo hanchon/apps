@@ -16,7 +16,7 @@ export default {
     "average": "0.025",
     "high": "0.04"
   },
-  "nativeCurrency": "EEUR",
+  "feeToken": "eeur",
   "currencies": [
     {
       "name": "e-Money EUR",
@@ -27,6 +27,8 @@ export default {
       },
       "denom": "EEUR",
       "channel": "channel-24",
+      "sourcePrefix": "emoney",
+      "baseDenom": "eeur",
       "minCoinDenom": "eeur",
       "cosmosDenom": "ibc/AB40F54CC4BAF9C4FDB5CB5BDFC4D6CDB475BFE84BCEAF4F72F02EDAEED60F05",
       "category": "stablecoin",
