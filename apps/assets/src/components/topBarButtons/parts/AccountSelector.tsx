@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import React, { PropsWithChildren, useEffect, useState } from "react";
 import {
   Address,
   getActiveProviderKey,
@@ -85,14 +85,12 @@ export const AccountSelector = ({
 
   const drawIcon = () => {
     const provider = getActiveProviderKey();
+    if (provider === null) {
+      return undefined;
+    }
     // TODO: what should we show for safe / wallet connect ?
-    if (provider === "keplr") {
-      return ICONS_TYPES.KEPLR;
-    }
-    if (provider === "metaMask") {
-      return ICONS_TYPES.METAMASK;
-    }
-    return undefined;
+
+    return ICONS_TYPES[provider.toUpperCase()];
   };
 
   return (
