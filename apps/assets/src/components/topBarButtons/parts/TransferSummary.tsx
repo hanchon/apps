@@ -13,6 +13,9 @@ import {
 import { chains } from "@evmos-apps/registry";
 import { Arrow } from "ui-helpers";
 import { AddressDisplay } from "./AddressDisplay";
+import { useTranslation } from "next-i18next";
+import { formatAmount } from "./helpers";
+
 export const TransferSummary = ({
   sender,
   receiver,
@@ -42,6 +45,8 @@ export const TransferSummary = ({
     denom: token.denom,
   });
   const feeToken = fee ? getTokenByMinDenom(fee.token.denom) : null;
+
+  const { t } = useTranslation();
   return (
     // TODO: we need to add opacity-50 in the div below if the user doesn't have enough balance to pay the fee
     <div className={cn("flex items-stretch", disabled && "disabled")}>
@@ -68,12 +73,12 @@ export const TransferSummary = ({
             height={18}
             alt={name}
           />
-          {formatUnits(token.amount, decimals)} {denom}
+          {formatAmount(formatUnits(token.amount, decimals))} {denom}
         </h3>
 
         <Arrow />
         {isFetching && (
-          <p className="text-white text-xxs">Calculating fee...</p>
+          <p className="text-white text-xxs">{t("message.processing.fee")}</p>
         )}
         {!isFetching && fee && feeToken && (
           <p className="text-white text-xxs">

@@ -361,21 +361,6 @@ export const Content = () => {
               </div>
             </InfoPanel>
           )}
-          {/**
-           * TODO: I disabled this error message, It's not specced anyway and I feel it makes things more confusing to the user, maybe just showing "no balance" error is already enough
-           */}
-          {/* {errors.has("accountDoesntExist") && (
-            <InfoPanel>
-              <div className="text-sm space-y-2">
-                <p>{t("error.account.not.exist.title")}</p>
-                <p>
-                  {t("error.account.not.exist.description")}{" "}
-                  <strong>{chains[token.chainPrefix].name}</strong>{" "}
-                  {t("error.account.not.exist.description2")}
-                </p>
-              </div>
-            </InfoPanel>
-          )} */}
 
           <Subtitle variant="modal-black">{t("transfer.section.to")}</Subtitle>
           <AccountSelector

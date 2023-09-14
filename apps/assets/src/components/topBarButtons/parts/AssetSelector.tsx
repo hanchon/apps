@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import { formatAmount } from "./helpers";
 import {
   AmountInput,
   CryptoSelectorBalanceBox,
@@ -21,6 +22,7 @@ import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
 import { max } from "helpers";
 import { getChainByTokenDenom } from "evmos-wallet/src/registry-actions/get-chain-by-token-min-denom";
+
 type Asset = {
   chainPrefix: Prefix;
   denom: TokenMinDenom;
@@ -211,7 +213,8 @@ export const AssetSelector = ({
                 <CryptoSelectorBalanceText>
                   {t("transfer.section.asset.balance")}{" "}
                 </CryptoSelectorBalanceText>
-                {balance?.formattedLong ?? "0"} {selectedToken.denom}
+                {formatAmount(balance?.formattedLong) ?? "0"}{" "}
+                {selectedToken.denom}
               </div>
             </>
           )}

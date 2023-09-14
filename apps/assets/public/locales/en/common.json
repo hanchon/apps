@@ -38,9 +38,6 @@
   "transfer.modal.description": "Deposit and send assets to any account on any chain.",
   "transfer.button": "Transfer",
   "transfer.input.placeholder": "Request receipient's address",
-  "error.account.not.exist.title": "The connected account doesn't have a balance in the selected network.",
-  "error.account.not.exist.description": "It also seems it has never been used in",
-  "error.account.not.exist.description2": "network, are you sure you're connected to the right account?",
   "error.network.not.support.by.wallet.connect.with.keplr": "Unfortunately, with Metamask we currently only support sending from ",
   "error.network.not.support.by.wallet.connect.with.keplr2": "Evmos Network.",
   "error.network.not.support.by.wallet.connect.with.keplr3": "Please use ",
@@ -74,5 +71,6 @@
   "pay.confirmation.paid.to": "Paid to",
   "pay.confirmation.date": "Transaction Date(UTC+0)",
   "message.gas.fee.reserved.amount": "Gas fee reserved in the max amount",
-  "message.insufficient.balance": "Insufficient Balance"
+  "message.insufficient.balance": "Insufficient Balance",
+  "message.processing.fee": "Calculating fee..."
 }
