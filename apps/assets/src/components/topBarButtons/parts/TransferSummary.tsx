@@ -62,7 +62,7 @@ export const TransferSummary = ({
       <div className="px-4 h-full justify-center flex flex-col items-center flex-grow tracking-wider">
         <h3 className="text-xs flex justify-center items-center gap-x-2 text-white">
           <Image
-            className="h-6 w-6"
+            className="h-6 w-6 rounded-full"
             src={`/assets/tokens/${denom}.png`}
             width={18}
             height={18}
