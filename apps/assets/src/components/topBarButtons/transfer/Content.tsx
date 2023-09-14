@@ -1,7 +1,14 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import React, { useContext, useMemo } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import {
   ErrorMessage,
   IconContainer,
@@ -16,7 +23,10 @@ import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../parts/AssetSelector";
 import { useAccount } from "wagmi";
 import {
+  StoreType,
+  WalletConnection,
   connectWith,
+  getGlobalKeplrProvider,
   getPrefix,
   getPrefixes,
   getTokenByDenom,
@@ -29,7 +39,7 @@ import {
   useTransfer,
 } from "evmos-wallet";
 import { AccountSelector } from "../parts/AccountSelector";
-import { useModalState } from "../hooks/useModal";
+import { useModal, useModalState } from "../hooks/useModal";
 import { TransferSummary } from "../parts/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
 import { z } from "zod";
@@ -39,8 +49,10 @@ import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 import { getChainByTokenDenom } from "evmos-wallet/src/registry-actions/get-chain-by-token-min-denom";
 import { ICONS_TYPES } from "constants-helper";
-import { StepsContext } from "copilot";
+import { CopilotButton, StepsContext } from "copilot";
 import dynamic from "next/dynamic";
+import { connectKeplr, installKeplr, reloadPage } from "./utils";
+import { useDispatch, useSelector } from "react-redux";
 const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
 const sortedChains = Object.values(chains)
   .map(({ prefix }) => prefix)
@@ -85,7 +97,9 @@ export const Content = () => {
     amount: 0n,
   });
 
-  const { connector } = useAccount();
+  const { connector, isDisconnected } = useAccount();
+  const wallet = useSelector((state: StoreType) => state.wallet.value);
+  const dispatch = useDispatch();
   const {
     data,
     error: walletRequestError,
@@ -222,6 +236,7 @@ export const Content = () => {
   ]);
 
   const { setShowModal } = useContext(StepsContext);
+  const { setShow } = useModal("transfer");
 
   const topUpEvmos = () => {
     return (
@@ -233,11 +248,15 @@ export const Content = () => {
 
   const handleSendAction = () => {
     if (topUpEvmos()) {
+      // TODO: it's also closing the current modal.
+      // await setShow(false);
       setShowModal(true);
+
       // TODO: close send modal
       return;
     }
 
+    // TODO:
     // if (uiexternal) {
     // transfer.bridge.button.text
     // redirect to axelar
@@ -253,11 +272,31 @@ export const Content = () => {
       return t("transfer.top.up.button.text");
     }
 
+    // TODO:
     // if (uiexternal) {
     //   return t("transfer.bridge.button.text")
     // }
     return t("transfer.send.button.text");
   };
+
+  const firstUpdate = useRef(true);
+  useEffect(() => {
+    if (firstUpdate.current) {
+      installKeplr();
+      firstUpdate.current = false;
+    }
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible" && reloadPage()) {
+        installKeplr();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   return (
     <section className="space-y-3 w-full">
@@ -320,7 +359,8 @@ export const Content = () => {
               </div>
             </InfoPanel>
           )}
-          {errors.has("networkNotSupportedByConnectedWallet") && (
+          {(errors.has("networkNotSupportedByConnectedWallet") ||
+            getGlobalKeplrProvider() === null) && (
             <InfoPanel icon={<IconContainer type={ICONS_TYPES.METAMASK} />}>
               <div>
                 <p className="pb-4">
@@ -346,17 +386,26 @@ export const Content = () => {
                   </span>
                 </p>
                 <PrimaryButton
+                  variant={
+                    getGlobalKeplrProvider() === null
+                      ? "outline-primary"
+                      : "primary"
+                  }
                   className="font-normal w-full"
                   // TODO: If the user rejects the connection, it's connecting with MetaMask. Check why.
                   onClick={async () => {
-                    // TODO: I created the ConnectKeplr component, maybe we can reuse something from there.
-                    // We should check if the user has Keplr installed and if not, show a message to install it
+                    if (getGlobalKeplrProvider() === null) {
+                      connectKeplr();
+                      return;
+                    }
                     const [err] = await E.try(() => connectWith("keplr"));
                     // TODO: handle error when user rejects the connection
                     if (err) return false;
                   }}
                 >
-                  {t("button.connect.with.keplr")}
+                  {getGlobalKeplrProvider() === null
+                    ? t("button.install.keplr")
+                    : t("button.connect.with.keplr")}
                 </PrimaryButton>
               </div>
             </InfoPanel>
@@ -390,7 +439,7 @@ export const Content = () => {
           {errors.has("insufficientBalanceForFee") && feeTokenbalance && (
             <ErrorMessage className="justify-center pl-0">
               {/* TODO: the message might be different if the insufficient token is the fee token? */}
-              {t("message.insufficient.balance")}{" "}
+              {t("message.insufficient.balance")}
               {feeTokenbalance.formattedLong} {feeTokenbalance.denom}
             </ErrorMessage>
           )}
@@ -403,15 +452,27 @@ export const Content = () => {
             </span>{" "}
             {t("error.send.axelar.assets.text3")}
           </ErrorMessage> */}
-
-          <PrimaryButton
-            variant={topUpEvmos() ? "outline-primary" : "primary"}
-            onClick={handleSendAction}
-            className="w-full text-lg rounded-md capitalize mt-5"
-            disabled={errors.size > 0 || !isReadyToTransfer || isTransferring}
-          >
-            {sendButtonText()}
-          </PrimaryButton>
+          {isDisconnected && (
+            <WalletConnection
+              copilotModal={({
+                beforeStartHook,
+              }: {
+                beforeStartHook: Dispatch<SetStateAction<boolean>>;
+              }) => <CopilotButton beforeStartHook={beforeStartHook} />}
+              dispatch={dispatch}
+              walletExtension={wallet}
+            />
+          )}
+          {!isDisconnected && (
+            <PrimaryButton
+              variant={topUpEvmos() ? "outline-primary" : "primary"}
+              onClick={handleSendAction}
+              className="w-full text-lg rounded-md capitalize mt-5"
+              disabled={errors.size > 0 || !isReadyToTransfer || isTransferring}
+            >
+              {sendButtonText()}
+            </PrimaryButton>
+          )}
 
           {isTransferring && (
             <p>Please, check your wallet to sign your transaction</p>

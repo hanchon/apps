@@ -45,6 +45,7 @@
   "error.network.not.support.by.wallet.connect.with.keplr5": "or ",
   "error.network.not.support.by.wallet.connect.with.keplr6": "choose Evmos.",
   "button.connect.with.keplr": "Connect with Keplr",
+  "button.install.keplr": "Install Keplr",
   "error.user.rejected.network.title": "I see you're trying to send tokens from ",
   "error.user.rejected.network.title2": " network",
   "error.user.rejected.network.title3": ", for that we will need to access your account address.",
@@ -71,6 +72,6 @@
   "pay.confirmation.paid.to": "Paid to",
   "pay.confirmation.date": "Transaction Date(UTC+0)",
   "message.gas.fee.reserved.amount": "Gas fee reserved in the max amount",
-  "message.insufficient.balance": "Insufficient Balance",
+  "message.insufficient.balance": "Insufficient Balance ",
   "message.processing.fee": "Calculating fee..."
 }
