@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { formatUnits } from "viem";
-import { E, cn } from "helpers";
+import { cn } from "helpers";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import {
   Address,
@@ -13,11 +13,11 @@ import {
 import { chains } from "@evmos-apps/registry";
 import { Arrow } from "ui-helpers";
 import { AddressDisplay } from "./AddressDisplay";
-
 export const TransferSummary = ({
   sender,
   receiver,
   token,
+  disabled = false,
 }: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
@@ -25,6 +25,7 @@ export const TransferSummary = ({
     denom: TokenMinDenom;
     amount: bigint;
   };
+  disabled?: boolean;
 }) => {
   const senderPrefix = getPrefix(normalizeToCosmosAddress(sender));
   const receiverPrefix = getPrefix(normalizeToCosmosAddress(receiver));
@@ -43,7 +44,7 @@ export const TransferSummary = ({
   const feeToken = fee ? getTokenByMinDenom(fee.token.denom) : null;
   return (
     // TODO: we need to add opacity-50 in the div below if the user doesn't have enough balance to pay the fee
-    <div className="flex items-stretch ">
+    <div className={cn("flex items-stretch", disabled && "disabled")}>
       {senderChain && (
         <div className="flex flex-col space-y-2 items-center">
           <Image

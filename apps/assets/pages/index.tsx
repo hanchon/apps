@@ -31,6 +31,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useModal } from "../src/components/topBarButtons/hooks/useModal";
 import { createPortal } from "react-dom";
 import { Confirmation } from "../src/components/topBarButtons/Confirmation";
+import { StepsContextProvider, topUpStep } from "copilot";
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -101,7 +102,9 @@ function Modals() {
         propClose={true}
         variant="modal-black"
       >
-        <TransferContent />
+        <StepsContextProvider steps={topUpStep}>
+          <TransferContent />
+        </StepsContextProvider>
       </ModalWithTransitions>
       <ModalWithTransitions
         show={requestModal.show}

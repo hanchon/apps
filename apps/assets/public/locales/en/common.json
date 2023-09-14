@@ -27,7 +27,7 @@
   "transfer.section.to.placeholder": "Paste other recipient's wallet address here",
   "transfer.section.summary.title": "Sending",
   "transfer.send.button.text": "Send",
-  "transfer.swap.button.text": "Swap for Evmos",
+  "transfer.top.up.button.text": "Top-Up Evmos",
   "transfer.bridge.button.text": "Send from Axelar",
   "transfer.section.network.label": "Select or Type a Network",
   "transfer.section.token.label": "Select or Type a Token",

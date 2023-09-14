@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import {
   ErrorMessage,
   IconContainer,
@@ -39,7 +39,9 @@ import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 import { getChainByTokenDenom } from "evmos-wallet/src/registry-actions/get-chain-by-token-min-denom";
 import { ICONS_TYPES } from "constants-helper";
-
+import { StepsContext } from "copilot";
+import dynamic from "next/dynamic";
+const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
 const sortedChains = Object.values(chains)
   .map(({ prefix }) => prefix)
   .sort((a, b) => {
@@ -219,6 +221,44 @@ export const Content = () => {
     token,
   ]);
 
+  const { setShowModal } = useContext(StepsContext);
+
+  const topUpEvmos = () => {
+    return (
+      (errors.has("insufficientBalanceForFee") ||
+        errors.has("insufficientBalance")) &&
+      token.chainPrefix === "evmos"
+    );
+  };
+
+  const handleSendAction = () => {
+    if (topUpEvmos()) {
+      setShowModal(true);
+      // TODO: close send modal
+      return;
+    }
+
+    // if (uiexternal) {
+    // transfer.bridge.button.text
+    // redirect to axelar
+    // close send modal
+    // }
+
+    transfer();
+    return;
+  };
+
+  const sendButtonText = () => {
+    if (topUpEvmos()) {
+      return t("transfer.top.up.button.text");
+    }
+
+    // if (uiexternal) {
+    //   return t("transfer.bridge.button.text")
+    // }
+    return t("transfer.send.button.text");
+  };
+
   return (
     <section className="space-y-3 w-full">
       <Title
@@ -351,13 +391,14 @@ export const Content = () => {
                 sender={sender}
                 receiver={receiver}
                 token={token}
+                disabled={errors.size > 0 || !isReadyToTransfer}
               />
             </div>
           )}
           {/* TODO: this should appear when we add the opacity to the transfer summary because the user doesn't have enough evmos to pay the fee */}
           {errors.has("insufficientBalance") && (
             <ErrorMessage className="justify-center pl-0">
-              {t("message.insufficient.balance")}{" "}
+              {t("message.insufficient.balance")}
               {balance?.formattedLong ?? "0"} {token.denom}
             </ErrorMessage>
           )}
@@ -370,26 +411,21 @@ export const Content = () => {
           )}
 
           {/* TODO: show it correctly */}
-          <ErrorMessage className="justify-center pl-0" variant="info">
+          {/* <ErrorMessage className="justify-center pl-0" variant="info">
             {t("error.send.axelar.assets.text")}{" "}
             <span className="text-red-300">
               {t("error.send.axelar.assets.text2")}
             </span>{" "}
             {t("error.send.axelar.assets.text3")}
-          </ErrorMessage>
+          </ErrorMessage> */}
 
           <PrimaryButton
-            // TODO: change variant to outline-primary if the user doesn't have enough balance to pay the fee
-            // variant="outline-primary"
-            onClick={() => {
-              transfer();
-            }}
+            variant={topUpEvmos() ? "outline-primary" : "primary"}
+            onClick={handleSendAction}
             className="w-full text-lg rounded-md capitalize mt-5"
             disabled={errors.size > 0 || !isReadyToTransfer || isTransferring}
-            // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
-            // "transfer.swap.button.text" - "transfer.bridge.button.text"
           >
-            {t("transfer.send.button.text")}
+            {sendButtonText()}
           </PrimaryButton>
 
           {isTransferring && (
@@ -397,6 +433,7 @@ export const Content = () => {
           )}
         </section>
       </form>
+      <Copilot />
     </section>
   );
 };
