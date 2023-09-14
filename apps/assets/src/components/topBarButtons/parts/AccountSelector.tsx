@@ -1,6 +1,7 @@
 import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import {
   Address,
+  getActiveProviderKey,
   getPrefix,
   normalizeToCosmosAddress,
   useAddressInput,
@@ -82,6 +83,18 @@ export const AccountSelector = ({
     },
   ];
 
+  const drawIcon = () => {
+    const provider = getActiveProviderKey();
+    // TODO: what should we show for safe / wallet connect ?
+    if (provider === "keplr") {
+      return ICONS_TYPES.KEPLR;
+    }
+    if (provider === "metaMask") {
+      return ICONS_TYPES.METAMASK;
+    }
+    return undefined;
+  };
+
   return (
     <div className="flex flex-col space-y-3 mb-8">
       <div className="flex md:justify-between md:flex-row flex-col space-y-4 md:space-y-0">
@@ -125,11 +138,8 @@ export const AccountSelector = ({
               ? t("transfer.section.to.placeholder")
               : ""
           }
-          // TODO: change it Keplr depending on the wallet: ICONS_TYPES.KEPLR
           extensionIcon={
-            walletTab === WALLET_TAB_TYPES.WALLET
-              ? ICONS_TYPES.METAMASK
-              : undefined
+            walletTab === WALLET_TAB_TYPES.WALLET ? drawIcon() : undefined
           }
           disabled={walletTab === WALLET_TAB_TYPES.WALLET}
           {...inputProps}
