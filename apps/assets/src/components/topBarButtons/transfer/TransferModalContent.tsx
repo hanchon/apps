@@ -17,7 +17,7 @@ import {
   Title,
   InfoPanel,
 } from "ui-helpers";
-import { raise } from "helpers";
+import { isString, raise } from "helpers";
 import { useTranslation } from "next-i18next";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../shared/AssetSelector";
@@ -54,6 +54,7 @@ const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
 
 import { sortedChains } from "../shared/sortedChains";
 import { TransferModalProps } from "./TransferModal";
+import { useReceiptModal } from "../receipt/ReceiptModal";
 
 export const TransferModalContent = ({
   receiver,
@@ -64,10 +65,10 @@ export const TransferModalContent = ({
   setState,
 }: TransferModalProps) => {
   const { t } = useTranslation();
-
   const { isDisconnected } = useAccount();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
+  const receiptModal = useReceiptModal();
   const feeChain = chains[networkPrefix];
   const feeToken = getToken(feeChain.prefix, feeChain.feeToken);
   const {
@@ -257,6 +258,14 @@ export const TransferModalContent = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (!transferData) return;
+    if (!isString(transferData.hash)) return;
+    receiptModal.setIsOpen(true, {
+      hash: transferData.hash,
+      chainPrefix: networkPrefix,
+    });
+  }, [transferData]);
   return (
     <section className="space-y-3 w-full">
       <Title
@@ -345,11 +354,7 @@ export const TransferModalContent = ({
             <InfoPanel icon={<IconContainer type={ICONS_TYPES.METAMASK} />}>
               <div>
                 <p className="pb-4">
-                  {t("error.network.not.support.by.wallet.connect.with.keplr", {
-                    context: {
-                      wallet: "Keplr",
-                    },
-                  })}
+                  {t("error.network.not.support.by.wallet.connect.with.keplr")}
                   <span className="text-pink-300">
                     {t(
                       "error.network.not.support.by.wallet.connect.with.keplr2"
@@ -468,6 +473,16 @@ export const TransferModalContent = ({
           )}
         </section>
       </form>
+      <button
+        onClick={() =>
+          receiptModal.setIsOpen(true, {
+            hash: "0x42218494f3257db4a0ba998245c5d5803222c8a2707b5534e4669f92c69ab672",
+            chainPrefix: "evmos",
+          })
+        }
+      >
+        test
+      </button>
       <Copilot />
     </section>
   );

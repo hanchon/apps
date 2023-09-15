@@ -35,17 +35,13 @@ export const useModal = <T extends z.AnyZodObject>(
     if (!isReady) return null;
     if (!isOpen) return null;
 
-    const params = schema.safeParse(query);
-
-    if (params.success) {
-      return params.data;
-    }
-    return null;
+    return schema.parse(query);
   }, [isReady, query, isOpen]);
 
   const setState = useCallback(
     (next: SetStateAction<z.infer<T>>, pushState = false) => {
-      const nextState = typeof next === "function" ? next(next) : next;
+      const nextState =
+        typeof next === "function" ? next(schema.parse(query)) : next;
 
       (pushState ? push : replace)({
         query: {
@@ -54,7 +50,7 @@ export const useModal = <T extends z.AnyZodObject>(
         },
       });
     },
-    [id]
+    [id, query]
   );
 
   const setIsOpen = useCallback(
@@ -67,10 +63,10 @@ export const useModal = <T extends z.AnyZodObject>(
         return;
       }
       // Clear state only if modal is open, otherwise it could close other modals
-      if (isOpen)
-        push({
-          query: null,
-        });
+
+      push({
+        query: null,
+      });
     },
     [id, schema, isOpen]
   );
