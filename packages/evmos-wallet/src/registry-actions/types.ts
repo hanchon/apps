@@ -1,5 +1,6 @@
 import { chains } from "@evmos-apps/registry";
 import { CosmosAddress } from "../wallet";
+import { Prettify } from "viem/dist/types/types/utils";
 
 export type Chain = (typeof chains)[keyof typeof chains];
 export type Prefix = Chain["prefix"];
@@ -14,6 +15,31 @@ export type TokenByDenom = Readonly<{
 export type TokenByMinDenom = Readonly<{
   [K in TokenMinDenom]: Readonly<Extract<Token, { minCoinDenom: K }>>;
 }>;
+
+type ExtractChainRefs<T extends Chain> = {
+  [J in T["currencies"][number] as `${T["prefix"]}:${J["minCoinDenom"]}`]: J;
+};
+type ExtractChainRefs2<T extends Chain> = {
+  [J in T["currencies"][number] as J["minCoinDenom"]]: [
+    `${T["prefix"]}:${J["minCoinDenom"]}`,
+    J,
+  ];
+}[T["currencies"][number]["minCoinDenom"]];
+
+export type TokenRef = {
+  [K in Chain as K["prefix"]]: `${K["prefix"]}/${K["currencies"][number]["minCoinDenom"]}`;
+}[Chain["prefix"]];
+
+export type TokenByRef = {
+  [K in TokenRef]: K extends `${infer TPrefix}/${infer TDenom}`
+    ? Extract<
+        Extract<Chain, { prefix: TPrefix }>["currencies"][number],
+        {
+          minCoinDenom: TDenom;
+        }
+      >
+    : never;
+};
 
 export type FormattedBalance = {
   /**
@@ -47,6 +73,7 @@ export type FormattedBalance = {
   formattedLong: string;
 
   denom: TokenDenom;
+  tokenSourcePrefix: Prefix;
   minDenom: string;
   /**
    * @description The balance value in bigint format at the minimum denomination

@@ -24,7 +24,9 @@ export const useTransfer = ({
 }: {
   sender?: Address<Prefix>;
   receiver?: Address<Prefix>;
-  token?: {
+
+  token: {
+    sourcePrefix: Prefix;
     denom: TokenMinDenom;
     amount: bigint;
   };

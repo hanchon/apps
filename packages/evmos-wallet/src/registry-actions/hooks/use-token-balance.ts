@@ -4,16 +4,19 @@ import { useAccountBalances } from "./use-account-balances";
 
 export const useTokenBalance = (
   address?: Address<Prefix>,
-  denom?: TokenMinDenom
+  token?: {
+    minCoinDenom: TokenMinDenom;
+    sourcePrefix: Prefix;
+  }
 ) => {
   const { data, ...rest } = useAccountBalances(address);
   const balance =
-    data && denom
+    data && token
       ? data.find(({ minDenom, type }) => {
-          if (denom === "aevmos") {
-            return minDenom === denom && type === "ICS20";
+          if (token.minCoinDenom === "aevmos") {
+            return minDenom === token.minCoinDenom && type === "ICS20";
           }
-          return minDenom === denom;
+          return minDenom === token.minCoinDenom;
         })
       : undefined;
 

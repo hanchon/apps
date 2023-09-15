@@ -16,7 +16,7 @@ export default {
     "average": "0.025",
     "high": "0.04"
   },
-  "nativeCurrency": "CMDX",
+  "feeToken": "ucmdx",
   "currencies": [
     {
       "name": "Comdex",
@@ -27,6 +27,8 @@ export default {
       },
       "denom": "CMDX",
       "channel": "channel-26",
+      "sourcePrefix": "comdex",
+      "baseDenom": "ucmdx",
       "minCoinDenom": "ucmdx",
       "cosmosDenom": "ibc/61DF64ADF65230540C14C63D64897BE08A3DC9A516A91425913F01240E2F432F",
       "category": "cosmos",
@@ -43,6 +45,8 @@ export default {
       },
       "denom": "CMST",
       "channel": "channel-26",
+      "sourcePrefix": "comdex",
+      "baseDenom": "ucmst",
       "minCoinDenom": "ucmst",
       "cosmosDenom": "ibc/9EC8A1701813BB7B73BFED2496009ABB2C8BF187E6CDFA788D77F68E08BC05CD",
       "category": "stablecoin",

@@ -220,5 +220,4 @@ export interface TokenRegistry {
       | "Deposit and Withdraw"
       | "All";
   }[];
-  [k: string]: unknown;
 }

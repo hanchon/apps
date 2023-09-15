@@ -16,7 +16,7 @@ export default {
     "average": "200000000000",
     "high": "30000000000000"
   },
-  "nativeCurrency": "INJ",
+  "feeToken": "inj",
   "currencies": [
     {
       "name": "Injective",
@@ -26,6 +26,8 @@ export default {
       },
       "denom": "INJ",
       "channel": "channel-10",
+      "sourcePrefix": "inj",
+      "baseDenom": "inj",
       "minCoinDenom": "inj",
       "cosmosDenom": "ibc/ADF401C952ADD9EE232D52C8303B8BE17FE7953C8D420F20769AF77240BD0C58",
       "category": "cosmos",

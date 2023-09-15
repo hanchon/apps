@@ -16,7 +16,7 @@ export default {
     "average": "0.025",
     "high": "0.04"
   },
-  "nativeCurrency": "OSMO",
+  "feeToken": "uosmo",
   "currencies": [
     {
       "name": "Osmosis",
@@ -27,6 +27,8 @@ export default {
       },
       "denom": "OSMO",
       "channel": "channel-0",
+      "sourcePrefix": "osmo",
+      "baseDenom": "uosmo",
       "minCoinDenom": "uosmo",
       "cosmosDenom": "ibc/ED07A3391A112B175915CD8FAF43A2DA8E4790EDE12566649D0C2F97716B8518",
       "category": "cosmos",

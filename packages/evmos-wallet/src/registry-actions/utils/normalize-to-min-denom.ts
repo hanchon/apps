@@ -1,9 +1,9 @@
 import { chains } from "@evmos-apps/registry";
-import { TokenMinDenom } from "../types";
+import { Token, TokenMinDenom } from "../types";
 import { getIBCDenom } from "./get-ibc-denom";
 import { getTokens } from "../get-tokens";
 
-const ibcDenomsMap: Record<string, TokenMinDenom> = {};
+export const IBC_DENOMS_MAP: Record<string, Token> = {};
 const { evmos, ...others } = chains;
 /**
  * Evmos tokens in other networks
@@ -14,9 +14,9 @@ for (const token of evmos.currencies) {
       sender: chain.prefix,
       receiver: "evmos",
 
-      minDenom: token.minCoinDenom,
+      token,
     });
-    ibcDenomsMap[ibcDenom] = token.minCoinDenom;
+    IBC_DENOMS_MAP[ibcDenom] = token;
   }
 }
 
@@ -28,19 +28,40 @@ for (const chain of Object.values(others)) {
     let ibcDenom = getIBCDenom({
       sender: "evmos",
       receiver: chain.prefix,
-      minDenom: token.minCoinDenom,
+      token,
     });
-    ibcDenomsMap[ibcDenom] = token.minCoinDenom;
+    IBC_DENOMS_MAP[ibcDenom] = token;
   }
 }
 
 export const normalizeToMinDenom = (denom: string) => {
   if (denom.startsWith("ibc/")) {
-    return ibcDenomsMap[denom] ?? null;
+    return IBC_DENOMS_MAP[denom].minCoinDenom ?? null;
   }
   const token = getTokens().find(
     ({ minCoinDenom, denom: tokenDenom }) =>
       minCoinDenom === denom || tokenDenom === denom
   );
   return token?.minCoinDenom ?? null;
+};
+
+export const findToken = ({
+  prefix,
+  denom,
+}: {
+  prefix?: string;
+  denom: string;
+}) => {
+  if (denom.startsWith("ibc/")) {
+    return IBC_DENOMS_MAP[denom] ?? null;
+  }
+  const token = getTokens().find(
+    ({ minCoinDenom, baseDenom, denom: tokenDenom, sourcePrefix }) => {
+      if (prefix && prefix !== sourcePrefix) return false;
+      return (
+        minCoinDenom === denom || tokenDenom === denom || baseDenom === denom
+      );
+    }
+  );
+  return token ?? null;
 };

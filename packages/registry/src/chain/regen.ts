@@ -16,7 +16,7 @@ export default {
     "average": "0.025",
     "high": "0.04"
   },
-  "nativeCurrency": "REGEN",
+  "feeToken": "uregen",
   "currencies": [
     {
       "name": "Regen Network",
@@ -26,6 +26,8 @@ export default {
       },
       "denom": "REGEN",
       "channel": "channel-20",
+      "sourcePrefix": "regen",
+      "baseDenom": "uregen",
       "minCoinDenom": "uregen",
       "cosmosDenom": "ibc/36DCDCDFB1D0D723546878E241BC5800D27214E1E1DA31A4E424DE2280B0B0EE",
       "category": "cosmos",

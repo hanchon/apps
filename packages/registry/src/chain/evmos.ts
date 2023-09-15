@@ -16,7 +16,7 @@ export default {
     "average": "25000000000",
     "high": "40000000000"
   },
-  "nativeCurrency": "EVMOS",
+  "feeToken": "aevmos",
   "currencies": [
     {
       "name": "EVMOS",
@@ -27,6 +27,8 @@ export default {
       },
       "denom": "EVMOS",
       "channel": "",
+      "sourcePrefix": "evmos",
+      "baseDenom": "aevmos",
       "minCoinDenom": "aevmos",
       "cosmosDenom": "aevmos",
       "category": "cosmos",
@@ -42,6 +44,8 @@ export default {
       },
       "denom": "NEOK",
       "channel": "",
+      "sourcePrefix": "evmos",
+      "baseDenom": "erc20/0x655ecB57432CC1370f65e5dc2309588b71b473A9",
       "minCoinDenom": "neok",
       "cosmosDenom": "erc20/0x655ecB57432CC1370f65e5dc2309588b71b473A9",
       "category": "cosmos",
