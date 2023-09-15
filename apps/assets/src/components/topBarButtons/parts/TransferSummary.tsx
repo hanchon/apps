@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { formatUnits } from "viem";
+import { formatUnits } from "evmos-wallet/src/registry-actions/utils";
 import { cn } from "helpers";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import {
@@ -14,7 +14,6 @@ import { chains } from "@evmos-apps/registry";
 import { Arrow } from "ui-helpers";
 import { AddressDisplay } from "./AddressDisplay";
 import { useTranslation } from "next-i18next";
-import { formatAmount } from "./helpers";
 
 export const TransferSummary = ({
   sender,
@@ -73,7 +72,7 @@ export const TransferSummary = ({
             height={18}
             alt={name}
           />
-          {formatAmount(formatUnits(token.amount, decimals))} {denom}
+          {formatUnits(token.amount, decimals)} {denom}
         </h3>
 
         <Arrow />

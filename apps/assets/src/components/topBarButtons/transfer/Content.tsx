@@ -26,6 +26,7 @@ import {
   StoreType,
   WalletConnection,
   connectWith,
+  getActiveProviderKey,
   getGlobalKeplrProvider,
   getPrefix,
   getPrefixes,
@@ -159,7 +160,24 @@ export const Content = () => {
 
     // if it's held somewhere else, it can only go to evmos
     return ["evmos"];
-  }, [sender, token.denom, token.chainPrefix, senderChain, tokenChain]);
+  }, [senderChain, tokenChain]);
+
+  const activeProviderKey = getActiveProviderKey();
+
+  const disabledDestinationNetworkOptions = useMemo((): Prefix[] => {
+    // If asset is being held on an EVMOS ACCOUNT and the user is using MetaMask
+    if (senderChain.prefix === "evmos" && activeProviderKey === "metaMask") {
+      // disable all chains expect evmos
+      if (tokenChain.prefix === "evmos") {
+        return sortedChains.filter((chain) => chain !== "evmos");
+      }
+      // disable native network
+      return [tokenChain.prefix];
+    }
+
+    // all enabled.
+    return [];
+  }, [senderChain, tokenChain, activeProviderKey]);
 
   /**
    * Centralizing errors
@@ -416,6 +434,7 @@ export const Content = () => {
             value={receiver}
             onChange={(receiver) => setState((prev) => ({ ...prev, receiver }))}
             networkOptions={destinationNetworkOptions}
+            disabledNetworkOptions={disabledDestinationNetworkOptions}
           />
 
           {sender && receiver && (

@@ -17,10 +17,12 @@ export const AccountSelector = ({
   value,
   onChange,
   networkOptions,
+  disabledNetworkOptions,
 }: PropsWithChildren<{
   value?: Address<Prefix>;
   onChange: (value?: Address<Prefix>) => void;
   networkOptions: Prefix[];
+  disabledNetworkOptions: Prefix[];
 }>) => {
   const { address, inputProps, errors, setValue } = useAddressInput(value);
 
@@ -119,6 +121,7 @@ export const AccountSelector = ({
                     src={`/assets/chains/${value}.png`}
                     key={value}
                     value={value}
+                    disabled={disabledNetworkOptions.includes(value)}
                   >
                     {chain.name}
                   </CryptoSelector.Option>

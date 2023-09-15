@@ -1,5 +1,4 @@
 import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { formatAmount } from "./helpers";
 import {
   AmountInput,
   CryptoSelectorBalanceBox,
@@ -213,8 +212,7 @@ export const AssetSelector = ({
                 <CryptoSelectorBalanceText>
                   {t("transfer.section.asset.balance")}{" "}
                 </CryptoSelectorBalanceText>
-                {formatAmount(balance?.formattedLong) ?? "0"}{" "}
-                {selectedToken.denom}
+                {balance?.formattedLong ?? "0"} {selectedToken.denom}
               </div>
             </>
           )}
