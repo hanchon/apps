@@ -24,14 +24,13 @@ import { StatefulFooter } from "stateful-components";
 import { MixpanelProvider } from "tracker";
 import { GiveFeedback } from "../src/GiveFeedback";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { Content as TransferContent } from "../src/components/topBarButtons/transfer/Content";
-import { Content as RequestContent } from "../src/components/topBarButtons/request/Content";
+
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import { useModal } from "../src/components/topBarButtons/hooks/useModal";
 import { createPortal } from "react-dom";
-import { Confirmation } from "../src/components/topBarButtons/Confirmation";
-import { StepsContextProvider, topUpStep } from "copilot";
+import { TransferModal } from "../src/components/topBarButtons/transfer/TransferModal";
+import { ReceiptModal } from "../src/components/topBarButtons/receipt/ReceiptModal";
+import { RequestModal } from "../src/components/topBarButtons/request/RequestModal";
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -89,39 +88,10 @@ export default function Home() {
     </Provider>
   );
 }
-function Modals() {
-  const transferModal = useModal("transfer");
-  const requestModal = useModal("request");
-  const confirmationModal = useModal("receipt");
-
-  return (
-    <>
-      <ModalWithTransitions
-        show={transferModal.show}
-        setShow={transferModal.setShow}
-        propClose={true}
-        variant="modal-black"
-      >
-        <StepsContextProvider steps={topUpStep}>
-          <TransferContent />
-        </StepsContextProvider>
-      </ModalWithTransitions>
-      <ModalWithTransitions
-        show={requestModal.show}
-        setShow={requestModal.setShow}
-        propClose={true}
-        variant="modal-black"
-      >
-        <RequestContent />
-      </ModalWithTransitions>
-      <ModalWithTransitions
-        show={confirmationModal.show}
-        setShow={confirmationModal.setShow}
-        propClose={true}
-        variant="modal-black"
-      >
-        <Confirmation />
-      </ModalWithTransitions>
-    </>
-  );
-}
+const Modals = () => (
+  <>
+    <TransferModal />
+    <ReceiptModal />
+    <RequestModal />
+  </>
+);

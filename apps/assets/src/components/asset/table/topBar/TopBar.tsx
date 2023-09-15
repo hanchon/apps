@@ -1,29 +1,47 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { TopBarContainer, TopBarItem } from "ui-helpers";
+import { PrimaryButton, TopBarContainer, TopBarItem } from "ui-helpers";
 import { TopBarProps } from "./types";
-import { TransferButton } from "../../../topBarButtons/transfer/TransferButton";
-import { RequestButton } from "../../../topBarButtons/request/RequestButton";
+
+import { useAccount } from "wagmi";
+import { RequestIcon, TransferIcon } from "icons";
+import { useTranslation } from "next-i18next";
+import { useTransferModal } from "../../../topBarButtons/transfer/TransferModal";
+import { useRequestModal } from "../../../topBarButtons/request/RequestModal";
 
 const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
+  const { isDisconnected } = useAccount();
+  const { t } = useTranslation();
+  const transferModal = useTransferModal();
+  const requestModal = useRequestModal();
   return (
     <TopBarContainer>
-      <>
-        <TopBarItem text="Total Assets" value={`$${topProps.totalAssets}`} />
-        <TopBarItem
-          text="EVMOS Price"
-          value={
-            topProps.evmosPrice === undefined
-              ? "--"
-              : `$${topProps.evmosPrice.toString()}`
-          }
-        />
-        <div className="flex items-center justify-center space-x-2 lg:justify-end">
-          <TransferButton />
-          <RequestButton />
-        </div>
-      </>
+      <TopBarItem text="Total Assets" value={`$${topProps.totalAssets}`} />
+      <TopBarItem
+        text="EVMOS Price"
+        value={
+          topProps.evmosPrice === undefined
+            ? "--"
+            : `$${topProps.evmosPrice.toString()}`
+        }
+      />
+      <div className="flex items-center justify-center space-x-2 lg:justify-end">
+        <PrimaryButton
+          disabled={isDisconnected}
+          icon={<TransferIcon />}
+          onClick={() => transferModal.setIsOpen(true)}
+        >
+          <p>{t("transfer.button")}</p>
+        </PrimaryButton>
+        <PrimaryButton
+          disabled={isDisconnected}
+          icon={<RequestIcon />}
+          onClick={() => requestModal.setIsOpen(true)}
+        >
+          <p>{t("request.button")}</p>
+        </PrimaryButton>
+      </div>
     </TopBarContainer>
   );
 };

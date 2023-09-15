@@ -17,9 +17,10 @@ import {
   Title,
   InfoPanel,
 } from "ui-helpers";
+import { raise } from "helpers";
 import { useTranslation } from "next-i18next";
-import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
-import { AssetSelector } from "../parts/AssetSelector";
+import { Prefix } from "evmos-wallet/src/registry-actions/types";
+import { AssetSelector } from "../shared/AssetSelector";
 import { useAccount } from "wagmi";
 import {
   StoreType,
@@ -28,18 +29,15 @@ import {
   getActiveProviderKey,
   getGlobalKeplrProvider,
   getPrefix,
-  getPrefixes,
   getToken,
-  isValidCosmosAddress,
-  isValidHexAddress,
   useAccountExists,
   useFee,
   useTokenBalance,
   useTransfer,
 } from "evmos-wallet";
-import { AccountSelector } from "../parts/AccountSelector";
-import { useModal, useModalState } from "../hooks/useModal";
-import { TransferSummary } from "../parts/TransferSummary";
+import { AccountSelector } from "../shared/AccountSelector";
+
+import { TransferSummary } from "../shared/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
 import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
@@ -53,47 +51,21 @@ import dynamic from "next/dynamic";
 import { connectKeplr, installKeplr, reloadPage } from "./utils";
 import { useDispatch, useSelector } from "react-redux";
 const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
-import {
-  ChainPrefixSchema,
-  MinDenomSchema,
-} from "evmos-wallet/src/registry-actions/utils";
 
-const sortedChains = Object.values(chains)
-  .map(({ prefix }) => prefix)
-  .sort((a, b) => {
-    if (a === "evmos") return -1;
-    if (b === "evmos") return 1;
+import { sortedChains } from "../shared/sortedChains";
+import { TransferModalProps } from "./TransferModal";
 
-    return a > b ? 1 : -1;
-  });
-
-const TransferModalSchema = z.object({
-  receiver: z.string().transform((v) => {
-    if (isValidHexAddress(v) || isValidCosmosAddress(v, [...getPrefixes()])) {
-      return v;
-    }
-    return undefined;
-  }),
-  networkPrefix: ChainPrefixSchema,
-  tokenSourcePrefix: ChainPrefixSchema,
-  denom: MinDenomSchema,
-  amount: z.coerce.bigint().default(0n),
-});
-
-export const Content = () => {
+export const TransferModalContent = ({
+  receiver,
+  networkPrefix,
+  tokenSourcePrefix,
+  denom,
+  amount,
+  setState,
+}: TransferModalProps) => {
   const { t } = useTranslation();
 
-  const {
-    state: { receiver, tokenSourcePrefix, denom, networkPrefix, amount },
-    setState,
-  } = useModalState("transfer", TransferModalSchema, {
-    networkPrefix: "evmos",
-    tokenSourcePrefix: "evmos",
-    denom: "aevmos",
-    amount: 0n,
-  });
-
-  const { connector, isDisconnected } = useAccount();
+  const { isDisconnected } = useAccount();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
   const feeChain = chains[networkPrefix];
@@ -251,40 +223,15 @@ export const Content = () => {
   ]);
 
   const { setShowModal } = useContext(StepsContext);
-  const { setShow } = useModal("transfer");
 
-  const topUpEvmos = () => {
-    return (
-      errors.has("insufficientBalanceForFee") ||
-      errors.has("insufficientBalance")
-      // TODO: there was a changed but I'm not sure what value should we use here now
-      // && token.chainPrefix === "evmos"
-    );
-  };
+  const topUpEvmos =
+    errors.has("insufficientBalanceForFee") ||
+    errors.has("insufficientBalance");
+  // TODO: there was a changed but I'm not sure what value should we use here now
+  // && token.chainPrefix === "evmos"
 
-  const handleSendAction = () => {
-    if (topUpEvmos()) {
-      // TODO: it's also closing the current modal.
-      // await setShow(false);
-      setShowModal(true);
-
-      // TODO: close send modal
-      return;
-    }
-
-    // TODO:
-    // if (uiexternal) {
-    // transfer.bridge.button.text
-    // redirect to axelar
-    // close send modal
-    // }
-
-    transfer();
-    return;
-  };
-
-  const sendButtonText = () => {
-    if (topUpEvmos()) {
+  const sendButtonText = useMemo(() => {
+    if (topUpEvmos) {
       return t("transfer.top.up.button.text");
     }
 
@@ -293,7 +240,7 @@ export const Content = () => {
     //   return t("transfer.bridge.button.text")
     // }
     return t("transfer.send.button.text");
-  };
+  }, [topUpEvmos]);
 
   useEffect(() => {
     installKeplr();
@@ -322,6 +269,24 @@ export const Content = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+
+          if (topUpEvmos) {
+            // TODO: it's also closing the current modal.
+            // await setShow(false);
+            setShowModal(true);
+
+            // TODO: close send modal
+            return;
+          }
+
+          // TODO:
+          // if (uiexternal) {
+          // transfer.bridge.button.text
+          // redirect to axelar
+          // close send modal
+          // }
+
+          transfer();
         }}
       >
         <section>
@@ -380,7 +345,11 @@ export const Content = () => {
             <InfoPanel icon={<IconContainer type={ICONS_TYPES.METAMASK} />}>
               <div>
                 <p className="pb-4">
-                  {t("error.network.not.support.by.wallet.connect.with.keplr")}
+                  {t("error.network.not.support.by.wallet.connect.with.keplr", {
+                    context: {
+                      wallet: "Keplr",
+                    },
+                  })}
                   <span className="text-pink-300">
                     {t(
                       "error.network.not.support.by.wallet.connect.with.keplr2"
@@ -486,12 +455,11 @@ export const Content = () => {
           )}
           {!isDisconnected && (
             <PrimaryButton
-              variant={topUpEvmos() ? "outline-primary" : "primary"}
-              onClick={handleSendAction}
+              variant={topUpEvmos ? "outline-primary" : "primary"}
               className="w-full text-lg rounded-md capitalize mt-5"
               disabled={errors.size > 0 || !isReadyToTransfer || isTransferring}
             >
-              {sendButtonText()}
+              {sendButtonText}
             </PrimaryButton>
           )}
 

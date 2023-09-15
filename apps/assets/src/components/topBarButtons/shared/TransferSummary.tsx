@@ -11,8 +11,8 @@ import {
   useFee,
 } from "evmos-wallet";
 import { chains } from "@evmos-apps/registry";
-import { Arrow } from "ui-helpers";
-import { AddressDisplay } from "./AddressDisplay";
+import { AddressDisplay, Arrow } from "ui-helpers";
+
 import { useTranslation } from "next-i18next";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
