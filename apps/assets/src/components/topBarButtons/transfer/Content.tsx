@@ -7,7 +7,6 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useRef,
 } from "react";
 import {
   ErrorMessage,
@@ -297,12 +296,8 @@ export const Content = () => {
     return t("transfer.send.button.text");
   };
 
-  const firstUpdate = useRef(true);
   useEffect(() => {
-    if (firstUpdate.current) {
-      installKeplr();
-      firstUpdate.current = false;
-    }
+    installKeplr();
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible" && reloadPage()) {
@@ -377,8 +372,7 @@ export const Content = () => {
               </div>
             </InfoPanel>
           )}
-          {(errors.has("networkNotSupportedByConnectedWallet") ||
-            getGlobalKeplrProvider() === null) && (
+          {errors.has("networkNotSupportedByConnectedWallet") && (
             <InfoPanel icon={<IconContainer type={ICONS_TYPES.METAMASK} />}>
               <div>
                 <p className="pb-4">

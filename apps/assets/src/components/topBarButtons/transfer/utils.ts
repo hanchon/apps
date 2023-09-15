@@ -98,7 +98,7 @@ export const stepsSetAccountKeplr = [
     checkAction: () => installKeplr(),
     loadingText: ["Waiting for Keplr Setup"],
     doneText: "Keplr Installed",
-    actions: [() => connectKeplr(KEPLR_DOWNLOAD_URL)],
+    actions: [() => connectKeplr()],
     errorsText: ["Keplr not installed"],
     href: KEPLR_DOWNLOAD_URL,
     hrefAction: () => reloadPage(),
