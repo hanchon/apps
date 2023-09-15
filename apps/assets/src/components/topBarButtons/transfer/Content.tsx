@@ -1,7 +1,13 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import React, { useMemo } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 import {
   ErrorMessage,
   IconContainer,
@@ -16,7 +22,11 @@ import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../parts/AssetSelector";
 import { useAccount } from "wagmi";
 import {
+  StoreType,
+  WalletConnection,
   connectWith,
+  getActiveProviderKey,
+  getGlobalKeplrProvider,
   getPrefix,
   getPrefixes,
   getToken,
@@ -28,7 +38,7 @@ import {
   useTransfer,
 } from "evmos-wallet";
 import { AccountSelector } from "../parts/AccountSelector";
-import { useModalState } from "../hooks/useModal";
+import { useModal, useModalState } from "../hooks/useModal";
 import { TransferSummary } from "../parts/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
 import { z } from "zod";
@@ -38,6 +48,11 @@ import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
 import { ICONS_TYPES } from "constants-helper";
+import { CopilotButton, StepsContext } from "copilot";
+import dynamic from "next/dynamic";
+import { connectKeplr, installKeplr, reloadPage } from "./utils";
+import { useDispatch, useSelector } from "react-redux";
+const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
 import {
   ChainPrefixSchema,
   MinDenomSchema,
@@ -77,6 +92,10 @@ export const Content = () => {
     denom: "aevmos",
     amount: 0n,
   });
+
+  const { connector, isDisconnected } = useAccount();
+  const wallet = useSelector((state: StoreType) => state.wallet.value);
+  const dispatch = useDispatch();
   const feeChain = chains[networkPrefix];
   const feeToken = getToken(feeChain.prefix, feeChain.feeToken);
   const {
@@ -139,6 +158,23 @@ export const Content = () => {
     // if it's held somewhere else, it can only go to evmos
     return ["evmos"];
   }, [senderChain, tokenChain]);
+
+  const activeProviderKey = getActiveProviderKey();
+
+  const disabledDestinationNetworkOptions = useMemo((): Prefix[] => {
+    // If asset is being held on an EVMOS ACCOUNT and the user is using MetaMask
+    if (senderChain.prefix === "evmos" && activeProviderKey === "metaMask") {
+      // disable all chains expect evmos
+      if (tokenChain.prefix === "evmos") {
+        return sortedChains.filter((chain) => chain !== "evmos");
+      }
+      // disable native network
+      return [tokenChain.prefix];
+    }
+
+    // all enabled.
+    return [];
+  }, [senderChain, tokenChain, activeProviderKey]);
 
   /**
    * Centralizing errors
@@ -213,6 +249,66 @@ export const Content = () => {
     accountExists,
     token,
   ]);
+
+  const { setShowModal } = useContext(StepsContext);
+  const { setShow } = useModal("transfer");
+
+  const topUpEvmos = () => {
+    return (
+      errors.has("insufficientBalanceForFee") ||
+      errors.has("insufficientBalance")
+      // TODO: there was a changed but I'm not sure what value should we use here now
+      // && token.chainPrefix === "evmos"
+    );
+  };
+
+  const handleSendAction = () => {
+    if (topUpEvmos()) {
+      // TODO: it's also closing the current modal.
+      // await setShow(false);
+      setShowModal(true);
+
+      // TODO: close send modal
+      return;
+    }
+
+    // TODO:
+    // if (uiexternal) {
+    // transfer.bridge.button.text
+    // redirect to axelar
+    // close send modal
+    // }
+
+    transfer();
+    return;
+  };
+
+  const sendButtonText = () => {
+    if (topUpEvmos()) {
+      return t("transfer.top.up.button.text");
+    }
+
+    // TODO:
+    // if (uiexternal) {
+    //   return t("transfer.bridge.button.text")
+    // }
+    return t("transfer.send.button.text");
+  };
+
+  useEffect(() => {
+    installKeplr();
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible" && reloadPage()) {
+        installKeplr();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   return (
     <section className="space-y-3 w-full">
@@ -306,42 +402,37 @@ export const Content = () => {
                   </span>
                 </p>
                 <PrimaryButton
+                  variant={
+                    getGlobalKeplrProvider() === null
+                      ? "outline-primary"
+                      : "primary"
+                  }
                   className="font-normal w-full"
                   // TODO: If the user rejects the connection, it's connecting with MetaMask. Check why.
                   onClick={async () => {
-                    // TODO: I created the ConnectKeplr component, maybe we can reuse something from there.
-                    // We should check if the user has Keplr installed and if not, show a message to install it
+                    if (getGlobalKeplrProvider() === null) {
+                      connectKeplr();
+                      return;
+                    }
                     const [err] = await E.try(() => connectWith("keplr"));
                     // TODO: handle error when user rejects the connection
                     if (err) return false;
                   }}
                 >
-                  {t("button.connect.with.keplr")}
+                  {getGlobalKeplrProvider() === null
+                    ? t("button.install.keplr")
+                    : t("button.connect.with.keplr")}
                 </PrimaryButton>
               </div>
             </InfoPanel>
           )}
-          {/**
-           * TODO: I disabled this error message, It's not specced anyway and I feel it makes things more confusing to the user, maybe just showing "no balance" error is already enough
-           */}
-          {/* {errors.has("accountDoesntExist") && (
-            <InfoPanel>
-              <div className="text-sm space-y-2">
-                <p>{t("error.account.not.exist.title")}</p>
-                <p>
-                  {t("error.account.not.exist.description")}{" "}
-                  <strong>{chains[token.chainPrefix].name}</strong>{" "}
-                  {t("error.account.not.exist.description2")}
-                </p>
-              </div>
-            </InfoPanel>
-          )} */}
 
           <Subtitle variant="modal-black">{t("transfer.section.to")}</Subtitle>
           <AccountSelector
             value={receiver}
             onChange={(receiver) => setState((prev) => ({ ...prev, receiver }))}
             networkOptions={destinationNetworkOptions}
+            disabledNetworkOptions={disabledDestinationNetworkOptions}
           />
 
           {sender && receiver && (
@@ -355,52 +446,61 @@ export const Content = () => {
                   denom,
                   sourcePrefix: tokenSourcePrefix,
                 }}
+                disabled={errors.size > 0 || !isReadyToTransfer}
               />
             </div>
           )}
           {/* TODO: this should appear when we add the opacity to the transfer summary because the user doesn't have enough evmos to pay the fee */}
           {errors.has("insufficientBalance") && (
             <ErrorMessage className="justify-center pl-0">
-              {t("message.insufficient.balance")}{" "}
+              {t("message.insufficient.balance")}
               {balance?.formattedLong ?? "0"} {token.denom}
             </ErrorMessage>
           )}
           {errors.has("insufficientBalanceForFee") && feeTokenbalance && (
             <ErrorMessage className="justify-center pl-0">
               {/* TODO: the message might be different if the insufficient token is the fee token? */}
-              {t("message.insufficient.balance")}{" "}
+              {t("message.insufficient.balance")}
               {feeTokenbalance.formattedLong} {feeTokenbalance.denom}
             </ErrorMessage>
           )}
 
           {/* TODO: show it correctly */}
-          <ErrorMessage className="justify-center pl-0" variant="info">
+          {/* <ErrorMessage className="justify-center pl-0" variant="info">
             {t("error.send.axelar.assets.text")}{" "}
             <span className="text-red-300">
               {t("error.send.axelar.assets.text2")}
             </span>{" "}
             {t("error.send.axelar.assets.text3")}
-          </ErrorMessage>
-
-          <PrimaryButton
-            // TODO: change variant to outline-primary if the user doesn't have enough balance to pay the fee
-            // variant="outline-primary"
-            onClick={() => {
-              transfer();
-            }}
-            className="w-full text-lg rounded-md capitalize mt-5"
-            disabled={errors.size > 0 || !isReadyToTransfer || isTransferring}
-            // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
-            // "transfer.swap.button.text" - "transfer.bridge.button.text"
-          >
-            {t("transfer.send.button.text")}
-          </PrimaryButton>
+          </ErrorMessage> */}
+          {isDisconnected && (
+            <WalletConnection
+              copilotModal={({
+                beforeStartHook,
+              }: {
+                beforeStartHook: Dispatch<SetStateAction<boolean>>;
+              }) => <CopilotButton beforeStartHook={beforeStartHook} />}
+              dispatch={dispatch}
+              walletExtension={wallet}
+            />
+          )}
+          {!isDisconnected && (
+            <PrimaryButton
+              variant={topUpEvmos() ? "outline-primary" : "primary"}
+              onClick={handleSendAction}
+              className="w-full text-lg rounded-md capitalize mt-5"
+              disabled={errors.size > 0 || !isReadyToTransfer || isTransferring}
+            >
+              {sendButtonText()}
+            </PrimaryButton>
+          )}
 
           {isTransferring && (
             <p>Please, check your wallet to sign your transaction</p>
           )}
         </section>
       </form>
+      <Copilot />
     </section>
   );
 };

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import { formatUnits } from "viem";
-import { E, cn } from "helpers";
+import { formatUnits } from "evmos-wallet/src/registry-actions/utils";
+import { cn } from "helpers";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import {
   Address,
@@ -13,12 +13,14 @@ import {
 import { chains } from "@evmos-apps/registry";
 import { Arrow } from "ui-helpers";
 import { AddressDisplay } from "./AddressDisplay";
+import { useTranslation } from "next-i18next";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
 export const TransferSummary = ({
   sender,
   receiver,
   token,
+  disabled = false,
 }: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
@@ -27,6 +29,7 @@ export const TransferSummary = ({
     denom: TokenMinDenom;
     amount: bigint;
   };
+  disabled?: boolean;
 }) => {
   const senderPrefix = getPrefix(normalizeToCosmosAddress(sender));
   const receiverPrefix = getPrefix(normalizeToCosmosAddress(receiver));
@@ -42,11 +45,13 @@ export const TransferSummary = ({
       : "evmos",
     token,
   });
+
+  const { t } = useTranslation();
   const feeChain = getChainByAddress(sender);
   const feeToken = getToken(feeChain.prefix, feeChain.feeToken);
   return (
     // TODO: we need to add opacity-50 in the div below if the user doesn't have enough balance to pay the fee
-    <div className="flex items-stretch ">
+    <div className={cn("flex items-stretch", disabled && "disabled")}>
       {senderChain && (
         <div className="flex flex-col space-y-2 items-center">
           <Image
@@ -64,7 +69,7 @@ export const TransferSummary = ({
       <div className="px-4 h-full justify-center flex flex-col items-center flex-grow tracking-wider">
         <h3 className="text-xs flex justify-center items-center gap-x-2 text-white">
           <Image
-            className="h-6 w-6"
+            className="h-6 w-6 rounded-full"
             src={`/assets/tokens/${denom}.png`}
             width={18}
             height={18}
@@ -75,7 +80,7 @@ export const TransferSummary = ({
 
         <Arrow />
         {isFetching && (
-          <p className="text-white text-xxs">Calculating fee...</p>
+          <p className="text-white text-xxs">{t("message.processing.fee")}</p>
         )}
         {!isFetching && fee && feeToken && (
           <p className="text-white text-xxs">

@@ -29,9 +29,9 @@ export function TextInput({
       />
       {showCopyIcon && (
         <button
-          className="w-auto h-4 flex items-center "
-          onClick={(e) => {
-            e.preventDefault();
+          className="w-auto h-4 flex items-center"
+          onClick={async () => {
+            await navigator.clipboard.writeText(rest.value as string);
           }}
         >
           <CopyPasteIcon />

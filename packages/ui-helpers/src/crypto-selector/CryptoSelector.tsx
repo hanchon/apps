@@ -104,18 +104,22 @@ CryptoSelector.Options = ({
 CryptoSelector.Option = <T,>({
   children,
   src,
+  disabled = false,
   ...props
 }: PropsWithChildren<{
   src: string;
   value: T;
+  disabled?: boolean;
 }>) => {
   return (
     <Listbox.Option
+      disabled={disabled}
       className={({ active, selected }) =>
         cn(
           "flex items-center space-x-2 p-2 w-full  bg-black rounded-md mb-1 text-white text-sm",
           {
             "bg-pink-600 text-black font-medium": active || selected,
+            disabled: disabled,
           }
         )
       }
