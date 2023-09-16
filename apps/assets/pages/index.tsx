@@ -31,6 +31,7 @@ import { createPortal } from "react-dom";
 import { TransferModal } from "../src/components/topBarButtons/transfer/TransferModal";
 import { ReceiptModal } from "../src/components/topBarButtons/receipt/ReceiptModal";
 import { RequestModal } from "../src/components/topBarButtons/request/RequestModal";
+import { TopupModal } from "../src/components/topBarButtons/topup/TopupModal";
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -93,5 +94,6 @@ const Modals = () => (
     <TransferModal />
     <ReceiptModal />
     <RequestModal />
+    <TopupModal />
   </>
 );

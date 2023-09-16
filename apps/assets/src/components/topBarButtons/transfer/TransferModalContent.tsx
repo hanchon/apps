@@ -55,6 +55,7 @@ const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
 import { sortedChains } from "../shared/sortedChains";
 import { TransferModalProps } from "./TransferModal";
 import { useReceiptModal } from "../receipt/ReceiptModal";
+import { useTopupModal } from "../topup/TopupModal";
 
 export const TransferModalContent = ({
   receiver,
@@ -223,7 +224,7 @@ export const TransferModalContent = ({
     token,
   ]);
 
-  const { setShowModal } = useContext(StepsContext);
+  const topupModal = useTopupModal();
 
   const topUpEvmos =
     errors.has("insufficientBalanceForFee") ||
@@ -261,10 +262,10 @@ export const TransferModalContent = ({
   useEffect(() => {
     if (!transferData) return;
     if (!isString(transferData.hash)) return;
-    receiptModal.setIsOpen(true, {
-      hash: transferData.hash,
-      chainPrefix: networkPrefix,
-    });
+    // receiptModal.setIsOpen(true, {
+    //   hash: transferData.hash,
+    //   chainPrefix: networkPrefix,
+    // });
   }, [transferData]);
   return (
     <section className="space-y-3 w-full">
@@ -280,9 +281,8 @@ export const TransferModalContent = ({
           e.preventDefault();
 
           if (topUpEvmos) {
-            // TODO: it's also closing the current modal.
             // await setShow(false);
-            setShowModal(true);
+            topupModal.setIsOpen(true);
 
             // TODO: close send modal
             return;
@@ -473,6 +473,7 @@ export const TransferModalContent = ({
           )}
         </section>
       </form>
+
       <button
         onClick={() =>
           receiptModal.setIsOpen(true, {
@@ -481,9 +482,38 @@ export const TransferModalContent = ({
           })
         }
       >
-        test
+        Test open receipt modal
       </button>
-      <Copilot />
+      <br />
+      <button
+        onClick={() => {
+          // To Milli 🫠: I wrapped the topup modal in the new modal routing thingy,
+          // you can check it in apps/assets/src/components/topBarButtons/topup/TopupModal.tsx
+          //
+          // The idea is to decouple the modal from what triggers the modal,
+          // so you don't have to embed the modal in the same component as the modal
+          // or have the modal as child of other modals, etc.
+          //
+          // I think after we finish here we could move all these modals somewhere that are acessible from the other apps too
+          // even though I think now most of them only exist in the assets app, I think it's nice to have them decoupled from it
+          //
+          // Also, because they are route based, they automatically close when another opens, and going back and forward in browser history works too
+          // (Although obviously, it will not work for individual steps on the copilot since it's being controlled on the provider)
+          // Although I think this is nice for most cases, there are some cases where it's not desirable,
+          // Ex: Opening the "connect" modal from the transfer modal and returning to it once you're connected
+
+          // Once solution would be to have the "connect" modal to take a "returnTo" route argument, so it knows where to go back to once it's done
+          // I added support for opening modals with prefilled parameters so it would look something like this:
+          //
+          // connectModal.setIsOpen(true, { returnTo: "/assets/action=transfer&...." })
+          //
+          // Anyway, let me know your thoughts
+          //
+          topupModal.setIsOpen(true);
+        }}
+      >
+        Test open topup modal
+      </button>
     </section>
   );
 };

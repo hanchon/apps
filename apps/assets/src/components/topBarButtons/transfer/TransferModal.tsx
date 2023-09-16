@@ -7,7 +7,6 @@ import { z } from "zod";
 
 import { ModalWithTransitions } from "ui-helpers";
 import { TransferModalContent } from "./TransferModalContent";
-import { StepsContextProvider, topUpStep } from "copilot";
 import { ModalProps, useModal } from "helpers";
 
 const TransferModalSchema = z.object({
@@ -31,9 +30,7 @@ export const TransferModal = () => {
       variant="modal-black"
       propClose={true}
     >
-      <StepsContextProvider steps={topUpStep}>
-        {modalProps && <TransferModalContent {...modalProps} />}
-      </StepsContextProvider>
+      {modalProps && <TransferModalContent {...modalProps} />}
     </ModalWithTransitions>
   );
 };

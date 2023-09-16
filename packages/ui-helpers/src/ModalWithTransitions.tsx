@@ -55,11 +55,11 @@ export const ModalWithTransitions = ({
           leaveFrom="transform scale-100 opacity-100"
           leaveTo="transform scale-95 opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          <div className="fixed inset-0 bg-black bg-opacity-50" />
         </Transition.Child>
 
         <div
-          className="bg-blackOpacity fixed inset-0 z-10 overflow-y-auto pb-24 pt-8"
+          className="fixed inset-0 z-10 overflow-y-auto pb-24 pt-8"
           onClick={() => {
             setShow(false);
           }}
