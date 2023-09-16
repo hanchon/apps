@@ -18,7 +18,7 @@ import {
   InfoPanel,
 } from "ui-helpers";
 import { isString, raise } from "helpers";
-import { useTranslation } from "next-i18next";
+import { Trans, useTranslation } from "next-i18next";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../shared/AssetSelector";
 import { useAccount } from "wagmi";
@@ -352,28 +352,22 @@ export const TransferModalContent = ({
           )}
           {errors.has("networkNotSupportedByConnectedWallet") && (
             <InfoPanel icon={<IconContainer type={ICONS_TYPES.METAMASK} />}>
-              <div>
-                <p className="pb-4">
-                  {t("error.network.not.support.by.wallet.connect.with.keplr")}
-                  <span className="text-pink-300">
-                    {t(
-                      "error.network.not.support.by.wallet.connect.with.keplr2"
-                    )}
-                  </span>
+              <div className="space-y-4">
+                <p>
+                  <Trans
+                    i18nKey="error.network.not.support.by-wallet.title"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
                 </p>
-                <p className="pb-8">
-                  {t("error.network.not.support.by.wallet.connect.with.keplr3")}
-                  <span className="text-pink-300">
-                    {t(
-                      "error.network.not.support.by.wallet.connect.with.keplr4"
-                    )}
-                  </span>
-                  {t("error.network.not.support.by.wallet.connect.with.keplr5")}
-                  <span className="text-pink-300">
-                    {t(
-                      "error.network.not.support.by.wallet.connect.with.keplr6"
-                    )}
-                  </span>
+                <p>
+                  <Trans
+                    i18nKey="error.network.not.support.by-wallet.subtitle"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
                 </p>
                 <PrimaryButton
                   variant={
@@ -394,8 +388,12 @@ export const TransferModalContent = ({
                   }}
                 >
                   {getGlobalKeplrProvider() === null
-                    ? t("button.install.keplr")
-                    : t("button.connect.with.keplr")}
+                    ? t(
+                        "error.network.not.support.by-wallet.installButtonLabel"
+                      )
+                    : t(
+                        "error.network.not.support.by-wallet.connectButtonLabel"
+                      )}
                 </PrimaryButton>
               </div>
             </InfoPanel>
