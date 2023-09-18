@@ -282,6 +282,7 @@ export const TransferModalContent = ({
   }, [transferData]);
 
   const isCTAEnabled = useMemo(() => {
+    // TO JULIA: Can you check if the logic is correct?
     if (isTransferring || !isReadyToTransfer) {
       return false;
     }
