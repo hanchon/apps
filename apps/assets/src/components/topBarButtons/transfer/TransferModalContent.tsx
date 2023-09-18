@@ -370,6 +370,7 @@ export const TransferModalContent = ({
                 ...token,
               }));
             }}
+            balanceError={errors.has("insufficientBalance")}
           />
 
           {/* TODO: Some error messages. This is not in the specs, so we need to check with Mian how to display those */}
