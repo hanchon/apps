@@ -28,7 +28,7 @@ export const ButtonConnectWallet = ({
             ? query.action === "transfer"
               ? "send modal"
               : "receive modal"
-            : "header",
+            : "dApp Store",
         });
       }}
       className={cn("", {
