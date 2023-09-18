@@ -114,9 +114,9 @@ export const Content = () => {
     },
     fee: fee
       ? {
-          token: fee.token,
-          gasLimit: fee.gas,
-        }
+        token: fee.token,
+        gasLimit: fee.gas,
+      }
       : undefined,
   });
   const { balance } = useTokenBalance(sender, token.denom);
@@ -386,8 +386,8 @@ export const Content = () => {
             }}
             className="w-full text-lg rounded-md capitalize mt-5"
             disabled={errors.size > 0 || !isReadyToTransfer || isTransferring}
-            // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
-            // "transfer.swap.button.text" - "transfer.bridge.button.text"
+          // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
+          // "transfer.swap.button.text" - "transfer.bridge.button.text"
           >
             {t("transfer.send.button.text")}
           </PrimaryButton>

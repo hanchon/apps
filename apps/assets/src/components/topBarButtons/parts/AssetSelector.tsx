@@ -21,27 +21,22 @@ import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
 import { max } from "helpers";
 import { getChainByTokenDenom } from "evmos-wallet/src/registry-actions/get-chain-by-token-min-denom";
+import { tokenToUSD } from "../common/utils";
 type Asset = {
   chainPrefix: Prefix;
   denom: TokenMinDenom;
   amount: bigint;
 };
 
-const tokenToUSD = (amount: bigint, price: number, decimals: number) => {
-  const unformmatedUsd = Number(
-    formatUnits((amount * BigInt(~~(1000 * Number(price)))) / 1000n, decimals)
-  );
-  return unformmatedUsd.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-};
+
 
 export const AssetSelector = ({
   fee,
   value,
   onChange,
   address,
+  showMax = true,
+  showNetworkSelector = true
 }: PropsWithChildren<{
   value: Asset;
   onChange: (value: Asset) => void;
@@ -50,6 +45,8 @@ export const AssetSelector = ({
     amount: bigint;
     denom: TokenMinDenom;
   };
+  showMax?: boolean;
+  showNetworkSelector?: boolean;
 }>) => {
   const { t } = useTranslation();
   // const [selectedChainPrefix, setSelectedChainPrefix] =
@@ -97,12 +94,13 @@ export const AssetSelector = ({
 
   const isFeeTokenAndSelectedTokenEqual = fee && fee.denom === value.denom;
   const maxAllowedTransferAmount = useMemo(() => {
+    if (!showMax) return undefined
     if (!balance) return 0n;
     if (isFeeTokenAndSelectedTokenEqual) {
       return max(balance.value - fee.amount, 0n);
     }
     return balance.value;
-  }, [balance, fee, isFeeTokenAndSelectedTokenEqual]);
+  }, [balance, fee, isFeeTokenAndSelectedTokenEqual, showMax]);
 
   return (
     <CryptoSelectorBox>
@@ -113,13 +111,17 @@ export const AssetSelector = ({
           </CryptoSelectorTitle>
           <CryptoSelector
             value={value.denom}
-            onChange={(denom) =>
+            onChange={(denom) => {
+              const { denom: name, decimals } = getTokenByMinDenom(denom);
+              console.log("nameee", name)
               onChange({
                 chainPrefix: getChainByTokenDenom(denom).prefix,
                 amount: 0n,
-                denom,
+                denom
               })
             }
+            }
+
           >
             <CryptoSelector.Button
               src={`/assets/tokens/${selectedToken.denom}.png`}
@@ -129,6 +131,7 @@ export const AssetSelector = ({
             </CryptoSelector.Button>
             <CryptoSelector.Options
               variant="multiple"
+
               className="left-0"
               label={t("transfer.section.token.label")}
             >
@@ -147,44 +150,48 @@ export const AssetSelector = ({
             </CryptoSelector.Options>
           </CryptoSelector>
         </CryptoSelectorDropdownBox>
-        <CryptoSelectorDropdownBox>
-          <CryptoSelectorTitle>
-            {t("transfer.section.asset.network")}
-          </CryptoSelectorTitle>
-          <CryptoSelector
-            value={value.chainPrefix}
-            onChange={(prefix) => {
-              onChange({
-                ...value,
-                amount: 0n,
-                chainPrefix: prefix,
-              });
-            }}
-          >
-            <CryptoSelector.Button
-              src={`/assets/chains/${value.chainPrefix}.png`}
+        {showNetworkSelector &&
+          <CryptoSelectorDropdownBox>
+            <CryptoSelectorTitle>
+              {t("transfer.section.asset.network")}
+            </CryptoSelectorTitle>
+            <CryptoSelector
+              value={value.chainPrefix}
+              onChange={(prefix) => {
+                onChange({
+                  ...value,
+                  amount: 0n,
+                  chainPrefix: prefix,
+                });
+              }}
             >
-              {selectedChain.name}
-            </CryptoSelector.Button>
-            <CryptoSelector.Options
-              label={t("transfer.section.network.label")}
-              className="right-0"
-            >
-              {networkOptions.map((value) => {
-                const chain = chains[value];
-                return (
-                  <CryptoSelector.Option
-                    src={`/assets/chains/${value}.png`}
-                    key={value}
-                    value={value}
-                  >
-                    {chain.name}
-                  </CryptoSelector.Option>
-                );
-              })}
-            </CryptoSelector.Options>
-          </CryptoSelector>
-        </CryptoSelectorDropdownBox>
+              <CryptoSelector.Button
+                src={`/assets/chains/${value.chainPrefix}.png`}
+              >
+                {selectedChain.name}
+              </CryptoSelector.Button>
+              <CryptoSelector.Options
+                label={t("transfer.section.network.label")}
+                className="right-0"
+              >
+                {networkOptions.map((value) => {
+                  const chain = chains[value];
+                  return (
+                    <CryptoSelector.Option
+                      src={`/assets/chains/${value}.png`}
+                      key={value}
+                      value={value}
+                    >
+                      {chain.name}
+                    </CryptoSelector.Option>
+                  );
+                })}
+              </CryptoSelector.Options>
+            </CryptoSelector>
+          </CryptoSelectorDropdownBox>
+
+        }
+
       </div>
       <AmountInput
         value={value.amount}

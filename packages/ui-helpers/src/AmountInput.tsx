@@ -95,20 +95,21 @@ export const AmountInput = ({
         autoCorrect="off"
         {...props}
       />
-
-      <button
-        className={cn(
-          "py-2 px-2.5 leading-none rounded-md bg-pink-400 text-black-900 text-sm tracking-wider font-normal",
-          maxButtonClassName
-        )}
-        onClick={(e) => {
-          e.preventDefault();
-          setValue(formatUnits(max ?? 0n, decimalsUnit));
-          onChange?.(max ?? 0n);
-        }}
-      >
-        Max.
-      </button>
+      {max !== undefined &&
+        <button
+          className={cn(
+            "py-2 px-2.5 leading-none rounded-md bg-pink-400 text-black-900 text-sm tracking-wider font-normal",
+            maxButtonClassName
+          )}
+          onClick={(e) => {
+            e.preventDefault();
+            setValue(formatUnits(max ?? 0n, decimalsUnit));
+            onChange?.(max ?? 0n);
+          }}
+        >
+          Max.
+        </button>
+      }
     </div>
   );
 };

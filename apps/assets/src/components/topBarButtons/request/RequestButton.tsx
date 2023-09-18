@@ -17,6 +17,8 @@ export const RequestButton = () => {
   const [showCloseModal, setShowCloseModal] = useState(false);
 
   const { show, setShow } = useModal("request");
+  const { show: showPay, setShow: setShowPay } = useModal("pay");
+
   const { t } = useTranslation();
   return (
     <>

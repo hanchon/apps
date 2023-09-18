@@ -27,6 +27,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Content as TransferContent } from "../src/components/topBarButtons/transfer/Content";
 import { Content as RequestContent } from "../src/components/topBarButtons/request/Content";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Content as PayContent } from "../src/components/topBarButtons/pay/Content";
 
 import { useModal } from "../src/components/topBarButtons/hooks/useModal";
 import { createPortal } from "react-dom";
@@ -92,6 +93,7 @@ function Modals() {
   const transferModal = useModal("transfer");
   const requestModal = useModal("request");
   const confirmationModal = useModal("receipt");
+  const payModal = useModal("pay");
 
   return (
     <>
@@ -102,6 +104,14 @@ function Modals() {
         variant="modal-black"
       >
         <TransferContent />
+      </ModalWithTransitions>
+      <ModalWithTransitions
+        show={payModal.show}
+        setShow={payModal.setShow}
+        propClose={true}
+        variant="modal-black"
+      >
+        <PayContent />
       </ModalWithTransitions>
       <ModalWithTransitions
         show={requestModal.show}

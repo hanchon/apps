@@ -25,7 +25,7 @@ CryptoSelector.Button = ({
   src,
   variant = "default",
 }: PropsWithChildren<{
-  src: string;
+  src?: string;
   variant?: "default" | "black";
 }>) => {
   return (
@@ -38,13 +38,17 @@ CryptoSelector.Button = ({
         }
       )}
     >
-      <Image
-        src={src}
-        className="rounded-full"
-        alt=""
-        width={variant === "default" ? 24 : 34}
-        height={variant === "default" ? 24 : 34}
-      />
+      {
+        src &&
+        <Image
+          src={src}
+          className="rounded-full"
+          alt=""
+          width={variant === "default" ? 24 : 34}
+          height={variant === "default" ? 24 : 34}
+        />
+      }
+
       <span className="text-sm text-white capitalize">{children}</span>
       <DropdownArrow
         className="h-5 w-5 pointer-events-none text-red"
@@ -63,7 +67,7 @@ CryptoSelector.Options = ({
 }: PropsWithChildren<{
   className?: string;
   label: string;
-  variant?: "default" | "multiple";
+  variant?: "default" | "multiple" | "wide";
 }>) => {
   return (
     <Transition
@@ -89,6 +93,7 @@ CryptoSelector.Options = ({
               "capitalize px-3 bg-black h-full text-black mt-1 scrollbar overflow-auto max-h-44 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer",
               {
                 "w-52": variant === "default",
+                "w-64": variant === "wide",
                 "w-80 grid grid-cols-2": variant === "multiple",
               }
             )}
