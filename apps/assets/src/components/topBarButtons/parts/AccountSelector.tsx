@@ -12,6 +12,7 @@ import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { useTranslation } from "next-i18next";
 import { ICONS_TYPES } from "constants-helper";
+import { SELECT_TO_NETWORK_SEND_FLOW, useTracker } from "tracker";
 
 export const AccountSelector = ({
   value,
@@ -58,9 +59,10 @@ export const AccountSelector = ({
   }, [address]);
 
   const { t } = useTranslation();
+  const { sendEvent } = useTracker();
 
   const WALLET_TAB_TYPES = {
-    WALLET: "wallet",
+    WALLET: "my wallet",
     OTHER: "other",
   };
 
@@ -105,6 +107,11 @@ export const AccountSelector = ({
             value={prefix}
             onChange={(value) => {
               setRequestedPrefix(value);
+              sendEvent(SELECT_TO_NETWORK_SEND_FLOW, {
+                network: value,
+                "account provider": getActiveProviderKey(),
+                "user's address or other": walletTab,
+              });
             }}
           >
             <CryptoSelector.Button src={`/assets/chains/${chain.prefix}.png`}>

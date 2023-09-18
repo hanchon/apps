@@ -42,6 +42,20 @@ export const CLICK_CTA_LINKS_REGISTER_TOKEN =
 export const CLICK_CTA_LINKS_ASSETS_GUIDE =
   "Click on CTA link to view assets guide";
 
+export const CLICK_ON_SEND_BUTTON = "Open up Send modal";
+export const CLICK_ON_RECEIVE_BUTTON = "Open up Receive modal";
+export const SELECT_TOKEN_SEND_FLOW = "Select Token to send to a network";
+export const SELECT_FROM_NETWORK_SEND_FLOW =
+  "Select Network to send token from";
+export const SELECT_TO_NETWORK_SEND_FLOW = "Select Network to send token to";
+export const INSUFFICIENT_FEE_AMOUNT =
+  "Insufficient fee error (not enough balance) when trying to send token";
+export const CLICK_ON_TOP_UP_EVMOS = "Prompted to top up Evmos from Send modal";
+export const CLICK_ON_AXL_REDIRECT =
+  "Go to Satellite for Axelar-related transactions";
+export const CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW =
+  "Prompted to connect to Keplr to send token";
+
 // staking
 export const CLICK_CLAIM_REWARDS_TOPBAR = "Claim Evmos Rewards";
 export const CLICK_SHOW_INACTIVE_TOGGLE = "Show inactive";

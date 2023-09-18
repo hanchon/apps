@@ -28,6 +28,14 @@ export { CLICK_HIDE_ZERO_BALANCE } from "./constants";
 export { CLICK_CTA_LINKS_REGISTER_TOKEN } from "./constants";
 export { CLICK_CTA_LINKS_ASSETS_GUIDE } from "./constants";
 
+export { CLICK_ON_SEND_BUTTON } from "./constants";
+export { CLICK_ON_RECEIVE_BUTTON } from "./constants";
+export { SELECT_TOKEN_SEND_FLOW } from "./constants";
+export { SELECT_FROM_NETWORK_SEND_FLOW } from "./constants";
+export { SELECT_TO_NETWORK_SEND_FLOW } from "./constants";
+export { INSUFFICIENT_FEE_AMOUNT } from "./constants";
+export { CLICK_ON_TOP_UP_EVMOS } from "./constants";
+export { CLICK_ON_AXL_REDIRECT } from "./constants";
 // staking
 export { CLICK_CLAIM_REWARDS_TOPBAR } from "./constants";
 export { CLICK_SEARCH_VALIDATORS_INPUT } from "./constants";

@@ -57,6 +57,13 @@ import {
   ChainPrefixSchema,
   MinDenomSchema,
 } from "evmos-wallet/src/registry-actions/utils";
+import {
+  CLICK_ON_AXL_REDIRECT,
+  CLICK_ON_TOP_UP_EVMOS,
+  INSUFFICIENT_FEE_AMOUNT,
+  useTracker,
+} from "tracker";
+import { CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW } from "tracker/src/constants";
 
 const sortedChains = Object.values(chains)
   .map(({ prefix }) => prefix)
@@ -82,7 +89,7 @@ const TransferModalSchema = z.object({
 
 export const Content = () => {
   const { t } = useTranslation();
-
+  const { sendEvent } = useTracker();
   const {
     state: { receiver, tokenSourcePrefix, denom, networkPrefix, amount },
     setState,
@@ -225,6 +232,7 @@ export const Content = () => {
      */
     if (feeTokenbalance?.value === 0n) {
       errors.add("insufficientBalanceForFee");
+      sendEvent(INSUFFICIENT_FEE_AMOUNT);
     }
     /**
      * Wallet checks
@@ -267,7 +275,8 @@ export const Content = () => {
       // TODO: it's also closing the current modal.
       // await setShow(false);
       setShowModal(true);
-
+      sendEvent(CLICK_ON_TOP_UP_EVMOS);
+      //
       // TODO: close send modal
       return;
     }
@@ -277,6 +286,8 @@ export const Content = () => {
     // transfer.bridge.button.text
     // redirect to axelar
     // close send modal
+    // sendEvent(CLICK_ON_AXL_REDIRECT);
+
     // }
 
     transfer();
@@ -291,6 +302,7 @@ export const Content = () => {
     // TODO:
     // if (uiexternal) {
     //   return t("transfer.bridge.button.text")
+
     // }
     return t("transfer.send.button.text");
   };
@@ -415,6 +427,7 @@ export const Content = () => {
                       return;
                     }
                     const [err] = await E.try(() => connectWith("keplr"));
+                    sendEvent(CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW);
                     // TODO: handle error when user rejects the connection
                     if (err) return false;
                   }}

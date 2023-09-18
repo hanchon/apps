@@ -9,6 +9,7 @@ import { CancelModalRequest } from "./CloseModal";
 import { RequestModal } from "./Modal";
 import { useTranslation } from "next-i18next";
 import { useModal } from "../hooks/useModal";
+import { useTracker, CLICK_ON_RECEIVE_BUTTON } from "tracker";
 
 export const RequestButton = () => {
   const { isDisconnected } = useAccount();
@@ -18,6 +19,7 @@ export const RequestButton = () => {
 
   const { show, setShow } = useModal("request");
   const { t } = useTranslation();
+  const { sendEvent } = useTracker();
   return (
     <>
       <PrimaryButton
@@ -26,8 +28,9 @@ export const RequestButton = () => {
         //   wallet.extensionName === WALLECT_CONNECT_KEY
 
         icon={<RequestIcon />}
-        onClick={() => {
-          setShow(true);
+        onClick={async () => {
+          await setShow(true);
+          sendEvent(CLICK_ON_RECEIVE_BUTTON);
         }}
       >
         {/* add i18 */}

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import React, { PropsWithChildren, useEffect, useMemo } from "react";
 import {
   AmountInput,
   CryptoSelectorBalanceBox,
@@ -15,6 +15,11 @@ import { useTranslation } from "next-i18next";
 import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
 import { max } from "helpers";
+import { useTracker } from "tracker";
+import {
+  SELECT_FROM_NETWORK_SEND_FLOW,
+  SELECT_TOKEN_SEND_FLOW,
+} from "tracker/src/constants";
 
 type Asset = {
   networkPrefix: Prefix;
@@ -48,7 +53,7 @@ export const AssetSelector = ({
   };
 }>) => {
   const { t } = useTranslation();
-
+  const { sendEvent } = useTracker();
   const selectedChain = chains[value.networkPrefix];
 
   const selectedToken = getToken(value.tokenSourcePrefix, value.denom);
@@ -114,6 +119,12 @@ export const AssetSelector = ({
                 amount: 0n,
                 denom: token.minCoinDenom,
               });
+              sendEvent(SELECT_TOKEN_SEND_FLOW, {
+                "token selected": token.name,
+              });
+              sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
+                network: token.sourcePrefix,
+              });
             }}
           >
             <CryptoSelector.Button
@@ -152,6 +163,9 @@ export const AssetSelector = ({
                 ...value,
                 amount: 0n,
                 networkPrefix: prefix,
+              });
+              sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
+                network: value.networkPrefix,
               });
             }}
           >
