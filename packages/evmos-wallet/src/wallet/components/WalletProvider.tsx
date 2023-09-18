@@ -39,7 +39,7 @@ function Provider({ children }: WalletProviderProps) {
 
   const { variables } = useConnect();
   const { disconnect } = useDisconnect();
-  const { pubkey, walletRequestError: pubkeyError } = usePubKey();
+  const { pubkey, error: pubkeyError } = usePubKey();
   useEffect(() => {
     wagmiConfig.autoConnect();
   }, []);

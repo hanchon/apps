@@ -15,7 +15,7 @@ export async function getCosmosBalances({
   const prefix = getPrefix(address);
   const chain = chains[prefix];
 
-  const response = await apiCosmosBalance(chain.cosmosRest.http, address);
+  const response = await apiCosmosBalance(chain.cosmosRest, address);
   const balances: FormattedBalance[] = [];
 
   for (const { denom, amount } of response.balances) {

@@ -15,10 +15,10 @@ export const getIBCChannelId = ({
   const receiverChain = chains[normalizeToPrefix(receiver)];
 
   if (senderChain.prefix !== "evmos") {
-    return senderChain.source.sourceChannel;
+    return senderChain.channels.evmos.channelId;
   }
   if (receiverChain.prefix !== "evmos") {
-    return receiverChain.source.destinationChannel;
+    return receiverChain.channels.evmos.counterpartyChannelId;
   }
   throw new Error(
     `Could not find channel id for ${senderChain.name} -> ${receiverChain.name}`

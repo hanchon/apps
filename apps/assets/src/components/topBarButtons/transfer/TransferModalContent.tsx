@@ -1,13 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import React, {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useMemo,
-} from "react";
+import React, { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import {
   ErrorMessage,
   IconContainer,
@@ -17,7 +11,6 @@ import {
   Title,
   InfoPanel,
 } from "ui-helpers";
-import { isString, raise } from "helpers";
 import { Trans, useTranslation } from "next-i18next";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../shared/AssetSelector";
@@ -39,23 +32,24 @@ import { AccountSelector } from "../shared/AccountSelector";
 
 import { TransferSummary } from "../shared/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
-import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
-import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
+import {
+  useRequestWalletAccount,
+  useWalletAccountByPrefix,
+} from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
 import { ICONS_TYPES } from "constants-helper";
-import { CopilotButton, StepsContext } from "copilot";
-import dynamic from "next/dynamic";
+import { CopilotButton } from "copilot";
 import { connectKeplr, installKeplr, reloadPage } from "./utils";
 import { useDispatch, useSelector } from "react-redux";
-const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
 
 import { sortedChains } from "../shared/sortedChains";
 import { TransferModalProps } from "./TransferModal";
 import { useReceiptModal } from "../receipt/ReceiptModal";
 import { useTopupModal } from "../topup/TopupModal";
+import { getAccount } from "wagmi/actions";
 
 export const TransferModalContent = ({
   receiver,
@@ -73,12 +67,17 @@ export const TransferModalContent = ({
   const feeChain = chains[networkPrefix];
   const feeToken = getToken(feeChain.prefix, feeChain.feeToken);
   const {
-    data,
+    account,
     error: walletRequestError,
-    refetch,
-  } = useWalletAccountByPrefix(networkPrefix);
+    requestAccount,
+  } = useRequestWalletAccount();
 
-  const sender = data?.bech32Address;
+  useEffect(() => {
+    if (networkPrefix !== "evmos" && getActiveProviderKey() !== "keplr") return;
+    requestAccount(networkPrefix);
+  }, [networkPrefix, getAccount().address]);
+
+  const sender = account?.bech32Address;
   const token = getToken(tokenSourcePrefix, denom);
   const senderChain = sender ? getChainByAddress(sender) : chains["evmos"];
   const tokenChain = chains[token.sourcePrefix];
@@ -188,6 +187,7 @@ export const TransferModalContent = ({
       (balance && amount > balance.value)
     ) {
       errors.add("insufficientBalance");
+      errors.add("insufficientBalanceForFee");
     }
 
     /**
@@ -261,11 +261,11 @@ export const TransferModalContent = ({
 
   useEffect(() => {
     if (!transferData) return;
-    if (!isString(transferData.hash)) return;
-    // receiptModal.setIsOpen(true, {
-    //   hash: transferData.hash,
-    //   chainPrefix: networkPrefix,
-    // });
+
+    receiptModal.setIsOpen(true, {
+      hash: transferData.hash,
+      chainPrefix: networkPrefix,
+    });
   }, [transferData]);
   return (
     <section className="space-y-3 w-full">
@@ -343,7 +343,7 @@ export const TransferModalContent = ({
                 </p>
                 <PrimaryButton
                   className="font-normal w-full"
-                  onClick={() => refetch()}
+                  onClick={() => requestAccount(networkPrefix)}
                 >
                   {t("button.authorize.request.button.text")}
                 </PrimaryButton>
@@ -422,13 +422,6 @@ export const TransferModalContent = ({
               />
             </div>
           )}
-          {/* TODO: this should appear when we add the opacity to the transfer summary because the user doesn't have enough evmos to pay the fee */}
-          {errors.has("insufficientBalance") && (
-            <ErrorMessage className="justify-center pl-0">
-              {t("message.insufficient.balance")}
-              {balance?.formattedLong ?? "0"} {token.denom}
-            </ErrorMessage>
-          )}
           {errors.has("insufficientBalanceForFee") && feeTokenbalance && (
             <ErrorMessage className="justify-center pl-0">
               {/* TODO: the message might be different if the insufficient token is the fee token? */}
@@ -485,28 +478,6 @@ export const TransferModalContent = ({
       <br />
       <button
         onClick={() => {
-          // To Milli 🫠: I wrapped the topup modal in the new modal routing thingy,
-          // you can check it in apps/assets/src/components/topBarButtons/topup/TopupModal.tsx
-          //
-          // The idea is to decouple the modal from what triggers the modal,
-          // so you don't have to embed the modal in the same component as the modal
-          // or have the modal as child of other modals, etc.
-          //
-          // I think after we finish here we could move all these modals somewhere that are acessible from the other apps too
-          // even though I think now most of them only exist in the assets app, I think it's nice to have them decoupled from it
-          //
-          // Also, because they are route based, they automatically close when another opens, and going back and forward in browser history works too
-          // (Although obviously, it will not work for individual steps on the copilot since it's being controlled on the provider)
-          // Although I think this is nice for most cases, there are some cases where it's not desirable,
-          // Ex: Opening the "connect" modal from the transfer modal and returning to it once you're connected
-
-          // Once solution would be to have the "connect" modal to take a "returnTo" route argument, so it knows where to go back to once it's done
-          // I added support for opening modals with prefilled parameters so it would look something like this:
-          //
-          // connectModal.setIsOpen(true, { returnTo: "/assets/action=transfer&...." })
-          //
-          // Anyway, let me know your thoughts
-          //
           topupModal.setIsOpen(true);
         }}
       >

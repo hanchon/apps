@@ -108,7 +108,7 @@ const AssetsTable = () => {
   };
   const { address } = useAccount();
   const { data: balances } = useAccountBalances(address);
-  console.log(balances);
+
   return (
     <>
       <TopBar topProps={topProps} />

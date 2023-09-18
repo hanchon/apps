@@ -47,7 +47,7 @@ export const prepareCosmosTransfer = async <T extends Prefix>(params: {
 }) => {
   const tx = await createProtobufMsgSend(params);
   const chain = getChainByAddress(params.sender);
-  const gas = (await apiCosmosTxSimulate(chain.cosmosRest.http, tx)).gas_info
+  const gas = (await apiCosmosTxSimulate(chain.cosmosRest, tx)).gas_info
     .gas_used;
   const estimatedGas = buffGasEstimate(gas);
 
