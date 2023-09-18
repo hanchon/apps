@@ -18,12 +18,14 @@ import { useTokenPrice } from "../hooks/useTokenPrice";
 import { useSearchParams } from 'next/navigation'
 import { AmountBox } from "../common/AmountBox";
 import { TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
+import { RequestModalProps } from "./RequestModal";
 
 export const ShareContent = ({ message, token, setState }: {
     message: string; token: {
         denom: TokenMinDenom,
         amount: bigint
     };
+    setState: RequestModalProps['setState']
 }) => {
     const { t } = useTranslation();
 

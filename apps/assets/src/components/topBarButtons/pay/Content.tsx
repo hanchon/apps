@@ -3,124 +3,90 @@
 import React, { useEffect, useState } from "react";
 import {
   CryptoSelector,
-  CryptoSelectorBalanceBox,
-  CryptoSelectorBalanceText,
   CryptoSelectorDropdownBox,
-  CryptoSelectorTitle,
-  ErrorMessage,
-  Label,
   PrimaryButton,
-  Subtitle,
-  TextInput,
   Title,
 } from "ui-helpers";
 import { useTranslation } from "next-i18next";
-import { FormattedBalance, Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
-import { AssetSelector } from "../parts/AssetSelector";
+import { FormattedBalance, Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
 import {
   Address,
-  connectWith,
-  getPrefixes,
   getTokenByMinDenom,
-  getTokenMinDenomList,
-  isValidCosmosAddress,
-  isValidHexAddress,
-  useAccountBalances,
   useTokenBalance,
 } from "evmos-wallet";
-import { useModalState } from "../hooks/useModal";
-import { CopyIcon, CopyPasteIcon, SendIcon } from "icons";
-import { z } from "zod";
-import { chains } from "@evmos-apps/registry";
-import { E } from "helpers";
+
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
-import Image from "next/image";
 import { formatUnits } from "viem";
 import { tokenToUSD } from "../common/utils";
 import { useTokenPrice } from "../hooks/useTokenPrice";
 import { useSearchParams } from 'next/navigation'
-import { formatProviderAddress, truncateAddress } from "evmos-wallet/src/internal/wallet/style/format";
+import { truncateAddress } from "evmos-wallet/src/internal/wallet/style/format";
 import { AmountBox } from "../common/AmountBox";
-import { StoreType, WalletConnection, useAssets } from "evmos-wallet";
+import { StoreType, WalletConnection } from "evmos-wallet";
 import { Dispatch, SetStateAction } from "react";
-import { CopilotButton, StepsContextProvider, steps } from "copilot";
+import { CopilotButton } from "copilot";
 import { useDispatch, useSelector } from "react-redux";
-import { getChainByTokenDenom } from "evmos-wallet/src/registry-actions/get-chain-by-token-min-denom";
+import { PayModalProps } from "./Modal";
+import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
+import { chains } from "@evmos-apps/registry";
+import { SendIcon } from "icons";
+import Image from "next/image";
 
-const MAX_MESSAGE_LENGTH = 140;
 
-const TransferModalSchema = z.object({
-  requester: z.string().transform((v) => {
-    if (isValidHexAddress(v) || isValidCosmosAddress(v, [...getPrefixes()])) {
-      return v;
-    }
-    return undefined;
-  }),
-  chainPrefix: z.custom<Prefix>((v) => {
-    if (Object.keys(chains).includes(v as Prefix)) {
-      return v;
-    }
-    return undefined;
-  }),
-  denom: z.custom<TokenMinDenom>((v) => {
-    if (getTokenMinDenomList().includes(v as TokenMinDenom)) {
-      return v;
-    }
-    return undefined;
-  }),
-  amount: z.coerce.bigint().default(0n),
-  step: z.union([z.literal("payment"), z.literal("result")]),
-  message: z.string().max(MAX_MESSAGE_LENGTH).default(""),
-});
 
-export const Content = () => {
+export const Content = ({ requester, networkPrefix, denom, amount, step, message, setState }: PayModalProps) => {
   const searchParams = useSearchParams()
   const dispatch = useDispatch();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
 
   const { t } = useTranslation();
-  const {
-    state: { requester, message, step, ...token },
-    setState,
-  } = useModalState("pay", TransferModalSchema, {
-    step: "payment",
-    requester: searchParams.get("requester") as Address<Prefix> ?? "",
-    chainPrefix: searchParams.get("chainPrefix") as Prefix ?? "evmos",
-    denom: searchParams.get("denom") as TokenMinDenom ?? "aphoton",
-    amount: BigInt(searchParams.get("amount") ?? 0),
-    message: searchParams.get("message") ?? "",
-  });
 
+  const token = {
+    chainPrefix: networkPrefix,
+    denom: denom,
+    amount: amount,
+    minCoinDenom: denom,
+    sourcePrefix: networkPrefix
+  }
+  const selectedToken = getTokenByMinDenom(token.denom);
   const { connector, isConnected, address } = useAccount();
-  const { data } = useWalletAccountByPrefix(token.chainPrefix);
+  const { data } = useWalletAccountByPrefix(selectedToken.sourcePrefix);
   const { data: evmosData } = useWalletAccountByPrefix("evmos");
   const sender = connector?.id === "metaMask" ? wallet.evmosAddressCosmosFormat as Address<Prefix> : data?.bech32Address;
 
-  const [selectedBalance, setSelectedBalance] = useState<undefined | FormattedBalance>()
+  const [selectedBalance, setSelectedBalance] = useState<undefined | FormattedBalance>({
+    decimals: 16,
+    value: 0n,
+    type: "ERC20",
+    tokenSourcePrefix: "evmos",
+    minDenom: "aevmos",
+    address: "evmos1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3z33a4",
+    formatted: "0.0000000000000000",
+    formattedLong: "0.000000000000000000",
+    denom: "EVMOS",
+  })
 
   const price = useTokenPrice(token.denom);
-  const selectedToken = getTokenByMinDenom(token.denom);
+
   const amountInUsd = price
     ? tokenToUSD(token.amount, Number(price), selectedToken.decimals)
     : null;
 
-  const selectedTokenUSD = selectedToken ? tokenToUSD(token.amount, Number(price), selectedToken.decimals) : null
+  const selectedTokenUSD = selectedToken ? tokenToUSD(selectedBalance?.value ?? 0n, Number(price), selectedToken.decimals) : null
 
-  const { balance } = useTokenBalance(sender, token.denom);
-  const { balance: evmosBalance } = useTokenBalance(evmosData?.bech32Address, token.denom);
-
-  const balances = sender === evmosData?.bech32Address ? [evmosBalance] : [balance, evmosBalance].filter(b => b !== undefined)
-  const chain = getChainByTokenDenom(token.denom)
-  // const tokenBalances = balances?.filter(b => {
-  //   b.
-  // })
+  const { balance } = useTokenBalance(sender, token);
+  const { balance: evmosBalance } = useTokenBalance(evmosData?.bech32Address, token);
+  const balances = sender === evmosData?.bech32Address ? [evmosBalance].filter(b => b !== undefined) : [balance, evmosBalance].filter(b => b !== undefined)
+  const chain = sender ? getChainByAddress(sender) : chains["evmos"];
 
   const insufficientBalance = selectedBalance?.value ?? 0n < token.amount ? true : false
 
-
-
-  console.log("balances", balances, sender === evmosData?.bech32Address, sender, evmosData?.bech32Address)
+  useEffect(() => {
+    if (balances.length > 0 && selectedBalance?.address === "evmos1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3z33a4") {
+      setSelectedBalance(balances[0])
+    }
+  }, [balances])
 
   return (
     <section className="space-y-3">
@@ -179,16 +145,20 @@ export const Content = () => {
                     value={selectedBalance?.type ?? ""}
                     onChange={(type) => {
                       setSelectedBalance(balances?.find(b => b?.type === type))
-                    }
-                    }
-
+                    }}
                   >
-
                     <CryptoSelector.Button
                     >
-                      <span className="pl-2">
-
-                      </span>
+                      <div className="pl-2 items-center flex gap-1.5">
+                        <Image
+                          src={`/assets/chains/${selectedBalance?.type === "ERC20" ? "evmos" : selectedBalance?.denom}.png`}
+                          className="rounded-full"
+                          alt=""
+                          width={24}
+                          height={24}
+                        />
+                        {selectedBalance?.type === "ERC20" ? "Evmos" : chain.name}
+                      </div>
                     </CryptoSelector.Button>
 
                     <CryptoSelector.Options
@@ -199,7 +169,7 @@ export const Content = () => {
                       {balances.map((b) => {
                         return (
                           <CryptoSelector.Option
-                            src={`/assets/tokens/${selectedToken.denom}.png`}
+                            src={`/assets/tokens/${b?.type === "ERC20" ? "evmos" : selectedBalance?.denom}.png`}
                             key={b?.address}
                             value={b?.type ?? ""}
                           >
@@ -220,15 +190,15 @@ export const Content = () => {
                     <div className="rounded p-2 border border-pink-300" >
                       <div className={`flex justify-between  ${insufficientBalance ? "opacity-60" : ""}`}>
                         <div className="flex items-center gap-2">
-                          <span className="text-sm">{formatUnits(selectedBalance?.value ?? 0n, selectedBalance?.decimals ?? 0)}
-
-                          </span><span className="text-gray-300 text-xs">≈ {selectedTokenUSD}</span>
+                          <span className="text-sm">
+                            {formatUnits(selectedBalance?.value ?? 0n, selectedBalance?.decimals ?? 0)} {selectedToken?.denom}
+                          </span>
+                          <span className="text-gray-300 text-xs">
+                            ≈ {selectedTokenUSD}
+                          </span>
                         </div>
                         <span className="text-xs text-gray-400">
                           {selectedBalance?.type === "ERC20" ? "Evmos" : chain.name}
-                        </span>
-                        <span className="text-xs text-gray-400">
-
                         </span>
                       </div>
                     </div>
@@ -242,20 +212,41 @@ export const Content = () => {
 
                 }
 
+                {!insufficientBalance &&
+                  <PrimaryButton
+                    disabled={insufficientBalance}
+                    // TODO: change variant to outline-primary if the user doesn't have enough balance to pay the fee
+                    variant={false ? "outline-primary" : undefined}
+                    onClick={() => {
+                    }}
+                    className="w-full text-lg rounded-md capitalize mt-5"
+                  // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
+                  // "transfer.swap.button.text" - "transfer.bridge.button.text"
+                  >
+                    {
+                      t("pay.button")}
+                  </PrimaryButton>
 
-                <PrimaryButton
-                  disabled={false}
-                  // TODO: change variant to outline-primary if the user doesn't have enough balance to pay the fee
-                  variant={false ? "outline-primary" : undefined}
-                  onClick={() => {
-                  }}
-                  className="w-full text-lg rounded-md capitalize mt-5"
-                // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
-                // "transfer.swap.button.text" - "transfer.bridge.button.text"
-                >
-                  {
-                    t("request.generate.button")}
-                </PrimaryButton>
+                }
+
+                {insufficientBalance &&
+                  <PrimaryButton
+                    disabled={false}
+                    // TODO: change variant to outline-primary if the user doesn't have enough balance to pay the fee
+                    variant={"outline-primary"}
+                    onClick={() => {
+                    }}
+                    className="w-full text-lg rounded-md capitalize mt-5"
+                  // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
+                  // "transfer.swap.button.text" - "transfer.bridge.button.text"
+                  >
+                    {
+                      t("pay.swap.button")}
+                  </PrimaryButton>
+
+                }
+
+
               </>
             }
           </div>

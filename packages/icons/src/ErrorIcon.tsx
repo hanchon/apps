@@ -32,7 +32,7 @@ export const ErrorIcon: React.FC<ErrorProps> = ({
         d="M8 4V9"
         stroke="currentColor"
         stroke-width="1.5"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <circle cx="8" cy="11.5" r="1" fill="currentColor" />
     </svg>

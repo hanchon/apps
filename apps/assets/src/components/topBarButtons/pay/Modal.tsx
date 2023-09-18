@@ -1,23 +1,39 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { IntroductionModal, ModalContainer } from "ui-helpers";
-import { AccountInformation } from "../common/AccountInformation";
+import { ModalWithTransitions } from "ui-helpers";
 import { Content } from "./Content";
-import { useTranslation } from "next-i18next";
+import { z } from "zod";
+import { AddressSchema, ChainPrefixSchema, MinDenomSchema } from "evmos-wallet/src/registry-actions/utils";
+import { ModalProps, useModal } from "helpers";
+
+const MAX_MESSAGE_LENGTH = 140;
+
+const PayModalSchema = z.object({
+  requester: AddressSchema.optional(),
+  networkPrefix: ChainPrefixSchema.default("evmos"),
+  denom: MinDenomSchema.default("aevmos"),
+  amount: z.coerce.bigint().default(0n),
+  step: z.union([z.literal("setup"), z.literal("share"), z.literal("receive")]).default("receive"),
+  message: z.string().max(MAX_MESSAGE_LENGTH).default(""),
+});
+
+export type PayModalProps = ModalProps<typeof PayModalSchema>;
+
+
+export const usePayModal = () => useModal("pay", PayModalSchema);
 
 export const PayModal = () => {
-  const { t } = useTranslation();
+  const { isOpen, setIsOpen, modalProps } = usePayModal();
   return (
-    <ModalContainer
-      introduction={
-        <IntroductionModal
-          title={t("pay.modal.title")}
-          description={t("pay.modal.description")}
-          content={<AccountInformation />}
-        />
-      }
-      content={<Content />}
-    />
+
+    <ModalWithTransitions
+      show={isOpen}
+      setShow={setIsOpen}
+      variant="modal-black"
+      propClose={true}
+    >
+      {modalProps && <Content {...modalProps} />}
+    </ModalWithTransitions>
   );
 };

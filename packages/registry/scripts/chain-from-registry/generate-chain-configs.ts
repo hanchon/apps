@@ -19,7 +19,10 @@ const normalizeNetworkUrls = (urls?: string[]) => {
   };
 };
 
-async function generateTokens(tokenRegistries: TokenRegistry[]) {
+async function generateTokens(
+  tokenRegistries: TokenRegistry[],
+  prefix: string
+) {
   return (await Promise.all(
     tokenRegistries.map(async (token) => {
       logger.info(
@@ -43,6 +46,8 @@ async function generateTokens(tokenRegistries: TokenRegistry[]) {
         images: images,
         denom: token.coinDenom,
         channel: token.channel,
+        sourcePrefix: prefix,
+        baseDenom: prefix === "evmos" ? token.cosmosDenom : token.minCoinDenom,
         minCoinDenom:
           token.minCoinDenom === "EVMOS" ? "aevmos" : token.minCoinDenom,
         cosmosDenom: token.cosmosDenom,
@@ -68,7 +73,7 @@ export const generateChainConfigs = async () => {
     logger.info(prefix, `Generating chain config for ${prefix}`);
     const tokens = tokensByPrefix[prefix] ?? [];
     logger.info(prefix, `Generating tokens`);
-    const currencies = await generateTokens(tokens);
+    const currencies = await generateTokens(tokens, chain.prefix);
     if (!chain.configurations) {
       logger.error(prefix, "No configurations found in chain registry");
       continue;
@@ -104,7 +109,7 @@ export const generateChainConfigs = async () => {
           denom === firstCurrency.coinDenom ||
           minCoinDenom === firstCurrency.coinMinDenom
         );
-      })?.denom;
+      })?.minCoinDenom;
 
       if (!nativeCurrency) {
         logger.error(
@@ -129,7 +134,7 @@ export const generateChainConfigs = async () => {
         cosmosId: configuration.chainId,
         evmId,
         gasPriceStep: chain.gasPriceStep,
-        nativeCurrency,
+        feeToken: nativeCurrency,
         currencies,
         clientId: configuration.clientId || null,
         source:

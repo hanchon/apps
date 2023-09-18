@@ -21,8 +21,11 @@ import { chains } from "@evmos-apps/registry";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
 import { useSelector } from "react-redux";
+import { RequestModalProps } from "./RequestModal";
 
-export const ReceiveContent = ({ setState }) => {
+export const ReceiveContent = ({ setState }: {
+    setState: RequestModalProps['setState']
+}) => {
     const { t } = useTranslation();
 
     const [walletFormat, setWalletFormat] = useState("0x");
@@ -37,7 +40,7 @@ export const ReceiveContent = ({ setState }) => {
 
     const networkOptions = useMemo(() => {
         if (connector?.id === "metaMask") {
-            return ["evmos"]
+            return ["evmos"] as Prefix[]
         }
         return Object.values(chains).map(({ prefix }) => prefix);
     }, [connector]);

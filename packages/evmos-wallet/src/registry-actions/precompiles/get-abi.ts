@@ -8,7 +8,7 @@ export const ABI = {
 } as const;
 
 export type ABIKey = keyof typeof ABI;
-export function getAbi(abiKey: ABIKey) {
+export function getAbi<T extends ABIKey>(abiKey: T) {
   return ABI[abiKey];
 }
 

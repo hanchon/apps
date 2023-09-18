@@ -7,7 +7,7 @@ import {
   isEvmosAddress,
   normalizeToEth,
 } from "../../wallet";
-import { Prefix, TokenMinDenom } from "../types";
+import { Prefix, Token, TokenMinDenom } from "../types";
 import { getIBCChannelId, getTimeoutTimestamp } from "../utils";
 import { writeContract } from "wagmi/actions";
 import { getIBCDenom } from "../utils/get-ibc-denom";
@@ -17,13 +17,12 @@ export const prepareContractIBCTransfer = async <T extends Prefix>({
   token,
   sender,
   receiver,
+  amount,
 }: {
   sender: Address<T>;
   receiver: Address<Exclude<Prefix, T>>; // Can't IBC transfer to the same network
-  token: {
-    denom: TokenMinDenom;
-    amount: bigint;
-  };
+  token: Token;
+  amount: bigint;
 }) => {
   assertIf(
     isEvmosAddress(sender),
@@ -45,9 +44,9 @@ export const prepareContractIBCTransfer = async <T extends Prefix>({
       getIBCDenom({
         sender,
         receiver,
-        minDenom: token.denom,
+        token,
       }),
-      token.amount,
+      amount,
       senderAddressAsHex,
       receiver,
       {
@@ -71,18 +70,18 @@ export const writeContractIBCTransfer = async <T extends Prefix>({
   token,
   sender,
   receiver,
+  amount,
 }: {
   sender: Address<T>;
   receiver: Address<Exclude<Prefix, T>>; // Can't IBC transfer to the same network
-  token: {
-    denom: TokenMinDenom;
-    amount: bigint;
-  };
+  token: Token;
+  amount: bigint;
 }) => {
   const prepared = await prepareContractIBCTransfer({
     sender,
     receiver,
     token,
+    amount,
   });
 
   return writeContract(prepared.tx);

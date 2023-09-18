@@ -4,11 +4,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { StoreType, useAccountBalances } from "evmos-wallet";
+import { StoreType } from "evmos-wallet";
 import { ERC20BalanceResponse } from "./types";
 import { getAssetsForAddress } from "../../../internal/asset/functionality/fetch";
 import dynamic from "next/dynamic";
-import { useAccount } from "wagmi";
 
 const ModalAsset = dynamic(() => import("../modals/ModalAsset"));
 import { MessageTable, Switch } from "ui-helpers";
@@ -106,9 +105,7 @@ const AssetsTable = () => {
       feeBalance: normalizedAssetsData.feeBalance,
     },
   };
-  const { address } = useAccount();
-  const { data: balances } = useAccountBalances(address);
-  console.log(balances);
+
   return (
     <>
       <TopBar topProps={topProps} />

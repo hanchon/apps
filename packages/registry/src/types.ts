@@ -13,6 +13,8 @@ export type Token = {
   denom: string;
   minCoinDenom: string;
   cosmosDenom: string;
+  baseDenom: string;
+  sourcePrefix: string;
   type: "IBC" | "ERC20";
   erc20Address: string;
   category: "bitcoin" | "ethereum" | "stablecoin" | "cosmos" | "polygon" | null;
@@ -43,7 +45,7 @@ export interface Chain {
   cosmosId: string;
   evmId: number | null;
   clientId: string | null;
-  nativeCurrency: string;
+  feeToken: string;
 
   currencies: [Token, ...Token[]];
   cosmosRest: NetworkUrls;

@@ -16,7 +16,7 @@ export default {
     "average": "0.025",
     "high": "0.03"
   },
-  "nativeCurrency": "CRE",
+  "feeToken": "ucre",
   "currencies": [
     {
       "name": "Crescent Network",
@@ -27,6 +27,8 @@ export default {
       },
       "denom": "CRE",
       "channel": "channel-11",
+      "sourcePrefix": "cre",
+      "baseDenom": "ucre",
       "minCoinDenom": "ucre",
       "cosmosDenom": "ibc/B5AB26FB63C08E1C14B91B4DDC15CA4FE59737052B4432D8A3B328B66F6FE7A1",
       "category": "cosmos",

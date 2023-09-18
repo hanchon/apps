@@ -8,35 +8,28 @@ import {
   normalizeToCosmosAddress,
 } from "../../wallet";
 import { getChainByAddress } from "../get-chain-by-account";
-import { Prefix, TokenMinDenom } from "../types";
-import {
-  getIBCChannelId,
-  getIBCDenomOnNetwork,
-  getTimeoutTimestamp,
-} from "../utils";
+import { Prefix, Token, TokenMinDenom } from "../types";
+import { getIBCChannelId, getTimeoutTimestamp } from "../utils";
 import { assignGasEstimateToProtoTx } from "../utils/assign-gas-estimate-to-proto-tx";
-import { getTokenByMinDenom } from "../get-token-by-min-denom";
 import { createProtobufTransaction } from "../utils/create-protobuf-transaction";
 import { buffGasEstimate } from "../utils/buff-gas-estimate";
 import { getIBCDenom } from "../utils/get-ibc-denom";
 import { apiCosmosTxBroadcast } from "../../api/cosmos-rest/api-cosmos-tx-broadcast";
-import { BroadcastMode } from "@keplr-wallet/types";
 import { getChainAccountInfo } from "../utils/get-chain-account-info";
 
 export const createProtobufIBCTransferMsg = ({
   sender,
   receiver,
   token,
+  amount,
   mode,
   fee,
   ...rest
 }: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
-  token: {
-    denom: TokenMinDenom;
-    amount: bigint;
-  };
+  token: Token;
+  amount: bigint;
   fee?: {
     gasLimit: bigint;
     token: {
@@ -49,7 +42,7 @@ export const createProtobufIBCTransferMsg = ({
   const ibcDenom = getIBCDenom({
     sender,
     receiver,
-    minDenom: token.denom,
+    token,
   });
   const message = new MsgTransfer({
     sender: normalizeToCosmosAddress(sender),
@@ -62,7 +55,7 @@ export const createProtobufIBCTransferMsg = ({
     timeoutTimestamp: getTimeoutTimestamp(),
     memo: "",
     token: {
-      amount: token.amount.toString(),
+      amount: amount.toString(),
       denom: ibcDenom,
     },
     ...rest,
@@ -87,10 +80,8 @@ export const createProtobufIBCTransferMsg = ({
 export const prepareCosmosIBCTransfer = async (params: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
-  token: {
-    denom: TokenMinDenom;
-    amount: bigint;
-  };
+  token: Token;
+  amount: bigint;
   fee?: {
     gasLimit: bigint;
     token: {
@@ -114,10 +105,8 @@ export const prepareCosmosIBCTransfer = async (params: {
 export const executeCosmosIBCTransfer = async (params: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
-  token: {
-    denom: TokenMinDenom;
-    amount: bigint;
-  };
+  token: Token;
+  amount: bigint;
   fee?: {
     gasLimit: bigint;
     token: {

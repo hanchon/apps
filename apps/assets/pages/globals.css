@@ -48,7 +48,7 @@
 
 @layer componentsAssets {
   .disabled {
-    @apply pointer-events-none select-none opacity-50 cursor-not-allowed;
+    @apply pointer-events-none select-none opacity-30 cursor-not-allowed;
   }
 
   td {

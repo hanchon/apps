@@ -16,7 +16,7 @@ export default {
     "average": "0.025",
     "high": "0.04"
   },
-  "nativeCurrency": "STARS",
+  "feeToken": "ustars",
   "currencies": [
     {
       "name": "Stargaze",
@@ -26,6 +26,8 @@ export default {
       },
       "denom": "STARS",
       "channel": "channel-13",
+      "sourcePrefix": "stars",
+      "baseDenom": "ustars",
       "minCoinDenom": "ustars",
       "cosmosDenom": "ibc/7564B7F838579DD4517A225978C623504F852A6D0FF7984AFB28F10D36022BE8",
       "category": "cosmos",

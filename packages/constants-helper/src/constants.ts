@@ -50,6 +50,7 @@ export const ICONS_TYPES = {
   SHRUG: "SHRUG",
   METAMASK: "METAMASK",
   KEPLR: "KEPLR",
+  WALLETCONNECT: "WALLETCONNECT",
 };
 
 export const EMOJIS = {

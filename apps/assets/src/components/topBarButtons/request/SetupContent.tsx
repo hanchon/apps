@@ -8,11 +8,11 @@ import {
     Title,
 } from "ui-helpers";
 import { useTranslation } from "next-i18next";
-import { AssetSelector } from "../parts/AssetSelector";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { SendIcon, BackArrowIcon } from "icons";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
-
+import { AssetSelector } from "../shared/AssetSelector";
+import { RequestModalProps } from "./RequestModal";
 
 const MAX_MESSAGE_LENGTH = 140;
 
@@ -20,8 +20,11 @@ export const SetUpContent = ({ setState, token, setMessage, message }: {
     message: string; token: {
         denom: TokenMinDenom,
         amount: bigint,
-        chainPrefix: Prefix
-    }; setMessage: Dispatch<SetStateAction<string>>
+        chainPrefix: Prefix,
+        tokenSourcePrefix: Prefix,
+        networkPrefix: Prefix
+    }; setMessage: Dispatch<SetStateAction<string>>;
+    setState: RequestModalProps['setState']
 }) => {
     const { t } = useTranslation();
 
@@ -75,7 +78,6 @@ export const SetUpContent = ({ setState, token, setMessage, message }: {
                                 }
                             />
 
-
                             <div className="flex justify-between items-center">
                                 <Subtitle variant="modal-black">
                                     {t("request.message.subtitle")}
@@ -113,7 +115,6 @@ export const SetUpContent = ({ setState, token, setMessage, message }: {
                                 {t("request.generate.button")}
                             </PrimaryButton>
                         </div>
-
                     </div>
                 </section>
             </form>

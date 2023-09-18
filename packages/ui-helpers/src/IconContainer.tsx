@@ -1,4 +1,10 @@
-import { CheckIcon, CloseBorderIcon, KeplrIcon, MetamaskIcon } from "icons";
+import {
+  CheckIcon,
+  CloseBorderIcon,
+  KeplrIcon,
+  MetamaskIcon,
+  WalletConnectIcon,
+} from "icons";
 import { ComponentProps } from "react";
 import { EMOJIS, ICONS_TYPES } from "constants-helper";
 
@@ -50,6 +56,10 @@ const ICONS_STYLES = {
   [ICONS_TYPES.KEPLR]: {
     style: "bg-gray-600 text-pearl flex h-9 w-9 shrink-0",
     icon: <KeplrIcon width={"20px"} height={"20px"} />,
+  },
+  [ICONS_TYPES.WALLETCONNECT]: {
+    style: "bg-gray-600 text-pearl flex h-9 w-9 shrink-0",
+    icon: <WalletConnectIcon width={"20px"} height={"20px"} />,
   },
 };
 

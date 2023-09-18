@@ -1,6 +1,5 @@
 import { chains } from "@evmos-apps/registry";
 import { Token, TokenByMinDenom, TokenMinDenom } from "./types";
-import { isObject } from "helpers";
 
 export const TOKENS_BY_MIN_DENOM = Object.values(chains).reduce(
   (acc, chain) => {

@@ -34,17 +34,17 @@ const removeTransferModalStateFromLocalStorage = () => {
   localStorage.removeItem(MODAL_STATE);
 };
 
-const connectKeplr = (href: string) => {
+export const connectKeplr = () => {
   if (getGlobalKeplrProvider() === null) {
     updateTransferModalState({ modalFlag: true });
-    window.open(href, "_blank");
+    window.open(KEPLR_DOWNLOAD_URL, "_blank");
 
     return false;
   }
   return true;
 };
 
-const installKeplr = () => {
+export const installKeplr = () => {
   removeTransferModalStateFromLocalStorage();
   if (getGlobalKeplrProvider() === null) {
     return false;
@@ -52,7 +52,7 @@ const installKeplr = () => {
   return true;
 };
 
-const reloadPage = () => {
+export const reloadPage = () => {
   // for chrome and brave we need to reload the page to know if the user has Keplr installed
   if (getGlobalKeplrProvider()) {
     return true;
@@ -98,7 +98,7 @@ export const stepsSetAccountKeplr = [
     checkAction: () => installKeplr(),
     loadingText: ["Waiting for Keplr Setup"],
     doneText: "Keplr Installed",
-    actions: [() => connectKeplr(KEPLR_DOWNLOAD_URL)],
+    actions: [() => connectKeplr()],
     errorsText: ["Keplr not installed"],
     href: KEPLR_DOWNLOAD_URL,
     hrefAction: () => reloadPage(),

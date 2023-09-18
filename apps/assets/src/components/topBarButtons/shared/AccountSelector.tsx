@@ -1,6 +1,7 @@
-import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import React, { PropsWithChildren, useEffect, useState } from "react";
 import {
   Address,
+  getActiveProviderKey,
   getPrefix,
   normalizeToCosmosAddress,
   useAddressInput,
@@ -16,10 +17,12 @@ export const AccountSelector = ({
   value,
   onChange,
   networkOptions,
+  disabledNetworkOptions,
 }: PropsWithChildren<{
   value?: Address<Prefix>;
   onChange: (value?: Address<Prefix>) => void;
   networkOptions: Prefix[];
+  disabledNetworkOptions: Prefix[];
 }>) => {
   const { address, inputProps, errors, setValue } = useAddressInput(value);
 
@@ -82,6 +85,16 @@ export const AccountSelector = ({
     },
   ];
 
+  const drawIcon = () => {
+    const provider = getActiveProviderKey();
+    if (provider === null) {
+      return undefined;
+    }
+    // TODO: what should we show for safe / wallet connect ?
+
+    return ICONS_TYPES[provider.toUpperCase()];
+  };
+
   return (
     <div className="flex flex-col space-y-3 mb-8">
       <div className="flex md:justify-between md:flex-row flex-col space-y-4 md:space-y-0">
@@ -107,6 +120,7 @@ export const AccountSelector = ({
                     src={`/assets/chains/${value}.png`}
                     key={value}
                     value={value}
+                    disabled={disabledNetworkOptions.includes(value)}
                   >
                     {chain.name}
                   </CryptoSelector.Option>
@@ -124,11 +138,8 @@ export const AccountSelector = ({
               ? t("transfer.section.to.placeholder")
               : ""
           }
-          // TODO: change it Keplr depending on the wallet: ICONS_TYPES.KEPLR
           extensionIcon={
-            walletTab === WALLET_TAB_TYPES.WALLET
-              ? ICONS_TYPES.METAMASK
-              : undefined
+            walletTab === WALLET_TAB_TYPES.WALLET ? drawIcon() : undefined
           }
           disabled={walletTab === WALLET_TAB_TYPES.WALLET}
           {...inputProps}

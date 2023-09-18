@@ -16,7 +16,7 @@ export default {
     "average": "0.04",
     "high": "0.05"
   },
-  "nativeCurrency": "JUNO",
+  "feeToken": "ujuno",
   "currencies": [
     {
       "name": "Juno",
@@ -27,6 +27,8 @@ export default {
       },
       "denom": "JUNO",
       "channel": "channel-5",
+      "sourcePrefix": "juno",
+      "baseDenom": "ujuno",
       "minCoinDenom": "ujuno",
       "cosmosDenom": "ibc/448C1061CE97D86CC5E86374CD914870FB8EBA16C58661B5F1D3F46729A2422D",
       "category": "cosmos",

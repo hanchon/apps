@@ -4,8 +4,8 @@ import { FormattedBalance, Prefix } from "./types";
 import { chains } from "@evmos-apps/registry";
 import { getPrefix } from "../wallet/utils";
 import { apiCosmosBalance } from "../api/cosmos-rest";
-import { getTokenByMinDenom } from "./get-token-by-min-denom";
-import { getIBCDenomOnNetwork } from "./utils";
+import { IBC_DENOMS_MAP } from "./utils";
+import { getToken } from "./get-token";
 
 export async function getCosmosBalances({
   address,
@@ -18,35 +18,16 @@ export async function getCosmosBalances({
   const response = await apiCosmosBalance(chain.cosmosRest.http, address);
   const balances: FormattedBalance[] = [];
 
-  /**
-   * These are the tokens native to the EVMOS chain
-   *
-   * Their IBC denom will show up differently on other chains
-   * It will look like this: ibc/HASH
-   * And the hash will be different for each chain that holds evmos assets
-   *
-   * This creates a map of all evmos denoms to their token object
-   * so we know which token is which
-   *
-   * learn more about IBC denoms here: https://tutorials.cosmos.network/tutorials/6-ibc-dev/
-   */
-  const evmosTokensIBCDenomsMap = Object.fromEntries(
-    chains.evmos.currencies.map((token) => [
-      getIBCDenomOnNetwork(prefix, token.denom),
-      token,
-    ])
-  );
-
   for (const { denom, amount } of response.balances) {
-    if (denom in evmosTokensIBCDenomsMap) {
-      const token = evmosTokensIBCDenomsMap[denom];
-      balances.push(makeBalance(token.denom, address, amount, "ICS20"));
+    if (denom in IBC_DENOMS_MAP) {
+      const token = IBC_DENOMS_MAP[denom];
+      balances.push(makeBalance(token, address, amount, "ICS20"));
       continue;
     }
-    const token = getTokenByMinDenom(denom);
+    const token = getToken(prefix, denom);
     // Token is not in our registry so we ignore it
     if (!token) continue;
-    balances.push(makeBalance(token.denom, address, amount, "ICS20"));
+    balances.push(makeBalance(token, address, amount, "ICS20"));
   }
 
   return balances;

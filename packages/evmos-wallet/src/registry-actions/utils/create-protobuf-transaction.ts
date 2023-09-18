@@ -31,7 +31,6 @@ export const createProtobufTransaction = async ({
 }) => {
   const chain = getChainByAddress(sender);
   const { publicKey, sequence } = await getChainAccountInfo(sender);
-  const nativeToken = getTokenByDenom(chain.nativeCurrency);
 
   return new Tx({
     body: {
@@ -66,7 +65,7 @@ export const createProtobufTransaction = async ({
         amount: [
           {
             amount: "0",
-            denom: nativeToken.minCoinDenom,
+            denom: chain.feeToken,
           },
         ],
         gasLimit: 0n,

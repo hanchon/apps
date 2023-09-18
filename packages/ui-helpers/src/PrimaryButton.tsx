@@ -2,6 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { cn } from "helpers";
+import { ComponentProps } from "react";
 
 export const PrimaryButton = ({
   variant = "primary",
@@ -10,13 +11,10 @@ export const PrimaryButton = ({
   className,
   icon,
   disabled,
-}: {
+  ...rest
+}: ComponentProps<"button"> & {
   variant?: "primary" | "outline-primary";
-  onClick: () => void;
-  children: JSX.Element | string;
-  className?: string;
   icon?: JSX.Element;
-  disabled?: boolean;
 }) => {
   return (
     <button
@@ -31,6 +29,8 @@ export const PrimaryButton = ({
         },
         disabled ? "disabled" : ""
       )}
+      disabled={disabled}
+      {...rest}
     >
       {icon && <span>{icon}</span>} {children}
     </button>

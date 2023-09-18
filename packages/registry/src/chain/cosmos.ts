@@ -16,7 +16,7 @@ export default {
     "average": "0.025",
     "high": "0.04"
   },
-  "nativeCurrency": "ATOM",
+  "feeToken": "uatom",
   "currencies": [
     {
       "name": "Cosmos Hub",
@@ -27,6 +27,8 @@ export default {
       },
       "denom": "ATOM",
       "channel": "channel-3",
+      "sourcePrefix": "cosmos",
+      "baseDenom": "uatom",
       "minCoinDenom": "uatom",
       "cosmosDenom": "ibc/A4DB47A9D3CF9A068D454513891B526702455D3EF08FB9EB558C561F9DC2B701",
       "category": "cosmos",
