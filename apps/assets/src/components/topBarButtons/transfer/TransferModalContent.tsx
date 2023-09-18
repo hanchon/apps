@@ -239,6 +239,8 @@ export const TransferModalContent = ({
   const topUpEvmos =
     errors.has("insufficientBalanceForFee") ||
     // TODO: there was a changed but I'm not sure what value should we use here now
+    // should we only check for evmos here ?
+    // Shooul we also check for the fee token. Case: Juno - network Evmos - to evmos. I have to pay with evmos.
     (errors.has("insufficientBalance") && token.denom === "EVMOS");
 
   const isAxelarBased = useMemo(() => {
