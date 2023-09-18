@@ -282,7 +282,7 @@ export const TransferModalContent = ({
   }, [transferData]);
 
   const isCTAEnabled = useMemo(() => {
-    if (isTransferring) {
+    if (isTransferring || !isReadyToTransfer) {
       return false;
     }
 
@@ -292,11 +292,6 @@ export const TransferModalContent = ({
 
     if (topUpEvmos) {
       return true;
-    }
-
-    // should we enable go to satellite if the user has 0 balance ?
-    if (!isReadyToTransfer) {
-      return false;
     }
 
     if (
