@@ -2,6 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { cn } from "helpers";
+import { useRouter } from "next/router";
 import { Dispatch, SetStateAction } from "react";
 import { CLICK_CONNECT_WALLET_BUTTON, useTracker } from "tracker";
 import { PrimaryButton } from "ui-helpers";
@@ -13,15 +14,22 @@ export const ButtonConnectWallet = ({
   setShow: Dispatch<SetStateAction<boolean>>;
   variant: "primary" | "outline-primary";
 }) => {
-  const { handlePreClickAction: trackClickConnectWallet } = useTracker(
-    CLICK_CONNECT_WALLET_BUTTON
-  );
+  const { query } = useRouter();
+
+  const { sendEvent } = useTracker(CLICK_CONNECT_WALLET_BUTTON);
+
   return (
     <PrimaryButton
       variant={variant}
       onClick={() => {
         setShow(true);
-        trackClickConnectWallet();
+        sendEvent(CLICK_CONNECT_WALLET_BUTTON, {
+          location: query.action
+            ? query.action === "transfer"
+              ? "send modal"
+              : "receive modal"
+            : "header",
+        });
       }}
       className={cn("", {
         "w-full text-lg": variant === "outline-primary",
