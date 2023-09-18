@@ -12,7 +12,11 @@ import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { useTranslation } from "next-i18next";
 import { ICONS_TYPES } from "constants-helper";
-import { SELECT_TO_NETWORK_SEND_FLOW, useTracker } from "tracker";
+import {
+  CLICK_ON_COPY_ICON,
+  SELECT_TO_NETWORK_SEND_FLOW,
+  useTracker,
+} from "tracker";
 
 export const AccountSelector = ({
   value,
@@ -139,8 +143,10 @@ export const AccountSelector = ({
         </div>
       </div>
       <div className="space-y-2">
-        {/* TODO: add the prefilled address to the input */}
         <TextInput
+          onClickCopy={() => {
+            sendEvent(CLICK_ON_COPY_ICON);
+          }}
           placeholder={
             walletTab !== WALLET_TAB_TYPES.WALLET
               ? t("transfer.section.to.placeholder")

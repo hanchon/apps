@@ -520,6 +520,7 @@ export const TransferModalContent = ({
               }) => <CopilotButton beforeStartHook={beforeStartHook} />}
               dispatch={dispatch}
               walletExtension={wallet}
+              variant="outline-primary"
             />
           )}
           {!isDisconnected && (
