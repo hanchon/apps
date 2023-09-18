@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { CopyPasteIcon, MetamaskIcon } from "icons";
+import { CopyPasteIcon } from "icons";
 import { ComponentProps } from "react";
 import { IconContainer } from "../IconContainer";
 
@@ -29,6 +29,7 @@ export function TextInput({
       />
       {showCopyIcon && (
         <button
+          type="button"
           className="w-auto h-4 flex items-center"
           onClick={async () => {
             await navigator.clipboard.writeText(rest.value as string);

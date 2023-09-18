@@ -238,22 +238,24 @@ export const TransferModalContent = ({
 
   const topUpEvmos =
     errors.has("insufficientBalanceForFee") ||
-    errors.has("insufficientBalance");
-  // TODO: there was a changed but I'm not sure what value should we use here now
-  // && token.chainPrefix === "evmos"
+    // TODO: there was a changed but I'm not sure what value should we use here now
+    (errors.has("insufficientBalance") && token.denom === "EVMOS");
+
+  const isAxelarBased = useMemo(() => {
+    return "handledByExternalUI" in token;
+  }, [token]);
 
   const sendButtonText = useMemo(() => {
     if (topUpEvmos) {
       return t("transfer.top.up.button.text");
     }
 
-    // TODO:
-    // if (uiexternal) {
-    //   return t("transfer.bridge.button.text")
+    if (isAxelarBased) {
+      return t("transfer.bridge.button.text");
+    }
 
-    // }
     return t("transfer.send.button.text");
-  }, [topUpEvmos]);
+  }, [topUpEvmos, isAxelarBased, t]);
 
   useEffect(() => {
     installKeplr();
@@ -278,6 +280,52 @@ export const TransferModalContent = ({
     //   chainPrefix: networkPrefix,
     // });
   }, [transferData]);
+
+  const isCTAEnabled = useMemo(() => {
+    if (isTransferring) {
+      return false;
+    }
+
+    if (isAxelarBased) {
+      return true;
+    }
+
+    if (topUpEvmos) {
+      return true;
+    }
+
+    // should we enable go to satellite if the user has 0 balance ?
+    if (!isReadyToTransfer) {
+      return false;
+    }
+
+    if (
+      errors.has("accountDoesntExist") ||
+      errors.has("networkNotSupportedByConnectedWallet") ||
+      errors.has("userRejectedEnablingNetwork")
+    ) {
+      return false;
+    }
+
+    if (
+      // CTA is disabled if the user doesn't have enough balance and the token is not evmos.
+      errors.has("insufficientBalance") &&
+      // what value should we use if I want to check for the token that is selected ?
+      token.denom !== "EVMOS"
+    ) {
+      return false;
+    }
+
+    return true;
+  }, [
+    errors,
+    token,
+    isAxelarBased,
+    topUpEvmos,
+    isReadyToTransfer,
+    isTransferring,
+  ]);
+
   return (
     <section className="space-y-3 w-full">
       <Title
@@ -292,19 +340,18 @@ export const TransferModalContent = ({
           e.preventDefault();
 
           if (topUpEvmos) {
-            // await setShow(false);
             topupModal.setIsOpen(true);
-
+            sendEvent(CLICK_ON_TOP_UP_EVMOS);
             // TODO: close send modal
             return;
           }
 
-          // TODO:
-          // if (uiexternal) {
-          // transfer.bridge.button.text
-          // redirect to axelar
-          // close send modal
-          // }
+          if ("handledByExternalUI" in token) {
+            window.open(token.handledByExternalUI[0].url, "_blank");
+            sendEvent(CLICK_ON_AXL_REDIRECT);
+            // TODO: close send modal
+            return;
+          }
 
           transfer();
         }}
@@ -335,28 +382,36 @@ export const TransferModalContent = ({
             <InfoPanel icon={<WizardIcon className="shrink-0" />}>
               <div>
                 <p className="pb-4">
-                  {t("error.user.rejected.network.title")}
+                  <Trans
+                    i18nKey="error.user.rejected.network.title"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
                   <span className="text-pink-300">
                     {chains[networkPrefix].name}
-                    {t("error.user.rejected.network.title2")}
                   </span>
-                  {t("error.user.rejected.network.title3")}
+                  <Trans
+                    i18nKey="error.user.rejected.network.title2"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
                 </p>
+
                 <p className="pb-8">
-                  {t("error.user.rejected.network.authorize.request")}
-                  <span className="text-pink-300">
-                    {t("error.user.rejected.network.authorize.request2")}
-                  </span>
-                  {t("error.user.rejected.network.authorize.request3")}
-                  <span className="text-pink-300">
-                    {t("error.user.rejected.network.authorize.request4")}
-                  </span>
+                  <Trans
+                    i18nKey="error.user.rejected.network.subtitle"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
                 </p>
                 <PrimaryButton
                   className="font-normal w-full"
                   onClick={() => refetch()}
                 >
-                  {t("button.authorize.request.button.text")}
+                  {t("error.user.rejected.network.authorizeButtonLabel")}
                 </PrimaryButton>
               </div>
             </InfoPanel>
@@ -434,30 +489,34 @@ export const TransferModalContent = ({
               />
             </div>
           )}
+          {/* To Julia: I think that it's not necessary to show this message. We should focus on the fee error instead of the balance (in the sending summary) */}
           {/* TODO: this should appear when we add the opacity to the transfer summary because the user doesn't have enough evmos to pay the fee */}
-          {errors.has("insufficientBalance") && (
+          {/* {errors.has("insufficientBalance") && (
             <ErrorMessage className="justify-center pl-0">
               {t("message.insufficient.balance")}
               {balance?.formattedLong ?? "0"} {token.denom}
             </ErrorMessage>
-          )}
+          )} */}
           {errors.has("insufficientBalanceForFee") && feeTokenbalance && (
             <ErrorMessage className="justify-center pl-0">
               {/* TODO: the message might be different if the insufficient token is the fee token? */}
-              {t("message.insufficient.balance")}
+              {t("message.insufficiente.fee")}
               {feeTokenbalance.formattedLong} {feeTokenbalance.denom}
             </ErrorMessage>
           )}
 
-          {/* TODO: show it correctly */}
-          {/* <ErrorMessage className="justify-center pl-0" variant="info">
-            {t("error.send.axelar.assets.text")}{" "}
-            <span className="text-red-300">
-              {t("error.send.axelar.assets.text2")}
-            </span>{" "}
-            {t("error.send.axelar.assets.text3")}
-          </ErrorMessage> */}
+          {isAxelarBased && (
+            <ErrorMessage className="justify-center pl-0" variant="info">
+              <Trans
+                i18nKey="error.send.axelar.assets.text"
+                components={{
+                  strong: <span className="text-pink-300" />,
+                }}
+              />
+            </ErrorMessage>
+          )}
           {isDisconnected && (
+            // TODO: add tracker event and add styles to the button
             <WalletConnection
               copilotModal={({
                 beforeStartHook,
@@ -470,9 +529,13 @@ export const TransferModalContent = ({
           )}
           {!isDisconnected && (
             <PrimaryButton
-              variant={topUpEvmos ? "outline-primary" : "primary"}
+              type="submit"
+              variant={
+                topUpEvmos || isAxelarBased ? "outline-primary" : "primary"
+              }
               className="w-full text-lg rounded-md capitalize mt-5"
-              disabled={errors.size > 0 || !isReadyToTransfer || isTransferring}
+              disabled={!isCTAEnabled}
+              //
             >
               {sendButtonText}
             </PrimaryButton>

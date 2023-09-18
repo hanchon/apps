@@ -15,6 +15,7 @@ export const Button = ({
 }) => {
   return (
     <button
+      type="button"
       onClick={tab.onClick}
       className={cx(
         "flex items-center justify-center gap-1 rounded-md py-1 px-3",

@@ -55,6 +55,13 @@ export const CLICK_ON_AXL_REDIRECT =
   "Go to Satellite for Axelar-related transactions";
 export const CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW =
   "Prompted to connect to Keplr to send token";
+export const CLICK_ON_CONNECT_ACCOUNT_INSIDE_MODAL =
+  "Prompted to connect account";
+export const CLICK_ON_COPY_ICON = "Copy address to send token";
+export const SUCCESSFUL_SEND_TX = "Successful transaction of Send";
+export const UNSUCCESSFUL_SEND_TX = "Unsuccessful transaction of Send";
+export const SUCCESSFUL_PAY_TX = "Successful transaction of Pay";
+export const UNSUCESSFUL_PAY_TX = "Unsuccessful transaction of Pay";
 
 // staking
 export const CLICK_CLAIM_REWARDS_TOPBAR = "Claim Evmos Rewards";

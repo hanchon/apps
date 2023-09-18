@@ -36,6 +36,13 @@ export { SELECT_TO_NETWORK_SEND_FLOW } from "./constants";
 export { INSUFFICIENT_FEE_AMOUNT } from "./constants";
 export { CLICK_ON_TOP_UP_EVMOS } from "./constants";
 export { CLICK_ON_AXL_REDIRECT } from "./constants";
+// TODO: add the events
+export { CLICK_ON_CONNECT_ACCOUNT_INSIDE_MODAL } from "./constants";
+export { CLICK_ON_COPY_ICON } from "./constants";
+export { SUCCESSFUL_SEND_TX } from "./constants";
+export { UNSUCCESSFUL_SEND_TX } from "./constants";
+export { SUCCESSFUL_PAY_TX } from "./constants";
+export { UNSUCESSFUL_PAY_TX } from "./constants";
 // staking
 export { CLICK_CLAIM_REWARDS_TOPBAR } from "./constants";
 export { CLICK_SEARCH_VALIDATORS_INPUT } from "./constants";

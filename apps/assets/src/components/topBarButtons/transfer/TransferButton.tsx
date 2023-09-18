@@ -31,8 +31,6 @@ export const TransferButton = () => {
   const { t } = useTranslation();
 
   const { sendEvent } = useTracker();
-  // CLICK_ON_SEND_BUTTON
-  // CLICK_ON_RECEIVE_BUTTON
 
   return (
     <>
