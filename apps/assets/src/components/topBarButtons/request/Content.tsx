@@ -3,7 +3,7 @@
 import React from "react";
 import { PrimaryButton, Subtitle, Title } from "ui-helpers";
 import { useTranslation } from "next-i18next";
-import { AssetSelector } from "../parts/AssetSelector";
+import { AssetSelector } from "../shared/AssetSelector";
 import { useAccount } from "wagmi";
 import {
   connectWith,
@@ -11,7 +11,7 @@ import {
   isValidCosmosAddress,
   isValidHexAddress,
 } from "evmos-wallet";
-import { useModalState } from "../hooks/useModal";
+
 import { SendIcon } from "icons";
 import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
@@ -21,31 +21,19 @@ import {
   ChainPrefixSchema,
   MinDenomSchema,
 } from "evmos-wallet/src/registry-actions/utils";
+import { RequestModalProps } from "./RequestModal";
 
-const TransferModalSchema = z.object({
-  receiver: z.string().transform((v) => {
-    if (isValidHexAddress(v) || isValidCosmosAddress(v, [...getPrefixes()])) {
-      return v;
-    }
-    return undefined;
-  }),
-  chainPrefix: ChainPrefixSchema,
-  denom: MinDenomSchema,
-  amount: z.coerce.bigint().default(0n),
-});
-export const Content = () => {
+export const Content = ({
+  denom,
+  amount,
+  tokenSourcePrefix,
+  networkPrefix,
+  setState,
+}: RequestModalProps) => {
   const { t } = useTranslation();
-  const {
-    state: { receiver, ...token },
-    setState,
-  } = useModalState("request", TransferModalSchema, {
-    chainPrefix: "evmos",
-    denom: "aevmos",
-    amount: 0n,
-  });
 
   const { connector } = useAccount();
-  const { data, error, refetch } = useWalletAccountByPrefix(token.chainPrefix);
+  const { data, error, refetch } = useWalletAccountByPrefix(networkPrefix);
 
   const sender = data?.bech32Address;
 
@@ -68,7 +56,12 @@ export const Content = () => {
           </Subtitle>
 
           <AssetSelector
-            value={token}
+            value={{
+              networkPrefix,
+              tokenSourcePrefix,
+              denom,
+              amount,
+            }}
             address={sender}
             onChange={(token) =>
               setState((prev) => ({
@@ -82,7 +75,7 @@ export const Content = () => {
             <div className="text-center space-y-2">
               <p>
                 I see you're trying to send tokens from{" "}
-                <strong>{chains[token.chainPrefix].name}</strong> using{" "}
+                <strong>{chains[networkPrefix].name}</strong> using{" "}
                 {connector?.name}.
               </p>
               <p>
@@ -103,7 +96,7 @@ export const Content = () => {
             <div className="text-center space-y-2">
               <p>
                 I see you're trying to send tokens from{" "}
-                <strong>{chains[token.chainPrefix].name}</strong> using{" "}
+                <strong>{chains[networkPrefix].name}</strong> using{" "}
                 {connector?.name}.
               </p>
               <p>

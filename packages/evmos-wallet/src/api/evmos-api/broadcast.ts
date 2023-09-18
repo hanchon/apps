@@ -1,9 +1,10 @@
 import { z } from "zod";
 import { protoTxNamespace } from "@evmos/proto";
-import { makeApiRequester } from "../utils";
+
 import { StdSignDoc, StdSignature } from "@keplr-wallet/types";
 import { raise } from "helpers";
 import { EVMOS_NETWORK_FOR_BACKEND } from "../../internal/wallet/functionality/networkConfig";
+import { makeApiRequester } from "../utils/makeApiRequester";
 
 const BroadcastResponseSchema = z.union([
   z.object({

@@ -17,9 +17,10 @@ import {
   Title,
   InfoPanel,
 } from "ui-helpers";
-import { useTranslation } from "next-i18next";
-import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
-import { AssetSelector } from "../parts/AssetSelector";
+import { isString, raise } from "helpers";
+import { Trans, useTranslation } from "next-i18next";
+import { Prefix } from "evmos-wallet/src/registry-actions/types";
+import { AssetSelector } from "../shared/AssetSelector";
 import { useAccount } from "wagmi";
 import {
   StoreType,
@@ -28,18 +29,15 @@ import {
   getActiveProviderKey,
   getGlobalKeplrProvider,
   getPrefix,
-  getPrefixes,
   getToken,
-  isValidCosmosAddress,
-  isValidHexAddress,
   useAccountExists,
   useFee,
   useTokenBalance,
   useTransfer,
 } from "evmos-wallet";
-import { AccountSelector } from "../parts/AccountSelector";
-import { useModal, useModalState } from "../hooks/useModal";
-import { TransferSummary } from "../parts/TransferSummary";
+import { AccountSelector } from "../shared/AccountSelector";
+
+import { TransferSummary } from "../shared/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
 import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
@@ -53,10 +51,7 @@ import dynamic from "next/dynamic";
 import { connectKeplr, installKeplr, reloadPage } from "./utils";
 import { useDispatch, useSelector } from "react-redux";
 const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
-import {
-  ChainPrefixSchema,
-  MinDenomSchema,
-} from "evmos-wallet/src/registry-actions/utils";
+
 import {
   CLICK_ON_AXL_REDIRECT,
   CLICK_ON_TOP_UP_EVMOS,
@@ -65,44 +60,25 @@ import {
 } from "tracker";
 import { CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW } from "tracker/src/constants";
 
-const sortedChains = Object.values(chains)
-  .map(({ prefix }) => prefix)
-  .sort((a, b) => {
-    if (a === "evmos") return -1;
-    if (b === "evmos") return 1;
+import { sortedChains } from "../shared/sortedChains";
+import { TransferModalProps } from "./TransferModal";
+import { useReceiptModal } from "../receipt/ReceiptModal";
+import { useTopupModal } from "../topup/TopupModal";
 
-    return a > b ? 1 : -1;
-  });
-
-const TransferModalSchema = z.object({
-  receiver: z.string().transform((v) => {
-    if (isValidHexAddress(v) || isValidCosmosAddress(v, [...getPrefixes()])) {
-      return v;
-    }
-    return undefined;
-  }),
-  networkPrefix: ChainPrefixSchema,
-  tokenSourcePrefix: ChainPrefixSchema,
-  denom: MinDenomSchema,
-  amount: z.coerce.bigint().default(0n),
-});
-
-export const Content = () => {
+export const TransferModalContent = ({
+  receiver,
+  networkPrefix,
+  tokenSourcePrefix,
+  denom,
+  amount,
+  setState,
+}: TransferModalProps) => {
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
-  const {
-    state: { receiver, tokenSourcePrefix, denom, networkPrefix, amount },
-    setState,
-  } = useModalState("transfer", TransferModalSchema, {
-    networkPrefix: "evmos",
-    tokenSourcePrefix: "evmos",
-    denom: "aevmos",
-    amount: 0n,
-  });
-
-  const { connector, isDisconnected } = useAccount();
+  const { isDisconnected } = useAccount();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
+  const receiptModal = useReceiptModal();
   const feeChain = chains[networkPrefix];
   const feeToken = getToken(feeChain.prefix, feeChain.feeToken);
   const {
@@ -258,44 +234,16 @@ export const Content = () => {
     token,
   ]);
 
-  const { setShowModal } = useContext(StepsContext);
-  const { setShow } = useModal("transfer");
+  const topupModal = useTopupModal();
 
-  const topUpEvmos = () => {
-    return (
-      errors.has("insufficientBalanceForFee") ||
-      errors.has("insufficientBalance")
-      // TODO: there was a changed but I'm not sure what value should we use here now
-      // && token.chainPrefix === "evmos"
-    );
-  };
+  const topUpEvmos =
+    errors.has("insufficientBalanceForFee") ||
+    errors.has("insufficientBalance");
+  // TODO: there was a changed but I'm not sure what value should we use here now
+  // && token.chainPrefix === "evmos"
 
-  const handleSendAction = () => {
-    if (topUpEvmos()) {
-      // TODO: it's also closing the current modal.
-      // await setShow(false);
-      setShowModal(true);
-      sendEvent(CLICK_ON_TOP_UP_EVMOS);
-      //
-      // TODO: close send modal
-      return;
-    }
-
-    // TODO:
-    // if (uiexternal) {
-    // transfer.bridge.button.text
-    // redirect to axelar
-    // close send modal
-    // sendEvent(CLICK_ON_AXL_REDIRECT);
-
-    // }
-
-    transfer();
-    return;
-  };
-
-  const sendButtonText = () => {
-    if (topUpEvmos()) {
+  const sendButtonText = useMemo(() => {
+    if (topUpEvmos) {
       return t("transfer.top.up.button.text");
     }
 
@@ -305,7 +253,7 @@ export const Content = () => {
 
     // }
     return t("transfer.send.button.text");
-  };
+  }, [topUpEvmos]);
 
   useEffect(() => {
     installKeplr();
@@ -322,6 +270,14 @@ export const Content = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!transferData) return;
+    if (!isString(transferData.hash)) return;
+    // receiptModal.setIsOpen(true, {
+    //   hash: transferData.hash,
+    //   chainPrefix: networkPrefix,
+    // });
+  }, [transferData]);
   return (
     <section className="space-y-3 w-full">
       <Title
@@ -334,6 +290,23 @@ export const Content = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+
+          if (topUpEvmos) {
+            // await setShow(false);
+            topupModal.setIsOpen(true);
+
+            // TODO: close send modal
+            return;
+          }
+
+          // TODO:
+          // if (uiexternal) {
+          // transfer.bridge.button.text
+          // redirect to axelar
+          // close send modal
+          // }
+
+          transfer();
         }}
       >
         <section>
@@ -390,28 +363,22 @@ export const Content = () => {
           )}
           {errors.has("networkNotSupportedByConnectedWallet") && (
             <InfoPanel icon={<IconContainer type={ICONS_TYPES.METAMASK} />}>
-              <div>
-                <p className="pb-4">
-                  {t("error.network.not.support.by.wallet.connect.with.keplr")}
-                  <span className="text-pink-300">
-                    {t(
-                      "error.network.not.support.by.wallet.connect.with.keplr2"
-                    )}
-                  </span>
+              <div className="space-y-4">
+                <p>
+                  <Trans
+                    i18nKey="error.network.not.support.by-wallet.title"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
                 </p>
-                <p className="pb-8">
-                  {t("error.network.not.support.by.wallet.connect.with.keplr3")}
-                  <span className="text-pink-300">
-                    {t(
-                      "error.network.not.support.by.wallet.connect.with.keplr4"
-                    )}
-                  </span>
-                  {t("error.network.not.support.by.wallet.connect.with.keplr5")}
-                  <span className="text-pink-300">
-                    {t(
-                      "error.network.not.support.by.wallet.connect.with.keplr6"
-                    )}
-                  </span>
+                <p>
+                  <Trans
+                    i18nKey="error.network.not.support.by-wallet.subtitle"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
                 </p>
                 <PrimaryButton
                   variant={
@@ -433,8 +400,12 @@ export const Content = () => {
                   }}
                 >
                   {getGlobalKeplrProvider() === null
-                    ? t("button.install.keplr")
-                    : t("button.connect.with.keplr")}
+                    ? t(
+                        "error.network.not.support.by-wallet.installButtonLabel"
+                      )
+                    : t(
+                        "error.network.not.support.by-wallet.connectButtonLabel"
+                      )}
                 </PrimaryButton>
               </div>
             </InfoPanel>
@@ -499,12 +470,11 @@ export const Content = () => {
           )}
           {!isDisconnected && (
             <PrimaryButton
-              variant={topUpEvmos() ? "outline-primary" : "primary"}
-              onClick={handleSendAction}
+              variant={topUpEvmos ? "outline-primary" : "primary"}
               className="w-full text-lg rounded-md capitalize mt-5"
               disabled={errors.size > 0 || !isReadyToTransfer || isTransferring}
             >
-              {sendButtonText()}
+              {sendButtonText}
             </PrimaryButton>
           )}
 
@@ -513,7 +483,47 @@ export const Content = () => {
           )}
         </section>
       </form>
-      <Copilot />
+
+      <button
+        onClick={() =>
+          receiptModal.setIsOpen(true, {
+            hash: "0x42218494f3257db4a0ba998245c5d5803222c8a2707b5534e4669f92c69ab672",
+            chainPrefix: "evmos",
+          })
+        }
+      >
+        Test open receipt modal
+      </button>
+      <br />
+      <button
+        onClick={() => {
+          // To Milli 🫠: I wrapped the topup modal in the new modal routing thingy,
+          // you can check it in apps/assets/src/components/topBarButtons/topup/TopupModal.tsx
+          //
+          // The idea is to decouple the modal from what triggers the modal,
+          // so you don't have to embed the modal in the same component as the modal
+          // or have the modal as child of other modals, etc.
+          //
+          // I think after we finish here we could move all these modals somewhere that are acessible from the other apps too
+          // even though I think now most of them only exist in the assets app, I think it's nice to have them decoupled from it
+          //
+          // Also, because they are route based, they automatically close when another opens, and going back and forward in browser history works too
+          // (Although obviously, it will not work for individual steps on the copilot since it's being controlled on the provider)
+          // Although I think this is nice for most cases, there are some cases where it's not desirable,
+          // Ex: Opening the "connect" modal from the transfer modal and returning to it once you're connected
+
+          // Once solution would be to have the "connect" modal to take a "returnTo" route argument, so it knows where to go back to once it's done
+          // I added support for opening modals with prefilled parameters so it would look something like this:
+          //
+          // connectModal.setIsOpen(true, { returnTo: "/assets/action=transfer&...." })
+          //
+          // Anyway, let me know your thoughts
+          //
+          topupModal.setIsOpen(true);
+        }}
+      >
+        Test open topup modal
+      </button>
     </section>
   );
 };

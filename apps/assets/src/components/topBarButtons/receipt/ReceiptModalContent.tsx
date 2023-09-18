@@ -9,9 +9,9 @@ import {
   Divider,
   ContainerItem,
   ConfirmationText,
+  AddressDisplay,
 } from "ui-helpers";
-import { useModalState } from "./hooks/useModal";
-import { z } from "zod";
+
 import { FetchTransactionResult, fetchTransaction } from "wagmi/actions";
 import { Hex, decodeFunctionData, formatUnits } from "viem";
 import {
@@ -26,16 +26,12 @@ import {
 } from "evmos-wallet";
 import { FailTxIcon, SuccessTxIcon } from "icons";
 import { Prefix, Token } from "evmos-wallet/src/registry-actions/types";
-import {
-  ChainPrefixSchema,
-  HexSchema,
-  findToken,
-} from "evmos-wallet/src/registry-actions/utils";
+import { findToken } from "evmos-wallet/src/registry-actions/utils";
 import { useQuery } from "@tanstack/react-query";
 import { chains } from "@evmos-apps/registry";
-import { AddressDisplay } from "./parts/AddressDisplay";
-import { SkeletonLoading } from "./parts/SkeletonLoading";
+import { SkeletonLoading } from "../shared/SkeletonLoading";
 import { E, raise } from "helpers";
+import { ReceiptModalProps } from "./ReceiptModal";
 const generateReceipt = ({
   sender,
   receiver,
@@ -185,18 +181,11 @@ const useBlock = (prefix?: Prefix, height?: bigint) => {
   });
 };
 
-export const Confirmation = () => {
-  const {
-    setShow,
-    state: { hash, chainPrefix },
-  } = useModalState(
-    "receipt",
-    z.object({
-      hash: HexSchema.optional(),
-      chainPrefix: ChainPrefixSchema.optional(),
-    }),
-    {}
-  );
+export const ReceiptModalContent = ({
+  hash,
+  chainPrefix,
+  setIsOpen,
+}: ReceiptModalProps) => {
   let {
     receipt,
     isLoading: isReceiptLoading,
@@ -296,9 +285,7 @@ export const Confirmation = () => {
       </ContainerConfirmation>
 
       <PrimaryButton
-        onClick={() => {
-          setShow(false);
-        }}
+        onClick={() => setIsOpen(false)}
         className="w-full text-lg rounded-md capitalize mt-11"
       >
         {t("transfer.confirmation.button.text")}
