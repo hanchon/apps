@@ -13,7 +13,6 @@ import {
 import {
   Container,
   MavaWidget,
-  ModalWithTransitions,
   TermOfServices,
 } from "ui-helpers";
 import { Provider, useDispatch, useSelector } from "react-redux";
@@ -32,6 +31,7 @@ import { TransferModal } from "../src/components/topBarButtons/transfer/Transfer
 import { ReceiptModal } from "../src/components/topBarButtons/receipt/ReceiptModal";
 import { RequestModal } from "../src/components/topBarButtons/request/RequestModal";
 import { TopupModal } from "../src/components/topBarButtons/topup/TopupModal";
+import { PayModal } from "../src/components/topBarButtons/pay/Modal";
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -95,5 +95,6 @@ const Modals = () => (
     <ReceiptModal />
     <RequestModal />
     <TopupModal />
+    <PayModal />
   </>
 );

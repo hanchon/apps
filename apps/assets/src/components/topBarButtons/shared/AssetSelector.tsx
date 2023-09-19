@@ -45,6 +45,8 @@ export const AssetSelector = ({
   value,
   onChange,
   address,
+  showNetworkSelector = true,
+  showMax = true,
   balanceError,
 }: PropsWithChildren<{
   value: Asset;
@@ -54,6 +56,8 @@ export const AssetSelector = ({
     amount: bigint;
     denom: TokenMinDenom;
   };
+  showNetworkSelector?: boolean;
+  showMax?: boolean;
   balanceError: boolean;
 }>) => {
   const { t } = useTranslation();
@@ -101,6 +105,7 @@ export const AssetSelector = ({
 
   const isFeeTokenAndSelectedTokenEqual = fee && fee.denom === value.denom;
   const maxAllowedTransferAmount = useMemo(() => {
+    if (!showMax) return undefined;
     if (!balance) return 0n;
     if (isFeeTokenAndSelectedTokenEqual) {
       return max(balance.value - fee.amount, 0n);
@@ -159,48 +164,50 @@ export const AssetSelector = ({
             </CryptoSelector.Options>
           </CryptoSelector>
         </CryptoSelectorDropdownBox>
-        <CryptoSelectorDropdownBox>
-          <CryptoSelectorTitle>
-            {t("transfer.section.asset.network")}
-          </CryptoSelectorTitle>
-          <CryptoSelector
-            value={value.networkPrefix}
-            onChange={(prefix) => {
-              onChange({
-                ...value,
-                amount: 0n,
-                networkPrefix: prefix,
-              });
-              sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
-                network: value.networkPrefix,
-              });
-              setIsMaxClicked(false);
-            }}
-          >
-            <CryptoSelector.Button
-              src={`/assets/chains/${value.networkPrefix}.png`}
+        {showNetworkSelector &&
+          <CryptoSelectorDropdownBox>
+            <CryptoSelectorTitle>
+              {t("transfer.section.asset.network")}
+            </CryptoSelectorTitle>
+            <CryptoSelector
+              value={value.networkPrefix}
+              onChange={(prefix) => {
+                onChange({
+                  ...value,
+                  amount: 0n,
+                  networkPrefix: prefix,
+                });
+                sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
+                  network: value.networkPrefix,
+                });
+                setIsMaxClicked(false);
+              }}
             >
-              {selectedChain.name}
-            </CryptoSelector.Button>
-            <CryptoSelector.Options
-              label={t("transfer.section.network.label")}
-              className="right-0"
-            >
-              {networkOptions.map((value) => {
-                const chain = chains[value];
-                return (
-                  <CryptoSelector.Option
-                    src={`/assets/chains/${value}.png`}
-                    key={value}
-                    value={value}
-                  >
-                    {chain.name}
-                  </CryptoSelector.Option>
-                );
-              })}
-            </CryptoSelector.Options>
-          </CryptoSelector>
-        </CryptoSelectorDropdownBox>
+              <CryptoSelector.Button
+                src={`/assets/chains/${value.networkPrefix}.png`}
+              >
+                {selectedChain.name}
+              </CryptoSelector.Button>
+              <CryptoSelector.Options
+                label={t("transfer.section.network.label")}
+                className="right-0"
+              >
+                {networkOptions.map((value) => {
+                  const chain = chains[value];
+                  return (
+                    <CryptoSelector.Option
+                      src={`/assets/chains/${value}.png`}
+                      key={value}
+                      value={value}
+                    >
+                      {chain.name}
+                    </CryptoSelector.Option>
+                  );
+                })}
+              </CryptoSelector.Options>
+            </CryptoSelector>
+          </CryptoSelectorDropdownBox>
+        }
       </div>
       <AmountInput
         variant={balanceError ? "error" : isMaxClicked ? "info" : "default"}

@@ -12,10 +12,10 @@ import { Content } from "./Content";
 
 const RequestModalSchema = z.object({
   receiver: AddressSchema.optional(),
-  networkPrefix: ChainPrefixSchema.default("evmos"),
   tokenSourcePrefix: ChainPrefixSchema.default("evmos"),
   denom: MinDenomSchema.default("aevmos"),
   amount: z.coerce.bigint().default(0n),
+  step: z.union([z.literal("setup"), z.literal("share"), z.literal("receive")]).default("receive"),
 });
 
 export type RequestModalProps = ModalProps<typeof RequestModalSchema>;

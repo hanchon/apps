@@ -56,3 +56,4 @@ export { WizardIcon } from "./WizardICon";
 export { SuccessTxIcon } from "./SuccessTxIcon";
 export { FailTxIcon } from "./FailTxIcon";
 export { PaymentTxIcon } from "./PaymentTxIcon";
+export { BackArrowIcon } from "./BackArrowIcon";

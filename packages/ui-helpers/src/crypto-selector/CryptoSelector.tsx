@@ -25,7 +25,7 @@ CryptoSelector.Button = ({
   src,
   variant = "default",
 }: PropsWithChildren<{
-  src: string;
+  src?: string;
   variant?: "default" | "black";
 }>) => {
   return (
@@ -38,16 +38,19 @@ CryptoSelector.Button = ({
         }
       )}
     >
-      <Image
-        src={src}
-        className={cn("rounded-full", {
-          "h-7 w-7 md:h-8 md:w-8": variant === "black",
-          "h-5 w-5 md:h-6 md:w-6": variant === "default",
-        })}
-        alt=""
-        width={24}
-        height={24}
-      />
+      {
+        src &&
+        <Image
+          src={src}
+          className={cn("rounded-full", {
+            "h-7 w-7 md:h-8 md:w-8": variant === "black",
+            "h-5 w-5 md:h-6 md:w-6": variant === "default",
+          })}
+          alt=""
+          width={24}
+          height={24}
+        />
+      }
       <span className="text-xs md:text-sm text-white capitalize">
         {children}
       </span>
@@ -68,7 +71,7 @@ CryptoSelector.Options = ({
 }: PropsWithChildren<{
   className?: string;
   label: string;
-  variant?: "default" | "multiple";
+  variant?: "default" | "multiple" | "wide";
 }>) => {
   return (
     <Transition
@@ -94,6 +97,7 @@ CryptoSelector.Options = ({
               "capitalize px-3 bg-black h-full text-black mt-1 scrollbar overflow-auto max-h-44 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer",
               {
                 "w-52": variant === "default",
+                "w-64": variant === "wide",
                 "w-80 grid grid-cols-2": variant === "multiple",
               }
             )}

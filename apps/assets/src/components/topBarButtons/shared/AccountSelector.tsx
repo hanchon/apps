@@ -111,7 +111,6 @@ export const AccountSelector = ({
     <div className="flex flex-col space-y-3 mb-8">
       <div className="flex md:justify-between md:flex-row flex-col space-y-4 md:space-y-0">
         <Tabs tabsProps={walletProps} variant="pink" />
-
         <div className="flex justify-end">
           <CryptoSelector
             value={prefix}
