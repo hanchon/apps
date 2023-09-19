@@ -51,7 +51,7 @@ export const AmountInput = ({
   return (
     <div
       className={cx(
-        "flex w-full tracking-wider font-bold py-2 px-4 text-sm leading-5 text-gray-900 focus:ring-1 border-2 border-pink-300 rounded bg-pink-200 text-black focus-visible:outline-none",
+        "flex w-full tracking-wider font-bold py-2 px-4 text-sm md:text-base leading-5 text-gray-900 focus:ring-1 border-2 border-pink-300 rounded bg-pink-200 text-black focus-visible:outline-none",
         {
           "bg-pink-700": variant === "error",
           "bg-purple-200": variant === "info",

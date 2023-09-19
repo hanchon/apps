@@ -340,7 +340,6 @@ export const TransferModalContent = ({
           if (topUpEvmos) {
             topupModal.setIsOpen(true);
             sendEvent(CLICK_ON_TOP_UP_EVMOS);
-            // TODO: close send modal
             return;
           }
 
