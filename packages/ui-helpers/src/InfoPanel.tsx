@@ -16,7 +16,7 @@ export const InfoPanel = ({
   return (
     <section
       className={cx(
-        "flex space-x-6 justify-start rounded-lg py-8 px-8 text-xs font-bold leading-5 mb-8",
+        "flex space-x-6 justify-start rounded-lg py-8 px-8 text-xxs md:text-xs font-bold leading-5 mb-8",
         {
           "border border-pink-300 text-purple-200": variant === "default",
           "bg-lightBlue text-blue": variant === "info",

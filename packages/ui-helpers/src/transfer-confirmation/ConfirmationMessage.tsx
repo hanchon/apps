@@ -5,6 +5,9 @@ import { ComponentProps } from "react";
 
 export function ConfirmationMessage({ ...rest }: ComponentProps<"p"> & {}) {
   return (
-    <p className="text-xs tracking-wider text-gray-300 text-center" {...rest} />
+    <p
+      className="text-xxs md:text-xs tracking-wider text-gray-300 text-center"
+      {...rest}
+    />
   );
 }

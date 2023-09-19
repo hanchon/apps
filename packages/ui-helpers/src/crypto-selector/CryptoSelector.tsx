@@ -42,14 +42,18 @@ CryptoSelector.Button = ({
         src &&
         <Image
           src={src}
-          className="rounded-full"
+          className={cn("rounded-full", {
+            "h-7 w-7 md:h-8 md:w-8": variant === "black",
+            "h-5 w-5 md:h-6 md:w-6": variant === "default",
+          })}
           alt=""
-          width={variant === "default" ? 24 : 34}
-          height={variant === "default" ? 24 : 34}
+          width={24}
+          height={24}
         />
       }
-
-      <span className="text-sm text-white capitalize">{children}</span>
+      <span className="text-xs md:text-sm text-white capitalize">
+        {children}
+      </span>
       <DropdownArrow
         className="h-5 w-5 pointer-events-none text-red"
         aria-hidden="true"

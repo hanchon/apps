@@ -10,7 +10,7 @@ export function ConfirmationTitle({
 }: ComponentProps<"h1"> & { variant?: "success" | "error" }) {
   return (
     <h1
-      className={cx("font-bold", {
+      className={cx("text-lg md:text-xl font-bold", {
         "text-green-200": variant === "success",
         "text-red-900": variant === "error",
       })}

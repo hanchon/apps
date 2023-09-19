@@ -244,7 +244,7 @@ export const TransferModalContent = ({
     (errors.has("insufficientBalance") && token.denom === "EVMOS");
 
   const isAxelarBased = useMemo(() => {
-    return "handledByExternalUI" in token;
+    return token.handledByExternalUI !== null;
   }, [token]);
 
   const sendButtonText = useMemo(() => {
@@ -340,12 +340,11 @@ export const TransferModalContent = ({
           if (topUpEvmos) {
             topupModal.setIsOpen(true);
             sendEvent(CLICK_ON_TOP_UP_EVMOS);
-            // TODO: close send modal
             return;
           }
 
-          if ("handledByExternalUI" in token) {
-            window.open(token.handledByExternalUI[0].url, "_blank");
+          if (token.handledByExternalUI) {
+            window.open(token.handledByExternalUI[0].url as string, "_blank");
             sendEvent(CLICK_ON_AXL_REDIRECT);
             // TODO: close send modal
             return;
@@ -472,7 +471,9 @@ export const TransferModalContent = ({
             networkOptions={destinationNetworkOptions}
             disabledNetworkOptions={disabledDestinationNetworkOptions}
           />
-
+          {/* To Julia: shouldn't we also wait for the amount to be set? 
+        As the to address is now being prefilled as soon as we open the modal, maybe we should wait 
+        for the amount (because it's showing the transfer summary instantly? */}
           {sender && receiver && (
             <div className="space-y-3">
               <Label>{t("transfer.section.summary.title")}</Label>
@@ -506,6 +507,19 @@ export const TransferModalContent = ({
               />
             </ErrorMessage>
           )}
+
+          {isDisconnected && (
+            <ErrorMessage className="justify-center pl-0 mb-4" variant="info">
+              <p className="pb-1"> {t("error.getting.balance")}</p>
+              <Trans
+                i18nKey="error.getting.balance.connect.wallet"
+                components={{
+                  strong: <span className="text-pink-300" />,
+                }}
+              />
+            </ErrorMessage>
+          )}
+
           {isDisconnected && (
             // TODO: add tracker event and add styles to the button
             <WalletConnection
@@ -525,7 +539,7 @@ export const TransferModalContent = ({
               variant={
                 topUpEvmos || isAxelarBased ? "outline-primary" : "primary"
               }
-              className="w-full text-lg rounded-md capitalize mt-5"
+              className="w-full text-base md:text-lg rounded-md capitalize mt-5"
               disabled={!isCTAEnabled}
               //
             >

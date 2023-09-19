@@ -6,7 +6,7 @@ import { ComponentProps } from "react";
 export function Label({ ...rest }: ComponentProps<"label">) {
   return (
     <label
-      className="text-gray-300 text-xs font-bold my-2 tracking-wider"
+      className="text-gray-300 text-xxs md:text-xs font-bold my-2 tracking-wider"
       {...rest}
     />
   );

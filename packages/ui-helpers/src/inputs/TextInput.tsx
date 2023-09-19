@@ -6,7 +6,7 @@ import { ComponentProps } from "react";
 import { IconContainer } from "../IconContainer";
 
 export function TextInput({
-  showCopyIcon = true,
+  showCopyIcon = false,
   extensionIcon,
   placeholder = "",
   onClickCopy,
@@ -15,17 +15,17 @@ export function TextInput({
   showCopyIcon?: boolean;
   extensionIcon?: string;
   placeholder?: string;
-  onClickCopy: () => void;
+  onClickCopy?: () => void;
 } & ComponentProps<"input">) {
   return (
-    <div className="w-full rounded-md bg-gray-500 py-4 px-4 text-xs font-medium flex justify-between items-center space-x-5">
+    <div className="w-full rounded-md bg-gray-500 py-4 px-4 text-xxs md:text-xs font-medium flex justify-between items-center space-x-5 ">
       {extensionIcon && (
         <div className="w-auto h-4 flex items-center">
           <IconContainer type={extensionIcon} />
         </div>
       )}
       <input
-        className="w-full bg-transparent focus-visible:outline-none placeholder:text-gray-400"
+        className="w-full bg-transparent focus-visible:outline-none placeholder:text-gray-400 placeholder:font-normal"
         placeholder={placeholder}
         {...rest}
       />
@@ -35,7 +35,7 @@ export function TextInput({
           className="w-auto h-4 flex items-center"
           onClick={async () => {
             await navigator.clipboard.writeText(rest.value as string);
-            onClickCopy();
+            onClickCopy && onClickCopy();
           }}
         >
           <CopyPasteIcon />

@@ -15,7 +15,8 @@ export const Subtitle = ({
       className={cx("my-2", {
         "text-darkGray900 font-bold text-xs ": variant === "default",
 
-        "text-white tracking-wider": variant === "modal-black",
+        "text-white tracking-wider text-sm md:text-base":
+          variant === "modal-black",
       })}
       {...rest}
     />
