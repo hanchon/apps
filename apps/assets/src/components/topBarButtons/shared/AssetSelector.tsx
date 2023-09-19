@@ -5,6 +5,7 @@ import {
   CryptoSelectorBalanceText,
   CryptoSelectorBox,
   CryptoSelectorDropdownBox,
+  ErrorMessage,
 } from "ui-helpers";
 import { chains } from "@evmos-apps/registry";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
@@ -15,6 +16,11 @@ import { useTranslation } from "next-i18next";
 import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
 import { max } from "helpers";
+import { useTracker } from "tracker";
+import {
+  SELECT_FROM_NETWORK_SEND_FLOW,
+  SELECT_TOKEN_SEND_FLOW,
+} from "tracker/src/constants";
 
 type Asset = {
   networkPrefix: Prefix;
@@ -38,6 +44,7 @@ export const AssetSelector = ({
   value,
   onChange,
   address,
+  balanceError,
 }: PropsWithChildren<{
   value: Asset;
   onChange: (value: Asset) => void;
@@ -46,9 +53,10 @@ export const AssetSelector = ({
     amount: bigint;
     denom: TokenMinDenom;
   };
+  balanceError: boolean;
 }>) => {
   const { t } = useTranslation();
-
+  const { sendEvent } = useTracker();
   const selectedChain = chains[value.networkPrefix];
 
   const selectedToken = getToken(value.tokenSourcePrefix, value.denom);
@@ -98,6 +106,7 @@ export const AssetSelector = ({
     return balance.value;
   }, [balance, fee, isFeeTokenAndSelectedTokenEqual]);
 
+  const [isMaxClicked, setIsMaxClicked] = useState(false);
   return (
     <CryptoSelectorBox>
       <div className="flex justify-between">
@@ -114,6 +123,13 @@ export const AssetSelector = ({
                 amount: 0n,
                 denom: token.minCoinDenom,
               });
+              sendEvent(SELECT_TOKEN_SEND_FLOW, {
+                "token selected": token.name,
+              });
+              sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
+                network: token.sourcePrefix,
+              });
+              setIsMaxClicked(false);
             }}
           >
             <CryptoSelector.Button
@@ -153,6 +169,10 @@ export const AssetSelector = ({
                 amount: 0n,
                 networkPrefix: prefix,
               });
+              sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
+                network: value.networkPrefix,
+              });
+              setIsMaxClicked(false);
             }}
           >
             <CryptoSelector.Button
@@ -190,6 +210,7 @@ export const AssetSelector = ({
           });
         }}
         decimals={selectedToken.decimals}
+        setIsMaxClicked={setIsMaxClicked}
       />
       <CryptoSelectorBalanceBox>
         <div>{amountInUsd !== null && `≈${amountInUsd}`}</div>
@@ -211,15 +232,16 @@ export const AssetSelector = ({
           )}
         </div>
       </CryptoSelectorBalanceBox>
-      {/* TODO: show it when the user clicks on max amount */}
-      {/* <ErrorMessage variant="info" displayIcon={false}>
-        {t("message.gas.fee.reserved.amount")}
-      </ErrorMessage> */}
-      {/* TODO: show it when the balance is not enough. We are showing it below the sending 
-      Remove that one and show it here. */}
-      {/* <ErrorMessage displayIcon={false}>
-        {t("message.insufficient.balance")}
-      </ErrorMessage> */}
+      {isMaxClicked && (
+        <ErrorMessage variant="info" displayIcon={false}>
+          {t("message.gas.fee.reserved.amount")}
+        </ErrorMessage>
+      )}
+      {balanceError && (
+        <ErrorMessage displayIcon={false}>
+          {t("message.insufficient.balance")}
+        </ErrorMessage>
+      )}
     </CryptoSelectorBox>
   );
 };

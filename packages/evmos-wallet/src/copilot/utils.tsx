@@ -99,13 +99,14 @@ type WalletConnectModalProps = {
   }: {
     beforeStartHook: Dispatch<SetStateAction<boolean>>;
   }) => JSX.Element;
+  variant: "primary" | "outline-primary";
 };
 
 export const drawConnectModal = (props: WalletConnectModalProps) => {
   return (
     <div className="flex justify-center">
       {/* open connect modal */}
-      <ButtonConnectWallet setShow={props.setShow} />
+      <ButtonConnectWallet setShow={props.setShow} variant={props.variant} />
       {/* display connect modal */}
       <WalletConnectModal
         copilotModal={

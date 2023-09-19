@@ -22,6 +22,7 @@ export const WalletConnection = ({
   walletExtension,
   dispatch,
   copilotModal,
+  variant = "primary",
 }: {
   walletExtension: WalletExtension;
   dispatch: Dispatch<AnyAction>;
@@ -30,6 +31,7 @@ export const WalletConnection = ({
   }: {
     beforeStartHook: Dispatch<SetStateAction<boolean>>;
   }) => JSX.Element;
+  variant?: "primary" | "outline-primary";
 }) => {
   const [show, setShow] = useState(false);
 
@@ -53,5 +55,5 @@ export const WalletConnection = ({
 
   return walletExtension.active === true
     ? drawWalletProfileModal({ setShow, walletExtension, show, dispatch })
-    : drawConnectModal({ setShow, show, dispatch, copilotModal });
+    : drawConnectModal({ setShow, show, dispatch, copilotModal, variant });
 };

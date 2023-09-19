@@ -9,15 +9,17 @@ import {
 import { chains } from "@evmos-apps/registry";
 import { CryptoSelector, ErrorMessage, Tabs, TextInput } from "ui-helpers";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
-import {
-  useRequestWalletAccount,
-  useWalletAccountByPrefix,
-} from "../hooks/useAccountByPrefix";
+import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { useTranslation } from "next-i18next";
 import { ICONS_TYPES } from "constants-helper";
+import {
+  CLICK_ON_COPY_ICON,
+  SELECT_TO_NETWORK_SEND_FLOW,
+  useTracker,
+} from "tracker";
 import { useAccount } from "wagmi";
 const WALLET_TAB_TYPES = {
-  WALLET: "wallet",
+  WALLET: "my wallet",
   OTHER: "other",
 };
 
@@ -32,6 +34,8 @@ export const AccountSelector = ({
   networkOptions: Prefix[];
   disabledNetworkOptions: Prefix[];
 }>) => {
+  const { t } = useTranslation();
+  const { sendEvent } = useTracker();
   const { address, inputProps, errors, setValue } = useAddressInput(value);
   const connectedAccount = useAccount();
   const [prefix, setChainPrefix] = useState<Prefix>("evmos");
@@ -82,8 +86,6 @@ export const AccountSelector = ({
     if (walletTab === WALLET_TAB_TYPES.OTHER) setValue("");
   }, [walletTab]);
 
-  const { t } = useTranslation();
-
   const walletProps = [
     {
       onClick: () => setWalletTab(WALLET_TAB_TYPES.WALLET),
@@ -119,6 +121,11 @@ export const AccountSelector = ({
             value={prefix}
             onChange={(value) => {
               setChainPrefix?.(value);
+              sendEvent(SELECT_TO_NETWORK_SEND_FLOW, {
+                network: value,
+                "account provider": getActiveProviderKey(),
+                "user's address or other": walletTab,
+              });
             }}
           >
             <CryptoSelector.Button src={`/assets/chains/${chain.prefix}.png`}>
@@ -146,8 +153,10 @@ export const AccountSelector = ({
         </div>
       </div>
       <div className="space-y-2">
-        {/* TODO: add the prefilled address to the input */}
         <TextInput
+          onClickCopy={() => {
+            sendEvent(CLICK_ON_COPY_ICON);
+          }}
           placeholder={
             walletTab !== WALLET_TAB_TYPES.WALLET
               ? t("transfer.section.to.placeholder")
