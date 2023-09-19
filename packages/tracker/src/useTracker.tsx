@@ -1,6 +1,7 @@
 import { Dict } from "mixpanel-browser";
 import { useMixpanel } from "./context/mixpanel";
 import { DISABLE_TRACKER_LOCALSTORAGE } from "./constants";
+import { useCallback } from "react";
 
 export const useTracker = (event?: string, properties?: Dict) => {
   const mixpanel = useMixpanel();
@@ -26,16 +27,19 @@ export const useTracker = (event?: string, properties?: Dict) => {
     localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "false");
   };
 
-  const sendEvent = (trackingID: string, extraProperties?: Dict) => {
-    if (
-      mixpanel !== null &&
-      Object.prototype.hasOwnProperty.call(mixpanel, "config") &&
-      (localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === null ||
-        localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === "false")
-    ) {
-      mixpanel?.track(trackingID, { ...properties, ...extraProperties });
-    }
-  };
+  const sendEvent = useCallback(
+    (trackingID: string, extraProperties?: Dict) => {
+      if (
+        mixpanel !== null &&
+        Object.prototype.hasOwnProperty.call(mixpanel, "config") &&
+        (localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === null ||
+          localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === "false")
+      ) {
+        mixpanel?.track(trackingID, { ...properties, ...extraProperties });
+      }
+    },
+    [mixpanel, properties]
+  );
 
   return {
     handlePreClickAction,
