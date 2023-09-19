@@ -12,11 +12,7 @@ import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { useTranslation } from "next-i18next";
 import { ICONS_TYPES } from "constants-helper";
-import {
-  CLICK_ON_COPY_ICON,
-  SELECT_TO_NETWORK_SEND_FLOW,
-  useTracker,
-} from "tracker";
+import { SELECT_TO_NETWORK_SEND_FLOW, useTracker } from "tracker";
 import { useAccount } from "wagmi";
 const WALLET_TAB_TYPES = {
   WALLET: "my wallet",

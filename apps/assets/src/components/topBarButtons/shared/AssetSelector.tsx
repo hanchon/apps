@@ -229,7 +229,7 @@ export const AssetSelector = ({
                 <CryptoSelectorBalanceText>
                   {t("transfer.section.asset.balance")}{" "}
                 </CryptoSelectorBalanceText>
-                {balance?.formattedLong ?? "0"} {selectedToken.denom}
+                {balance?.formattedLong ?? "0"}
               </div>
             </>
           )}

@@ -50,26 +50,25 @@ export const TransferSummary = ({
   const feeChain = getChainByAddress(sender);
   const feeToken = getToken(feeChain.prefix, feeChain.feeToken);
   return (
-    // TODO: we need to add opacity-50 in the div below if the user doesn't have enough balance to pay the fee
     <div className={cn("flex items-stretch", disabled && "disabled")}>
       {senderChain && (
         <div className="flex flex-col space-y-2 items-center">
           <Image
-            className="h-12 w-12 bg-white rounded-full"
+            className="h-10 w-10 md:h-12 md:w-12 bg-white rounded-full"
             src={`/assets/chains/${senderChain.prefix}.png`}
             width={48}
             height={48}
             alt={senderChain.name}
           />
-          <p className="text-xxs text-gray-200 tracking-wide">
+          <p className="text-xxxs md:text-xxs text-gray-200 tracking-wide">
             <AddressDisplay address={sender} fallback="Account 1" />
           </p>
         </div>
       )}
       <div className="px-4 h-full justify-center flex flex-col items-center flex-grow tracking-wider">
-        <h3 className="text-xs flex justify-center items-center gap-x-2 text-white">
+        <h3 className="text-xxs md:text-xs flex justify-center items-center gap-x-2 text-white">
           <Image
-            className="h-6 w-6 rounded-full"
+            className="h-4 w-4 md:h-6 md:w-6 rounded-full"
             src={`/assets/tokens/${denom}.png`}
             width={18}
             height={18}
@@ -80,10 +79,12 @@ export const TransferSummary = ({
 
         <Arrow />
         {isFetching && (
-          <p className="text-white text-xxs">{t("message.processing.fee")}</p>
+          <p className="text-white text-xxxs md:text-xxs">
+            {t("message.processing.fee")}
+          </p>
         )}
         {!isFetching && fee && feeToken && (
-          <p className="text-white text-xxs">
+          <p className="text-white text-xxxs md:text-xxs">
             Fee:{" "}
             <span className="text-pink-300">
               {formatUnits(fee.token.amount, feeToken.decimals)}{" "}
@@ -95,13 +96,13 @@ export const TransferSummary = ({
       {receiverChain && (
         <div className="flex flex-col space-y-2 items-center">
           <Image
-            className="h-12 w-12 bg-white rounded-full"
+            className="h-10 w-10 md:h-12 md:w-12 bg-white rounded-full"
             src={`/assets/chains/${receiverChain.prefix}.png`}
             width={48}
             height={48}
             alt={receiverChain.name}
           />
-          <p className="text-xxs text-gray-200">
+          <p className="text-xxxs md:text-xxs text-gray-200">
             <AddressDisplay address={receiver} fallback="Account 2" />
           </p>
         </div>

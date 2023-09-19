@@ -29,7 +29,7 @@
   "transfer.section.summary.title": "Sending",
   "transfer.send.button.text": "Send",
   "transfer.top.up.button.text": "Top-Up Evmos",
-  "transfer.bridge.button.text": "Send from Axelar",
+  "transfer.bridge.button.text": "Go to Satellite",
   "transfer.section.network.label": "Select or Type a Network",
   "transfer.section.token.label": "Select or Type a Token",
   "transfer.deposit.helper.description": "We prefilled the address of the recipient above with",

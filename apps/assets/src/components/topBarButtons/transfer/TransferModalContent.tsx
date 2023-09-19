@@ -538,7 +538,7 @@ export const TransferModalContent = ({
               variant={
                 topUpEvmos || isAxelarBased ? "outline-primary" : "primary"
               }
-              className="w-full text-lg rounded-md capitalize mt-5"
+              className="w-full text-base md:text-lg rounded-md capitalize mt-5"
               disabled={!isCTAEnabled}
               //
             >
