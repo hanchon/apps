@@ -1,6 +1,10 @@
 import { writeContract } from "wagmi/actions";
 import { Address, isEvmosAddress } from "../../wallet";
-import { Prefix, TokenAmount, TokenMinDenom } from "../types";
+import {
+  Prefix,
+  TokenAmount,
+  TokenMinDenom,
+} from "../types";
 import {
   prepareContractERC20Transfer,
   writeContractERC20Transfer,
@@ -13,9 +17,6 @@ import {
   executeCosmosIBCTransfer,
   prepareCosmosIBCTransfer,
 } from "./prepare-cosmos-ibc-transfer";
-import { E, raise } from "helpers";
-import { getToken } from "../get-token";
-import { getTokenByRef } from "../get-token-by-ref";
 
 export const simulateTransfer = async ({
   sender,

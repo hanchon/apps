@@ -67,9 +67,9 @@ export const AssetSelector = ({
   const networkOptions = useMemo(() => {
     if (selectedToken.sourcePrefix === "evmos")
       return Object.values(chains).map(({ prefix }) => prefix);
-
     return [selectedToken.sourcePrefix, "evmos"] as Prefix[];
   }, [selectedToken]);
+
 
   /**
    * When network changes, check if the selected token is available on the new network.

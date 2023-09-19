@@ -108,6 +108,7 @@ export const AccountSelector = ({
     return ICONS_TYPES[provider.toUpperCase()];
   };
 
+
   return (
     <div className="flex flex-col space-y-3 mb-8">
       <div className="flex md:justify-between md:flex-row flex-col space-y-4 md:space-y-0">

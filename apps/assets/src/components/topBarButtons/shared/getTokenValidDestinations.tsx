@@ -11,7 +11,7 @@ export const getTokenValidDestinations = (tokenRef: TokenRef, network: Prefix): 
     // if it's NOT native to Evmos,than it can go to:
     // - other evmos accounts
     // - its native network
-    return ["evmos", network];
+    return ["evmos", token.sourcePrefix];
   }
 
   // if it's held somewhere else, it can only go to evmos
