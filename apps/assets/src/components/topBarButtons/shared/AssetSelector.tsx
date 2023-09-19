@@ -52,7 +52,6 @@ export const AssetSelector = ({
   fee?: TokenAmount;
   showNetworkSelector?: boolean;
   showMax?: boolean;
-
 }>) => {
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
@@ -255,4 +254,7 @@ export const AssetSelector = ({
     </CryptoSelectorBox>
   );
 };
+
+
+
 

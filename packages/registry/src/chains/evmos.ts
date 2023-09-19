@@ -54,7 +54,7 @@ export default {
       "symbol": "NEOK",
       "denom": "NEOK",
       "sourcePrefix": "evmos",
-      "sourceDenom": "neok",
+      "sourceDenom": "erc20/0x655ecB57432CC1370f65e5dc2309588b71b473A9",
       "minCoinDenom": "neok",
       "category": "cosmos",
       "type": "IBC",

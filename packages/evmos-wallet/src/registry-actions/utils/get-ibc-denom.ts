@@ -16,7 +16,7 @@ export const getIBCDenom = ({
 }) => {
   const chain = chains[token.sourcePrefix];
   if (chain.prefix === normalizeToPrefix(sender)) {
-    return token.minCoinDenom;
+    return token.sourceDenom;
   }
 
   return toIBCDenom(

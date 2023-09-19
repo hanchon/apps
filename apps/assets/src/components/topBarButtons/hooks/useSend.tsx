@@ -10,7 +10,6 @@ import {
   useTransfer
 } from "evmos-wallet";
 import { Receiverish, normalizeToPrefix } from "evmos-wallet/src/registry-actions/utils/normalize-to-prefix";
-import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 import { getFeeToken } from "evmos-wallet/src/registry-actions/getFeeToken";
 
 export const useSend = (
