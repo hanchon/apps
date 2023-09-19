@@ -16,7 +16,7 @@ export const useAccountExists = (address?: Address<Prefix>) => {
           return false;
         }
       }
-      if (!response) return;
+      if (!response) false;
       return true;
     },
     enabled: !!address,

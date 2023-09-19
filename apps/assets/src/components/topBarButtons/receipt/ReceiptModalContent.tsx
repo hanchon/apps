@@ -136,7 +136,7 @@ const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
        */
       const chainConfig = chains[chainPrefix];
 
-      const result = await apiCosmosTxByHash(chainConfig.cosmosRest.http, hash);
+      const result = await apiCosmosTxByHash(chainConfig.cosmosRest, hash);
       const message = { ...result.tx.body.messages[0] } as const;
 
       if (result.tx_response.code !== 0) {
@@ -172,7 +172,7 @@ const useBlock = (prefix?: Prefix, height?: bigint) => {
       if (!height || !prefix) throw new Error("Missing parameters");
       const chainConfig = chains[prefix];
       const result = await apiCosmosBlockByHeight(
-        chainConfig.cosmosRest.http,
+        chainConfig.cosmosRest,
         height
       );
       return result;

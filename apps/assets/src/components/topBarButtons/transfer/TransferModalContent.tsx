@@ -1,13 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import React, {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useMemo,
-} from "react";
+import React, { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import {
   ErrorMessage,
   IconContainer,
@@ -17,7 +11,6 @@ import {
   Title,
   InfoPanel,
 } from "ui-helpers";
-import { isString, raise } from "helpers";
 import { Trans, useTranslation } from "next-i18next";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../shared/AssetSelector";
@@ -39,23 +32,32 @@ import { AccountSelector } from "../shared/AccountSelector";
 
 import { TransferSummary } from "../shared/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
-import { z } from "zod";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
-import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
+import {
+  useRequestWalletAccount,
+  useWalletAccountByPrefix,
+} from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
 import { ICONS_TYPES } from "constants-helper";
-import { CopilotButton, StepsContext } from "copilot";
-import dynamic from "next/dynamic";
+import { CopilotButton } from "copilot";
 import { connectKeplr, installKeplr, reloadPage } from "./utils";
 import { useDispatch, useSelector } from "react-redux";
-const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
+
+import {
+  CLICK_ON_AXL_REDIRECT,
+  CLICK_ON_TOP_UP_EVMOS,
+  INSUFFICIENT_FEE_AMOUNT,
+  useTracker,
+} from "tracker";
+import { CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW } from "tracker/src/constants";
 
 import { sortedChains } from "../shared/sortedChains";
 import { TransferModalProps } from "./TransferModal";
 import { useReceiptModal } from "../receipt/ReceiptModal";
 import { useTopupModal } from "../topup/TopupModal";
+import { getAccount } from "wagmi/actions";
 
 export const TransferModalContent = ({
   receiver,
@@ -66,6 +68,7 @@ export const TransferModalContent = ({
   setState,
 }: TransferModalProps) => {
   const { t } = useTranslation();
+  const { sendEvent } = useTracker();
   const { isDisconnected } = useAccount();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
@@ -73,12 +76,17 @@ export const TransferModalContent = ({
   const feeChain = chains[networkPrefix];
   const feeToken = getToken(feeChain.prefix, feeChain.feeToken);
   const {
-    data,
+    account,
     error: walletRequestError,
-    refetch,
-  } = useWalletAccountByPrefix(networkPrefix);
+    requestAccount,
+  } = useRequestWalletAccount();
 
-  const sender = data?.bech32Address;
+  useEffect(() => {
+    if (networkPrefix !== "evmos" && getActiveProviderKey() !== "keplr") return;
+    requestAccount(networkPrefix);
+  }, [networkPrefix, getAccount().address]);
+
+  const sender = account?.bech32Address;
   const token = getToken(tokenSourcePrefix, denom);
   const senderChain = sender ? getChainByAddress(sender) : chains["evmos"];
   const tokenChain = chains[token.sourcePrefix];
@@ -188,6 +196,7 @@ export const TransferModalContent = ({
       (balance && amount > balance.value)
     ) {
       errors.add("insufficientBalance");
+      errors.add("insufficientBalanceForFee");
     }
 
     /**
@@ -199,6 +208,7 @@ export const TransferModalContent = ({
      */
     if (feeTokenbalance?.value === 0n) {
       errors.add("insufficientBalanceForFee");
+      sendEvent(INSUFFICIENT_FEE_AMOUNT);
     }
     /**
      * Wallet checks
@@ -228,21 +238,26 @@ export const TransferModalContent = ({
 
   const topUpEvmos =
     errors.has("insufficientBalanceForFee") ||
-    errors.has("insufficientBalance");
-  // TODO: there was a changed but I'm not sure what value should we use here now
-  // && token.chainPrefix === "evmos"
+    // TODO: there was a changed but I'm not sure what value should we use here now
+    // should we only check for evmos here ?
+    // Shooul we also check for the fee token. Case: Juno - network Evmos - to evmos. I have to pay with evmos.
+    (errors.has("insufficientBalance") && token.denom === "EVMOS");
+
+  const isAxelarBased = useMemo(() => {
+    return "handledByExternalUI" in token;
+  }, [token]);
 
   const sendButtonText = useMemo(() => {
     if (topUpEvmos) {
       return t("transfer.top.up.button.text");
     }
 
-    // TODO:
-    // if (uiexternal) {
-    //   return t("transfer.bridge.button.text")
-    // }
+    if (isAxelarBased) {
+      return t("transfer.bridge.button.text");
+    }
+
     return t("transfer.send.button.text");
-  }, [topUpEvmos]);
+  }, [topUpEvmos, isAxelarBased, t]);
 
   useEffect(() => {
     installKeplr();
@@ -261,12 +276,54 @@ export const TransferModalContent = ({
 
   useEffect(() => {
     if (!transferData) return;
-    if (!isString(transferData.hash)) return;
-    // receiptModal.setIsOpen(true, {
-    //   hash: transferData.hash,
-    //   chainPrefix: networkPrefix,
-    // });
+
+    receiptModal.setIsOpen(true, {
+      hash: transferData.hash,
+      chainPrefix: networkPrefix,
+    });
   }, [transferData]);
+
+  const isCTAEnabled = useMemo(() => {
+    // TO JULIA: Can you check if the logic is correct?
+    if (isTransferring || !isReadyToTransfer) {
+      return false;
+    }
+
+    if (isAxelarBased) {
+      return true;
+    }
+
+    if (topUpEvmos) {
+      return true;
+    }
+
+    if (
+      errors.has("accountDoesntExist") ||
+      errors.has("networkNotSupportedByConnectedWallet") ||
+      errors.has("userRejectedEnablingNetwork")
+    ) {
+      return false;
+    }
+
+    if (
+      // CTA is disabled if the user doesn't have enough balance and the token is not evmos.
+      errors.has("insufficientBalance") &&
+      // what value should we use if I want to check for the token that is selected ?
+      token.denom !== "EVMOS"
+    ) {
+      return false;
+    }
+
+    return true;
+  }, [
+    errors,
+    token,
+    isAxelarBased,
+    topUpEvmos,
+    isReadyToTransfer,
+    isTransferring,
+  ]);
+
   return (
     <section className="space-y-3 w-full">
       <Title
@@ -281,19 +338,18 @@ export const TransferModalContent = ({
           e.preventDefault();
 
           if (topUpEvmos) {
-            // await setShow(false);
             topupModal.setIsOpen(true);
-
+            sendEvent(CLICK_ON_TOP_UP_EVMOS);
             // TODO: close send modal
             return;
           }
 
-          // TODO:
-          // if (uiexternal) {
-          // transfer.bridge.button.text
-          // redirect to axelar
-          // close send modal
-          // }
+          if ("handledByExternalUI" in token) {
+            window.open(token.handledByExternalUI[0].url, "_blank");
+            sendEvent(CLICK_ON_AXL_REDIRECT);
+            // TODO: close send modal
+            return;
+          }
 
           transfer();
         }}
@@ -317,6 +373,7 @@ export const TransferModalContent = ({
                 ...token,
               }));
             }}
+            balanceError={errors.has("insufficientBalance")}
           />
 
           {/* TODO: Some error messages. This is not in the specs, so we need to check with Mian how to display those */}
@@ -324,28 +381,36 @@ export const TransferModalContent = ({
             <InfoPanel icon={<WizardIcon className="shrink-0" />}>
               <div>
                 <p className="pb-4">
-                  {t("error.user.rejected.network.title")}
+                  <Trans
+                    i18nKey="error.user.rejected.network.title"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
                   <span className="text-pink-300">
                     {chains[networkPrefix].name}
-                    {t("error.user.rejected.network.title2")}
                   </span>
-                  {t("error.user.rejected.network.title3")}
+                  <Trans
+                    i18nKey="error.user.rejected.network.title2"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
                 </p>
+
                 <p className="pb-8">
-                  {t("error.user.rejected.network.authorize.request")}
-                  <span className="text-pink-300">
-                    {t("error.user.rejected.network.authorize.request2")}
-                  </span>
-                  {t("error.user.rejected.network.authorize.request3")}
-                  <span className="text-pink-300">
-                    {t("error.user.rejected.network.authorize.request4")}
-                  </span>
+                  <Trans
+                    i18nKey="error.user.rejected.network.subtitle"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
                 </p>
                 <PrimaryButton
                   className="font-normal w-full"
-                  onClick={() => refetch()}
+                  onClick={() => requestAccount(networkPrefix)}
                 >
-                  {t("button.authorize.request.button.text")}
+                  {t("error.user.rejected.network.authorizeButtonLabel")}
                 </PrimaryButton>
               </div>
             </InfoPanel>
@@ -383,6 +448,7 @@ export const TransferModalContent = ({
                       return;
                     }
                     const [err] = await E.try(() => connectWith("keplr"));
+                    sendEvent(CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW);
                     // TODO: handle error when user rejects the connection
                     if (err) return false;
                   }}
@@ -422,30 +488,26 @@ export const TransferModalContent = ({
               />
             </div>
           )}
-          {/* TODO: this should appear when we add the opacity to the transfer summary because the user doesn't have enough evmos to pay the fee */}
-          {errors.has("insufficientBalance") && (
-            <ErrorMessage className="justify-center pl-0">
-              {t("message.insufficient.balance")}
-              {balance?.formattedLong ?? "0"} {token.denom}
-            </ErrorMessage>
-          )}
           {errors.has("insufficientBalanceForFee") && feeTokenbalance && (
             <ErrorMessage className="justify-center pl-0">
               {/* TODO: the message might be different if the insufficient token is the fee token? */}
-              {t("message.insufficient.balance")}
+              {t("message.insufficiente.fee")}
               {feeTokenbalance.formattedLong} {feeTokenbalance.denom}
             </ErrorMessage>
           )}
 
-          {/* TODO: show it correctly */}
-          {/* <ErrorMessage className="justify-center pl-0" variant="info">
-            {t("error.send.axelar.assets.text")}{" "}
-            <span className="text-red-300">
-              {t("error.send.axelar.assets.text2")}
-            </span>{" "}
-            {t("error.send.axelar.assets.text3")}
-          </ErrorMessage> */}
+          {isAxelarBased && (
+            <ErrorMessage className="justify-center pl-0" variant="info">
+              <Trans
+                i18nKey="error.send.axelar.assets.text"
+                components={{
+                  strong: <span className="text-pink-300" />,
+                }}
+              />
+            </ErrorMessage>
+          )}
           {isDisconnected && (
+            // TODO: add tracker event and add styles to the button
             <WalletConnection
               copilotModal={({
                 beforeStartHook,
@@ -454,13 +516,18 @@ export const TransferModalContent = ({
               }) => <CopilotButton beforeStartHook={beforeStartHook} />}
               dispatch={dispatch}
               walletExtension={wallet}
+              variant="outline-primary"
             />
           )}
           {!isDisconnected && (
             <PrimaryButton
-              variant={topUpEvmos ? "outline-primary" : "primary"}
+              type="submit"
+              variant={
+                topUpEvmos || isAxelarBased ? "outline-primary" : "primary"
+              }
               className="w-full text-lg rounded-md capitalize mt-5"
-              disabled={errors.size > 0 || !isReadyToTransfer || isTransferring}
+              disabled={!isCTAEnabled}
+              //
             >
               {sendButtonText}
             </PrimaryButton>
@@ -485,28 +552,6 @@ export const TransferModalContent = ({
       <br />
       <button
         onClick={() => {
-          // To Milli 🫠: I wrapped the topup modal in the new modal routing thingy,
-          // you can check it in apps/assets/src/components/topBarButtons/topup/TopupModal.tsx
-          //
-          // The idea is to decouple the modal from what triggers the modal,
-          // so you don't have to embed the modal in the same component as the modal
-          // or have the modal as child of other modals, etc.
-          //
-          // I think after we finish here we could move all these modals somewhere that are acessible from the other apps too
-          // even though I think now most of them only exist in the assets app, I think it's nice to have them decoupled from it
-          //
-          // Also, because they are route based, they automatically close when another opens, and going back and forward in browser history works too
-          // (Although obviously, it will not work for individual steps on the copilot since it's being controlled on the provider)
-          // Although I think this is nice for most cases, there are some cases where it's not desirable,
-          // Ex: Opening the "connect" modal from the transfer modal and returning to it once you're connected
-
-          // Once solution would be to have the "connect" modal to take a "returnTo" route argument, so it knows where to go back to once it's done
-          // I added support for opening modals with prefilled parameters so it would look something like this:
-          //
-          // connectModal.setIsOpen(true, { returnTo: "/assets/action=transfer&...." })
-          //
-          // Anyway, let me know your thoughts
-          //
           topupModal.setIsOpen(true);
         }}
       >

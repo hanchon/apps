@@ -26,12 +26,12 @@ export const ErrorIcon: React.FC<ErrorProps> = ({
         cy="8"
         r="7.375"
         stroke="currentColor"
-        stroke-width="1.25"
+        strokeWidth="1.25"
       />
       <path
         d="M8 4V9"
         stroke="currentColor"
-        stroke-width="1.5"
+        strokeWidth="1.5"
         strokeLinecap="round"
       />
       <circle cx="8" cy="11.5" r="1" fill="currentColor" />

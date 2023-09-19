@@ -5,7 +5,7 @@ import { z } from "zod";
 import { E } from "helpers";
 
 describe("apiCosmosFetch", () => {
-  const evmosHttp = chains.evmos.cosmosRest.http[0];
+  const evmosHttp = chains.evmos.cosmosRest[0];
   const unreachableUrl = "https://nonexistent-grpc-rest-api.com";
 
   const nodeInfoFetch = (http: string) =>

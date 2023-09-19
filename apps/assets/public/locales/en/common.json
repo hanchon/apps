@@ -50,7 +50,7 @@
   "transfer.deposit.helper.description3": ". If you are depositing into a different address, you can make the changes accordingly.",
   "transfer.modal.title": "Transfer Assets",
   "transfer.modal.description": "Deposit and send assets to any account on any chain.",
-  "transfer.button": "Transfer",
+  "transfer.button": "Send",
   "transfer.input.placeholder": "Request receipient's address",
   "error.network.not.support.by-wallet": {
     "title": "Unfortunately, with Metamask we currently only support sending from <strong>Evmos Network</strong>.",
@@ -58,17 +58,15 @@
     "connectButtonLabel": "Connect with Keplr",
     "installButtonLabel": "Install Keplr"
   },
-  "error.user.rejected.network.title": "I see you're trying to send tokens from ",
-  "error.user.rejected.network.title2": " network",
-  "error.user.rejected.network.title3": ", for that we will need to access your account address.",
-  "error.user.rejected.network.authorize.request": "Please ",
-  "error.user.rejected.network.authorize.request2": "approve the network ",
-  "error.user.rejected.network.authorize.request3": "in ",
-  "error.user.rejected.network.authorize.request4": "your wallet.",
+  "error.user.rejected.network": {
+    "title": "I see you're trying to send tokens from ",
+    "title2": "<strong> network</strong>, for that we will need to access your account address.",
+    "subtitle": "Please, <strong>approve the network </strong> in <strong>your wallet</strong>.",
+    "authorizeButtonLabel": "Try again"
+  },
   "button.authorize.request.button.text": "Try again",
-  "error.send.axelar.assets.text": "For axl based assets, please use",
-  "error.send.axelar.assets.text2": "Satellite",
-  "error.send.axelar.assets.text3": "instead",
+  "error.send.axelar.assets.text": "For axl based assets, please use <strong>Satellite </strong> instead",
+
   "transfer.confirmation.message.successful": "Successfully Sent",
   "transfer.confirmation.message.successful.description": "Your transaction has been processed on the blockchain.",
   "transfer.confirmation.message.successful.description2": "Check details below.",
@@ -85,5 +83,6 @@
   "pay.confirmation.date": "Transaction Date(UTC+0)",
   "message.gas.fee.reserved.amount": "Gas fee reserved in the max amount",
   "message.insufficient.balance": "Insufficient Balance ",
+  "message.insufficiente.fee": "Insufficient Gas Fees: ",
   "message.processing.fee": "Calculating fee..."
 }

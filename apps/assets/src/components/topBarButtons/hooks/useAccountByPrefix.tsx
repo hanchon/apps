@@ -10,6 +10,7 @@ import { chains } from "@evmos-apps/registry";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { E } from "helpers";
 import { useId } from "react";
+import { getAccount } from "wagmi/actions";
 
 const suggestChain = async (prefix: Prefix) => {
   const keplr = await getKeplrProvider();
@@ -89,35 +90,48 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
   });
 };
 
-// export const useWalletAddressess = () => {
-//   const id = useId();
-//   return useMutation({
-//     mutationKey: ["wallet_address_request", id],
-//     mutationFn: async () => {
-//       const activeProvider = await getActiveProviderKey();
-//       if (!activeProvider) return;
-//       const keplr = await getKeplrProvider();
-//       const allChains = Object.values(chains);
+export const useRequestWalletAccount = () => {
+  const id = useId();
+  const { data, mutate, ...rest } = useMutation({
+    mutationKey: ["wallet_address_request", id],
+    mutationFn: async (prefix: Prefix) => {
+      const activeProvider = getActiveProviderKey();
+      if (!activeProvider) throw new Error("NO_ACTIVE_PROVIDER");
+      const chain = chains[prefix];
+      if (activeProvider === "keplr") {
+        const keplr = await getKeplrProvider();
+        const [suggestChainErr] = await E.try(() => suggestChain(prefix));
 
-//       const [needSuggesting, keplrSupported] = allChains.reduce(
-//         (acc: [Chain[], Chain[]], chain) => {
-//           const [needSuggesting, keplrSupported] = acc;
-//           if (["cre", "emoney", "tori", "comdex"].includes(chain.prefix)) {
-//             needSuggesting.push(chain);
-//             return acc;
-//           }
-//           keplrSupported.push(chain);
-//           return acc;
-//         },
-//         [[], []]
-//       );
-//       const [suggestChainErr] = await E.try(() => {
-//         return Promise.all([
-//           ...needSuggesting.map((chain) => suggestChain(chain.prefix)),
-//           keplr.enable(keplrSupported.map((chain) => chain.cosmosId)),
-//         ]);
-//       });
-//       // const accounts = await keplr.getKeysSettled([]);
-//     },
-//   });
-// };
+        if (suggestChainErr) {
+          throw new Error("USER_REJECTED_REQUEST", { cause: suggestChainErr });
+        }
+
+        const [err, account] = await E.try(() => keplr.getKey(chain.cosmosId));
+
+        if (err) {
+          throw new Error("USER_REJECTED_REQUEST", { cause: err });
+        }
+
+        const { bech32Address, isNanoLedger, pubKey } = account;
+        return {
+          prefix,
+          bech32Address: bech32Address as CosmosAddress<Prefix>,
+          isNanoLedger,
+          pubKey,
+        };
+      }
+
+      if (prefix !== "evmos")
+        throw new Error("NETWORK_NOT_SUPPORTED_BY_WALLET");
+
+      const { address } = getAccount();
+      if (!address) throw new Error("NOT_CONNECTED");
+      return {
+        prefix: prefix,
+        bech32Address: normalizeToCosmosAddress(address),
+        evmAddress: address,
+      };
+    },
+  });
+  return { ...rest, account: data, requestAccount: mutate };
+};

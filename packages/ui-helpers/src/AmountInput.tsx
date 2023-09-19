@@ -1,4 +1,10 @@
-import { ComponentProps, useState, useEffect } from "react";
+import {
+  ComponentProps,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { formatUnits, parseUnits } from "viem";
 import { cn, clamp, E } from "helpers";
 import cx from "clsx";
@@ -11,6 +17,7 @@ export const AmountInput = ({
   min = 0n,
   className,
   maxButtonClassName,
+  setIsMaxClicked,
   variant = "default",
   ...props
 }: Omit<ComponentProps<"input">, "value" | "onChange" | "max" | "min"> & {
@@ -20,6 +27,7 @@ export const AmountInput = ({
   value?: bigint;
   max?: bigint;
   min?: bigint;
+  setIsMaxClicked?: Dispatch<SetStateAction<boolean>>;
   variant?: "default" | "error" | "info";
 }) => {
   const decimalsUnit = parseInt(String(decimals ?? 18));
@@ -105,6 +113,7 @@ export const AmountInput = ({
             e.preventDefault();
             setValue(formatUnits(max ?? 0n, decimalsUnit));
             onChange?.(max ?? 0n);
+            setIsMaxClicked && setIsMaxClicked(true);
           }}
         >
           Max.

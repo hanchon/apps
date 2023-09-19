@@ -10,14 +10,17 @@ export const PrimaryButton = ({
   children,
   className,
   icon,
+  type = "button",
   disabled,
   ...rest
 }: ComponentProps<"button"> & {
   variant?: "primary" | "outline-primary";
   icon?: JSX.Element;
+  type?: string;
 }) => {
   return (
     <button
+      type={type}
       onClick={onClick}
       className={cn(
         "w-fit text-sm px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-md flex items-center justify-center space-x-3 tracking-wider",

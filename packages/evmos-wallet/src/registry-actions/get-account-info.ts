@@ -1,10 +1,5 @@
-import { FormattedBalance, Prefix } from "./types";
-import {
-  Address,
-  isEvmosAddress,
-  normalizeToCosmosAddress,
-  normalizeToEvmos,
-} from "../wallet/utils";
+import { Prefix } from "./types";
+import { Address, normalizeToCosmosAddress } from "../wallet/utils";
 import { apiCosmosAccountByAddress } from "../api";
 import { getChainByAddress } from "./get-chain-by-account";
 
@@ -15,7 +10,7 @@ export const getAccountInfo = async ({
 }) => {
   const chain = getChainByAddress(address);
   return await apiCosmosAccountByAddress(
-    chain.cosmosRest.http,
+    chain.cosmosRest,
     normalizeToCosmosAddress(address)
   );
 };

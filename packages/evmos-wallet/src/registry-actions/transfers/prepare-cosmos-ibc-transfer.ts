@@ -16,6 +16,7 @@ import { buffGasEstimate } from "../utils/buff-gas-estimate";
 import { getIBCDenom } from "../utils/get-ibc-denom";
 import { apiCosmosTxBroadcast } from "../../api/cosmos-rest/api-cosmos-tx-broadcast";
 import { getChainAccountInfo } from "../utils/get-chain-account-info";
+import { Hex } from "viem";
 
 export const createProtobufIBCTransferMsg = ({
   sender,
@@ -92,7 +93,7 @@ export const prepareCosmosIBCTransfer = async (params: {
 }) => {
   const tx = await createProtobufIBCTransferMsg(params);
   const chain = getChainByAddress(params.sender);
-  const gas = (await apiCosmosTxSimulate(chain.cosmosRest.http, tx)).gas_info
+  const gas = (await apiCosmosTxSimulate(chain.cosmosRest, tx)).gas_info
     .gas_used;
   const estimatedGas = buffGasEstimate(gas);
 
@@ -131,5 +132,11 @@ export const executeCosmosIBCTransfer = async (params: {
 
   tx.signatures = [Buffer.from(signature.signature.signature, "base64")];
 
-  return await apiCosmosTxBroadcast(chain.cosmosRest.http, tx);
+  const response = await apiCosmosTxBroadcast(chain.cosmosRest, tx);
+  const hash: Hex = `0x${response.tx_response.txhash}`;
+
+  return {
+    hash,
+    ...response,
+  };
 };
