@@ -20,7 +20,8 @@
   "transfer.section.asset.token": "Token",
   "transfer.section.asset.network": "Network",
   "transfer.section.asset.balance.loading": "Loading balance...",
-  "transfer.section.asset.balance": "Balance:",
+  "transfer.section.asset.balance": "Balance: ",
+  "transfer.section.asset.balance.error": "unable to read",
   "transfer.section.to": "To",
   "transfer.section.to.wallet": "My Wallet",
   "transfer.section.to.wallet.other": "Other",
@@ -70,5 +71,7 @@
   "message.gas.fee.reserved.amount": "Gas fee reserved in the max amount",
   "message.insufficient.balance": "Insufficient Balance ",
   "message.insufficiente.fee": "Insufficient Gas Fees: ",
-  "message.processing.fee": "Calculating fee..."
+  "message.processing.fee": "Calculating fee...",
+  "error.getting.balance": "Error getting balance.",
+  "error.getting.balance.connect.wallet": "Please make sure <strong> your wallet is connected</strong>."
 }

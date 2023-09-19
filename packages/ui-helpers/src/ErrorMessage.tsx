@@ -17,7 +17,7 @@ export function ErrorMessage({
   return (
     <div
       className={cn(
-        "flex items-center space-x-2 text-xs font-medium pl-4 mt-3",
+        "flex justify-start space-x-2 text-xs font-medium pl-4 mt-3",
         className,
         {
           "text-red-300": variant === "error",

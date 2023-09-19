@@ -244,7 +244,7 @@ export const TransferModalContent = ({
     (errors.has("insufficientBalance") && token.denom === "EVMOS");
 
   const isAxelarBased = useMemo(() => {
-    return "handledByExternalUI" in token;
+    return token.handledByExternalUI !== null;
   }, [token]);
 
   const sendButtonText = useMemo(() => {
@@ -344,8 +344,8 @@ export const TransferModalContent = ({
             return;
           }
 
-          if ("handledByExternalUI" in token) {
-            window.open(token.handledByExternalUI[0].url, "_blank");
+          if (token.handledByExternalUI) {
+            window.open(token.handledByExternalUI[0].url as string, "_blank");
             sendEvent(CLICK_ON_AXL_REDIRECT);
             // TODO: close send modal
             return;
@@ -506,6 +506,19 @@ export const TransferModalContent = ({
               />
             </ErrorMessage>
           )}
+
+          {isDisconnected && (
+            <ErrorMessage className="justify-center pl-0 mb-4" variant="info">
+              <p className="pb-1"> {t("error.getting.balance")}</p>
+              <Trans
+                i18nKey="error.getting.balance.connect.wallet"
+                components={{
+                  strong: <span className="text-pink-300" />,
+                }}
+              />
+            </ErrorMessage>
+          )}
+
           {isDisconnected && (
             // TODO: add tracker event and add styles to the button
             <WalletConnection

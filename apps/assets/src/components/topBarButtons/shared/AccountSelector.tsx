@@ -154,9 +154,6 @@ export const AccountSelector = ({
       </div>
       <div className="space-y-2">
         <TextInput
-          onClickCopy={() => {
-            sendEvent(CLICK_ON_COPY_ICON);
-          }}
           placeholder={
             walletTab !== WALLET_TAB_TYPES.WALLET
               ? t("transfer.section.to.placeholder")
