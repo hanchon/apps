@@ -25,6 +25,6 @@ export const getIBCDenom = ({
       sender,
       receiver,
     }),
-    token.baseDenom
+    token.sourceDenom
   );
 };

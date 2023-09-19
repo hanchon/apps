@@ -2,7 +2,7 @@ import { chains } from "@evmos-apps/registry";
 import { TokenByDenom, TokenDenom } from "./types";
 
 export const TOKENS_BY_DENOM = Object.values(chains).reduce((acc, chain) => {
-  for (const token of chain.currencies) {
+  for (const token of chain.tokens) {
     Object.assign(acc, { [token.denom]: token });
   }
   return acc;

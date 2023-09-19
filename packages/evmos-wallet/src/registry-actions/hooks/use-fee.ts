@@ -35,6 +35,7 @@ export const useFee = ({
   const { data: accountExists } = useAccountExists(sender);
   const { data, ...rest } = useQuery({
     staleTime: 1000 * 30,
+    retry: false,
     queryKey: [
       "use-fee",
       sender,

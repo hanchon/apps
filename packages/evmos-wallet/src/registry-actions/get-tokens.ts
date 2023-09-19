@@ -1,4 +1,6 @@
-import { TOKENS_BY_DENOM } from "./get-token-by-denom";
+import { chains } from "@evmos-apps/registry";
 
-export const tokens = Object.values(TOKENS_BY_DENOM);
+export const tokens = Object.values(chains).flatMap((chain) => [
+  ...chain.tokens,
+]);
 export const getTokens = () => tokens;

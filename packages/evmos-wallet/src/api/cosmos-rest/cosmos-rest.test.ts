@@ -11,7 +11,7 @@ describe("apiCosmosFetchAccountByAddress", () => {
   test("existent address", async () => {
     const chain = chains.evmos;
     const { account } = await apiCosmosAccountByAddress(
-      chain.cosmosRest.http,
+      chain.cosmosRest,
       existentAddress
     );
     expect(account).toBeDefined();
@@ -20,7 +20,7 @@ describe("apiCosmosFetchAccountByAddress", () => {
   test("inexistent address", async () => {
     const chain = chains.evmos;
     const [err] = await E.try(() =>
-      apiCosmosAccountByAddress(chain.cosmosRest.http, inexistentAddress)
+      apiCosmosAccountByAddress(chain.cosmosRest, inexistentAddress)
     );
     expect(E.match.byPattern(err, /account .* not found/)).toBeTruthy();
   });

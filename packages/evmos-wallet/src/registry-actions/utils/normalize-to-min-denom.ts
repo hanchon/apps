@@ -8,12 +8,11 @@ const { evmos, ...others } = chains;
 /**
  * Evmos tokens in other networks
  */
-for (const token of evmos.currencies) {
+for (const token of evmos.tokens) {
   for (const chain of Object.values(others)) {
     let ibcDenom = getIBCDenom({
       sender: chain.prefix,
       receiver: "evmos",
-
       token,
     });
     IBC_DENOMS_MAP[ibcDenom] = token;
@@ -24,7 +23,7 @@ for (const token of evmos.currencies) {
  * other networks tokens in Evmos
  */
 for (const chain of Object.values(others)) {
-  for (const token of chain.currencies) {
+  for (const token of chain.tokens) {
     let ibcDenom = getIBCDenom({
       sender: "evmos",
       receiver: chain.prefix,
@@ -56,10 +55,10 @@ export const findToken = ({
     return IBC_DENOMS_MAP[denom] ?? null;
   }
   const token = getTokens().find(
-    ({ minCoinDenom, baseDenom, denom: tokenDenom, sourcePrefix }) => {
+    ({ minCoinDenom, sourceDenom, denom: tokenDenom, sourcePrefix }) => {
       if (prefix && prefix !== sourcePrefix) return false;
       return (
-        minCoinDenom === denom || tokenDenom === denom || baseDenom === denom
+        minCoinDenom === denom || tokenDenom === denom || sourceDenom === denom
       );
     }
   );

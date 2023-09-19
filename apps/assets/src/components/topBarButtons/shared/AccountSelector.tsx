@@ -9,7 +9,7 @@ import {
 import { chains } from "@evmos-apps/registry";
 import { CryptoSelector, ErrorMessage, Tabs, TextInput } from "ui-helpers";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
-import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
+import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { useTranslation } from "next-i18next";
 import { ICONS_TYPES } from "constants-helper";
 import {
@@ -17,6 +17,11 @@ import {
   SELECT_TO_NETWORK_SEND_FLOW,
   useTracker,
 } from "tracker";
+import { useAccount } from "wagmi";
+const WALLET_TAB_TYPES = {
+  WALLET: "my wallet",
+  OTHER: "other",
+};
 
 export const AccountSelector = ({
   value,
@@ -29,23 +34,34 @@ export const AccountSelector = ({
   networkOptions: Prefix[];
   disabledNetworkOptions: Prefix[];
 }>) => {
+  const { t } = useTranslation();
+  const { sendEvent } = useTracker();
   const { address, inputProps, errors, setValue } = useAddressInput(value);
-
+  const connectedAccount = useAccount();
   const [prefix, setChainPrefix] = useState<Prefix>("evmos");
-  const [requestedPrefix, setRequestedPrefix] = useState<Prefix | undefined>(
-    undefined
-  );
+  const [walletTab, setWalletTab] = useState(WALLET_TAB_TYPES.WALLET);
 
-  const { data, error } = useWalletAccountByPrefix(requestedPrefix);
+  const chain = chains[prefix];
+
+  const { requestAccount, account } = useRequestWalletAccount();
 
   useEffect(() => {
-    if (!requestedPrefix) {
-      return;
-    }
-    setRequestedPrefix(undefined);
+    if (getActiveProviderKey() !== "keplr") return;
+    if (walletTab !== WALLET_TAB_TYPES.WALLET) return;
 
-    if (data) setValue(data.bech32Address);
-  }, [data, error]);
+    requestAccount(prefix);
+  }, [prefix, walletTab]);
+
+  useEffect(() => {
+    if (!networkOptions.includes(prefix)) {
+      setChainPrefix(networkOptions[0]);
+    }
+  }, [networkOptions]);
+
+  useEffect(() => {
+    if (!account) return;
+    setValue(account.bech32Address);
+  }, [account]);
 
   useEffect(() => {
     if (!address) {
@@ -54,28 +70,22 @@ export const AccountSelector = ({
     setChainPrefix(getPrefix(normalizeToCosmosAddress(address)));
   }, [address]);
 
-  const chain = prefix ? chains[prefix] : chains.evmos;
-
   useEffect(() => {
     if (address !== value) {
       onChange?.(address);
     }
   }, [address]);
 
-  const { t } = useTranslation();
-  const { sendEvent } = useTracker();
+  useEffect(() => {
+    if (walletTab !== WALLET_TAB_TYPES.WALLET) return;
 
-  const WALLET_TAB_TYPES = {
-    WALLET: "my wallet",
-    OTHER: "other",
-  };
+    setValue(connectedAccount.address ?? "");
+  }, [connectedAccount.address, walletTab]);
 
   useEffect(() => {
-    if (networkOptions.includes(chain.prefix)) return;
-    setChainPrefix(networkOptions[0]);
-  }, [networkOptions]);
+    if (walletTab === WALLET_TAB_TYPES.OTHER) setValue("");
+  }, [walletTab]);
 
-  const [walletTab, setWalletTab] = useState(WALLET_TAB_TYPES.WALLET);
   const walletProps = [
     {
       onClick: () => setWalletTab(WALLET_TAB_TYPES.WALLET),
@@ -110,7 +120,7 @@ export const AccountSelector = ({
           <CryptoSelector
             value={prefix}
             onChange={(value) => {
-              setRequestedPrefix(value);
+              setChainPrefix?.(value);
               sendEvent(SELECT_TO_NETWORK_SEND_FLOW, {
                 network: value,
                 "account provider": getActiveProviderKey(),

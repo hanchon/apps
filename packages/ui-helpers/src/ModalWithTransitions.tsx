@@ -58,7 +58,6 @@ export const ModalWithTransitions = ({
           <div
             className="fixed inset-0 bg-black bg-opacity-50"
             onClick={() => {
-              console.log("click");
               setShow(false);
             }}
           />

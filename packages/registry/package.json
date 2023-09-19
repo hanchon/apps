@@ -8,28 +8,32 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "build:registry": "NODE_OPTIONS='--experimental-import-meta-resolve' ts-node --esm ./scripts/typegen.ts",
+    "build:registry": "NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./scripts/gen-chains.ts",
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@types/node": "18.11.14",
-    "@types/react": "^18.0.26",
-    "chain-token-registry": "github:evmos/chain-token-registry#main",
-    "helpers": "workspace:helpers",
     "@evmos-apps/config": "workspace:helpers",
-    "typescript": "^5.1.6",
     "@types/lodash": "^4.14.197",
     "@types/lodash-es": "^4.17.8",
-    "lodash-es": "^4.17.21",
+    "@types/node": "18.11.14",
+    "@types/react": "^18.0.26",
     "ajv": "^8.12.0",
+    "chain-token-registry": "github:evmos/chain-token-registry#main",
     "chalk": "^5.3.0",
+    "helpers": "workspace:helpers",
+    "lodash-es": "^4.17.21",
     "sharp": "^0.32.5",
     "ts-node": "^10.9.1",
+    "typescript": "^5.1.6",
     "vitest": "^0.34.1"
   },
   "browserslist": [
     "last 3 chrome version",
     "last 3 firefox version",
     "last 3 safari version"
-  ]
+  ],
+  "dependencies": {
+    "glob": "^10.3.4",
+    "tsx": "^3.12.10"
+  }
 }

@@ -12,19 +12,20 @@ export const apiCosmosTxBroadcast = (
   apiCosmosFetch(
     z
       .object({
-        gas_info: z.object({
+        tx_response: z.object({
+          height: z.string(),
+          txhash: z.string(),
+          codespace: z.string(),
+          code: z.number(),
+          data: z.string(),
+          raw_log: z.string(),
+          logs: z.array(z.unknown()),
+          info: z.string(),
           gas_wanted: BigIntSchema,
           gas_used: BigIntSchema,
-        }),
-        result: z.object({
-          data: z.string(),
-          log: z.string(),
-          events: z.array(
-            z.object({
-              type: z.string(),
-              attributes: z.unknown(),
-            })
-          ),
+          tx: z.unknown(),
+          timestamp: z.string(),
+          events: z.array(z.unknown()),
         }),
       })
       .passthrough(),
