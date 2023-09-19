@@ -73,5 +73,6 @@
   "message.insufficiente.fee": "Insufficient Gas Fees: ",
   "message.processing.fee": "Calculating fee...",
   "error.getting.balance": "Error getting balance.",
-  "error.getting.balance.connect.wallet": "Please make sure <strong> your wallet is connected</strong>."
+  "error.getting.balance.connect.wallet": "Please make sure <strong> your wallet is connected</strong>.",
+  "message.only.evmos.supported": "Only <strong>Evmos Network</strong> is currently supported"
 }

@@ -10,7 +10,7 @@ import { chains } from "@evmos-apps/registry";
 import { CryptoSelector, ErrorMessage, Tabs, TextInput } from "ui-helpers";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
-import { useTranslation } from "next-i18next";
+import { Trans, useTranslation } from "next-i18next";
 import { ICONS_TYPES } from "constants-helper";
 import { SELECT_TO_NETWORK_SEND_FLOW, useTracker } from "tracker";
 import { useAccount } from "wagmi";
@@ -161,6 +161,17 @@ export const AccountSelector = ({
           disabled={walletTab === WALLET_TAB_TYPES.WALLET}
           {...inputProps}
         />
+
+        {networkOptions.length === 1 && networkOptions.includes("evmos") && (
+          <ErrorMessage variant="info" className="justify-center">
+            <Trans
+              i18nKey="message.only.evmos.supported"
+              components={{
+                strong: <span className="text-pink-300" />,
+              }}
+            />
+          </ErrorMessage>
+        )}
         {errors?.map((error, index) => {
           return (
             <ErrorMessage key={index}>

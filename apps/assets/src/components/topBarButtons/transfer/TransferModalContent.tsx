@@ -471,7 +471,9 @@ export const TransferModalContent = ({
             networkOptions={destinationNetworkOptions}
             disabledNetworkOptions={disabledDestinationNetworkOptions}
           />
-
+          {/* To Julia: shouldn't we also wait for the amount to be set? 
+        As the to address is now being prefilled as soon as we open the modal, maybe we should wait 
+        for the amount (because it's showing the transfer summary instantly? */}
           {sender && receiver && (
             <div className="space-y-3">
               <Label>{t("transfer.section.summary.title")}</Label>
