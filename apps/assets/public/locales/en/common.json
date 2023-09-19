@@ -20,7 +20,8 @@
   "transfer.section.asset.token": "Token",
   "transfer.section.asset.network": "Network",
   "transfer.section.asset.balance.loading": "Loading balance...",
-  "transfer.section.asset.balance": "Balance:",
+  "transfer.section.asset.balance": "Balance: ",
+  "transfer.section.asset.balance.error": "unable to read",
   "transfer.section.to": "To",
   "transfer.section.to.wallet": "My Wallet",
   "transfer.section.to.wallet.other": "Other",
@@ -28,7 +29,7 @@
   "transfer.section.summary.title": "Sending",
   "transfer.send.button.text": "Send",
   "transfer.top.up.button.text": "Top-Up Evmos",
-  "transfer.bridge.button.text": "Send from Axelar",
+  "transfer.bridge.button.text": "Go to Satellite",
   "transfer.section.network.label": "Select or Type a Network",
   "transfer.section.token.label": "Select or Type a Token",
   "transfer.deposit.helper.description": "We prefilled the address of the recipient above with",
@@ -70,5 +71,8 @@
   "message.gas.fee.reserved.amount": "Gas fee reserved in the max amount",
   "message.insufficient.balance": "Insufficient Balance ",
   "message.insufficiente.fee": "Insufficient Gas Fees: ",
-  "message.processing.fee": "Calculating fee..."
+  "message.processing.fee": "Calculating fee...",
+  "error.getting.balance": "Error getting balance.",
+  "error.getting.balance.connect.wallet": "Please make sure <strong> your wallet is connected</strong>.",
+  "message.only.evmos.supported": "Only <strong>Evmos Network</strong> is currently supported"
 }

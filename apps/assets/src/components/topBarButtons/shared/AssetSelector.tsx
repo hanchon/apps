@@ -21,6 +21,7 @@ import {
   SELECT_FROM_NETWORK_SEND_FLOW,
   SELECT_TOKEN_SEND_FLOW,
 } from "tracker/src/constants";
+import { useAccount } from "wagmi";
 
 type Asset = {
   networkPrefix: Prefix;
@@ -57,6 +58,7 @@ export const AssetSelector = ({
 }>) => {
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
+  const { isDisconnected } = useAccount();
   const selectedChain = chains[value.networkPrefix];
 
   const selectedToken = getToken(value.tokenSourcePrefix, value.denom);
@@ -201,6 +203,7 @@ export const AssetSelector = ({
         </CryptoSelectorDropdownBox>
       </div>
       <AmountInput
+        variant={balanceError ? "error" : isMaxClicked ? "info" : "default"}
         value={value.amount}
         max={maxAllowedTransferAmount}
         onChange={(amount) => {
@@ -226,9 +229,16 @@ export const AssetSelector = ({
                 <CryptoSelectorBalanceText>
                   {t("transfer.section.asset.balance")}{" "}
                 </CryptoSelectorBalanceText>
-                {balance?.formattedLong ?? "0"} {selectedToken.denom}
+                {balance?.formattedLong ?? "0"}
               </div>
             </>
+          )}
+
+          {isDisconnected && (
+            <CryptoSelectorBalanceText>
+              {t("transfer.section.asset.balance")}{" "}
+              {t("transfer.section.asset.balance.error")}
+            </CryptoSelectorBalanceText>
           )}
         </div>
       </CryptoSelectorBalanceBox>

@@ -15,7 +15,8 @@ export const Title = ({
   return (
     <h1
       className={cx("flex items-center gap-2", {
-        "text-xl tracking-wider font-[IBM]": variant === "modal-black",
+        "text-lg md:text-xl tracking-wider font-[IBM]":
+          variant === "modal-black",
         "font-bold": variant === "default",
       })}
     >

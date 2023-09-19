@@ -79,6 +79,7 @@ const config = {
       fontSize: {
         h5: "1.36rem",
         xxs: "10px",
+        xxxs: "8.5px",
       },
     },
   },

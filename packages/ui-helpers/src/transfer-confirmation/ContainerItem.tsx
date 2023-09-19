@@ -3,5 +3,7 @@
 
 import { ComponentProps } from "react";
 export function ContainerItem({ ...rest }: ComponentProps<"div"> & {}) {
-  return <p className="flex justify-between text-sm w-full" {...rest} />;
+  return (
+    <p className="flex justify-between text-xs md:text-sm w-full" {...rest} />
+  );
 }

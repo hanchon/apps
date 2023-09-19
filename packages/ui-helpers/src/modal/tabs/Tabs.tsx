@@ -13,9 +13,9 @@ export const Tabs = ({
   variant: "default" | "pink";
 }) => (
   <div
-    className={cn(" text-sm font-medium  shrink-0", {
-      "grid grid-cols-1 md:grid-cols-2 gap-4": variant === "default",
-      "grid grid-cols-2 gap-4 w-fit md:w-auto tracking-wider":
+    className={cn("font-medium  shrink-0", {
+      "grid grid-cols-1 md:grid-cols-2 gap-4 text-sm ": variant === "default",
+      "grid grid-cols-2 gap-4 w-fit md:w-auto tracking-wider text-xs md:text-sm":
         variant === "pink",
     })}
   >
