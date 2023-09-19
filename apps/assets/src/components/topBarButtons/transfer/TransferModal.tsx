@@ -2,6 +2,7 @@ import {
   AddressSchema,
   ChainPrefixSchema,
   MinDenomSchema,
+  TokenRefSchema,
 } from "evmos-wallet/src/registry-actions/utils";
 import { z } from "zod";
 
@@ -12,8 +13,7 @@ import { ModalProps, useModal } from "helpers";
 const TransferModalSchema = z.object({
   receiver: AddressSchema.optional(),
   networkPrefix: ChainPrefixSchema.default("evmos"),
-  tokenSourcePrefix: ChainPrefixSchema.default("evmos"),
-  denom: MinDenomSchema.default("aevmos"),
+  token: TokenRefSchema.default("evmos:EVMOS"),
   amount: z.coerce.bigint().default(0n),
 });
 

@@ -1,6 +1,6 @@
 import { writeContract } from "wagmi/actions";
 import { Address, isEvmosAddress } from "../../wallet";
-import { Prefix, TokenMinDenom } from "../types";
+import { Prefix, TokenAmount, TokenMinDenom } from "../types";
 import {
   prepareContractERC20Transfer,
   writeContractERC20Transfer,
@@ -15,6 +15,7 @@ import {
 } from "./prepare-cosmos-ibc-transfer";
 import { E, raise } from "helpers";
 import { getToken } from "../get-token";
+import { getTokenByRef } from "../get-token-by-ref";
 
 export const simulateTransfer = async ({
   sender,
@@ -23,16 +24,11 @@ export const simulateTransfer = async ({
 }: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
-  token: {
-    sourcePrefix: Prefix;
-    denom: TokenMinDenom;
-    amount: bigint;
-  };
+  token: TokenAmount;
 }) => {
   const senderIsEvmos = isEvmosAddress(sender);
   const receiverIsEvmos = isEvmosAddress(receiver);
-  const tokenConfig =
-    getToken(token.sourcePrefix, token.denom) ?? raise("TOKEN_NOT_FOUND");
+
   /**
    * Evmos -> Evmos
    */
@@ -46,8 +42,7 @@ export const simulateTransfer = async ({
       ...(await prepareContractERC20Transfer({
         sender,
         receiver,
-        token: tokenConfig,
-        amount: token.amount,
+        token,
       })),
     } as const;
   }
@@ -63,8 +58,7 @@ export const simulateTransfer = async ({
       ...(await prepareContractIBCTransfer({
         sender,
         receiver,
-        token: tokenConfig,
-        amount: token.amount,
+        token,
       })),
     } as const;
   }
@@ -80,8 +74,7 @@ export const simulateTransfer = async ({
       ...(await prepareCosmosIBCTransfer({
         sender,
         receiver,
-        token: tokenConfig,
-        amount: token.amount,
+        token,
       })),
     } as const;
   }
@@ -100,46 +93,34 @@ export const transfer = async ({
 }: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
-  token: {
-    sourcePrefix: Prefix;
-    denom: TokenMinDenom;
-    amount: bigint;
-  };
+  token: TokenAmount;
   fee?: {
     gasLimit: bigint;
-    token: {
-      denom: TokenMinDenom;
-      amount: bigint;
-    };
+    token: TokenAmount;
   };
 }) => {
   const senderIsEvmos = isEvmosAddress(sender);
   const receiverIsEvmos = isEvmosAddress(receiver);
-  const tokenConfig =
-    getToken(token.sourcePrefix, token.denom) ?? raise("TOKEN_NOT_FOUND");
 
   if (senderIsEvmos && receiverIsEvmos) {
     return await writeContractERC20Transfer({
       sender,
       receiver,
-      token: tokenConfig,
-      amount: token.amount,
+      token,
     });
   }
   if (senderIsEvmos && !receiverIsEvmos) {
     return await writeContractIBCTransfer({
       sender,
       receiver,
-      token: tokenConfig,
-      amount: token.amount,
+      token,
     });
   }
   if (!senderIsEvmos && receiverIsEvmos) {
     return await executeCosmosIBCTransfer({
       sender,
       receiver,
-      token: tokenConfig,
-      amount: token.amount,
+      token,
       fee,
     });
   }

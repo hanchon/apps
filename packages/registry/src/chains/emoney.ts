@@ -47,7 +47,9 @@ export default {
   "tokens": [
     {
       "name": "e-Money EUR",
+      "ref": "emoney:EEUR",
       "description": "e-Money EUR stablecoin",
+      "symbol": "EEUR",
       "denom": "EEUR",
       "sourcePrefix": "emoney",
       "sourceDenom": "eeur",

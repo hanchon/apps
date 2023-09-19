@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { formatUnits } from "evmos-wallet/src/registry-actions/utils";
 import { cn } from "helpers";
-import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
+import { Prefix, TokenAmount, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import {
   Address,
   getPrefix,
@@ -15,6 +15,7 @@ import { AddressDisplay, Arrow } from "ui-helpers";
 
 import { useTranslation } from "next-i18next";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
+import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
 
 export const TransferSummary = ({
   sender,
@@ -24,10 +25,8 @@ export const TransferSummary = ({
 }: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
-  token: {
-    sourcePrefix: Prefix;
-    denom: TokenMinDenom;
-    amount: bigint;
+  token: TokenAmount & {
+    networkPrefix: Prefix;
   };
   disabled?: boolean;
 }) => {
@@ -36,14 +35,14 @@ export const TransferSummary = ({
   const senderChain = chains[senderPrefix];
   const receiverChain = chains[receiverPrefix];
 
-  const { name, decimals, denom } = getToken(token.sourcePrefix, token.denom);
+  const { name, decimals, denom } = getTokenByRef(token.ref)
 
   const { fee, isFetching, error } = useFee({
     sender,
     receiverChainPrefix: receiver
       ? getPrefix(normalizeToCosmosAddress(receiver))
       : "evmos",
-    token,
+    tokenRef: token.ref,
   });
 
   const { t } = useTranslation();

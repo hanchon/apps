@@ -14,6 +14,7 @@ import { Trans, useTranslation } from "next-i18next";
 import { ICONS_TYPES } from "constants-helper";
 import { SELECT_TO_NETWORK_SEND_FLOW, useTracker } from "tracker";
 import { useAccount } from "wagmi";
+
 const WALLET_TAB_TYPES = {
   WALLET: "my wallet",
   OTHER: "other",
@@ -46,7 +47,7 @@ export const AccountSelector = ({
     if (walletTab !== WALLET_TAB_TYPES.WALLET) return;
 
     requestAccount(prefix);
-  }, [prefix, walletTab]);
+  }, [prefix, walletTab, getActiveProviderKey()]);
 
   useEffect(() => {
     if (!networkOptions.includes(prefix)) {

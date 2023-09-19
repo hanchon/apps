@@ -1,6 +1,6 @@
 import { Address } from "../../wallet";
 import { transfer } from "../transfers/prepare-transfer";
-import { Prefix, TokenMinDenom } from "../types";
+import { Prefix, TokenAmount, TokenMinDenom, TokenRef } from "../types";
 import { useMutation } from "@tanstack/react-query";
 
 export const useTransfer = ({
@@ -11,18 +11,10 @@ export const useTransfer = ({
 }: {
   sender?: Address<Prefix>;
   receiver?: Address<Prefix>;
-
-  token: {
-    sourcePrefix: Prefix;
-    denom: TokenMinDenom;
-    amount: bigint;
-  };
+  token?: TokenAmount;
   fee?: {
     gasLimit: bigint;
-    token: {
-      denom: TokenMinDenom;
-      amount: bigint;
-    };
+    token: TokenAmount;
   };
 }) => {
   const isReady = sender && receiver && token && fee && token.amount > 0n;

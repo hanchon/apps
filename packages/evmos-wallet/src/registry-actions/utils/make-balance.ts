@@ -16,6 +16,8 @@ export const makeBalance = (
     formatted: formatUnits(amount, token.decimals, "short"),
     formattedLong: formatUnits(amount, token.decimals, "long"),
     tokenSourcePrefix: token.sourcePrefix,
+    symbol: token.symbol,
+    tokenRef: token.ref,
     denom: token.denom,
     minDenom: token.minCoinDenom,
     value: amount,

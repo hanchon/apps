@@ -12,7 +12,7 @@ import {
   InfoPanel,
 } from "ui-helpers";
 import { Trans, useTranslation } from "next-i18next";
-import { Prefix } from "evmos-wallet/src/registry-actions/types";
+import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../shared/AssetSelector";
 import { useAccount } from "wagmi";
 import {
@@ -23,10 +23,6 @@ import {
   getGlobalKeplrProvider,
   getPrefix,
   getToken,
-  useAccountExists,
-  useFee,
-  useTokenBalance,
-  useTransfer,
 } from "evmos-wallet";
 import { AccountSelector } from "../shared/AccountSelector";
 
@@ -36,7 +32,7 @@ import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
 import {
   useRequestWalletAccount,
-  useWalletAccountByPrefix,
+
 } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
@@ -58,12 +54,15 @@ import { TransferModalProps } from "./TransferModal";
 import { useReceiptModal } from "../receipt/ReceiptModal";
 import { useTopupModal } from "../topup/TopupModal";
 import { getAccount } from "wagmi/actions";
-
+import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import { createPortal } from "react-dom";
+import { useSend } from "../hooks/useSend";
+import { getTokenValidDestinations } from "../shared/getTokenValidDestinations";
+import { TransactionInspector } from "../shared/TransactionInspector";
 export const TransferModalContent = ({
   receiver,
   networkPrefix,
-  tokenSourcePrefix,
-  denom,
+  token: tokenRef,
   amount,
   setState,
 }: TransferModalProps) => {
@@ -72,9 +71,15 @@ export const TransferModalContent = ({
   const { isDisconnected } = useAccount();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
+
   const receiptModal = useReceiptModal();
-  const feeChain = chains[networkPrefix];
-  const feeToken = getToken(feeChain.prefix, feeChain.feeToken);
+  const topupModal = useTopupModal();
+
+  const tokenAmount: TokenAmount = {
+    ref: tokenRef,
+    amount: amount,
+  }
+
   const {
     account,
     error: walletRequestError,
@@ -87,59 +92,29 @@ export const TransferModalContent = ({
   }, [networkPrefix, getAccount().address]);
 
   const sender = account?.bech32Address;
-  const token = getToken(tokenSourcePrefix, denom);
+  const {
+    isTransferring,
+    isReady: isReadyToTransfer,
+    transfer,
+    transferResponse,
+    validation,
+    fee,
+    feeBalance,
+    isPreparing,
+    feeToken,
+    __DEBUG__
+  } = useSend({
+    sender,
+    receiver,
+    token: tokenAmount,
+  })
+  const token = getTokenByRef(tokenRef);
   const senderChain = sender ? getChainByAddress(sender) : chains["evmos"];
   const tokenChain = chains[token.sourcePrefix];
 
-  const { data: accountExists } = useAccountExists(sender);
 
-  const { fee, error: feeError } = useFee({
-    sender,
-    receiverChainPrefix: receiver ? getPrefix(receiver) : "evmos",
-    token: token && {
-      denom: token.minCoinDenom,
-      sourcePrefix: tokenSourcePrefix,
-    },
-  });
-
-  const {
-    transfer,
-    isReady: isReadyToTransfer,
-    isLoading: isTransferring,
-    data: transferData,
-  } = useTransfer({
-    sender,
-    receiver,
-    token: {
-      amount: amount,
-      denom: denom,
-      sourcePrefix: tokenSourcePrefix,
-    },
-    fee: fee
-      ? {
-          token: fee.token,
-          gasLimit: fee.gas,
-        }
-      : undefined,
-  });
-  const { balance } = useTokenBalance(sender, token);
-
-  const { balance: feeTokenbalance } = useTokenBalance(sender, feeToken);
-
-  const destinationNetworkOptions = useMemo((): Prefix[] => {
-    // If asset is being held on an EVMOS ACCOUNT
-    if (senderChain.prefix === "evmos") {
-      // if it's an EVMOS NATIVE TOKEN it can go anywhere
-      if (tokenChain.prefix === "evmos") return sortedChains;
-      // if it's NOT native to Evmos,than it can go to:
-      // - other evmos accounts
-      // - its native network
-      return ["evmos", tokenChain.prefix];
-    }
-
-    // if it's held somewhere else, it can only go to evmos
-    return ["evmos"];
-  }, [senderChain, tokenChain]);
+  const destinationNetworkOptions = useMemo((): Prefix[] => //
+    getTokenValidDestinations(tokenAmount.ref, senderChain.prefix), [tokenAmount.ref, senderChain.prefix]);
 
   const activeProviderKey = getActiveProviderKey();
 
@@ -158,106 +133,11 @@ export const TransferModalContent = ({
     return [];
   }, [senderChain, tokenChain, activeProviderKey]);
 
-  /**
-   * Centralizing errors
-   * We could consider moving this out of the component if it's starts to grow too much
-   */
-  const errors = useMemo(() => {
-    const errors = new Set<
-      | "accountDoesntExist"
-      | "insufficientBalance"
-      | "insufficientBalanceForFee"
-      | "userRejectedEnablingNetwork"
-      | "networkNotSupportedByConnectedWallet"
-    >();
+  const senderValidation = {
+    userRejectedEnablingNetwork: E.match.byPattern(walletRequestError, /USER_REJECTED_REQUEST/),
+    networkNotSupportedByConnectedWallet: activeProviderKey && activeProviderKey !== 'keplr' && networkPrefix !== 'evmos'
+  };
 
-    /**
-     * Account doesn't exist
-     */
-    if (accountExists === false) {
-      errors.add("accountDoesntExist");
-    }
-
-    /**
-     * Balance checks
-     */
-    const isFeeTokenAndSelectedTokenEqual = feeToken === token;
-
-    if (
-      accountExists === false ||
-      // Checks if the balance is 0 (undefined means balance might be loading so it's not an error)
-      balance?.value === 0n ||
-      // Checks if the balance is enough to pay for transfer and fee
-      (balance &&
-        fee &&
-        isFeeTokenAndSelectedTokenEqual &&
-        fee.token.amount + amount > balance.value) ||
-      // check if balance is enough without considering fee (when fee is paid in a different token)
-      (balance && amount > balance.value)
-    ) {
-      errors.add("insufficientBalance");
-      errors.add("insufficientBalanceForFee");
-    }
-
-    /**
-     * Balance check exclusive for fee token
-     * Note: The simulation will fail if the user doesn't have enough balance to pay the fee
-     * so we will not even know how much the fee would be to begin with
-     *
-     * so we only check if the balance is 0
-     */
-    if (feeTokenbalance?.value === 0n) {
-      errors.add("insufficientBalanceForFee");
-      sendEvent(INSUFFICIENT_FEE_AMOUNT);
-    }
-    /**
-     * Wallet checks
-     */
-    if (E.match.byPattern(walletRequestError, /USER_REJECTED_REQUEST/)) {
-      errors.add("userRejectedEnablingNetwork");
-    }
-
-    if (
-      E.match.byPattern(walletRequestError, /NETWORK_NOT_SUPPORTED_BY_WALLET/)
-    ) {
-      errors.add("networkNotSupportedByConnectedWallet");
-    }
-
-    return errors;
-  }, [
-    balance,
-    fee,
-    feeError,
-    walletRequestError,
-    feeTokenbalance,
-    accountExists,
-    token,
-  ]);
-
-  const topupModal = useTopupModal();
-
-  const topUpEvmos =
-    errors.has("insufficientBalanceForFee") ||
-    // TODO: there was a changed but I'm not sure what value should we use here now
-    // should we only check for evmos here ?
-    // Shooul we also check for the fee token. Case: Juno - network Evmos - to evmos. I have to pay with evmos.
-    (errors.has("insufficientBalance") && token.denom === "EVMOS");
-
-  const isAxelarBased = useMemo(() => {
-    return token.handledByExternalUI !== null;
-  }, [token]);
-
-  const sendButtonText = useMemo(() => {
-    if (topUpEvmos) {
-      return t("transfer.top.up.button.text");
-    }
-
-    if (isAxelarBased) {
-      return t("transfer.bridge.button.text");
-    }
-
-    return t("transfer.send.button.text");
-  }, [topUpEvmos, isAxelarBased, t]);
 
   useEffect(() => {
     installKeplr();
@@ -275,55 +155,32 @@ export const TransferModalContent = ({
   }, []);
 
   useEffect(() => {
-    if (!transferData) return;
+    if (!transferResponse) return;
 
     receiptModal.setIsOpen(true, {
-      hash: transferData.hash,
+      hash: transferResponse.hash,
       chainPrefix: networkPrefix,
     });
-  }, [transferData]);
+  }, [transferResponse]);
 
-  const isCTAEnabled = useMemo(() => {
-    // TO JULIA: Can you check if the logic is correct?
-    if (isTransferring || !isReadyToTransfer) {
-      return false;
-    }
 
-    if (isAxelarBased) {
-      return true;
-    }
+  const action = useMemo(() => {
+    if (isDisconnected) return 'CONNECT';
 
-    if (topUpEvmos) {
-      return true;
-    }
+    if (token.ref === 'evmos:EVMOS' && !validation.hasSufficientBalance && !isPreparing) return 'TOPUP';
+    if (fee && fee.token.ref === 'evmos:EVMOS' && !validation.hasSufficientBalanceForFee && !isPreparing) return 'TOPUP';
 
-    if (
-      errors.has("accountDoesntExist") ||
-      errors.has("networkNotSupportedByConnectedWallet") ||
-      errors.has("userRejectedEnablingNetwork")
-    ) {
-      return false;
-    }
+    if (token.handledByExternalUI !== null) return 'BRIDGE';
 
-    if (
-      // CTA is disabled if the user doesn't have enough balance and the token is not evmos.
-      errors.has("insufficientBalance") &&
-      // what value should we use if I want to check for the token that is selected ?
-      token.denom !== "EVMOS"
-    ) {
-      return false;
-    }
+    return 'TRANSFER';
+  }, [token, isDisconnected, validation.hasSufficientBalance, validation.hasSufficientBalanceForFee, fee?.token.ref]);
 
-    return true;
+  useEffect(() => {
+    if (!validation.hasSufficientBalanceForFee && !isPreparing) sendEvent(INSUFFICIENT_FEE_AMOUNT)
   }, [
-    errors,
-    token,
-    isAxelarBased,
-    topUpEvmos,
-    isReadyToTransfer,
-    isTransferring,
-  ]);
-
+    validation.hasSufficientBalanceForFee,
+    isPreparing,
+  ])
   return (
     <section className="space-y-3 w-full">
       <Title
@@ -337,16 +194,21 @@ export const TransferModalContent = ({
         onSubmit={(e) => {
           e.preventDefault();
 
-          if (topUpEvmos) {
+          if (action === "TOPUP") {
             topupModal.setIsOpen(true);
             sendEvent(CLICK_ON_TOP_UP_EVMOS);
             return;
           }
 
-          if (token.handledByExternalUI) {
-            window.open(token.handledByExternalUI[0].url as string, "_blank");
+          if (action === "BRIDGE") {
+            const target = token.handledByExternalUI?.[0].url;
+            if (!target) return;
+            window.open(target, "_blank");
             sendEvent(CLICK_ON_AXL_REDIRECT);
-            // TODO: close send modal
+            return
+          }
+
+          if (action === "CONNECT") {
             return;
           }
 
@@ -360,23 +222,23 @@ export const TransferModalContent = ({
           <AssetSelector
             value={{
               networkPrefix,
-              tokenSourcePrefix,
-              denom,
-              amount,
+              ...tokenAmount,
             }}
             address={sender}
             fee={fee?.token}
             onChange={(token) => {
               setState((prev) => ({
                 ...prev,
-                ...token,
+                networkPrefix: token.networkPrefix,
+                amount: token.amount,
+                token: token.ref,
+
               }));
             }}
-            balanceError={errors.has("insufficientBalance")}
           />
 
           {/* TODO: Some error messages. This is not in the specs, so we need to check with Mian how to display those */}
-          {errors.has("userRejectedEnablingNetwork") && (
+          {senderValidation.userRejectedEnablingNetwork && (
             <InfoPanel icon={<WizardIcon className="shrink-0" />}>
               <div>
                 <p className="pb-4">
@@ -414,7 +276,7 @@ export const TransferModalContent = ({
               </div>
             </InfoPanel>
           )}
-          {errors.has("networkNotSupportedByConnectedWallet") && (
+          {senderValidation.networkNotSupportedByConnectedWallet && (
             <InfoPanel icon={<IconContainer type={ICONS_TYPES.METAMASK} />}>
               <div className="space-y-4">
                 <p>
@@ -454,15 +316,16 @@ export const TransferModalContent = ({
                 >
                   {getGlobalKeplrProvider() === null
                     ? t(
-                        "error.network.not.support.by-wallet.installButtonLabel"
-                      )
+                      "error.network.not.support.by-wallet.installButtonLabel"
+                    )
                     : t(
-                        "error.network.not.support.by-wallet.connectButtonLabel"
-                      )}
+                      "error.network.not.support.by-wallet.connectButtonLabel"
+                    )}
                 </PrimaryButton>
               </div>
             </InfoPanel>
           )}
+
 
           <Subtitle variant="modal-black">{t("transfer.section.to")}</Subtitle>
           <AccountSelector
@@ -481,69 +344,92 @@ export const TransferModalContent = ({
                 sender={sender}
                 receiver={receiver}
                 token={{
-                  amount,
-                  denom,
-                  sourcePrefix: tokenSourcePrefix,
+                  ...tokenAmount,
+                  networkPrefix: senderChain.prefix,
                 }}
-                disabled={errors.size > 0 || !isReadyToTransfer}
+                disabled={!isReadyToTransfer}
               />
             </div>
           )}
-          {errors.has("insufficientBalanceForFee") && feeTokenbalance && (
+
+          {/* {!validation.hasSufficientBalanceForFee && feeBalance && (
             <ErrorMessage className="justify-center pl-0">
-              {/* TODO: the message might be different if the insufficient token is the fee token? */}
               {t("message.insufficiente.fee")}
-              {feeTokenbalance.formattedLong} {feeTokenbalance.denom}
+              {feeBalance.formattedLong} {feeBalance.symbol}
             </ErrorMessage>
-          )}
+          )} */}
 
-          {isAxelarBased && (
-            <ErrorMessage className="justify-center pl-0" variant="info">
-              <Trans
-                i18nKey="error.send.axelar.assets.text"
-                components={{
-                  strong: <span className="text-pink-300" />,
-                }}
+          {/* 
+            * Call to action Buttons
+            */}
+          {action === 'CONNECT' && (
+            <>
+              <ErrorMessage className="justify-center pl-0 mb-4" variant="info">
+                <p className="pb-1"> {t("error.getting.balance")}</p>
+                <Trans
+                  i18nKey="error.getting.balance.connect.wallet"
+                  components={{
+                    strong: <span className="text-pink-300" />,
+                  }}
+                />
+              </ErrorMessage>
+              {/* TODO: add tracker event and add styles to the button */}
+              <WalletConnection
+                copilotModal={({
+                  beforeStartHook,
+                }: {
+                  beforeStartHook: Dispatch<SetStateAction<boolean>>;
+                }) => <CopilotButton beforeStartHook={beforeStartHook} />}
+                dispatch={dispatch}
+                walletExtension={wallet}
+                variant="outline-primary"
               />
-            </ErrorMessage>
+            </>
           )}
 
-          {isDisconnected && (
-            <ErrorMessage className="justify-center pl-0 mb-4" variant="info">
-              <p className="pb-1"> {t("error.getting.balance")}</p>
-              <Trans
-                i18nKey="error.getting.balance.connect.wallet"
-                components={{
-                  strong: <span className="text-pink-300" />,
-                }}
-              />
-            </ErrorMessage>
+          {action === 'TOPUP' && (
+            <>
+              {!validation.hasSufficientBalanceForFee && (
+                <ErrorMessage className="justify-center pl-0">
+                  {t("message.insufficiente.fee")}
+                  {feeBalance?.formattedLong ?? 0} {feeToken?.symbol}
+                </ErrorMessage>
+              )}
+              <PrimaryButton
+                type="submit"
+                variant={"outline-primary"}
+                className="w-full text-base md:text-lg rounded-md capitalize mt-5"
+              >
+                {t("transfer.top.up.button.text")}
+              </PrimaryButton>
+            </>
           )}
-
-          {isDisconnected && (
-            // TODO: add tracker event and add styles to the button
-            <WalletConnection
-              copilotModal={({
-                beforeStartHook,
-              }: {
-                beforeStartHook: Dispatch<SetStateAction<boolean>>;
-              }) => <CopilotButton beforeStartHook={beforeStartHook} />}
-              dispatch={dispatch}
-              walletExtension={wallet}
-              variant="outline-primary"
-            />
+          {action === 'BRIDGE' && (
+            <>
+              <ErrorMessage className="justify-center pl-0" variant="info">
+                <Trans
+                  i18nKey="error.send.axelar.assets.text"
+                  components={{
+                    strong: <span className="text-pink-300" />,
+                  }}
+                />
+              </ErrorMessage>
+              <PrimaryButton
+                type="submit"
+                variant={"outline-primary"}
+                className="w-full text-base md:text-lg rounded-md capitalize mt-5"
+              >
+                {t("transfer.bridge.button.text")}
+              </PrimaryButton>
+            </>
           )}
-          {!isDisconnected && (
+          {action === 'TRANSFER' && (
             <PrimaryButton
               type="submit"
-              variant={
-                topUpEvmos || isAxelarBased ? "outline-primary" : "primary"
-              }
               className="w-full text-base md:text-lg rounded-md capitalize mt-5"
-              disabled={!isCTAEnabled}
-              //
+              disabled={!isReadyToTransfer}
             >
-              {sendButtonText}
+              {t("transfer.send.button.text")}
             </PrimaryButton>
           )}
 
@@ -571,6 +457,14 @@ export const TransferModalContent = ({
       >
         Test open topup modal
       </button>
+      {typeof document !== "undefined" && process.env.NODE_ENV === 'development' &&
+        createPortal(
+          <TransactionInspector {...__DEBUG__} />,
+          document.body
+        )}
     </section>
   );
 };
+
+
+

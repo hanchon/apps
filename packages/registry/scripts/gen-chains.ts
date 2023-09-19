@@ -63,10 +63,16 @@ await mkdir("src/chains", { recursive: true });
 const chains = await readRegistryChain();
 
 for (const chainRegistry of chains) {
+  if (chainRegistry.prefix === "kujira") {
+    // TODO: We need to add Kujira fee token to our registry
+    continue;
+  }
   const tokens = tokenByPrefix[chainRegistry.prefix]?.map((token) => {
     return {
       name: token.name,
+      ref: `${chainRegistry.prefix}:${token.coinDenom}`,
       description: token.description,
+      symbol: token.coinDenom,
       denom: token.coinDenom,
       sourcePrefix: chainRegistry.prefix,
       sourceDenom: token.ibc.sourceDenom,
@@ -133,6 +139,7 @@ for (const chainRegistry of chains) {
 await writeFile("src/chains/index.ts", [
   fileHeader,
   chains
+    .filter(({ prefix }) => prefix !== "kujira")
     .map(({ prefix }) => `export { default as ${prefix} } from "./${prefix}";`)
     .join("\n"),
 ]);

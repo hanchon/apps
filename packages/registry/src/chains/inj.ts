@@ -44,7 +44,9 @@ export default {
   "tokens": [
     {
       "name": "Injective",
+      "ref": "inj:INJ",
       "description": "The INJ token is the native governance token for the Injective chain.",
+      "symbol": "INJ",
       "denom": "INJ",
       "sourcePrefix": "inj",
       "sourceDenom": "inj",

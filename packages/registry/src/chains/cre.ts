@@ -41,7 +41,9 @@ export default {
   "tokens": [
     {
       "name": "Crescent Network",
+      "ref": "cre:CRE",
       "description": "The native token of Crecent Network",
+      "symbol": "CRE",
       "denom": "CRE",
       "sourcePrefix": "cre",
       "sourceDenom": "ucre",

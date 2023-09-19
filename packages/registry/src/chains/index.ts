@@ -12,7 +12,6 @@ export { default as stars } from "./stars";
 export { default as regen } from "./regen";
 export { default as quick } from "./quick";
 export { default as osmo } from "./osmo";
-export { default as kujira } from "./kujira";
 export { default as juno } from "./juno";
 export { default as inj } from "./inj";
 export { default as gravity } from "./gravity";

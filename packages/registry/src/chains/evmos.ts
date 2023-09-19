@@ -49,7 +49,9 @@ export default {
   "tokens": [
     {
       "name": "NEOKingdom DAO",
+      "ref": "evmos:NEOK",
       "description": "NEOKingdom DAO",
+      "symbol": "NEOK",
       "denom": "NEOK",
       "sourcePrefix": "evmos",
       "sourceDenom": "neok",
@@ -62,7 +64,9 @@ export default {
     },
     {
       "name": "EVMOS",
+      "ref": "evmos:EVMOS",
       "description": "EVMOS",
+      "symbol": "EVMOS",
       "denom": "EVMOS",
       "sourcePrefix": "evmos",
       "sourceDenom": "aevmos",
