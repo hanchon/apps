@@ -49,7 +49,9 @@ export default {
   "tokens": [
     {
       "name": "Stride Staked Stars",
+      "ref": "stride:stSTARS",
       "description": "Staking derivative by Stride",
+      "symbol": "stSTARS",
       "denom": "stSTARS",
       "sourcePrefix": "stride",
       "sourceDenom": "stustars",
@@ -62,7 +64,9 @@ export default {
     },
     {
       "name": "Stride Staked Osmo",
+      "ref": "stride:stOSMO",
       "description": "Staking derivative by Stride",
+      "symbol": "stOSMO",
       "denom": "stOSMO",
       "sourcePrefix": "stride",
       "sourceDenom": "stuosmo",
@@ -75,7 +79,9 @@ export default {
     },
     {
       "name": "Stride Staked Juno",
+      "ref": "stride:stJUNO",
       "description": "Staking derivative by Stride",
+      "symbol": "stJUNO",
       "denom": "stJUNO",
       "sourcePrefix": "stride",
       "sourceDenom": "stujuno",
@@ -88,7 +94,9 @@ export default {
     },
     {
       "name": "Stride Staked Inj",
+      "ref": "stride:stINJ",
       "description": "Staking derivative by Stride",
+      "symbol": "stINJ",
       "denom": "stINJ",
       "sourcePrefix": "stride",
       "sourceDenom": "stinj",
@@ -101,7 +109,9 @@ export default {
     },
     {
       "name": "Stride Staked Evmos",
+      "ref": "stride:stEVMOS",
       "description": "Staking derivative by Stride",
+      "symbol": "stEVMOS",
       "denom": "stEVMOS",
       "sourcePrefix": "stride",
       "sourceDenom": "staevmos",
@@ -114,7 +124,9 @@ export default {
     },
     {
       "name": "Stride Staked Atom",
+      "ref": "stride:stATOM",
       "description": "Staking derivative by Stride",
+      "symbol": "stATOM",
       "denom": "stATOM",
       "sourcePrefix": "stride",
       "sourceDenom": "stuatom",
@@ -127,7 +139,9 @@ export default {
     },
     {
       "name": "Stride",
+      "ref": "stride:STRD",
       "description": "The native token of Stride",
+      "symbol": "STRD",
       "denom": "STRD",
       "sourcePrefix": "stride",
       "sourceDenom": "ustrd",

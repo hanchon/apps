@@ -23,12 +23,17 @@ export const readRegistryChain = async () =>
     )
   ).flatMap(({ configurations, ...rest }) =>
     configurations
-      ? configurations.map((configuration) => ({ ...rest, configuration }))
+      ? configurations.map((configuration) => ({
+          ...rest,
+          configuration,
+        }))
       : []
   );
 
 export const readRegistryToken = () =>
-  readFiles<TokenRegistry>("node_modules/chain-token-registry/tokens/*.json");
+  readFiles<TokenRegistry>(
+    "node_modules/chain-token-registry/tokens/*.json"
+  );
 
 const normalizeNetworkUrls = (urls?: string[]) => {
   if (!urls) {
@@ -63,27 +68,43 @@ await mkdir("src/chains", { recursive: true });
 const chains = await readRegistryChain();
 
 for (const chainRegistry of chains) {
-  const tokens = tokenByPrefix[chainRegistry.prefix]?.map((token) => {
-    return {
-      name: token.name,
-      description: token.description,
-      denom: token.coinDenom,
-      sourcePrefix: chainRegistry.prefix,
-      sourceDenom: token.ibc.sourceDenom,
-      // TODO: minCoinDenom for evmos is wrong in our registry, we should fix that there
-      minCoinDenom:
-        token.minCoinDenom === "EVMOS" ? "aevmos" : token.minCoinDenom,
-      category: token.category === "none" ? null : token.category,
-      type: token.type === "IBC" ? "IBC" : "ERC20",
-      decimals: Number(token.exponent),
-      erc20Address: token.erc20Address,
-      handledByExternalUI: token.handledByExternalUI ?? null,
-    };
-  });
+  if (chainRegistry.prefix === "kujira") {
+    // TODO: We need to add Kujira fee token to our registry
+    continue;
+  }
+  const tokens = tokenByPrefix[chainRegistry.prefix]?.map(
+    (token) => {
+      return {
+        name: token.name,
+        ref: `${chainRegistry.prefix}:${token.coinDenom}`,
+        description: token.description,
+        symbol: token.coinDenom,
+        denom: token.coinDenom,
+        sourcePrefix: chainRegistry.prefix,
+        sourceDenom:
+          chainRegistry.prefix === "evmos"
+            ? token.cosmosDenom
+            : token.ibc.sourceDenom,
+        // TODO: minCoinDenom for evmos is wrong in our registry, we should fix that there
+        minCoinDenom:
+          token.minCoinDenom === "EVMOS"
+            ? "aevmos"
+            : token.minCoinDenom,
+        category:
+          token.category === "none" ? null : token.category,
+        type: token.type === "IBC" ? "IBC" : "ERC20",
+        decimals: Number(token.exponent),
+        erc20Address: token.erc20Address,
+        handledByExternalUI:
+          token.handledByExternalUI ?? null,
+      };
+    }
+  );
 
   const configuration = chainRegistry.configuration;
 
-  const isTestnet = configuration.configurationType === "testnet";
+  const isTestnet =
+    configuration.configurationType === "testnet";
   const identifier = configuration.identifier.toLowerCase();
 
   const chain = {
@@ -92,14 +113,21 @@ for (const chainRegistry of chains) {
     cosmosId: configuration.chainId,
     identifier,
     gasPriceStep: chainRegistry.gasPriceStep,
-    evmId: chainRegistry.prefix !== "evmos" ? null : isTestnet ? 9000 : 9001,
+    evmId:
+      chainRegistry.prefix !== "evmos"
+        ? null
+        : isTestnet
+        ? 9000
+        : 9001,
     channels:
       // TODO: When we start supporting IBC between other chains, we need to add the proper channels here
-      chainRegistry.prefix !== "evmos" && configuration.source
+      chainRegistry.prefix !== "evmos" &&
+      configuration.source
         ? {
             evmos: {
               channelId: configuration.source.sourceChannel,
-              counterpartyChannelId: configuration.source.destinationChannel,
+              counterpartyChannelId:
+                configuration.source.destinationChannel,
             },
           }
         : null,
@@ -126,13 +154,21 @@ for (const chainRegistry of chains) {
   };
   await writeFile(`src/chains/${chain.prefix}.ts`, [
     fileHeader,
-    `export default ${JSON.stringify(chain, null, 2)} as const;`,
+    `export default ${JSON.stringify(
+      chain,
+      null,
+      2
+    )} as const;`,
   ]);
 }
 
 await writeFile("src/chains/index.ts", [
   fileHeader,
   chains
-    .map(({ prefix }) => `export { default as ${prefix} } from "./${prefix}";`)
+    .filter(({ prefix }) => prefix !== "kujira")
+    .map(
+      ({ prefix }) =>
+        `export { default as ${prefix} } from "./${prefix}";`
+    )
     .join("\n"),
 ]);

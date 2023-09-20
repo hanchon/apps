@@ -7,29 +7,40 @@ import {
   isEvmosAddress,
   normalizeToEth,
 } from "../../wallet";
-import { Prefix, Token, TokenMinDenom } from "../types";
-import { getIBCChannelId, getTimeoutTimestamp } from "../utils";
+import {
+  Prefix,
+  Token,
+  TokenAmount,
+  TokenMinDenom,
+} from "../types";
+import {
+  getIBCChannelId,
+  getTimeoutTimestamp,
+} from "../utils";
 import { writeContract } from "wagmi/actions";
 import { getIBCDenom } from "../utils/get-ibc-denom";
 import { buffGasEstimate } from "../utils/buff-gas-estimate";
+import { getTokenByRef } from "../get-token-by-ref";
 
-export const prepareContractIBCTransfer = async <T extends Prefix>({
-  token,
+export const prepareContractIBCTransfer = async <
+  T extends Prefix,
+>({
   sender,
   receiver,
-  amount,
+  token,
 }: {
   sender: Address<T>;
   receiver: Address<Exclude<Prefix, T>>; // Can't IBC transfer to the same network
-  token: Token;
-  amount: bigint;
+  token: TokenAmount;
 }) => {
   assertIf(
     isEvmosAddress(sender),
     "Sender must be an EVMOS address to transfer through ICS20 contract"
   );
+  const transferredToken = getTokenByRef(token.ref);
 
   const senderAddressAsHex = normalizeToEth(sender);
+
   const args = {
     abi: ics20Abi,
     address: "0x0000000000000000000000000000000000000802",
@@ -44,9 +55,9 @@ export const prepareContractIBCTransfer = async <T extends Prefix>({
       getIBCDenom({
         sender,
         receiver,
-        token,
+        token: transferredToken,
       }),
-      amount,
+      token.amount,
       senderAddressAsHex,
       receiver,
       {
@@ -58,30 +69,33 @@ export const prepareContractIBCTransfer = async <T extends Prefix>({
     ],
   } as const;
 
-  const { request } = await evmosClient.simulateContract(args);
+  const { request } = await evmosClient.simulateContract(
+    args
+  );
 
   return {
     tx: request,
-    estimatedGas: buffGasEstimate(await evmosClient.estimateContractGas(args)),
+    estimatedGas: buffGasEstimate(
+      await evmosClient.estimateContractGas(args)
+    ),
   };
 };
 
-export const writeContractIBCTransfer = async <T extends Prefix>({
-  token,
+export const writeContractIBCTransfer = async <
+  T extends Prefix,
+>({
   sender,
   receiver,
-  amount,
+  token,
 }: {
   sender: Address<T>;
   receiver: Address<Exclude<Prefix, T>>; // Can't IBC transfer to the same network
-  token: Token;
-  amount: bigint;
+  token: TokenAmount;
 }) => {
   const prepared = await prepareContractIBCTransfer({
     sender,
     receiver,
     token,
-    amount,
   });
 
   return writeContract(prepared.tx);

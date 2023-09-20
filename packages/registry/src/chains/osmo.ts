@@ -43,7 +43,9 @@ export default {
   "tokens": [
     {
       "name": "Osmosis",
+      "ref": "osmo:OSMO",
       "description": "The native token of Osmosis",
+      "symbol": "OSMO",
       "denom": "OSMO",
       "sourcePrefix": "osmo",
       "sourceDenom": "uosmo",

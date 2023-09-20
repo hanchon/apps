@@ -1,12 +1,16 @@
 import { chains } from "@evmos-apps/registry";
 import { CosmosAddress } from "../wallet";
-import { Prettify } from "viem/dist/types/types/utils";
 
 export type Chain = (typeof chains)[keyof typeof chains];
 export type Prefix = Chain["prefix"];
 export type Token = Chain["tokens"][number];
 export type TokenDenom = Token["denom"];
 export type TokenMinDenom = Token["minCoinDenom"];
+
+export type TokenRef = Token["ref"];
+export type TokenByRef = Readonly<{
+  [K in TokenRef]: Readonly<Extract<Token, { ref: K }>>;
+}>;
 
 export type TokenByDenom = Readonly<{
   [K in TokenDenom]: Readonly<Extract<Token, { denom: K }>>;
@@ -16,6 +20,10 @@ export type TokenByMinDenom = Readonly<{
   [K in TokenMinDenom]: Readonly<Extract<Token, { minCoinDenom: K }>>;
 }>;
 
+export type TokenAmount = {
+  ref: TokenRef;
+  amount: bigint;
+};
 export type FormattedBalance = {
   /**
    * @description
@@ -29,11 +37,7 @@ export type FormattedBalance = {
   decimals: number;
   /**
    * @description
-   * The formatted balance with 2 decimal places
-   * @example
-   * // 1234567890000000000n
-   * formatBalance(1234567890000000000n, 18)
-   * // 1.23
+   * The formatted balance with 7 decimal places
    */
   formatted: string;
   /**
@@ -46,7 +50,8 @@ export type FormattedBalance = {
    * // 1.23456789
    */
   formattedLong: string;
-
+  symbol: Token["symbol"];
+  tokenRef: TokenRef;
   denom: TokenDenom;
   tokenSourcePrefix: Prefix;
   minDenom: string;

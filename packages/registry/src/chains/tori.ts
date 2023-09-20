@@ -46,7 +46,9 @@ export default {
   "tokens": [
     {
       "name": "Teritori",
+      "ref": "tori:TORI",
       "description": "The native staking and governance token of the Teritori chain",
+      "symbol": "TORI",
       "denom": "TORI",
       "sourcePrefix": "tori",
       "sourceDenom": "utori",

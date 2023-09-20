@@ -8,7 +8,7 @@ import {
   ErrorMessage,
 } from "ui-helpers";
 import { chains } from "@evmos-apps/registry";
-import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
+import { Prefix, TokenAmount, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "ui-helpers";
 import { Address, getToken, getTokens, useTokenBalance } from "evmos-wallet";
 import { CryptoSelectorTitle } from "ui-helpers";
@@ -22,13 +22,11 @@ import {
   SELECT_TOKEN_SEND_FLOW,
 } from "tracker/src/constants";
 import { useAccount } from "wagmi";
+import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
 
 type Asset = {
   networkPrefix: Prefix;
-  denom: TokenMinDenom;
-  tokenSourcePrefix: Prefix;
-  amount: bigint;
-};
+} & TokenAmount
 
 const tokenToUSD = (amount: bigint, price: number, decimals: number) => {
   const unformmatedUsd = Number(
@@ -47,25 +45,20 @@ export const AssetSelector = ({
   address,
   showNetworkSelector = true,
   showMax = true,
-  balanceError,
 }: PropsWithChildren<{
   value: Asset;
   onChange: (value: Asset) => void;
   address?: Address<Prefix>;
-  fee?: {
-    amount: bigint;
-    denom: TokenMinDenom;
-  };
+  fee?: TokenAmount;
   showNetworkSelector?: boolean;
   showMax?: boolean;
-  balanceError: boolean;
 }>) => {
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
   const { isDisconnected } = useAccount();
   const selectedChain = chains[value.networkPrefix];
 
-  const selectedToken = getToken(value.tokenSourcePrefix, value.denom);
+  const selectedToken = getTokenByRef(value.ref);
 
   const tokenOptions = useMemo(() => {
     return getTokens().sort(({ denom: a }, { denom: b }) => (a > b ? 1 : -1));
@@ -74,36 +67,34 @@ export const AssetSelector = ({
   const networkOptions = useMemo(() => {
     if (selectedToken.sourcePrefix === "evmos")
       return Object.values(chains).map(({ prefix }) => prefix);
-
     return [selectedToken.sourcePrefix, "evmos"] as Prefix[];
   }, [selectedToken]);
+
 
   /**
    * When network changes, check if the selected token is available on the new network.
    * If not, set the first available token as the selected token.
    */
   useEffect(() => {
-    if (tokenOptions.includes(getToken(value.tokenSourcePrefix, value.denom)))
+    if (tokenOptions.includes(selectedToken))
       return;
+    const [firstAvailableToken] = tokenOptions;
     onChange({
       ...value,
-      tokenSourcePrefix: tokenOptions[0].sourcePrefix,
-      denom: tokenOptions[0].minCoinDenom,
+      ref: firstAvailableToken.ref,
+      networkPrefix: firstAvailableToken.sourcePrefix,
     });
-  }, [tokenOptions]);
+  }, [tokenOptions, selectedToken]);
 
-  const price = useTokenPrice(value.denom);
+  const price = useTokenPrice(value.ref);
 
-  const { balance, isFetching: isFetchingBalance } = useTokenBalance(address, {
-    minCoinDenom: value.denom,
-    sourcePrefix: value.tokenSourcePrefix,
-  });
+  const { balance, isFetching: isFetchingBalance } = useTokenBalance(address, value.ref);
 
   const amountInUsd = price
     ? tokenToUSD(value.amount, Number(price), selectedToken.decimals)
     : null;
 
-  const isFeeTokenAndSelectedTokenEqual = fee && fee.denom === value.denom;
+  const isFeeTokenAndSelectedTokenEqual = fee && fee.ref === value.ref;
   const maxAllowedTransferAmount = useMemo(() => {
     if (!showMax) return undefined;
     if (!balance) return 0n;
@@ -113,6 +104,7 @@ export const AssetSelector = ({
     return balance.value;
   }, [balance, fee, isFeeTokenAndSelectedTokenEqual]);
 
+  const inssuficientBalance = isFetchingBalance === false && !balance || balance?.value === 0n
   const [isMaxClicked, setIsMaxClicked] = useState(false);
   return (
     <CryptoSelectorBox>
@@ -124,11 +116,11 @@ export const AssetSelector = ({
           <CryptoSelector
             value={selectedToken}
             onChange={(token) => {
+              console.log(token.ref)
               onChange({
                 networkPrefix: token.sourcePrefix,
-                tokenSourcePrefix: token.sourcePrefix,
+                ref: token.ref,
                 amount: 0n,
-                denom: token.minCoinDenom,
               });
               sendEvent(SELECT_TOKEN_SEND_FLOW, {
                 "token selected": token.name,
@@ -143,7 +135,7 @@ export const AssetSelector = ({
               src={`/assets/tokens/${selectedToken.denom}.png`}
               variant="black"
             >
-              {selectedToken.denom.toLowerCase()}
+              {selectedToken.symbol.toLowerCase()}
             </CryptoSelector.Button>
             <CryptoSelector.Options
               variant="multiple"
@@ -210,7 +202,7 @@ export const AssetSelector = ({
         }
       </div>
       <AmountInput
-        variant={balanceError ? "error" : isMaxClicked ? "info" : "default"}
+        variant={inssuficientBalance ? "error" : isMaxClicked ? "info" : "default"}
         value={value.amount}
         max={maxAllowedTransferAmount}
         onChange={(amount) => {
@@ -236,7 +228,7 @@ export const AssetSelector = ({
                 <CryptoSelectorBalanceText>
                   {t("transfer.section.asset.balance")}{" "}
                 </CryptoSelectorBalanceText>
-                {balance?.formattedLong ?? "0"}
+                {balance?.formatted ?? "0"}
               </div>
             </>
           )}
@@ -254,7 +246,7 @@ export const AssetSelector = ({
           {t("message.gas.fee.reserved.amount")}
         </ErrorMessage>
       )}
-      {balanceError && (
+      {inssuficientBalance && (
         <ErrorMessage displayIcon={false}>
           {t("message.insufficient.balance")}
         </ErrorMessage>
@@ -262,3 +254,7 @@ export const AssetSelector = ({
     </CryptoSelectorBox>
   );
 };
+
+
+
+

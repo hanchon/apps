@@ -8,7 +8,7 @@ import {
   normalizeToCosmosAddress,
 } from "../../wallet";
 import { getChainByAddress } from "../get-chain-by-account";
-import { Prefix, Token, TokenMinDenom } from "../types";
+import { Prefix, Token, TokenAmount, TokenMinDenom } from "../types";
 import { getIBCChannelId, getTimeoutTimestamp } from "../utils";
 import { assignGasEstimateToProtoTx } from "../utils/assign-gas-estimate-to-proto-tx";
 import { createProtobufTransaction } from "../utils/create-protobuf-transaction";
@@ -17,33 +17,32 @@ import { getIBCDenom } from "../utils/get-ibc-denom";
 import { apiCosmosTxBroadcast } from "../../api/cosmos-rest/api-cosmos-tx-broadcast";
 import { getChainAccountInfo } from "../utils/get-chain-account-info";
 import { Hex } from "viem";
+import { getTokenByRef } from "../get-token-by-ref";
 
 export const createProtobufIBCTransferMsg = ({
   sender,
   receiver,
   token,
-  amount,
+
   mode,
   fee,
   ...rest
 }: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
-  token: Token;
-  amount: bigint;
+  token: TokenAmount;
   fee?: {
     gasLimit: bigint;
-    token: {
-      denom: TokenMinDenom;
-      amount: bigint;
-    };
+    token: TokenAmount;
   };
   mode?: keyof typeof SignMode;
 }) => {
+  const transferredToken = getTokenByRef(token.ref);
+  const feeToken = fee && getTokenByRef(fee.token.ref);
   const ibcDenom = getIBCDenom({
     sender,
     receiver,
-    token,
+    token: transferredToken,
   });
   const message = new MsgTransfer({
     sender: normalizeToCosmosAddress(sender),
@@ -56,7 +55,7 @@ export const createProtobufIBCTransferMsg = ({
     timeoutTimestamp: getTimeoutTimestamp(),
     memo: "",
     token: {
-      amount: amount.toString(),
+      amount: token.amount.toString(),
       denom: ibcDenom,
     },
     ...rest,
@@ -66,11 +65,11 @@ export const createProtobufIBCTransferMsg = ({
     sender,
     messages: [message],
     mode,
-    fee: fee && {
+    fee: feeToken && {
       amount: [
         {
           amount: fee.token.amount.toString(),
-          denom: fee.token.denom,
+          denom: feeToken.sourceDenom,
         },
       ],
       gasLimit: fee.gasLimit,
@@ -81,14 +80,10 @@ export const createProtobufIBCTransferMsg = ({
 export const prepareCosmosIBCTransfer = async (params: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
-  token: Token;
-  amount: bigint;
+  token: TokenAmount;
   fee?: {
     gasLimit: bigint;
-    token: {
-      denom: TokenMinDenom;
-      amount: bigint;
-    };
+    token: TokenAmount;
   };
 }) => {
   const tx = await createProtobufIBCTransferMsg(params);
@@ -106,14 +101,10 @@ export const prepareCosmosIBCTransfer = async (params: {
 export const executeCosmosIBCTransfer = async (params: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
-  token: Token;
-  amount: bigint;
+  token: TokenAmount;
   fee?: {
     gasLimit: bigint;
-    token: {
-      denom: TokenMinDenom;
-      amount: bigint;
-    };
+    token: TokenAmount;
   };
 }) => {
   const tx = await createProtobufIBCTransferMsg(params);

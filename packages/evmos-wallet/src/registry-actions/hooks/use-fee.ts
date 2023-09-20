@@ -3,11 +3,13 @@ import { Address, CosmosAddress, HexAddress } from "../../wallet";
 import { getChainByAddress } from "../get-chain-by-account";
 import { getTokenByDenom } from "../get-token-by-denom";
 import { simulateTransfer } from "../transfers/prepare-transfer";
-import { Prefix, TokenMinDenom } from "../types";
+import { Prefix, TokenAmount, TokenMinDenom, TokenRef } from "../types";
 import { useQuery } from "@tanstack/react-query";
 import { E, multiply } from "helpers";
 import { bech32 } from "bech32";
 import { useAccountExists } from "./use-account-exists";
+import { getTokenByRef } from "../get-token-by-ref";
+import { getFeeToken } from "../getFeeToken";
 
 /**
  * this is used to simulate a transfer before the user has entered the receiver address
@@ -23,30 +25,22 @@ const ethToBech32 = <T extends Prefix>(address: HexAddress, prefix: T) => {
 export const useFee = ({
   sender,
   receiverChainPrefix,
-  token,
+  tokenRef,
 }: {
   sender?: Address<Prefix>;
   receiverChainPrefix?: Prefix;
-  token?: {
-    sourcePrefix: Prefix;
-    denom: TokenMinDenom;
-  };
+  tokenRef?: TokenRef;
 }) => {
   const { data: accountExists } = useAccountExists(sender);
   const { data, ...rest } = useQuery({
     staleTime: 1000 * 30,
     retry: false,
-    queryKey: [
-      "use-fee",
-      sender,
-      receiverChainPrefix,
-      token?.sourcePrefix,
-      token?.denom,
-    ],
+    queryKey: ["use-fee", sender, receiverChainPrefix, tokenRef],
     queryFn: async () => {
-      if (!sender || !receiverChainPrefix || !token) {
-        return null;
+      if (!sender || !receiverChainPrefix || !tokenRef) {
+        throw new Error("MISSING_PARAMS");
       }
+      const token = getTokenByRef(tokenRef);
 
       const [err, prepared] = await E.try(() =>
         simulateTransfer({
@@ -66,17 +60,18 @@ export const useFee = ({
       }
 
       const { estimatedGas } = prepared;
+      const feeToken = getFeeToken(sender);
       const senderChain = getChainByAddress(sender);
 
       return {
-        gas: estimatedGas,
+        gasLimit: estimatedGas,
         token: {
+          ref: feeToken.ref,
           amount: multiply(estimatedGas, senderChain.gasPriceStep.average),
-          denom: senderChain.feeToken,
-        },
+        } satisfies TokenAmount,
       };
     },
-    enabled: !!sender && !!receiverChainPrefix && !!token && accountExists,
+    enabled: !!sender && !!receiverChainPrefix && !!tokenRef && accountExists,
   });
   return {
     ...rest,

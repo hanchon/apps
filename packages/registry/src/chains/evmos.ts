@@ -49,10 +49,12 @@ export default {
   "tokens": [
     {
       "name": "NEOKingdom DAO",
+      "ref": "evmos:NEOK",
       "description": "NEOKingdom DAO",
+      "symbol": "NEOK",
       "denom": "NEOK",
       "sourcePrefix": "evmos",
-      "sourceDenom": "neok",
+      "sourceDenom": "erc20/0x655ecB57432CC1370f65e5dc2309588b71b473A9",
       "minCoinDenom": "neok",
       "category": "cosmos",
       "type": "IBC",
@@ -62,7 +64,9 @@ export default {
     },
     {
       "name": "EVMOS",
+      "ref": "evmos:EVMOS",
       "description": "EVMOS",
+      "symbol": "EVMOS",
       "denom": "EVMOS",
       "sourcePrefix": "evmos",
       "sourceDenom": "aevmos",

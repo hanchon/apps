@@ -1,30 +1,26 @@
 import { erc20ABI } from "wagmi";
 
 import { normalizeToEth, evmosClient, Address } from "../../wallet";
-import { Token, TokenMinDenom } from "../types";
+import { Token, TokenAmount, TokenMinDenom } from "../types";
 import { writeContract } from "wagmi/actions";
 import { buffGasEstimate } from "../utils/buff-gas-estimate";
+import { getTokenByRef } from "../get-token-by-ref";
 
 export const prepareContractERC20Transfer = async ({
   sender,
   receiver,
   token,
-  amount,
 }: {
   sender: Address<"evmos">;
   receiver: Address<"evmos">;
-  token: Token;
-  amount: bigint;
-  fee?: {
-    amount: bigint;
-    denom: TokenMinDenom;
-  };
+  token: TokenAmount;
 }) => {
+  const transferredToken = getTokenByRef(token.ref);
   const args = {
     abi: erc20ABI,
     functionName: "transfer",
-    address: token.erc20Address,
-    args: [normalizeToEth(receiver), amount],
+    address: transferredToken.erc20Address,
+    args: [normalizeToEth(receiver), token.amount],
     account: normalizeToEth(sender),
   } as const;
   const { request } = await evmosClient.simulateContract(args);
@@ -38,18 +34,15 @@ export const writeContractERC20Transfer = async ({
   sender,
   receiver,
   token,
-  amount,
 }: {
   sender: Address<"evmos">;
   receiver: Address<"evmos">;
-  token: Token;
-  amount: bigint;
+  token: TokenAmount;
 }) => {
   const prepared = await prepareContractERC20Transfer({
     sender,
     receiver,
     token,
-    amount,
   });
   return writeContract(prepared.tx);
 };

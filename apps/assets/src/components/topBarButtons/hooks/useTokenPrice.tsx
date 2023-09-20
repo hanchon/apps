@@ -2,26 +2,27 @@ import { useMemo } from "react";
 import {
   TokenDenom,
   TokenMinDenom,
+  TokenRef,
 } from "evmos-wallet/src/registry-actions/types";
 import { getTokenByDenom, useAssets } from "evmos-wallet";
 
-export const useTokenPrice = (tokenMinDenom: TokenMinDenom) => {
+export const useTokenPrice = (tokenRef: TokenRef) => {
   const { sourceData: assets } = useAssets();
 
   const priceMap = useMemo(
     () =>
       (assets?.balance ?? []).reduce(
-        (acc, { symbol, coingeckoPrice, tokenIdentifier }) => {
-          const denom = getTokenByDenom(symbol as TokenDenom)?.minCoinDenom;
-          if (!denom) {
+        (acc, { symbol, coingeckoPrice }) => {
+          const ref = getTokenByDenom(symbol as TokenDenom)?.ref;
+          if (!ref) {
             return acc;
           }
-          acc[denom] = coingeckoPrice;
+          acc[ref] = coingeckoPrice;
           return acc;
         },
-        {} as Record<TokenMinDenom, string | undefined>
+        {} as Record<TokenRef, string | undefined>
       ),
     [assets]
   );
-  return priceMap[tokenMinDenom];
+  return priceMap[tokenRef];
 };

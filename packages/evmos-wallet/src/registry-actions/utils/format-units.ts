@@ -20,6 +20,6 @@ export function formatUnits(
       fraction ? `.${fraction}` : ""
     }`;
   }
-  fraction = fraction.padEnd(2, "0").slice(0, 7);
+  fraction = fraction.slice(0, 7);
   return `${negative ? "-" : ""}${integer || "0"}.${fraction}`;
 }
