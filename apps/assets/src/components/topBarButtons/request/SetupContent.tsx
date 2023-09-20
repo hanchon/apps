@@ -39,7 +39,7 @@ export const SetUpContent = ({
   const disabled = token.amount == 0n || message?.length === 0;
 
   return (
-    <section className="space-y-3">
+    <section className="space-y-8">
       <Title
         variant="modal-black"
         icon={<RequestIcon className="text-pink-300" />}
@@ -53,7 +53,7 @@ export const SetUpContent = ({
         }}
       >
         <section>
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-8">
             <button
               onClick={() => {
                 setState((prev) => ({
@@ -65,7 +65,7 @@ export const SetUpContent = ({
             >
               <BackArrowIcon width={28} />
             </button>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col ">
               <Subtitle variant="modal-black">
                 {t("transfer.section.asset")}
               </Subtitle>
@@ -87,7 +87,7 @@ export const SetUpContent = ({
                 <Subtitle variant="modal-black">
                   {t("request.message.subtitle")}
                 </Subtitle>
-                <span className="text-sm font-light text-red">
+                <span className="text-xs md:text-sm font-light text-red">
                   {message.length}/{MAX_MESSAGE_LENGTH}
                 </span>
               </div>
@@ -99,28 +99,22 @@ export const SetUpContent = ({
                     setMessage(e.target.value);
                   }
                 }}
-                showCopyIcon={false}
                 placeholder={t("request.message.input.placeholder")}
               />
-
-              <PrimaryButton
-                disabled={disabled}
-                // TODO: change variant to outline-primary if the user doesn't have enough balance to pay the fee
-                variant={disabled ? "outline-primary" : undefined}
-                onClick={() => {
-                  setState((prev) => ({
-                    ...prev,
-                    step: "share",
-                  }));
-                  sendEvent(CLICK_ON_GENERATE_PAYMENT_REQUEST);
-                }}
-                className="w-full text-lg rounded-md capitalize mt-5"
-                // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
-                // "transfer.swap.button.text" - "transfer.bridge.button.text"
-              >
-                {t("request.generate.button")}
-              </PrimaryButton>
             </div>
+            <PrimaryButton
+              disabled={disabled}
+              onClick={() => {
+                setState((prev) => ({
+                  ...prev,
+                  step: "share",
+                }));
+                sendEvent(CLICK_ON_GENERATE_PAYMENT_REQUEST);
+              }}
+              variant="primary-lg"
+            >
+              {t("request.generate.button")}
+            </PrimaryButton>
           </div>
         </section>
       </form>

@@ -27,8 +27,10 @@ export const PrimaryButton = ({
         className,
         {
           "bg-red text-pearl hover:bg-red1 active:bg-red2":
-            variant === "primary" || variant === "primary-lg",
+            variant === "primary",
           "border-2 border-pink-300 gradient": variant === "outline-primary",
+          "bg-red text-pearl hover:bg-red1 active:bg-red2 w-full text-base md:text-lg capitalize":
+            variant === "primary-lg",
         },
         disabled ? "disabled" : "",
       )}

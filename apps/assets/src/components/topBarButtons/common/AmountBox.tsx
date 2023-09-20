@@ -18,22 +18,22 @@ export function AmountBox({
     <div className="flex rounded-md bg-gray-500 py-2 px-4 items-center justify-between">
       <div className="flex items-center gap-2">
         <Image
-          className="h-7 w-7 rounded-full"
+          className="h-10 w-10 md:h-12 md:w-12 rounded-full"
           src={`/assets/chains/${token.denom}.png`}
-          alt=""
-          width={30}
-          height={30}
+          alt={token.denom}
+          width={48}
+          height={48}
         />
-        <span className="text-sm">{token.name}</span>
+        <span className="text-sm md:text-lg capitalize">
+          {token.name.toLowerCase()}
+        </span>
       </div>
 
       <div className="font-medium flex flex-col justify-between pl-4 text-white">
-        <div>
-          <>
-            <div>{formatUnits(amount, token.decimals)}</div>
-          </>
+        <div className="text-sm md:text-lg">
+          <div>{formatUnits(amount, token.decimals)}</div>
         </div>
-        <div className="text-gray-400 text-xs">
+        <div className="text-gray-400 text-xxs md:text-sm">
           {amountInUsd !== null && `≈${amountInUsd}`}
         </div>
       </div>

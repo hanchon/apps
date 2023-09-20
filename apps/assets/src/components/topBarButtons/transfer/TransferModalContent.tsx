@@ -200,7 +200,7 @@ export const TransferModalContent = ({
       sendEvent(INSUFFICIENT_FEE_AMOUNT);
   }, [validation.hasSufficientBalanceForFee, isPreparing]);
   return (
-    <section className="space-y-3 w-full">
+    <section className="space-y-8 w-full">
       <Title
         variant="modal-black"
         icon={<SendIcon className="text-pink-300" />}
@@ -233,221 +233,227 @@ export const TransferModalContent = ({
           transfer();
         }}
       >
-        <section>
-          <Subtitle variant="modal-black">
-            {t("transfer.section.asset")}
-          </Subtitle>
-          <AssetSelector
-            value={{
-              networkPrefix,
-              ...tokenAmount,
-            }}
-            address={sender}
-            fee={fee?.token}
-            onChange={(token) => {
-              setState((prev) => ({
-                ...prev,
-                networkPrefix: token.networkPrefix,
-                amount: token.amount,
-                token: token.ref,
-              }));
-            }}
-          />
+        <section className="space-y-8">
+          <div>
+            <Subtitle variant="modal-black">
+              {t("transfer.section.asset")}
+            </Subtitle>
+            <AssetSelector
+              value={{
+                networkPrefix,
+                ...tokenAmount,
+              }}
+              address={sender}
+              fee={fee?.token}
+              onChange={(token) => {
+                setState((prev) => ({
+                  ...prev,
+                  networkPrefix: token.networkPrefix,
+                  amount: token.amount,
+                  token: token.ref,
+                }));
+              }}
+            />
 
-          {/* TODO: Some error messages. This is not in the specs, so we need to check with Mian how to display those */}
-          {senderValidation.userRejectedEnablingNetwork && (
-            <InfoPanel icon={<WizardIcon className="shrink-0" />}>
-              <div>
-                <p className="pb-4">
-                  <Trans
-                    i18nKey="error.user.rejected.network.title"
-                    components={{
-                      strong: <span className="text-pink-300" />,
-                    }}
-                  />
-                  <span className="text-pink-300">
-                    {chains[networkPrefix].name}
-                  </span>
-                  <Trans
-                    i18nKey="error.user.rejected.network.title2"
-                    components={{
-                      strong: <span className="text-pink-300" />,
-                    }}
-                  />
-                </p>
+            {/* TODO: Some error messages. This is not in the specs, so we need to check with Mian how to display those */}
+            {senderValidation.userRejectedEnablingNetwork && (
+              <InfoPanel icon={<WizardIcon className="shrink-0" />}>
+                <div className="space-y-2 md:space-y-4">
+                  <p>
+                    <Trans
+                      i18nKey="error.user.rejected.network.title"
+                      components={{
+                        strong: <span className="text-pink-300" />,
+                      }}
+                    />
+                    <span className="text-pink-300">
+                      {chains[networkPrefix].name}
+                    </span>
+                    <Trans
+                      i18nKey="error.user.rejected.network.title2"
+                      components={{
+                        strong: <span className="text-pink-300" />,
+                      }}
+                    />
+                  </p>
 
-                <p className="pb-8">
-                  <Trans
-                    i18nKey="error.user.rejected.network.subtitle"
-                    components={{
-                      strong: <span className="text-pink-300" />,
-                    }}
-                  />
-                </p>
-                <PrimaryButton
-                  className="font-normal w-full"
-                  onClick={() => requestAccount(networkPrefix)}
-                >
-                  {t("error.user.rejected.network.authorizeButtonLabel")}
-                </PrimaryButton>
-              </div>
-            </InfoPanel>
-          )}
-          {senderValidation.networkNotSupportedByConnectedWallet && (
-            <InfoPanel icon={<IconContainer type={ICONS_TYPES.METAMASK} />}>
-              <div className="space-y-4">
-                <p>
-                  <Trans
-                    i18nKey="error.network.not.support.by-wallet.title"
-                    components={{
-                      strong: <span className="text-pink-300" />,
-                    }}
-                  />
-                </p>
-                <p>
-                  <Trans
-                    i18nKey="error.network.not.support.by-wallet.subtitle"
-                    components={{
-                      strong: <span className="text-pink-300" />,
-                    }}
-                  />
-                </p>
-                <PrimaryButton
-                  variant={
-                    getGlobalKeplrProvider() === null
-                      ? "outline-primary"
-                      : "primary"
-                  }
-                  className="font-normal w-full"
-                  // TODO: If the user rejects the connection, it's connecting with MetaMask. Check why.
-                  onClick={async () => {
-                    if (getGlobalKeplrProvider() === null) {
-                      connectKeplr();
-                      return;
+                  <p>
+                    <Trans
+                      i18nKey="error.user.rejected.network.subtitle"
+                      components={{
+                        strong: <span className="text-pink-300" />,
+                      }}
+                    />
+                  </p>
+                  <PrimaryButton
+                    className="font-normal w-full"
+                    onClick={() => requestAccount(networkPrefix)}
+                  >
+                    {t("error.user.rejected.network.authorizeButtonLabel")}
+                  </PrimaryButton>
+                </div>
+              </InfoPanel>
+            )}
+            {senderValidation.networkNotSupportedByConnectedWallet && (
+              <InfoPanel icon={<IconContainer type={ICONS_TYPES.METAMASK} />}>
+                <div className="space-y-2 md:space-y-4">
+                  <p>
+                    <Trans
+                      i18nKey="error.network.not.support.by-wallet.title"
+                      components={{
+                        strong: <span className="text-pink-300" />,
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <Trans
+                      i18nKey="error.network.not.support.by-wallet.subtitle"
+                      components={{
+                        strong: <span className="text-pink-300" />,
+                      }}
+                    />
+                  </p>
+                  <PrimaryButton
+                    variant={
+                      getGlobalKeplrProvider() === null
+                        ? "outline-primary"
+                        : "primary"
                     }
-                    const [err] = await E.try(() => connectWith("keplr"));
-                    sendEvent(CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW);
-                    // TODO: handle error when user rejects the connection
-                    if (err) return false;
+                    className="font-normal w-full"
+                    // TODO: If the user rejects the connection, it's connecting with MetaMask. Check why.
+                    onClick={async () => {
+                      if (getGlobalKeplrProvider() === null) {
+                        connectKeplr();
+                        return;
+                      }
+                      const [err] = await E.try(() => connectWith("keplr"));
+                      sendEvent(CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW);
+                      // TODO: handle error when user rejects the connection
+                      if (err) return false;
+                    }}
+                  >
+                    {getGlobalKeplrProvider() === null
+                      ? t(
+                          "error.network.not.support.by-wallet.installButtonLabel",
+                        )
+                      : t(
+                          "error.network.not.support.by-wallet.connectButtonLabel",
+                        )}
+                  </PrimaryButton>
+                </div>
+              </InfoPanel>
+            )}
+          </div>
+          <div>
+            <Subtitle variant="modal-black">
+              {t("transfer.section.to")}
+            </Subtitle>
+            <AccountSelector
+              value={receiver}
+              onChange={(receiver) =>
+                setState((prev) => ({ ...prev, receiver }))
+              }
+              networkOptions={destinationNetworkOptions}
+              disabledNetworkOptions={disabledDestinationNetworkOptions}
+            />
+            {sender && receiver && amount !== 0n && (
+              <div className="space-y-3 mt-8">
+                <Label>{t("transfer.section.summary.title")}</Label>
+                <TransferSummary
+                  sender={sender}
+                  receiver={receiver}
+                  token={{
+                    ...tokenAmount,
+                    networkPrefix: senderChain.prefix,
                   }}
-                >
-                  {getGlobalKeplrProvider() === null
-                    ? t(
-                      "error.network.not.support.by-wallet.installButtonLabel",
-                    )
-                    : t(
-                      "error.network.not.support.by-wallet.connectButtonLabel",
-                    )}
-                </PrimaryButton>
+                  disabled={!isReadyToTransfer}
+                />
               </div>
-            </InfoPanel>
-          )}
+            )}
 
-          <Subtitle variant="modal-black">{t("transfer.section.to")}</Subtitle>
-          <AccountSelector
-            value={receiver}
-            onChange={(receiver) => setState((prev) => ({ ...prev, receiver }))}
-            networkOptions={destinationNetworkOptions}
-            disabledNetworkOptions={disabledDestinationNetworkOptions}
-          />
-          {/* To Julia: shouldn't we also wait for the amount to be set? 
-        As the to address is now being prefilled as soon as we open the modal, maybe we should wait 
-        for the amount (because it's showing the transfer summary instantly? */}
-          {sender && receiver && amount !== 0n && (
-            <div className="space-y-3">
-              <Label>{t("transfer.section.summary.title")}</Label>
-              <TransferSummary
-                sender={sender}
-                receiver={receiver}
-                token={{
-                  ...tokenAmount,
-                  networkPrefix: senderChain.prefix,
-                }}
-                disabled={!isReadyToTransfer}
-              />
-            </div>
-          )}
-
-          {/* {!validation.hasSufficientBalanceForFee && feeBalance && (
+            {/* {!validation.hasSufficientBalanceForFee && feeBalance && (
             <ErrorMessage className="justify-center pl-0">
               {t("message.insufficiente.fee")}
               {feeBalance.formattedLong} {feeBalance.symbol}
             </ErrorMessage>
           )} */}
 
-          {/*
-           * Call to action Buttons
-           */}
-          {action === "CONNECT" && (
-            <>
-              <ErrorMessage className="justify-center pl-0 mb-4" variant="info">
-                <p className="pb-1"> {t("error.getting.balance")}</p>
-                <Trans
-                  i18nKey="error.getting.balance.connect.wallet"
-                  components={{
-                    strong: <span className="text-pink-300" />,
-                  }}
-                />
-              </ErrorMessage>
-              <WalletConnection
-                copilotModal={({
-                  beforeStartHook,
-                }: {
-                  beforeStartHook: Dispatch<SetStateAction<boolean>>;
-                }) => <CopilotButton beforeStartHook={beforeStartHook} />}
-                dispatch={dispatch}
-                walletExtension={wallet}
-                variant="outline-primary"
-              />
-            </>
-          )}
-
-          {action === "TOPUP" && (
-            <>
-              {!validation.hasSufficientBalanceForFee && (
-                <ErrorMessage className="justify-center pl-0">
-                  {t("message.insufficiente.fee")}
-                  {feeBalance?.formatted ?? 0} {feeToken?.symbol}
+            {/*
+             * Call to action Buttons
+             */}
+            {action === "CONNECT" && (
+              <>
+                <ErrorMessage
+                  className="justify-center pl-0 mb-4"
+                  variant="info"
+                >
+                  <p className="pb-1"> {t("error.getting.balance")}</p>
+                  <Trans
+                    i18nKey="error.getting.balance.connect.wallet"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
                 </ErrorMessage>
-              )}
-              <PrimaryButton
-                type="submit"
-                variant={"outline-primary"}
-                className="w-full text-base md:text-lg rounded-md capitalize mt-5"
-              >
-                {t("transfer.top.up.button.text")}
-              </PrimaryButton>
-            </>
-          )}
-          {action === "BRIDGE" && (
-            <>
-              <ErrorMessage className="justify-center pl-0" variant="info">
-                <Trans
-                  i18nKey="error.send.axelar.assets.text"
-                  components={{
-                    strong: <span className="text-pink-300" />,
-                  }}
+                <WalletConnection
+                  copilotModal={({
+                    beforeStartHook,
+                  }: {
+                    beforeStartHook: Dispatch<SetStateAction<boolean>>;
+                  }) => <CopilotButton beforeStartHook={beforeStartHook} />}
+                  dispatch={dispatch}
+                  walletExtension={wallet}
+                  variant="outline-primary"
                 />
-              </ErrorMessage>
+              </>
+            )}
+
+            {action === "TOPUP" && (
+              <>
+                {!validation.hasSufficientBalanceForFee && (
+                  <ErrorMessage className="justify-center pl-0">
+                    {t("message.insufficiente.fee")}
+                    {feeBalance?.formatted ?? 0} {feeToken?.symbol}
+                  </ErrorMessage>
+                )}
+                <PrimaryButton
+                  type="submit"
+                  variant={"outline-primary"}
+                  className="w-full text-base md:text-lg rounded-md capitalize mt-8"
+                >
+                  {t("transfer.top.up.button.text")}
+                </PrimaryButton>
+              </>
+            )}
+            {action === "BRIDGE" && (
+              <>
+                <ErrorMessage className="justify-center pl-0" variant="info">
+                  <Trans
+                    i18nKey="error.send.axelar.assets.text"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
+                </ErrorMessage>
+                <PrimaryButton
+                  type="submit"
+                  variant={"outline-primary"}
+                  className="w-full text-base md:text-lg rounded-md capitalize mt-8"
+                >
+                  {t("transfer.bridge.button.text")}
+                </PrimaryButton>
+              </>
+            )}
+            {action === "TRANSFER" && (
               <PrimaryButton
                 type="submit"
-                variant={"outline-primary"}
-                className="w-full text-base md:text-lg rounded-md capitalize mt-5"
+                className="w-full text-base md:text-lg rounded-md capitalize mt-8"
+                disabled={!isReadyToTransfer}
               >
-                {t("transfer.bridge.button.text")}
+                {t("transfer.send.button.text")}
               </PrimaryButton>
-            </>
-          )}
-          {action === "TRANSFER" && (
-            <PrimaryButton
-              type="submit"
-              className="w-full text-base md:text-lg rounded-md capitalize mt-5"
-              disabled={!isReadyToTransfer}
-            >
-              {t("transfer.send.button.text")}
-            </PrimaryButton>
-          )}
-
+            )}
+          </div>
           {isTransferring && (
             <p>Please, check your wallet to sign your transaction</p>
           )}
