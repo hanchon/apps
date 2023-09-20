@@ -8,12 +8,11 @@ export const apiFetch = async <
   successSchema: TSuccess,
   errorSchema: TError,
   url: string,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<z.output<TSuccess>> => {
   const fetchResponse = await fetch(url, init);
 
-  const parsedResponse =
-    (await fetchResponse.json()) as unknown;
+  const parsedResponse = (await fetchResponse.json()) as unknown;
 
   if (fetchResponse.ok) {
     const validated = successSchema.parse(parsedResponse);
@@ -29,12 +28,8 @@ export const apiFetch = async <
   throw new Error(
     [
       `Failed to validate response from ${url}`,
-      `Received:\n${JSON.stringify(
-        parsedResponse,
-        null,
-        2
-      )}`,
-    ].join("\n")
+      `Received:\n${JSON.stringify(parsedResponse, null, 2)}`,
+    ].join("\n"),
   );
 };
 
@@ -49,7 +44,7 @@ export const apiBalancedFetch = async <
   init?: RequestInit & {
     timeout?: number;
     millisecondsBetweenCalls?: number;
-  }
+  },
 ): Promise<z.infer<TSuccess>> => {
   for (const host of hosts) {
     let response;

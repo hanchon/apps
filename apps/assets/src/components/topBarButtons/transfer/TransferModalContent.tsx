@@ -459,11 +459,13 @@ export const TransferModalContent = ({
             <p>Please, check your wallet to sign your transaction</p>
           )}
         </section>
-      </form>
+      </form >
 
-      {typeof document !== "undefined" &&
+      {
+        typeof document !== "undefined" &&
         process.env.NODE_ENV === "development" &&
-        createPortal(<TransactionInspector {...__DEBUG__} />, document.body)}
-    </section>
+        createPortal(<TransactionInspector {...__DEBUG__} />, document.body)
+      }
+    </section >
   );
 };

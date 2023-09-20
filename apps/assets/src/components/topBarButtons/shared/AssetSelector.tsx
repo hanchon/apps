@@ -8,10 +8,7 @@ import {
   ErrorMessage,
 } from "ui-helpers";
 import { chains } from "@evmos-apps/registry";
-import {
-  Prefix,
-  TokenAmount,
-} from "evmos-wallet/src/registry-actions/types";
+import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "ui-helpers";
 import { Address, getTokens, useTokenBalance } from "evmos-wallet";
 import { CryptoSelectorTitle } from "ui-helpers";
@@ -26,6 +23,7 @@ import {
 } from "tracker/src/constants";
 import { useAccount } from "wagmi";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import { sortedChains, sortedTokens } from "./sortedChains";
 
 type Asset = {
   networkPrefix: Prefix;
@@ -59,16 +57,14 @@ export const AssetSelector = ({
 
   const selectedToken = getTokenByRef(value.ref);
 
-  const tokenOptions = useMemo(() => {
-    return getTokens().sort(({ denom: a }, { denom: b }) => (a > b ? 1 : -1));
-  }, []);
+
+  const tokenOptions = sortedTokens
 
   const networkOptions = useMemo(() => {
     if (selectedToken === null) {
       return [];
     }
-    if (selectedToken.sourcePrefix === "evmos")
-      return Object.values(chains).map(({ prefix }) => prefix);
+    if (selectedToken.sourcePrefix === "evmos") return sortedChains;
     return [selectedToken.sourcePrefix, "evmos"] as Prefix[];
   }, [selectedToken]);
 
