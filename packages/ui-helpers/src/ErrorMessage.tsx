@@ -17,10 +17,10 @@ export function ErrorMessage({
   return (
     <div
       className={cn(
-        "flex justify-start space-x-2 text-xxs md:text-xs font-medium pl-4 mt-3",
+        "flex justify-start space-x-2 text-[10px] md:text-xs font-medium pl-4 mt-3",
         className,
         {
-          "text-red-300": variant === "error",
+          "text-red-900": variant === "error",
           "text-purple-200": variant === "info",
         },
       )}

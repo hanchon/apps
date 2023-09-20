@@ -10,13 +10,15 @@ export const Tabs = ({
   variant = "default",
 }: {
   tabsProps: TabProps[];
-  variant: "default" | "pink";
+  variant: "default" | "pink" | "pink-small";
 }) => (
   <div
-    className={cn("font-medium  shrink-0", {
+    className={cn("font-medium shrink-0", {
       "grid grid-cols-1 md:grid-cols-2 gap-4 text-sm ": variant === "default",
-      "grid grid-cols-2 gap-4 w-fit md:w-auto tracking-wider text-xs md:text-sm":
+      "grid grid-cols-2 gap-3 w-fit md:w-auto tracking-wider text-xs md:text-sm":
         variant === "pink",
+      "grid grid-cols-2 gap-3 w-fit tracking-wider text-xs md:text-sm":
+        variant === "pink-small",
     })}
   >
     {tabsProps.map((tab) => (

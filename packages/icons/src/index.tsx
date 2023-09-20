@@ -59,3 +59,4 @@ export { PaymentTxIcon } from "./PaymentTxIcon";
 export { BackArrowIcon } from "./BackArrowIcon";
 export { ReceiveIcon } from "./ReceiveIcon";
 export { PayIcon } from "./PayIcon";
+export { ShareIcon } from "./ShareIcon";

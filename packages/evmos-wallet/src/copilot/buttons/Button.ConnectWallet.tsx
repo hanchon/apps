@@ -34,7 +34,8 @@ export const ButtonConnectWallet = ({
         });
       }}
       className={cn("", {
-        "w-full text-lg": variant === "outline-primary" || "primary-lg",
+        "w-full text-base md:text-lg":
+          variant === "outline-primary" || "primary-lg",
         "rounded-full px-10 py-2": variant === "primary",
       })}
     >

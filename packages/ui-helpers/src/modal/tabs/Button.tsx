@@ -28,6 +28,10 @@ export const Button = ({
             variant === "pink" && tab.option === tab.type,
           "bg-pink-200 text-black font-light":
             variant === "pink" && tab.option !== tab.type,
+          "border-[#FFA1A1] border-2 bg-[#FF9E90] shadow-custom-pink text-black font-medium md:h-11 md:w-11 h-9 w-9":
+            variant === "pink-small" && tab.option === tab.type,
+          "bg-pink-200 text-black font-light h-9 w-9 md:h-11 md:w-11":
+            variant === "pink-small" && tab.option !== tab.type,
         },
       )}
     >

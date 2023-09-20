@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import {
   CryptoSelector,
   CryptoSelectorDropdownBox,
+  ErrorMessage,
   PrimaryButton,
   Subtitle,
   Title,
@@ -106,7 +107,7 @@ export const Content = ({
   }, [balances]);
 
   return (
-    <section className="space-y-3">
+    <section className="space-y-8">
       <Title variant="modal-black" icon={<PayIcon className="text-pink-300" />}>
         {t("pay.title")}
       </Title>
@@ -119,14 +120,14 @@ export const Content = ({
         }}
       >
         <section>
-          <div className="flex gap-5 flex-col">
+          <div className="flex gap-8 flex-col">
             <div className="flex gap-2 flex-col">
-              <div className="flex h-28 rounded-md bg-gray-500 py-2 px-4 items-center justify-between">
+              <div className="flex h-28 rounded-md bg-gray-500 py-2 px-4 items-center justify-between text-xs md:text-sm">
                 {message}
               </div>
-              <div className="flex text-sm justify-end gap-1">
-                <span className="text-gray-400">from:</span>
-                <span className="text-red font-semibold">
+              <div className="flex text-xs md:text-sm justify-end gap-1">
+                <span className="text-gray-400">{t("pay.from")}</span>
+                <span className="text-pink-300 font-semibold">
                   {truncateAddress(requester)}
                 </span>
               </div>
@@ -208,25 +209,27 @@ export const Content = ({
                 </CryptoSelectorDropdownBox>
                 {selectedBalance && (
                   <div className={`flex flex-col gap-2`}>
-                    <span className="font-medium">Your Balance</span>
-                    <div className="rounded p-2 border border-pink-300">
+                    <span className="font-medium text-sm md:text-lg">
+                      {t("pay.balance")}
+                    </span>
+                    <div className="rounded px-5 py-4 border border-pink-300">
                       <div
-                        className={`flex justify-between  ${insufficientBalance ? "opacity-60" : ""
+                        className={`flex justify-between items-center  ${insufficientBalance ? "opacity-60" : ""
                           }`}
                       >
                         <div className="flex items-center gap-2">
-                          <span className="text-sm">
+                          <span className="text-xs md:text-sm">
                             {formatUnits(
                               selectedBalance?.value ?? 0n,
                               selectedBalance?.decimals ?? 0,
                             )}{" "}
                             {selectedToken?.denom}
                           </span>
-                          <span className="text-gray-300 text-xs">
+                          <span className="text-gray-300 text-xxs md:text-xs">
                             ≈ {selectedTokenUSD}
                           </span>
                         </div>
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xxs md:text-xs text-gray-400">
                           {selectedBalance?.type === "ERC20"
                             ? "Evmos"
                             : chain.name}
@@ -234,9 +237,9 @@ export const Content = ({
                       </div>
                     </div>
                     {insufficientBalance && (
-                      <span className="text-xs text-red-900 font-bold">
-                        Insuficient Balance
-                      </span>
+                      <ErrorMessage displayIcon={false} className="mt-0">
+                        {t("message.insufficient.balance")}
+                      </ErrorMessage>
                     )}
                   </div>
                 )}

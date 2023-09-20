@@ -112,8 +112,8 @@ export const drawConnectModal = (props: WalletConnectModalProps) => {
         copilotModal={
           props.copilotModal
             ? props.copilotModal({
-              beforeStartHook: () => props.setShow(false),
-            })
+                beforeStartHook: () => props.setShow(false),
+              })
             : undefined
         }
         show={props.show}

@@ -1,11 +1,10 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 import React from "react";
-import { PrimaryButton, Title } from "ui-helpers";
+import { Label, PrimaryButton, TextInput, Title } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { EVMOS_PAGE_URL } from "constants-helper";
-
-import { CopyPasteIcon, BackArrowIcon, RequestIcon } from "icons";
+import { BackArrowIcon, RequestIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { tokenToUSD } from "../common/utils";
 import { useTokenPrice } from "../hooks/useTokenPrice";
@@ -50,7 +49,7 @@ export const ShareContent = ({
     }&message=${message}&requester=${sender}`;
 
   return (
-    <section className="space-y-3">
+    <section className="space-y-8">
       <Title
         variant="modal-black"
         icon={<RequestIcon className="text-pink-300" />}
@@ -64,7 +63,7 @@ export const ShareContent = ({
         }}
       >
         <section>
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-8">
             <button
               onClick={() => {
                 setState((prev) => ({
@@ -78,34 +77,33 @@ export const ShareContent = ({
             </button>
             <div className="flex gap-2 flex-col">
               {/* To MrSir: add this event in the onclick: sendEvent(CLICK_ON_SHARE_QR_CODE_PAYMENT) */}
+
               <div className="bg-white p-2 w-44 h-44 rounded-xl self-center">
                 <QRCode
                   style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                   value={shareURL}
                 />
               </div>
-              <span className="text-red text-xs self-center">
-                Share Payment QR
-              </span>
+              <div className="flex items-center space-x-2 self-center">
+                <span className="text-pink-300 text-xs md:text-sm ">
+                  {t("request.share.payment.qr")}
+                </span>
+                <ShareIcon className="w-3 h-4 md:w-5 md:h-4" />
+              </div>
             </div>
 
-            <div className="w-full rounded-md bg-gray-500 py-2 px-3 text-xs font-medium flex justify-between items-center space-x-5">
-              <span className="text-sm overflow-hidden">
-                {shareURL.substring(0, 40)}...
-              </span>
-              <button
-                onClick={async () => {
-                  await navigator.clipboard.writeText(shareURL);
-                  sendEvent(CLICK_ON_COPY_ICON_REQUEST_FLOW);
-                }}
-                className=""
-              >
-                <CopyPasteIcon height={32} width={32} />
-              </button>
-            </div>
+            <TextInput
+              value={`${shareURL.substring(0, 40)}...`}
+              disabled={true}
+              showCopyIcon={true}
+              onClickCopy={async () => {
+                await navigator.clipboard.writeText(shareURL);
+                sendEvent(CLICK_ON_COPY_ICON_REQUEST_FLOW);
+              }}
+            />
 
-            <div className="flex gap-1 flex-col">
-              <span className="text-gray-300 text-xs">Requesting:</span>
+            <div className="flex flex-col">
+              <Label>{t("request.label")}</Label>
               <AmountBox
                 amount={amount}
                 token={selectedToken}
@@ -114,8 +112,6 @@ export const ShareContent = ({
             </div>
 
             <PrimaryButton
-              // TODO: change variant to outline-primary if the user doesn't have enough balance to pay the fee
-              // variant="outline-primary"
               onClick={async () => {
                 sendEvent(CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW);
                 if (shareEnabled) {
@@ -129,9 +125,7 @@ export const ShareContent = ({
                   );
                 }
               }}
-              className="w-full text-lg rounded-md capitalize mt-5"
-            // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
-            // "transfer.swap.button.text" - "transfer.bridge.button.text"
+              variant="primary-lg"
             >
               {shareEnabled
                 ? t("request.share.button")
