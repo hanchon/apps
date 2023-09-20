@@ -36,7 +36,7 @@ export const apiBroadcastEip712 = makeApiRequester(
       raise("BROADCAST_EIP712_FAILED");
     }
     return tx_hash;
-  })
+  }),
 );
 
 export const apiBroadcastRawTx = makeApiRequester(
@@ -53,7 +53,7 @@ export const apiBroadcastRawTx = makeApiRequester(
   }) => {
     const message = rawTx.message.serializeBinary().toString();
     return JSON.parse(
-      `{ "tx_bytes": [${message}], "network": "${network}" }`
+      `{ "tx_bytes": [${message}], "network": "${network}" }`,
     ) as {
       tx_bytes: number[];
       network: string;
@@ -64,7 +64,7 @@ export const apiBroadcastRawTx = makeApiRequester(
       raise("BROADCAST_BYTES_FAILED");
     }
     return data.tx_hash;
-  })
+  }),
 );
 
 export const apiBroadcastAmino = makeApiRequester(
@@ -78,5 +78,5 @@ export const apiBroadcastAmino = makeApiRequester(
       raise("BROADCAST_AMINO_FAILED");
     }
     return data.tx_hash;
-  })
+  }),
 );

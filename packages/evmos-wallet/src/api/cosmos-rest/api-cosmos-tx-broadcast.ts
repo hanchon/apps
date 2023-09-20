@@ -7,7 +7,7 @@ import { BroadcastMode } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/v1be
 export const apiCosmosTxBroadcast = (
   urls: Readonly<[string, ...string[]]>,
   tx: Tx,
-  mode: keyof typeof BroadcastMode = "SYNC"
+  mode: keyof typeof BroadcastMode = "SYNC",
 ) =>
   apiCosmosFetch(
     z
@@ -37,5 +37,5 @@ export const apiCosmosTxBroadcast = (
         tx_bytes: Buffer.from(tx.toBinary()).toString("base64"),
         mode: BroadcastMode[mode],
       }),
-    }
+    },
   );

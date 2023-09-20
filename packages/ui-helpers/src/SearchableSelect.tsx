@@ -38,7 +38,7 @@ export function SearchableSelect<T>({
           label
             .toLowerCase()
             .replace(/\s+/g, "")
-            .includes(query.toLowerCase().replace(/\s+/g, ""))
+            .includes(query.toLowerCase().replace(/\s+/g, "")),
         );
   const selectedOption = options.find(({ id }) => id === selected);
   return (
@@ -64,7 +64,7 @@ export function SearchableSelect<T>({
               focus-visible:ring-offset-2
               focus-visible:ring-offset-teal-300
               sm:text-sm
-              `
+              `,
         )}
       >
         {/* {selectedOption && (
@@ -116,7 +116,7 @@ export function SearchableSelect<T>({
                     {
                       "bg-teal-600 text-white": active,
                       "text-gray-900": !active,
-                    }
+                    },
                   )
                 }
                 value={id}

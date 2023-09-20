@@ -29,7 +29,7 @@ export const CancelModal = () => {
   const getCurrentStep = () => {
     // TODO: create a function to get the currentElement
     const currentElement = stepsStatus.find(
-      (element) => element.status === STEP_STATUS.CURRENT
+      (element) => element.status === STEP_STATUS.CURRENT,
     );
     return currentElement;
   };

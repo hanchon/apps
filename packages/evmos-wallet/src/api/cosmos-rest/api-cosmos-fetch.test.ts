@@ -16,7 +16,7 @@ describe("apiCosmosFetch", () => {
         })
         .passthrough(),
       [http],
-      `/cosmos/base/tendermint/v1beta1/node_info`
+      `/cosmos/base/tendermint/v1beta1/node_info`,
     );
   test("successful call ", async () => {
     const response = await nodeInfoFetch(evmosHttp);

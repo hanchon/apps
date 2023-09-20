@@ -187,7 +187,7 @@ const Withdraw = ({
                 onClick={async () => {
                   const keplrAddress = await getKeplrAddressByChain(
                     chainId,
-                    chainIdentifier
+                    chainIdentifier,
                   );
                   if (keplrAddress === null) {
                     dispatch(
@@ -200,7 +200,7 @@ const Withdraw = ({
                         },
 
                         type: SNACKBAR_TYPES.ERROR,
-                      })
+                      }),
                     );
                     return;
                   }
@@ -226,7 +226,7 @@ const Withdraw = ({
                   },
 
                   type: SNACKBAR_TYPES.ERROR,
-                })
+                }),
               );
               setShow(false);
               return;
@@ -246,7 +246,7 @@ const Withdraw = ({
 
             const amount = parseUnits(
               inputValue,
-              BigNumber.from(item.decimals)
+              BigNumber.from(item.decimals),
             );
             if (amount.gt(typeSelected.amount)) {
               return;
@@ -272,14 +272,14 @@ const Withdraw = ({
                 },
 
                 type: SNACKBAR_TYPES.DEFAULT,
-              })
+              }),
             );
             // create, sign and broadcast tx
             const res = await executeWithdraw(
               wallet,
               params,
               feeBalance,
-              isERC20Selected
+              isERC20Selected,
             );
 
             dispatch(
@@ -302,7 +302,7 @@ const Withdraw = ({
                   res.error === true
                     ? SNACKBAR_TYPES.ERROR
                     : SNACKBAR_TYPES.SUCCESS,
-              })
+              }),
             );
             setShow(false);
             // check if tx is executed
@@ -312,8 +312,8 @@ const Withdraw = ({
                 await snackbarIncludedInBlock(
                   res.txHash,
                   EVMOS_SYMBOL,
-                  res.explorerTxUrl
-                )
+                  res.explorerTxUrl,
+                ),
               );
               dispatch(await snackbarExecutedTx(res.txHash, EVMOS_SYMBOL));
             }

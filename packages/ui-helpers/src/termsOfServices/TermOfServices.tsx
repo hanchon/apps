@@ -44,7 +44,7 @@ export const TermOfServices = () => {
     setConsent(!consent);
     setShowConsent(true);
     setModalContent(
-      <ConsentModal setShow={setShowConsent} setConsent={setConsent} />
+      <ConsentModal setShow={setShowConsent} setConsent={setConsent} />,
     );
   };
 

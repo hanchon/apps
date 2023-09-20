@@ -11,7 +11,7 @@ export const useEpochDay = () => {
   });
 
   const epoch = epochs?.data?.epochs?.filter(
-    (e: { identifier: string }) => e.identifier === "day"
+    (e: { identifier: string }) => e.identifier === "day",
   );
 
   let convertedEpochStart = 0;

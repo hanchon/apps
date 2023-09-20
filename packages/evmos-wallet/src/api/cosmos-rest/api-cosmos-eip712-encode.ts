@@ -5,7 +5,7 @@ import { Tx } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/v1beta1/tx_pb";
 
 export const apiCosmosEip712Encode = (
   urls: Readonly<[string, ...string[]]>,
-  tx: Tx
+  tx: Tx,
 ) => {
   return apiCosmosFetch(
     z
@@ -20,6 +20,6 @@ export const apiCosmosEip712Encode = (
       body: JSON.stringify({
         tx_bytes: Buffer.from(tx.toBinary()).toString("base64"),
       }),
-    }
+    },
   );
 };

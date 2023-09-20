@@ -5,10 +5,10 @@ export const __dirname = path.dirname(__filename);
 export const registryDir = path.resolve(
   fileURLToPath(
     (await import.meta.resolve?.(
-      "chain-token-registry/chainConfig/evmos.json"
-    )) || ""
+      "chain-token-registry/chainConfig/evmos.json",
+    )) || "",
   ),
-  "../.."
+  "../..",
 );
 
 export const chainRegistryDir = path.resolve(registryDir, "chainConfig");

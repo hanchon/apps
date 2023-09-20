@@ -59,16 +59,16 @@ export const CreateAccountModal = () => {
             await planTypeRegister.onChange(e); // method from hook form register
             setValue(
               "vestingDuration",
-              vestingSettingsConfig[planType].duration[0]
+              vestingSettingsConfig[planType].duration[0],
             );
             setValue("vestingCliff", vestingSettingsConfig[planType].cliff[0]);
             setValue(
               "vestingSchedule",
-              vestingSettingsConfig[planType].schedule[0]
+              vestingSettingsConfig[planType].schedule[0],
             );
             setValue(
               "lockupDuration",
-              vestingSettingsConfig[planType].lockup[0]
+              vestingSettingsConfig[planType].lockup[0],
             );
           }}
         >

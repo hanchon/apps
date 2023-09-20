@@ -15,7 +15,9 @@ const RequestModalSchema = z.object({
   tokenSourcePrefix: ChainPrefixSchema.default("evmos"),
   denom: MinDenomSchema.default("aevmos"),
   amount: z.coerce.bigint().default(0n),
-  step: z.union([z.literal("setup"), z.literal("share"), z.literal("receive")]).default("receive"),
+  step: z
+    .union([z.literal("setup"), z.literal("share"), z.literal("receive")])
+    .default("receive"),
 });
 
 export type RequestModalProps = ModalProps<typeof RequestModalSchema>;

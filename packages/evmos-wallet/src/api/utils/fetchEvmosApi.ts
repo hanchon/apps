@@ -7,7 +7,7 @@ export async function fetchEvmosApi<TSchema extends z.ZodType<unknown>>(
   pathname: string,
   schema: TSchema,
   body: Record<string, unknown>,
-  init?: RequestInit & { apiUrl?: string }
+  init?: RequestInit & { apiUrl?: string },
 ) {
   const config = Object.assign(
     {
@@ -20,13 +20,13 @@ export async function fetchEvmosApi<TSchema extends z.ZodType<unknown>>(
         {
           "Content-Type": "application/json",
         },
-        init?.headers
+        init?.headers,
       ),
-    }
+    },
   );
   return await fetchAndValidate<TSchema>(
     schema,
     `${config.apiUrl ?? EVMOS_BACKEND}${pathname}`,
-    config
+    config,
   );
 }

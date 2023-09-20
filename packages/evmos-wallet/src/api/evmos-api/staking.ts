@@ -19,7 +19,7 @@ export const apiStakingDelegate = makeApiRequester(
       validatorAddress: params.validatorAddress,
     },
   }),
-  ApiPresignTxSchema
+  ApiPresignTxSchema,
 );
 
 export const apiStakingUndelegate = makeApiRequester(
@@ -40,7 +40,7 @@ export const apiStakingUndelegate = makeApiRequester(
       validatorAddress: params.validatorAddress,
     },
   }),
-  ApiPresignTxSchema
+  ApiPresignTxSchema,
 );
 
 export const apiStakingCancelUndelegation = makeApiRequester(
@@ -63,7 +63,7 @@ export const apiStakingCancelUndelegation = makeApiRequester(
       creationHeight: params.creationHeight,
     },
   }),
-  ApiPresignTxSchema
+  ApiPresignTxSchema,
 );
 
 export const apiStakingRedelegate = makeApiRequester(
@@ -86,7 +86,7 @@ export const apiStakingRedelegate = makeApiRequester(
       validatorDstAddress: params.toValidatorAddress,
     },
   }),
-  ApiPresignTxSchema
+  ApiPresignTxSchema,
 );
 
 export const apiStakingRewards = makeApiRequester(
@@ -98,5 +98,5 @@ export const apiStakingRewards = makeApiRequester(
       gas: 0,
     },
   }),
-  ApiPresignTxSchema
+  ApiPresignTxSchema,
 );

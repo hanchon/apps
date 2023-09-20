@@ -30,10 +30,7 @@ import { TransferSummary } from "../shared/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
-import {
-  useRequestWalletAccount,
-
-} from "../hooks/useAccountByPrefix";
+import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
 import { ICONS_TYPES } from "constants-helper";
@@ -78,7 +75,7 @@ export const TransferModalContent = ({
   const tokenAmount: TokenAmount = {
     ref: tokenRef,
     amount: amount,
-  }
+  };
 
   const {
     account,
@@ -102,19 +99,21 @@ export const TransferModalContent = ({
     feeBalance,
     isPreparing,
     feeToken,
-    __DEBUG__
+    __DEBUG__,
   } = useSend({
     sender,
     receiver,
     token: tokenAmount,
-  })
+  });
   const token = getTokenByRef(tokenRef);
   const senderChain = sender ? getChainByAddress(sender) : chains["evmos"];
   const tokenChain = chains[token.sourcePrefix];
 
-
-  const destinationNetworkOptions = useMemo((): Prefix[] => //
-    getTokenValidDestinations(tokenAmount.ref, senderChain.prefix), [tokenAmount.ref, senderChain.prefix]);
+  const destinationNetworkOptions = useMemo(
+    (): Prefix[] => //
+      getTokenValidDestinations(tokenAmount.ref, senderChain.prefix),
+    [tokenAmount.ref, senderChain.prefix],
+  );
 
   const activeProviderKey = getActiveProviderKey();
 
@@ -134,10 +133,15 @@ export const TransferModalContent = ({
   }, [senderChain, tokenChain, activeProviderKey]);
 
   const senderValidation = {
-    userRejectedEnablingNetwork: E.match.byPattern(walletRequestError, /USER_REJECTED_REQUEST/),
-    networkNotSupportedByConnectedWallet: activeProviderKey && activeProviderKey !== 'keplr' && networkPrefix !== 'evmos'
+    userRejectedEnablingNetwork: E.match.byPattern(
+      walletRequestError,
+      /USER_REJECTED_REQUEST/,
+    ),
+    networkNotSupportedByConnectedWallet:
+      activeProviderKey &&
+      activeProviderKey !== "keplr" &&
+      networkPrefix !== "evmos",
   };
-
 
   useEffect(() => {
     installKeplr();
@@ -163,24 +167,38 @@ export const TransferModalContent = ({
     });
   }, [transferResponse]);
 
-
   const action = useMemo(() => {
-    if (isDisconnected) return 'CONNECT';
+    if (isDisconnected) return "CONNECT";
 
-    if (token.ref === 'evmos:EVMOS' && !validation.hasSufficientBalance && !isPreparing) return 'TOPUP';
-    if (fee && fee.token.ref === 'evmos:EVMOS' && !validation.hasSufficientBalanceForFee && !isPreparing) return 'TOPUP';
+    if (
+      token.ref === "evmos:EVMOS" &&
+      !validation.hasSufficientBalance &&
+      !isPreparing
+    )
+      return "TOPUP";
+    if (
+      fee &&
+      fee.token.ref === "evmos:EVMOS" &&
+      !validation.hasSufficientBalanceForFee &&
+      !isPreparing
+    )
+      return "TOPUP";
 
-    if (token.handledByExternalUI !== null) return 'BRIDGE';
+    if (token.handledByExternalUI !== null) return "BRIDGE";
 
-    return 'TRANSFER';
-  }, [token, isDisconnected, validation.hasSufficientBalance, validation.hasSufficientBalanceForFee, fee?.token.ref]);
+    return "TRANSFER";
+  }, [
+    token,
+    isDisconnected,
+    validation.hasSufficientBalance,
+    validation.hasSufficientBalanceForFee,
+    fee?.token.ref,
+  ]);
 
   useEffect(() => {
-    if (!validation.hasSufficientBalanceForFee && !isPreparing) sendEvent(INSUFFICIENT_FEE_AMOUNT)
-  }, [
-    validation.hasSufficientBalanceForFee,
-    isPreparing,
-  ])
+    if (!validation.hasSufficientBalanceForFee && !isPreparing)
+      sendEvent(INSUFFICIENT_FEE_AMOUNT);
+  }, [validation.hasSufficientBalanceForFee, isPreparing]);
   return (
     <section className="space-y-3 w-full">
       <Title
@@ -205,7 +223,7 @@ export const TransferModalContent = ({
             if (!target) return;
             window.open(target, "_blank");
             sendEvent(CLICK_ON_AXL_REDIRECT);
-            return
+            return;
           }
 
           if (action === "CONNECT") {
@@ -232,7 +250,6 @@ export const TransferModalContent = ({
                 networkPrefix: token.networkPrefix,
                 amount: token.amount,
                 token: token.ref,
-
               }));
             }}
           />
@@ -316,16 +333,15 @@ export const TransferModalContent = ({
                 >
                   {getGlobalKeplrProvider() === null
                     ? t(
-                      "error.network.not.support.by-wallet.installButtonLabel"
-                    )
+                        "error.network.not.support.by-wallet.installButtonLabel",
+                      )
                     : t(
-                      "error.network.not.support.by-wallet.connectButtonLabel"
-                    )}
+                        "error.network.not.support.by-wallet.connectButtonLabel",
+                      )}
                 </PrimaryButton>
               </div>
             </InfoPanel>
           )}
-
 
           <Subtitle variant="modal-black">{t("transfer.section.to")}</Subtitle>
           <AccountSelector
@@ -359,10 +375,10 @@ export const TransferModalContent = ({
             </ErrorMessage>
           )} */}
 
-          {/* 
-            * Call to action Buttons
-            */}
-          {action === 'CONNECT' && (
+          {/*
+           * Call to action Buttons
+           */}
+          {action === "CONNECT" && (
             <>
               <ErrorMessage className="justify-center pl-0 mb-4" variant="info">
                 <p className="pb-1"> {t("error.getting.balance")}</p>
@@ -387,7 +403,7 @@ export const TransferModalContent = ({
             </>
           )}
 
-          {action === 'TOPUP' && (
+          {action === "TOPUP" && (
             <>
               {!validation.hasSufficientBalanceForFee && (
                 <ErrorMessage className="justify-center pl-0">
@@ -404,7 +420,7 @@ export const TransferModalContent = ({
               </PrimaryButton>
             </>
           )}
-          {action === 'BRIDGE' && (
+          {action === "BRIDGE" && (
             <>
               <ErrorMessage className="justify-center pl-0" variant="info">
                 <Trans
@@ -423,7 +439,7 @@ export const TransferModalContent = ({
               </PrimaryButton>
             </>
           )}
-          {action === 'TRANSFER' && (
+          {action === "TRANSFER" && (
             <PrimaryButton
               type="submit"
               className="w-full text-base md:text-lg rounded-md capitalize mt-5"
@@ -457,14 +473,9 @@ export const TransferModalContent = ({
       >
         Test open topup modal
       </button>
-      {typeof document !== "undefined" && process.env.NODE_ENV === 'development' &&
-        createPortal(
-          <TransactionInspector {...__DEBUG__} />,
-          document.body
-        )}
+      {typeof document !== "undefined" &&
+        process.env.NODE_ENV === "development" &&
+        createPortal(<TransactionInspector {...__DEBUG__} />, document.body)}
     </section>
   );
 };
-
-
-

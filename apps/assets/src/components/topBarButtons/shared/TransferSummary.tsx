@@ -2,7 +2,11 @@ import Image from "next/image";
 import React from "react";
 import { formatUnits } from "evmos-wallet/src/registry-actions/utils";
 import { cn } from "helpers";
-import { Prefix, TokenAmount, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
+import {
+  Prefix,
+  TokenAmount,
+  TokenMinDenom,
+} from "evmos-wallet/src/registry-actions/types";
 import {
   Address,
   getPrefix,
@@ -35,7 +39,7 @@ export const TransferSummary = ({
   const senderChain = chains[senderPrefix];
   const receiverChain = chains[receiverPrefix];
 
-  const { name, decimals, denom } = getTokenByRef(token.ref)
+  const { name, decimals, denom } = getTokenByRef(token.ref);
 
   const { fee, isFetching, error } = useFee({
     sender,

@@ -12,7 +12,7 @@ export async function networkConfigByName(network: string) {
       {
         method: "get",
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
     return (await res.json()) as NetworkChainConfigResponse;
   } catch (e) {

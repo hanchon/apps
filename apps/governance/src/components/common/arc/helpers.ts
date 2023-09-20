@@ -5,7 +5,7 @@ export function polarToCartesian(
   centerX: number,
   centerY: number,
   radius: number,
-  angleInDegrees: number
+  angleInDegrees: number,
 ) {
   const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
 
@@ -20,7 +20,7 @@ export function describeArc(
   y: number,
   radius: number,
   startAngle: number,
-  endAngle: number
+  endAngle: number,
 ) {
   const start = polarToCartesian(x, y, radius, endAngle);
   const end = polarToCartesian(x, y, radius, startAngle);
@@ -48,7 +48,7 @@ export function buildD(
   afterPercentage: number,
   percentage: number,
   strokeWidth = 6,
-  range = 200
+  range = 200,
 ) {
   const percentageToRadius =
     Math.floor((range * percentage) / 100) - (strokeWidth / 2 + 1);
@@ -59,6 +59,6 @@ export function buildD(
     50,
     50 - strokeWidth / 2,
     afterPercentageToRadius - range / 2 + (strokeWidth / 2 + 1),
-    afterPercentageToRadius + percentageToRadius - range / 2
+    afterPercentageToRadius + percentageToRadius - range / 2,
   );
 }

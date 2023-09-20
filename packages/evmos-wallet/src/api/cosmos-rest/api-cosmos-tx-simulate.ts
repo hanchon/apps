@@ -5,7 +5,7 @@ import { Tx } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/v1beta1/tx_pb";
 
 export const apiCosmosTxSimulate = (
   urls: Readonly<[string, ...string[]]>,
-  tx: Tx
+  tx: Tx,
 ) =>
   apiCosmosFetch(
     z
@@ -21,7 +21,7 @@ export const apiCosmosTxSimulate = (
             z.object({
               type: z.string(),
               attributes: z.unknown(),
-            })
+            }),
           ),
         }),
       })
@@ -33,5 +33,5 @@ export const apiCosmosTxSimulate = (
       body: JSON.stringify({
         tx_bytes: Buffer.from(tx.toBinary()).toString("base64"),
       }),
-    }
+    },
   );

@@ -31,12 +31,12 @@ export const WalletConnection = ({
   }: {
     beforeStartHook: Dispatch<SetStateAction<boolean>>;
   }) => JSX.Element;
-  variant?: "primary" | "outline-primary";
+  variant?: "primary" | "outline-primary" | "primary-lg";
 }) => {
   const [show, setShow] = useState(false);
 
   const { handlePreClickAction: trackChangeWallet } = useTracker(
-    SWITCH_BETWEEN_WALLETS
+    SWITCH_BETWEEN_WALLETS,
   );
 
   useEffect(() => {

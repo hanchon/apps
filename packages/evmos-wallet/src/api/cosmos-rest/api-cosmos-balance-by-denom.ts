@@ -6,12 +6,12 @@ import { AmountSchema } from "./validation";
 export const apiCosmosBalanceByDenom = (
   urls: Readonly<[string, ...string[]]>,
   address: CosmosAddress,
-  denom: string
+  denom: string,
 ) =>
   apiCosmosFetch(
     z.object({
       balance: AmountSchema,
     }),
     urls,
-    `/cosmos/bank/v1beta1/balances/${address}/by_denom?denom=${denom}`
+    `/cosmos/bank/v1beta1/balances/${address}/by_denom?denom=${denom}`,
   );

@@ -18,7 +18,7 @@ export function TextInput({
   onClickCopy?: () => void;
 } & ComponentProps<"input">) {
   return (
-    <div className="w-full rounded-md bg-gray-500 py-4 px-4 text-xxs md:text-xs font-medium flex justify-between items-center space-x-5 ">
+    <div className="w-full rounded-md bg-gray-500 py-4 px-4 text-xxs md:text-xs font-medium flex justify-between items-center space-x-2">
       {extensionIcon && (
         <div className="w-auto h-4 flex items-center">
           <IconContainer type={extensionIcon} />

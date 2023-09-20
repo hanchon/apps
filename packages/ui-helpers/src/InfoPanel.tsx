@@ -20,7 +20,7 @@ export const InfoPanel = ({
         {
           "border border-pink-300 text-purple-200": variant === "default",
           "bg-lightBlue text-blue": variant === "info",
-        }
+        },
       )}
     >
       {/* by default we show the wizard icon */}

@@ -9,7 +9,7 @@ import { sha256 } from "@noble/hashes/sha256";
 export const toIBCDenom = (
   portId: string,
   channelId: string,
-  baseDenom: string
+  baseDenom: string,
 ) => {
   const hashedPart = Buffer.from(sha256(`${portId}/${channelId}/${baseDenom}`))
     .toString("hex")

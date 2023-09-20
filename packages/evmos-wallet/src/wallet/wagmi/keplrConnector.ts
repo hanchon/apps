@@ -54,7 +54,7 @@ const TransactionRequestSchema = z
 
 const prepareTransaction = async (
   chainId: number,
-  request: TransactionRequest
+  request: TransactionRequest,
 ): Promise<UnsignedTransaction> => {
   const client = getPublicClient({
     chainId,
@@ -128,7 +128,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
   async getPubkey({ cosmosChainId }: { cosmosChainId?: string } = {}) {
     const provider = await this.getProvider();
     const { pubKey } = await provider.getKey(
-      cosmosChainId ?? (await this.getCosmosId())
+      cosmosChainId ?? (await this.getCosmosId()),
     );
     return pubKey;
   }
@@ -150,7 +150,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
 
     const cosmosId =
       this.chainId in COSMOS_ID_MAP
-        ? COSMOS_ID_MAP[this.chainId ]
+        ? COSMOS_ID_MAP[this.chainId]
         : evmosInfo.cosmosId;
 
     assertIf(cosmosId, "UNSUPPORTED_NETWORK");
@@ -209,9 +209,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
 
     assertIf(this.isChainUnsupported(chainId), "UNSUPPORTED_NETWORK");
 
-    const cosmosId =
-      COSMOS_ID_MAP[chainId ] ??
-      raise("UNSUPPORTED_NETWORK");
+    const cosmosId = COSMOS_ID_MAP[chainId] ?? raise("UNSUPPORTED_NETWORK");
     return cosmosId;
   }
   async getWalletClient({ chainId }: { chainId?: number } = {}) {
@@ -260,8 +258,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     ]);
 
     const cosmosId = await this.getCosmosId(chainId);
-    const bech32Address =
-      ADDRESS_ENCODERS[chainId ](account);
+    const bech32Address = ADDRESS_ENCODERS[chainId](account);
 
     switch (method) {
       case "eth_sendTransaction": {
@@ -295,7 +292,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
           params[0],
           method === "account_signTransaction"
             ? EthSignType.TRANSACTION
-            : EthSignType.MESSAGE
+            : EthSignType.MESSAGE,
         );
         return toHex(signature);
       }
@@ -306,7 +303,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
           cosmosId,
           bech32Address,
           params[1],
-          EthSignType.EIP712
+          EthSignType.EIP712,
         );
         return toHex(signature);
       }

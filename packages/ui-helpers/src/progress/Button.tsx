@@ -46,7 +46,7 @@ export const Button = ({ props }: { props: ButtonProps }) => {
       key={props.id}
       className={classNames(
         props.index !== props.stepsLength - 1 ? "pb-8" : "",
-        "relative list-none"
+        "relative list-none",
       )}
     >
       <>

@@ -18,7 +18,7 @@ const DropdownChainDeposit = ({
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState<DepositElement | null>(
-    null
+    null,
   );
   useEffect(() => {
     const handler = () => setShowMenu(false);

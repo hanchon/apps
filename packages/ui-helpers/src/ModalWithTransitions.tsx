@@ -81,7 +81,7 @@ export const ModalWithTransitions = ({
                     variant === "default",
                   "bg-black-900 shadow-custom-sm px-6 pt-6 pb-16 text-white w-full max-w-md":
                     variant === "modal-black",
-                }
+                },
               )}
             >
               {propClose && (

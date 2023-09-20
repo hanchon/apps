@@ -31,7 +31,7 @@ export const apiConvertCoin = makeApiRequester(
       token: params.token,
     },
   }),
-  ApiPresignTxSchema
+  ApiPresignTxSchema,
 );
 
 export const apiConvertERC20 = makeApiRequester(
@@ -57,5 +57,5 @@ export const apiConvertERC20 = makeApiRequester(
       token: params.token,
     },
   }),
-  ApiPresignTxSchema
+  ApiPresignTxSchema,
 );

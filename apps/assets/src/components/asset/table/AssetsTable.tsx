@@ -46,7 +46,7 @@ const AssetsTable = () => {
     queryFn: () =>
       getAssetsForAddress(
         value.evmosAddressCosmosFormat,
-        value.evmosAddressEthFormat
+        value.evmosAddressEthFormat,
       ),
   });
 
@@ -66,7 +66,7 @@ const AssetsTable = () => {
       status: !hideZeroBalance,
       wallet: value?.evmosAddressEthFormat,
       provider: value?.extensionName,
-    }
+    },
   );
   const zeroBalance = () => {
     localStorage.setItem("zeroBalance", String(!hideZeroBalance));

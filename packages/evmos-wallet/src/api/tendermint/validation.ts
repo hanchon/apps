@@ -6,5 +6,5 @@ const JSONRPCSchema = z.object({
 });
 
 export const makeJSONRPCResponseSchema = <TSchema extends ZodRawShape>(
-  schema: TSchema
+  schema: TSchema,
 ) => JSONRPCSchema.extend(schema);

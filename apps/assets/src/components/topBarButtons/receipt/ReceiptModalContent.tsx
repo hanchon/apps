@@ -173,7 +173,7 @@ const useBlock = (prefix?: Prefix, height?: bigint) => {
       const chainConfig = chains[prefix];
       const result = await apiCosmosBlockByHeight(
         chainConfig.cosmosRest,
-        height
+        height,
       );
       return result;
     },
@@ -196,7 +196,7 @@ export const ReceiptModalContent = ({
 
   const { data: block, isLoading: isFetchingBlock } = useBlock(
     chainPrefix,
-    receipt?.height
+    receipt?.height,
   );
   const chain = chains[chainPrefix ?? "evmos"];
   const blockDate = block?.block?.header?.time

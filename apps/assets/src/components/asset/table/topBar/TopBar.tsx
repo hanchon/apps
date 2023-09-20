@@ -5,7 +5,7 @@ import { PrimaryButton, TopBarContainer, TopBarItem } from "ui-helpers";
 import { TopBarProps } from "./types";
 
 import { useAccount } from "wagmi";
-import { RequestIcon, SendIcon } from "icons";
+import { ReceiveIcon, SendIcon } from "icons";
 import { useTranslation } from "next-i18next";
 import { useTransferModal } from "../../../topBarButtons/transfer/TransferModal";
 import { useRequestModal } from "../../../topBarButtons/request/RequestModal";
@@ -45,7 +45,7 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
         </PrimaryButton>
         <PrimaryButton
           disabled={isDisconnected}
-          icon={<RequestIcon />}
+          icon={<ReceiveIcon />}
           onClick={() => {
             requestModal.setIsOpen(true);
             sendEvent(CLICK_ON_RECEIVE_BUTTON);

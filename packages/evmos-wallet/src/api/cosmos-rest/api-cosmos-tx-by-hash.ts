@@ -23,7 +23,7 @@ const TxSchema = z.object({
       z.union([
         MsgTransferSchema,
         z.object({ "@type": z.string() }).passthrough(),
-      ])
+      ]),
     ),
     memo: z.string(),
     timeout_height: z.string(),
@@ -59,11 +59,11 @@ export const TxResponseSchema = z.object({
           z.object({
             type: z.string(),
             attributes: z.array(
-              z.object({ key: z.string(), value: z.string() })
+              z.object({ key: z.string(), value: z.string() }),
             ),
-          })
+          }),
         ),
-      })
+      }),
     ),
     info: z.string(),
     gas_wanted: z.string(),
@@ -75,7 +75,11 @@ export const TxResponseSchema = z.object({
         z.object({
           type: z.string(),
           attributes: z.array(
-            z.object({ key: z.string(), value: z.string(), index: z.boolean() })
+            z.object({
+              key: z.string(),
+              value: z.string(),
+              index: z.boolean(),
+            }),
           ),
         }),
         z.object({
@@ -92,20 +96,20 @@ export const TxResponseSchema = z.object({
                 value: z.null(),
                 index: z.boolean(),
               }),
-            ])
+            ]),
           ),
         }),
-      ])
+      ]),
     ),
   }),
 });
 
 export const apiCosmosTxByHash = (
   urls: Readonly<[string, ...string[]]>,
-  hash: string
+  hash: string,
 ) =>
   apiCosmosFetch(
     TxResponseSchema,
     urls,
-    `/cosmos/tx/v1beta1/txs/${hash.replace(/^0x/, "")}`
+    `/cosmos/tx/v1beta1/txs/${hash.replace(/^0x/, "")}`,
   );

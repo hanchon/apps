@@ -8,7 +8,11 @@ import {
   ErrorMessage,
 } from "ui-helpers";
 import { chains } from "@evmos-apps/registry";
-import { Prefix, TokenAmount, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
+import {
+  Prefix,
+  TokenAmount,
+  TokenMinDenom,
+} from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "ui-helpers";
 import { Address, getToken, getTokens, useTokenBalance } from "evmos-wallet";
 import { CryptoSelectorTitle } from "ui-helpers";
@@ -26,11 +30,11 @@ import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-re
 
 type Asset = {
   networkPrefix: Prefix;
-} & TokenAmount
+} & TokenAmount;
 
 const tokenToUSD = (amount: bigint, price: number, decimals: number) => {
   const unformmatedUsd = Number(
-    formatUnits((amount * BigInt(~~(1000 * Number(price)))) / 1000n, decimals)
+    formatUnits((amount * BigInt(~~(1000 * Number(price)))) / 1000n, decimals),
   );
   return unformmatedUsd.toLocaleString("en-US", {
     style: "currency",
@@ -65,19 +69,20 @@ export const AssetSelector = ({
   }, []);
 
   const networkOptions = useMemo(() => {
+    if (selectedToken === null) {
+      return [];
+    }
     if (selectedToken.sourcePrefix === "evmos")
       return Object.values(chains).map(({ prefix }) => prefix);
     return [selectedToken.sourcePrefix, "evmos"] as Prefix[];
   }, [selectedToken]);
-
 
   /**
    * When network changes, check if the selected token is available on the new network.
    * If not, set the first available token as the selected token.
    */
   useEffect(() => {
-    if (tokenOptions.includes(selectedToken))
-      return;
+    if (tokenOptions.includes(selectedToken)) return;
     const [firstAvailableToken] = tokenOptions;
     onChange({
       ...value,
@@ -88,7 +93,10 @@ export const AssetSelector = ({
 
   const price = useTokenPrice(value.ref);
 
-  const { balance, isFetching: isFetchingBalance } = useTokenBalance(address, value.ref);
+  const { balance, isFetching: isFetchingBalance } = useTokenBalance(
+    address,
+    value.ref,
+  );
 
   const amountInUsd = price
     ? tokenToUSD(value.amount, Number(price), selectedToken.decimals)
@@ -104,7 +112,8 @@ export const AssetSelector = ({
     return balance.value;
   }, [balance, fee, isFeeTokenAndSelectedTokenEqual]);
 
-  const inssuficientBalance = isFetchingBalance === false && !balance || balance?.value === 0n
+  const inssuficientBalance =
+    (isFetchingBalance === false && !balance) || balance?.value === 0n;
   const [isMaxClicked, setIsMaxClicked] = useState(false);
   return (
     <CryptoSelectorBox>
@@ -116,7 +125,7 @@ export const AssetSelector = ({
           <CryptoSelector
             value={selectedToken}
             onChange={(token) => {
-              console.log(token.ref)
+              console.log(token.ref);
               onChange({
                 networkPrefix: token.sourcePrefix,
                 ref: token.ref,
@@ -132,10 +141,10 @@ export const AssetSelector = ({
             }}
           >
             <CryptoSelector.Button
-              src={`/assets/tokens/${selectedToken.denom}.png`}
+              src={`/assets/tokens/${selectedToken?.denom}.png`}
               variant="black"
             >
-              {selectedToken.symbol.toLowerCase()}
+              {selectedToken?.symbol.toLowerCase()}
             </CryptoSelector.Button>
             <CryptoSelector.Options
               variant="multiple"
@@ -156,7 +165,7 @@ export const AssetSelector = ({
             </CryptoSelector.Options>
           </CryptoSelector>
         </CryptoSelectorDropdownBox>
-        {showNetworkSelector &&
+        {showNetworkSelector && (
           <CryptoSelectorDropdownBox>
             <CryptoSelectorTitle>
               {t("transfer.section.asset.network")}
@@ -199,10 +208,12 @@ export const AssetSelector = ({
               </CryptoSelector.Options>
             </CryptoSelector>
           </CryptoSelectorDropdownBox>
-        }
+        )}
       </div>
       <AmountInput
-        variant={inssuficientBalance ? "error" : isMaxClicked ? "info" : "default"}
+        variant={
+          inssuficientBalance ? "error" : isMaxClicked ? "info" : "default"
+        }
         value={value.amount}
         max={maxAllowedTransferAmount}
         onChange={(amount) => {
@@ -211,7 +222,7 @@ export const AssetSelector = ({
             amount,
           });
         }}
-        decimals={selectedToken.decimals}
+        decimals={selectedToken?.decimals}
         setIsMaxClicked={setIsMaxClicked}
       />
       <CryptoSelectorBalanceBox>
@@ -254,7 +265,3 @@ export const AssetSelector = ({
     </CryptoSelectorBox>
   );
 };
-
-
-
-

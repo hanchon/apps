@@ -28,8 +28,8 @@ export const ProvidersIcons: { [key: string]: JSX.Element } = {
 export function trackWallet(
   walletExtension: WalletExtension,
   trackChangeWallet: (
-    extraProperties?: Record<string, unknown> | undefined
-  ) => void
+    extraProperties?: Record<string, unknown> | undefined,
+  ) => void,
 ) {
   const walletLocalStorage = GetWalletFromLocalStorage();
   // walletExtension is not set
@@ -51,7 +51,7 @@ export function trackWallet(
 }
 
 export const handleWalletInLocalStorage = (
-  walletExtension: WalletExtension
+  walletExtension: WalletExtension,
 ) => {
   const walletLocalStorage = GetWalletFromLocalStorage();
   // avoid saving the evmos address if it is empty or is already stored.

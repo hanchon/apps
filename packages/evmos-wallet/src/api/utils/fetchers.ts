@@ -17,7 +17,7 @@ export const apiFetch = async <
   successSchema: TSuccess,
   errorSchema: TError,
   url: string,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<z.output<TSuccess>> => {
   const fetchResponse = await fetch(url, init);
 
@@ -38,14 +38,14 @@ export const apiFetch = async <
     [
       `Failed to validate response from ${url}`,
       `Received:\n${JSON.stringify(parsedResponse, null, 2)}`,
-    ].join("\n")
+    ].join("\n"),
   );
 };
 
 const delayCall = async <T extends (...args: unknown[]) => unknown>(
   fn: T,
   milliseconds: number,
-  abortController: AbortController
+  abortController: AbortController,
 ) => {
   await sleep(milliseconds, abortController);
   return await fn();
@@ -59,7 +59,7 @@ export const apiBalancedFetch2 = <
   errorSchema: TError,
   hosts: Readonly<[string, ...string[]]>,
   pathname: string,
-  init?: RequestInit & { timeout?: number; millisecondsBetweenCalls?: number }
+  init?: RequestInit & { timeout?: number; millisecondsBetweenCalls?: number },
 ) =>
   new Promise<z.output<TSuccess>>((resolve, reject) => {
     const controllers: AbortController[] = [];
@@ -74,7 +74,7 @@ export const apiBalancedFetch2 = <
               signal: abortController.signal,
             }),
           i * (init?.millisecondsBetweenCalls ?? 1000),
-          abortController
+          abortController,
         );
 
         promise
@@ -103,7 +103,7 @@ export const apiBalancedFetch2 = <
             controllers.forEach((controller) => controller.abort());
           });
         return promise;
-      })
+      }),
     );
 
     setTimeout(
@@ -111,7 +111,7 @@ export const apiBalancedFetch2 = <
         controllers.forEach((controller) => controller.abort());
         reject(new Error(`Failed to fetch ${pathname}`));
       },
-      init?.timeout ?? 10000
+      init?.timeout ?? 10000,
     );
   });
 export const apiBalancedFetch = async <
@@ -122,14 +122,14 @@ export const apiBalancedFetch = async <
   errorSchema: TError,
   hosts: Readonly<[string, ...string[]]>,
   pathname: string,
-  init?: RequestInit & { timeout?: number; millisecondsBetweenCalls?: number }
+  init?: RequestInit & { timeout?: number; millisecondsBetweenCalls?: number },
 ) => {
   for (const host of hosts) {
     try {
       const abortController = new AbortController();
       const timeout = setTimeout(
         () => abortController.abort(),
-        init?.timeout ?? 4000
+        init?.timeout ?? 4000,
       );
       const response = await apiFetch(
         successSchema,
@@ -138,7 +138,7 @@ export const apiBalancedFetch = async <
         {
           signal: abortController.signal,
           ...init,
-        }
+        },
       );
       clearTimeout(timeout);
       return response;
