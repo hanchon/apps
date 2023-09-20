@@ -32,6 +32,7 @@ import { chains } from "@evmos-apps/registry";
 import { SkeletonLoading } from "../shared/SkeletonLoading";
 import { E, raise } from "helpers";
 import { ReceiptModalProps } from "./ReceiptModal";
+
 const generateReceipt = ({
   sender,
   receiver,
@@ -47,9 +48,8 @@ const generateReceipt = ({
 }) => ({
   sender: normalizeToCosmosAddress(sender as Address<Prefix>),
   receiver: normalizeToCosmosAddress(receiver as Address<Prefix>),
-  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${
-    token.denom
-  }`,
+  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${token.denom
+    }`,
   height: BigInt(height),
 });
 
@@ -112,7 +112,8 @@ const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
   const { data, ...rest } = useQuery({
     queryKey: ["receipt", hash],
     enabled: !!hash && !!chainPrefix,
-    retry: 0,
+    retry: 10,
+    retryDelay: 3000,
     refetchOnWindowFocus: false,
     queryFn: async () => {
       if (!hash || !chainPrefix) throw new Error("Missing parameters");
@@ -203,12 +204,7 @@ export const ReceiptModalContent = ({
     ? new Date(block.block.header.time)
     : undefined;
 
-  /**
-   * TODO: We only have a display name field for chains in our registry, not a name that can be used as a common identifier
-   * We should add a name field that matches the cosmos registry name field
-   */
 
-  const networkName = chain.name.split(" ")[0].toLowerCase();
   return (
     <>
       <ContainerConfirmation>
@@ -240,8 +236,8 @@ export const ReceiptModalContent = ({
         </ConfirmationMessage>
         <Divider variant="info" className="w-full">
           <ViewExplorer
-            txHash={networkName !== "evmos" ? hash?.slice(2) ?? "" : hash ?? ""}
-            explorerTxUrl={`https://www.mintscan.io/${networkName}/transactions/`}
+            txHash={chainPrefix !== "evmos" ? hash?.slice(2) ?? "" : hash ?? ""}
+            explorerTxUrl={chain.explorerUrl}
             text={`Transaction ID: ${hash?.slice(0, 10)}...`}
           />
         </Divider>
