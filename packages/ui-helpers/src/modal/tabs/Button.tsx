@@ -17,6 +17,7 @@ export const Button = ({
     <button
       type="button"
       onClick={tab.onClick}
+      disabled={tab.disabled}
       className={cx(
         "flex items-center justify-center gap-1 rounded-md py-1 px-3",
         {
@@ -32,6 +33,7 @@ export const Button = ({
             variant === "pink-small" && tab.option === tab.type,
           "bg-pink-200 text-black font-light h-9 w-9 md:h-11 md:w-11":
             variant === "pink-small" && tab.option !== tab.type,
+          disabled: tab.disabled,
         },
       )}
     >

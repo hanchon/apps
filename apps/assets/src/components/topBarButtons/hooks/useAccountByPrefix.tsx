@@ -90,48 +90,51 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
   });
 };
 
+
+export const requestWalletAccount = async (prefix: Prefix) => {
+  const activeProvider = getActiveProviderKey();
+  if (!activeProvider) throw new Error("NO_ACTIVE_PROVIDER");
+  const chain = chains[prefix];
+  if (activeProvider === "keplr") {
+    const keplr = await getKeplrProvider();
+    const [suggestChainErr] = await E.try(() => suggestChain(prefix));
+
+    if (suggestChainErr) {
+      throw new Error("USER_REJECTED_REQUEST", { cause: suggestChainErr });
+    }
+
+    const [err, account] = await E.try(() => keplr.getKey(chain.cosmosId));
+
+    if (err) {
+      throw new Error("USER_REJECTED_REQUEST", { cause: err });
+    }
+
+    const { bech32Address, isNanoLedger, pubKey } = account;
+    return {
+      prefix,
+      bech32Address: bech32Address as CosmosAddress<Prefix>,
+      isNanoLedger,
+      pubKey,
+    };
+  }
+
+  if (prefix !== "evmos")
+    throw new Error("NETWORK_NOT_SUPPORTED_BY_WALLET");
+
+  const { address } = getAccount();
+  if (!address) throw new Error("NOT_CONNECTED");
+  return {
+    prefix: prefix,
+    bech32Address: normalizeToCosmosAddress(address),
+    evmAddress: address,
+  };
+}
+
 export const useRequestWalletAccount = () => {
   const id = useId();
   const { data, mutate, ...rest } = useMutation({
     mutationKey: ["wallet_address_request", id],
-    mutationFn: async (prefix: Prefix) => {
-      const activeProvider = getActiveProviderKey();
-      if (!activeProvider) throw new Error("NO_ACTIVE_PROVIDER");
-      const chain = chains[prefix];
-      if (activeProvider === "keplr") {
-        const keplr = await getKeplrProvider();
-        const [suggestChainErr] = await E.try(() => suggestChain(prefix));
-
-        if (suggestChainErr) {
-          throw new Error("USER_REJECTED_REQUEST", { cause: suggestChainErr });
-        }
-
-        const [err, account] = await E.try(() => keplr.getKey(chain.cosmosId));
-
-        if (err) {
-          throw new Error("USER_REJECTED_REQUEST", { cause: err });
-        }
-
-        const { bech32Address, isNanoLedger, pubKey } = account;
-        return {
-          prefix,
-          bech32Address: bech32Address as CosmosAddress<Prefix>,
-          isNanoLedger,
-          pubKey,
-        };
-      }
-
-      if (prefix !== "evmos")
-        throw new Error("NETWORK_NOT_SUPPORTED_BY_WALLET");
-
-      const { address } = getAccount();
-      if (!address) throw new Error("NOT_CONNECTED");
-      return {
-        prefix: prefix,
-        bech32Address: normalizeToCosmosAddress(address),
-        evmAddress: address,
-      };
-    },
+    mutationFn: requestWalletAccount,
   });
   return { ...rest, account: data, requestAccount: mutate };
 };

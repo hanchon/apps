@@ -22,7 +22,7 @@ export const Tabs = ({
     })}
   >
     {tabsProps.map((tab) => (
-      <Button key={tab.type} tab={tab} variant={variant} />
+      <Button key={tab.type} tab={tab} variant={variant} disabled={tab.disabled} />
     ))}
   </div>
 );

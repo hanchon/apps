@@ -7,4 +7,5 @@ export type TabProps = {
   type: string;
   text: string;
   option: string;
+  disabled?: boolean;
 };

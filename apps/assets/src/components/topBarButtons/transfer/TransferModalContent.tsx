@@ -30,7 +30,7 @@ import { TransferSummary } from "../shared/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
-import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
+import { requestWalletAccount, useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
 import { ICONS_TYPES } from "constants-helper";
@@ -355,7 +355,8 @@ export const TransferModalContent = ({
                 setState((prev) => ({ ...prev, receiver }))
               }
               networkOptions={destinationNetworkOptions}
-              disabledNetworkOptions={disabledDestinationNetworkOptions}
+              senderPrefix={senderChain.prefix}
+
             />
             {sender && receiver && amount !== 0n && (
               <div className="space-y-3 mt-8">

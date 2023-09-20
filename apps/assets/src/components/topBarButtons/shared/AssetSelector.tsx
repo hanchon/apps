@@ -118,7 +118,7 @@ export const AssetSelector = ({
             onChange={(token) => {
               console.log(token.ref);
               onChange({
-                networkPrefix: token.sourcePrefix,
+                networkPrefix: value.networkPrefix === 'evmos' ? 'evmos' : token.sourcePrefix,
                 ref: token.ref,
                 amount: 0n,
               });

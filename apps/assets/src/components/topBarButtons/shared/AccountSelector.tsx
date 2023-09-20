@@ -18,42 +18,48 @@ import { useAccount } from "wagmi";
 const WALLET_TAB_TYPES = {
   WALLET: "my wallet",
   OTHER: "other",
-};
+}
 
 export const AccountSelector = ({
   value,
   onChange,
   networkOptions,
-  disabledNetworkOptions,
+
+  senderPrefix,
 }: PropsWithChildren<{
   value?: Address<Prefix>;
   onChange: (value?: Address<Prefix>) => void;
+
   networkOptions: Prefix[];
-  disabledNetworkOptions: Prefix[];
+  senderPrefix: Prefix;
+
 }>) => {
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
   const { address, inputProps, errors, setValue } = useAddressInput(value);
-  const connectedAccount = useAccount();
   const [prefix, setChainPrefix] = useState<Prefix>("evmos");
-  const [walletTab, setWalletTab] = useState(WALLET_TAB_TYPES.WALLET);
+  const [selectedWalletTab, setSelectedWalletTab] = useState(WALLET_TAB_TYPES.WALLET);
 
+  const disableMyWallet = getActiveProviderKey() !== "keplr" || (senderPrefix === prefix)
+
+  const activeWalletTab = disableMyWallet ? WALLET_TAB_TYPES.OTHER : selectedWalletTab;
   const chain = chains[prefix];
 
   const { requestAccount, account } = useRequestWalletAccount();
 
   useEffect(() => {
     if (getActiveProviderKey() !== "keplr") return;
-    if (walletTab !== WALLET_TAB_TYPES.WALLET) return;
+    if (activeWalletTab !== WALLET_TAB_TYPES.WALLET) return;
+
 
     requestAccount(prefix);
-  }, [prefix, walletTab, getActiveProviderKey()]);
+  }, [prefix, activeWalletTab, getActiveProviderKey()]);
 
   useEffect(() => {
     if (!networkOptions.includes(prefix)) {
       setChainPrefix(networkOptions[0]);
     }
-  }, [networkOptions]);
+  }, [networkOptions, prefix]);
 
   useEffect(() => {
     if (!account) return;
@@ -74,26 +80,30 @@ export const AccountSelector = ({
   }, [address]);
 
   useEffect(() => {
-    if (walletTab !== WALLET_TAB_TYPES.WALLET) return;
+    if (activeWalletTab === WALLET_TAB_TYPES.OTHER) return setValue("");
 
-    setValue(connectedAccount.address ?? "");
-  }, [connectedAccount.address, walletTab]);
+  }, [activeWalletTab]);
+
 
   useEffect(() => {
-    if (walletTab === WALLET_TAB_TYPES.OTHER) setValue("");
-  }, [walletTab]);
-
+    if (disableMyWallet && activeWalletTab === WALLET_TAB_TYPES.WALLET) {
+      setSelectedWalletTab(WALLET_TAB_TYPES.OTHER);
+    }
+  }, [disableMyWallet, activeWalletTab]);
   const walletProps = [
     {
-      onClick: () => setWalletTab(WALLET_TAB_TYPES.WALLET),
+      onClick: () => {
+        setSelectedWalletTab(WALLET_TAB_TYPES.WALLET)
+      },
       type: WALLET_TAB_TYPES.WALLET,
-      option: walletTab,
+      option: activeWalletTab,
       text: t("transfer.section.to.wallet"),
+      disabled: disableMyWallet
     },
     {
-      onClick: () => setWalletTab(WALLET_TAB_TYPES.OTHER),
+      onClick: () => setSelectedWalletTab(WALLET_TAB_TYPES.OTHER),
       type: WALLET_TAB_TYPES.OTHER,
-      option: walletTab,
+      option: activeWalletTab,
       text: t("transfer.section.to.wallet.other"),
     },
   ];
@@ -108,6 +118,9 @@ export const AccountSelector = ({
     return ICONS_TYPES[provider.toUpperCase()];
   };
 
+
+  const inputPlaceholder = disableMyWallet ? t("transfer.section.to.placeholder.mywalletdisabled") : t("transfer.section.to.placeholder.mywalletenabled")
+
   return (
     <div className="flex flex-col space-y-3">
       <div className="flex md:justify-between md:flex-row flex-col space-y-4 md:space-y-0">
@@ -120,7 +133,7 @@ export const AccountSelector = ({
               sendEvent(SELECT_TO_NETWORK_SEND_FLOW, {
                 network: value,
                 "account provider": getActiveProviderKey(),
-                "user's address or other": walletTab,
+                "user's address or other": activeWalletTab,
               });
             }}
           >
@@ -138,7 +151,6 @@ export const AccountSelector = ({
                     src={`/assets/chains/${value}.png`}
                     key={value}
                     value={value}
-                    disabled={disabledNetworkOptions.includes(value)}
                   >
                     {chain.name}
                   </CryptoSelector.Option>
@@ -151,14 +163,14 @@ export const AccountSelector = ({
       <div className="space-y-2">
         <TextInput
           placeholder={
-            walletTab !== WALLET_TAB_TYPES.WALLET
-              ? t("transfer.section.to.placeholder")
+            activeWalletTab !== WALLET_TAB_TYPES.WALLET
+              ? inputPlaceholder
               : ""
           }
           extensionIcon={
-            walletTab === WALLET_TAB_TYPES.WALLET ? drawIcon() : undefined
+            activeWalletTab === WALLET_TAB_TYPES.WALLET ? drawIcon() : undefined
           }
-          disabled={walletTab === WALLET_TAB_TYPES.WALLET}
+          disabled={activeWalletTab === WALLET_TAB_TYPES.WALLET}
           {...inputProps}
         />
 
