@@ -23,10 +23,10 @@ export const WalletConnectModal = ({
       introduction={<ConnectToEvmos />}
       content={
         <ConnectToEvmosWallets
-        copilotModal={copilotModal}
-        setShow={setShow}
-        connectorIds={connectorIds}
-      />
+          copilotModal={copilotModal}
+          setShow={setShow}
+          connectorIds={connectorIds}
+        />
       }
     />
   );

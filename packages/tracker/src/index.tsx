@@ -36,12 +36,18 @@ export { SELECT_TO_NETWORK_SEND_FLOW } from "./constants";
 export { INSUFFICIENT_FEE_AMOUNT } from "./constants";
 export { CLICK_ON_TOP_UP_EVMOS } from "./constants";
 export { CLICK_ON_AXL_REDIRECT } from "./constants";
-export { CLICK_ON_DISPLAY_FORMAT } from './constants'
-export { SELECT_NETWORK_RECEIVE_FLOW } from './constants'
+export { CLICK_ON_DISPLAY_FORMAT } from "./constants";
+export { SELECT_NETWORK_RECEIVE_FLOW } from "./constants";
 export { CLICK_ON_CONNECT_ACCOUNT_INSIDE_MODAL } from "./constants";
 export { CLICK_ON_COPY_ICON_RECEIVE_FLOW } from "./constants";
-export { CLICK_ON_REQUEST_FUNDS } from './constants'
-export { CLICK_ON_GENERATE_PAYMENT_REQUEST } from './constants'
+export { CLICK_ON_REQUEST_FUNDS } from "./constants";
+export { CLICK_ON_GENERATE_PAYMENT_REQUEST } from "./constants";
+export { CLICK_ON_SHARE_QR_CODE } from "./constants";
+export { CLICK_ON_SHARE_QR_CODE_PAYMENT } from "./constants";
+export { CLICK_ON_COPY_ICON_REQUEST_FLOW } from "./constants";
+export { CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW } from "./constants";
+export { CLICK_ON_SWAP_ASSETS_PAY_FLOW } from "./constants";
+export { CLICK_ON_PAY } from "./constants";
 
 // TODO: add the events
 

@@ -95,15 +95,15 @@ const Convert = ({
   };
 
   const { handlePreClickAction: clickConfirmConvertTx } = useTracker(
-    CLICK_BUTTON_CONFIRM_CONVERT_TX
+    CLICK_BUTTON_CONFIRM_CONVERT_TX,
   );
 
   const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_CONVERT_TX
+    SUCCESSFUL_CONVERT_TX,
   );
 
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_CONVERT_TX
+    UNSUCCESSFUL_CONVERT_TX,
   );
 
   return (
@@ -146,7 +146,7 @@ const Convert = ({
             {getReservedForFeeText(
               BigNumber.from("300000000000000000"),
               EVMOS_SYMBOL,
-              EVMOS_SYMBOL
+              EVMOS_SYMBOL,
             )}
           </div>
         </div>
@@ -180,7 +180,7 @@ const Convert = ({
                     text: KEPLR_NOTIFICATIONS.RequestRejectedSubtext,
                   },
                   type: SNACKBAR_TYPES.ERROR,
-                })
+                }),
               );
               setShow(false);
               return;
@@ -196,7 +196,7 @@ const Convert = ({
             }
             const amount = parseUnits(
               inputValue,
-              BigNumber.from(item.decimals)
+              BigNumber.from(item.decimals),
             );
             if (amount.gt(typeSelected.amount)) {
               return;
@@ -215,7 +215,7 @@ const Convert = ({
                 wallet,
                 params,
                 isERC20Selected,
-                feeBalance
+                feeBalance,
               );
 
               dispatch(
@@ -224,21 +224,21 @@ const Convert = ({
                   content:
                     res.error === true
                       ? {
-                        type: SNACKBAR_CONTENT_TYPES.TEXT,
-                        title: res.title,
-                        text: res.message,
-                      }
+                          type: SNACKBAR_CONTENT_TYPES.TEXT,
+                          title: res.title,
+                          text: res.message,
+                        }
                       : {
-                        type: SNACKBAR_CONTENT_TYPES.LINK,
-                        title: res.title,
-                        hash: res.txHash,
-                        explorerTxUrl: res.explorerTxUrl,
-                      },
+                          type: SNACKBAR_CONTENT_TYPES.LINK,
+                          title: res.title,
+                          hash: res.txHash,
+                          explorerTxUrl: res.explorerTxUrl,
+                        },
                   type:
                     res.error === true
                       ? SNACKBAR_TYPES.ERROR
                       : SNACKBAR_TYPES.SUCCESS,
-                })
+                }),
               );
 
               if (res.error) {
@@ -279,7 +279,7 @@ const Convert = ({
                           title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
                         },
                         type: SNACKBAR_TYPES.ERROR,
-                      })
+                      }),
                     );
                     setShow(false);
                     return;
@@ -297,7 +297,7 @@ const Convert = ({
                         explorerTxUrl: "www.mintscan.io/evmos/txs/",
                       },
                       type: SNACKBAR_TYPES.SUCCESS,
-                    })
+                    }),
                   );
                 } catch (e) {
                   // TODO: Add Sentry here!
@@ -309,7 +309,7 @@ const Convert = ({
                         title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
                       },
                       type: SNACKBAR_TYPES.ERROR,
-                    })
+                    }),
                   );
                 }
               } else {
@@ -329,7 +329,7 @@ const Convert = ({
                           title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
                         },
                         type: SNACKBAR_TYPES.ERROR,
-                      })
+                      }),
                     );
                     setShow(false);
                     return;
@@ -346,7 +346,7 @@ const Convert = ({
                         explorerTxUrl: "www.mintscan.io/evmos/txs/",
                       },
                       type: SNACKBAR_TYPES.SUCCESS,
-                    })
+                    }),
                   );
                 } catch (e) {
                   // TODO: Add Sentry here!
@@ -358,7 +358,7 @@ const Convert = ({
                         title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
                       },
                       type: SNACKBAR_TYPES.ERROR,
-                    })
+                    }),
                   );
                 }
               }

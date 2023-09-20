@@ -7,7 +7,7 @@ import { CLICK_MISSION_CONTROL_ECOSYSTEM_BUTTON, useTracker } from "tracker";
 
 const Header = () => {
   const { handlePreClickAction } = useTracker(
-    CLICK_MISSION_CONTROL_ECOSYSTEM_BUTTON
+    CLICK_MISSION_CONTROL_ECOSYSTEM_BUTTON,
   );
 
   return (

@@ -38,5 +38,5 @@ export const apiIBCTransfer = makeApiRequester(
       useERC20Denom,
     },
   }),
-  ApiPresignTxSchema
+  ApiPresignTxSchema,
 );

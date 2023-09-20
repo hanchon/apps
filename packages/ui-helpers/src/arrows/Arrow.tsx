@@ -13,7 +13,7 @@ export function Arrow({ ...rest }: ComponentProps<"hr"> & {}) {
         "after:absolute after:block after:right-0",
         "after:h-2 after:w-2",
         "after:border-t-2 after:border-r-2 after:border-t-gradient-to-r after:border-t-[#FCDBD6CC] after:border-r-[#FCDBD6CC]",
-        "after:rotate-45 after:top-1/2 after:-translate-y-1/2"
+        "after:rotate-45 after:top-1/2 after:-translate-y-1/2",
       )}
       {...rest}
     />

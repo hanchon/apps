@@ -6,7 +6,7 @@ import { Prefix } from "../types";
 export const assignGasEstimateToProtoTx = (
   sender: Address<Prefix>,
   tx: Tx,
-  estimatedGas: bigint
+  estimatedGas: bigint,
 ) => {
   tx = tx.clone();
 

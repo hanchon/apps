@@ -26,7 +26,7 @@ describe("useTracker with the mixpanel token set", () => {
   test("should call mixpanel.track", async () => {
     const { result } = renderHook(
       () => useTracker(CLICK_CONNECT_WALLET_BUTTON, { prop: "value" }),
-      { wrapper }
+      { wrapper },
     );
     /* eslint-disable-next-line */
     expect(mixpanel.init).toHaveBeenCalledTimes(1);

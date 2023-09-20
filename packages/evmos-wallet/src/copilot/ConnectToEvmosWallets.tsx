@@ -58,7 +58,7 @@ export const ConnectToEvmosWallets = ({
   const { handlePreClickAction: trackConnectedWithWallet } =
     useTracker(CLICK_CONNECTED_WITH);
   const { handlePreClickAction: trackSuccessfulWalletConnection } = useTracker(
-    SUCCESSFUL_WALLET_CONNECTION
+    SUCCESSFUL_WALLET_CONNECTION,
   );
   const { handlePreClickAction: trackUnsuccessfulWalletConnection } =
     useTracker(UNSUCCESSFUL_WALLET_CONNECTION);
@@ -104,7 +104,7 @@ export const ConnectToEvmosWallets = ({
                     WALLET_NOTIFICATIONS.ExtensionNotFoundSubtext,
                     {
                       walletName: label,
-                    }
+                    },
                   );
                   return;
                 }
@@ -117,7 +117,7 @@ export const ConnectToEvmosWallets = ({
                     WALLET_NOTIFICATIONS.AddressSubtext,
                     {
                       walletName: label,
-                    }
+                    },
                   );
                   return;
                 }
@@ -131,7 +131,7 @@ export const ConnectToEvmosWallets = ({
                     "The connection was rejected",
                     {
                       walletName: label,
-                    }
+                    },
                   );
                   return;
                 }

@@ -11,7 +11,7 @@ export const useCopilot = () => {
 
   const componentToDraw = useMemo(() => {
     return stepsStatus.find(
-      (element) => element.status === STEP_STATUS.CURRENT
+      (element) => element.status === STEP_STATUS.CURRENT,
     );
   }, [stepsStatus]);
 

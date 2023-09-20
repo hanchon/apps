@@ -11,6 +11,6 @@ export const getAccountInfo = async ({
   const chain = getChainByAddress(address);
   return await apiCosmosAccountByAddress(
     chain.cosmosRest,
-    normalizeToCosmosAddress(address)
+    normalizeToCosmosAddress(address),
   );
 };

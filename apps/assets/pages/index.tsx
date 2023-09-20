@@ -10,11 +10,7 @@ import {
   getAllSnackbars,
   WalletProvider,
 } from "evmos-wallet";
-import {
-  Container,
-  MavaWidget,
-  TermOfServices,
-} from "ui-helpers";
+import { Container, MavaWidget, TermOfServices } from "ui-helpers";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { StatefulHeader } from "stateful-components";
 import { HeadComponent } from "../src/components/asset/HeadComponent";
@@ -83,7 +79,7 @@ export default function Home() {
         {typeof document !== "undefined" &&
           createPortal(
             <ReactQueryDevtools initialIsOpen={false} />,
-            document.body
+            document.body,
           )}
       </QueryClientProvider>
     </Provider>

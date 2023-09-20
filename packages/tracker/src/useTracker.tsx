@@ -38,7 +38,7 @@ export const useTracker = (event?: string, properties?: Dict) => {
         mixpanel?.track(trackingID, { ...extraProperties });
       }
     },
-    [mixpanel]
+    [mixpanel],
   );
 
   return {
@@ -48,5 +48,3 @@ export const useTracker = (event?: string, properties?: Dict) => {
     sendEvent,
   };
 };
-
-

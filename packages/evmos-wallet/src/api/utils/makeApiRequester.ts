@@ -10,11 +10,11 @@ export const makeApiRequester =
   >(
     apiEndpoint: string,
     transformParameters: (params: TParams) => TBody,
-    schema: TSchema
+    schema: TSchema,
   ) =>
   async (params: TParams) => {
     const [, response] = await E.try(() =>
-      fetchEvmosApi("POST", apiEndpoint, schema, transformParameters(params))
+      fetchEvmosApi("POST", apiEndpoint, schema, transformParameters(params)),
     );
     return (
       response ||
@@ -23,7 +23,7 @@ export const makeApiRequester =
           .split("/")
           .filter(Boolean)
           .join("_")
-          .toUpperCase()}_TRANSACTION_REQUEST_FAILED`
+          .toUpperCase()}_TRANSACTION_REQUEST_FAILED`,
       )
     );
   };

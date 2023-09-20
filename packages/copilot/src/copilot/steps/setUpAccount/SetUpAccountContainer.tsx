@@ -13,7 +13,7 @@ export const SetUpAccountContainer = () => {
       id: step.id,
       index,
       status: step.status,
-    }))
+    })),
   );
 
   const isSetUpDone = useMemo(() => {

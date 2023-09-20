@@ -11,7 +11,7 @@ import { Address, HexAddress, CosmosAddress } from "./types";
  */
 
 export const normalizeToEvmos = (
-  address: Address<"evmos"> | HexAddress
+  address: Address<"evmos"> | HexAddress,
 ): CosmosAddress<"evmos"> => {
   return isHex(address) ? ethToEvmos(address) : address;
 };

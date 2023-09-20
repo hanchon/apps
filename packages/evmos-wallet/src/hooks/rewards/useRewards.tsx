@@ -19,10 +19,10 @@ export const useRewards = (value: WalletExtension, totalRewards: number) => {
     amount: totalRewards,
   });
   const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_CLAIM_REWARDS
+    SUCCESSFUL_TX_CLAIM_REWARDS,
   );
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_CLAIM_REWARDS
+    UNSUCCESSFUL_TX_CLAIM_REWARDS,
   );
   const handleConfirmButton = useCallback(async () => {
     handlePreClickAction({

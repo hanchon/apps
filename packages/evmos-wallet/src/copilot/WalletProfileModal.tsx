@@ -44,7 +44,7 @@ export const WalletProfileModal = ({
                     className="text-xs font-normal"
                     onClick={async () => {
                       await navigator.clipboard.writeText(
-                        walletExtension.evmosAddressCosmosFormat
+                        walletExtension.evmosAddressCosmosFormat,
                       );
                       setIsCopied(true);
                     }}

@@ -4,7 +4,11 @@
 import { ModalWithTransitions } from "ui-helpers";
 import { Content } from "./Content";
 import { z } from "zod";
-import { AddressSchema, ChainPrefixSchema, MinDenomSchema } from "evmos-wallet/src/registry-actions/utils";
+import {
+  AddressSchema,
+  ChainPrefixSchema,
+  MinDenomSchema,
+} from "evmos-wallet/src/registry-actions/utils";
 import { ModalProps, useModal } from "helpers";
 
 const MAX_MESSAGE_LENGTH = 140;
@@ -14,19 +18,19 @@ const PayModalSchema = z.object({
   networkPrefix: ChainPrefixSchema.default("evmos"),
   denom: MinDenomSchema.default("aevmos"),
   amount: z.coerce.bigint().default(0n),
-  step: z.union([z.literal("setup"), z.literal("share"), z.literal("receive")]).default("receive"),
+  step: z
+    .union([z.literal("setup"), z.literal("share"), z.literal("receive")])
+    .default("receive"),
   message: z.string().max(MAX_MESSAGE_LENGTH).default(""),
 });
 
 export type PayModalProps = ModalProps<typeof PayModalSchema>;
-
 
 export const usePayModal = () => useModal("pay", PayModalSchema);
 
 export const PayModal = () => {
   const { isOpen, setIsOpen, modalProps } = usePayModal();
   return (
-
     <ModalWithTransitions
       show={isOpen}
       setShow={setIsOpen}

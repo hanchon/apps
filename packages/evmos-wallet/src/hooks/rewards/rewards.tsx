@@ -3,18 +3,20 @@
 
 import { raise } from "helpers";
 import { WalletExtension } from "../../internal/wallet/functionality/wallet";
-import {
-  BROADCASTED_NOTIFICATIONS,
-} from "../../notification/errors";
+import { BROADCASTED_NOTIFICATIONS } from "../../notification/errors";
 
-import { apiStakingRewards, executeApiTransaction, mapExecuteResponse } from "../../api";
+import {
+  apiStakingRewards,
+  executeApiTransaction,
+  mapExecuteResponse,
+} from "../../api";
 
 export const executeRewards = async (wallet: WalletExtension) => {
   const { apiResponse, error, hash } = await executeApiTransaction(() =>
     apiStakingRewards({
       address: wallet.evmosAddressCosmosFormat,
       pubkey: wallet.evmosPubkey ?? raise("ACCOUNT_NOT_FOUND"),
-    })
+    }),
   );
   if (error) {
     return mapExecuteResponse({

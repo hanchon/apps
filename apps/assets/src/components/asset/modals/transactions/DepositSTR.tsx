@@ -100,7 +100,7 @@ const DepositSTR = ({
       if (chain !== undefined) {
         const wallet = await getKeplrAddressByChain(
           chain.elements[0].chainId,
-          chain.elements[0].chainIdentifier
+          chain.elements[0].chainIdentifier,
         );
         if (wallet === null) {
           dispatch(snackErrorConnectingKeplr());
@@ -130,7 +130,7 @@ const DepositSTR = ({
           balance = await getEvmosBalanceForDeposit(
             walletToUse,
             chain.chain.toUpperCase(),
-            token.symbol
+            token.symbol,
           );
         } else {
           let tokenDenom = token.symbol;
@@ -141,7 +141,7 @@ const DepositSTR = ({
           balance = await getBalance(
             walletToUse,
             chain?.chain.toUpperCase() ?? "",
-            tokenDenom
+            tokenDenom,
           );
         }
       }
@@ -152,7 +152,7 @@ const DepositSTR = ({
       }
 
       setBalance(
-        BigNumber.from(balance?.data.balance ? balance.data.balance.amount : 0)
+        BigNumber.from(balance?.data.balance ? balance.data.balance.amount : 0),
       );
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises

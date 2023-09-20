@@ -33,15 +33,15 @@ export const completeStep = ({
             ...actionGroup,
             status: STEP_STATUS.DONE,
           }
-        : actionGroup
-    )
+        : actionGroup,
+    ),
   );
 };
 
 // if the prevStep is done, set the status to current.
 export const updateCurrentStatus = (
   groupState: GroupStateI[],
-  currentIndex: number
+  currentIndex: number,
 ) => {
   const updatedState = [...groupState];
   const prevStep = updatedState[currentIndex - 1];
@@ -59,6 +59,6 @@ export const checkAllDoneStatus = (groupState: GroupStateI[]) => {
   return groupState.every(
     (obj) =>
       Object.prototype.hasOwnProperty.call(obj, "status") &&
-      obj.status === STEP_STATUS.DONE
+      obj.status === STEP_STATUS.DONE,
   );
 };

@@ -3,8 +3,8 @@ import { Chain, Prefix, Token, TokenByRef, TokenRef } from "./types";
 
 const TOKEN_BY_REF = Object.fromEntries(
   Object.entries(chains).flatMap(([chainId, chain]) =>
-    chain.tokens.map((token) => [token.ref, token])
-  )
+    chain.tokens.map((token) => [token.ref, token]),
+  ),
 ) as TokenByRef;
 
 export function getTokenByRef<T extends TokenRef>(ref: T): TokenByRef[T];

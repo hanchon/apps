@@ -9,7 +9,7 @@ import { Address, HexAddress, CosmosAddress } from "./types";
  */
 
 export const normalizeToCosmosAddress = <T extends Address>(
-  address: T
+  address: T,
 ): T extends HexAddress ? CosmosAddress<"evmos"> : T => {
   if (isHex(address)) {
     return ethToEvmos(address) as never; // <- nasty hack to allow for conditional return type

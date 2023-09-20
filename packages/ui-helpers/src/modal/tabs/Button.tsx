@@ -28,7 +28,7 @@ export const Button = ({
             variant === "pink" && tab.option === tab.type,
           "bg-pink-200 text-black font-light":
             variant === "pink" && tab.option !== tab.type,
-        }
+        },
       )}
     >
       {tab.icon} {tab.text}

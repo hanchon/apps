@@ -9,7 +9,7 @@ import { useTracker } from "tracker";
 
 export const useStep = (
   step: SetUpAccountI,
-  setGroupState: React.Dispatch<React.SetStateAction<GroupStateI[]>>
+  setGroupState: React.Dispatch<React.SetStateAction<GroupStateI[]>>,
 ) => {
   const [text, setText] = useState(step.buttonText);
   const [status, setStatus] = useState(STEP_STATUS.CURRENT);
@@ -17,10 +17,10 @@ export const useStep = (
 
   const { handlePreClickAction: initTracker } = useTracker(step.tracker.init);
   const { handlePreClickAction: successfullTrack } = useTracker(
-    step.tracker.successful
+    step.tracker.successful,
   );
   const { handlePreClickAction: unsuccessfullTrack } = useTracker(
-    step.tracker.unsuccessful
+    step.tracker.unsuccessful,
   );
   const callActions = async () => {
     setStatus(STEP_STATUS.PROCESSING);
@@ -111,7 +111,7 @@ export const useStep = (
       return () => {
         document.removeEventListener(
           "visibilitychange",
-          handleVisibilityChange
+          handleVisibilityChange,
         );
       };
     }

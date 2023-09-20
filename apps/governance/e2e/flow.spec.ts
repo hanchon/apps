@@ -46,6 +46,6 @@ test.describe("Governance page", () => {
       await page.getByRole("button", { name: /MetaMask/i }).click();
       await wallet.approve();
       await expect(page.getByText(/Connected with Metamask/i)).toBeVisible();
-    }
+    },
   );
 });

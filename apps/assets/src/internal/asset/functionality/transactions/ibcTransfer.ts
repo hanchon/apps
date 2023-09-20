@@ -12,7 +12,7 @@ export async function ibcTransferBackendCall(
   pubkey: string,
   address: string,
   params: IBCChainParams,
-  useERC20Denom = true
+  useERC20Denom = true,
 ): Promise<{
   error: boolean;
   message: string;

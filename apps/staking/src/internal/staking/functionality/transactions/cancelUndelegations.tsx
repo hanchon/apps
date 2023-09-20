@@ -16,7 +16,7 @@ export const executeCancelUndelegations = async (
   wallet: WalletExtension,
   valAddress: string,
   amount: BigNumber,
-  creationHeight: string
+  creationHeight: string,
 ) => {
   const { apiResponse, error, hash } = await executeApiTransaction(() =>
     apiStakingCancelUndelegation({
@@ -25,7 +25,7 @@ export const executeCancelUndelegations = async (
       creationHeight,
       address: wallet.evmosAddressCosmosFormat,
       pubkey: wallet.evmosPubkey ?? raise("ACCOUNT_NOT_FOUND"),
-    })
+    }),
   );
   if (error) {
     return mapExecuteResponse({

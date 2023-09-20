@@ -73,7 +73,7 @@ const StepsContextProvider = ({
   const updateStepsStatus = () => {
     const updatedState = [...stepsStatus];
     const currentElement = updatedState.find(
-      (element) => element.status === STEP_STATUS.CURRENT
+      (element) => element.status === STEP_STATUS.CURRENT,
     );
     if (currentElement === undefined) {
       return;

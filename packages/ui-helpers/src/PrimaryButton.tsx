@@ -14,7 +14,7 @@ export const PrimaryButton = ({
   disabled,
   ...rest
 }: ComponentProps<"button"> & {
-  variant?: "primary" | "outline-primary";
+  variant?: "primary" | "outline-primary" | "primary-lg";
   icon?: JSX.Element;
   type?: string;
 }) => {
@@ -27,10 +27,10 @@ export const PrimaryButton = ({
         className,
         {
           "bg-red text-pearl hover:bg-red1 active:bg-red2":
-            variant === "primary",
+            variant === "primary" || variant === "primary-lg",
           "border-2 border-pink-300 gradient": variant === "outline-primary",
         },
-        disabled ? "disabled" : ""
+        disabled ? "disabled" : "",
       )}
       disabled={disabled}
       {...rest}

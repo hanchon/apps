@@ -55,7 +55,7 @@ export const AmountInput = ({
         {
           "bg-pink-700": variant === "error",
           "bg-purple-200": variant === "info",
-        }
+        },
       )}
     >
       <input
@@ -66,7 +66,7 @@ export const AmountInput = ({
             "bg-pink-700": variant === "error",
             "bg-purple-200": variant === "info",
           },
-          className
+          className,
         )}
         onChange={(e) => {
           const inputValue = e.target.value.replace(/^(0+)(?=[1-9])/, "");
@@ -74,7 +74,7 @@ export const AmountInput = ({
             return;
           }
           const [error, parsed] = E.try(() =>
-            parseUnits(inputValue, decimalsUnit)
+            parseUnits(inputValue, decimalsUnit),
           );
 
           if (error) {
@@ -103,11 +103,11 @@ export const AmountInput = ({
         autoCorrect="off"
         {...props}
       />
-      {max !== undefined &&
+      {max !== undefined && (
         <button
           className={cn(
             "py-2 px-2.5 leading-none rounded-md bg-pink-400 text-black-900 text-xs md:text-sm tracking-wider font-normal",
-            maxButtonClassName
+            maxButtonClassName,
           )}
           onClick={(e) => {
             e.preventDefault();
@@ -118,7 +118,7 @@ export const AmountInput = ({
         >
           Max.
         </button>
-      }
+      )}
     </div>
   );
 };

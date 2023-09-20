@@ -3,7 +3,7 @@ import { CosmosAddress } from "./types";
 
 export const isValidCosmosAddress = <TPrefix extends string = string>(
   address: unknown,
-  expectedPrefixes?: TPrefix[]
+  expectedPrefixes?: TPrefix[],
 ): address is CosmosAddress<TPrefix> => {
   if (typeof address !== "string") {
     return false;

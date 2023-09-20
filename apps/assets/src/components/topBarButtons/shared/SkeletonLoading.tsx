@@ -13,7 +13,7 @@ export const SkeletonLoading = ({
         "animate-pulse w-20 h-full inline-flex align-bottom bg-white/10 rounded min-h-[1em]":
           loading && !children,
       },
-      className
+      className,
     )}
     {...rest}
   >

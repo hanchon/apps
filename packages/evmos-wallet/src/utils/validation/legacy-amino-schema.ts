@@ -9,7 +9,7 @@ export const LegacyAminoSchema = z
         z.object({
           amount: z.string(),
           denom: z.string(),
-        })
+        }),
       ),
       gas: z.string(),
     }),
@@ -25,7 +25,7 @@ export const LegacyAminoSchema = z
           z.null(),
           z.array(z.unknown()),
         ]),
-      })
+      }),
     ),
     sequence: z.string(),
   })

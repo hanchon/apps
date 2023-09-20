@@ -36,7 +36,7 @@ export const SuccessTopUp = () => {
   const { handlePreClickAction } = useTracker(CLICK_ON_NEXT_STEPS_COPILOT);
 
   const { handlePreClickAction: clickContinue } = useTracker(
-    CLICK_ON_CONTINUE_TO_THE_DASHBOARD
+    CLICK_ON_CONTINUE_TO_THE_DASHBOARD,
   );
   const handleOnClick = () => {
     updateStepsStatus();

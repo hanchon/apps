@@ -62,6 +62,15 @@ export const CLICK_ON_DISPLAY_FORMAT = "Display Format in Receive modal";
 export const SELECT_NETWORK_RECEIVE_FLOW = "Choose network to receive tokens";
 export const CLICK_ON_REQUEST_FUNDS = "Request for Funds";
 export const CLICK_ON_GENERATE_PAYMENT_REQUEST = "Generate Payment Request";
+export const CLICK_ON_SHARE_QR_CODE = "Share QR Code of recipient address";
+export const CLICK_ON_SHARE_QR_CODE_PAYMENT =
+  "Share QR code of payment request";
+export const CLICK_ON_COPY_ICON_REQUEST_FLOW = "Copy payment request link";
+export const CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW = "Share payment request link";
+export const SELECT_NETWORK_PAY_FLOW = "Select the dropdown";
+export const CLICK_ON_SWAP_ASSETS_PAY_FLOW =
+  "Click 'Swap Asset' to be moved to Forge";
+export const CLICK_ON_PAY = "Click on Pay";
 
 export const SUCCESSFUL_SEND_TX = "Successful transaction of Send";
 export const UNSUCCESSFUL_SEND_TX = "Unsuccessful transaction of Send";
