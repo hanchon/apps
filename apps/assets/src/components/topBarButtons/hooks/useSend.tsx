@@ -20,10 +20,12 @@ export const useSend = ({
   sender,
   receiver,
   token,
+  onTransfer,
 }: {
   sender?: Address<Prefix>;
   receiver?: Receiverish;
   token?: TokenAmount;
+  onTransfer?: (response: ReturnType<typeof useTransfer>['data'] & {}) => void;
 }) => {
   const receiverPrefix = receiver ? normalizeToPrefix(receiver) : "evmos";
   const receiverAddress =
@@ -88,11 +90,13 @@ export const useSend = ({
     receiverAddress &&
     sender &&
     normalizeToCosmosAddress(sender) !==
-      normalizeToCosmosAddress(receiverAddress);
+    normalizeToCosmosAddress(receiverAddress);
 
   const hasValidAmount = token?.amount !== undefined && token?.amount > 0n;
 
   const hasLoadedFee = fee !== undefined && isFeeLoading === false;
+
+  const hasTransferred = transferResponse !== undefined;
 
   const out = {
     transfer,
@@ -102,10 +106,13 @@ export const useSend = ({
       hasValidReceiver &&
       hasValidAmount &&
       hasLoadedFee,
+
     isPreparing: isFeeLoading || isFetchingBalance || isFetchingFeeBalance,
     isFetchingBalance,
     isFetchingFeeBalance,
     isTransferring,
+    hasTransferred,
+
     transferResponse,
     balance,
     fee,

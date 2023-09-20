@@ -33,7 +33,6 @@
     "last 3 safari version"
   ],
   "dependencies": {
-    "helpers": "workspace:*",
     "@babel/plugin-syntax-import-assertions": "^7.22.5",
     "@evmos-apps/config": "workspace:*",
     "@fireworks-js/react": "^2.10.7",
@@ -46,8 +45,9 @@
     "eslint": "^8.47.0",
     "eslint-interactive": "^10.8.0",
     "eslint-nibble": "^8.1.0",
+    "helpers": "workspace:*",
     "kill-port": "^2.0.1",
-    "next": "^13.4.17",
+    "next": "^13.5.2",
     "nibble": "^0.0.2",
     "react-confetti-explosion": "^2.1.2",
     "react-hook-form": "^7.44.3",

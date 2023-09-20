@@ -38,7 +38,7 @@
     "evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
     "icons": "workspace:*",
-    "next": "13.4.17",
+    "next": "13.5.2",
     "playwright-config-custom": "workspace:*",
     "postcss": "^8.4.20",
     "react": "18.2.0",
