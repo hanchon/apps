@@ -105,6 +105,7 @@ export const TransferModalContent = ({
     receiver,
     token: tokenAmount,
   });
+
   const token = getTokenByRef(tokenRef);
   const senderChain = sender ? getChainByAddress(sender) : chains["evmos"];
   const tokenChain = chains[token.sourcePrefix];
@@ -334,11 +335,11 @@ export const TransferModalContent = ({
                   >
                     {getGlobalKeplrProvider() === null
                       ? t(
-                          "error.network.not.support.by-wallet.installButtonLabel",
-                        )
+                        "error.network.not.support.by-wallet.installButtonLabel",
+                      )
                       : t(
-                          "error.network.not.support.by-wallet.connectButtonLabel",
-                        )}
+                        "error.network.not.support.by-wallet.connectButtonLabel",
+                      )}
                   </PrimaryButton>
                 </div>
               </InfoPanel>
@@ -448,7 +449,7 @@ export const TransferModalContent = ({
               <PrimaryButton
                 type="submit"
                 className="w-full text-base md:text-lg rounded-md capitalize mt-8"
-                disabled={!isReadyToTransfer}
+                disabled={!isReadyToTransfer || isTransferring || !!(transferResponse?.hash)}
               >
                 {t("transfer.send.button.text")}
               </PrimaryButton>
@@ -460,24 +461,6 @@ export const TransferModalContent = ({
         </section>
       </form>
 
-      <button
-        onClick={() =>
-          receiptModal.setIsOpen(true, {
-            hash: "0x42218494f3257db4a0ba998245c5d5803222c8a2707b5534e4669f92c69ab672",
-            chainPrefix: "evmos",
-          })
-        }
-      >
-        Test open receipt modal
-      </button>
-      <br />
-      <button
-        onClick={() => {
-          topupModal.setIsOpen(true);
-        }}
-      >
-        Test open topup modal
-      </button>
       {typeof document !== "undefined" &&
         process.env.NODE_ENV === "development" &&
         createPortal(<TransactionInspector {...__DEBUG__} />, document.body)}
