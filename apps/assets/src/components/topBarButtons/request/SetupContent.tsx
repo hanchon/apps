@@ -5,10 +5,10 @@ import { PrimaryButton, Subtitle, TextInput, Title } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { BackArrowIcon, RequestIcon } from "icons";
-import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
-import { AssetSelector } from "../shared/AssetSelector";
+import { TokenAmount, TokenRef } from "evmos-wallet/src/registry-actions/types";
 import { RequestModalProps } from "./RequestModal";
 import { CLICK_ON_GENERATE_PAYMENT_REQUEST, useTracker } from "tracker";
+import { RequestAssetSelector } from "./RequestAssetSelector";
 
 const MAX_MESSAGE_LENGTH = 140;
 
@@ -17,26 +17,27 @@ export const SetUpContent = ({
   token,
   setMessage,
   message,
+  amount
 }: {
   message: string;
-  token: {
-    denom: TokenMinDenom;
-    amount: bigint;
-    chainPrefix: Prefix;
-    tokenSourcePrefix: Prefix;
-    networkPrefix: Prefix;
-  };
+  token: TokenRef;
+  amount: bigint;
   setMessage: Dispatch<SetStateAction<string>>;
   setState: RequestModalProps["setState"];
 }) => {
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
 
+  const tokenAmount: TokenAmount = {
+    ref: token,
+    amount: amount,
+  };
+
   const { data } = useWalletAccountByPrefix("evmos");
 
   const sender = data?.bech32Address;
 
-  const disabled = token.amount == 0n || message?.length === 0;
+  const disabled = amount == 0n || message?.length === 0;
 
   return (
     <section className="space-y-3">
@@ -70,15 +71,17 @@ export const SetUpContent = ({
                 {t("transfer.section.asset")}
               </Subtitle>
 
-              <AssetSelector
-                showNetworkSelector={false}
-                showMax={false}
-                value={token}
+              <RequestAssetSelector
+                value={{
+                  networkPrefix: "evmos",
+                  ...tokenAmount,
+                }}
                 address={sender}
                 onChange={(token) =>
                   setState((prev) => ({
                     ...prev,
-                    ...token,
+                    token: token.ref,
+                    amount: token.amount,
                   }))
                 }
               />
@@ -115,8 +118,8 @@ export const SetUpContent = ({
                   sendEvent(CLICK_ON_GENERATE_PAYMENT_REQUEST);
                 }}
                 className="w-full text-lg rounded-md capitalize mt-5"
-                // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
-                // "transfer.swap.button.text" - "transfer.bridge.button.text"
+              // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
+              // "transfer.swap.button.text" - "transfer.bridge.button.text"
               >
                 {t("request.generate.button")}
               </PrimaryButton>

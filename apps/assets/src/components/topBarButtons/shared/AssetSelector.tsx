@@ -11,10 +11,9 @@ import { chains } from "@evmos-apps/registry";
 import {
   Prefix,
   TokenAmount,
-  TokenMinDenom,
 } from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "ui-helpers";
-import { Address, getToken, getTokens, useTokenBalance } from "evmos-wallet";
+import { Address, getTokens, useTokenBalance } from "evmos-wallet";
 import { CryptoSelectorTitle } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { formatUnits } from "viem";
@@ -47,15 +46,11 @@ export const AssetSelector = ({
   value,
   onChange,
   address,
-  showNetworkSelector = true,
-  showMax = true,
 }: PropsWithChildren<{
   value: Asset;
   onChange: (value: Asset) => void;
   address?: Address<Prefix>;
   fee?: TokenAmount;
-  showNetworkSelector?: boolean;
-  showMax?: boolean;
 }>) => {
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
@@ -104,7 +99,6 @@ export const AssetSelector = ({
 
   const isFeeTokenAndSelectedTokenEqual = fee && fee.ref === value.ref;
   const maxAllowedTransferAmount = useMemo(() => {
-    if (!showMax) return undefined;
     if (!balance) return 0n;
     if (isFeeTokenAndSelectedTokenEqual) {
       return max(balance.value - fee.amount, 0n);
@@ -114,6 +108,7 @@ export const AssetSelector = ({
 
   const inssuficientBalance =
     (isFetchingBalance === false && !balance) || balance?.value === 0n;
+
   const [isMaxClicked, setIsMaxClicked] = useState(false);
   return (
     <CryptoSelectorBox>
@@ -165,50 +160,48 @@ export const AssetSelector = ({
             </CryptoSelector.Options>
           </CryptoSelector>
         </CryptoSelectorDropdownBox>
-        {showNetworkSelector && (
-          <CryptoSelectorDropdownBox>
-            <CryptoSelectorTitle>
-              {t("transfer.section.asset.network")}
-            </CryptoSelectorTitle>
-            <CryptoSelector
-              value={value.networkPrefix}
-              onChange={(prefix) => {
-                onChange({
-                  ...value,
-                  amount: 0n,
-                  networkPrefix: prefix,
-                });
-                sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
-                  network: value.networkPrefix,
-                });
-                setIsMaxClicked(false);
-              }}
+        <CryptoSelectorDropdownBox>
+          <CryptoSelectorTitle>
+            {t("transfer.section.asset.network")}
+          </CryptoSelectorTitle>
+          <CryptoSelector
+            value={value.networkPrefix}
+            onChange={(prefix) => {
+              onChange({
+                ...value,
+                amount: 0n,
+                networkPrefix: prefix,
+              });
+              sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
+                network: value.networkPrefix,
+              });
+              setIsMaxClicked(false);
+            }}
+          >
+            <CryptoSelector.Button
+              src={`/assets/chains/${value.networkPrefix}.png`}
             >
-              <CryptoSelector.Button
-                src={`/assets/chains/${value.networkPrefix}.png`}
-              >
-                {selectedChain.name}
-              </CryptoSelector.Button>
-              <CryptoSelector.Options
-                label={t("transfer.section.network.label")}
-                className="right-0"
-              >
-                {networkOptions.map((value) => {
-                  const chain = chains[value];
-                  return (
-                    <CryptoSelector.Option
-                      src={`/assets/chains/${value}.png`}
-                      key={value}
-                      value={value}
-                    >
-                      {chain.name}
-                    </CryptoSelector.Option>
-                  );
-                })}
-              </CryptoSelector.Options>
-            </CryptoSelector>
-          </CryptoSelectorDropdownBox>
-        )}
+              {selectedChain.name}
+            </CryptoSelector.Button>
+            <CryptoSelector.Options
+              label={t("transfer.section.network.label")}
+              className="right-0"
+            >
+              {networkOptions.map((value) => {
+                const chain = chains[value];
+                return (
+                  <CryptoSelector.Option
+                    src={`/assets/chains/${value}.png`}
+                    key={value}
+                    value={value}
+                  >
+                    {chain.name}
+                  </CryptoSelector.Option>
+                );
+              })}
+            </CryptoSelector.Options>
+          </CryptoSelector>
+        </CryptoSelectorDropdownBox>
       </div>
       <AmountInput
         variant={
