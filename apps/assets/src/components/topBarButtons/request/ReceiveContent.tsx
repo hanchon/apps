@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Label, PrimaryButton, Tabs, TextInput, Title } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { CryptoSelector } from "ui-helpers";
+import QRCode from "react-qr-code";
 
 import { StoreType } from "evmos-wallet";
 import { ReceiveIcon, ShareIcon } from "icons";
@@ -21,7 +22,6 @@ import {
   CLICK_ON_REQUEST_FUNDS,
   SELECT_NETWORK_RECEIVE_FLOW,
   useTracker,
-  CLICK_ON_SHARE_QR_CODE,
 } from "tracker";
 
 export const ReceiveContent = ({
@@ -37,7 +37,7 @@ export const ReceiveContent = ({
   const [selectedNetworkPrefix, setSelectedNetworkPrefix] =
     useState<Prefix>("evmos");
   const selectedChain = chains[selectedNetworkPrefix];
-  const { data, error, refetch } = useWalletAccountByPrefix(
+  const { data } = useWalletAccountByPrefix(
     selectedNetworkPrefix,
   );
 
@@ -103,7 +103,12 @@ export const ReceiveContent = ({
           <div className="flex flex-col gap-5">
             {/* TO MrSir: on the click add this event: sendEvent(CLICK_ON_SHARE_QR_CODE) */}
             <div className="flex gap-2 flex-col">
-              <div className="bg-white w-44 h-44 rounded-xl self-center" />
+              <div className="bg-white p-2 w-44 h-44 rounded-xl self-center">
+                <QRCode
+                  style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                  value={sender ?? ""}
+                />
+              </div>
               <div className="flex items-center space-x-2 self-center">
                 <span className="text-pink-300 text-xs md:text-sm">
                   {t("receive.share.qr")}

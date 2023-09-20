@@ -6,8 +6,7 @@ import { Content } from "./Content";
 import { z } from "zod";
 import {
   AddressSchema,
-  ChainPrefixSchema,
-  MinDenomSchema,
+  TokenRefSchema,
 } from "evmos-wallet/src/registry-actions/utils";
 import { ModalProps, useModal } from "helpers";
 
@@ -15,8 +14,7 @@ const MAX_MESSAGE_LENGTH = 140;
 
 const PayModalSchema = z.object({
   requester: AddressSchema.optional(),
-  networkPrefix: ChainPrefixSchema.default("evmos"),
-  denom: MinDenomSchema.default("aevmos"),
+  token: TokenRefSchema.default("evmos:EVMOS"),
   amount: z.coerce.bigint().default(0n),
   step: z
     .union([z.literal("setup"), z.literal("share"), z.literal("receive")])

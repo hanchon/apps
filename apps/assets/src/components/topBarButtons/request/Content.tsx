@@ -8,32 +8,24 @@ import { SetUpContent } from "./SetupContent";
 import { ReceiveContent } from "./ReceiveContent";
 
 export const Content = ({
-  denom,
+  token,
   amount,
-  tokenSourcePrefix,
   setState,
   step,
 }: RequestModalProps) => {
   const [message, setMessage] = React.useState("");
 
-  const token = {
-    denom: denom,
-    amount: amount,
-    chainPrefix: tokenSourcePrefix,
-    tokenSourcePrefix: tokenSourcePrefix,
-    networkPrefix: tokenSourcePrefix,
-  };
-
   return (
     <section className="space-y-3">
       {step === "share" && (
-        <ShareContent setState={setState} message={message} token={token} />
+        <ShareContent setState={setState} message={message} amount={amount} token={token} />
       )}
       {step === "setup" && (
         <SetUpContent
           setState={setState}
           setMessage={setMessage}
           message={message}
+          amount={amount}
           token={token}
         />
       )}

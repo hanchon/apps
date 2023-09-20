@@ -4,38 +4,34 @@ import React from "react";
 import { Label, PrimaryButton, TextInput, Title } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { EVMOS_PAGE_URL } from "constants-helper";
-
-import { getToken, getTokenByMinDenom } from "evmos-wallet";
 import { BackArrowIcon, RequestIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { tokenToUSD } from "../common/utils";
 import { useTokenPrice } from "../hooks/useTokenPrice";
-import { useSearchParams } from "next/navigation";
 import { AmountBox } from "../common/AmountBox";
-import { TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
+import { TokenRef } from "evmos-wallet/src/registry-actions/types";
 import { RequestModalProps } from "./RequestModal";
 import {
   CLICK_ON_COPY_ICON_REQUEST_FLOW,
-  CLICK_ON_SHARE_QR_CODE_PAYMENT,
   CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW,
   useTracker,
 } from "tracker";
+import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import QRCode from "react-qr-code";
 
 export const ShareContent = ({
   message,
   token,
   setState,
+  amount
 }: {
   message: string;
-  token: {
-    denom: TokenMinDenom;
-    amount: bigint;
-  };
+  token: TokenRef;
+  amount: bigint;
   setState: RequestModalProps["setState"];
 }) => {
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
-  const searchParams = useSearchParams();
 
   const { data } = useWalletAccountByPrefix("evmos");
 
@@ -43,17 +39,14 @@ export const ShareContent = ({
 
   const shareEnabled = navigator.share !== undefined;
 
-  const price = useTokenPrice(token.denom);
-  const selectedToken = getToken(token.networkPrefix, token.denom);
+  const price = useTokenPrice(token);
+  const selectedToken = getTokenByRef(token);
   const amountInUsd = price
-    ? tokenToUSD(token.amount, Number(price), selectedToken.decimals)
+    ? tokenToUSD(amount, Number(price), selectedToken.decimals)
     : null;
 
-  const shareURL = `${EVMOS_PAGE_URL}assets?action=pay&chainPrefix=${searchParams.get(
-    "chainPrefix",
-  )}&denom=${token.denom}&amount=${
-    token.amount
-  }&message=${message}&requester=${sender}`;
+  const shareURL = `${EVMOS_PAGE_URL}assets?action=pay&token=${token}&amount=${amount
+    }&message=${message}&requester=${sender}`;
 
   return (
     <section className="space-y-8">
@@ -85,7 +78,12 @@ export const ShareContent = ({
             <div className="flex gap-2 flex-col">
               {/* To MrSir: add this event in the onclick: sendEvent(CLICK_ON_SHARE_QR_CODE_PAYMENT) */}
 
-              <div className="bg-white w-44 h-44 rounded-xl self-center" />
+              <div className="bg-white p-2 w-44 h-44 rounded-xl self-center">
+                <QRCode
+                  style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                  value={shareURL}
+                />
+              </div>
               <div className="flex items-center space-x-2 self-center">
                 <span className="text-pink-300 text-xs md:text-sm ">
                   {t("request.share.payment.qr")}
@@ -107,7 +105,7 @@ export const ShareContent = ({
             <div className="flex flex-col">
               <Label>{t("request.label")}</Label>
               <AmountBox
-                amount={token.amount}
+                amount={amount}
                 token={selectedToken}
                 amountInUsd={amountInUsd}
               />
