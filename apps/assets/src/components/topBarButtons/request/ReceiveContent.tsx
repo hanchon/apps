@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { PrimaryButton, Title } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { CryptoSelector } from "ui-helpers";
+import QRCode from "react-qr-code";
 
 import { StoreType } from "evmos-wallet";
 import { CopyPasteIcon, ReceiveIcon } from "icons";
@@ -21,7 +22,6 @@ import {
   CLICK_ON_REQUEST_FUNDS,
   SELECT_NETWORK_RECEIVE_FLOW,
   useTracker,
-  CLICK_ON_SHARE_QR_CODE,
 } from "tracker";
 
 export const ReceiveContent = ({
@@ -37,7 +37,7 @@ export const ReceiveContent = ({
   const [selectedNetworkPrefix, setSelectedNetworkPrefix] =
     useState<Prefix>("evmos");
   const selectedChain = chains[selectedNetworkPrefix];
-  const { data, error, refetch } = useWalletAccountByPrefix(
+  const { data } = useWalletAccountByPrefix(
     selectedNetworkPrefix,
   );
 
@@ -76,7 +76,12 @@ export const ReceiveContent = ({
           <div className="flex pt-8 flex-col gap-5">
             {/* TO MrSir: on the click add this event: sendEvent(CLICK_ON_SHARE_QR_CODE) */}
             <div className="flex gap-2 flex-col">
-              <div className="bg-white w-44 h-44 rounded-xl self-center" />
+              <div className="bg-white p-2 w-44 h-44 rounded-xl self-center">
+                <QRCode
+                  style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                  value={sender ?? ""}
+                />
+              </div>
               <span className="text-red text-xs self-center">
                 {t("receive.share.qr")}
               </span>
@@ -86,7 +91,7 @@ export const ReceiveContent = ({
               <span className="text-xs text-gray-300">
                 {t("receive.format.label")}
               </span>
-              <div className="flex justify-between">
+              <div className="flex items-center justify-between">
                 <div className="flex gap-2">
                   {/* TODO: only if evmos */}
                   {selectedNetworkPrefix === "evmos" && (
@@ -97,9 +102,8 @@ export const ReceiveContent = ({
                           type: "0x",
                         });
                       }}
-                      className={`rounded text-sm text-black p-3 h-11 w-11 text-center flex justify-center items-center  ${
-                        walletFormat === "0x" ? "bg-[#FF9E90]" : "bg-pink-200"
-                      }`}
+                      className={`rounded text-sm text-black p-3 h-11 w-11 text-center flex justify-center items-center  ${walletFormat === "0x" ? "bg-[#FF9E90]" : "bg-pink-200"
+                        }`}
                     >
                       0x
                     </button>
@@ -112,9 +116,8 @@ export const ReceiveContent = ({
                         type: "IBC",
                       });
                     }}
-                    className={`rounded text-sm text-black p-3 h-11 w-11 text-center flex justify-center items-center ${
-                      walletFormat === "IBC" ? "bg-[#FF9E90]" : "bg-pink-200"
-                    }`}
+                    className={`rounded text-sm text-black p-3 h-11 w-11 text-center flex justify-center items-center ${walletFormat === "IBC" ? "bg-[#FF9E90]" : "bg-pink-200"
+                      }`}
                   >
                     IBC
                   </button>
@@ -184,8 +187,8 @@ export const ReceiveContent = ({
                 sendEvent(CLICK_ON_REQUEST_FUNDS);
               }}
               className="w-full text-lg rounded-md capitalize mt-5"
-              // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
-              // "transfer.swap.button.text" - "transfer.bridge.button.text"
+            // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page
+            // "transfer.swap.button.text" - "transfer.bridge.button.text"
             >
               {t("receive.button")}
             </PrimaryButton>

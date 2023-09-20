@@ -16,8 +16,6 @@ import {
 import { useAccount } from "wagmi";
 import {
   Address,
-  getToken,
-  getTokenByMinDenom,
   useTokenBalance,
 } from "evmos-wallet";
 
@@ -43,31 +41,22 @@ import {
   SELECT_NETWORK_PAY_FLOW,
 } from "tracker/src/constants";
 import { useTracker } from "tracker";
+import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
 
 export const Content = ({
   requester,
-  networkPrefix,
-  denom,
+  token,
   amount,
-  step,
   message,
-  setState,
 }: PayModalProps) => {
-  const searchParams = useSearchParams();
   const dispatch = useDispatch();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
 
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
-  const token = {
-    chainPrefix: networkPrefix,
-    denom: denom,
-    amount: amount,
-    minCoinDenom: denom,
-    sourcePrefix: networkPrefix,
-  };
-  const selectedToken = getToken(token.chainPrefix, denom);
-  const { connector, isDisconnected, address } = useAccount();
+
+  const selectedToken = getTokenByRef(token);
+  const { connector, isDisconnected } = useAccount();
   const { data } = useWalletAccountByPrefix(selectedToken.sourcePrefix);
   const { data: evmosData } = useWalletAccountByPrefix("evmos");
   const sender =
@@ -77,30 +66,20 @@ export const Content = ({
 
   const [selectedBalance, setSelectedBalance] = useState<
     undefined | FormattedBalance
-  >({
-    decimals: 16,
-    value: 0n,
-    type: "ERC20",
-    tokenSourcePrefix: "evmos",
-    minDenom: "aevmos",
-    address: "evmos1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3z33a4",
-    formatted: "0.0000000000000000",
-    formattedLong: "0.000000000000000000",
-    denom: "EVMOS",
-  });
+  >(undefined);
 
-  const price = useTokenPrice(token.denom);
+  const price = useTokenPrice(token);
 
   const amountInUsd = price
-    ? tokenToUSD(token.amount, Number(price), selectedToken.decimals)
+    ? tokenToUSD(amount, Number(price), selectedToken.decimals)
     : null;
 
   const selectedTokenUSD = selectedToken
     ? tokenToUSD(
-        selectedBalance?.value ?? 0n,
-        Number(price),
-        selectedToken.decimals,
-      )
+      selectedBalance?.value ?? 0n,
+      Number(price),
+      selectedToken.decimals,
+    )
     : null;
 
   const { balance } = useTokenBalance(sender, token);
@@ -115,13 +94,12 @@ export const Content = ({
   const chain = sender ? getChainByAddress(sender) : chains["evmos"];
 
   const insufficientBalance =
-    selectedBalance?.value ?? 0n < token.amount ? true : false;
+    selectedBalance?.value ?? 0n < amount ? true : false;
 
   useEffect(() => {
     if (
       balances.length > 0 &&
-      selectedBalance?.address ===
-        "evmos1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3z33a4"
+      selectedBalance === undefined
     ) {
       setSelectedBalance(balances[0]);
     }
@@ -154,7 +132,7 @@ export const Content = ({
               </div>
             </div>
             <AmountBox
-              amount={token.amount}
+              amount={amount}
               token={selectedToken}
               amountInUsd={amountInUsd}
             />
@@ -189,19 +167,18 @@ export const Content = ({
                     <CryptoSelector.Button>
                       <div className="pl-2 items-center flex gap-1.5">
                         <Image
-                          src={`/assets/chains/${
-                            selectedBalance?.type === "ERC20"
-                              ? "evmos"
-                              : selectedBalance?.denom
-                          }.png`}
+                          src={`/assets/chains/${selectedBalance ? selectedBalance?.type === "ERC20"
+                            ? "evmos"
+                            : selectedBalance?.denom
+                            : "evmos"}.png`}
                           className="rounded-full"
                           alt=""
                           width={24}
                           height={24}
                         />
-                        {selectedBalance?.type === "ERC20"
+                        {selectedBalance ? selectedBalance?.type === "ERC20"
                           ? "Evmos"
-                          : chain.name}
+                          : chain.name : "evmos"}
                       </div>
                     </CryptoSelector.Button>
 
@@ -213,11 +190,10 @@ export const Content = ({
                       {balances.map((b) => {
                         return (
                           <CryptoSelector.Option
-                            src={`/assets/tokens/${
-                              b?.type === "ERC20"
-                                ? "evmos"
-                                : selectedBalance?.denom
-                            }.png`}
+                            src={`/assets/tokens/${b?.type === "ERC20"
+                              ? "evmos"
+                              : selectedBalance?.denom
+                              }.png`}
                             key={b?.address}
                             value={b?.type ?? ""}
                           >
@@ -235,9 +211,8 @@ export const Content = ({
                     <span className="font-medium">Your Balance</span>
                     <div className="rounded p-2 border border-pink-300">
                       <div
-                        className={`flex justify-between  ${
-                          insufficientBalance ? "opacity-60" : ""
-                        }`}
+                        className={`flex justify-between  ${insufficientBalance ? "opacity-60" : ""
+                          }`}
                       >
                         <div className="flex items-center gap-2">
                           <span className="text-sm">

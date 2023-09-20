@@ -1,7 +1,6 @@
 import {
   AddressSchema,
-  ChainPrefixSchema,
-  MinDenomSchema,
+  TokenRefSchema,
 } from "evmos-wallet/src/registry-actions/utils";
 import { z } from "zod";
 
@@ -12,8 +11,7 @@ import { Content } from "./Content";
 
 const RequestModalSchema = z.object({
   receiver: AddressSchema.optional(),
-  tokenSourcePrefix: ChainPrefixSchema.default("evmos"),
-  denom: MinDenomSchema.default("aevmos"),
+  token: TokenRefSchema.default("evmos:EVMOS"),
   amount: z.coerce.bigint().default(0n),
   step: z
     .union([z.literal("setup"), z.literal("share"), z.literal("receive")])
