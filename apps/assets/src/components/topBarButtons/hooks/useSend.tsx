@@ -20,12 +20,11 @@ export const useSend = ({
   sender,
   receiver,
   token,
-  onTransfer,
+
 }: {
   sender?: Address<Prefix>;
   receiver?: Receiverish;
   token?: TokenAmount;
-  onTransfer?: (response: ReturnType<typeof useTransfer>['data'] & {}) => void;
 }) => {
   const receiverPrefix = receiver ? normalizeToPrefix(receiver) : "evmos";
   const receiverAddress =
@@ -73,12 +72,16 @@ export const useSend = ({
   /**
    * Full amount includes fee when necessary
    */
+  const tokenRef = token?.ref;
+  const tokenAmount = token?.amount;
+  const feeTokenRef = fee?.token.ref;
+  const feeTokenAmount = fee?.token.amount;
   const fullAmount = useMemo(() => {
-    if (token && token.ref === fee?.token.ref) {
-      return token.amount + fee.token.amount;
+    if (tokenRef && tokenRef === feeTokenRef) {
+      return (tokenAmount ?? 0n) + (feeTokenAmount ?? 0n);
     }
-    return token?.amount ?? 0n;
-  }, [token?.ref, token?.amount, fee?.token.ref, fee?.token.amount]);
+    return tokenAmount ?? 0n;
+  }, [tokenRef, tokenAmount, feeTokenRef, feeTokenAmount]);
 
   const hasSufficientBalance =
     accountExists === true && fullAmount <= (balance?.value ?? 0n);
