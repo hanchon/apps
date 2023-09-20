@@ -108,16 +108,6 @@ export const AccountSelector = ({
     },
   ];
 
-  const drawIcon = () => {
-    const provider = getActiveProviderKey();
-    if (provider === null) {
-      return undefined;
-    }
-    // TODO: what should we show for safe / wallet connect ?
-
-    return ICONS_TYPES[provider.toUpperCase()];
-  };
-
 
   const inputPlaceholder = disableMyWallet ? t("transfer.section.to.placeholder.mywalletdisabled") : t("transfer.section.to.placeholder.mywalletenabled")
 
@@ -168,7 +158,7 @@ export const AccountSelector = ({
               : ""
           }
           extensionIcon={
-            activeWalletTab === WALLET_TAB_TYPES.WALLET ? drawIcon() : undefined
+            activeWalletTab === WALLET_TAB_TYPES.WALLET ? getActiveProviderKey()?.toUpperCase() : undefined
           }
           disabled={activeWalletTab === WALLET_TAB_TYPES.WALLET}
           {...inputProps}
