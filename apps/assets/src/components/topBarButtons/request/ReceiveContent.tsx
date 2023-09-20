@@ -11,7 +11,7 @@ import { CryptoSelector } from "ui-helpers";
 import {
     StoreType,
 } from "evmos-wallet";
-import { CopyPasteIcon, SendIcon } from "icons";
+import { CopyPasteIcon, ReceiveIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import {
     CryptoSelectorDropdownBox,
@@ -22,12 +22,13 @@ import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
 import { useSelector } from "react-redux";
 import { RequestModalProps } from "./RequestModal";
+import { CLICK_ON_COPY_ICON_RECEIVE_FLOW, CLICK_ON_DISPLAY_FORMAT, CLICK_ON_REQUEST_FUNDS, SELECT_NETWORK_RECEIVE_FLOW, useTracker } from "tracker";
 
 export const ReceiveContent = ({ setState }: {
     setState: RequestModalProps['setState']
 }) => {
     const { t } = useTranslation();
-
+    const { sendEvent } = useTracker();
     const [walletFormat, setWalletFormat] = useState("0x");
     const wallet = useSelector((state: StoreType) => state.wallet.value);
 
@@ -56,7 +57,7 @@ export const ReceiveContent = ({ setState }: {
         <section className="space-y-3">
             <Title
                 variant="modal-black"
-                icon={<SendIcon className="text-pink-300" />}
+                icon={<ReceiveIcon className="text-pink-300" />}
             >
                 {t("receive.title")}
             </Title>
@@ -84,11 +85,17 @@ export const ReceiveContent = ({ setState }: {
                                     {selectedNetworkPrefix === "evmos" &&
                                         <button onClick={() => {
                                             setWalletFormat("0x")
+                                            sendEvent(CLICK_ON_DISPLAY_FORMAT, {
+                                                type: "0x"
+                                            })
                                         }} className={`rounded text-sm text-black p-3 h-11 w-11 text-center flex justify-center items-center  ${walletFormat === "0x" ? "bg-[#FF9E90]" : "bg-pink-200"}`}>0x</button>
                                     }
 
                                     <button onClick={() => {
                                         setWalletFormat("IBC")
+                                        sendEvent(CLICK_ON_DISPLAY_FORMAT, {
+                                            type: "IBC"
+                                        })
                                     }} className={`rounded text-sm text-black p-3 h-11 w-11 text-center flex justify-center items-center ${walletFormat === "IBC" ? "bg-[#FF9E90]" : "bg-pink-200"}`}>IBC</button>
                                 </div>
                                 {/* TODO: network selector */}
@@ -100,6 +107,9 @@ export const ReceiveContent = ({ setState }: {
                                         value={selectedNetworkPrefix}
                                         onChange={(prefix) => {
                                             setSelectedNetworkPrefix(prefix);
+                                            sendEvent(SELECT_NETWORK_RECEIVE_FLOW, {
+                                                network: prefix
+                                            })
                                         }}
                                     >
                                         <CryptoSelector.Button
@@ -133,8 +143,9 @@ export const ReceiveContent = ({ setState }: {
 
                         <div className="w-full rounded-md bg-gray-500 py-2 px-3 text-xs font-medium flex justify-between items-center space-x-5">
                             <span className="text-sm overflow-hidden">{sender}</span>
-                            <button onClick={() => {
-                                navigator.clipboard.writeText(sender ?? "");
+                            <button onClick={async () => {
+                                await navigator.clipboard.writeText(sender ?? "");
+                                sendEvent(CLICK_ON_COPY_ICON_RECEIVE_FLOW)
                             }} className="">
                                 <CopyPasteIcon
                                     height={32}
@@ -153,6 +164,7 @@ export const ReceiveContent = ({ setState }: {
                                     ...prev,
                                     step: "setup",
                                 }))
+                                sendEvent(CLICK_ON_REQUEST_FUNDS)
                             }}
                             className="w-full text-lg rounded-md capitalize mt-5"
                         // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page

@@ -224,16 +224,16 @@ const Convert = ({
                   content:
                     res.error === true
                       ? {
-                          type: SNACKBAR_CONTENT_TYPES.TEXT,
-                          title: res.title,
-                          text: res.message,
-                        }
+                        type: SNACKBAR_CONTENT_TYPES.TEXT,
+                        title: res.title,
+                        text: res.message,
+                      }
                       : {
-                          type: SNACKBAR_CONTENT_TYPES.LINK,
-                          title: res.title,
-                          hash: res.txHash,
-                          explorerTxUrl: res.explorerTxUrl,
-                        },
+                        type: SNACKBAR_CONTENT_TYPES.LINK,
+                        title: res.title,
+                        hash: res.txHash,
+                        explorerTxUrl: res.explorerTxUrl,
+                      },
                   type:
                     res.error === true
                       ? SNACKBAR_TYPES.ERROR

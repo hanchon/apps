@@ -35,10 +35,10 @@ export const useTracker = (event?: string, properties?: Dict) => {
         (localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === null ||
           localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === "false")
       ) {
-        mixpanel?.track(trackingID, { ...properties, ...extraProperties });
+        mixpanel?.track(trackingID, { ...extraProperties });
       }
     },
-    [mixpanel, properties]
+    [mixpanel]
   );
 
   return {

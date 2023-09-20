@@ -57,3 +57,5 @@ export { SuccessTxIcon } from "./SuccessTxIcon";
 export { FailTxIcon } from "./FailTxIcon";
 export { PaymentTxIcon } from "./PaymentTxIcon";
 export { BackArrowIcon } from "./BackArrowIcon";
+export { ReceiveIcon } from './ReceiveIcon'
+export { PayIcon } from './PayIcon'

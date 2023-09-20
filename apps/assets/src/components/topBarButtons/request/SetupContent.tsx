@@ -9,10 +9,11 @@ import {
 } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
-import { SendIcon, BackArrowIcon } from "icons";
+import { BackArrowIcon, RequestIcon } from "icons";
 import { Prefix, TokenMinDenom } from "evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../shared/AssetSelector";
 import { RequestModalProps } from "./RequestModal";
+import { CLICK_ON_GENERATE_PAYMENT_REQUEST, useTracker } from "tracker";
 
 const MAX_MESSAGE_LENGTH = 140;
 
@@ -27,7 +28,7 @@ export const SetUpContent = ({ setState, token, setMessage, message }: {
     setState: RequestModalProps['setState']
 }) => {
     const { t } = useTranslation();
-
+    const { sendEvent } = useTracker();
 
     const { data } = useWalletAccountByPrefix("evmos");
 
@@ -40,7 +41,7 @@ export const SetUpContent = ({ setState, token, setMessage, message }: {
         <section className="space-y-3">
             <Title
                 variant="modal-black"
-                icon={<SendIcon className="text-pink-300" />}
+                icon={<RequestIcon className="text-pink-300" />}
             >
                 {t("request.title")}
             </Title>
@@ -107,6 +108,7 @@ export const SetUpContent = ({ setState, token, setMessage, message }: {
                                         ...prev,
                                         step: "share",
                                     }))
+                                    sendEvent(CLICK_ON_GENERATE_PAYMENT_REQUEST)
                                 }}
                                 className="w-full text-lg rounded-md capitalize mt-5"
                             // TODO: we should change the message and the action depending if the user has enought balance to pay the fee or if we have to redirect them to axelar page

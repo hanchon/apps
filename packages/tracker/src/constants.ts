@@ -57,7 +57,12 @@ export const CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW =
   "Prompted to connect to Keplr to send token";
 export const CLICK_ON_CONNECT_ACCOUNT_INSIDE_MODAL =
   "Prompted to connect account";
-export const CLICK_ON_COPY_ICON = "Copy address to send token";
+export const CLICK_ON_COPY_ICON_RECEIVE_FLOW = "Copy recipient address";
+export const CLICK_ON_DISPLAY_FORMAT = "Display Format in Receive modal";
+export const SELECT_NETWORK_RECEIVE_FLOW = "Choose network to receive tokens";
+export const CLICK_ON_REQUEST_FUNDS = "Request for Funds";
+export const CLICK_ON_GENERATE_PAYMENT_REQUEST = "Generate Payment Request";
+
 export const SUCCESSFUL_SEND_TX = "Successful transaction of Send";
 export const UNSUCCESSFUL_SEND_TX = "Unsuccessful transaction of Send";
 export const SUCCESSFUL_PAY_TX = "Successful transaction of Pay";

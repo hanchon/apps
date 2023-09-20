@@ -11,7 +11,7 @@ import { EVMOS_PAGE_URL } from "constants-helper";
 import {
     getTokenByMinDenom,
 } from "evmos-wallet";
-import { CopyPasteIcon, SendIcon, BackArrowIcon } from "icons";
+import { CopyPasteIcon, BackArrowIcon, RequestIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { tokenToUSD } from "../common/utils";
 import { useTokenPrice } from "../hooks/useTokenPrice";
@@ -49,7 +49,7 @@ export const ShareContent = ({ message, token, setState }: {
         <section className="space-y-3">
             <Title
                 variant="modal-black"
-                icon={<SendIcon className="text-pink-300" />}
+                icon={<RequestIcon className="text-pink-300" />}
             >
                 {t("request.title")}
             </Title>

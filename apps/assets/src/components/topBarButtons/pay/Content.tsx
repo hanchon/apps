@@ -30,7 +30,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { PayModalProps } from "./Modal";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 import { chains } from "@evmos-apps/registry";
-import { SendIcon } from "icons";
+import { PayIcon } from "icons";
 import Image from "next/image";
 
 
@@ -90,7 +90,7 @@ export const Content = ({ requester, networkPrefix, denom, amount, step, message
 
   return (
     <section className="space-y-3">
-      <Title variant="modal-black" icon={<SendIcon />}>
+      <Title variant="modal-black" icon={<PayIcon />}>
         {t("pay.title")}
       </Title>
 
