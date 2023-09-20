@@ -99,7 +99,7 @@ type WalletConnectModalProps = {
   }: {
     beforeStartHook: Dispatch<SetStateAction<boolean>>;
   }) => JSX.Element;
-  variant: "primary" | "outline-primary";
+  variant: "primary" | "outline-primary" | "primary-lg";
 };
 
 export const drawConnectModal = (props: WalletConnectModalProps) => {
@@ -112,8 +112,8 @@ export const drawConnectModal = (props: WalletConnectModalProps) => {
         copilotModal={
           props.copilotModal
             ? props.copilotModal({
-                beforeStartHook: () => props.setShow(false),
-              })
+              beforeStartHook: () => props.setShow(false),
+            })
             : undefined
         }
         show={props.show}

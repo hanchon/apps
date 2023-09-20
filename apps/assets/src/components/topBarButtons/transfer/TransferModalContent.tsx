@@ -333,11 +333,11 @@ export const TransferModalContent = ({
                 >
                   {getGlobalKeplrProvider() === null
                     ? t(
-                        "error.network.not.support.by-wallet.installButtonLabel",
-                      )
+                      "error.network.not.support.by-wallet.installButtonLabel",
+                    )
                     : t(
-                        "error.network.not.support.by-wallet.connectButtonLabel",
-                      )}
+                      "error.network.not.support.by-wallet.connectButtonLabel",
+                    )}
                 </PrimaryButton>
               </div>
             </InfoPanel>
@@ -353,7 +353,7 @@ export const TransferModalContent = ({
           {/* To Julia: shouldn't we also wait for the amount to be set? 
         As the to address is now being prefilled as soon as we open the modal, maybe we should wait 
         for the amount (because it's showing the transfer summary instantly? */}
-          {sender && receiver && (
+          {sender && receiver && amount !== 0n && (
             <div className="space-y-3">
               <Label>{t("transfer.section.summary.title")}</Label>
               <TransferSummary
@@ -389,7 +389,6 @@ export const TransferModalContent = ({
                   }}
                 />
               </ErrorMessage>
-              {/* TODO: add tracker event and add styles to the button */}
               <WalletConnection
                 copilotModal={({
                   beforeStartHook,
@@ -408,7 +407,7 @@ export const TransferModalContent = ({
               {!validation.hasSufficientBalanceForFee && (
                 <ErrorMessage className="justify-center pl-0">
                   {t("message.insufficiente.fee")}
-                  {feeBalance?.formattedLong ?? 0} {feeToken?.symbol}
+                  {feeBalance?.formatted ?? 0} {feeToken?.symbol}
                 </ErrorMessage>
               )}
               <PrimaryButton
