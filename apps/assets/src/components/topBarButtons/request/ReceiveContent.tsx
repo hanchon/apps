@@ -36,14 +36,12 @@ export const ReceiveContent = ({
   const [selectedNetworkPrefix, setSelectedNetworkPrefix] =
     useState<Prefix>("evmos");
   const selectedChain = chains[selectedNetworkPrefix];
-  const { data } = useWalletAccountByPrefix(
-    selectedNetworkPrefix,
-  );
+  const { data } = useWalletAccountByPrefix(selectedNetworkPrefix);
 
   const sender =
     walletFormat === "0x" ? wallet.evmosAddressEthFormat : data?.bech32Address;
 
-  const activeProviderKey = getActiveProviderKey()
+  const activeProviderKey = getActiveProviderKey();
   const networkOptions = useMemo(() => {
     if (activeProviderKey == "metaMask") {
       return ["evmos"] as Prefix[];

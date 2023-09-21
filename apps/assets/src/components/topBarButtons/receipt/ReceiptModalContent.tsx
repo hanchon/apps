@@ -48,8 +48,9 @@ const generateReceipt = ({
 }) => ({
   sender: normalizeToCosmosAddress(sender as Address<Prefix>),
   receiver: normalizeToCosmosAddress(receiver as Address<Prefix>),
-  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${token.denom
-    }`,
+  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${
+    token.denom
+  }`,
   height: BigInt(height),
 });
 

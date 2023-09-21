@@ -90,7 +90,6 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
   });
 };
 
-
 export const requestWalletAccount = async (prefix: Prefix) => {
   const activeProvider = getActiveProviderKey();
   if (!activeProvider) throw new Error("NO_ACTIVE_PROVIDER");
@@ -118,8 +117,7 @@ export const requestWalletAccount = async (prefix: Prefix) => {
     };
   }
 
-  if (prefix !== "evmos")
-    throw new Error("NETWORK_NOT_SUPPORTED_BY_WALLET");
+  if (prefix !== "evmos") throw new Error("NETWORK_NOT_SUPPORTED_BY_WALLET");
 
   const { address } = getAccount();
   if (!address) throw new Error("NOT_CONNECTED");
@@ -128,7 +126,7 @@ export const requestWalletAccount = async (prefix: Prefix) => {
     bech32Address: normalizeToCosmosAddress(address),
     evmAddress: address,
   };
-}
+};
 
 export const useRequestWalletAccount = () => {
   const id = useId();

@@ -49,7 +49,7 @@ export const BlockLatestSchema = z.object({
             timestamp: z.string(),
             signature: z.null(),
           }),
-        ])
+        ]),
       ),
     }),
   }),
@@ -106,5 +106,5 @@ export const apiCosmosBlockLatest = (urls: Readonly<[string, ...string[]]>) =>
   apiCosmosFetch(
     BlockLatestSchema,
     urls,
-    `/cosmos/base/tendermint/v1beta1/blocks/latest`
+    `/cosmos/base/tendermint/v1beta1/blocks/latest`,
   );

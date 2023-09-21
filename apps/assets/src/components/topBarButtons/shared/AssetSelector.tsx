@@ -57,7 +57,7 @@ export const AssetSelector = ({
 
   const selectedToken = getTokenByRef(value.ref);
 
-  const tokenOptions = sortedTokens
+  const tokenOptions = sortedTokens;
 
   const networkOptions = useMemo(() => {
     if (selectedToken === null) {
@@ -78,10 +78,10 @@ export const AssetSelector = ({
       ref: firstAvailableToken.ref,
       networkPrefix: firstAvailableToken.sourcePrefix,
     });
-  })
+  });
   useEffect(() => {
     if (tokenOptions.includes(selectedToken)) return;
-    selectFirstNetworkOption()
+    selectFirstNetworkOption();
   }, [tokenOptions, selectedToken, selectFirstNetworkOption]);
 
   const price = useTokenPrice(value.ref);
@@ -120,7 +120,10 @@ export const AssetSelector = ({
             onChange={(token) => {
               console.log(token.ref);
               onChange({
-                networkPrefix: value.networkPrefix === 'evmos' ? 'evmos' : token.sourcePrefix,
+                networkPrefix:
+                  value.networkPrefix === "evmos"
+                    ? "evmos"
+                    : token.sourcePrefix,
                 ref: token.ref,
                 amount: 0n,
               });

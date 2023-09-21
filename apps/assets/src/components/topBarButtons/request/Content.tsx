@@ -18,7 +18,12 @@ export const Content = ({
   return (
     <section className="space-y-3">
       {step === "share" && (
-        <ShareContent setState={setState} message={message} amount={amount} token={token} />
+        <ShareContent
+          setState={setState}
+          message={message}
+          amount={amount}
+          token={token}
+        />
       )}
       {step === "setup" && (
         <SetUpContent

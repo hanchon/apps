@@ -10,14 +10,9 @@ import {
   Title,
 } from "ui-helpers";
 import { useTranslation } from "next-i18next";
-import {
-  FormattedBalance,
-} from "evmos-wallet/src/registry-actions/types";
+import { FormattedBalance } from "evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
-import {
-  normalizeToCosmosAddress,
-  useTokenBalance,
-} from "evmos-wallet";
+import { normalizeToCosmosAddress, useTokenBalance } from "evmos-wallet";
 
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { formatUnits } from "viem";
@@ -55,8 +50,6 @@ export const Content = ({
   const dispatch = useDispatch();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
 
-
-
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
 
@@ -69,7 +62,7 @@ export const Content = ({
       ? address && normalizeToCosmosAddress(address)
       : data?.bech32Address;
 
-  const receiptModal = useReceiptModal()
+  const receiptModal = useReceiptModal();
   const {
     transfer,
 
@@ -84,7 +77,7 @@ export const Content = ({
     // feeBalance,
 
     // this will give you the balance of the selected token so you don't need to fetch it below:
-    // balance, 
+    // balance,
 
     // this has some ready to use validation like:
     validation,
@@ -102,18 +95,17 @@ export const Content = ({
       ref: token,
       amount,
     },
-
-  })
+  });
   useEffect(() => {
-    if (!transferResponse) return
-    if (!sender) return
-    const chainPrefix = normalizeToPrefix(sender)
+    if (!transferResponse) return;
+    if (!sender) return;
+    const chainPrefix = normalizeToPrefix(sender);
     receiptModal.setIsOpen(true, {
       hash: transferResponse.hash,
       chainPrefix,
-    })
-  }
-  ), [transferResponse, sender, receiptModal]
+    });
+  }),
+    [transferResponse, sender, receiptModal];
 
   const [selectedBalance, setSelectedBalance] = useState<
     undefined | FormattedBalance
@@ -127,10 +119,10 @@ export const Content = ({
 
   const selectedTokenUSD = selectedToken
     ? tokenToUSD(
-      selectedBalance?.value ?? 0n,
-      Number(price),
-      selectedToken.decimals,
-    )
+        selectedBalance?.value ?? 0n,
+        Number(price),
+        selectedToken.decimals,
+      )
     : null;
 
   const { balance } = useTokenBalance(sender, token);
@@ -147,17 +139,17 @@ export const Content = ({
   const insufficientBalance =
     selectedBalance?.value ?? 0n < amount ? true : false;
 
-
   useEffect(() => {
-    if (
-      balances.length > 0 &&
-      selectedBalance === undefined
-    ) {
+    if (balances.length > 0 && selectedBalance === undefined) {
       setSelectedBalance(balances[0]);
     }
   }, [balances, selectedBalance]);
 
-  const action = (validation.hasSufficientBalance && validation.hasSufficientBalance) || isPreparing ? 'PAY' : 'SWAP'
+  const action =
+    (validation.hasSufficientBalance && validation.hasSufficientBalance) ||
+    isPreparing
+      ? "PAY"
+      : "SWAP";
 
   return (
     <section className="space-y-8">
@@ -170,7 +162,7 @@ export const Content = ({
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (action === 'PAY') {
+          if (action === "PAY") {
             transfer();
           }
         }}
@@ -224,18 +216,23 @@ export const Content = ({
                     <CryptoSelector.Button>
                       <div className="pl-2 items-center flex gap-1.5">
                         <Image
-                          src={`/assets/chains/${selectedBalance ? selectedBalance?.type === "ERC20"
-                            ? "evmos"
-                            : selectedBalance?.denom
-                            : "evmos"}.png`}
+                          src={`/assets/chains/${
+                            selectedBalance
+                              ? selectedBalance?.type === "ERC20"
+                                ? "evmos"
+                                : selectedBalance?.denom
+                              : "evmos"
+                          }.png`}
                           className="rounded-full"
                           alt=""
                           width={24}
                           height={24}
                         />
-                        {selectedBalance ? selectedBalance?.type === "ERC20"
-                          ? "Evmos"
-                          : chain.name : "evmos"}
+                        {selectedBalance
+                          ? selectedBalance?.type === "ERC20"
+                            ? "Evmos"
+                            : chain.name
+                          : "evmos"}
                       </div>
                     </CryptoSelector.Button>
 
@@ -247,10 +244,11 @@ export const Content = ({
                       {balances.map((b) => {
                         return (
                           <CryptoSelector.Option
-                            src={`/assets/tokens/${b?.type === "ERC20"
-                              ? "evmos"
-                              : selectedBalance?.denom
-                              }.png`}
+                            src={`/assets/tokens/${
+                              b?.type === "ERC20"
+                                ? "evmos"
+                                : selectedBalance?.denom
+                            }.png`}
                             key={b?.address}
                             value={b?.type ?? ""}
                           >
@@ -270,8 +268,9 @@ export const Content = ({
                     </span>
                     <div className="rounded px-5 py-4 border border-pink-300">
                       <div
-                        className={`flex justify-between items-center  ${insufficientBalance ? "opacity-60" : ""
-                          }`}
+                        className={`flex justify-between items-center  ${
+                          insufficientBalance ? "opacity-60" : ""
+                        }`}
                       >
                         <div className="flex items-center gap-2">
                           <span className="text-xs md:text-sm">
@@ -300,7 +299,7 @@ export const Content = ({
                   </div>
                 )}
 
-                {action === 'PAY' && (
+                {action === "PAY" && (
                   <PrimaryButton
                     type="submit"
                     disabled={!isReady || isTransferring || hasTransferred}
@@ -314,9 +313,8 @@ export const Content = ({
                   </PrimaryButton>
                 )}
 
-                {action === 'SWAP' && (
+                {action === "SWAP" && (
                   <PrimaryButton
-
                     variant={"outline-primary"}
                     onClick={() => {
                       sendEvent(CLICK_ON_SWAP_ASSETS_PAY_FLOW);

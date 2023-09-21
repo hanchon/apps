@@ -23,7 +23,7 @@ export const ShareContent = ({
   message,
   token,
   setState,
-  amount
+  amount,
 }: {
   message: string;
   token: TokenRef;
@@ -45,8 +45,7 @@ export const ShareContent = ({
     ? tokenToUSD(amount, Number(price), selectedToken.decimals)
     : null;
 
-  const shareURL = `${EVMOS_PAGE_URL}assets?action=pay&token=${token}&amount=${amount
-    }&message=${message}&requester=${sender}`;
+  const shareURL = `${EVMOS_PAGE_URL}assets?action=pay&token=${token}&amount=${amount}&message=${message}&requester=${sender}`;
 
   return (
     <section className="space-y-8">

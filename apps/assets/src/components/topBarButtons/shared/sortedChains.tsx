@@ -23,5 +23,5 @@ export const sortedTokens = getTokens()
     if (a === "EVMOS") return -1;
     if (b === "EVMOS") return 1;
 
-    return (a > b ? 1 : -1)
+    return a > b ? 1 : -1;
   });

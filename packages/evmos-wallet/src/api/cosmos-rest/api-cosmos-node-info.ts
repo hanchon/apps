@@ -24,7 +24,7 @@ export const NodeInfoResponseSchema = z.object({
     build_tags: z.string(),
     go_version: z.string(),
     build_deps: z.array(
-      z.object({ path: z.string(), version: z.string(), sum: z.string() })
+      z.object({ path: z.string(), version: z.string(), sum: z.string() }),
     ),
     cosmos_sdk_version: z.string(),
   }),
@@ -34,5 +34,5 @@ export const apiCosmosNodeInfo = (urls: Readonly<[string, ...string[]]>) =>
   apiCosmosFetch(
     NodeInfoResponseSchema,
     urls,
-    `/cosmos/base/tendermint/v1beta1/node_info`
+    `/cosmos/base/tendermint/v1beta1/node_info`,
   );

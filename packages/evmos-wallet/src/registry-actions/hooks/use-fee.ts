@@ -48,7 +48,7 @@ export const useFee = ({
             ...token,
             amount: 1n,
           },
-        })
+        }),
       );
       if (err) {
         if (E.match.byPattern(err, /NotFound/g)) {

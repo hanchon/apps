@@ -9,7 +9,7 @@ const readFiles = async <T>(globPattern: string) => {
   const files = await glob(globPattern);
   const contents = await Promise.all(
     files //
-      .map((file) => readFile(file, { encoding: "utf-8" }))
+      .map((file) => readFile(file, { encoding: "utf-8" })),
   );
   const parsed = contents //
     .map((content) => JSON.parse(content) as T);
@@ -19,7 +19,7 @@ const readFiles = async <T>(globPattern: string) => {
 export const readRegistryChain = async () =>
   (
     await readFiles<ChainRegistry>(
-      "node_modules/chain-token-registry/chainConfig/*.json"
+      "node_modules/chain-token-registry/chainConfig/*.json",
     )
   ).flatMap(({ configurations, ...rest }) =>
     configurations
@@ -27,7 +27,7 @@ export const readRegistryChain = async () =>
           ...rest,
           configuration,
         }))
-      : []
+      : [],
   );
 
 export const readRegistryToken = () =>
@@ -46,7 +46,7 @@ const normalizeNetworkUrls = (urls?: string[]) => {
 
 const tokenByPrefix = groupBy(
   await readRegistryToken(),
-  ({ coinSourcePrefix }) => coinSourcePrefix
+  ({ coinSourcePrefix }) => coinSourcePrefix,
 );
 
 // This might be handy when we start supporting IBC between other chains

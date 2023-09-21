@@ -4,7 +4,7 @@ import { useAccountBalances } from "./use-account-balances";
 
 export const useTokenBalance = (
   address?: Address<Prefix>,
-  tokenRef?: TokenRef
+  tokenRef?: TokenRef,
 ) => {
   const { data, ...rest } = useAccountBalances(address);
 

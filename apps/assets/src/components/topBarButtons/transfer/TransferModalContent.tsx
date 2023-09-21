@@ -80,7 +80,7 @@ export const TransferModalContent = ({
     requestAccount,
   } = useRequestWalletAccount();
 
-  const { address } = useAccount()
+  const { address } = useAccount();
   useEffect(() => {
     if (networkPrefix !== "evmos" && getActiveProviderKey() !== "keplr") return;
     requestAccount(networkPrefix);
@@ -170,7 +170,15 @@ export const TransferModalContent = ({
     if (token.handledByExternalUI !== null) return "BRIDGE";
 
     return "TRANSFER";
-  }, [isDisconnected, token.ref, token.handledByExternalUI, validation.hasSufficientBalance, validation.hasSufficientBalanceForFee, isPreparing, fee]);
+  }, [
+    isDisconnected,
+    token.ref,
+    token.handledByExternalUI,
+    validation.hasSufficientBalance,
+    validation.hasSufficientBalanceForFee,
+    isPreparing,
+    fee,
+  ]);
 
   useEffect(() => {
     if (!validation.hasSufficientBalanceForFee && !isPreparing)
@@ -311,11 +319,11 @@ export const TransferModalContent = ({
                   >
                     {getGlobalKeplrProvider() === null
                       ? t(
-                        "error.network.not.support.by-wallet.installButtonLabel",
-                      )
+                          "error.network.not.support.by-wallet.installButtonLabel",
+                        )
                       : t(
-                        "error.network.not.support.by-wallet.connectButtonLabel",
-                      )}
+                          "error.network.not.support.by-wallet.connectButtonLabel",
+                        )}
                   </PrimaryButton>
                 </div>
               </InfoPanel>
@@ -332,7 +340,6 @@ export const TransferModalContent = ({
               }
               networkOptions={destinationNetworkOptions}
               senderPrefix={senderChain.prefix}
-
             />
             {sender && receiver && amount !== 0n && (
               <div className="space-y-3 mt-8">
@@ -426,7 +433,11 @@ export const TransferModalContent = ({
               <PrimaryButton
                 type="submit"
                 className="w-full text-base md:text-lg rounded-md capitalize mt-8"
-                disabled={!isReadyToTransfer || isTransferring || !!(transferResponse?.hash)}
+                disabled={
+                  !isReadyToTransfer ||
+                  isTransferring ||
+                  !!transferResponse?.hash
+                }
               >
                 {t("transfer.send.button.text")}
               </PrimaryButton>
@@ -436,13 +447,11 @@ export const TransferModalContent = ({
             <p>Please, check your wallet to sign your transaction</p>
           )}
         </section>
-      </form >
+      </form>
 
-      {
-        typeof document !== "undefined" &&
+      {typeof document !== "undefined" &&
         process.env.NODE_ENV === "development" &&
-        createPortal(<TransactionInspector {...__DEBUG__} />, document.body)
-      }
-    </section >
+        createPortal(<TransactionInspector {...__DEBUG__} />, document.body)}
+    </section>
   );
 };

@@ -20,7 +20,6 @@ export const useSend = ({
   sender,
   receiver,
   token,
-
 }: {
   sender?: Address<Prefix>;
   receiver?: Receiverish;
@@ -93,7 +92,7 @@ export const useSend = ({
     receiverAddress &&
     sender &&
     normalizeToCosmosAddress(sender) !==
-    normalizeToCosmosAddress(receiverAddress);
+      normalizeToCosmosAddress(receiverAddress);
 
   const hasValidAmount = token?.amount !== undefined && token?.amount > 0n;
 

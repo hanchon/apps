@@ -15,7 +15,7 @@ export const getChainAccountInfo = async (address: Address<Prefix>) => {
 
   const { account } = await apiCosmosAccountByAddress(
     chain.cosmosRest,
-    cosmosAddress
+    cosmosAddress,
   );
 
   if (account["@type"] === "/ethermint.types.v1.EthAccount") {

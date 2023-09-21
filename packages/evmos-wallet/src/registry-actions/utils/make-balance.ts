@@ -6,7 +6,7 @@ export const makeBalance = (
   token: Token,
   address: CosmosAddress,
   value: string | bigint,
-  type: "ICS20" | "ERC20"
+  type: "ICS20" | "ERC20",
 ): FormattedBalance => {
   const amount = BigInt(value);
 

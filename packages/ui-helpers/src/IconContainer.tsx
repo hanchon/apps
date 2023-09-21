@@ -61,7 +61,7 @@ const ICONS_STYLES = {
     style: "bg-gray-600 text-pearl flex h-9 w-9 shrink-0",
     icon: <WalletConnectIcon width={"20px"} height={"20px"} />,
   },
-} as const
+} as const;
 
 export const IconContainer = ({
   type,

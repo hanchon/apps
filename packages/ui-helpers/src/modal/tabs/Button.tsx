@@ -14,7 +14,7 @@ export const Button = ({
 }: {
   tab: TabProps;
   variant: string;
-} & ComponentProps<'button'>) => {
+} & ComponentProps<"button">) => {
   return (
     <button
       type="button"

@@ -17,7 +17,7 @@ export const SetUpContent = ({
   token,
   setMessage,
   message,
-  amount
+  amount,
 }: {
   message: string;
   token: TokenRef;
