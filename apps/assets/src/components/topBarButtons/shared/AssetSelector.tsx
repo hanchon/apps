@@ -112,8 +112,17 @@ export const AssetSelector = ({
 
   const [isMaxClicked, setIsMaxClicked] = useState(false);
 
-
-
+  const updateAmount = useEffectEvent((amount: bigint) => {
+    onChange({
+      ...value,
+      amount,
+    });
+  })
+  useEffect(() => {
+    if (value.amount > maxAllowedTransferAmount) {
+      updateAmount(maxAllowedTransferAmount);
+    }
+  }, [maxAllowedTransferAmount, updateAmount, value.amount])
   return (
     <CryptoSelectorBox>
       <div className="flex justify-between">
