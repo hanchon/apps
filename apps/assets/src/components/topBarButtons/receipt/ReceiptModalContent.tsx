@@ -48,9 +48,8 @@ const generateReceipt = ({
 }) => ({
   sender: normalizeToCosmosAddress(sender as Address<Prefix>),
   receiver: normalizeToCosmosAddress(receiver as Address<Prefix>),
-  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${
-    token.denom
-  }`,
+  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${token.denom
+    }`,
   height: BigInt(height),
 });
 
@@ -78,17 +77,20 @@ const generateICS20TransferReceipt = (result: FetchTransactionResult) => {
 };
 
 const generateERC20TransferReceipt = (result: FetchTransactionResult) => {
+
   const { args, functionName } = decodeFunctionData({
     abi: getAbi("erc20"),
     data: result.input,
   });
+
   if (!args || functionName !== "transfer") throw new Error("Missing args");
 
   const [receiver, amount] = args;
 
   if (!amount || !amount || !receiver) throw new Error("Missing args");
+  const tokenErc20Address = result.to?.toLowerCase();
   const token =
-    getTokens().find((token) => token.erc20Address === result.to) ??
+    getTokens().find((token) => token.erc20Address.toLowerCase() === tokenErc20Address) ??
     raise("Token not found");
 
   return generateReceipt({
@@ -126,6 +128,8 @@ const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
         const result = await fetchTransaction({
           hash: hash,
         });
+
+
         if (result.to === ICS20_ADDRESS) {
           return generateICS20TransferReceipt(result);
         }
@@ -137,7 +141,6 @@ const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
        * cosmos transactions
        */
       const chainConfig = chains[chainPrefix];
-
       const result = await apiCosmosTxByHash(chainConfig.cosmosRest, hash);
       const message = { ...result.tx.body.messages[0] } as const;
 
