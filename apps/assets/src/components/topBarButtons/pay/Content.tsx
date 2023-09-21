@@ -119,10 +119,10 @@ export const Content = ({
 
   const selectedTokenUSD = selectedToken
     ? tokenToUSD(
-        selectedBalance?.value ?? 0n,
-        Number(price),
-        selectedToken.decimals,
-      )
+      selectedBalance?.value ?? 0n,
+      Number(price),
+      selectedToken.decimals,
+    )
     : null;
 
   const { balance } = useTokenBalance(sender, token);
@@ -136,8 +136,8 @@ export const Content = ({
       : [balance, evmosBalance].filter((b) => b !== undefined);
   const chain = sender ? getChainByAddress(sender) : chains["evmos"];
 
-  const insufficientBalance =
-    selectedBalance?.value ?? 0n < amount ? true : false;
+  const insufficientBalance = selectedBalance?.value ?
+    selectedBalance?.value < amount ? true : false : true;
 
   useEffect(() => {
     if (balances.length > 0 && selectedBalance === undefined) {
@@ -147,7 +147,7 @@ export const Content = ({
 
   const action =
     (validation.hasSufficientBalance && validation.hasSufficientBalance) ||
-    isPreparing
+      isPreparing
       ? "PAY"
       : "SWAP";
 
@@ -216,13 +216,12 @@ export const Content = ({
                     <CryptoSelector.Button>
                       <div className="pl-2 items-center flex gap-1.5">
                         <Image
-                          src={`/assets/chains/${
-                            selectedBalance
-                              ? selectedBalance?.type === "ERC20"
-                                ? "evmos"
-                                : selectedBalance?.denom
-                              : "evmos"
-                          }.png`}
+                          src={`/assets/chains/${selectedBalance
+                            ? selectedBalance?.type === "ERC20"
+                              ? "evmos"
+                              : selectedBalance?.denom
+                            : "evmos"
+                            }.png`}
                           className="rounded-full"
                           alt=""
                           width={24}
@@ -244,11 +243,10 @@ export const Content = ({
                       {balances.map((b) => {
                         return (
                           <CryptoSelector.Option
-                            src={`/assets/tokens/${
-                              b?.type === "ERC20"
-                                ? "evmos"
-                                : selectedBalance?.denom
-                            }.png`}
+                            src={`/assets/tokens/${b?.type === "ERC20"
+                              ? "evmos"
+                              : selectedBalance?.denom
+                              }.png`}
                             key={b?.address}
                             value={b?.type ?? ""}
                           >
@@ -268,9 +266,8 @@ export const Content = ({
                     </span>
                     <div className="rounded px-5 py-4 border border-pink-300">
                       <div
-                        className={`flex justify-between items-center  ${
-                          insufficientBalance ? "opacity-60" : ""
-                        }`}
+                        className={`flex justify-between items-center  ${insufficientBalance ? "opacity-60" : ""
+                          }`}
                       >
                         <div className="flex items-center gap-2">
                           <span className="text-xs md:text-sm">
@@ -318,6 +315,7 @@ export const Content = ({
                     variant={"outline-primary"}
                     onClick={() => {
                       sendEvent(CLICK_ON_SWAP_ASSETS_PAY_FLOW);
+                      window.open("https://forge.trade/#/swap", "_blank");
                     }}
                     className="w-full text-lg rounded-md capitalize mt-5"
                   >

@@ -13,6 +13,7 @@ import { TokenRef } from "evmos-wallet/src/registry-actions/types";
 import { RequestModalProps } from "./RequestModal";
 import {
   CLICK_ON_COPY_ICON_REQUEST_FLOW,
+  CLICK_ON_SHARE_QR_CODE_PAYMENT,
   CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW,
   useTracker,
 } from "tracker";
@@ -84,12 +85,22 @@ export const ShareContent = ({
                   value={shareURL}
                 />
               </div>
-              <div className="flex items-center space-x-2 self-center">
-                <span className="text-pink-300 text-xs md:text-sm ">
-                  {t("request.share.payment.qr")}
-                </span>
-                <ShareIcon className="w-3 h-4 md:w-5 md:h-4" />
-              </div>
+              {shareEnabled &&
+                <button
+                  onClick={async () => {
+                    await navigator.share({
+                      url: shareURL,
+                      title: "Payment Link",
+                    });
+                    sendEvent(CLICK_ON_SHARE_QR_CODE_PAYMENT);
+                  }}
+                  className="flex items-center space-x-2 self-center">
+                  <span className="text-pink-300 text-xs md:text-sm ">
+                    {t("request.share.payment.qr")}
+                  </span>
+                  <ShareIcon className="w-3 h-4 md:w-5 md:h-4" />
+                </button>
+              }
             </div>
 
             <TextInput

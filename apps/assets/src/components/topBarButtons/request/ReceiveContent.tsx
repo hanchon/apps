@@ -19,6 +19,7 @@ import {
   CLICK_ON_COPY_ICON_RECEIVE_FLOW,
   CLICK_ON_DISPLAY_FORMAT,
   CLICK_ON_REQUEST_FUNDS,
+  CLICK_ON_SHARE_QR_CODE,
   SELECT_NETWORK_RECEIVE_FLOW,
   useTracker,
 } from "tracker";
@@ -40,6 +41,8 @@ export const ReceiveContent = ({
 
   const sender =
     walletFormat === "0x" ? wallet.evmosAddressEthFormat : data?.bech32Address;
+
+  const shareEnabled = navigator.share !== undefined;
 
   const activeProviderKey = getActiveProviderKey();
   const networkOptions = useMemo(() => {
@@ -106,20 +109,26 @@ export const ReceiveContent = ({
                   value={sender ?? ""}
                 />
               </div>
-              <div className="flex items-center space-x-2 self-center">
-                <span className="text-pink-300 text-xs md:text-sm">
-                  {t("receive.share.qr")}
-                </span>
-                <ShareIcon className="w-3 h-4 md:w-5 md:h-4" />
-              </div>
+              {shareEnabled &&
+                <button onClick={() => {
+                  navigator.share({
+                    url: sender ?? "",
+                    title: "Wallet Address",
+                  });
+                  sendEvent(CLICK_ON_SHARE_QR_CODE);
+                }} className="flex items-center space-x-2 self-center">
+                  <span className="text-pink-300 text-xs md:text-sm">
+                    {t("receive.share.qr")}
+                  </span>
+                  <ShareIcon className="w-3 h-4 md:w-5 md:h-4" />
+                </button>
+              }
             </div>
             <div className="">
               <Label> {t("receive.format.label")}</Label>
               <div className="flex justify-between flex-row items-end">
-                {/* TODO: only if evmos */}
                 <Tabs tabsProps={addressProps} variant="pink-small" />
                 <div className="flex justify-between">
-                  {/* TODO: network selector */}
                   <CryptoSelectorDropdownBox>
                     <CryptoSelectorTitle>
                       {t("transfer.section.asset.network")}
