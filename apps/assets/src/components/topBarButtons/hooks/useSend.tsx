@@ -92,7 +92,7 @@ export const useSend = ({
     receiverAddress &&
     sender &&
     normalizeToCosmosAddress(sender) !==
-      normalizeToCosmosAddress(receiverAddress);
+    normalizeToCosmosAddress(receiverAddress);
 
   const hasValidAmount = token?.amount !== undefined && token?.amount > 0n;
 

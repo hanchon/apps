@@ -97,6 +97,7 @@ export const TransferModalContent = ({
     feeBalance,
     isPreparing,
     feeToken,
+    hasTransferred,
     __DEBUG__,
   } = useSend({
     sender,
@@ -319,11 +320,11 @@ export const TransferModalContent = ({
                   >
                     {getGlobalKeplrProvider() === null
                       ? t(
-                          "error.network.not.support.by-wallet.installButtonLabel",
-                        )
+                        "error.network.not.support.by-wallet.installButtonLabel",
+                      )
                       : t(
-                          "error.network.not.support.by-wallet.connectButtonLabel",
-                        )}
+                        "error.network.not.support.by-wallet.connectButtonLabel",
+                      )}
                   </PrimaryButton>
                 </div>
               </InfoPanel>
@@ -436,7 +437,7 @@ export const TransferModalContent = ({
                 disabled={
                   !isReadyToTransfer ||
                   isTransferring ||
-                  !!transferResponse?.hash
+                  hasTransferred
                 }
               >
                 {t("transfer.send.button.text")}
