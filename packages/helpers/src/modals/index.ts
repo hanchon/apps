@@ -41,7 +41,7 @@ export const useModal = <T extends z.AnyZodObject>(
 
     return ref.current.schema.parse(query);
   }, [isReady, query, isOpen]);
-  if (isOpen) console.log(state);
+
   const setState = useCallback(
     (next: SetStateAction<z.infer<T>>, pushState = false) => {
       const nextState =

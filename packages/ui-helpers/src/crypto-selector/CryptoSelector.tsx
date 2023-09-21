@@ -50,7 +50,7 @@ const Button = ({
           height={24}
         />
       )}
-      <span className="text-xs md:text-sm text-white capitalize">
+      <span className="text-xs md:text-sm text-white">
         {children}
       </span>
       <DropdownArrow
@@ -93,7 +93,7 @@ const Options = ({
           <Listbox.Options
             {...props}
             className={cx(
-              "capitalize px-3 bg-black h-full text-black mt-1 scrollbar overflow-auto max-h-44 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer",
+              "px-3 bg-black h-full text-black mt-1 scrollbar overflow-auto max-h-44 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer",
               {
                 "w-52": variant === "default",
                 "w-64": variant === "wide",
