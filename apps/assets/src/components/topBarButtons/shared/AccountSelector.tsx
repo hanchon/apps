@@ -11,9 +11,8 @@ import { CryptoSelector, ErrorMessage, Tabs, TextInput } from "ui-helpers";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { Trans, useTranslation } from "next-i18next";
-import { ICONS_TYPES } from "constants-helper";
 import { SELECT_TO_NETWORK_SEND_FLOW, useTracker } from "tracker";
-import { useAccount } from "wagmi";
+import { useEffectEvent } from "helpers";
 
 const WALLET_TAB_TYPES = {
   WALLET: "my wallet",
@@ -39,8 +38,8 @@ export const AccountSelector = ({
   const { address, inputProps, errors, setValue } = useAddressInput(value);
   const [prefix, setChainPrefix] = useState<Prefix>("evmos");
   const [selectedWalletTab, setSelectedWalletTab] = useState(WALLET_TAB_TYPES.WALLET);
-
-  const disableMyWallet = getActiveProviderKey() !== "keplr" || (senderPrefix === prefix)
+  const activeProviderKey = getActiveProviderKey()
+  const disableMyWallet = activeProviderKey !== "keplr" || (senderPrefix === prefix)
 
   const activeWalletTab = disableMyWallet ? WALLET_TAB_TYPES.OTHER : selectedWalletTab;
   const chain = chains[prefix];
@@ -48,12 +47,12 @@ export const AccountSelector = ({
   const { requestAccount, account } = useRequestWalletAccount();
 
   useEffect(() => {
-    if (getActiveProviderKey() !== "keplr") return;
+    if (activeProviderKey !== "keplr") return;
     if (activeWalletTab !== WALLET_TAB_TYPES.WALLET) return;
 
 
     requestAccount(prefix);
-  }, [prefix, activeWalletTab, getActiveProviderKey()]);
+  }, [prefix, activeWalletTab, activeProviderKey, requestAccount]);
 
   useEffect(() => {
     if (!networkOptions.includes(prefix)) {
@@ -64,7 +63,7 @@ export const AccountSelector = ({
   useEffect(() => {
     if (!account) return;
     setValue(account.bech32Address);
-  }, [account]);
+  }, [account, setValue]);
 
   useEffect(() => {
     if (!address) {
@@ -73,16 +72,20 @@ export const AccountSelector = ({
     setChainPrefix(getPrefix(normalizeToCosmosAddress(address)));
   }, [address]);
 
+  const syncAddress = useEffectEvent(() => {
+    onChange?.(address);
+  })
   useEffect(() => {
     if (address !== value) {
-      onChange?.(address);
+      syncAddress()
     }
-  }, [address]);
+  }, [address, syncAddress, value]);
+
 
   useEffect(() => {
     if (activeWalletTab === WALLET_TAB_TYPES.OTHER) return setValue("");
 
-  }, [activeWalletTab]);
+  }, [activeWalletTab, setValue]);
 
 
   useEffect(() => {

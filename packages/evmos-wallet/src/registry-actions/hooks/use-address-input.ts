@@ -5,12 +5,7 @@ import {
   useCallback,
   ComponentProps,
 } from "react";
-import {
-  Address,
-  CosmosAddress,
-  getPrefix,
-  isValidHexAddress,
-} from "../../wallet";
+import { Address, getPrefix, isValidHexAddress } from "../../wallet";
 import { isValidCosmosAddress } from "../../wallet/utils/addresses/is-valid-cosmos-address";
 import { getPrefixes } from "../get-prefixes";
 import { isValidRegistryPrefix } from "../is-valid-registry-prefix";
@@ -65,7 +60,7 @@ export const useAddressInput = <TPrefix extends Prefix>(
   initialAddress: string = "",
   config: {
     allowedPrefixes?: TPrefix[];
-  } = {},
+  } = {}
 ) => {
   const { allowedPrefixes = [...getPrefixes()] as TPrefix[] } = config;
   const [value, setValue] = useState(initialAddress);
@@ -79,7 +74,7 @@ export const useAddressInput = <TPrefix extends Prefix>(
     if (initialAddress && value === "") {
       setValue(initialAddress);
     }
-  }, [initialAddress]);
+  }, [initialAddress, value]);
 
   /**
    * this extracts the prefix from the address
@@ -128,7 +123,7 @@ export const useAddressInput = <TPrefix extends Prefix>(
       return errors;
     }
     return null;
-  }, [value, prefix]);
+  }, [value, prefix, isAllowedPrefix]);
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);

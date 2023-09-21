@@ -51,7 +51,6 @@ export { TokenCard } from "./modal/TokenCard";
 export { TextBox } from "./modal/TextBox";
 export { Header } from "./Header";
 export * from "./AmountInput";
-export * from "./SearchableSelect";
 export * from "./crypto-selector/CryptoSelectorTitle";
 export * from "./crypto-selector/CryptoSelector";
 export * from "./crypto-selector/CryptoSelectorBox";

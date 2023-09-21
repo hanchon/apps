@@ -2,7 +2,7 @@ import { MsgSend } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/bank/v1beta1/
 import { SignMode } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/signing/v1beta1/signing_pb";
 
 import { Address, normalizeToCosmosAddress } from "../../wallet";
-import { Prefix, Token, TokenAmount } from "../types";
+import { Prefix, TokenAmount } from "../types";
 import { apiCosmosTxSimulate } from "../../api/cosmos-rest/api-cosmos-tx-simulate";
 import { getChainByAddress } from "../get-chain-by-account";
 import { assignGasEstimateToProtoTx } from "../utils/assign-gas-estimate-to-proto-tx";

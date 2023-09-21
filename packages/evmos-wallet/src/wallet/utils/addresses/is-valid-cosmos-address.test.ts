@@ -1,8 +1,6 @@
+/* eslint-disable no-secrets/no-secrets */
 import { describe, expect, test } from "vitest";
 import { isValidCosmosAddress } from "./is-valid-cosmos-address";
-import { bech32 } from "bech32";
-import { sha256 } from "@noble/hashes/sha256";
-import { toHex } from "viem";
 
 /**
  * Real address extracted from https://www.mintscan.io/
@@ -70,18 +68,18 @@ describe("isValidCosmosAddress", () => {
     });
   });
   test("check invalid addresses", () => {
-    REAL_ACCOUNTS.forEach((address, i) => {
+    REAL_ACCOUNTS.forEach((address) => {
       // swap random digit
       address = address.replace(/[123]/g, "r");
 
       expect(isValidCosmosAddress(address)).toBe(false);
     });
-    REAL_ACCOUNTS.forEach((address, i) => {
+    REAL_ACCOUNTS.forEach((address) => {
       // slice first character
       address = address.slice(1);
       expect(isValidCosmosAddress(address)).toBe(false);
     });
-    REAL_ACCOUNTS.forEach((address, i) => {
+    REAL_ACCOUNTS.forEach((address) => {
       // slice last character
       address = address.slice(0, -1);
       expect(isValidCosmosAddress(address)).toBe(false);

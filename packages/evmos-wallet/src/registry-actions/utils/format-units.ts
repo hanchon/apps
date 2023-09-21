@@ -1,7 +1,7 @@
 export function formatUnits(
   value: bigint,
   tokenDecimals: number,
-  mode: "short" | "long" = "short",
+  mode: "short" | "long" = "short"
 ) {
   let display = value.toString();
 

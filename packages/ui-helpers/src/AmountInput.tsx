@@ -38,7 +38,7 @@ export const AmountInput = ({
   useEffect(() => {
     if (isInternalSync) return;
     setValue(formattedValue);
-  }, [isInternalSync]);
+  }, [formattedValue, isInternalSync]);
 
   useEffect(() => {
     setValue((prev) => {

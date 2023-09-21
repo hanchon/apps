@@ -1,7 +1,6 @@
 import {
   AddressSchema,
   ChainPrefixSchema,
-  MinDenomSchema,
   TokenRefSchema,
 } from "evmos-wallet/src/registry-actions/utils";
 import { z } from "zod";

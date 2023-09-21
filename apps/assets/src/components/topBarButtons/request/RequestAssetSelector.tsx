@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import React, { PropsWithChildren, useEffect, useMemo } from "react";
 import {
     AmountInput,
     CryptoSelectorBalanceBox,
@@ -24,6 +24,7 @@ import {
 } from "tracker/src/constants";
 import { useAccount } from "wagmi";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import { useEffectEvent } from "helpers";
 
 type Asset = {
     networkPrefix: Prefix;
@@ -52,7 +53,9 @@ export const RequestAssetSelector = ({
     const { sendEvent } = useTracker();
     const { isDisconnected } = useAccount();
     const selectedChain = chains[value.networkPrefix];
-
+    const onChangeEvent = useEffectEvent((next: Asset | ((value: Asset) => Asset)) => {
+        onChange(typeof next === "function" ? next(value) : next);
+    })
     const selectedToken = getTokenByRef(value.ref);
 
     const tokenOptions = useMemo(() => {
@@ -70,12 +73,12 @@ export const RequestAssetSelector = ({
     useEffect(() => {
         if (tokenOptions.includes(selectedToken)) return;
         const [firstAvailableToken] = tokenOptions;
-        onChange({
-            ...value,
+        onChangeEvent((next) => ({
+            ...next,
             ref: firstAvailableToken.ref,
             networkPrefix: firstAvailableToken.sourcePrefix,
-        });
-    }, [tokenOptions, selectedToken]);
+        }));
+    }, [tokenOptions, selectedToken, onChangeEvent]);
 
     const price = useTokenPrice(value.ref);
 

@@ -1,7 +1,7 @@
 import { erc20ABI } from "wagmi";
 
 import { normalizeToEth, evmosClient, Address } from "../../wallet";
-import { Token, TokenAmount, TokenMinDenom } from "../types";
+import { TokenAmount } from "../types";
 import { writeContract } from "wagmi/actions";
 import { buffGasEstimate } from "../utils/buff-gas-estimate";
 import { getTokenByRef } from "../get-token-by-ref";

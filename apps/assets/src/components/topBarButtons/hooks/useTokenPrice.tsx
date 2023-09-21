@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import {
   TokenDenom,
-  TokenMinDenom,
   TokenRef,
 } from "evmos-wallet/src/registry-actions/types";
 import { getTokenByDenom, useAssets } from "evmos-wallet";

@@ -5,14 +5,16 @@ import { TabProps } from "./types";
 import cx from "clsx";
 import { IconContainer } from "../../IconContainer";
 import { ICONS_TYPES } from "constants-helper";
+import { ComponentProps } from "react";
 
 export const Button = ({
   tab,
   variant,
+  ...props
 }: {
   tab: TabProps;
   variant: string;
-}) => {
+} & ComponentProps<'button'>) => {
   return (
     <button
       type="button"
@@ -36,6 +38,7 @@ export const Button = ({
           disabled: tab.disabled,
         },
       )}
+      {...props}
     >
       {tab.icon} {tab.text}
       {tab.option === tab.type && variant === "default" && (

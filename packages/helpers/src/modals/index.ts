@@ -1,18 +1,19 @@
 import { useRouter } from "next/router";
-import { useMemo, useCallback, SetStateAction } from "react";
+import { ParsedUrlQueryInput } from "querystring";
+import { useMemo, useCallback, SetStateAction, useRef } from "react";
 import { z } from "zod";
 
 const serialize = <T extends Record<string, unknown>>(obj: T) => {
-  return JSON.stringify(obj, (key, value) => {
+  return JSON.stringify(obj, (_, value) => {
     if (typeof value === "bigint") {
       return value.toString();
     }
-    return value;
+    return value as unknown;
   });
 };
 
-const sanitize = <T extends Record<string, unknown>>(obj: T) => {
-  return JSON.parse(serialize(obj));
+const sanitize = (obj: Record<string, unknown>) => {
+  return JSON.parse(serialize(obj)) as ParsedUrlQueryInput;
 };
 
 /**
@@ -25,8 +26,11 @@ const sanitize = <T extends Record<string, unknown>>(obj: T) => {
  */
 export const useModal = <T extends z.AnyZodObject>(
   id: string,
-  schema: T = z.object({}) as T,
+  schema: T = z.object({}) as T
 ) => {
+  const ref = useRef({
+    schema,
+  });
   const { isReady, push, replace, query } = useRouter();
 
   const isOpen = id === query.action;
@@ -35,22 +39,24 @@ export const useModal = <T extends z.AnyZodObject>(
     if (!isReady) return null;
     if (!isOpen) return null;
 
-    return schema.parse(query);
+    return ref.current.schema.parse(query);
   }, [isReady, query, isOpen]);
 
   const setState = useCallback(
     (next: SetStateAction<z.infer<T>>, pushState = false) => {
       const nextState =
-        typeof next === "function" ? next(schema.parse(query)) : next;
+        typeof next === "function"
+          ? next(ref.current.schema.parse(query))
+          : next;
 
       (pushState ? push : replace)({
         query: {
           action: id,
           ...sanitize(nextState),
         },
-      });
+      }).catch(console.error);
     },
-    [id, query],
+    [id, push, query, replace]
   );
 
   const setIsOpen = useCallback(
@@ -66,9 +72,9 @@ export const useModal = <T extends z.AnyZodObject>(
 
       push({
         query: null,
-      });
+      }).catch(console.error);
     },
-    [id, schema, isOpen],
+    [push, schema, setState]
   );
 
   if (isOpen && state) {

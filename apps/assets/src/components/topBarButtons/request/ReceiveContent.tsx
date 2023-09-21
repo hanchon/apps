@@ -6,14 +6,13 @@ import { useTranslation } from "next-i18next";
 import { CryptoSelector } from "ui-helpers";
 import QRCode from "react-qr-code";
 
-import { StoreType } from "evmos-wallet";
+import { StoreType, getActiveProviderKey } from "evmos-wallet";
 import { ReceiveIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { CryptoSelectorDropdownBox } from "ui-helpers";
 import { CryptoSelectorTitle } from "ui-helpers";
 import { chains } from "@evmos-apps/registry";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
-import { useAccount } from "wagmi";
 import { useSelector } from "react-redux";
 import { RequestModalProps } from "./RequestModal";
 import {
@@ -43,14 +42,14 @@ export const ReceiveContent = ({
 
   const sender =
     walletFormat === "0x" ? wallet.evmosAddressEthFormat : data?.bech32Address;
-  const { connector, isConnected, address } = useAccount();
 
+  const activeProviderKey = getActiveProviderKey()
   const networkOptions = useMemo(() => {
-    if (connector?.id === "metaMask") {
+    if (activeProviderKey == "metaMask") {
       return ["evmos"] as Prefix[];
     }
     return Object.values(chains).map(({ prefix }) => prefix);
-  }, [connector]);
+  }, [activeProviderKey]);
 
   useEffect(() => {
     if (selectedNetworkPrefix !== "evmos") {

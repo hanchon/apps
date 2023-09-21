@@ -8,7 +8,7 @@ import {
   normalizeToCosmosAddress,
 } from "../../wallet";
 import { getChainByAddress } from "../get-chain-by-account";
-import { Prefix, Token, TokenAmount, TokenMinDenom } from "../types";
+import { Prefix, TokenAmount } from "../types";
 import { getIBCChannelId, getTimeoutTimestamp } from "../utils";
 import { assignGasEstimateToProtoTx } from "../utils/assign-gas-estimate-to-proto-tx";
 import { createProtobufTransaction } from "../utils/create-protobuf-transaction";

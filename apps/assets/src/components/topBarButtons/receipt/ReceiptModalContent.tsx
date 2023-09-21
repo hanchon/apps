@@ -48,13 +48,12 @@ const generateReceipt = ({
 }) => ({
   sender: normalizeToCosmosAddress(sender as Address<Prefix>),
   receiver: normalizeToCosmosAddress(receiver as Address<Prefix>),
-  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${
-    token.denom
-  }`,
+  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${token.denom
+    }`,
   height: BigInt(height),
 });
 
-const generateICS20TransferReceipt = async (result: FetchTransactionResult) => {
+const generateICS20TransferReceipt = (result: FetchTransactionResult) => {
   const { args, functionName } = decodeFunctionData({
     abi: getAbi("ics20"),
     data: result.input,
@@ -77,7 +76,7 @@ const generateICS20TransferReceipt = async (result: FetchTransactionResult) => {
   });
 };
 
-const generateERC20TransferReceipt = async (result: FetchTransactionResult) => {
+const generateERC20TransferReceipt = (result: FetchTransactionResult) => {
   const { args, functionName } = decodeFunctionData({
     abi: getAbi("erc20"),
     data: result.input,
@@ -188,7 +187,7 @@ export const ReceiptModalContent = ({
   chainPrefix,
   setIsOpen,
 }: ReceiptModalProps) => {
-  let {
+  const {
     receipt,
     isLoading: isReceiptLoading,
     error,

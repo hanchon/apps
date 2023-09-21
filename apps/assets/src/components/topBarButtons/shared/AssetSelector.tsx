@@ -10,12 +10,12 @@ import {
 import { chains } from "@evmos-apps/registry";
 import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "ui-helpers";
-import { Address, getTokens, useTokenBalance } from "evmos-wallet";
+import { Address, useTokenBalance } from "evmos-wallet";
 import { CryptoSelectorTitle } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
-import { max } from "helpers";
+import { max, useEffectEvent } from "helpers";
 import { useTracker } from "tracker";
 import {
   SELECT_FROM_NETWORK_SEND_FLOW,
@@ -57,7 +57,6 @@ export const AssetSelector = ({
 
   const selectedToken = getTokenByRef(value.ref);
 
-
   const tokenOptions = sortedTokens
 
   const networkOptions = useMemo(() => {
@@ -72,15 +71,18 @@ export const AssetSelector = ({
    * When network changes, check if the selected token is available on the new network.
    * If not, set the first available token as the selected token.
    */
-  useEffect(() => {
-    if (tokenOptions.includes(selectedToken)) return;
+  const selectFirstNetworkOption = useEffectEvent(() => {
     const [firstAvailableToken] = tokenOptions;
     onChange({
       ...value,
       ref: firstAvailableToken.ref,
       networkPrefix: firstAvailableToken.sourcePrefix,
     });
-  }, [tokenOptions, selectedToken]);
+  })
+  useEffect(() => {
+    if (tokenOptions.includes(selectedToken)) return;
+    selectFirstNetworkOption()
+  }, [tokenOptions, selectedToken, selectFirstNetworkOption]);
 
   const price = useTokenPrice(value.ref);
 

@@ -1,3 +1,5 @@
+/* eslint-disable no-secrets/no-secrets */
+
 export default [
   {
     anonymous: false,

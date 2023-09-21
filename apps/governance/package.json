@@ -54,7 +54,7 @@
     "tracker": "workspace:*",
     "typescript": "5.2.2",
     "ui-helpers": "workspace:*",
-    "wagmi": "~1.4.1"
+    "wagmi": "~1.4.2"
   },
   "browserslist": [
     "last 3 chrome version",

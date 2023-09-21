@@ -50,7 +50,7 @@ export interface TokenRegistry {
   erc20Address: string;
   ibc: {
     /**
-     * There are two states for sourceDenom. Main chain coins like EVMOS will have their minCoinDenom listed here, however, coins from that ecosystem other than the main coin will require its prefix+hexAddress, i.e. gravity0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 for Gravity's USDC.grv
+     * There are two states for sourceDenom. Main chain coins like EVMOS will have their minCoinDenom listed here, however, coins from that ecosystem other than the main coin will require its prefix+hexAddress, i.e. gravity0xxxx... for Gravity's USDC.grv
      */
     sourceDenom?: string;
     /**

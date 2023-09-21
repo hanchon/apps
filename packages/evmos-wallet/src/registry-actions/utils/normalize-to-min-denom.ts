@@ -1,5 +1,5 @@
 import { chains } from "@evmos-apps/registry";
-import { Token, TokenMinDenom } from "../types";
+import { Token } from "../types";
 import { getIBCDenom } from "./get-ibc-denom";
 import { getTokens } from "../get-tokens";
 
@@ -10,7 +10,7 @@ const { evmos, ...others } = chains;
  */
 for (const token of evmos.tokens) {
   for (const chain of Object.values(others)) {
-    let ibcDenom = getIBCDenom({
+    const ibcDenom = getIBCDenom({
       sender: chain.prefix,
       receiver: "evmos",
       token,
@@ -24,7 +24,7 @@ for (const token of evmos.tokens) {
  */
 for (const chain of Object.values(others)) {
   for (const token of chain.tokens) {
-    let ibcDenom = getIBCDenom({
+    const ibcDenom = getIBCDenom({
       sender: "evmos",
       receiver: chain.prefix,
       token,
@@ -39,7 +39,7 @@ export const normalizeToMinDenom = (denom: string) => {
   }
   const token = getTokens().find(
     ({ minCoinDenom, denom: tokenDenom }) =>
-      minCoinDenom === denom || tokenDenom === denom,
+      minCoinDenom === denom || tokenDenom === denom
   );
   return token?.minCoinDenom ?? null;
 };
@@ -60,7 +60,7 @@ export const findToken = ({
       return (
         minCoinDenom === denom || tokenDenom === denom || sourceDenom === denom
       );
-    },
+    }
   );
   return token ?? null;
 };

@@ -1,9 +1,7 @@
-import { useMemo } from "react";
 import { Address, CosmosAddress, HexAddress } from "../../wallet";
 import { getChainByAddress } from "../get-chain-by-account";
-import { getTokenByDenom } from "../get-token-by-denom";
 import { simulateTransfer } from "../transfers/prepare-transfer";
-import { Prefix, TokenAmount, TokenMinDenom, TokenRef } from "../types";
+import { Prefix, TokenAmount, TokenRef } from "../types";
 import { useQuery } from "@tanstack/react-query";
 import { E, multiply } from "helpers";
 import { bech32 } from "bech32";
@@ -50,7 +48,7 @@ export const useFee = ({
             ...token,
             amount: 1n,
           },
-        }),
+        })
       );
       if (err) {
         if (E.match.byPattern(err, /NotFound/g)) {

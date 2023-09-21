@@ -28,25 +28,11 @@ export const CosmosSDKErrorDetailsSchema = z.object({
   value: z.unknown(),
 });
 
-export const CosmosSDKErrorSchema = z
-  .object({
-    code: z.number(),
-    message: z.string(),
-    details: z.array(CosmosSDKErrorDetailsSchema),
-  })
-  .transform((error) => {
-    return new CosmosSDKError(
-      CosmosSDKErrorNames[error.code],
-      error.message,
-      error.details,
-    );
-  });
-
 export class CosmosSDKError extends Error {
   constructor(
     public readonly code: CosmosSDKErrorName | "Unknown",
     message: string,
-    public details: z.infer<typeof CosmosSDKErrorDetailsSchema>[] = [],
+    public details: z.infer<typeof CosmosSDKErrorDetailsSchema>[] = []
   ) {
     super(message);
   }
@@ -56,5 +42,5 @@ export const apiCosmosFetch = <TSchema extends z.ZodType<unknown>>(
   schema: TSchema,
   hosts: Readonly<[string, ...string[]]>,
   pathname: string,
-  init?: RequestInit & { timeout?: number; millisecondsBetweenCalls?: number },
-) => apiBalancedFetch(schema, CosmosSDKErrorSchema, hosts, pathname, init);
+  init?: RequestInit & { timeout?: number; millisecondsBetweenCalls?: number }
+) => apiBalancedFetch(schema, hosts, pathname, init);

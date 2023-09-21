@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { Dispatch, Fragment, PropsWithChildren, SetStateAction } from "react";
+import { Fragment, PropsWithChildren } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CloseIcon } from "icons";
 import useEventListener from "./useEventListener";

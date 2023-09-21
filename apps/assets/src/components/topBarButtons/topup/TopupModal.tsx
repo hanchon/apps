@@ -14,7 +14,7 @@ export const TopupModalController = () => {
       return;
     }
     setIsOpen(showModal);
-  }, [showModal]);
+  }, [isOpen, setIsOpen, showModal]);
 
   useEffect(() => {
     if (showModal === isOpen) {
@@ -22,7 +22,7 @@ export const TopupModalController = () => {
     }
 
     setShowModal(isOpen);
-  }, [isOpen]);
+  }, [isOpen, setShowModal, showModal]);
 
   return <Copilot />;
 };

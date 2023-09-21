@@ -1,6 +1,6 @@
 import { Address } from "../../wallet";
 import { transfer } from "../transfers/prepare-transfer";
-import { Prefix, TokenAmount, TokenMinDenom, TokenRef } from "../types";
+import { Prefix, TokenAmount } from "../types";
 import { useMutation } from "@tanstack/react-query";
 
 export const useTransfer = ({

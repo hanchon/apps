@@ -21,8 +21,6 @@ import {
   connectWith,
   getActiveProviderKey,
   getGlobalKeplrProvider,
-  getPrefix,
-  getToken,
 } from "evmos-wallet";
 import { AccountSelector } from "../shared/AccountSelector";
 
@@ -30,7 +28,7 @@ import { TransferSummary } from "../shared/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
 import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
-import { requestWalletAccount, useRequestWalletAccount } from "../hooks/useAccountByPrefix";
+import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
 import { ICONS_TYPES } from "constants-helper";
@@ -46,11 +44,10 @@ import {
 } from "tracker";
 import { CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW } from "tracker/src/constants";
 
-import { sortedChains } from "../shared/sortedChains";
 import { TransferModalProps } from "./TransferModal";
 import { useReceiptModal } from "../receipt/ReceiptModal";
 import { useTopupModal } from "../topup/TopupModal";
-import { getAccount } from "wagmi/actions";
+
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
 import { createPortal } from "react-dom";
 import { useSend } from "../hooks/useSend";
@@ -83,10 +80,11 @@ export const TransferModalContent = ({
     requestAccount,
   } = useRequestWalletAccount();
 
+  const { address } = useAccount()
   useEffect(() => {
     if (networkPrefix !== "evmos" && getActiveProviderKey() !== "keplr") return;
     requestAccount(networkPrefix);
-  }, [networkPrefix, getAccount().address]);
+  }, [networkPrefix, requestAccount, address]);
 
   const sender = account?.bech32Address;
   const {
@@ -108,7 +106,6 @@ export const TransferModalContent = ({
 
   const token = getTokenByRef(tokenRef);
   const senderChain = sender ? getChainByAddress(sender) : chains["evmos"];
-  const tokenChain = chains[token.sourcePrefix];
 
   const destinationNetworkOptions = useMemo(
     (): Prefix[] => //
@@ -117,21 +114,6 @@ export const TransferModalContent = ({
   );
 
   const activeProviderKey = getActiveProviderKey();
-
-  const disabledDestinationNetworkOptions = useMemo((): Prefix[] => {
-    // If asset is being held on an EVMOS ACCOUNT and the user is using MetaMask
-    if (senderChain.prefix === "evmos" && activeProviderKey === "metaMask") {
-      // disable all chains expect evmos
-      if (tokenChain.prefix === "evmos") {
-        return sortedChains.filter((chain) => chain !== "evmos");
-      }
-      // disable native network
-      return [tokenChain.prefix];
-    }
-
-    // all enabled.
-    return [];
-  }, [senderChain, tokenChain, activeProviderKey]);
 
   const senderValidation = {
     userRejectedEnablingNetwork: E.match.byPattern(
@@ -166,7 +148,7 @@ export const TransferModalContent = ({
       hash: transferResponse.hash,
       chainPrefix: networkPrefix,
     });
-  }, [transferResponse]);
+  }, [networkPrefix, receiptModal, transferResponse]);
 
   const action = useMemo(() => {
     if (isDisconnected) return "CONNECT";
@@ -188,18 +170,12 @@ export const TransferModalContent = ({
     if (token.handledByExternalUI !== null) return "BRIDGE";
 
     return "TRANSFER";
-  }, [
-    token,
-    isDisconnected,
-    validation.hasSufficientBalance,
-    validation.hasSufficientBalanceForFee,
-    fee?.token.ref,
-  ]);
+  }, [isDisconnected, token.ref, token.handledByExternalUI, validation.hasSufficientBalance, validation.hasSufficientBalanceForFee, isPreparing, fee]);
 
   useEffect(() => {
     if (!validation.hasSufficientBalanceForFee && !isPreparing)
       sendEvent(INSUFFICIENT_FEE_AMOUNT);
-  }, [validation.hasSufficientBalanceForFee, isPreparing]);
+  }, [validation.hasSufficientBalanceForFee, isPreparing, sendEvent]);
   return (
     <section className="space-y-8 w-full">
       <Title

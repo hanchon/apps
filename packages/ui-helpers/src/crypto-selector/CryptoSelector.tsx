@@ -20,7 +20,7 @@ export function CryptoSelector<T>(
   );
 }
 
-CryptoSelector.Button = ({
+const Button = ({
   children,
   src,
   variant = "default",
@@ -60,8 +60,8 @@ CryptoSelector.Button = ({
     </Listbox.Button>
   );
 };
-
-CryptoSelector.Options = ({
+CryptoSelector.Button = Button;
+const Options = ({
   children,
   className,
   label,
@@ -109,7 +109,8 @@ CryptoSelector.Options = ({
   );
 };
 
-CryptoSelector.Option = <T,>({
+CryptoSelector.Options = Options;
+const Option = <T,>({
   children,
   src,
   disabled = false,
@@ -146,3 +147,5 @@ CryptoSelector.Option = <T,>({
     </Listbox.Option>
   );
 };
+
+CryptoSelector.Option = Option;

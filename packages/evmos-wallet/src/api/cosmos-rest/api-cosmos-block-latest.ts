@@ -1,6 +1,4 @@
 import { z } from "zod";
-import { CosmosAddress } from "../../wallet";
-import { AmountSchema, paginateCosmosSchema } from "./validation";
 import { apiCosmosFetch } from "./api-cosmos-fetch";
 
 export const BlockLatestSchema = z.object({
@@ -51,7 +49,7 @@ export const BlockLatestSchema = z.object({
             timestamp: z.string(),
             signature: z.null(),
           }),
-        ]),
+        ])
       ),
     }),
   }),
@@ -108,5 +106,5 @@ export const apiCosmosBlockLatest = (urls: Readonly<[string, ...string[]]>) =>
   apiCosmosFetch(
     BlockLatestSchema,
     urls,
-    `/cosmos/base/tendermint/v1beta1/blocks/latest`,
+    `/cosmos/base/tendermint/v1beta1/blocks/latest`
   );

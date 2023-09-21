@@ -192,6 +192,8 @@ export class KeplrConnector extends Connector<Keplr, {}> {
       },
     };
   }
+  // This has to be a promise to conform to the interface
+  // eslint-disable-next-line @typescript-eslint/require-await
   async disconnect() {
     window.removeEventListener("keplr_keystorechange", this.onAccountsChanged);
   }
@@ -320,7 +322,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     return null;
   };
 
-  protected onAccountsChanged = async (...args: any[]) => {
+  protected onAccountsChanged = async () => {
     this.emit("change", {
       account: await this.getAccount(),
     });

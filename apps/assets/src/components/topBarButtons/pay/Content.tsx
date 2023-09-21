@@ -12,12 +12,9 @@ import {
 import { useTranslation } from "next-i18next";
 import {
   FormattedBalance,
-  Prefix,
 } from "evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
 import {
-  Address,
-  getPrefix,
   normalizeToCosmosAddress,
   useTokenBalance,
 } from "evmos-wallet";
@@ -158,7 +155,7 @@ export const Content = ({
     ) {
       setSelectedBalance(balances[0]);
     }
-  }, [balances]);
+  }, [balances, selectedBalance]);
 
   const action = (validation.hasSufficientBalance && validation.hasSufficientBalance) || isPreparing ? 'PAY' : 'SWAP'
 

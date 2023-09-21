@@ -7,7 +7,7 @@ import {
   isEvmosAddress,
   normalizeToEth,
 } from "../../wallet";
-import { Prefix, Token, TokenAmount, TokenMinDenom } from "../types";
+import { Prefix, TokenAmount } from "../types";
 import { getIBCChannelId, getTimeoutTimestamp } from "../utils";
 import { writeContract } from "wagmi/actions";
 import { getIBCDenom } from "../utils/get-ibc-denom";
@@ -25,7 +25,7 @@ export const prepareContractIBCTransfer = async <T extends Prefix>({
 }) => {
   assertIf(
     isEvmosAddress(sender),
-    "Sender must be an EVMOS address to transfer through ICS20 contract",
+    "Sender must be an EVMOS address to transfer through ICS20 contract"
   );
   const transferredToken = getTokenByRef(token.ref);
 

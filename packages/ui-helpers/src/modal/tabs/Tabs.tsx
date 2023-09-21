@@ -10,7 +10,7 @@ export const Tabs = ({
   variant = "default",
 }: {
   tabsProps: TabProps[];
-  variant: "default" | "pink" | "pink-small";
+  variant?: "default" | "pink" | "pink-small";
 }) => (
   <div
     className={cn("font-medium shrink-0", {

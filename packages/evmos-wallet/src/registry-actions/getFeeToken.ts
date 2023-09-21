@@ -1,7 +1,7 @@
 import { chains } from "@evmos-apps/registry";
-import { Address, getPrefix } from "../wallet";
+import { Address } from "../wallet";
 
-import { Prefix, TokenRef } from "./types";
+import { Prefix } from "./types";
 import { normalizeToPrefix } from "./utils/normalize-to-prefix";
 import { getToken } from "./get-token";
 

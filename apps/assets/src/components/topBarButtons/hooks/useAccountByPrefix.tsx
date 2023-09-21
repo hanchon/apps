@@ -1,4 +1,4 @@
-import { Chain, Prefix } from "evmos-wallet/src/registry-actions/types";
+import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
 import {
   CosmosAddress,
@@ -53,7 +53,7 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
       if (!chain) {
         throw new Error("NETWORK_NOT_SUPPORTED_BY_WALLET");
       }
-      const activeProvider = await getActiveProviderKey();
+      const activeProvider = getActiveProviderKey();
       if (!activeProvider) return;
       if (activeProvider === "keplr") {
         const keplr = await getKeplrProvider();

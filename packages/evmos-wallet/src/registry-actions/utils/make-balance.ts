@@ -1,12 +1,12 @@
 import { CosmosAddress } from "../../wallet";
-import { FormattedBalance, Token, TokenDenom } from "../types";
+import { FormattedBalance, Token } from "../types";
 import { formatUnits } from "./format-units";
 
 export const makeBalance = (
   token: Token,
   address: CosmosAddress,
   value: string | bigint,
-  type: "ICS20" | "ERC20",
+  type: "ICS20" | "ERC20"
 ): FormattedBalance => {
   const amount = BigInt(value);
 

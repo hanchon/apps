@@ -3,7 +3,6 @@ import { Tx } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/v1beta1/tx_pb";
 import { Message, Any } from "@bufbuild/protobuf";
 
 import { getChainByAddress } from "../get-chain-by-account";
-import { getTokenByDenom } from "../get-token-by-denom";
 import { Prefix } from "../types";
 import { Address } from "../../wallet";
 import { getChainAccountInfo } from "./get-chain-account-info";
@@ -40,7 +39,7 @@ export const createProtobufTransaction = async ({
           new Any({
             typeUrl: `/${msg.getType().typeName}`,
             value: msg.toBinary(),
-          }),
+          })
       ),
     },
     authInfo: {

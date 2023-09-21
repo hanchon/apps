@@ -65,7 +65,7 @@ export const TransactionInspector = ({
               ["Fee Balance Query", props.feeBalanceQuery],
             ] as const
           ).map(([title, query]) => (
-            <div className="space-y-2">
+            <div key={title} className="space-y-2">
               <h2 className="font-bold">{title}</h2>
               <p>{!!query.error && E.ensureError(query.error).message}</p>
               <pre

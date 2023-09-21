@@ -1,9 +1,10 @@
+import { serialize } from "wagmi";
 import { z } from "zod";
 
 export async function fetchAndValidate<TSchema extends z.ZodType<unknown>>(
   schema: TSchema,
   input: RequestInfo | URL,
-  init?: RequestInit,
+  init?: RequestInit
 ): Promise<z.infer<TSchema>> {
   const response = await fetch(input, init);
   if (!response.ok) {
@@ -17,9 +18,11 @@ export async function fetchAndValidate<TSchema extends z.ZodType<unknown>>(
 
   const error = new Error(
     [
-      `Failed to validate response from ${input}.\n${result.error.message}`,
+      `Failed to validate response from ${serialize(input)}.\n${
+        result.error.message
+      }`,
       `Received:\n${JSON.stringify(json, null, 2)}`,
-    ].join("\n"),
+    ].join("\n")
   );
   throw error;
 }

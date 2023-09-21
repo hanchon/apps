@@ -5,7 +5,6 @@ import { cn } from "helpers";
 import {
   Prefix,
   TokenAmount,
-  TokenMinDenom,
 } from "evmos-wallet/src/registry-actions/types";
 import {
   Address,
@@ -41,7 +40,7 @@ export const TransferSummary = ({
 
   const { name, decimals, denom } = getTokenByRef(token.ref);
 
-  const { fee, isFetching, error } = useFee({
+  const { fee, isFetching } = useFee({
     sender,
     receiverChainPrefix: receiver
       ? getPrefix(normalizeToCosmosAddress(receiver))
