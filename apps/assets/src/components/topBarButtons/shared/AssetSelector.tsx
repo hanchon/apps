@@ -86,7 +86,7 @@ export const AssetSelector = ({
 
   const price = useTokenPrice(value.ref);
 
-  const { balance, isFetching: isFetchingBalance } = useTokenBalance(
+  const { balance, isLoading: isFetchingBalance } = useTokenBalance(
     address,
     value.ref,
   );
@@ -104,10 +104,16 @@ export const AssetSelector = ({
     return balance.value;
   }, [balance, fee, isFeeTokenAndSelectedTokenEqual]);
 
-  const inssuficientBalance =
-    (isFetchingBalance === false && !balance) || balance?.value === 0n;
+  const insufficientBalance = useMemo(() => {
+    if (isFetchingBalance) return false;
+    return balance?.value === 0n || (balance?.value ?? 0n) < value.amount;
+  }, [isFetchingBalance, balance, value.amount]);
+
 
   const [isMaxClicked, setIsMaxClicked] = useState(false);
+
+
+
   return (
     <CryptoSelectorBox>
       <div className="flex justify-between">
@@ -118,12 +124,12 @@ export const AssetSelector = ({
           <CryptoSelector
             value={selectedToken}
             onChange={(token) => {
-              console.log(token.ref);
               onChange({
                 networkPrefix:
                   value.networkPrefix === "evmos"
                     ? "evmos"
                     : token.sourcePrefix,
+
                 ref: token.ref,
                 amount: 0n,
               });
@@ -173,6 +179,7 @@ export const AssetSelector = ({
                 amount: 0n,
                 networkPrefix: prefix,
               });
+
               sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
                 network: value.networkPrefix,
               });
@@ -206,7 +213,7 @@ export const AssetSelector = ({
       </div>
       <AmountInput
         variant={
-          inssuficientBalance ? "error" : isMaxClicked ? "info" : "default"
+          insufficientBalance ? "error" : isMaxClicked ? "info" : "default"
         }
         value={value.amount}
         max={maxAllowedTransferAmount}
@@ -251,7 +258,7 @@ export const AssetSelector = ({
           {t("message.gas.fee.reserved.amount")}
         </ErrorMessage>
       )}
-      {inssuficientBalance && (
+      {insufficientBalance && (
         <ErrorMessage displayIcon={false}>
           {t("message.insufficient.balance")}
         </ErrorMessage>

@@ -6,11 +6,15 @@ import { useRef, useInsertionEffect, useCallback } from "react";
 // This should be a drop in replacement for the official one once it is released
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export function useEffectEvent<T extends Function>(fn: T): T {
+export function useEffectEvent<T extends (...args: any[]) => unknown>(
+  fn: T
+): T {
   const ref = useRef(fn);
   useInsertionEffect(() => {
     ref.current = fn;
   }, [fn]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  return useCallback<T>(ref.current, []);
+  return useCallback((...args: Parameters<T>) => {
+    return ref.current(...args);
+  }, []) as T;
 }

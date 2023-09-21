@@ -111,7 +111,7 @@ export const ReceiveContent = ({
               </div>
               {shareEnabled &&
                 <button onClick={() => {
-                  navigator.share({
+                  void navigator.share({
                     url: sender ?? "",
                     title: "Wallet Address",
                   });

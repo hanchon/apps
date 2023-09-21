@@ -1,9 +1,10 @@
 import {
   ComponentProps,
-  useState,
   useEffect,
   Dispatch,
   SetStateAction,
+  useRef,
+  ComponentRef,
 } from "react";
 import { formatUnits, parseUnits } from "viem";
 import { cn, clamp, E } from "helpers";
@@ -31,25 +32,18 @@ export const AmountInput = ({
   variant?: "default" | "error" | "info";
 }) => {
   const decimalsUnit = parseInt(String(decimals ?? 18));
-  const formattedValue = formatUnits(value ?? 0n, decimalsUnit);
-  const [internalValueState, setValue] = useState(formattedValue);
 
-  const isInternalSync = parseUnits(internalValueState, decimalsUnit) === value;
+  const ref = useRef<ComponentRef<'input'>>(null);
   useEffect(() => {
-    if (isInternalSync) return;
-    setValue(formattedValue);
-  }, [formattedValue, isInternalSync]);
+    if (!ref.current) return;
+    if (ref.current === document.activeElement) return;
+    ref.current.value = formatUnits(value ?? 0n, decimalsUnit);
+  }, [value, decimalsUnit]);
 
-  useEffect(() => {
-    setValue((prev) => {
-      const parsed = parseUnits(prev, decimalsUnit);
-      const amount = clamp(parsed, min, max ?? parsed);
-      return formatUnits(amount, decimalsUnit);
-    });
-  }, [max, min, decimalsUnit]);
 
   return (
     <div
+
       className={cx(
         "flex w-full tracking-wider font-bold py-2 px-4 text-sm md:text-base leading-5 text-gray-900 focus:ring-1 border-2 border-pink-300 rounded bg-pink-200 text-black focus-visible:outline-none",
         {
@@ -59,7 +53,7 @@ export const AmountInput = ({
       )}
     >
       <input
-        value={internalValueState}
+        ref={ref}
         className={cx(
           "w-full border-none bg-pink-200 focus-visible:outline-none",
           {
@@ -68,13 +62,13 @@ export const AmountInput = ({
           },
           className,
         )}
-        onChange={(e) => {
-          const inputValue = e.target.value.replace(/^(0+)(?=[1-9])/, "");
-          if (inputValue.split(".").length > 2) {
-            return;
-          }
+        onChange={({ target }) => {
+          target.value = target.value.replace(/^(0+)(?=[1-9])/, "");
+          const [decimal, fractional] = target.value.split(".");
+          target.value = decimal + (fractional !== undefined ? "." + fractional : '')
+
           const [error, parsed] = E.try(() =>
-            parseUnits(inputValue, decimalsUnit),
+            parseUnits(target.value, decimalsUnit),
           );
 
           if (error) {
@@ -84,16 +78,12 @@ export const AmountInput = ({
           if (max || min) {
             amount = clamp(amount, min ?? 0n, max ?? amount);
           }
-          setValue(inputValue);
           if (amount !== value) {
             onChange?.(amount);
           }
         }}
-        onBlur={() => {
-          const normalizedValue = formatUnits(value ?? 0n, decimalsUnit);
-          if (normalizedValue !== internalValueState) {
-            setValue(normalizedValue);
-          }
+        onBlur={({ target }) => {
+          target.value = formatUnits(value ?? 0n, decimalsUnit);
         }}
         inputMode="decimal"
         type="text"
@@ -111,7 +101,7 @@ export const AmountInput = ({
           )}
           onClick={(e) => {
             e.preventDefault();
-            setValue(formatUnits(max ?? 0n, decimalsUnit));
+
             onChange?.(max ?? 0n);
             setIsMaxClicked && setIsMaxClicked(true);
           }}
