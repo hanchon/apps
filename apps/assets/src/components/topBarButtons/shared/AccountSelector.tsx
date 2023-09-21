@@ -106,9 +106,8 @@ export const AccountSelector = ({
 
   return (
     <div className="flex flex-col space-y-3">
-      <div className="flex md:justify-between md:flex-row flex-col space-y-4 md:space-y-0">
+      <div className="flex justify-between flex-row">
         <ModeSelector mode={activeWalletTab} onChange={setSelectedWalletTab} disableWalletRequest={disableWalletRequest} />
-
         <div className="flex justify-end">
           <NetworkSelector
             value={selectedNetwork}
