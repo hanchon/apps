@@ -320,11 +320,11 @@ export const TransferModalContent = ({
                   >
                     {getGlobalKeplrProvider() === null
                       ? t(
-                        "error.network.not.support.by-wallet.installButtonLabel",
-                      )
+                          "error.network.not.support.by-wallet.installButtonLabel",
+                        )
                       : t(
-                        "error.network.not.support.by-wallet.connectButtonLabel",
-                      )}
+                          "error.network.not.support.by-wallet.connectButtonLabel",
+                        )}
                   </PrimaryButton>
                 </div>
               </InfoPanel>
@@ -356,13 +356,6 @@ export const TransferModalContent = ({
                 />
               </div>
             )}
-
-            {/* {!validation.hasSufficientBalanceForFee && feeBalance && (
-            <ErrorMessage className="justify-center pl-0">
-              {t("message.insufficiente.fee")}
-              {feeBalance.formattedLong} {feeBalance.symbol}
-            </ErrorMessage>
-          )} */}
 
             {/*
              * Call to action Buttons
@@ -435,9 +428,7 @@ export const TransferModalContent = ({
                 type="submit"
                 className="w-full text-base md:text-lg rounded-md capitalize mt-8"
                 disabled={
-                  !isReadyToTransfer ||
-                  isTransferring ||
-                  hasTransferred
+                  !isReadyToTransfer || isTransferring || hasTransferred
                 }
               >
                 {t("transfer.send.button.text")}

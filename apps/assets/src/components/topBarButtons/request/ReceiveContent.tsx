@@ -109,20 +109,23 @@ export const ReceiveContent = ({
                   value={sender ?? ""}
                 />
               </div>
-              {shareEnabled &&
-                <button onClick={() => {
-                  void navigator.share({
-                    url: sender ?? "",
-                    title: "Wallet Address",
-                  });
-                  sendEvent(CLICK_ON_SHARE_QR_CODE);
-                }} className="flex items-center space-x-2 self-center">
+              {shareEnabled && (
+                <button
+                  onClick={() => {
+                    void navigator.share({
+                      url: sender ?? "",
+                      title: "Wallet Address",
+                    });
+                    sendEvent(CLICK_ON_SHARE_QR_CODE);
+                  }}
+                  className="flex items-center space-x-2 self-center"
+                >
                   <span className="text-pink-300 text-xs md:text-sm">
                     {t("receive.share.qr")}
                   </span>
                   <ShareIcon className="w-3 h-4 md:w-5 md:h-4" />
                 </button>
-              }
+              )}
             </div>
             <div className="">
               <Label> {t("receive.format.label")}</Label>

@@ -100,7 +100,6 @@ export const RequestAssetSelector = ({
           <CryptoSelector
             value={selectedToken}
             onChange={(token) => {
-
               onChange({
                 networkPrefix: token.sourcePrefix,
                 ref: token.ref,
@@ -192,7 +191,7 @@ export const RequestAssetSelector = ({
           });
         }}
         decimals={selectedToken?.decimals}
-        setIsMaxClicked={() => { }}
+        setIsMaxClicked={() => {}}
       />
       <CryptoSelectorBalanceBox>
         <div>{amountInUsd !== null && `≈${amountInUsd}`}</div>

@@ -26,7 +26,7 @@ const sanitize = (obj: Record<string, unknown>) => {
  */
 export const useModal = <T extends z.AnyZodObject>(
   id: string,
-  schema: T = z.object({}) as T
+  schema: T = z.object({}) as T,
 ) => {
   const ref = useRef({
     schema,
@@ -56,7 +56,7 @@ export const useModal = <T extends z.AnyZodObject>(
         },
       }).catch(console.error);
     },
-    [id, push, query, replace]
+    [id, push, query, replace],
   );
 
   const setIsOpen = useCallback(
@@ -74,7 +74,7 @@ export const useModal = <T extends z.AnyZodObject>(
         query: null,
       }).catch(console.error);
     },
-    [push, schema, setState]
+    [push, schema, setState],
   );
 
   if (isOpen && state) {

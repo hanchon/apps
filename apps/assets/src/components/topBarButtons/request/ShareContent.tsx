@@ -1,6 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import React from "react";
+import React, { useEffect } from "react";
 import { Label, PrimaryButton, TextInput, Title } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { EVMOS_PAGE_URL } from "constants-helper";
@@ -19,6 +19,7 @@ import {
 } from "tracker";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
 import QRCode from "react-qr-code";
+import { useRouter } from "next/router";
 
 export const ShareContent = ({
   message,
@@ -46,7 +47,12 @@ export const ShareContent = ({
     ? tokenToUSD(amount, Number(price), selectedToken.decimals)
     : null;
 
-  const shareURL = `${EVMOS_PAGE_URL}assets?action=pay&token=${token}&amount=${amount}&message=${message}&requester=${sender}`;
+  const [origin, setOrigin] = React.useState("");
+  useEffect(() => {
+    setOrigin(window.location.origin);
+  }, []);
+
+  const shareURL = `${origin}/assets?action=pay&token=${token}&amount=${amount}&message=${message}&requester=${sender}`;
 
   return (
     <section className="space-y-8">
@@ -85,7 +91,7 @@ export const ShareContent = ({
                   value={shareURL}
                 />
               </div>
-              {shareEnabled &&
+              {shareEnabled && (
                 <button
                   onClick={async () => {
                     await navigator.share({
@@ -94,13 +100,14 @@ export const ShareContent = ({
                     });
                     sendEvent(CLICK_ON_SHARE_QR_CODE_PAYMENT);
                   }}
-                  className="flex items-center space-x-2 self-center">
+                  className="flex items-center space-x-2 self-center"
+                >
                   <span className="text-pink-300 text-xs md:text-sm ">
                     {t("request.share.payment.qr")}
                   </span>
                   <ShareIcon className="w-3 h-4 md:w-5 md:h-4" />
                 </button>
-              }
+              )}
             </div>
 
             <TextInput

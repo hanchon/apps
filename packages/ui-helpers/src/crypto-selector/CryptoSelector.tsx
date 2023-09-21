@@ -50,9 +50,7 @@ const Button = ({
           height={24}
         />
       )}
-      <span className="text-xs md:text-sm text-white">
-        {children}
-      </span>
+      <span className="text-xs md:text-sm text-white">{children}</span>
       <DropdownArrow
         className="h-5 w-5 pointer-events-none text-red"
         aria-hidden="true"

@@ -33,17 +33,15 @@ export const AmountInput = ({
 }) => {
   const decimalsUnit = parseInt(String(decimals ?? 18));
 
-  const ref = useRef<ComponentRef<'input'>>(null);
+  const ref = useRef<ComponentRef<"input">>(null);
   useEffect(() => {
     if (!ref.current) return;
     if (ref.current === document.activeElement) return;
     ref.current.value = formatUnits(value ?? 0n, decimalsUnit);
   }, [value, decimalsUnit]);
 
-
   return (
     <div
-
       className={cx(
         "flex w-full tracking-wider font-bold py-2 px-4 text-sm md:text-base leading-5 text-gray-900 focus:ring-1 border-2 border-pink-300 rounded bg-pink-200 text-black focus-visible:outline-none",
         {
@@ -65,7 +63,8 @@ export const AmountInput = ({
         onChange={({ target }) => {
           target.value = target.value.replace(/^(0+)(?=[1-9])/, "");
           const [decimal, fractional] = target.value.split(".");
-          target.value = decimal + (fractional !== undefined ? "." + fractional : '')
+          target.value =
+            decimal + (fractional !== undefined ? "." + fractional : "");
 
           const [error, parsed] = E.try(() =>
             parseUnits(target.value, decimalsUnit),
