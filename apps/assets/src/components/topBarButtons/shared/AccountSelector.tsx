@@ -76,7 +76,9 @@ export const AccountSelector = ({
   }, [address]);
 
   const syncAddress = useEffectEvent(() => {
+    console.log(value, address)
     onChange?.(value);
+
   });
   useEffect(() => {
     if (address !== value) {

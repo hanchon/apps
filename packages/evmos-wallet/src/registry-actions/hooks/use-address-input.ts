@@ -4,12 +4,14 @@ import {
   useMemo,
   useCallback,
   ComponentProps,
+  useRef,
 } from "react";
 import { Address, getPrefix, isValidHexAddress } from "../../wallet";
 import { isValidCosmosAddress } from "../../wallet/utils/addresses/is-valid-cosmos-address";
 import { getPrefixes } from "../get-prefixes";
 import { isValidRegistryPrefix } from "../is-valid-registry-prefix";
 import { Prefix } from "../types";
+import { useEffectEvent } from "helpers";
 
 export type AddressInputErrors = "INVALID_ADDRESS" | "INVALID_PREFIX";
 /**
@@ -60,7 +62,7 @@ export const useAddressInput = <TPrefix extends Prefix>(
   initialAddress: string = "",
   config: {
     allowedPrefixes?: TPrefix[];
-  } = {},
+  } = {}
 ) => {
   const { allowedPrefixes = [...getPrefixes()] as TPrefix[] } = config;
   const [value, setValue] = useState(initialAddress);
@@ -70,11 +72,18 @@ export const useAddressInput = <TPrefix extends Prefix>(
    * if the initial address changes from empty ('') to something else
    * and the value is still empty, use the new initial address value
    */
+  const hasSetValueBeenCalled = useRef(false);
   useEffect(() => {
-    if (initialAddress && value === "") {
+    if (value !== "") hasSetValueBeenCalled.current = true;
+  }, [value]);
+  const updateInitialValue = useEffectEvent(() => {
+    if (hasSetValueBeenCalled.current === false) {
       setValue(initialAddress);
     }
-  }, [initialAddress, value]);
+  });
+  useEffect(() => {
+    updateInitialValue();
+  }, [initialAddress, updateInitialValue]);
 
   /**
    * this extracts the prefix from the address
