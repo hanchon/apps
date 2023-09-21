@@ -20,6 +20,7 @@ export const useSend = ({
   sender,
   receiver,
   token,
+
 }: {
   sender?: Address<Prefix>;
   receiver?: Receiverish;
@@ -71,12 +72,16 @@ export const useSend = ({
   /**
    * Full amount includes fee when necessary
    */
+  const tokenRef = token?.ref;
+  const tokenAmount = token?.amount;
+  const feeTokenRef = fee?.token.ref;
+  const feeTokenAmount = fee?.token.amount;
   const fullAmount = useMemo(() => {
-    if (token && token.ref === fee?.token.ref) {
-      return token.amount + fee.token.amount;
+    if (tokenRef && tokenRef === feeTokenRef) {
+      return (tokenAmount ?? 0n) + (feeTokenAmount ?? 0n);
     }
-    return token?.amount ?? 0n;
-  }, [token?.ref, token?.amount, fee?.token.ref, fee?.token.amount]);
+    return tokenAmount ?? 0n;
+  }, [tokenRef, tokenAmount, feeTokenRef, feeTokenAmount]);
 
   const hasSufficientBalance =
     accountExists === true && fullAmount <= (balance?.value ?? 0n);
@@ -88,11 +93,13 @@ export const useSend = ({
     receiverAddress &&
     sender &&
     normalizeToCosmosAddress(sender) !==
-      normalizeToCosmosAddress(receiverAddress);
+    normalizeToCosmosAddress(receiverAddress);
 
   const hasValidAmount = token?.amount !== undefined && token?.amount > 0n;
 
   const hasLoadedFee = fee !== undefined && isFeeLoading === false;
+
+  const hasTransferred = transferResponse !== undefined;
 
   const out = {
     transfer,
@@ -102,10 +109,13 @@ export const useSend = ({
       hasValidReceiver &&
       hasValidAmount &&
       hasLoadedFee,
+
     isPreparing: isFeeLoading || isFetchingBalance || isFetchingFeeBalance,
     isFetchingBalance,
     isFetchingFeeBalance,
     isTransferring,
+    hasTransferred,
+
     transferResponse,
     balance,
     fee,

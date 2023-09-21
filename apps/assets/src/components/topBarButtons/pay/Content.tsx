@@ -17,6 +17,8 @@ import {
 import { useAccount } from "wagmi";
 import {
   Address,
+  getPrefix,
+  normalizeToCosmosAddress,
   useTokenBalance,
 } from "evmos-wallet";
 
@@ -24,7 +26,7 @@ import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { formatUnits } from "viem";
 import { tokenToUSD } from "../common/utils";
 import { useTokenPrice } from "../hooks/useTokenPrice";
-import { useSearchParams } from "next/navigation";
+
 import { truncateAddress } from "evmos-wallet/src/internal/wallet/style/format";
 import { AmountBox } from "../common/AmountBox";
 import { StoreType, WalletConnection } from "evmos-wallet";
@@ -43,6 +45,9 @@ import {
 } from "tracker/src/constants";
 import { useTracker } from "tracker";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import { useSend } from "../hooks/useSend";
+import { useReceiptModal } from "../receipt/ReceiptModal";
+import { normalizeToPrefix } from "evmos-wallet/src/registry-actions/utils/normalize-to-prefix";
 
 export const Content = ({
   requester,
@@ -53,17 +58,65 @@ export const Content = ({
   const dispatch = useDispatch();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
 
+
+
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
 
   const selectedToken = getTokenByRef(token);
-  const { connector, isDisconnected } = useAccount();
+  const { address, connector, isDisconnected } = useAccount();
   const { data } = useWalletAccountByPrefix(selectedToken.sourcePrefix);
   const { data: evmosData } = useWalletAccountByPrefix("evmos");
   const sender =
     connector?.id === "metaMask"
-      ? (wallet.evmosAddressCosmosFormat as Address<Prefix>)
+      ? address && normalizeToCosmosAddress(address)
       : data?.bech32Address;
+
+  const receiptModal = useReceiptModal()
+  const {
+    transfer,
+
+    isPreparing,
+    isReady,
+    isTransferring,
+    hasTransferred,
+
+    transferResponse,
+    // If you need to account for fees:
+    // fee,
+    // feeBalance,
+
+    // this will give you the balance of the selected token so you don't need to fetch it below:
+    // balance, 
+
+    // this has some ready to use validation like:
+    validation,
+    // {
+    //   hasSufficientBalance: boolean;
+    //   hasSufficientBalanceForFee: boolean;
+    //   hasValidReceiver: boolean | undefined;
+    //   hasValidAmount: boolean;
+    //   hasLoadedFee: boolean;
+    // }
+  } = useSend({
+    sender: sender,
+    receiver: requester,
+    token: {
+      ref: token,
+      amount,
+    },
+
+  })
+  useEffect(() => {
+    if (!transferResponse) return
+    if (!sender) return
+    const chainPrefix = normalizeToPrefix(sender)
+    receiptModal.setIsOpen(true, {
+      hash: transferResponse.hash,
+      chainPrefix,
+    })
+  }
+  ), [transferResponse, sender, receiptModal]
 
   const [selectedBalance, setSelectedBalance] = useState<
     undefined | FormattedBalance
@@ -97,6 +150,7 @@ export const Content = ({
   const insufficientBalance =
     selectedBalance?.value ?? 0n < amount ? true : false;
 
+
   useEffect(() => {
     if (
       balances.length > 0 &&
@@ -105,6 +159,8 @@ export const Content = ({
       setSelectedBalance(balances[0]);
     }
   }, [balances]);
+
+  const action = (validation.hasSufficientBalance && validation.hasSufficientBalance) || isPreparing ? 'PAY' : 'SWAP'
 
   return (
     <section className="space-y-8">
@@ -117,6 +173,9 @@ export const Content = ({
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          if (action === 'PAY') {
+            transfer();
+          }
         }}
       >
         <section>
@@ -244,9 +303,10 @@ export const Content = ({
                   </div>
                 )}
 
-                {!insufficientBalance && (
+                {action === 'PAY' && (
                   <PrimaryButton
-                    disabled={insufficientBalance}
+                    type="submit"
+                    disabled={!isReady || isTransferring || hasTransferred}
                     variant={false ? "outline-primary" : undefined}
                     onClick={() => {
                       sendEvent(CLICK_ON_PAY);
@@ -257,9 +317,9 @@ export const Content = ({
                   </PrimaryButton>
                 )}
 
-                {insufficientBalance && (
+                {action === 'SWAP' && (
                   <PrimaryButton
-                    disabled={false}
+
                     variant={"outline-primary"}
                     onClick={() => {
                       sendEvent(CLICK_ON_SWAP_ASSETS_PAY_FLOW);
