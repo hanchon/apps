@@ -3,7 +3,6 @@
 import React, { useEffect } from "react";
 import { Label, PrimaryButton, TextInput, Title } from "ui-helpers";
 import { useTranslation } from "next-i18next";
-import { EVMOS_PAGE_URL } from "constants-helper";
 import { BackArrowIcon, RequestIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { tokenToUSD } from "../common/utils";
@@ -19,7 +18,6 @@ import {
 } from "tracker";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
 import QRCode from "react-qr-code";
-import { useRouter } from "next/router";
 
 export const ShareContent = ({
   message,

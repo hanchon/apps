@@ -75,7 +75,7 @@ export const ModalWithTransitions = ({
           >
             <Dialog.Panel
               className={cx(
-                "relative transform overflow-auto max-h-full rounded-lg text-left transition-all  pointer-events-auto",
+                "relative transform  max-h-full rounded-lg text-left transition-all  pointer-events-auto",
                 {
                   "bg-pearl1 shadow-xl md:min-w-[400px] max-w-[850px]":
                     variant === "default",
