@@ -13,7 +13,7 @@ import {
 import { useTranslation } from "next-i18next";
 import { FormattedBalance } from "evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
-import { normalizeToCosmosAddress, useTokenBalance } from "evmos-wallet";
+import { getChain, normalizeToCosmosAddress, useTokenBalance } from "evmos-wallet";
 
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { formatUnits } from "viem";
@@ -28,7 +28,6 @@ import { CopilotButton } from "copilot";
 import { useDispatch, useSelector } from "react-redux";
 import { PayModalProps } from "./Modal";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
-import { chains } from "@evmos-apps/registry";
 import { PayIcon } from "icons";
 import Image from "next/image";
 import {
@@ -138,7 +137,7 @@ export const Content = ({
     sender === evmosData?.bech32Address
       ? [evmosBalance].filter((b) => b !== undefined)
       : [balance, evmosBalance].filter((b) => b !== undefined);
-  const chain = sender ? getChainByAddress(sender) : chains["evmos"];
+  const chain = sender ? getChainByAddress(sender) : getChain("evmos");
 
   const insufficientBalance = selectedBalance?.value
     ? selectedBalance?.value < amount

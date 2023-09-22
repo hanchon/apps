@@ -1,11 +1,11 @@
 import { CosmosAddress } from "../wallet";
 import { makeBalance } from "./utils/make-balance";
 import { FormattedBalance, Prefix } from "./types";
-import { chains } from "@evmos-apps/registry";
 import { getPrefix } from "../wallet/utils";
 import { apiCosmosBalance } from "../api/cosmos-rest";
 import { IBC_DENOMS_MAP } from "./utils";
 import { getToken } from "./get-token";
+import { getChain } from "./get-chain";
 
 export async function getCosmosBalances({
   address,
@@ -13,7 +13,7 @@ export async function getCosmosBalances({
   address: CosmosAddress<Prefix>;
 }) {
   const prefix = getPrefix(address);
-  const chain = chains[prefix];
+  const chain = getChain(prefix);
 
   const response = await apiCosmosBalance(chain.cosmosRest, address);
   const balances: FormattedBalance[] = [];

@@ -7,10 +7,9 @@ import {
   CryptoSelectorDropdownBox,
   ErrorMessage,
 } from "ui-helpers";
-import { chains } from "@evmos-apps/registry";
 import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "ui-helpers";
-import { Address, useTokenBalance } from "evmos-wallet";
+import { Address, getChain, useTokenBalance } from "evmos-wallet";
 import { CryptoSelectorTitle } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { formatUnits } from "viem";
@@ -53,7 +52,7 @@ export const AssetSelector = ({
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
   const { isDisconnected } = useAccount();
-  const selectedChain = chains[value.networkPrefix];
+  const selectedChain = getChain(value.networkPrefix);
 
   const selectedToken = getTokenByRef(value.ref);
 
@@ -204,7 +203,7 @@ export const AssetSelector = ({
               className="right-0"
             >
               {networkOptions.map((value) => {
-                const chain = chains[value];
+                const chain = getChain(value);
                 return (
                   <CryptoSelector.Option
                     src={`/assets/chains/${value}.png`}

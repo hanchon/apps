@@ -3,10 +3,10 @@ import { useAccount } from "wagmi";
 import {
   CosmosAddress,
   getActiveProviderKey,
+  getChain,
   getKeplrProvider,
   normalizeToCosmosAddress,
 } from "evmos-wallet";
-import { chains } from "@evmos-apps/registry";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { E } from "helpers";
 import { useId } from "react";
@@ -43,7 +43,7 @@ const suggestChain = async (prefix: Prefix) => {
 
 export const useWalletAccountByPrefix = (prefix?: Prefix) => {
   const { address, connector } = useAccount();
-  const chain = prefix ? chains[prefix] : undefined;
+  const chain = prefix ? getChain(prefix) : undefined;
   return useQuery({
     queryKey: ["wallet_account_request", prefix, connector?.id],
     retry: false,
@@ -93,7 +93,7 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
 export const requestWalletAccount = async (prefix: Prefix) => {
   const activeProvider = getActiveProviderKey();
   if (!activeProvider) throw new Error("NO_ACTIVE_PROVIDER");
-  const chain = chains[prefix];
+  const chain = getChain(prefix);
   if (activeProvider === "keplr") {
     const keplr = await getKeplrProvider();
     const [suggestChainErr] = await E.try(() => suggestChain(prefix));

@@ -10,3 +10,4 @@ export * from "./get-token-min-denom-list";
 export * from "./get-account-info";
 export * from "./precompiles";
 export * from "./get-token";
+export * from "./get-chain";

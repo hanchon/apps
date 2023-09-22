@@ -1,6 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from "react";
-import { Address, getActiveProviderKey, useAddressInput } from "evmos-wallet";
-import { chains } from "@evmos-apps/registry";
+import { Address, getActiveProviderKey, getChain, useAddressInput } from "evmos-wallet";
 import { CryptoSelector, ErrorMessage, Tabs, TextInput } from "ui-helpers";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
@@ -193,7 +192,7 @@ const NetworkSelector = ({
   options: Prefix[];
 }) => {
   const { t } = useTranslation();
-  const selectedChain = chains[value];
+  const selectedChain = getChain(value);
   return (
     <CryptoSelector value={value} onChange={onChange}>
       <CryptoSelector.Button src={`/assets/chains/${selectedChain.prefix}.png`}>
@@ -204,7 +203,7 @@ const NetworkSelector = ({
         className="right-0"
       >
         {options.map((value) => {
-          const chain = chains[value];
+          const chain = getChain(value);
           return (
             <CryptoSelector.Option
               src={`/assets/chains/${value}.png`}

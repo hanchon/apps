@@ -5,9 +5,9 @@ import {
   isValidHexAddress,
 } from "../../wallet";
 import { Prefix } from "../types";
-export type Receiverish = Address<Prefix> | Prefix;
+export type Prefixish = Address<Prefix> | Prefix;
 
-export const normalizeToPrefix = (address: Receiverish) => {
+export const normalizeToPrefix = (address: Prefixish) => {
   if (isValidHexAddress(address) || isValidCosmosAddress(address)) {
     return getPrefix(address);
   }

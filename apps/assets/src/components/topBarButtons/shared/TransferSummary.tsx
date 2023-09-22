@@ -5,12 +5,12 @@ import { cn } from "helpers";
 import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
 import {
   Address,
+  getChain,
   getPrefix,
   getToken,
   normalizeToCosmosAddress,
   useFee,
 } from "evmos-wallet";
-import { chains } from "@evmos-apps/registry";
 import { AddressDisplay, Arrow } from "ui-helpers";
 
 import { useTranslation } from "next-i18next";
@@ -32,8 +32,8 @@ export const TransferSummary = ({
 }) => {
   const senderPrefix = getPrefix(normalizeToCosmosAddress(sender));
   const receiverPrefix = getPrefix(normalizeToCosmosAddress(receiver));
-  const senderChain = chains[senderPrefix];
-  const receiverChain = chains[receiverPrefix];
+  const senderChain = getChain(senderPrefix);
+  const receiverChain = getChain(receiverPrefix);
 
   const { name, decimals, denom } = getTokenByRef(token.ref);
 

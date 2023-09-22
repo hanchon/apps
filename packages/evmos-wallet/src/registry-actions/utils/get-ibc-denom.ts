@@ -3,7 +3,7 @@ import { Prefix, Token } from "../types";
 import { getIBCChannelId } from "./get-ibc-channel-id";
 import { toIBCDenom } from "helpers";
 import { normalizeToPrefix } from "./normalize-to-prefix";
-import { chains } from "@evmos-apps/registry";
+import { getChain } from "../get-chain";
 
 export const getIBCDenom = ({
   sender,
@@ -14,7 +14,7 @@ export const getIBCDenom = ({
   receiver: Address<Prefix> | Prefix;
   token: Token;
 }) => {
-  const chain = chains[token.sourcePrefix];
+  const chain = getChain(token.sourcePrefix);
   if (chain.prefix === normalizeToPrefix(sender)) {
     return token.sourceDenom;
   }
@@ -25,6 +25,6 @@ export const getIBCDenom = ({
       sender,
       receiver,
     }),
-    token.sourceDenom,
+    token.sourceDenom
   );
 };

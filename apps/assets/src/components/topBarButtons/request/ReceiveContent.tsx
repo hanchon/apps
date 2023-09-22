@@ -6,7 +6,7 @@ import { Trans, useTranslation } from "next-i18next";
 import { CryptoSelector } from "ui-helpers";
 import QRCode from "react-qr-code";
 
-import { StoreType, getActiveProviderKey } from "evmos-wallet";
+import { StoreType, getActiveProviderKey, getChain } from "evmos-wallet";
 import { ReceiveIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { CryptoSelectorDropdownBox } from "ui-helpers";
@@ -36,7 +36,7 @@ export const ReceiveContent = ({
 
   const [selectedNetworkPrefix, setSelectedNetworkPrefix] =
     useState<Prefix>("evmos");
-  const selectedChain = chains[selectedNetworkPrefix];
+  const selectedChain = getChain(selectedNetworkPrefix);
   const { data } = useWalletAccountByPrefix(selectedNetworkPrefix);
 
   const sender =
@@ -157,7 +157,7 @@ export const ReceiveContent = ({
                         className="right-0"
                       >
                         {networkOptions.map((value) => {
-                          const chain = chains[value];
+                          const chain = getChain(value);
                           return (
                             <CryptoSelector.Option
                               src={`/assets/chains/${value}.png`}

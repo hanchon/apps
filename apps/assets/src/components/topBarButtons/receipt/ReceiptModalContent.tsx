@@ -21,6 +21,7 @@ import {
   apiCosmosBlockByHeight,
   apiCosmosTxByHash,
   getAbi,
+  getChain,
   getTokens,
   normalizeToCosmosAddress,
 } from "evmos-wallet";
@@ -28,7 +29,6 @@ import { FailTxIcon, SuccessTxIcon } from "icons";
 import { Prefix, Token } from "evmos-wallet/src/registry-actions/types";
 import { findToken } from "evmos-wallet/src/registry-actions/utils";
 import { useQuery } from "@tanstack/react-query";
-import { chains } from "@evmos-apps/registry";
 import { SkeletonLoading } from "../shared/SkeletonLoading";
 import { E, raise } from "helpers";
 import { ReceiptModalProps } from "./ReceiptModal";
@@ -154,7 +154,7 @@ const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
        * All transactions originated on Cosmos are sent through the Cosmos SDK, so we fetch the results as
        * cosmos transactions
        */
-      const chainConfig = chains[chainPrefix];
+      const chainConfig = getChain(chainPrefix);
       const result = await apiCosmosTxByHash(chainConfig.cosmosRest, hash);
       const message = { ...result.tx.body.messages[0] } as const;
 
@@ -189,7 +189,7 @@ const useBlock = (prefix?: Prefix, height?: bigint) => {
 
     queryFn: async () => {
       if (!height || !prefix) throw new Error("Missing parameters");
-      const chainConfig = chains[prefix];
+      const chainConfig = getChain(prefix);
       const result = await apiCosmosBlockByHeight(
         chainConfig.cosmosRest,
         height,
@@ -217,7 +217,7 @@ export const ReceiptModalContent = ({
     chainPrefix,
     receipt?.height,
   );
-  const chain = chains[chainPrefix ?? "evmos"];
+  const chain = getChain(chainPrefix ?? "evmos");
   const blockDate = block?.block?.header?.time
     ? new Date(block.block.header.time)
     : undefined;

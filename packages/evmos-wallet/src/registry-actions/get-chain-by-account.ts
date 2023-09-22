@@ -1,8 +1,7 @@
-import { chains } from "@evmos-apps/registry";
-import { Address, getPrefix } from "../wallet";
-
+import { Address } from "../wallet";
 import { Prefix } from "./types";
+import { getChain } from "./get-chain";
 
 export const getChainByAddress = (address: Address<Prefix>) => {
-  return chains[getPrefix(address)];
+  return getChain(address);
 };

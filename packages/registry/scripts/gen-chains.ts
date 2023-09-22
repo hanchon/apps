@@ -9,7 +9,7 @@ const readFiles = async <T>(globPattern: string) => {
   const files = await glob(globPattern);
   const contents = await Promise.all(
     files //
-      .map((file) => readFile(file, { encoding: "utf-8" })),
+      .map((file) => readFile(file, { encoding: "utf-8" }))
   );
   const parsed = contents //
     .map((content) => JSON.parse(content) as T);
@@ -19,7 +19,7 @@ const readFiles = async <T>(globPattern: string) => {
 export const readRegistryChain = async () =>
   (
     await readFiles<ChainRegistry>(
-      "node_modules/chain-token-registry/chainConfig/*.json",
+      "node_modules/chain-token-registry/chainConfig/*.json"
     )
   ).flatMap(({ configurations, ...rest }) =>
     configurations
@@ -27,7 +27,7 @@ export const readRegistryChain = async () =>
           ...rest,
           configuration,
         }))
-      : [],
+      : []
   );
 
 export const readRegistryToken = () =>
@@ -46,7 +46,7 @@ const normalizeNetworkUrls = (urls?: string[]) => {
 
 const tokenByPrefix = groupBy(
   await readRegistryToken(),
-  ({ coinSourcePrefix }) => coinSourcePrefix,
+  ({ coinSourcePrefix }) => coinSourcePrefix
 );
 
 // This might be handy when we start supporting IBC between other chains
@@ -86,6 +86,7 @@ for (const chainRegistry of chains) {
       minCoinDenom:
         token.minCoinDenom === "EVMOS" ? "aevmos" : token.minCoinDenom,
       category: token.category === "none" ? null : token.category,
+      tokenRepresentation: token.tokenRepresentation,
       type: token.type === "IBC" ? "IBC" : "ERC20",
       decimals: Number(token.exponent),
       erc20Address: token.erc20Address,
@@ -96,7 +97,10 @@ for (const chainRegistry of chains) {
   const configuration = chainRegistry.configuration;
 
   const isTestnet = configuration.configurationType === "testnet";
-  const identifier = configuration.identifier.toLowerCase();
+  let identifier = configuration.identifier.toLowerCase();
+  if (identifier === "gravity") {
+    identifier = "gravitybridge";
+  }
 
   const chain = {
     prefix: chainRegistry.prefix,

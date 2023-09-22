@@ -11,7 +11,7 @@ import {
   useTransfer,
 } from "evmos-wallet";
 import {
-  Receiverish,
+  Prefixish,
   normalizeToPrefix,
 } from "evmos-wallet/src/registry-actions/utils/normalize-to-prefix";
 import { getFeeToken } from "evmos-wallet/src/registry-actions/getFeeToken";
@@ -22,7 +22,7 @@ export const useSend = ({
   token,
 }: {
   sender?: Address<Prefix>;
-  receiver?: Receiverish;
+  receiver?: Prefixish;
   token?: TokenAmount;
 }) => {
   const receiverPrefix = receiver ? normalizeToPrefix(receiver) : "evmos";
@@ -92,7 +92,7 @@ export const useSend = ({
     receiverAddress &&
     sender &&
     normalizeToCosmosAddress(sender) !==
-      normalizeToCosmosAddress(receiverAddress);
+    normalizeToCosmosAddress(receiverAddress);
 
   const hasValidAmount = token?.amount !== undefined && token?.amount > 0n;
 

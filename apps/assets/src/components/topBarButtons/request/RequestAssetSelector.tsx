@@ -6,10 +6,9 @@ import {
   CryptoSelectorBox,
   CryptoSelectorDropdownBox,
 } from "ui-helpers";
-import { chains } from "@evmos-apps/registry";
 import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "ui-helpers";
-import { Address, getTokens, useTokenBalance } from "evmos-wallet";
+import { Address, getChain, getTokens, useTokenBalance } from "evmos-wallet";
 import { CryptoSelectorTitle } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { formatUnits } from "viem";
@@ -49,7 +48,7 @@ export const RequestAssetSelector = ({
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
   const { isDisconnected } = useAccount();
-  const selectedChain = chains[value.networkPrefix];
+  const selectedChain = getChain(value.networkPrefix);
   const onChangeEvent = useEffectEvent(
     (next: Asset | ((value: Asset) => Asset)) => {
       onChange(typeof next === "function" ? next(value) : next);
@@ -165,7 +164,7 @@ export const RequestAssetSelector = ({
               className="right-0"
             >
               {networkOptions.map((value) => {
-                const chain = chains[value];
+                const chain = getChain(value);
                 return (
                   <CryptoSelector.Option
                     src={`/assets/chains/${value}.png`}

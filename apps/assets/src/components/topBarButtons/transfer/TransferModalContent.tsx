@@ -21,13 +21,13 @@ import {
   WalletConnection,
   connectWith,
   getActiveProviderKey,
+  getChain,
   getGlobalKeplrProvider,
 } from "evmos-wallet";
 import { AccountSelector } from "../shared/AccountSelector";
 
 import { TransferSummary } from "../shared/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
-import { chains } from "@evmos-apps/registry";
 import { E } from "helpers";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
@@ -107,7 +107,7 @@ export const TransferModalContent = ({
   });
 
   const token = getTokenByRef(tokenRef);
-  const senderChain = sender ? getChainByAddress(sender) : chains["evmos"];
+  const senderChain = sender ? getChainByAddress(sender) : getChain("evmos");
 
   const destinationNetworkOptions = useMemo(
     (): Prefix[] => //
@@ -254,7 +254,7 @@ export const TransferModalContent = ({
                       }}
                     />
                     <span className="text-pink-300">
-                      {chains[networkPrefix].name}
+                      {getChain(networkPrefix).name}
                     </span>
                     <Trans
                       i18nKey="error.user.rejected.network.title2"
