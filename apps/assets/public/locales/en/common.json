@@ -13,7 +13,7 @@
   "request.button": "Receive",
   "request.share.payment.qr": "Share Payment QR",
   "request.share.button": "Share via App",
-  "request.copy.button": "Generate Message",
+  "request.copy.button": "Share Message",
   "request.label": "Requesting:",
   "request.generate.button": "Generate Payment Request",
   "request.modal.title": "Request Payment",
