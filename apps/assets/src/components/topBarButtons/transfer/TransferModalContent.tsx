@@ -320,11 +320,11 @@ export const TransferModalContent = ({
                   >
                     {getGlobalKeplrProvider() === null
                       ? t(
-                          "error.network.not.support.by-wallet.installButtonLabel",
-                        )
+                        "error.network.not.support.by-wallet.installButtonLabel",
+                      )
                       : t(
-                          "error.network.not.support.by-wallet.connectButtonLabel",
-                        )}
+                        "error.network.not.support.by-wallet.connectButtonLabel",
+                      )}
                   </PrimaryButton>
                 </div>
               </InfoPanel>
@@ -431,13 +431,11 @@ export const TransferModalContent = ({
                   !isReadyToTransfer || isTransferring || hasTransferred
                 }
               >
-                {t("transfer.send.button.text")}
+                {isTransferring ? t("transfer.send.button.processing.text") : t("transfer.send.button.text")}
               </PrimaryButton>
+
             )}
           </div>
-          {isTransferring && (
-            <p>Please, check your wallet to sign your transaction</p>
-          )}
         </section>
       </form>
 

@@ -32,7 +32,7 @@ export function TextInput({
       {showCopyIcon && (
         <button
           type="button"
-          className="w-auto h-4 flex items-center"
+          className="w-auto h-4 flex items-center active:transform active:scale-75 active:duration-300"
           onClick={async () => {
             await navigator.clipboard.writeText(rest.value as string);
             onClickCopy && onClickCopy();
