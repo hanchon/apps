@@ -273,7 +273,7 @@ export const TransferModalContent = ({
                     />
                   </p>
                   <PrimaryButton
-                    className="font-normal w-full"
+                    className="font-normal w-full py-2"
                     onClick={() => requestAccount(networkPrefix)}
                   >
                     {t("error.user.rejected.network.authorizeButtonLabel")}
@@ -306,7 +306,7 @@ export const TransferModalContent = ({
                         ? "outline-primary"
                         : "primary"
                     }
-                    className="font-normal w-full"
+                    className="font-normal w-full py-2"
                     // TODO: If the user rejects the connection, it's connecting with MetaMask. Check why.
                     onClick={async () => {
                       if (getGlobalKeplrProvider() === null) {
