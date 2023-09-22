@@ -255,7 +255,7 @@ export const Content = ({
                           >
                             {b?.type === "ERC20" ? "Evmos" : chain.name} -{" "}
                             {formatUnits(b?.value ?? 0n, b?.decimals ?? 0)}{" "}
-                            {selectedToken?.denom?.toLocaleUpperCase()}
+                            {selectedToken?.denom}
                           </CryptoSelector.Option>
                         );
                       })}
