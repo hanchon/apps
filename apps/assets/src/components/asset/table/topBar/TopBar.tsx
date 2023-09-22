@@ -34,6 +34,7 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
       />
       <div className="flex items-center justify-center space-x-2 lg:justify-end">
         <PrimaryButton
+          className="py-2"
           disabled={isDisconnected}
           icon={<SendIcon />}
           onClick={() => {
@@ -44,6 +45,7 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
           <p>{t("transfer.button")}</p>
         </PrimaryButton>
         <PrimaryButton
+          className="py-2"
           disabled={isDisconnected}
           icon={<ReceiveIcon />}
           onClick={() => {
