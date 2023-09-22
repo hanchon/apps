@@ -309,7 +309,7 @@ export const Content = ({
                     }}
                     className="w-full text-lg rounded-md capitalize mt-5"
                   >
-                    {t("pay.button")}
+                    {isTransferring ? t("transfer.send.button.processing.text") : t("pay.button")}
                   </PrimaryButton>
                 )}
 
