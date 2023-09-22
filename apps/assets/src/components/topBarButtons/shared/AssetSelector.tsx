@@ -154,7 +154,7 @@ export const AssetSelector = ({
               src={`/assets/tokens/${selectedToken?.denom}.png`}
               variant="black"
             >
-              {selectedToken?.symbol.toLowerCase()}
+              {selectedToken?.symbol}
             </CryptoSelector.Button>
             <CryptoSelector.Options
               variant="multiple"
