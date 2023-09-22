@@ -32,6 +32,7 @@ import { chains } from "@evmos-apps/registry";
 import { SkeletonLoading } from "../shared/SkeletonLoading";
 import { E, raise } from "helpers";
 import { ReceiptModalProps } from "./ReceiptModal";
+import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
 
 const generateReceipt = ({
   sender,
@@ -48,9 +49,8 @@ const generateReceipt = ({
 }) => ({
   sender: normalizeToCosmosAddress(sender as Address<Prefix>),
   receiver: normalizeToCosmosAddress(receiver as Address<Prefix>),
-  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${
-    token.denom
-  }`,
+  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${token.denom
+    }`,
   height: BigInt(height),
 });
 
@@ -103,6 +103,16 @@ const generateERC20TransferReceipt = (result: FetchTransactionResult) => {
   });
 };
 
+const generateEVMTxReceipt = (result: FetchTransactionResult) => {
+  return generateReceipt({
+    sender: result.from,
+    receiver: result.to ?? raise("Missing receiver"),
+    amount: result.value,
+    token: getTokenByRef('evmos:EVMOS'),
+    height: result.blockNumber,
+  });
+}
+
 const isIBCMsgTransfer = (message: unknown): message is MsgTransfer => {
   return (
     typeof message === "object" &&
@@ -129,6 +139,10 @@ const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
         const result = await fetchTransaction({
           hash: hash,
         });
+
+        if (result.input === "0x") {
+          return generateEVMTxReceipt(result);
+        }
 
         if (result.to === ICS20_ADDRESS) {
           return generateICS20TransferReceipt(result);

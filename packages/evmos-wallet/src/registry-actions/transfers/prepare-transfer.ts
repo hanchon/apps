@@ -12,6 +12,7 @@ import {
   executeCosmosIBCTransfer,
   prepareCosmosIBCTransfer,
 } from "./prepare-cosmos-ibc-transfer";
+import { prepareEvmTransfer, writeEvmTransfer } from "./prepare-evm-transfer";
 
 export const simulateTransfer = async ({
   sender,
@@ -30,6 +31,18 @@ export const simulateTransfer = async ({
    */
 
   if (senderIsEvmos && receiverIsEvmos) {
+    if (token.ref === "evmos:EVMOS") {
+      return {
+        method: "evm-transfer",
+        sender,
+        receiver,
+        token,
+        ...(await prepareEvmTransfer({
+          receiver,
+          amount: token,
+        })),
+      } as const;
+    }
     return {
       method: "erc20-extension-transfer",
       sender,
@@ -99,6 +112,12 @@ export const transfer = async ({
   const receiverIsEvmos = isEvmosAddress(receiver);
 
   if (senderIsEvmos && receiverIsEvmos) {
+    if (token.ref === "evmos:EVMOS") {
+      return await writeEvmTransfer({
+        receiver,
+        amount: token,
+      });
+    }
     return await writeContractERC20Transfer({
       sender,
       receiver,

@@ -16,6 +16,7 @@ export const prepareContractERC20Transfer = async ({
   token: TokenAmount;
 }) => {
   const transferredToken = getTokenByRef(token.ref);
+
   const args = {
     abi: erc20ABI,
     functionName: "transfer",
@@ -23,6 +24,7 @@ export const prepareContractERC20Transfer = async ({
     args: [normalizeToEth(receiver), token.amount],
     account: normalizeToEth(sender),
   } as const;
+
   const { request } = await evmosClient.simulateContract(args);
   return {
     tx: request,

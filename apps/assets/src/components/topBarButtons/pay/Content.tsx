@@ -41,6 +41,8 @@ import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-re
 import { useSend } from "../hooks/useSend";
 import { useReceiptModal } from "../receipt/ReceiptModal";
 import { normalizeToPrefix } from "evmos-wallet/src/registry-actions/utils/normalize-to-prefix";
+import { createPortal } from "react-dom";
+import { TransactionInspector } from "../shared/TransactionInspector";
 
 export const Content = ({
   requester,
@@ -89,6 +91,7 @@ export const Content = ({
     //   hasValidAmount: boolean;
     //   hasLoadedFee: boolean;
     // }
+    __DEBUG__
   } = useSend({
     sender: sender,
     receiver: requester,
@@ -331,6 +334,9 @@ export const Content = ({
           </div>
         </section>
       </form>
+      {typeof document !== "undefined" &&
+        process.env.NODE_ENV === "development" &&
+        createPortal(<TransactionInspector {...__DEBUG__} />, document.body)}
     </section>
   );
 };
