@@ -1,8 +1,8 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 import React, { useEffect, useMemo, useState } from "react";
-import { Label, PrimaryButton, Tabs, TextInput, Title } from "ui-helpers";
-import { useTranslation } from "next-i18next";
+import { ErrorMessage, Label, PrimaryButton, Tabs, TextInput, Title } from "ui-helpers";
+import { Trans, useTranslation } from "next-i18next";
 import { CryptoSelector } from "ui-helpers";
 import QRCode from "react-qr-code";
 
@@ -84,6 +84,8 @@ export const ReceiveContent = ({
       text: "IBC",
     },
   ];
+
+  const [showCopied, setShowCopied] = useState(false);
 
   return (
     <section className="space-y-8">
@@ -173,16 +175,26 @@ export const ReceiveContent = ({
               </div>
             </div>
 
-            <TextInput
-              value={sender}
-              disabled={true}
-              showCopyIcon={true}
-              onClickCopy={async () => {
-                await navigator.clipboard.writeText(sender ?? "");
-                sendEvent(CLICK_ON_COPY_ICON_RECEIVE_FLOW);
-              }}
-            />
+            <div>
+              <TextInput
+                value={sender}
+                disabled={true}
+                showCopyIcon={true}
+                onClickCopy={async () => {
+                  await navigator.clipboard.writeText(sender ?? "");
+                  sendEvent(CLICK_ON_COPY_ICON_RECEIVE_FLOW);
+                  setShowCopied(true)
+                }}
+              />
+              {showCopied && <ErrorMessage variant="info" className="justify-center" displayIcon={false}>
+                <Trans i18nKey="receive.copied"
+                  components={{
+                    strong: <span className="text-pink-300" />,
+                  }} />
 
+              </ErrorMessage>
+              }
+            </div>
             <PrimaryButton
               onClick={() => {
                 setState((prev) => ({

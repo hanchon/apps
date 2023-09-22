@@ -1,8 +1,8 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import React, { useEffect } from "react";
-import { Label, PrimaryButton, TextInput, Title } from "ui-helpers";
-import { useTranslation } from "next-i18next";
+import React, { useEffect, useState } from "react";
+import { ErrorMessage, Label, PrimaryButton, TextInput, Title } from "ui-helpers";
+import { Trans, useTranslation } from "next-i18next";
 import { BackArrowIcon, RequestIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { tokenToUSD } from "../common/utils";
@@ -52,6 +52,8 @@ export const ShareContent = ({
 
   const shareURL = `${origin}/assets?action=pay&token=${token}&amount=${amount}&message=${message}&requester=${sender}`;
 
+  const [showCopied, setShowCopied] = useState(false);
+
   return (
     <section className="space-y-8">
       <Title
@@ -80,9 +82,6 @@ export const ShareContent = ({
               <BackArrowIcon width={28} />
             </button>
             <div className="flex gap-2 flex-col">
-              {/* eslint-disable-next-line no-secrets/no-secrets */}
-              {/* To MrSir: add this event in the onclick: sendEvent(CLICK_ON_SHARE_QR_CODE_PAYMENT) */}
-
               <div className="bg-white p-2 w-44 h-44 rounded-xl self-center">
                 <QRCode
                   style={{ height: "auto", maxWidth: "100%", width: "100%" }}
@@ -108,16 +107,26 @@ export const ShareContent = ({
               )}
             </div>
 
-            <TextInput
-              value={`${shareURL.substring(0, 40)}...`}
-              disabled={true}
-              showCopyIcon={true}
-              onClickCopy={async () => {
-                await navigator.clipboard.writeText(shareURL);
-                sendEvent(CLICK_ON_COPY_ICON_REQUEST_FLOW);
-              }}
-            />
+            <div>
+              <TextInput
+                value={`${shareURL.substring(0, 40)}...`}
+                disabled={true}
+                showCopyIcon={true}
+                onClickCopy={async () => {
+                  await navigator.clipboard.writeText(shareURL);
+                  sendEvent(CLICK_ON_COPY_ICON_REQUEST_FLOW);
+                  setShowCopied(true)
+                }}
+              />
+              {showCopied && <ErrorMessage variant="info" className="justify-center" displayIcon={false}>
+                <Trans i18nKey="request.copied"
+                  components={{
+                    strong: <span className="text-pink-300" />,
+                  }} />
 
+              </ErrorMessage>
+              }
+            </div>
             <div className="flex flex-col">
               <Label>{t("request.label")}</Label>
               <AmountBox

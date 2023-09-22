@@ -28,15 +28,15 @@ export const ButtonConnectWallet = ({
             ? query.action === "transfer"
               ? "send modal"
               : query.action === "pay"
-              ? "payment request modal"
-              : "receive modal"
+                ? "payment request modal"
+                : "receive modal"
             : "dApp Store",
         });
       }}
       className={cn("", {
         "w-full text-base md:text-lg":
-          variant === "outline-primary" || "primary-lg",
-        "rounded-full px-10 py-2": variant === "primary",
+          variant === "outline-primary" || variant === "primary-lg",
+        "rounded-full px-10 py-2 font-bold ": variant === "primary",
       })}
     >
       Connect
