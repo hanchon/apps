@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import { ParsedUrlQueryInput } from "querystring";
-import { useMemo, useCallback, SetStateAction, useRef } from "react";
+import { useMemo, SetStateAction } from "react";
 import { z } from "zod";
+import { useEffectEvent } from "../use-effect-event";
 
 const serialize = <T extends Record<string, unknown>>(obj: T) => {
   return JSON.stringify(obj, (_, value) => {
@@ -26,55 +27,47 @@ const sanitize = (obj: Record<string, unknown>) => {
  */
 export const useModal = <T extends z.AnyZodObject>(
   id: string,
-  schema: T = z.object({}) as T,
+  schema: T = z.object({}) as T
 ) => {
-  const ref = useRef({
-    schema,
-  });
   const { isReady, push, replace, query } = useRouter();
-
+  const parse = useEffectEvent(schema.parse);
+  const safeParse = useEffectEvent(schema.safeParse);
   const isOpen = id === query.action;
 
   const state = useMemo(() => {
     if (!isReady) return null;
     if (!isOpen) return null;
 
-    return ref.current.schema.parse(query);
-  }, [isReady, query, isOpen]);
+    return parse(query);
+  }, [isReady, query, isOpen, parse]);
 
-  const setState = useCallback(
+  const setState = useEffectEvent(
     (next: SetStateAction<z.infer<T>>, pushState = false) => {
-      const nextState =
-        typeof next === "function"
-          ? next(ref.current.schema.parse(query))
-          : next;
+      const nextState = typeof next === "function" ? next(parse(query)) : next;
 
-      (pushState ? push : replace)({
+      void (pushState ? push : replace)({
         query: {
           action: id,
           ...sanitize(nextState),
         },
-      }).catch(console.error);
-    },
-    [id, push, query, replace],
+      });
+    }
   );
 
-  const setIsOpen = useCallback(
+  const setIsOpen = useEffectEvent(
     (open: boolean, initialState: z.infer<T> = {}) => {
       if (open) {
-        const next = schema.safeParse(initialState);
+        const next = safeParse(initialState);
         if (next.success) {
           setState(next.data, true);
         }
         return;
       }
       // Clear state only if modal is open, otherwise it could close other modals
-
-      push({
+      void push({
         query: null,
-      }).catch(console.error);
-    },
-    [push, schema, setState],
+      });
+    }
   );
 
   if (isOpen && state) {

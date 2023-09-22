@@ -1,5 +1,5 @@
 const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
-import { useModal } from "helpers";
+import { useEffectEvent, useModal } from "helpers";
 import dynamic from "next/dynamic";
 import { StepsContext, StepsContextProvider, topUpStep } from "copilot";
 import { useContext, useEffect } from "react";
@@ -9,20 +9,22 @@ export const useTopupModal = () => useModal("topup");
 export const TopupModalController = () => {
   const { isOpen, setIsOpen } = useTopupModal();
   const { showModal, setShowModal } = useContext(StepsContext);
-  useEffect(() => {
-    if (showModal === isOpen) {
-      return;
+  const setSyncedIsOpen = useEffectEvent((syncedIsOpen: boolean) => {
+    if (syncedIsOpen !== isOpen) {
+      setIsOpen(syncedIsOpen);
     }
-    setIsOpen(showModal);
-  }, [isOpen, setIsOpen, showModal]);
+    if (syncedIsOpen !== showModal) {
+      setShowModal(syncedIsOpen);
+    }
+  })
+  useEffect(() => {
+    setSyncedIsOpen(showModal);
+  }, [showModal, setSyncedIsOpen]);
 
   useEffect(() => {
-    if (showModal === isOpen) {
-      return;
-    }
 
-    setShowModal(isOpen);
-  }, [isOpen, setShowModal, showModal]);
+    setSyncedIsOpen(isOpen);
+  }, [isOpen, setSyncedIsOpen]);
 
   return <Copilot />;
 };
