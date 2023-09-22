@@ -85,7 +85,7 @@ const Options = ({
         )}
       >
         <div className="pr-3 py-5 bg-black rounded-2xl">
-          <Listbox.Label className="px-3 text-xs text-[#9A7873CC]">
+          <Listbox.Label className="px-3 text-xxs md:text-xs text-[#9A7873CC]">
             {label}
           </Listbox.Label>
           <Listbox.Options
@@ -93,9 +93,9 @@ const Options = ({
             className={cx(
               "px-3 bg-black h-full text-black mt-1 scrollbar overflow-auto max-h-44 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer",
               {
-                "w-52": variant === "default",
-                "w-64": variant === "wide",
-                "w-80 grid grid-cols-2": variant === "multiple",
+                "w-44 md:w-52": variant === "default",
+                "w-56 md:w-64": variant === "wide",
+                "w-64 md:w-80 grid grid-cols-2": variant === "multiple",
               },
             )}
           >
@@ -123,7 +123,7 @@ const Option = <T,>({
       disabled={disabled}
       className={({ active, selected }) =>
         cn(
-          "flex items-center space-x-2 p-2 w-full  bg-black rounded-md mb-1 text-white text-sm",
+          "flex items-center space-x-2 p-2 w-full  bg-black rounded-md mb-1 text-white text-xs md:text-sm",
           {
             "bg-pink-600 text-black font-medium": active || selected,
             disabled: disabled,
