@@ -22,7 +22,6 @@ export const useTransferModal = () => useModal("transfer", TransferModalSchema);
 
 export const TransferModal = () => {
   const { isOpen, setIsOpen, modalProps } = useTransferModal();
-  if (modalProps) console.log(modalProps)
   return (
     <ModalWithTransitions
       show={isOpen}
