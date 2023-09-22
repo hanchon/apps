@@ -6,6 +6,7 @@ import {
   CryptoSelectorDropdownBox,
   ErrorMessage,
   PrimaryButton,
+  Spinner,
   Subtitle,
   Title,
 } from "ui-helpers";
@@ -309,7 +310,7 @@ export const Content = ({
                     }}
                     className="w-full text-lg rounded-md capitalize mt-5"
                   >
-                    {isTransferring ? t("transfer.send.button.processing.text") : t("pay.button")}
+                    {isTransferring ? <><Spinner /> {t("transfer.send.button.processing.text")}</> : t("pay.button")}
                   </PrimaryButton>
                 )}
 
