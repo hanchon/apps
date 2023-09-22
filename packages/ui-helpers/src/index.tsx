@@ -68,3 +68,4 @@ export { ConfirmationTitle } from "./transfer-confirmation/ConfirmationTitle";
 export { ConfirmationMessage } from "./transfer-confirmation/ConfirmationMessage";
 export { ContainerItem } from "./transfer-confirmation/ContainerItem";
 export { ConfirmationText } from "./transfer-confirmation/ConfirmationText";
+export { Spinner } from "./spinners/Spinner";

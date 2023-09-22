@@ -10,6 +10,7 @@ import {
   Subtitle,
   Title,
   InfoPanel,
+  Spinner,
 } from "ui-helpers";
 import { Trans, useTranslation } from "next-i18next";
 import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
@@ -431,7 +432,8 @@ export const TransferModalContent = ({
                   !isReadyToTransfer || isTransferring || hasTransferred
                 }
               >
-                {isTransferring ? t("transfer.send.button.processing.text") : t("transfer.send.button.text")}
+
+                {isTransferring ? <><Spinner /> {t("transfer.send.button.processing.text")}</> : t("transfer.send.button.text")}
               </PrimaryButton>
 
             )}
