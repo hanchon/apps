@@ -115,7 +115,7 @@ export const ReceiveContent = ({
                 <button
                   onClick={() => {
                     void navigator.share({
-                      url: sender ?? "",
+                      text: sender ?? "",
                       title: "Wallet Address",
                     });
                     sendEvent(CLICK_ON_SHARE_QR_CODE);
