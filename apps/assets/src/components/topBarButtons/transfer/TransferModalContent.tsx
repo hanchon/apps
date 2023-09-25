@@ -433,7 +433,7 @@ export const TransferModalContent = ({
                 }
               >
 
-                {isTransferring ? <><Spinner /> {t("transfer.send.button.processing.text")}</> : t("transfer.send.button.text")}
+                {!isTransferring ? <><Spinner /> {t("transfer.send.button.processing.text")}</> : t("transfer.send.button.text")}
               </PrimaryButton>
 
             )}
