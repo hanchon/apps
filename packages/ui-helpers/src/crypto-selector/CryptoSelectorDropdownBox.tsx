@@ -6,5 +6,5 @@ import { ComponentProps } from "react";
 export function CryptoSelectorDropdownBox({
   ...rest
 }: ComponentProps<"div"> & {}) {
-  return <div className="justify-center flex flex-col h-full" {...rest} />;
+  return <div className="justify-evenly flex flex-col" {...rest} />;
 }

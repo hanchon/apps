@@ -123,7 +123,7 @@ export const AssetSelector = ({
   }, [maxAllowedTransferAmount, updateAmount, value.amount, balance, fee]);
   return (
     <CryptoSelectorBox>
-      <div className="flex justify-between">
+      <div className="flex h-full justify-between items-stretch">
         <CryptoSelectorDropdownBox>
           <CryptoSelectorTitle>
             {t("transfer.section.asset.token")}
