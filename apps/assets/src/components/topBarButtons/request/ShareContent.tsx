@@ -1,6 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ErrorMessage, Label, PrimaryButton, TextInput, Title } from "ui-helpers";
 import { Trans, useTranslation } from "next-i18next";
 import { BackArrowIcon, RequestIcon, ShareIcon } from "icons";
@@ -18,6 +18,10 @@ import {
 } from "tracker";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
 import QRCode from "react-qr-code";
+import { useDispatch, useSelector } from "react-redux";
+import { useAccount } from "wagmi";
+import { StoreType, WalletConnection } from "evmos-wallet";
+import { CopilotButton } from "copilot";
 
 export const ShareContent = ({
   message,
@@ -53,7 +57,9 @@ export const ShareContent = ({
   const shareURL = `${origin}/assets?action=pay&token=${token}&amount=${amount}&message=${encodeURIComponent(message)}&requester=${sender}`;
 
   const [showCopied, setShowCopied] = useState(false);
-
+  const dispatch = useDispatch();
+  const { isDisconnected } = useAccount();
+  const wallet = useSelector((state: StoreType) => state.wallet.value);
   return (
     <section className="space-y-8">
       <Title
@@ -135,8 +141,19 @@ export const ShareContent = ({
                 amountInUsd={amountInUsd}
               />
             </div>
-
-            <PrimaryButton
+            {isDisconnected && (
+              <WalletConnection
+                copilotModal={({
+                  beforeStartHook,
+                }: {
+                  beforeStartHook: Dispatch<SetStateAction<boolean>>;
+                }) => <CopilotButton beforeStartHook={beforeStartHook} />}
+                dispatch={dispatch}
+                walletExtension={wallet}
+                variant="primary-lg"
+              />
+            )}
+            {!isDisconnected && (<PrimaryButton
               onClick={async () => {
                 sendEvent(CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW);
                 if (shareEnabled) {
@@ -156,6 +173,7 @@ export const ShareContent = ({
                 ? t("request.share.button")
                 : t("request.copy.button")}
             </PrimaryButton>
+            )}
           </div>
         </section>
       </form>

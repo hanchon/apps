@@ -1,19 +1,19 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import React, { useEffect, useMemo, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { ErrorMessage, Label, PrimaryButton, Tabs, TextInput, Title } from "ui-helpers";
 import { Trans, useTranslation } from "next-i18next";
 import { CryptoSelector } from "ui-helpers";
 import QRCode from "react-qr-code";
 
-import { StoreType, getActiveProviderKey, getChain } from "evmos-wallet";
+import { StoreType, WalletConnection, getActiveProviderKey, getChain } from "evmos-wallet";
 import { ReceiveIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { CryptoSelectorDropdownBox } from "ui-helpers";
 import { CryptoSelectorTitle } from "ui-helpers";
 import { chains } from "@evmos-apps/registry";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RequestModalProps } from "./RequestModal";
 import {
   CLICK_ON_COPY_ICON_RECEIVE_FLOW,
@@ -23,6 +23,8 @@ import {
   SELECT_NETWORK_RECEIVE_FLOW,
   useTracker,
 } from "tracker";
+import { CopilotButton } from "copilot";
+import { useAccount } from "wagmi";
 
 export const ReceiveContent = ({
   setState,
@@ -86,6 +88,8 @@ export const ReceiveContent = ({
   ];
 
   const [showCopied, setShowCopied] = useState(false);
+  const dispatch = useDispatch();
+  const { isDisconnected } = useAccount();
 
   return (
     <section className="space-y-8">
@@ -195,7 +199,20 @@ export const ReceiveContent = ({
               </ErrorMessage>
               }
             </div>
-            <PrimaryButton
+
+            {isDisconnected && (
+              <WalletConnection
+                copilotModal={({
+                  beforeStartHook,
+                }: {
+                  beforeStartHook: Dispatch<SetStateAction<boolean>>;
+                }) => <CopilotButton beforeStartHook={beforeStartHook} />}
+                dispatch={dispatch}
+                walletExtension={wallet}
+                variant="primary-lg"
+              />
+            )}
+            {!isDisconnected && <PrimaryButton
               onClick={() => {
                 setState((prev) => ({
                   ...prev,
@@ -207,6 +224,7 @@ export const ReceiveContent = ({
             >
               {t("receive.button")}
             </PrimaryButton>
+            }
           </div>
         </section>
       </form>
