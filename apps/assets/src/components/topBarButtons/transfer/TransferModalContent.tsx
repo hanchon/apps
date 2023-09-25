@@ -108,8 +108,6 @@ export const TransferModalContent = ({
   });
 
 
-  console.log("transferRejected", transferRejected)
-
   const token = getTokenByRef(tokenRef);
   const senderChain = sender ? getChainByAddress(sender) : getChain("evmos");
 
@@ -429,16 +427,22 @@ export const TransferModalContent = ({
               </>
             )}
             {action === "TRANSFER" && (
-              <PrimaryButton
-                type="submit"
-                className="w-full text-base md:text-lg rounded-md capitalize mt-8"
-                disabled={
-                  !isReadyToTransfer || isTransferring || hasTransferred
+              <>
+                {transferRejected && <ErrorMessage className="justify-center pl-0" >
+                  {t("error.generating.transaction")}
+                </ErrorMessage>
                 }
-              >
+                <PrimaryButton
+                  type="submit"
+                  className="w-full text-base md:text-lg rounded-md capitalize mt-8"
+                  disabled={
+                    !isReadyToTransfer || isTransferring || hasTransferred
+                  }
+                >
 
-                {isTransferring || hasTransferred ? <><Spinner /> {t("transfer.send.button.processing.text")}</> : t("transfer.send.button.text")}
-              </PrimaryButton>
+                  {isTransferring || hasTransferred ? <><Spinner /> {t("transfer.send.button.processing.text")}</> : transferRejected ? t("message.try.again") : t("transfer.send.button.text")}
+                </PrimaryButton>
+              </>
 
             )}
           </div>
