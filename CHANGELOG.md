@@ -36,6 +36,10 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.2.3 - 2023-09-11
+
+- (chore) | apps/assets 1.0.28 | adds neok support
+
 ## 1.2.2 - 2023-09-04
 
 - (fix) | apps/assets 1.0.27 apps/vesting 1.0.20 apps/governance 1.0.25 apps/mission 1.0.23 apps/staking 1.0.22 | Remove semicolon
