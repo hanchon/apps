@@ -94,6 +94,7 @@ export const TransferModalContent = ({
     transfer,
     transferResponse,
     transferRejected,
+    transferError,
     validation,
     fee,
     feeBalance,
@@ -148,7 +149,18 @@ export const TransferModalContent = ({
   }, []);
 
   useEffect(() => {
+    if (!transferError) return;
+    // sendEvent(failureEvent)
+    // Milli: whenever a transfer fail, this will be called
+    // so it might be good to add the failure events here
+    // this will also trigger if the user rejects the transaction, I'm not sure if that counts as a transaction failure so you may want to filter that out (or not)
+  }, [transferError])
+  useEffect(() => {
     if (!transferResponse) return;
+    // sendEvent(successEvent)
+    // Milli: This is what opens the receipt modal, once it hits this point, we know that the transaction was sent and we have a hash for it
+    // it could still fail for some other reason that we don't know yet, like, not enough gas or something, but that will be a rare case
+    // I think it's safe enough to put success event here
 
     receiptModal.setIsOpen(true, {
       hash: transferResponse.hash,
