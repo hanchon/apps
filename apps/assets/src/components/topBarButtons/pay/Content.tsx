@@ -72,7 +72,7 @@ export const Content = ({
     isReady,
     isTransferring,
     hasTransferred,
-
+    transferRejected,
     transferResponse,
     // If you need to account for fees:
     // fee,
@@ -301,6 +301,10 @@ export const Content = ({
                     )}
                   </div>
                 )}
+                {transferRejected && <ErrorMessage className="justify-center mt-0 pl-0" >
+                  {t("error.generating.transaction")}
+                </ErrorMessage>
+                }
 
                 {action === "PAY" && (
                   <PrimaryButton
@@ -310,9 +314,9 @@ export const Content = ({
                     onClick={() => {
                       sendEvent(CLICK_ON_PAY);
                     }}
-                    className="w-full text-lg rounded-md capitalize mt-5"
+                    className="w-full text-lg rounded-md capitalize"
                   >
-                    {isTransferring ? <><Spinner /> {t("transfer.send.button.processing.text")}</> : t("pay.button")}
+                    {isTransferring || hasTransferred ? <><Spinner /> {t("transfer.send.button.processing.text")}</> : transferRejected ? t("message.try.again") : t("pay.button")}
                   </PrimaryButton>
                 )}
 
@@ -323,7 +327,7 @@ export const Content = ({
                       sendEvent(CLICK_ON_SWAP_ASSETS_PAY_FLOW);
                       window.open("https://forge.trade/#/swap", "_blank");
                     }}
-                    className="w-full text-lg rounded-md capitalize mt-5"
+                    className="w-full text-lg rounded-md capitalize"
                   >
                     {t("pay.swap.button")}
                   </PrimaryButton>

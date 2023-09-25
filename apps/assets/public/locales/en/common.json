@@ -97,5 +97,7 @@
   "message.processing.fee": "Calculating fee...",
   "error.getting.balance": "Error getting balance.",
   "error.getting.balance.connect.wallet": "Please make sure <strong> your account is connected</strong>.",
-  "message.only.evmos.supported": "Only <strong>Evmos Network</strong> is currently supported"
+  "error.generating.transaction": "Error generating transaction. Please try again later.",
+  "message.only.evmos.supported": "Only <strong>Evmos Network</strong> is currently supported",
+  "message.try.again": "Try Again"
 }
