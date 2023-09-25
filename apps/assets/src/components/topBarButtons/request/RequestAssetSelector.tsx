@@ -195,7 +195,7 @@ export const RequestAssetSelector = ({
       <CryptoSelectorBalanceBox>
         <div>{amountInUsd !== null && `≈${amountInUsd}`}</div>
         <div>
-          {!balance && isFetchingBalance && (
+          {!isDisconnected && !balance && isFetchingBalance && (
             <CryptoSelectorBalanceText>
               {t("transfer.section.asset.balance.loading")}
             </CryptoSelectorBalanceText>
