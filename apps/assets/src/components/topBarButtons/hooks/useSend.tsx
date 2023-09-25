@@ -15,6 +15,7 @@ import {
   normalizeToPrefix,
 } from "evmos-wallet/src/registry-actions/utils/normalize-to-prefix";
 import { getFeeToken } from "evmos-wallet/src/registry-actions/getFeeToken";
+import { E } from "helpers";
 
 export const useSend = ({
   sender,
@@ -52,6 +53,7 @@ export const useSend = ({
     fee,
   });
   const {
+    error: transferError,
     transfer,
     isLoading: isTransferring,
     data: transferResponse,
@@ -100,6 +102,7 @@ export const useSend = ({
 
   const hasTransferred = transferResponse !== undefined;
 
+  const transferRejected = E.match.byPattern(transferError, /Request rejected/g)
   const out = {
     transfer,
     isReady:
@@ -114,8 +117,9 @@ export const useSend = ({
     isFetchingFeeBalance,
     isTransferring,
     hasTransferred,
-
+    transferRejected,
     transferResponse,
+    transferError,
     balance,
     fee,
     feeBalance,

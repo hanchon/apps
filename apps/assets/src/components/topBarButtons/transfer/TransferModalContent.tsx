@@ -93,6 +93,7 @@ export const TransferModalContent = ({
     isReady: isReadyToTransfer,
     transfer,
     transferResponse,
+    transferRejected,
     validation,
     fee,
     feeBalance,
@@ -105,6 +106,9 @@ export const TransferModalContent = ({
     receiver,
     token: tokenAmount,
   });
+
+
+  console.log("transferRejected", transferRejected)
 
   const token = getTokenByRef(tokenRef);
   const senderChain = sender ? getChainByAddress(sender) : getChain("evmos");
