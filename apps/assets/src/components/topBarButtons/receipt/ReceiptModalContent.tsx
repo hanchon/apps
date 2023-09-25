@@ -301,7 +301,7 @@ export const ReceiptModalContent = ({
         onClick={() => setIsOpen(false)}
         className="w-full text-lg rounded-md capitalize mt-11"
       >
-        {t("transfer.confirmation.button.text")}
+        {isReceiptLoading || isFetchingBlock ? t("transfer.confirmation.button.text.loading") : t("transfer.confirmation.button.text")}
       </PrimaryButton>
     </>
   );
