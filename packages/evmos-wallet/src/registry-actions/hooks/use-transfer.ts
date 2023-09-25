@@ -1,4 +1,4 @@
-import { switchNetwork } from "wagmi/actions";
+import { getNetwork, switchNetwork } from "wagmi/actions";
 import { Address } from "../../wallet";
 import { transfer } from "../transfers/prepare-transfer";
 import { Prefix, TokenAmount } from "../types";
@@ -26,9 +26,13 @@ export const useTransfer = ({
       if (!isReady) {
         throw new Error("NOT_READY_TO_TRANSFER");
       }
-      await switchNetwork({
-        chainId: evmos.id,
-      });
+
+      const connectedNetwork = getNetwork();
+      if (connectedNetwork.chain?.id !== evmos.id)
+        await switchNetwork({
+          chainId: evmos.id,
+        });
+
       return transfer({
         sender,
         receiver,
