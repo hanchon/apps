@@ -70,7 +70,7 @@ const checkConnectionMetamask = async () => {
   }
 
   // only show metamask connected if the pubkey is setted
-  const pubkey = await queryPubKey("https://rest.bd.evmos.org:1317", account);
+  const pubkey = await queryPubKey("https://rest.evmos.lava.build", account);
   if (pubkey === null) {
     return false;
   }
