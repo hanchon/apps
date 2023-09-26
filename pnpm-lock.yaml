@@ -129,15 +129,21 @@ importers:
       '@testing-library/user-event':
         specifier: ^14.4.3
         version: 14.4.3(@testing-library/dom@9.3.3)
+      '@types/lodash-es':
+        specifier: ^4.17.8
+        version: 4.17.8
       '@types/mixpanel-browser':
         specifier: 2.47.1
         version: 2.47.1
       chainapsis-suggest-chain:
         specifier: github:chainapsis/keplr-chain-registry
-        version: github.com/chainapsis/keplr-chain-registry/c7bde5ce07bb6654a821d9ea0971a414e447598a(@babel/core@7.22.20)(react-is@18.2.0)
+        version: github.com/chainapsis/keplr-chain-registry/35b95dae8136670d70145c74f5f9fc477c3cd77a(@babel/core@7.22.20)(react-is@18.2.0)
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       mixpanel-browser:
         specifier: ^2.47.0
         version: 2.47.0
@@ -12949,9 +12955,9 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
 
-  github.com/chainapsis/keplr-chain-registry/c7bde5ce07bb6654a821d9ea0971a414e447598a(@babel/core@7.22.20)(react-is@18.2.0):
-    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/c7bde5ce07bb6654a821d9ea0971a414e447598a}
-    id: github.com/chainapsis/keplr-chain-registry/c7bde5ce07bb6654a821d9ea0971a414e447598a
+  github.com/chainapsis/keplr-chain-registry/35b95dae8136670d70145c74f5f9fc477c3cd77a(@babel/core@7.22.20)(react-is@18.2.0):
+    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/35b95dae8136670d70145c74f5f9fc477c3cd77a}
+    id: github.com/chainapsis/keplr-chain-registry/35b95dae8136670d70145c74f5f9fc477c3cd77a
     name: chainapsis-suggest-chain
     version: 0.0.1
     dependencies:

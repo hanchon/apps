@@ -3,7 +3,7 @@
 
 import Image from "next/image";
 import { DescriptionProps } from "./types";
-
+import { kebabCase } from "lodash-es";
 export const Description = ({
   symbol,
   description,
@@ -20,7 +20,7 @@ export const Description = ({
         src={
           imageSrc
             ? imageSrc
-            : `/assets/tokens/${symbol.toLocaleLowerCase()}.png`
+            : `/assets/tokens/${kebabCase(symbol.toLowerCase())}.png`
         }
         alt={symbol}
         width={30}
