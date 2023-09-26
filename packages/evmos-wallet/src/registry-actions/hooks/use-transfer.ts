@@ -1,8 +1,11 @@
+import { getNetwork, switchNetwork } from "wagmi/actions";
 import { Address } from "../../wallet";
 import { transfer } from "../transfers/prepare-transfer";
 import { Prefix, TokenAmount } from "../types";
 import { useMutation } from "@tanstack/react-query";
+import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
 
+const evmos = getEvmosChainInfo();
 export const useTransfer = ({
   sender,
   receiver,
@@ -19,10 +22,17 @@ export const useTransfer = ({
 }) => {
   const isReady = sender && receiver && token && fee && token.amount > 0n;
   const { mutate, ...rest } = useMutation({
-    mutationFn: () => {
+    mutationFn: async () => {
       if (!isReady) {
         throw new Error("NOT_READY_TO_TRANSFER");
       }
+
+      const connectedNetwork = getNetwork();
+      if (connectedNetwork.chain?.id !== evmos.id)
+        await switchNetwork({
+          chainId: evmos.id,
+        });
+
       return transfer({
         sender,
         receiver,

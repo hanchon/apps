@@ -9,6 +9,10 @@ import { TokenAmount, TokenRef } from "evmos-wallet/src/registry-actions/types";
 import { RequestModalProps } from "./RequestModal";
 import { CLICK_ON_GENERATE_PAYMENT_REQUEST, useTracker } from "tracker";
 import { RequestAssetSelector } from "./RequestAssetSelector";
+import { useDispatch, useSelector } from "react-redux";
+import { useAccount } from "wagmi";
+import { StoreType, WalletConnection } from "evmos-wallet";
+import { CopilotButton } from "copilot";
 
 const MAX_MESSAGE_LENGTH = 140;
 
@@ -27,6 +31,9 @@ export const SetUpContent = ({
 }) => {
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
+  const dispatch = useDispatch();
+  const { isDisconnected } = useAccount();
+  const wallet = useSelector((state: StoreType) => state.wallet.value);
 
   const tokenAmount: TokenAmount = {
     ref: token,
@@ -105,7 +112,19 @@ export const SetUpContent = ({
                 placeholder={t("request.message.input.placeholder")}
               />
             </div>
-            <PrimaryButton
+            {isDisconnected && (
+              <WalletConnection
+                copilotModal={({
+                  beforeStartHook,
+                }: {
+                  beforeStartHook: Dispatch<SetStateAction<boolean>>;
+                }) => <CopilotButton beforeStartHook={beforeStartHook} />}
+                dispatch={dispatch}
+                walletExtension={wallet}
+                variant="primary-lg"
+              />
+            )}
+            {!isDisconnected && (<PrimaryButton
               disabled={disabled}
               onClick={() => {
                 setState((prev) => ({
@@ -118,6 +137,7 @@ export const SetUpContent = ({
             >
               {t("request.generate.button")}
             </PrimaryButton>
+            )}
           </div>
         </section>
       </form>

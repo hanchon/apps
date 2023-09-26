@@ -58,7 +58,6 @@ export default function Home() {
               <HeadComponent />
               <GoogleAnalytics />
               <main>
-                <TermOfServices />
                 <GiveFeedback />
                 <Container>
                   <>
@@ -92,5 +91,10 @@ const Modals = () => (
     <RequestModal />
     <TopupModal />
     <PayModal />
+    {typeof document !== "undefined" &&
+      createPortal(
+        <TermOfServices />
+        , document.body)}
+
   </>
 );

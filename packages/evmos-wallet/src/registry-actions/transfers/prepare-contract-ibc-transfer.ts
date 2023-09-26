@@ -61,6 +61,10 @@ export const prepareContractIBCTransfer = async <T extends Prefix>({
 
   const { request } = await evmosClient.simulateContract(args);
 
+  // @ts-expect-error "Safe Wallet" SDK has a bug where this value can't be undefined
+  // https://github.com/wagmi-dev/wagmi/issues/2887
+  request.value = 0n;
+
   return {
     tx: request,
     estimatedGas: buffGasEstimate(await evmosClient.estimateContractGas(args)),
