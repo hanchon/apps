@@ -57,7 +57,8 @@ export default {
       "type": "ERC20",
       "decimals": 18,
       "erc20Address": "0xc03345448969Dd8C00e9E4A85d2d9722d093aF8E",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "Wrapped Bitcoin",
@@ -73,7 +74,8 @@ export default {
       "type": "ERC20",
       "decimals": 8,
       "erc20Address": "0x1D54EcB8583Ca25895c512A8308389fFD581F9c9",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "Tether USD",
@@ -89,7 +91,8 @@ export default {
       "type": "ERC20",
       "decimals": 6,
       "erc20Address": "0xecEEEfCEE421D8062EF8d6b4D814efe4dc898265",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "Dai Stablecoin",
@@ -105,7 +108,8 @@ export default {
       "type": "ERC20",
       "decimals": 18,
       "erc20Address": "0xd567B3d7B8FE3C79a1AD8dA978812cfC4Fa05e75",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "USD Coin",
@@ -121,7 +125,8 @@ export default {
       "type": "ERC20",
       "decimals": 6,
       "erc20Address": "0x5FD55A1B9FC24967C4dB09C513C3BA0DFa7FF687",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "Graviton",
@@ -137,7 +142,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0x80b5a32E4F032B2a058b4F29EC95EEfEEB87aDcd",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     }
   ],
   "explorerUrl": "https://www.mintscan.io/gravity-bridge/txs"

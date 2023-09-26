@@ -86,11 +86,12 @@ for (const chainRegistry of chains) {
       minCoinDenom:
         token.minCoinDenom === "EVMOS" ? "aevmos" : token.minCoinDenom,
       category: token.category === "none" ? null : token.category,
-      tokenRepresentation: token.tokenRepresentation,
+      tokenRepresentation: token.tokenRepresentation as string | null,
       type: token.type === "IBC" ? "IBC" : "ERC20",
       decimals: Number(token.exponent),
-      erc20Address: token.erc20Address,
+      erc20Address: token.erc20Address as string | null,
       handledByExternalUI: token.handledByExternalUI ?? null,
+      listed: true,
     };
   });
 
@@ -101,7 +102,33 @@ for (const chainRegistry of chains) {
   if (identifier === "gravity") {
     identifier = "gravitybridge";
   }
-
+  const feeTokenFromChainConfig = configuration.currencies[0];
+  let feeToken = tokens.find(
+    (token) =>
+      token.minCoinDenom === feeTokenFromChainConfig.coinMinDenom ||
+      // @ts-expect-error TODO: Injective coinMinDenom key is wrong in our registry, we should fix that there
+      token.minCoinDenom === feeTokenFromChainConfig.coinMinimalDenom
+  );
+  if (!feeToken) {
+    feeToken = {
+      category: "cosmos",
+      decimals: parseInt(feeTokenFromChainConfig.coinDecimals!),
+      denom: feeTokenFromChainConfig.coinDenom!,
+      erc20Address: null,
+      handledByExternalUI: null,
+      description: "",
+      listed: false,
+      minCoinDenom: feeTokenFromChainConfig.coinMinDenom!,
+      name: feeTokenFromChainConfig.coinDenom!,
+      ref: `${chainRegistry.prefix}:${feeTokenFromChainConfig.coinDenom!}`,
+      sourceDenom: feeTokenFromChainConfig.coinMinDenom!,
+      sourcePrefix: chainRegistry.prefix,
+      symbol: feeTokenFromChainConfig.coinDenom!,
+      tokenRepresentation: null,
+      type: "IBC",
+    };
+    tokens.push(feeToken);
+  }
   const chain = {
     prefix: chainRegistry.prefix,
     name: configuration.chainName,
@@ -121,10 +148,7 @@ for (const chainRegistry of chains) {
         : null,
 
     // Naively assume the first token is the fee token, we should probably add this to our registry
-    feeToken:
-      ((configuration.currencies[0].coinMinDenom ??
-        // @ts-expect-error TODO: Injective coinMinDenom key is wrong in our registry, we should fix that there
-        configuration.currencies[0].coinMinimalDenom) as string) ?? null,
+    feeToken: feeToken.minCoinDenom,
     cosmosRest: [
       `https://rest.cosmos.directory/${identifier}`,
       ...(normalizeNetworkUrls(configuration.rest) ?? []),

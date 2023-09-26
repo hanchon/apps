@@ -59,7 +59,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0x5db67696C3c088DfBf588d3dd849f44266ff0ffa",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     }
   ],
   "explorerUrl": "https://www.mintscan.io/emoney/txs"

@@ -65,7 +65,8 @@ export default {
           "url": "https://satellite.money/",
           "handlingAction": "Deposit and Withdraw"
         }
-      ]
+      ],
+      "listed": true
     },
     {
       "name": "Wrapped Ether on Axelar",
@@ -86,7 +87,8 @@ export default {
           "url": "https://satellite.money/",
           "handlingAction": "Deposit and Withdraw"
         }
-      ]
+      ],
+      "listed": true
     },
     {
       "name": "Wrapped Bitcoin on Axelar",
@@ -107,7 +109,8 @@ export default {
           "url": "https://satellite.money/",
           "handlingAction": "Deposit and Withdraw"
         }
-      ]
+      ],
+      "listed": true
     },
     {
       "name": "USDT by Axelar",
@@ -128,7 +131,8 @@ export default {
           "url": "https://satellite.money/",
           "handlingAction": "Deposit and Withdraw"
         }
-      ]
+      ],
+      "listed": true
     },
     {
       "name": "USD Coin by Axelar",
@@ -149,7 +153,8 @@ export default {
           "url": "https://satellite.money/",
           "handlingAction": "Deposit and Withdraw"
         }
-      ]
+      ],
+      "listed": true
     },
     {
       "name": "Rocket Pool staked ETH by Axelar",
@@ -170,7 +175,8 @@ export default {
           "url": "https://satellite.money/",
           "handlingAction": "Deposit and Withdraw"
         }
-      ]
+      ],
+      "listed": true
     },
     {
       "name": "Pepe by Axelar",
@@ -191,7 +197,8 @@ export default {
           "url": "https://satellite.money/",
           "handlingAction": "Deposit and Withdraw"
         }
-      ]
+      ],
+      "listed": true
     },
     {
       "name": "DAI by Axelar",
@@ -212,7 +219,8 @@ export default {
           "url": "https://satellite.money/",
           "handlingAction": "Deposit and Withdraw"
         }
-      ]
+      ],
+      "listed": true
     },
     {
       "name": "Axelar",
@@ -228,7 +236,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0x94c23eE865E3c963A56263d0ce2CBF5C6cE7ce2d",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     }
   ],
   "explorerUrl": "https://www.mintscan.io/axelar/txs"
