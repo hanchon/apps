@@ -46,6 +46,12 @@
   font-weight: 500;
 }
 
+@font-face {
+  font-family: "NB";
+  src: url("../public/fonts/NBInternationalProBol.otf");
+  font-weight: 600;
+}
+
 @layer componentsAssets {
   .disabled {
     @apply pointer-events-none select-none opacity-30 cursor-not-allowed;
