@@ -52,6 +52,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 - (ci) | Adding PR review template
 - (chore) | packages/config 1.0.1 | Adding missing headers
 - (chore) fse-735 | apps/assets 1.0.25 apps/governance 1.0.23 apps/mission 1.0.22 apps/staking 1.0.21 apps/vesting 1.0.19 packages/constants-helper 1.0.6 packages/ui-helpers 1.0.14 | Add Mava Widget to all apps.
+- (feature) | packages/registry 1.0.0 | Creates typesafe registry package
 - (refactor) | packages/config 1.0.0 packages/evmos-wallet 1.0.8 packages/evmos-wallet 1.0.15 | refactor wallet setup to use the latest Wagmi version, fixes Wallet Connect integration
 
 ## 1.2.0 - 2023-08-21

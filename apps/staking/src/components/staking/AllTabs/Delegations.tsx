@@ -47,7 +47,7 @@ const Delegations = () => {
         i.delegation.validator.description.moniker
           .toLowerCase()
           .includes(value) ||
-        i.delegation.validator.rank.toString().includes(value)
+        i.delegation.validator.rank.toString().includes(value),
     );
     if (value !== "") {
       return filteredData;
@@ -71,7 +71,7 @@ const Delegations = () => {
         }}
         setShow={setShow}
         tab="Delegations"
-      />
+      />,
     );
   }, []);
 
@@ -95,7 +95,7 @@ const Delegations = () => {
       if (sorting.column === 2) {
         // sort by voting power
         const temp = BigNumber.from(a.delegation.validator.tokens).gt(
-          BigNumber.from(b.delegation.validator.tokens)
+          BigNumber.from(b.delegation.validator.tokens),
         )
           ? 1
           : -1;
@@ -155,8 +155,8 @@ const Delegations = () => {
                 title: dataHead[2],
                 value: formatNumber(
                   convertStringFromAtto(
-                    item.delegation.validator.tokens
-                  ).toFixed(2)
+                    item.delegation.validator.tokens,
+                  ).toFixed(2),
                 ),
               }}
             />
@@ -168,7 +168,7 @@ const Delegations = () => {
                 value: convertAndFormat(
                   BigNumber.from(item.balance.amount),
                   EVMOS_DECIMALS,
-                  6
+                  6,
                 ),
               }}
             />
@@ -178,7 +178,7 @@ const Delegations = () => {
               tdProps={{
                 title: dataHead[4],
                 value: formatPercentage(
-                  item.delegation.validator.commission?.commission_rates?.rate
+                  item.delegation.validator.commission?.commission_rates?.rate,
                 ),
               }}
             />

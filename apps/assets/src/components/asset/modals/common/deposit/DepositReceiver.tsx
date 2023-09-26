@@ -124,13 +124,13 @@ const DepositReceiver = ({
           </>
         )}
         {confirmClicked && receiver === "" && (
-          <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorAddressEmpty} />
+          <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorAddressEmpty}</ErrorMessage>
         )}
 
         {confirmClicked &&
           !checkFormatAddress(receiver, "evmos") &&
           !checkMetaMaskFormatAddress(receiver) && (
-            <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorWrongPrefix} />
+            <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorWrongPrefix}</ErrorMessage>
           )}
         <div className="flex w-full justify-end">
           {token !== undefined && (

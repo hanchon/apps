@@ -16,7 +16,7 @@ export const getBalance = (amount: BigNumber, wallet: boolean) => {
 export const getBalanceInDollars = (
   amount: BigNumber,
   wallet: boolean,
-  evmosPrice: string
+  evmosPrice: string,
 ) => {
   if (!wallet) {
     return "-";
@@ -45,7 +45,7 @@ export const getNumberBalance = (amount: number, wallet: boolean) => {
 export const getNumberBalanceInDollars = (
   amount: number,
   wallet: boolean,
-  evmosPrice: string
+  evmosPrice: string,
 ) => {
   if (!wallet) {
     return "-";

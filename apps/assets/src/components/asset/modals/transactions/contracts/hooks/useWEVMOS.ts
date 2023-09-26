@@ -1,6 +1,6 @@
 import WETH_ABI from "../../contracts/abis/WEVMOS/WEVMOS.json";
 import { WEVMOS_CONTRACT_ADDRESS } from "../../../constants";
-import { prepareWriteContract, writeContract } from"wagmi/actions";
+import { prepareWriteContract, writeContract } from "wagmi/actions";
 
 import { BigNumber } from "@ethersproject/bignumber";
 

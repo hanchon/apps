@@ -44,7 +44,7 @@ export const WalletProfileModal = ({
                     className="text-xs font-normal"
                     onClick={async () => {
                       await navigator.clipboard.writeText(
-                        walletExtension.evmosAddressCosmosFormat
+                        walletExtension.evmosAddressCosmosFormat,
                       );
                       setIsCopied(true);
                     }}
@@ -78,10 +78,8 @@ export const WalletProfileModal = ({
     </div>
   );
   return (
-    <ModalWithTransitions
-      show={show}
-      setShow={setShow}
-      content={contentModal}
-    />
+    <ModalWithTransitions show={show} setShow={setShow}>
+      {contentModal}
+    </ModalWithTransitions>
   );
 };

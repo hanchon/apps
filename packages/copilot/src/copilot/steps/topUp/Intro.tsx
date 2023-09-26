@@ -16,11 +16,11 @@ export const Intro = ({
   setTopUpType: Dispatch<SetStateAction<string>>;
 }) => {
   const { handlePreClickAction: trackCardTopUp } = useTracker(
-    CLICK_ON_TOP_UP_WITH_CARD_COPILOT
+    CLICK_ON_TOP_UP_WITH_CARD_COPILOT,
   );
 
   const { handlePreClickAction: trackCryptoTopUp } = useTracker(
-    CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT
+    CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT,
   );
 
   const handleCardOnClick = () => {

@@ -9,7 +9,7 @@ export const EVMOS_CHAIN_NAME =
   process.env.NEXT_PUBLIC_EVMOS_CHAIN_NAME ?? "Evmos";
 export const EVMOS_SYMBOL = process.env.NEXT_PUBLIC_EVMOS_SYMBOL ?? "EVMOS";
 export const EVMOS_DECIMALS = parseInt(
-  process.env.NEXT_PUBLIC_EVMOS_DECIMALS ?? "18"
+  process.env.NEXT_PUBLIC_EVMOS_DECIMALS ?? "18",
 );
 export const EVMOS_COSMOS_EXPLORER =
   process.env.NEXT_PUBLIC_EVMOS_COSMOS_EXPLORER ?? "https://escan.live/";
@@ -33,3 +33,8 @@ export const EVMOS_MINIMAL_COIN_DENOM =
 export const WALLET_CONNECT_PROJECT_ID =
   process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ??
   "ae920fe62c5a565cfaaa6edacbbb6fa7";
+export const REGISTRY_NETWORK_BLOCK_LIST = (
+  process.env.NEXT_PUBLIC_REGISTRY_NETWORK_BLOCK_LIST ?? "regen,kujira,emoney"
+)
+  .split(",")
+  .map((s) => s.trim());

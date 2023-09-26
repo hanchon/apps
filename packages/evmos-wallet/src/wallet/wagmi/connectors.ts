@@ -25,19 +25,16 @@ export const safeConnector = new SafeConnector({
   chains: [evmos],
   options: { debug: false },
 });
-walletConnectConnector
-  .getProvider()
-  .then((provider) => {
-    // @ts-expect-error: for some reason WalletConnectConnector
-    // doesn't allow us to pass
-    // the required methods, which breaks metamask
-    provider?.rpc?.methods?.push(
-      "eth_signTypedData_v4",
-      "wallet_addEthereumChain",
-      "wallet_switchEthereumChain"
-    );
-  })
-  .catch(console.error);
+void walletConnectConnector.getProvider().then((provider) => {
+  // @ts-expect-error: for some reason WalletConnectConnector
+  // doesn't allow us to pass
+  // the required methods, which breaks metamask
+  provider?.rpc?.methods?.push(
+    "eth_signTypedData_v4",
+    "wallet_addEthereumChain",
+    "wallet_switchEthereumChain",
+  );
+});
 
 export const CONNECTOR_MAP = {
   [keplrConnector.id]: keplrConnector,

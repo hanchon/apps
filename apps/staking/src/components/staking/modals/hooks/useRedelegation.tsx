@@ -18,10 +18,10 @@ export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
 
   const { handlePreClickAction } = useTracker(CLICK_BUTTON_CONFIRM_REDELEGATE);
   const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_REDELEGATE
+    SUCCESSFUL_TX_REDELEGATE,
   );
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_REDELEGATE
+    UNSUCCESSFUL_TX_REDELEGATE,
   );
   const handleConfirmButton = async () => {
     handlePreClickAction({
@@ -51,7 +51,7 @@ export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
       useRedelegateProps.wallet,
       useRedelegateProps.item.validatorAddress,
       amount,
-      useRedelegateProps.validatorDst
+      useRedelegateProps.validatorDst,
     );
     dispatch(snackExecuteIBCTransfer(res));
     if (res.error === true) {

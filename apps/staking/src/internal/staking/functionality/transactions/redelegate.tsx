@@ -16,7 +16,7 @@ export const executeRedelegate = async (
   wallet: WalletExtension,
   valAddress: string,
   amount: BigNumber,
-  valDstAddress: string
+  valDstAddress: string,
 ) => {
   const { apiResponse, error, hash } = await executeApiTransaction(() =>
     apiStakingRedelegate({
@@ -25,7 +25,7 @@ export const executeRedelegate = async (
       toValidatorAddress: valDstAddress,
       address: wallet.evmosAddressCosmosFormat,
       pubkey: wallet.evmosPubkey ?? raise("ACCOUNT_NOT_FOUND"),
-    })
+    }),
   );
   if (error) {
     return mapExecuteResponse({

@@ -48,7 +48,7 @@ export function createEIP712Transaction(
   chain: Chain,
   sender: Sender,
   signature: string,
-  tx: TxGenerated
+  tx: TxGenerated,
 ): ReturnType<typeof createTxRawEIP712> {
   // The chain and sender objects are the same as the previous example
   const extension = signatureToWeb3Extension(chain, sender, signature);
@@ -57,7 +57,7 @@ export function createEIP712Transaction(
   return createTxRawEIP712(
     tx.legacyAmino.body,
     tx.legacyAmino.authInfo,
-    extension
+    extension,
   );
 }
 
@@ -75,7 +75,7 @@ export async function broadcastSignedTxToBackend(
     path: string;
   },
   network: string = EVMOS_NETWORK_FOR_BACKEND,
-  endpoint: string = EVMOS_BACKEND
+  endpoint: string = EVMOS_BACKEND,
 ) {
   try {
     const bodyString = `{ "tx_bytes": [${rawTx.message
@@ -90,7 +90,7 @@ export async function broadcastSignedTxToBackend(
 
     const broadcastPost = await fetchWithTimeout(
       `${endpoint}/v2/tx/broadcast`,
-      postOptions
+      postOptions,
     );
     const response = (await broadcastPost.json()) as BroadcastTxResponse;
 
@@ -130,7 +130,7 @@ export async function broadcastSignedTxToGRPC(
     message: protoTxNamespace.txn.TxRaw;
     path: string;
   },
-  grpcEndpoint: string = EVMOS_GRPC_URL
+  grpcEndpoint: string = EVMOS_GRPC_URL,
 ) {
   const postOptions = {
     method: "POST",
@@ -141,7 +141,7 @@ export async function broadcastSignedTxToGRPC(
   try {
     const broadcastPost = await fetch(
       `${grpcEndpoint}${generateEndpointBroadcast()}`,
-      postOptions
+      postOptions,
     );
     const response = (await broadcastPost.json()) as BroadcastToGRPCResponse;
 
@@ -182,7 +182,7 @@ export async function broadcastEip712BackendTxToBackend(
   feePayerSig: string,
   body: string,
   authInfo: string,
-  endpoint: string = EVMOS_BACKEND
+  endpoint: string = EVMOS_BACKEND,
 ) {
   try {
     const txBody = {
@@ -199,7 +199,7 @@ export async function broadcastEip712BackendTxToBackend(
         method: "post",
         body: JSON.stringify(txBody),
         headers,
-      }
+      },
     );
 
     const response = (await postBroadcast.json()) as BroadcastEip712Response;
@@ -236,7 +236,7 @@ interface BroadcastAminoResponse {
 export async function broadcastAminoBackendTxToBackend(
   signature: StdSignature,
   signed: StdSignDoc,
-  network: string
+  network: string,
 ) {
   try {
     const txBody = {
@@ -251,7 +251,7 @@ export async function broadcastAminoBackendTxToBackend(
         method: "post",
         body: JSON.stringify(txBody),
         headers,
-      }
+      },
     );
 
     const response = (await postBroadcast.json()) as BroadcastAminoResponse;

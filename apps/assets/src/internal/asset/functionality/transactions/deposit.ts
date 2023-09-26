@@ -20,7 +20,7 @@ export const executeDeposit = async (
   address: string,
   params: IBCChainParams,
   prefix: string,
-  network = EVMOS_NETWORK_FOR_BACKEND
+  network = EVMOS_NETWORK_FOR_BACKEND,
 ) => {
   if (parseEther(params.amount).lte(BigNumber.from("0"))) {
     return mapExecuteResponse({
@@ -54,7 +54,7 @@ export const executeDeposit = async (
         address,
         useERC20Denom: false,
       }),
-    (response) => signApiAminoTx(response, network)
+    (response) => signApiAminoTx(response, network),
   );
   if (error) {
     return mapExecuteResponse({

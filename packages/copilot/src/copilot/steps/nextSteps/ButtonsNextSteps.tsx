@@ -21,13 +21,13 @@ export const ButtonsNextSteps = () => {
   const { setShowModal, resetSteps } = useContext(StepsContext);
 
   const { handlePreClickAction: trackInteractWithdAppClick } = useTracker(
-    CLICK_ON_INTERACT_WITH_DAPP_COPILOT
+    CLICK_ON_INTERACT_WITH_DAPP_COPILOT,
   );
   const { handlePreClickAction: trackStakeEvmosClick } = useTracker(
-    CLICK_ON_STAKE_YOUR_EVMOS_COPILOT
+    CLICK_ON_STAKE_YOUR_EVMOS_COPILOT,
   );
   const { handlePreClickAction: trackLearnMoreClick } = useTracker(
-    CLICK_ON_LEARN_MORE_COPILOT
+    CLICK_ON_LEARN_MORE_COPILOT,
   );
   // TODO: use ecosystem, staking and academy link from locales
   return (

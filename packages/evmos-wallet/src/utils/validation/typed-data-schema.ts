@@ -18,8 +18,8 @@ export const TypedDataSchema = z
         z.object({
           name: z.string(),
           type: z.string(),
-        })
-      )
+        }),
+      ),
     ),
   })
   .passthrough();

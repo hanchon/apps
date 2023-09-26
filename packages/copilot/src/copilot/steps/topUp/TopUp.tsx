@@ -15,7 +15,7 @@ import CypherD from "./CypherD";
 export const TopUp = () => {
   const [topUpType, setTopUpType] = useState("intro");
   const [cardProvider, setCardProvider] = useState<DropdownOption>(
-    dropdownOptions[0]
+    dropdownOptions[0],
   );
 
   function renderScreen() {

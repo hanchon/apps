@@ -49,7 +49,7 @@ describe("Consent Modal", () => {
 
     const { result } = renderHook(
       () => useTracker(CLICK_BACK_TO_GOVERNANCE, { prop: "value" }),
-      { wrapper }
+      { wrapper },
     );
 
     expect(mixpanel.init).toHaveBeenCalledTimes(1);
@@ -70,7 +70,7 @@ describe("Consent Modal", () => {
 
     const { result } = renderHook(
       () => useTracker(CLICK_BACK_TO_GOVERNANCE, { prop: "value" }),
-      { wrapper }
+      { wrapper },
     );
 
     /* eslint-disable-next-line */
