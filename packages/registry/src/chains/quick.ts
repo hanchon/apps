@@ -8,7 +8,7 @@
 
 export default {
   "prefix": "quick",
-  "name": "quicksilver",
+  "name": "Quicksilver",
   "cosmosId": "quicksilver-2",
   "identifier": "quicksilver",
   "gasPriceStep": {
