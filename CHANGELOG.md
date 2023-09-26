@@ -36,7 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
-- (chore) | packages/playwright-config-custom 1.0.3 packages/evmos-wallet 1.0.17 packages/copilot 1.0.6
+- (chore) | packages/playwright-config-custom 1.0.3 packages/evmos-wallet 1.0.17 packages/copilot 1.0.6 | Using Lava RPCs as default ones
 
 ## 1.2.3 - 2023-09-11
 
