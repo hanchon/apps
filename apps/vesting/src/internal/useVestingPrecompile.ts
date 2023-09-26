@@ -2,11 +2,13 @@ import VestingABI from "./abis/VestingABI.json";
 import { Period } from "@evmos/transactions";
 import { prepareWriteContract, writeContract } from "wagmi/actions";
 import { useAccount } from "wagmi";
+import { useSelector } from "react-redux";
+import { StoreType } from "evmos-wallet";
 
 const VESTING_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000803";
 
 export function useVestingPrecompile() {
-  const { address } = useAccount();
+  const address = useSelector((state: StoreType) => state.wallet.value);
 
   async function createClawbackVestingAccount(
     funderAddress: string,
@@ -20,7 +22,7 @@ export function useVestingPrecompile() {
         abi: VestingABI,
         functionName: "createClawbackVestingAccount",
 
-        account: address as `0x${string}`,
+        account: address.evmosAddressEthFormat as `0x${string}`,
         args: [funderAddress, vestingAddress, enableGovClawback],
       },
     });
@@ -40,7 +42,7 @@ export function useVestingPrecompile() {
         abi: VestingABI,
         functionName: "fundVestingAccount",
         value: 0n,
-        account: address as `0x${string}`,
+        account: address.evmosAddressEthFormat as `0x${string}`,
         args: [
           funderAddress,
           vestingAddress,
@@ -62,7 +64,7 @@ export function useVestingPrecompile() {
       abi: VestingABI,
       functionName: "clawback",
       value: 0n,
-      account: address as `0x${string}`,
+      account: address.evmosAddressEthFormat as `0x${string}`,
       args: [founderAddress, accountAddress, destinationAddress],
     });
     return await writeContract(request);

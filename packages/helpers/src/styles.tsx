@@ -349,7 +349,7 @@ export const getChainIds = (
 ) => {
   let chainId = token?.chainId;
   let chainIdentifier = token?.chainIdentifier;
-  if (token?.symbol === "EVMOS") {
+  if (token?.prefix === "evmos") {
     chainId = chain?.chainId;
     chainIdentifier = chain?.chainIdentifier;
   }

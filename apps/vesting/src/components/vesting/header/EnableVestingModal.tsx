@@ -50,6 +50,7 @@ export const EnableVestingModal = () => {
       );
       setDisabled(false);
     } catch (e) {
+      console.log(e)
       setDisabled(false);
       // TODO: Add Sentry here!
       dispatch(
@@ -112,7 +113,7 @@ export const EnableVestingModal = () => {
           <p className="flex gap-1">
             {t("enable.modal.toggle.description")}{" "}
             <span className="font-bold">
-              {t("enable.modal.toggle.description.disabled")}
+              { govClawbackEnabled ? t("enable.modal.toggle.description.enabled") : t("enable.modal.toggle.description.disabled")}
             </span>
           </p>
           <Toggle

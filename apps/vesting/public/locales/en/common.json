@@ -22,6 +22,7 @@
   "enable.modal.toggle.description": "Clawback through governance",
   "enable.modal.governance.clawback.tooltip.description": "If enabled, a governance proposal will be allowed to trigger the clawback.",
   "enable.modal.toggle.description.disabled": "disallowed",
+  "enable.modal.toggle.description.enabled": "allowed",
   "enable.button.action.title": "Create",
   "vesting.fund.title": "Fund Vesting Account",
   "vesting.fund.plan.title": "PLAN TYPE",

@@ -50,6 +50,17 @@ export function withEvmosConfig(config = {}) {
     headers: async () => {
       return [
         {
+          source: `${config.basePath ?? ""}/manifest.json`,
+          headers: [
+            { key: "Access-Control-Allow-Origin", value: "*" },
+            { key: "Access-Control-Allow-Methods", value: "GET" },
+            {
+              key: "Access-Control-Allow-Headers",
+              value: "X-Requested-With, content-type, Authorization",
+            },
+          ],
+        },
+        {
           source: "/:path*",
           headers: [
             {
@@ -72,7 +83,7 @@ export function withEvmosConfig(config = {}) {
             {
               key: "Content-Security-Policy",
               value:
-                "font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self';",
+                "font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self' safe.evmos.dev safe.evmos.org;",
             },
             {
               key: "Permissions-Policy",
