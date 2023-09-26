@@ -36,22 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
-## 1.3.3 - 2023-10-03
-
-- (fix) | fix scrolling issue on iOS modals
-- (chore) | apps/vesting 1.1.0 | vesting mainnet app
-
-## 1.3.2 - 2023-09-29
-
-- (fix) | apps/assets 1.0.29 | fee error message was not being displayed when fee was not paid in Evmos
-
-## 1.3.1 - 2023-09-28
-
-- (fix) | 1.3.1 fix stride balance in send modal
-
-## 1.3.0 - 2023-09-28
-
-- (chore) | 1.3.0 new send/receive/request modals in assets page
+- (chore) | packages/playwright-config-custom 1.0.3 packages/evmos-wallet 1.0.17 packages/copilot 1.0.6
 
 ## 1.2.3 - 2023-09-11
 
