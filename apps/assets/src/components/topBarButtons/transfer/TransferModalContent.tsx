@@ -43,7 +43,7 @@ import {
   INSUFFICIENT_FEE_AMOUNT,
   useTracker,
 } from "tracker";
-import { CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW } from "tracker/src/constants";
+import { CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW, SUCCESSFUL_SEND_TX, UNSUCCESSFUL_SEND_TX } from "tracker/src/constants";
 
 import { TransferModalProps } from "./TransferModal";
 import { useReceiptModal } from "../receipt/ReceiptModal";
@@ -147,24 +147,30 @@ export const TransferModalContent = ({
   }, []);
 
   useEffect(() => {
-    if (!transferError) return;
-    // sendEvent(failureEvent)
-    // Milli: whenever a transfer fail, this will be called
-    // so it might be good to add the failure events here
-    // this will also trigger if the user rejects the transaction, I'm not sure if that counts as a transaction failure so you may want to filter that out (or not)
-  }, [transferError])
+    if (!transferError) {
+      sendEvent(UNSUCCESSFUL_SEND_TX,
+        //   {
+        //   token: ,
+        //   "destination network": ,
+        //  "transaction ID": 
+        //   }
+      )
+      return;
+    }
+  }, [transferError, sendEvent])
   useEffect(() => {
     if (!transferResponse) return;
-    // sendEvent(successEvent)
-    // Milli: This is what opens the receipt modal, once it hits this point, we know that the transaction was sent and we have a hash for it
-    // it could still fail for some other reason that we don't know yet, like, not enough gas or something, but that will be a rare case
-    // I think it's safe enough to put success event here
-
+    sendEvent(SUCCESSFUL_SEND_TX, {
+      // token: 
+      // "destination network": 
+      "transaction ID": transferResponse.hash
+    })
     receiptModal.setIsOpen(true, {
       hash: transferResponse.hash,
       chainPrefix: networkPrefix,
     });
-  }, [networkPrefix, receiptModal, transferResponse]);
+  }, [networkPrefix, receiptModal, transferResponse, sendEvent]);
+
 
   const action = useMemo(() => {
     if (isDisconnected) return "CONNECT";

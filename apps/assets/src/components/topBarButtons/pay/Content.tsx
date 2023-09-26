@@ -34,6 +34,8 @@ import {
   CLICK_ON_PAY,
   CLICK_ON_SWAP_ASSETS_PAY_FLOW,
   SELECT_NETWORK_PAY_FLOW,
+  SUCCESSFUL_SEND_TX,
+  UNSUCCESSFUL_SEND_TX,
 } from "tracker/src/constants";
 import { useTracker } from "tracker";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
@@ -100,9 +102,23 @@ export const Content = ({
     },
   });
   useEffect(() => {
-    if (!transferResponse) return;
+    if (!transferResponse) {
+      sendEvent(UNSUCCESSFUL_SEND_TX,
+        //   {
+        //   token: ,
+        //   "destination network": ,
+        //  "transaction ID": 
+        //   }
+      )
+      return
+    };
     if (!sender) return;
     const chainPrefix = normalizeToPrefix(sender);
+    sendEvent(SUCCESSFUL_SEND_TX, {
+      // token: receiptModal.
+      // "destination network": 
+      "transaction ID": transferResponse.hash
+    })
     receiptModal.setIsOpen(true, {
       hash: transferResponse.hash,
       chainPrefix,
