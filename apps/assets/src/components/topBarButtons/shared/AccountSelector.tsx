@@ -1,5 +1,10 @@
 import React, { PropsWithChildren, useEffect, useState } from "react";
-import { Address, getActiveProviderKey, getChain, useAddressInput } from "evmos-wallet";
+import {
+  Address,
+  getActiveProviderKey,
+  getChain,
+  useAddressInput,
+} from "evmos-wallet";
 import { CryptoSelector, ErrorMessage, Tabs, TextInput } from "ui-helpers";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
@@ -126,7 +131,7 @@ export const AccountSelector = ({
         />
 
         {networkOptions.length === 1 && networkOptions.includes("evmos") && (
-          <ErrorMessage variant="info" className="justify-center">
+          <ErrorMessage variant="info" className="justify-center font-normal">
             <Trans
               i18nKey="message.only.evmos.supported"
               components={{

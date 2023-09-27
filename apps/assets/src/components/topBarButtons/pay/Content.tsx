@@ -13,7 +13,11 @@ import {
 import { useTranslation } from "next-i18next";
 import { FormattedBalance } from "evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
-import { getChain, normalizeToCosmosAddress, useTokenBalance } from "evmos-wallet";
+import {
+  getChain,
+  normalizeToCosmosAddress,
+  useTokenBalance,
+} from "evmos-wallet";
 
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { formatUnits } from "viem";
@@ -90,7 +94,7 @@ export const Content = ({
     //   hasValidAmount: boolean;
     //   hasLoadedFee: boolean;
     // }
-    __DEBUG__
+    __DEBUG__,
   } = useSend({
     sender: sender,
     receiver: requester,
@@ -122,16 +126,16 @@ export const Content = ({
 
   const selectedTokenUSD = selectedToken
     ? tokenToUSD(
-      selectedBalance?.value ?? 0n,
-      Number(price),
-      selectedToken.decimals,
-    )
+        selectedBalance?.value ?? 0n,
+        Number(price),
+        selectedToken.decimals
+      )
     : null;
 
   const { balance } = useTokenBalance(sender, token);
   const { balance: evmosBalance } = useTokenBalance(
     evmosData?.bech32Address,
-    token,
+    token
   );
   const balances =
     sender === evmosData?.bech32Address
@@ -153,7 +157,7 @@ export const Content = ({
 
   const action =
     (validation.hasSufficientBalance && validation.hasSufficientBalance) ||
-      isPreparing
+    isPreparing
       ? "PAY"
       : "SWAP";
 
@@ -212,7 +216,7 @@ export const Content = ({
                     value={selectedBalance?.type ?? ""}
                     onChange={(type) => {
                       setSelectedBalance(
-                        balances?.find((b) => b?.type === type),
+                        balances?.find((b) => b?.type === type)
                       );
                       sendEvent(SELECT_NETWORK_PAY_FLOW, {
                         // TODO: we should pass here the network.
@@ -222,12 +226,13 @@ export const Content = ({
                     <CryptoSelector.Button>
                       <div className="pl-2 items-center flex gap-1.5">
                         <Image
-                          src={`/assets/chains/${selectedBalance
-                            ? selectedBalance?.type === "ERC20"
-                              ? "evmos"
-                              : selectedBalance?.denom
-                            : "evmos"
-                            }.png`}
+                          src={`/assets/chains/${
+                            selectedBalance
+                              ? selectedBalance?.type === "ERC20"
+                                ? "evmos"
+                                : selectedBalance?.denom
+                              : "evmos"
+                          }.png`}
                           className="rounded-full"
                           alt=""
                           width={24}
@@ -249,10 +254,11 @@ export const Content = ({
                       {balances.map((b) => {
                         return (
                           <CryptoSelector.Option
-                            src={`/assets/tokens/${b?.type === "ERC20"
-                              ? "evmos"
-                              : selectedBalance?.denom
-                              }.png`}
+                            src={`/assets/tokens/${
+                              b?.type === "ERC20"
+                                ? "evmos"
+                                : selectedBalance?.denom
+                            }.png`}
                             key={b?.address}
                             value={b?.type ?? ""}
                           >
@@ -272,14 +278,15 @@ export const Content = ({
                     </span>
                     <div className="rounded px-5 py-4 border border-pink-300">
                       <div
-                        className={`flex justify-between items-center  ${insufficientBalance ? "opacity-60" : ""
-                          }`}
+                        className={`flex justify-between items-center  ${
+                          insufficientBalance ? "opacity-60" : ""
+                        }`}
                       >
                         <div className="flex items-center gap-2">
                           <span className="text-xs md:text-sm">
                             {formatUnits(
                               selectedBalance?.value ?? 0n,
-                              selectedBalance?.decimals ?? 0,
+                              selectedBalance?.decimals ?? 0
                             )}{" "}
                             {selectedToken?.denom}
                           </span>
@@ -295,16 +302,20 @@ export const Content = ({
                       </div>
                     </div>
                     {insufficientBalance && (
-                      <ErrorMessage displayIcon={false} className="mt-0">
+                      <ErrorMessage
+                        displayIcon={false}
+                        className="mt-0 font-normal"
+                      >
                         {t("message.insufficient.balance")}
                       </ErrorMessage>
                     )}
                   </div>
                 )}
-                {transferRejected && <ErrorMessage className="justify-center mt-0 pl-0" >
-                  {t("error.generating.transaction")}
-                </ErrorMessage>
-                }
+                {transferRejected && (
+                  <ErrorMessage className="justify-center mt-0 pl-0">
+                    {t("error.generating.transaction")}
+                  </ErrorMessage>
+                )}
 
                 {action === "PAY" && (
                   <PrimaryButton
@@ -316,7 +327,15 @@ export const Content = ({
                     }}
                     className="w-full text-lg rounded-md capitalize"
                   >
-                    {isTransferring || hasTransferred ? <><Spinner /> {t("transfer.send.button.processing.text")}</> : transferRejected ? t("message.try.again") : t("pay.button")}
+                    {isTransferring || hasTransferred ? (
+                      <>
+                        <Spinner /> {t("transfer.send.button.processing.text")}
+                      </>
+                    ) : transferRejected ? (
+                      t("message.try.again")
+                    ) : (
+                      t("pay.button")
+                    )}
                   </PrimaryButton>
                 )}
 
@@ -327,7 +346,6 @@ export const Content = ({
                       sendEvent(CLICK_ON_SWAP_ASSETS_PAY_FLOW);
                       window.open("https://forge.trade/#/swap", "_blank");
                     }}
-                    className="w-full text-lg rounded-md capitalize"
                   >
                     {t("pay.swap.button")}
                   </PrimaryButton>

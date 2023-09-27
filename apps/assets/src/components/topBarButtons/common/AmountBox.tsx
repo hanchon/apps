@@ -15,7 +15,7 @@ export function AmountBox({
   amountInUsd: string | null;
 }) {
   return (
-    <div className="flex rounded-md bg-gray-500 py-2 px-4 items-center justify-between">
+    <div className="flex rounded-md bg-gray-500 py-3 px-4 items-center justify-between">
       <div className="flex items-center gap-2">
         <Image
           className="h-10 w-10 md:h-12 md:w-12 rounded-full"
