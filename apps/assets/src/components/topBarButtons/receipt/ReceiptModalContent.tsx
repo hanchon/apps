@@ -90,9 +90,10 @@ const generateERC20TransferReceipt = (result: FetchTransactionResult) => {
 
   if (!amount || !amount || !receiver) throw new Error("Missing args");
   const tokenErc20Address = result.to?.toLowerCase();
+  if (!tokenErc20Address) throw new Error("Missing token contract address");
   const token =
     getTokens().find(
-      (token) => token.erc20Address.toLowerCase() === tokenErc20Address
+      (token) => token.erc20Address?.toLowerCase() === tokenErc20Address
     ) ?? raise("Token not found");
 
   return generateReceipt({

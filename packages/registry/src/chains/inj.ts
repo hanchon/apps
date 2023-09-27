@@ -56,7 +56,8 @@ export default {
       "type": "IBC",
       "decimals": 18,
       "erc20Address": "0x3515F25AB7637adcF1b69F4D384ed5936B83431F",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     }
   ],
   "explorerUrl": "https://www.mintscan.io/injective/txs"

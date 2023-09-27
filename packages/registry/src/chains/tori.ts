@@ -58,7 +58,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0x205CF44075E77A3543abC690437F3b2819bc450a",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     }
   ],
   "explorerUrl": "https://www.mintscan.io/teritori/txs"

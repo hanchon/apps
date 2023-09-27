@@ -8,7 +8,7 @@ import {
 } from "ui-helpers";
 import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "ui-helpers";
-import { Address, getChain, getTokens, useTokenBalance } from "evmos-wallet";
+import { Address, getChain, useTokenBalance } from "evmos-wallet";
 import { CryptoSelectorTitle } from "ui-helpers";
 import { useTranslation } from "next-i18next";
 import { formatUnits } from "viem";
@@ -21,6 +21,7 @@ import {
 import { useAccount } from "wagmi";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
 import { useEffectEvent } from "helpers";
+import { sortedTokens } from "../shared/sortedChains";
 
 type Asset = {
   networkPrefix: Prefix;
@@ -28,7 +29,7 @@ type Asset = {
 
 const tokenToUSD = (amount: bigint, price: number, decimals: number) => {
   const unformmatedUsd = Number(
-    formatUnits((amount * BigInt(~~(1000 * Number(price)))) / 1000n, decimals),
+    formatUnits((amount * BigInt(~~(1000 * Number(price)))) / 1000n, decimals)
   );
   return unformmatedUsd.toLocaleString("en-US", {
     style: "currency",
@@ -52,13 +53,11 @@ export const RequestAssetSelector = ({
   const onChangeEvent = useEffectEvent(
     (next: Asset | ((value: Asset) => Asset)) => {
       onChange(typeof next === "function" ? next(value) : next);
-    },
+    }
   );
   const selectedToken = getTokenByRef(value.ref);
 
-  const tokenOptions = useMemo(() => {
-    return getTokens().sort(({ denom: a }, { denom: b }) => (a > b ? 1 : -1));
-  }, []);
+  const tokenOptions = sortedTokens;
 
   const networkOptions = useMemo(() => {
     return ["evmos"] as Prefix[];
@@ -82,7 +81,7 @@ export const RequestAssetSelector = ({
 
   const { balance, isFetching: isFetchingBalance } = useTokenBalance(
     address,
-    value.ref,
+    value.ref
   );
 
   const amountInUsd = price
@@ -190,7 +189,7 @@ export const RequestAssetSelector = ({
           });
         }}
         decimals={selectedToken?.decimals}
-        setIsMaxClicked={() => { }}
+        setIsMaxClicked={() => {}}
       />
       <CryptoSelectorBalanceBox>
         <div>{amountInUsd !== null && `≈${amountInUsd}`}</div>

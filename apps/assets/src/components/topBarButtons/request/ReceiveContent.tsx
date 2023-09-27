@@ -92,7 +92,8 @@ export const ReceiveContent = ({
       type: "0x",
       option: walletFormat,
       text: "0x",
-      disabled: selectedChain.prefix !== "evmos",
+      disabled:
+        selectedChain.prefix !== "evmos" && selectedChain.prefix !== "kava",
     },
     {
       onClick: () => {
