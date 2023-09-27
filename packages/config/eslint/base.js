@@ -68,6 +68,7 @@ const lintConfig = [
       "no-secrets/no-secrets": ["error", { tolerance: 4.1 }],
       "sonarjs/prefer-single-boolean-return": "off",
       "sonarjs/prefer-immediate-return": "off",
+      "prefer-const": ["error", { destructuring: "all" }],
     },
   },
   ...configCompat({

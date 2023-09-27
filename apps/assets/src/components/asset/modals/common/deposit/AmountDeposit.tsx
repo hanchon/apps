@@ -39,14 +39,14 @@ const AmountDeposit = ({
       ) {
         amountProps.setValue(
           numericOnly(
-            convertFromAtto(amountProps.balance, amountProps.token.decimals)
-          )
+            convertFromAtto(amountProps.balance, amountProps.token.decimals),
+          ),
         );
         setMaxClicked(true);
       } else {
         const val = safeSubstraction(amountProps.balance, amountProps.fee.fee);
         amountProps.setValue(
-          numericOnly(convertFromAtto(val, amountProps.token.decimals))
+          numericOnly(convertFromAtto(val, amountProps.token.decimals)),
         );
         setMaxClicked(true);
       }
@@ -126,7 +126,7 @@ const AmountDeposit = ({
             {convertAndFormat(
               amountProps.balance,
               amountProps.token?.decimals,
-              6
+              6,
             )}{" "}
             {amountProps.token?.symbol}
           </span>
@@ -156,13 +156,15 @@ const AmountDeposit = ({
         </ContainerInput>
         <div className="flex flex-col">
           {amountProps.confirmClicked && amountProps.token === undefined && (
-            <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorTokenEmpty} />
+            <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorTokenEmpty}</ErrorMessage>
           )}
           {truncateNumber(amountProps.value) === 0 && (
-            <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext} />
+            <ErrorMessage>
+              {MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext}
+            </ErrorMessage>
           )}
           {amountProps.confirmClicked && amountProps.value === "" && (
-            <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorAmountEmpty} />
+            <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorAmountEmpty}</ErrorMessage>
           )}
           {amountProps.token !== undefined &&
             amountProps.token.handledByExternalUI === null &&
@@ -171,10 +173,12 @@ const AmountDeposit = ({
                 numericOnly(
                   convertFromAtto(
                     amountProps.balance,
-                    amountProps.token.decimals
-                  )
-                )
-              ) && <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorsAmountGt} />}
+                    amountProps.token.decimals,
+                  ),
+                ),
+              ) && (
+              <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorsAmountGt}</ErrorMessage>
+            )}
         </div>
         <div className="space-y-2">{createBalanceDiv()}</div>
         {amountProps.fee.fee.eq(createBigNumber(feeDeposit)) &&

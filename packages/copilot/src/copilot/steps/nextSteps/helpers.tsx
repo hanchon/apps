@@ -7,21 +7,21 @@ import { Dispatch, SetStateAction } from "react";
 
 export const handleInteractWithdApp = (
   url: string,
-  setShow: Dispatch<SetStateAction<boolean>>
+  setShow: Dispatch<SetStateAction<boolean>>,
 ) => {
   setShow(false);
   window.open(url, "_blank");
 };
 export const handleStakeWithEvmos = (
   url: string,
-  setShow: Dispatch<SetStateAction<boolean>>
+  setShow: Dispatch<SetStateAction<boolean>>,
 ) => {
   setShow(false);
   window.open(url, "_blank");
 };
 export const handleLearnMore = (
   url: string,
-  setShow: Dispatch<SetStateAction<boolean>>
+  setShow: Dispatch<SetStateAction<boolean>>,
 ) => {
   setShow(false);
   window.open(url, "_blank");
@@ -29,7 +29,7 @@ export const handleLearnMore = (
 
 export const renderFireworksPortal = (
   fireworksRef: React.MutableRefObject<FireworksHandlers | null>,
-  portalContainer: HTMLDivElement
+  portalContainer: HTMLDivElement,
 ): React.ReactPortal => {
   return ReactDOM.createPortal(
     <Fireworks
@@ -37,6 +37,6 @@ export const renderFireworksPortal = (
       className="pointer-events-none absolute inset-0 z-[99999] overflow-visible"
       options={{ traceSpeed: 5, delay: { min: 10, max: 20 }, explosion: 7 }}
     />,
-    portalContainer
+    portalContainer,
   );
 };

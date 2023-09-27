@@ -8,11 +8,12 @@ import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT, useTracker } from "tracker";
 import { PrimaryButton } from "../../PrimaryButton";
-import { ConfettiEmoji } from "../icons/ConfettiEmoji";
+import { IconContainer } from "ui-helpers";
+
 export const SuccessSetUp = () => {
   const { updateStepsStatus } = useContext(StepsContext);
   const { handlePreClickAction } = useTracker(
-    CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT
+    CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT,
   );
 
   const handleClick = () => {
@@ -24,17 +25,14 @@ export const SuccessSetUp = () => {
     <TranslationContextProvider locale="en">
       <section className=" h-full w-full space-y-1 overflow-hidden text-center">
         <div className="flex items-center justify-center ">
-          <p className="border-lightYellow2 bg-lightYellow2 mb-4 flex h-56 w-56 items-center justify-center rounded-full border text-9xl">
-            <ConfettiEmoji />
-          </p>
+          <IconContainer type="BIG_CONFETTI" />
         </div>
         <h6 className="font-bold">{t("setupaccount.success")}</h6>
         <p className="pb-5 text-sm">{t("setupaccount.success.message")}</p>
 
-        <PrimaryButton
-          onClick={handleClick}
-          text={t("setupaccount.button.text") as string}
-        />
+        <PrimaryButton onClick={handleClick}>
+          {t("setupaccount.button.text") as string}
+        </PrimaryButton>
 
         <ConfettiExplosion
           zIndex={11}

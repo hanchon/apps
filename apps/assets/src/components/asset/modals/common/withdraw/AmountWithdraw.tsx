@@ -36,12 +36,12 @@ const AmountWithdraw = ({
       }
       if (amountProps.token.prefix.toUpperCase() !== feeDenom.toUpperCase()) {
         amountProps.setValue(
-          numericOnly(convertFromAtto(balance, amountProps.token.decimals))
+          numericOnly(convertFromAtto(balance, amountProps.token.decimals)),
         );
       } else {
         const val = safeSubstraction(balance, BigNumber.from(FEE_WITHDRAW));
         amountProps.setValue(
-          numericOnly(convertFromAtto(val, amountProps.token.decimals))
+          numericOnly(convertFromAtto(val, amountProps.token.decimals)),
         );
       }
     }
@@ -129,7 +129,7 @@ const AmountWithdraw = ({
                 ? amountProps.token.cosmosBalance
                 : amountProps.token.erc20Balance,
               amountProps.token.decimals,
-              6
+              6,
             )}{" "}
             {amountProps.token.symbol}
           </span>
@@ -138,7 +138,7 @@ const AmountWithdraw = ({
           text={getReservedForFeeText(
             BigNumber.from(FEE_WITHDRAW),
             EVMOS_SYMBOL,
-            EVMOS_SYMBOL
+            EVMOS_SYMBOL,
           )}
         />
       </>
@@ -163,13 +163,15 @@ const AmountWithdraw = ({
         </ContainerInput>
         <div className="flex flex-col">
           {amountProps.confirmClicked && amountProps.token === undefined && (
-            <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorTokenEmpty} />
+            <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorTokenEmpty}</ErrorMessage>
           )}
           {truncateNumber(amountProps.value) === 0 && (
-            <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext} />
+            <ErrorMessage>
+              {MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext}
+            </ErrorMessage>
           )}
           {amountProps.confirmClicked && amountProps.value === "" && (
-            <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorAmountEmpty} />
+            <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorAmountEmpty}</ErrorMessage>
           )}
           {amountProps.token !== undefined &&
             amountProps.token.handledByExternalUI === null &&
@@ -181,10 +183,12 @@ const AmountWithdraw = ({
                     amountProps.token.symbol === EVMOS_SYMBOL
                       ? amountProps.token.cosmosBalance
                       : amountProps.token.erc20Balance,
-                    amountProps.token.decimals
-                  )
-                )
-              ) && <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorsAmountGt} />}
+                    amountProps.token.decimals,
+                  ),
+                ),
+              ) && (
+              <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorsAmountGt}</ErrorMessage>
+            )}
         </div>
         <div className="space-y-2">{createBalanceDiv()} </div>
       </>

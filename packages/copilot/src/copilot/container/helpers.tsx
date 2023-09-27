@@ -1,8 +1,9 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { STEP_STATUS } from "../steps/setUpAccount/buttons/utils";
-import { CheckIcon } from "icons";
+import { STEP_STATUS } from "constants-helper";
+import { IconContainer } from "ui-helpers";
+import { ICONS_TYPES } from "constants-helper";
 
 export const TEXT_STYLES = {
   [STEP_STATUS.CURRENT]: "text-red",
@@ -11,11 +12,7 @@ export const TEXT_STYLES = {
 };
 
 export const STEPS_CIRCLE_STYLES = {
-  [STEP_STATUS.DONE]: (
-    <div className="bg-red text-pearl flex h-4 w-4 items-center justify-center rounded-full">
-      <CheckIcon width={"14px"} height={"14px"} color="#fff" />
-    </div>
-  ),
+  [STEP_STATUS.DONE]: <IconContainer type={ICONS_TYPES.CHECK} />,
   [STEP_STATUS.CURRENT]: (
     <span
       className="flex h-4 w-4 items-center justify-center"

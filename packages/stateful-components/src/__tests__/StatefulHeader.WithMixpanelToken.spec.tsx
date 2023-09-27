@@ -45,7 +45,7 @@ describe("Testing Header with mixpanel token", () => {
 
     const { getByText, getByRole } = render(
       <StatefulHeader pageName="Portfolio" page="assets" />,
-      { wrapper }
+      { wrapper },
     );
     const element = getByText("Portfolio");
     expect(element).toBeDefined();
@@ -60,7 +60,7 @@ describe("Testing Header with mixpanel token", () => {
       "Click on dApp inside the Launcher",
       {
         dApp: "dAppStore",
-      }
+      },
     );
   });
 });

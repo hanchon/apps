@@ -37,7 +37,7 @@ describe("Test Helpers for getting balances", () => {
     const balance = getBalanceInDollars(
       BigNumber.from("3000000000000000000"),
       true,
-      "0.08"
+      "0.08",
     );
     expect(balance).toBe("0.24");
   });

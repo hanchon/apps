@@ -146,10 +146,10 @@ test.describe("dAppStore Page - Copilot", () => {
       await page.waitForTimeout(3000);
 
       await expect(
-        page.getByRole("heading", { name: /Congratulations/i })
+        page.getByRole("heading", { name: /Congratulations/i }),
       ).toBeVisible();
       await expect(
-        page.getByText(/You're now ready to use your Evmos!/i)
+        page.getByText(/You're now ready to use your Evmos!/i),
       ).toBeVisible();
 
       await page.getByRole("button", { name: /Next steps/i }).click();
@@ -173,15 +173,15 @@ test.describe("dAppStore Page - Copilot", () => {
       await page.waitForTimeout(3000);
 
       await expect(
-        page.getByRole("heading", { name: /Congratulations/i })
+        page.getByRole("heading", { name: /Congratulations/i }),
       ).toBeVisible();
       await expect(
-        page.getByText(/You're now ready to use your Evmos!/i)
+        page.getByText(/You're now ready to use your Evmos!/i),
       ).toBeVisible();
 
       await page
         .getByRole("button", { name: /Continue to the dashboard/i })
         .click();
-    }
+    },
   );
 });

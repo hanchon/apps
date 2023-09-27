@@ -12,7 +12,7 @@ import { CLICK_ON_PARTICIPATE_IN_GOVERNANCE, useTracker } from "tracker";
 export const GovernanceCard = () => {
   const router = useRouter();
   const { handlePreClickAction } = useTracker(
-    CLICK_ON_PARTICIPATE_IN_GOVERNANCE
+    CLICK_ON_PARTICIPATE_IN_GOVERNANCE,
   );
   const handleOnClick = async () => {
     handlePreClickAction();

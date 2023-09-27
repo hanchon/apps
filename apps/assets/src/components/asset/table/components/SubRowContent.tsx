@@ -46,7 +46,7 @@ export const SubRowContent = ({
         setShow={setShow}
         isIBCBalance={isIBCBalance}
         feeBalance={feeBalance}
-      />
+      />,
     );
   };
 
@@ -65,7 +65,7 @@ export const SubRowContent = ({
           feeBalance={feeBalance}
           address={wallet.evmosAddressCosmosFormat}
           setShow={setShow}
-        />
+        />,
       );
     } else {
       dispatch(snackWarningLedger());

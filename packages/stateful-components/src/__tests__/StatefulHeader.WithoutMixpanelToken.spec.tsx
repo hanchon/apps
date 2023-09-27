@@ -46,7 +46,7 @@ describe("Testing Header - mixpanel is not setted", () => {
       <StatefulHeader pageName="Portfolio" page="assets" />,
       {
         wrapper: wrapperWithoutToken,
-      }
+      },
     );
     const element = getByText("Portfolio");
     expect(element).toBeDefined();

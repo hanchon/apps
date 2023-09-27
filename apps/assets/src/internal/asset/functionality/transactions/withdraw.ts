@@ -20,7 +20,7 @@ export const executeWithdraw = async (
   wallet: WalletExtension,
   params: IBCChainParams,
   feeBalance: BigNumber,
-  useERC20Denom: boolean
+  useERC20Denom: boolean,
 ) => {
   if (feeBalance.lt(BigNumber.from(FEE_WITHDRAW))) {
     return mapExecuteResponse({
@@ -51,7 +51,7 @@ export const executeWithdraw = async (
       useERC20Denom,
       address: wallet.evmosAddressCosmosFormat,
       pubkey: wallet.evmosPubkey ?? raise("ACCOUNT_NOT_FOUND"),
-    })
+    }),
   );
   if (error) {
     return mapExecuteResponse({

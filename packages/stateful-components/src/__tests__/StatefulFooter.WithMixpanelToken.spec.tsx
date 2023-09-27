@@ -32,7 +32,7 @@ describe("Testing Footer", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(
       "Click on Give Feedback on Footer",
-      {}
+      {},
     );
   });
 });

@@ -11,7 +11,7 @@ import {
   isWalletSelected,
   connectWith,
 } from "evmos-wallet";
-import { STEP_STATUS } from "./buttons/utils";
+import { METAMASK_DOWNLOAD_URL, STEP_STATUS } from "constants-helper";
 import {
   CLICK_ON_CONNECT_ACCOUNT_COPILOT,
   CLICK_ON_INSTALL_ACCOUNT_COPILOT,
@@ -21,16 +21,11 @@ import {
   UNSUCCESSFUL_WALLET_INSTALLATION_COPILOT,
 } from "tracker";
 import {
-  checkCopilotFlagToReloadModal,
-  checkReloadFlagToReloadModal,
-  removeCopilotFlagOnLoad,
-  removeReloadFlagOnLoad,
-  setCopilotFlagToReloadModal,
-  setReloadFlagToReloadModal,
+  removeCopilotModalStateFromLocalStorage,
+  getCopilotModalState,
+  updateCopilotModalState,
 } from "../../utils";
 import { E } from "helpers";
-
-const metamaskDownloadUrl = "https://metamask.io/download/";
 
 const getWalletLocal = async () => {
   // get wallet returns null or string but
@@ -81,7 +76,7 @@ const checkConnectionMetamask = async () => {
 
 const connectMetaMask = (href: string) => {
   if (isMetamaskInstalled() === false) {
-    setCopilotFlagToReloadModal("true");
+    updateCopilotModalState({ modalCopilotFlag: true });
     window.open(href, "_blank");
 
     return false;
@@ -96,10 +91,10 @@ const reloadPage = () => {
   } else {
     if (
       isMetamaskInstalled() === false &&
-      checkReloadFlagToReloadModal() === null &&
-      checkCopilotFlagToReloadModal() === "true"
+      getCopilotModalState().reloadMetaMask === false &&
+      getCopilotModalState().modalCopilotFlag === true
     ) {
-      setReloadFlagToReloadModal("true");
+      updateCopilotModalState({ reloadMetaMask: true });
       window.location.reload();
       return false;
     }
@@ -108,8 +103,7 @@ const reloadPage = () => {
 };
 
 const installMetamask = () => {
-  removeCopilotFlagOnLoad();
-  removeReloadFlagOnLoad();
+  removeCopilotModalStateFromLocalStorage();
   return isMetamaskInstalled();
 };
 
@@ -120,9 +114,9 @@ export const stepsSetAccount = [
     checkAction: () => installMetamask(),
     loadingText: ["Waiting for MetaMask Setup"],
     doneText: "Metamask Installed",
-    actions: [() => connectMetaMask(metamaskDownloadUrl)],
+    actions: [() => connectMetaMask(METAMASK_DOWNLOAD_URL)],
     errorsText: ["Metamask not installed"],
-    href: metamaskDownloadUrl,
+    href: METAMASK_DOWNLOAD_URL,
     hrefAction: () => reloadPage(),
     status: STEP_STATUS.CURRENT,
     tracker: {

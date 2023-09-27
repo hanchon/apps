@@ -29,7 +29,7 @@ export function snackbarWaitingBroadcast() {
 export async function snackbarIncludedInBlock(
   txHash: string,
   chain: string,
-  explorerTxUrl: string
+  explorerTxUrl: string,
 ) {
   const includedInBlock = await checkTxInclusionInABlock(txHash, chain);
   if (includedInBlock !== undefined) {
