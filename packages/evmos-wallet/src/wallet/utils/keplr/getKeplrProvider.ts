@@ -11,7 +11,8 @@ export function getGlobalKeplrProvider() {
 export async function getKeplrProvider(): Promise<Keplr> {
   let keplr = getGlobalKeplrProvider();
   if (keplr) return keplr;
-  assertIf(document.readyState === "complete", "PROVIDER_NOT_AVAILABLE");
+
+  assertIf(document.readyState !== "complete", "PROVIDER_NOT_AVAILABLE");
 
   return new Promise((resolve) => {
     const documentStateChange = (event: Event) => {

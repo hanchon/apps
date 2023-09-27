@@ -79,19 +79,21 @@ export const Undelegate = ({
           </>
         </ContainerInput>
         {truncateNumber(value) === 0 && (
-          <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext} />
+          <ErrorMessage>
+            {MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext}
+          </ErrorMessage>
         )}
         {confirmClicked && value === "" && (
-          <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorAmountEmpty} />
+          <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorAmountEmpty}</ErrorMessage>
         )}
         {confirmClicked &&
           safeSubstraction(
             evmosBalance,
-            BigNumber.from(FEE_STAKING_ACTIONS)
+            BigNumber.from(FEE_STAKING_ACTIONS),
           ).lte(BigNumber.from(0)) && (
-            <ErrorMessage
-              text={MODAL_NOTIFICATIONS.ErrorInsufficientFeeSubtext}
-            />
+            <ErrorMessage>
+              {MODAL_NOTIFICATIONS.ErrorInsufficientFeeSubtext}
+            </ErrorMessage>
           )}
         {truncateNumber(value) >
           truncateNumber(
@@ -100,15 +102,17 @@ export const Undelegate = ({
                 item.balance !== ""
                   ? BigNumber.from(item.balance)
                   : BigNumber.from(0),
-                18
-              )
-            )
-          ) && <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorsAmountGt} />}
+                18,
+              ),
+            ),
+          ) && (
+          <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorsAmountGt}</ErrorMessage>
+        )}
         <p className="text-sm">
           {getReservedForFeeText(
             BigNumber.from(FEE_STAKING_ACTIONS),
             "EVMOS",
-            "EVMOS"
+            "EVMOS",
           )}
         </p>
       </div>

@@ -24,7 +24,7 @@ import { CLICK_ON_STAKE_AND_MANAGE_DELEGATION, useTracker } from "tracker";
 export const StakingCard = () => {
   const router = useRouter();
   const { handlePreClickAction } = useTracker(
-    CLICK_ON_STAKE_AND_MANAGE_DELEGATION
+    CLICK_ON_STAKE_AND_MANAGE_DELEGATION,
   );
   const handleOnClick = async () => {
     handlePreClickAction();
@@ -55,7 +55,7 @@ export const StakingCard = () => {
             amountInDollars={getBalanceInDollars(
               totalEvmosAsset,
               wallet.active,
-              evmosPrice
+              evmosPrice,
             )}
           />
           <BalanceContainer
@@ -64,7 +64,7 @@ export const StakingCard = () => {
             amountInDollars={getBalanceInDollars(
               totalDelegations,
               wallet.active,
-              evmosPrice
+              evmosPrice,
             )}
           />
         </div>
@@ -75,7 +75,7 @@ export const StakingCard = () => {
             amountInDollars={getNumberBalanceInDollars(
               totalRewards,
               wallet.active,
-              evmosPrice
+              evmosPrice,
             )}
           />
           <button

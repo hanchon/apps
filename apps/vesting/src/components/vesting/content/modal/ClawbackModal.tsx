@@ -21,7 +21,7 @@ export const ClawbackModal = ({
   const availableClawback = () => {
     return formatNumber(
       convertFromAtto(vestingDetails.originalVestingAmount, 18),
-      6
+      6,
     );
   };
   return (

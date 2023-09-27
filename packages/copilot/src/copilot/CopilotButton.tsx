@@ -1,5 +1,5 @@
 import { EvmosCopilotIcon } from "icons";
-import { DividerWithLabel, Badge } from "ui-helpers";
+import { Divider, Badge } from "ui-helpers";
 import { ButtonWallet } from "evmos-wallet";
 import { StepsContext } from "./container/StepsContext";
 import { useTracker, CLICK_EVMOS_COPILOT_START_FLOW } from "tracker";
@@ -36,7 +36,9 @@ export const CopilotButton = ({
           <Badge variant="success">New</Badge>
         </ButtonWallet>
       </div>
-      <DividerWithLabel label="or" />
+      <Divider>
+        <>or</>
+      </Divider>
     </>
   );
 };

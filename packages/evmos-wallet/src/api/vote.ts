@@ -25,5 +25,5 @@ export const apiVote = makeApiRequester(
       option: option,
     },
   }),
-  ApiPresignTxSchema
+  ApiPresignTxSchema,
 );

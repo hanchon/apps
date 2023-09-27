@@ -43,7 +43,7 @@ export default function ProviderDropwdown({
   }, []);
 
   const { handlePreClickAction: handleDifferentOnRampClick } = useTracker(
-    CLICK_ON_DIFFERENT_ON_RAMP
+    CLICK_ON_DIFFERENT_ON_RAMP,
   );
 
   const handleInputClick = (e: React.MouseEvent<HTMLElement>) => {

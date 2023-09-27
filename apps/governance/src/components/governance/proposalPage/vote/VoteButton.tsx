@@ -67,13 +67,13 @@ const VoteButton = ({ voteProps }: { voteProps: VoteProps }) => {
             {getReservedForFeeText(
               BigNumber.from(FEE_VOTE),
               EVMOS_SYMBOL,
-              EVMOS_SYMBOL
+              EVMOS_SYMBOL,
             )}
           </p>
           {isSmallBalance && (
-            <ErrorMessage
-              text={MODAL_NOTIFICATIONS.ErrorInsufficientFeeSubtext}
-            />
+            <ErrorMessage>
+              {MODAL_NOTIFICATIONS.ErrorInsufficientFeeSubtext}
+            </ErrorMessage>
           )}
 
           <ConfirmButton

@@ -91,7 +91,7 @@ export async function changeNetworkToEvmosMainnet(): Promise<boolean> {
 }
 
 export function subscribeToAccountChange(
-  handler: (a: Maybe<string[]>) => void
+  handler: (a: Maybe<string[]>) => void,
 ): boolean {
   const mmProvider = getMetamaskProvider();
   if (!mmProvider) return false;
@@ -193,7 +193,7 @@ export async function generatePubkeyFromSignature(wallet: string) {
 
 export async function generatePubKey(
   account: string,
-  evmosGRPCUrl = EVMOS_GRPC_URL
+  evmosGRPCUrl = EVMOS_GRPC_URL,
 ) {
   let pubkey = await queryPubKey(evmosGRPCUrl, account);
   if (pubkey === null) {
@@ -275,7 +275,7 @@ export async function connectHandler(addresses: Maybe<string[]>) {
         evmosPubkey: metamask.evmosPubkey,
         osmosisPubkey: null,
         accountName: null,
-      })
+      }),
     );
     SaveProviderToLocalStorate(METAMASK_KEY);
     return true;

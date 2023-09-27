@@ -7,7 +7,7 @@ export const getAssets = async () => {
 };
 export const getAssetsForAddress = async (
   address: string,
-  hexAddress: string
+  hexAddress: string,
 ) => {
   // If not wallet selected return everything empty
   if (address === "" || hexAddress === "") {
@@ -15,7 +15,7 @@ export const getAssetsForAddress = async (
   }
 
   const res = await fetch(
-    `${EVMOS_BACKEND}/ERC20ModuleBalance/${address}/${hexAddress}`
+    `${EVMOS_BACKEND}/ERC20ModuleBalance/${address}/${hexAddress}`,
   );
   return res.json() as Promise<ERC20BalanceResponse>;
 };

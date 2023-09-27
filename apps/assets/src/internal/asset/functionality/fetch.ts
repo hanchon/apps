@@ -11,7 +11,7 @@ export const getAssets = async () => {
 
 export const getAssetsForAddress = async (
   address: string,
-  hexAddress: string
+  hexAddress: string,
 ) => {
   // If not wallet selected return everything empty
   if (address === "" || hexAddress === "") {
@@ -19,7 +19,7 @@ export const getAssetsForAddress = async (
   }
 
   const res = await fetch(
-    `${EVMOS_BACKEND}/ERC20ModuleBalance/${address}/${hexAddress}`
+    `${EVMOS_BACKEND}/ERC20ModuleBalance/${address}/${hexAddress}`,
   );
   return res.json() as Promise<ERC20BalanceResponse>;
 };
@@ -34,7 +34,7 @@ export type BalanceResponse = {
 export const getBalance = async (
   address: string,
   network: string,
-  token: string
+  token: string,
 ) => {
   // If not wallet selected return everything empty
   if (address === "" || network === "" || token === "") {
@@ -47,7 +47,7 @@ export const getBalance = async (
 
   try {
     const res = await fetch(
-      `${EVMOS_BACKEND}/BalanceByNetworkAndDenom/${network}/${token}/${address}`
+      `${EVMOS_BACKEND}/BalanceByNetworkAndDenom/${network}/${token}/${address}`,
     );
     const data = (await res.json()) as BalanceResponse;
     if ("error" in data) {
@@ -72,7 +72,7 @@ export const getBalance = async (
 export const getEvmosBalanceForDeposit = async (
   address: string,
   network: string,
-  token: string
+  token: string,
 ) => {
   // If not wallet selected return everything empty
   if (address === "" || network === "" || token === "") {
@@ -84,7 +84,7 @@ export const getEvmosBalanceForDeposit = async (
   }
   try {
     const res = await fetch(
-      `${EVMOS_BACKEND}/EVMOSIBCBalance/${network}/${address}`
+      `${EVMOS_BACKEND}/EVMOSIBCBalance/${network}/${address}`,
     );
     const data = (await res.json()) as BalanceResponse;
     if ("error" in data) {

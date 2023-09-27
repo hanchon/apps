@@ -35,7 +35,7 @@ const ButtonsActions = ({ actionsProps }: { actionsProps: actionsProps }) => {
               feeBalance={actionsProps.tableData.feeBalance}
               address={wallet.evmosAddressCosmosFormat}
               setShow={actionsProps.setShow}
-            />
+            />,
           );
         }}
       />
@@ -52,7 +52,7 @@ const ButtonsActions = ({ actionsProps }: { actionsProps: actionsProps }) => {
                 feeBalance={actionsProps.tableData.feeBalance}
                 address={wallet.evmosAddressCosmosFormat}
                 setShow={actionsProps.setShow}
-              />
+              />,
             );
           } else {
             dispatch(snackWarningLedger());

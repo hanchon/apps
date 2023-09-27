@@ -1,9 +1,15 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { Dispatch, SetStateAction, createContext, useState } from "react";
+import {
+  Dispatch,
+  PropsWithChildren,
+  SetStateAction,
+  createContext,
+  useState,
+} from "react";
 
-import { STEP_STATUS } from "../steps/setUpAccount/buttons/utils";
+import { STEP_STATUS } from "constants-helper";
 
 type StepsPropsContext = {
   stepsStatus: {
@@ -44,15 +50,14 @@ const StepsContext = createContext<StepsPropsContext>({
 const StepsContextProvider = ({
   children,
   steps,
-}: {
-  children: JSX.Element;
+}: PropsWithChildren<{
   steps: {
     title: string;
     component: JSX.Element;
     status: string;
     buttonDapp: (status: string) => JSX.Element;
   }[];
-}) => {
+}>) => {
   const initialValue = steps.map((step, index) => ({
     status: step.status,
     index,
@@ -68,7 +73,7 @@ const StepsContextProvider = ({
   const updateStepsStatus = () => {
     const updatedState = [...stepsStatus];
     const currentElement = updatedState.find(
-      (element) => element.status === STEP_STATUS.CURRENT
+      (element) => element.status === STEP_STATUS.CURRENT,
     );
     if (currentElement === undefined) {
       return;

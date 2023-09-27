@@ -15,7 +15,7 @@ import {
 export const EcosystemContainer = () => {
   const { handlePreClickAction } = useTracker(CLICK_ON_VIEW_ALL_DAPPS);
   const { handlePreClickAction: clickApply } = useTracker(
-    CLCIK_ON_APPLY_TO_BE_PART_OF_THE_ECOSYSTEM
+    CLCIK_ON_APPLY_TO_BE_PART_OF_THE_ECOSYSTEM,
   );
   const handleViewAlldApps = () => {
     handlePreClickAction();

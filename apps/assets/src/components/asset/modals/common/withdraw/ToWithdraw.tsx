@@ -170,12 +170,12 @@ const ToWithdraw = ({
           </>
         )}
         {confirmClicked && receiverAddress === "" && (
-          <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorAddressEmpty} />
+          <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorAddressEmpty}</ErrorMessage>
         )}
         {confirmClicked &&
           token !== undefined &&
           !checkFormatAddress(receiverAddress, prefix) && (
-            <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorWrongPrefix} />
+            <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorWrongPrefix}</ErrorMessage>
           )}
         {createAddMetamaskDiv()}
       </>

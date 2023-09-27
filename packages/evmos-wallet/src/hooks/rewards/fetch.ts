@@ -7,7 +7,7 @@ import { IBCTransferResponse } from "../../notification/transactionsTypes";
 
 export async function rewardsBackendCall(
   pubkey: string,
-  address: string
+  address: string,
 ): Promise<{
   error: boolean;
   message: string;

@@ -23,14 +23,14 @@ export const InformationBanner = ({
     function saveDismissInLocalStorage() {
       localStorage.setItem(localStorageId ?? "", "true");
     },
-    [localStorageId]
+    [localStorageId],
   );
 
   const getDismissFromLocalStorage = useCallback(
     function getDismissFromLocalStorage() {
       return localStorage.getItem(localStorageId ?? "") === "true";
     },
-    [localStorageId]
+    [localStorageId],
   );
 
   function handleOnClick() {

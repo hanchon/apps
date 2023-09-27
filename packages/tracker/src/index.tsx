@@ -28,6 +28,33 @@ export { CLICK_HIDE_ZERO_BALANCE } from "./constants";
 export { CLICK_CTA_LINKS_REGISTER_TOKEN } from "./constants";
 export { CLICK_CTA_LINKS_ASSETS_GUIDE } from "./constants";
 
+export { CLICK_ON_SEND_BUTTON } from "./constants";
+export { CLICK_ON_RECEIVE_BUTTON } from "./constants";
+export { SELECT_TOKEN_SEND_FLOW } from "./constants";
+export { SELECT_FROM_NETWORK_SEND_FLOW } from "./constants";
+export { SELECT_TO_NETWORK_SEND_FLOW } from "./constants";
+export { INSUFFICIENT_FEE_AMOUNT } from "./constants";
+export { CLICK_ON_TOP_UP_EVMOS } from "./constants";
+export { CLICK_ON_AXL_REDIRECT } from "./constants";
+export { CLICK_ON_DISPLAY_FORMAT } from "./constants";
+export { SELECT_NETWORK_RECEIVE_FLOW } from "./constants";
+export { CLICK_ON_CONNECT_ACCOUNT_INSIDE_MODAL } from "./constants";
+export { CLICK_ON_COPY_ICON_RECEIVE_FLOW } from "./constants";
+export { CLICK_ON_REQUEST_FUNDS } from "./constants";
+export { CLICK_ON_GENERATE_PAYMENT_REQUEST } from "./constants";
+export { CLICK_ON_SHARE_QR_CODE } from "./constants";
+export { CLICK_ON_SHARE_QR_CODE_PAYMENT } from "./constants";
+export { CLICK_ON_COPY_ICON_REQUEST_FLOW } from "./constants";
+export { CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW } from "./constants";
+export { CLICK_ON_SWAP_ASSETS_PAY_FLOW } from "./constants";
+export { CLICK_ON_PAY } from "./constants";
+
+// TODO: add the events
+
+export { SUCCESSFUL_SEND_TX } from "./constants";
+export { UNSUCCESSFUL_SEND_TX } from "./constants";
+export { SUCCESSFUL_PAY_TX } from "./constants";
+export { UNSUCESSFUL_PAY_TX } from "./constants";
 // staking
 export { CLICK_CLAIM_REWARDS_TOPBAR } from "./constants";
 export { CLICK_SEARCH_VALIDATORS_INPUT } from "./constants";

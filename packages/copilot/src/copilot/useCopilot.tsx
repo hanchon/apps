@@ -3,7 +3,7 @@
 
 import { useContext, useMemo } from "react";
 import { StepsContext } from "./container/StepsContext";
-import { STEP_STATUS } from "./steps/setUpAccount/buttons/utils";
+import { STEP_STATUS } from "constants-helper";
 import { StepsContainer } from "./container/StepsContainer";
 
 export const useCopilot = () => {
@@ -11,7 +11,7 @@ export const useCopilot = () => {
 
   const componentToDraw = useMemo(() => {
     return stepsStatus.find(
-      (element) => element.status === STEP_STATUS.CURRENT
+      (element) => element.status === STEP_STATUS.CURRENT,
     );
   }, [stepsStatus]);
 

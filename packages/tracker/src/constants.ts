@@ -42,6 +42,41 @@ export const CLICK_CTA_LINKS_REGISTER_TOKEN =
 export const CLICK_CTA_LINKS_ASSETS_GUIDE =
   "Click on CTA link to view assets guide";
 
+export const CLICK_ON_SEND_BUTTON = "Open up Send modal";
+export const CLICK_ON_RECEIVE_BUTTON = "Open up Receive modal";
+export const SELECT_TOKEN_SEND_FLOW = "Select Token to send to a network";
+export const SELECT_FROM_NETWORK_SEND_FLOW =
+  "Select Network to send token from";
+export const SELECT_TO_NETWORK_SEND_FLOW = "Select Network to send token to";
+export const INSUFFICIENT_FEE_AMOUNT =
+  "Insufficient fee error (not enough balance) when trying to send token";
+export const CLICK_ON_TOP_UP_EVMOS = "Prompted to top up Evmos from Send modal";
+export const CLICK_ON_AXL_REDIRECT =
+  "Go to Satellite for Axelar-related transactions";
+export const CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW =
+  "Prompted to connect to Keplr to send token";
+export const CLICK_ON_CONNECT_ACCOUNT_INSIDE_MODAL =
+  "Prompted to connect account";
+export const CLICK_ON_COPY_ICON_RECEIVE_FLOW = "Copy recipient address";
+export const CLICK_ON_DISPLAY_FORMAT = "Display Format in Receive modal";
+export const SELECT_NETWORK_RECEIVE_FLOW = "Choose network to receive tokens";
+export const CLICK_ON_REQUEST_FUNDS = "Request for Funds";
+export const CLICK_ON_GENERATE_PAYMENT_REQUEST = "Generate Payment Request";
+export const CLICK_ON_SHARE_QR_CODE = "Share QR Code of recipient address";
+export const CLICK_ON_SHARE_QR_CODE_PAYMENT =
+  "Share QR code of payment request";
+export const CLICK_ON_COPY_ICON_REQUEST_FLOW = "Copy payment request link";
+export const CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW = "Share payment request link";
+export const SELECT_NETWORK_PAY_FLOW = "Select the dropdown";
+export const CLICK_ON_SWAP_ASSETS_PAY_FLOW =
+  "Click 'Swap Asset' to be moved to Forge";
+export const CLICK_ON_PAY = "Click on Pay";
+
+export const SUCCESSFUL_SEND_TX = "Successful transaction of Send";
+export const UNSUCCESSFUL_SEND_TX = "Unsuccessful transaction of Send";
+export const SUCCESSFUL_PAY_TX = "Successful transaction of Pay";
+export const UNSUCESSFUL_PAY_TX = "Unsuccessful transaction of Pay";
+
 // staking
 export const CLICK_CLAIM_REWARDS_TOPBAR = "Claim Evmos Rewards";
 export const CLICK_SHOW_INACTIVE_TOGGLE = "Show inactive";

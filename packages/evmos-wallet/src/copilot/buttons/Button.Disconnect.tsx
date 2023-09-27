@@ -18,7 +18,7 @@ export const ButtonDisconnect = ({
   setIsCopied: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { handlePreClickAction: trackClickDisconnectWallet } = useTracker(
-    CLICK_DISCONNECT_WALLET_BUTTON
+    CLICK_DISCONNECT_WALLET_BUTTON,
   );
 
   return (
