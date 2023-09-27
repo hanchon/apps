@@ -17,12 +17,12 @@ export function ErrorMessage({
   return (
     <div
       className={cn(
-        "flex justify-start space-x-2 text-[10px] md:text-xs font-medium pl-4 mt-3",
+        "tracking-wider flex justify-start space-x-2 text-[10px] md:text-xs pl-4 mt-3",
         className,
         {
           "text-red-900": variant === "error",
           "text-purple-200": variant === "info",
-        },
+        }
       )}
     >
       {displayIcon && <ErrorIcon />}

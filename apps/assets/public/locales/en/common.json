@@ -23,7 +23,7 @@
   "request.message.input.placeholder": "Write a message for the recipient of this request",
   "request.message.subtitle": "Message",
   "request.subtitle": "Asset and amount to request",
-  "request.copied": "Payment linked <strong>has been copied </strong> to the clipboard.",
+  "request.copied": "Payment link <strong>has been copied </strong> to the clipboard.",
   "pay.modal.title": "Pay",
   "pay.title": "Pay",
   "pay.button": "Pay",
