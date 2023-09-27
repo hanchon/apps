@@ -40,9 +40,6 @@ export default {
   "cosmosGRPC": [
     "https://rpc.mainnet.teritori.com"
   ],
-  "evmRPC": [
-    "https://rpc.mainnet.teritori.com"
-  ],
   "tokens": [
     {
       "name": "Teritori",

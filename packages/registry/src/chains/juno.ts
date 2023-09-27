@@ -25,6 +25,7 @@ export default {
   },
   "feeToken": "ujuno",
   "cosmosRest": [
+    "https://g.w.lavanet.xyz:443/gateway/jun1/rest/ef1ad852a77275e1eeef6c7972370118",
     "https://rest.cosmos.directory/juno",
     "https://lcd-juno.itastakers.com",
     "https://rest-juno.ecostake.com",
@@ -34,14 +35,12 @@ export default {
     "https://juno-api.polkachu.com"
   ],
   "tendermintRest": [
+    "https://g.w.lavanet.xyz:443/gateway/jun1/tendermint-rpc-http/ef1ad852a77275e1eeef6c7972370118",
     "https://rpc.cosmos.directory/juno",
     "https://rpc-juno.whispernode.com"
   ],
   "evmRest": null,
   "cosmosGRPC": [
-    "https://rpc-juno.whispernode.com"
-  ],
-  "evmRPC": [
     "https://rpc-juno.whispernode.com"
   ],
   "tokens": [

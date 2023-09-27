@@ -38,9 +38,6 @@ export default {
   "cosmosGRPC": [
     "https://rpc.kava.io:443"
   ],
-  "evmRPC": [
-    "https://rpc.kava.io:443"
-  ],
   "tokens": [
     {
       "name": "USDT on Kava",

@@ -38,9 +38,6 @@ export default {
   "cosmosGRPC": [
     "https://quicksilver-rpc.polkachu.com:443"
   ],
-  "evmRPC": [
-    "https://quicksilver-rpc.polkachu.com:443"
-  ],
   "tokens": [
     {
       "name": "Quicksilver Liquid Staked OSMO",

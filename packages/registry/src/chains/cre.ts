@@ -37,7 +37,6 @@ export default {
   ],
   "evmRest": null,
   "cosmosGRPC": null,
-  "evmRPC": null,
   "tokens": [
     {
       "name": "Crescent Network",
