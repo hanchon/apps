@@ -8,7 +8,7 @@
 
 export default {
   "prefix": "cre",
-  "name": "Crescent NetWork",
+  "name": "Crescent Network",
   "cosmosId": "crescent-1",
   "identifier": "crescent",
   "gasPriceStep": {

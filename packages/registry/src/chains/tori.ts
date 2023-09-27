@@ -8,7 +8,7 @@
 
 export default {
   "prefix": "tori",
-  "name": "teritori",
+  "name": "Teritori",
   "cosmosId": "teritori-1",
   "identifier": "teritori",
   "gasPriceStep": {

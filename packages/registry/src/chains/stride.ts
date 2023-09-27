@@ -8,7 +8,7 @@
 
 export default {
   "prefix": "stride",
-  "name": "stride",
+  "name": "Stride",
   "cosmosId": "stride-1",
   "identifier": "stride",
   "gasPriceStep": {
