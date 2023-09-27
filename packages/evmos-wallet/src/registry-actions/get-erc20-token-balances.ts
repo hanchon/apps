@@ -3,6 +3,7 @@ import { Address, evmosClient } from "../wallet";
 import { getTokens } from "./get-tokens";
 import { normalizeToEth, normalizeToEvmos } from "../wallet/utils/addresses";
 import { makeBalance } from "./utils/make-balance";
+import { Hex } from "viem";
 
 export async function getERC20TokenBalances({
   address,
@@ -12,12 +13,14 @@ export async function getERC20TokenBalances({
   const tokens = getTokens();
   const ethAddress = normalizeToEth(address);
   const response = await evmosClient.multicall({
-    contracts: tokens.map((token) => ({
-      abi: erc20ABI,
-      address: token.erc20Address,
-      functionName: "balanceOf",
-      args: [ethAddress],
-    })),
+    contracts: tokens
+      .filter(({ erc20Address }) => erc20Address)
+      .map((token) => ({
+        abi: erc20ABI,
+        address: token.erc20Address as Hex,
+        functionName: "balanceOf",
+        args: [ethAddress],
+      })),
   });
   const evmosAddress = normalizeToEvmos(address);
   return response

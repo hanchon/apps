@@ -4,7 +4,7 @@ import { REGISTRY_NETWORK_BLOCK_LIST } from "evmos-wallet/src/internal/wallet/fu
 
 export const sortedChains = Object.values(chains)
   .filter(
-    ({ prefix }) => REGISTRY_NETWORK_BLOCK_LIST.includes(prefix) === false,
+    ({ prefix }) => REGISTRY_NETWORK_BLOCK_LIST.includes(prefix) === false
   )
   .map(({ prefix }) => prefix)
   .sort((a, b) => {
@@ -16,8 +16,8 @@ export const sortedChains = Object.values(chains)
 
 export const sortedTokens = getTokens()
   .filter(
-    ({ sourcePrefix }) =>
-      REGISTRY_NETWORK_BLOCK_LIST.includes(sourcePrefix) === false,
+    ({ sourcePrefix, listed }) =>
+      listed && REGISTRY_NETWORK_BLOCK_LIST.includes(sourcePrefix) === false
   )
   .sort(({ symbol: a }, { symbol: b }) => {
     if (a === "EVMOS") return -1;

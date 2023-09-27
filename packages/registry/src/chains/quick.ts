@@ -56,7 +56,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0x616E00909730f7dE9Afd97Dc71981f6d28e2B0ca",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "Quicksilver Liquid Staked ATOM",
@@ -72,7 +73,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0x4ad26064831ECE180B179a4C02Dc97940AA77B17",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "Quicksilver",
@@ -88,7 +90,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0xf55454383cEEFB1B5e889E59542352B1b928707d",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     }
   ],
   "explorerUrl": "https://www.mintscan.io/quicksilver/txs"
