@@ -1,12 +1,30 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
-import { ErrorMessage, Label, PrimaryButton, Tabs, TextInput, Title } from "ui-helpers";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import {
+  ErrorMessage,
+  Label,
+  PrimaryButton,
+  Tabs,
+  TextInput,
+  Title,
+} from "ui-helpers";
 import { Trans, useTranslation } from "next-i18next";
 import { CryptoSelector } from "ui-helpers";
 import QRCode from "react-qr-code";
 
-import { StoreType, WalletConnection, getActiveProviderKey, getChain } from "evmos-wallet";
+import {
+  StoreType,
+  WalletConnection,
+  getActiveProviderKey,
+  getChain,
+} from "evmos-wallet";
 import { ReceiveIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { CryptoSelectorDropdownBox } from "ui-helpers";
@@ -73,7 +91,8 @@ export const ReceiveContent = ({
       type: "0x",
       option: walletFormat,
       text: "0x",
-      disabled: selectedChain.prefix !== "evmos",
+      disabled:
+        selectedChain.prefix !== "evmos" && selectedChain.prefix !== "kava",
     },
     {
       onClick: () => {
@@ -188,17 +207,23 @@ export const ReceiveContent = ({
                 onClickCopy={async () => {
                   await navigator.clipboard.writeText(sender ?? "");
                   sendEvent(CLICK_ON_COPY_ICON_RECEIVE_FLOW);
-                  setShowCopied(true)
+                  setShowCopied(true);
                 }}
               />
-              {showCopied && <ErrorMessage variant="info" className="justify-center" displayIcon={false}>
-                <Trans i18nKey="receive.copied"
-                  components={{
-                    strong: <span className="text-pink-300" />,
-                  }} />
-
-              </ErrorMessage>
-              }
+              {showCopied && (
+                <ErrorMessage
+                  variant="info"
+                  className="justify-center"
+                  displayIcon={false}
+                >
+                  <Trans
+                    i18nKey="receive.copied"
+                    components={{
+                      strong: <span className="text-pink-300" />,
+                    }}
+                  />
+                </ErrorMessage>
+              )}
             </div>
 
             {isDisconnected && (
@@ -213,19 +238,20 @@ export const ReceiveContent = ({
                 variant="primary-lg"
               />
             )}
-            {!isDisconnected && <PrimaryButton
-              onClick={() => {
-                setState((prev) => ({
-                  ...prev,
-                  step: "setup",
-                }));
-                sendEvent(CLICK_ON_REQUEST_FUNDS);
-              }}
-              variant="primary-lg"
-            >
-              {t("receive.button")}
-            </PrimaryButton>
-            }
+            {!isDisconnected && (
+              <PrimaryButton
+                onClick={() => {
+                  setState((prev) => ({
+                    ...prev,
+                    step: "setup",
+                  }));
+                  sendEvent(CLICK_ON_REQUEST_FUNDS);
+                }}
+                variant="primary-lg"
+              >
+                {t("receive.button")}
+              </PrimaryButton>
+            )}
           </div>
         </section>
       </form>
