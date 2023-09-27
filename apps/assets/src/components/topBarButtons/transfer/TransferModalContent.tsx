@@ -28,7 +28,7 @@ import { AccountSelector } from "../shared/AccountSelector";
 
 import { TransferSummary } from "../shared/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
-import { E } from "helpers";
+import { E, useWatch } from "helpers";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
@@ -43,7 +43,11 @@ import {
   INSUFFICIENT_FEE_AMOUNT,
   useTracker,
 } from "tracker";
-import { CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW, SUCCESSFUL_SEND_TX, UNSUCCESSFUL_SEND_TX } from "tracker/src/constants";
+import {
+  CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW,
+  SUCCESSFUL_SEND_TX,
+  UNSUCCESSFUL_SEND_TX,
+} from "tracker/src/constants";
 
 import { TransferModalProps } from "./TransferModal";
 import { useReceiptModal } from "../receipt/ReceiptModal";
@@ -54,6 +58,7 @@ import { createPortal } from "react-dom";
 import { useSend } from "../hooks/useSend";
 import { getTokenValidDestinations } from "../shared/getTokenValidDestinations";
 import { TransactionInspector } from "../shared/TransactionInspector";
+
 export const TransferModalContent = ({
   receiver,
   networkPrefix,
@@ -108,14 +113,13 @@ export const TransferModalContent = ({
     token: tokenAmount,
   });
 
-
   const token = getTokenByRef(tokenRef);
   const senderChain = sender ? getChainByAddress(sender) : getChain("evmos");
 
   const destinationNetworkOptions = useMemo(
     (): Prefix[] => //
       getTokenValidDestinations(tokenAmount.ref, senderChain.prefix),
-    [tokenAmount.ref, senderChain.prefix],
+    [tokenAmount.ref, senderChain.prefix]
   );
 
   const activeProviderKey = getActiveProviderKey();
@@ -123,7 +127,7 @@ export const TransferModalContent = ({
   const senderValidation = {
     userRejectedEnablingNetwork: E.match.byPattern(
       walletRequestError,
-      /USER_REJECTED_REQUEST/,
+      /USER_REJECTED_REQUEST/
     ),
     networkNotSupportedByConnectedWallet:
       activeProviderKey &&
@@ -146,31 +150,31 @@ export const TransferModalContent = ({
     };
   }, []);
 
-  useEffect(() => {
-    if (!transferError) {
-      sendEvent(UNSUCCESSFUL_SEND_TX,
-        //   {
-        //   token: ,
-        //   "destination network": ,
-        //  "transaction ID": 
-        //   }
-      )
-      return;
-    }
-  }, [transferError, sendEvent])
-  useEffect(() => {
+  /**
+   * on tx failure
+   */
+  useWatch(() => {
+    if (!transferError) return;
+    sendEvent(UNSUCCESSFUL_SEND_TX, {
+      token: getTokenByRef(tokenAmount.ref).symbol,
+      "destination network": getChain(networkPrefix).name,
+    });
+  }, [transferError]);
+  /**
+   * on tx success
+   */
+  useWatch(() => {
     if (!transferResponse) return;
     sendEvent(SUCCESSFUL_SEND_TX, {
-      // token: 
-      // "destination network": 
-      "transaction ID": transferResponse.hash
-    })
+      token: getTokenByRef(tokenAmount.ref).symbol,
+      "destination network": getChain(networkPrefix).name,
+      "transaction ID": transferResponse.hash,
+    });
     receiptModal.setIsOpen(true, {
       hash: transferResponse.hash,
       chainPrefix: networkPrefix,
     });
-  }, [networkPrefix, receiptModal, transferResponse, sendEvent]);
-
+  }, [transferResponse]);
 
   const action = useMemo(() => {
     if (isDisconnected) return "CONNECT";
@@ -341,11 +345,11 @@ export const TransferModalContent = ({
                   >
                     {getGlobalKeplrProvider() === null
                       ? t(
-                        "error.network.not.support.by-wallet.installButtonLabel",
-                      )
+                          "error.network.not.support.by-wallet.installButtonLabel"
+                        )
                       : t(
-                        "error.network.not.support.by-wallet.connectButtonLabel",
-                      )}
+                          "error.network.not.support.by-wallet.connectButtonLabel"
+                        )}
                   </PrimaryButton>
                 </div>
               </InfoPanel>
@@ -446,10 +450,11 @@ export const TransferModalContent = ({
             )}
             {action === "TRANSFER" && (
               <>
-                {transferRejected && <ErrorMessage className="justify-center pl-0" >
-                  {t("error.generating.transaction")}
-                </ErrorMessage>
-                }
+                {transferRejected && (
+                  <ErrorMessage className="justify-center pl-0">
+                    {t("error.generating.transaction")}
+                  </ErrorMessage>
+                )}
                 <PrimaryButton
                   type="submit"
                   className="w-full text-base md:text-lg rounded-md capitalize mt-8"
@@ -457,11 +462,17 @@ export const TransferModalContent = ({
                     !isReadyToTransfer || isTransferring || hasTransferred
                   }
                 >
-
-                  {isTransferring || hasTransferred ? <><Spinner /> {t("transfer.send.button.processing.text")}</> : transferRejected ? t("message.try.again") : t("transfer.send.button.text")}
+                  {isTransferring || hasTransferred ? (
+                    <>
+                      <Spinner /> {t("transfer.send.button.processing.text")}
+                    </>
+                  ) : transferRejected ? (
+                    t("message.try.again")
+                  ) : (
+                    t("transfer.send.button.text")
+                  )}
                 </PrimaryButton>
               </>
-
             )}
           </div>
         </section>
