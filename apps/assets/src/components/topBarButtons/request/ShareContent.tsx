@@ -95,8 +95,8 @@ export const ShareContent = ({
             >
               <BackArrowIcon width={28} />
             </button>
-            <div className="flex gap-2 flex-col">
-              <div className="bg-white p-2 w-44 h-44 rounded-xl self-center">
+            <div className="flex gap-2 mb-6 flex-col">
+              <div className="bg-white p-2 w-[250px] h-[250px] rounded-xl self-center">
                 <QRCode
                   style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                   value={shareURL}

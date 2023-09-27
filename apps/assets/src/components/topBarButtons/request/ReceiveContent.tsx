@@ -112,7 +112,7 @@ export const ReceiveContent = ({
   const { isDisconnected } = useAccount();
 
   return (
-    <section className="space-y-8">
+    <section className="space-y-16">
       <Title
         variant="modal-black"
         icon={<ReceiveIcon className="text-pink-300" />}
@@ -126,9 +126,9 @@ export const ReceiveContent = ({
         }}
       >
         <section className="space-y-8">
-          <div className="flex flex-col gap-5">
-            <div className="flex gap-2 flex-col">
-              <div className="bg-white p-2 w-44 h-44 rounded-xl self-center">
+          <div className="flex flex-col gap-6">
+            <div className="flex gap-2 mb-6 flex-col">
+              <div className="bg-white p-2 w-[250px] h-[250px] rounded-xl self-center">
                 <QRCode
                   style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                   value={sender ?? ""}
@@ -227,21 +227,6 @@ export const ReceiveContent = ({
                   />
                 </ErrorMessage>
               )}
-              {selectedChain.prefix !== "evmos" &&
-                selectedChain.prefix !== "kava" && (
-                  <ErrorMessage
-                    variant="info"
-                    className="justify-center font-normal"
-                    displayIcon={false}
-                  >
-                    <Trans
-                      i18nKey="receive.format.hex"
-                      components={{
-                        strong: <span className="text-pink-300" />,
-                      }}
-                    />
-                  </ErrorMessage>
-                )}
             </div>
 
             {isDisconnected && (
