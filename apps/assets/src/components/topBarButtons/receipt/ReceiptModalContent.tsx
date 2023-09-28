@@ -250,7 +250,9 @@ export const ReceiptModalContent = ({
                 {t("transfer.confirmation.message.successful.description2")}
               </>
             )}
-            {!!error && <>{E.ensureError(error).message}</>}
+            {!!error && (
+              <span className="break-all">{E.ensureError(error).message}</span>
+            )}
           </SkeletonLoading>
         </ConfirmationMessage>
         <Divider variant="info" className="w-full">
@@ -303,7 +305,7 @@ export const ReceiptModalContent = ({
         onClick={() => setIsOpen(false)}
         className="w-full text-lg rounded-md capitalize mt-11"
       >
-        {isReceiptLoading || isFetchingBlock
+        {isReceiptLoading || (isFetchingBlock && !error)
           ? t("transfer.confirmation.button.text.loading")
           : t("transfer.confirmation.button.text")}
       </PrimaryButton>

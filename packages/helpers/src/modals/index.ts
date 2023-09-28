@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { ParsedUrlQueryInput } from "querystring";
 import { useMemo, SetStateAction } from "react";
 import { z } from "zod";
-import { useEffectEvent } from "../use-effect-event";
+import { useEffectEvent } from "../hooks/use-effect-event";
 
 const serialize = <T extends Record<string, unknown>>(obj: T) => {
   return JSON.stringify(obj, (_, value) => {

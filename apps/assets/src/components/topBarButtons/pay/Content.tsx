@@ -38,6 +38,8 @@ import {
   CLICK_ON_PAY,
   CLICK_ON_SWAP_ASSETS_PAY_FLOW,
   SELECT_NETWORK_PAY_FLOW,
+  SUCCESSFUL_PAY_TX,
+  UNSUCESSFUL_PAY_TX,
 } from "tracker/src/constants";
 import { useTracker } from "tracker";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
@@ -46,6 +48,7 @@ import { useReceiptModal } from "../receipt/ReceiptModal";
 import { normalizeToPrefix } from "evmos-wallet/src/registry-actions/utils/normalize-to-prefix";
 import { createPortal } from "react-dom";
 import { TransactionInspector } from "../shared/TransactionInspector";
+import { useWatch } from "helpers";
 
 export const Content = ({
   requester,
@@ -78,22 +81,8 @@ export const Content = ({
     hasTransferred,
     transferRejected,
     transferResponse,
-    // If you need to account for fees:
-    // fee,
-    // feeBalance,
-
-    // this will give you the balance of the selected token so you don't need to fetch it below:
-    // balance,
-
-    // this has some ready to use validation like:
+    transferError,
     validation,
-    // {
-    //   hasSufficientBalance: boolean;
-    //   hasSufficientBalanceForFee: boolean;
-    //   hasValidReceiver: boolean | undefined;
-    //   hasValidAmount: boolean;
-    //   hasLoadedFee: boolean;
-    // }
     __DEBUG__,
   } = useSend({
     sender: sender,
@@ -103,16 +92,32 @@ export const Content = ({
       amount,
     },
   });
-  useEffect(() => {
+
+  useWatch(() => {
+    if (!transferError) return;
+    sendEvent(UNSUCESSFUL_PAY_TX, {
+      token: getTokenByRef(token).symbol,
+      "destination network": requester && getChainByAddress(requester).name,
+    });
+    return;
+  }, [transferError]);
+
+  useWatch(() => {
     if (!transferResponse) return;
-    if (!sender) return;
+    if (!sender || !requester) return;
+
+    sendEvent(SUCCESSFUL_PAY_TX, {
+      token: getTokenByRef(token).symbol,
+      "destination network": requester && getChainByAddress(requester).name,
+      "transaction ID": transferResponse.hash,
+    });
+
     const chainPrefix = normalizeToPrefix(sender);
     receiptModal.setIsOpen(true, {
       hash: transferResponse.hash,
       chainPrefix,
     });
-  }),
-    [transferResponse, sender, receiptModal];
+  }, [transferResponse]);
 
   const [selectedBalance, setSelectedBalance] = useState<
     undefined | FormattedBalance

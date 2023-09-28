@@ -30,7 +30,6 @@ import { ReceiveIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { CryptoSelectorDropdownBox } from "ui-helpers";
 import { CryptoSelectorTitle } from "ui-helpers";
-import { chains } from "@evmos-apps/registry";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RequestModalProps } from "./RequestModal";
@@ -44,6 +43,7 @@ import {
 } from "tracker";
 import { CopilotButton } from "copilot";
 import { useAccount } from "wagmi";
+import { sortedChains } from "../shared/sortedChains";
 
 export const ReceiveContent = ({
   setState,
@@ -70,7 +70,7 @@ export const ReceiveContent = ({
     if (activeProviderKey == "metaMask") {
       return ["evmos"] as Prefix[];
     }
-    return Object.values(chains).map(({ prefix }) => prefix);
+    return sortedChains;
   }, [activeProviderKey]);
 
   useEffect(() => {

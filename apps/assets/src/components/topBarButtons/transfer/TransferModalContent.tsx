@@ -28,7 +28,7 @@ import { AccountSelector } from "../shared/AccountSelector";
 
 import { TransferSummary } from "../shared/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
-import { E } from "helpers";
+import { E, useWatch } from "helpers";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 
@@ -43,7 +43,11 @@ import {
   INSUFFICIENT_FEE_AMOUNT,
   useTracker,
 } from "tracker";
-import { CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW } from "tracker/src/constants";
+import {
+  CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW,
+  SUCCESSFUL_SEND_TX,
+  UNSUCCESSFUL_SEND_TX,
+} from "tracker/src/constants";
 
 import { TransferModalProps } from "./TransferModal";
 import { useReceiptModal } from "../receipt/ReceiptModal";
@@ -54,6 +58,7 @@ import { createPortal } from "react-dom";
 import { useSend } from "../hooks/useSend";
 import { getTokenValidDestinations } from "../shared/getTokenValidDestinations";
 import { TransactionInspector } from "../shared/TransactionInspector";
+
 export const TransferModalContent = ({
   receiver,
   networkPrefix,
@@ -145,25 +150,31 @@ export const TransferModalContent = ({
     };
   }, []);
 
-  useEffect(() => {
+  /**
+   * on tx failure
+   */
+  useWatch(() => {
     if (!transferError) return;
-    // sendEvent(failureEvent)
-    // Milli: whenever a transfer fail, this will be called
-    // so it might be good to add the failure events here
-    // this will also trigger if the user rejects the transaction, I'm not sure if that counts as a transaction failure so you may want to filter that out (or not)
+    sendEvent(UNSUCCESSFUL_SEND_TX, {
+      token: getTokenByRef(tokenAmount.ref).symbol,
+      "destination network": getChain(networkPrefix).name,
+    });
   }, [transferError]);
-  useEffect(() => {
+  /**
+   * on tx success
+   */
+  useWatch(() => {
     if (!transferResponse) return;
-    // sendEvent(successEvent)
-    // Milli: This is what opens the receipt modal, once it hits this point, we know that the transaction was sent and we have a hash for it
-    // it could still fail for some other reason that we don't know yet, like, not enough gas or something, but that will be a rare case
-    // I think it's safe enough to put success event here
-
+    sendEvent(SUCCESSFUL_SEND_TX, {
+      token: getTokenByRef(tokenAmount.ref).symbol,
+      "destination network": getChain(networkPrefix).name,
+      "transaction ID": transferResponse.hash,
+    });
     receiptModal.setIsOpen(true, {
       hash: transferResponse.hash,
       chainPrefix: networkPrefix,
     });
-  }, [networkPrefix, receiptModal, transferResponse]);
+  }, [transferResponse]);
 
   const action = useMemo(() => {
     if (isDisconnected) return "CONNECT";
