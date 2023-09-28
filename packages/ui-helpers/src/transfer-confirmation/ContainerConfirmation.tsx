@@ -8,7 +8,7 @@ export const ContainerConfirmation = ({
 }: ComponentProps<"div"> & {}) => {
   return (
     <div
-      className="flex items-center justify-center flex-col text-xl tracking-wider space-y-3"
+      className="flex items-center justify-center flex-col text-xl tracking-wider space-y-8"
       {...rest}
     />
   );

@@ -261,7 +261,7 @@ export const ReceiptModalContent = ({
           />
         </Divider>
         {!error && (
-          <>
+          <div className="w-full space-y-2">
             <ContainerItem>
               <ConfirmationText>
                 {t("transfer.confirmation.total.amount.sent")}
@@ -295,7 +295,7 @@ export const ReceiptModalContent = ({
                 </SkeletonLoading>
               </p>
             </ContainerItem>
-          </>
+          </div>
         )}
       </ContainerConfirmation>
 
