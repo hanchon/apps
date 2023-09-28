@@ -28,11 +28,12 @@ export const PrimaryButton = ({
         {
           "bg-red text-pearl hover:bg-red1 active:bg-red2":
             variant === "primary",
-          "border-2 border-pink-300 gradient": variant === "outline-primary",
-          "bg-red text-pearl hover:bg-red1 active:bg-red2 w-full text-base md:text-lg capitalize":
+          "border-2 border-pink-300 gradient w-full text-base md:text-lg rounded-md capitalize font-medium":
+            variant === "outline-primary",
+          "bg-red text-pearl hover:bg-red1 active:bg-red2 w-full text-base md:text-lg capitalize font-medium":
             variant === "primary-lg",
         },
-        disabled ? "disabled" : "",
+        disabled ? "disabled" : ""
       )}
       disabled={disabled}
       {...rest}

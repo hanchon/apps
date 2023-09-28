@@ -56,7 +56,25 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0xB8f812B5943ab3BF941D5D4F1de90A4b326c5d8f",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
+    },
+    {
+      "category": "cosmos",
+      "decimals": 6,
+      "denom": "KAVA",
+      "erc20Address": null,
+      "handledByExternalUI": null,
+      "description": "",
+      "listed": false,
+      "minCoinDenom": "ukava",
+      "name": "KAVA",
+      "ref": "kava:KAVA",
+      "sourceDenom": "ukava",
+      "sourcePrefix": "kava",
+      "symbol": "KAVA",
+      "tokenRepresentation": null,
+      "type": "IBC"
     }
   ],
   "explorerUrl": "https://www.mintscan.io/kava/txs"

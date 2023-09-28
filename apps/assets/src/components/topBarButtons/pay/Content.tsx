@@ -188,7 +188,7 @@ export const Content = ({
               <div className="flex h-28 rounded-md bg-gray-500 py-2 px-4 items-center justify-between text-xs md:text-sm">
                 {message}
               </div>
-              <div className="flex text-xs md:text-sm justify-end gap-1">
+              <div className="tracking-wide flex text-xs md:text-sm justify-end gap-1">
                 <span className="text-gray-400">{t("pay.from")}</span>
                 <span className="text-pink-300 font-semibold">
                   {truncateAddress(requester)}
@@ -277,7 +277,7 @@ export const Content = ({
                   </CryptoSelector>
                 </CryptoSelectorDropdownBox>
                 {selectedBalance && (
-                  <div className={`flex flex-col gap-2`}>
+                  <div className={`tracking-wider flex flex-col gap-2`}>
                     <span className="font-medium text-sm md:text-lg">
                       {t("pay.balance")}
                     </span>
@@ -288,7 +288,7 @@ export const Content = ({
                         }`}
                       >
                         <div className="flex items-center gap-2">
-                          <span className="text-xs md:text-sm">
+                          <span className="text-xs md:text-sm break-all">
                             {formatUnits(
                               selectedBalance?.value ?? 0n,
                               selectedBalance?.decimals ?? 0
@@ -307,8 +307,16 @@ export const Content = ({
                       </div>
                     </div>
                     {insufficientBalance && (
-                      <ErrorMessage displayIcon={false} className="mt-0">
+                      <ErrorMessage
+                        displayIcon={false}
+                        className="mt-0 font-normal"
+                      >
                         {t("message.insufficient.balance")}
+                      </ErrorMessage>
+                    )}
+                    {transferRejected && (
+                      <ErrorMessage className="justify-center mt-0 pl-0">
+                        {t("error.generating.transaction")}
                       </ErrorMessage>
                     )}
                   </div>
@@ -348,7 +356,6 @@ export const Content = ({
                       sendEvent(CLICK_ON_SWAP_ASSETS_PAY_FLOW);
                       window.open("https://forge.trade/#/swap", "_blank");
                     }}
-                    className="w-full text-lg rounded-md capitalize"
                   >
                     {t("pay.swap.button")}
                   </PrimaryButton>

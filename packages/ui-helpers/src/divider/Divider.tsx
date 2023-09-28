@@ -29,7 +29,7 @@ export const Divider = ({
           className={cx("px-2", {
             "bg-white text-gray-400 text-sm": variant === "default",
 
-            "bg-black text-pink-300 text-xs flex items-center space-x-2":
+            "bg-black-900 text-pink-300 text-xs flex items-center space-x-2":
               variant === "info",
           })}
           {...rest}

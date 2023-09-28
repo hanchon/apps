@@ -49,8 +49,9 @@ const generateReceipt = ({
 }) => ({
   sender: normalizeToCosmosAddress(sender as Address<Prefix>),
   receiver: normalizeToCosmosAddress(receiver as Address<Prefix>),
-  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${token.denom
-    }`,
+  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${
+    token.denom
+  }`,
   height: BigInt(height),
 });
 
@@ -89,9 +90,10 @@ const generateERC20TransferReceipt = (result: FetchTransactionResult) => {
 
   if (!amount || !amount || !receiver) throw new Error("Missing args");
   const tokenErc20Address = result.to?.toLowerCase();
+  if (!tokenErc20Address) throw new Error("Missing token contract address");
   const token =
     getTokens().find(
-      (token) => token.erc20Address.toLowerCase() === tokenErc20Address,
+      (token) => token.erc20Address?.toLowerCase() === tokenErc20Address
     ) ?? raise("Token not found");
 
   return generateReceipt({
@@ -108,10 +110,10 @@ const generateEVMTxReceipt = (result: FetchTransactionResult) => {
     sender: result.from,
     receiver: result.to ?? raise("Missing receiver"),
     amount: result.value,
-    token: getTokenByRef('evmos:EVMOS'),
+    token: getTokenByRef("evmos:EVMOS"),
     height: result.blockNumber,
   });
-}
+};
 
 const isIBCMsgTransfer = (message: unknown): message is MsgTransfer => {
   return (
@@ -192,7 +194,7 @@ const useBlock = (prefix?: Prefix, height?: bigint) => {
       const chainConfig = getChain(prefix);
       const result = await apiCosmosBlockByHeight(
         chainConfig.cosmosRest,
-        height,
+        height
       );
       return result;
     },
@@ -215,7 +217,7 @@ export const ReceiptModalContent = ({
 
   const { data: block, isLoading: isFetchingBlock } = useBlock(
     chainPrefix,
-    receipt?.height,
+    receipt?.height
   );
   const chain = getChain(chainPrefix ?? "evmos");
   const blockDate = block?.block?.header?.time
@@ -248,7 +250,9 @@ export const ReceiptModalContent = ({
                 {t("transfer.confirmation.message.successful.description2")}
               </>
             )}
-            {!!error && <span className="break-all">{E.ensureError(error).message}</span>}
+            {!!error && (
+              <span className="break-all">{E.ensureError(error).message}</span>
+            )}
           </SkeletonLoading>
         </ConfirmationMessage>
         <Divider variant="info" className="w-full">
@@ -259,7 +263,7 @@ export const ReceiptModalContent = ({
           />
         </Divider>
         {!error && (
-          <>
+          <div className="w-full space-y-2">
             <ContainerItem>
               <ConfirmationText>
                 {t("transfer.confirmation.total.amount.sent")}
@@ -293,7 +297,7 @@ export const ReceiptModalContent = ({
                 </SkeletonLoading>
               </p>
             </ContainerItem>
-          </>
+          </div>
         )}
       </ContainerConfirmation>
 
@@ -301,7 +305,9 @@ export const ReceiptModalContent = ({
         onClick={() => setIsOpen(false)}
         className="w-full text-lg rounded-md capitalize mt-11"
       >
-        {isReceiptLoading || (isFetchingBlock && !error) ? t("transfer.confirmation.button.text.loading") : t("transfer.confirmation.button.text")}
+        {isReceiptLoading || (isFetchingBlock && !error)
+          ? t("transfer.confirmation.button.text.loading")
+          : t("transfer.confirmation.button.text")}
       </PrimaryButton>
     </>
   );

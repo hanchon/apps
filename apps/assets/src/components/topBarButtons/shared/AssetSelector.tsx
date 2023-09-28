@@ -30,7 +30,7 @@ type Asset = {
 
 const tokenToUSD = (amount: bigint, price: number, decimals: number) => {
   const unformmatedUsd = Number(
-    formatUnits((amount * BigInt(~~(1000 * Number(price)))) / 1000n, decimals),
+    formatUnits((amount * BigInt(~~(1000 * Number(price)))) / 1000n, decimals)
   );
   return unformmatedUsd.toLocaleString("en-US", {
     style: "currency",
@@ -87,7 +87,7 @@ export const AssetSelector = ({
 
   const { balance, isLoading: isFetchingBalance } = useTokenBalance(
     address,
-    value.ref,
+    value.ref
   );
 
   const amountInUsd = price
@@ -218,55 +218,61 @@ export const AssetSelector = ({
           </CryptoSelector>
         </CryptoSelectorDropdownBox>
       </div>
-      <AmountInput
-        variant={
-          insufficientBalance ? "error" : isMaxClicked ? "info" : "default"
-        }
-        value={value.amount}
-        max={maxAllowedTransferAmount}
-        onChange={(amount) => {
-          onChange({
-            ...value,
-            amount,
-          });
-        }}
-        decimals={selectedToken?.decimals}
-        setIsMaxClicked={setIsMaxClicked}
-      />
-      <CryptoSelectorBalanceBox>
-        <div>{amountInUsd !== null && `≈${amountInUsd}`}</div>
-        <div>
-          {!isDisconnected && !balance && isFetchingBalance && (
-            <CryptoSelectorBalanceText>
-              {t("transfer.section.asset.balance.loading")}
-            </CryptoSelectorBalanceText>
-          )}
-          {balance && (
-            <>
-              <div>
-                <CryptoSelectorBalanceText>
-                  {t("transfer.section.asset.balance")}{" "}
-                </CryptoSelectorBalanceText>
-                {balance?.formatted ?? "0"}
-              </div>
-            </>
-          )}
+      <div className="space-y-2">
+        <AmountInput
+          variant={
+            insufficientBalance ? "error" : isMaxClicked ? "info" : "default"
+          }
+          value={value.amount}
+          max={maxAllowedTransferAmount}
+          onChange={(amount) => {
+            onChange({
+              ...value,
+              amount,
+            });
+          }}
+          decimals={selectedToken?.decimals}
+          setIsMaxClicked={setIsMaxClicked}
+        />
+        <CryptoSelectorBalanceBox>
+          <div>{amountInUsd !== null && `≈${amountInUsd}`}</div>
+          <div>
+            {!isDisconnected && !balance && isFetchingBalance && (
+              <CryptoSelectorBalanceText>
+                {t("transfer.section.asset.balance.loading")}
+              </CryptoSelectorBalanceText>
+            )}
+            {balance && (
+              <>
+                <div>
+                  <CryptoSelectorBalanceText>
+                    {t("transfer.section.asset.balance")}{" "}
+                  </CryptoSelectorBalanceText>
+                  {balance?.formatted ?? "0"}
+                </div>
+              </>
+            )}
 
-          {isDisconnected && (
-            <CryptoSelectorBalanceText>
-              {t("transfer.section.asset.balance")}{" "}
-              {t("transfer.section.asset.balance.error")}
-            </CryptoSelectorBalanceText>
-          )}
-        </div>
-      </CryptoSelectorBalanceBox>
+            {isDisconnected && (
+              <CryptoSelectorBalanceText>
+                {t("transfer.section.asset.balance")}{" "}
+                {t("transfer.section.asset.balance.error")}
+              </CryptoSelectorBalanceText>
+            )}
+          </div>
+        </CryptoSelectorBalanceBox>
+      </div>
       {isMaxClicked && (
-        <ErrorMessage variant="info" displayIcon={false}>
+        <ErrorMessage
+          variant="info"
+          className="font-normal"
+          displayIcon={false}
+        >
           {t("message.gas.fee.reserved.amount")}
         </ErrorMessage>
       )}
       {insufficientBalance && (
-        <ErrorMessage displayIcon={false}>
+        <ErrorMessage displayIcon={false} className="font-normal">
           {t("message.insufficient.balance")}
         </ErrorMessage>
       )}

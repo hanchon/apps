@@ -423,7 +423,7 @@ export const TransferModalContent = ({
                 <PrimaryButton
                   type="submit"
                   variant={"outline-primary"}
-                  className="w-full text-base md:text-lg rounded-md capitalize mt-8"
+                  className="mt-8"
                 >
                   {t("transfer.top.up.button.text")}
                 </PrimaryButton>

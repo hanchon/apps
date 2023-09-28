@@ -61,7 +61,8 @@ export default {
       "type": "IBC",
       "decimals": 18,
       "erc20Address": "0x98fAFD9F714CE0B4bB2870527076F2F314aAed82",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "NEOKingdom DAO",
@@ -77,7 +78,8 @@ export default {
       "type": "IBC",
       "decimals": 18,
       "erc20Address": "0x655ecB57432CC1370f65e5dc2309588b71b473A9",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "EVMOS",
@@ -93,7 +95,8 @@ export default {
       "type": "IBC",
       "decimals": 18,
       "erc20Address": "0xD4949664cD82660AaE99bEdc034a0deA8A0bd517",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     }
   ],
   "explorerUrl": "https://www.mintscan.io/evmos/txs"

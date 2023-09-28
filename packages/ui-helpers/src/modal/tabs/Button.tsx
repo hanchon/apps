@@ -27,16 +27,16 @@ export const Button = ({
             variant === "default" && tab.option === tab.type,
           "border-strokeGrey border":
             variant === "default" && tab.option !== tab.type,
-          "border-[#FFA1A1] border-2 bg-[#FF9E90] shadow-custom-pink text-black font-medium":
+          "border-[#FFA1A1] h-8 px-2 border-2 bg-[#FF9E90] shadow-custom-pink text-black font-medium":
             variant === "pink" && tab.option === tab.type,
-          "bg-pink-200 text-black font-light":
+          "bg-pink-200 text-black font-light h-8 px-2":
             variant === "pink" && tab.option !== tab.type,
           "border-[#FFA1A1] border-2 bg-[#FF9E90] shadow-custom-pink text-black font-medium md:h-11 md:w-11 h-9 w-9":
             variant === "pink-small" && tab.option === tab.type,
           "bg-pink-200 text-black font-light h-9 w-9 md:h-11 md:w-11":
             variant === "pink-small" && tab.option !== tab.type,
           disabled: tab.disabled,
-        },
+        }
       )}
       {...props}
     >

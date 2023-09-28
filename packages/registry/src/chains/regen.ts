@@ -57,7 +57,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0x0CE35b0D42608Ca54Eb7bcc8044f7087C18E7717",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     }
   ],
   "explorerUrl": "https://www.mintscan.io/regen/txs"
