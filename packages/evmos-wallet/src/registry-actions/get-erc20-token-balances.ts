@@ -10,18 +10,17 @@ export async function getERC20TokenBalances({
 }: {
   address: Address<"evmos">;
 }) {
-  const tokens = getTokens();
+  const tokens = getTokens().filter(({ erc20Address }) => erc20Address);
   const ethAddress = normalizeToEth(address);
   const response = await evmosClient.multicall({
-    contracts: tokens
-      .filter(({ erc20Address }) => erc20Address)
-      .map((token) => ({
-        abi: erc20ABI,
-        address: token.erc20Address as Hex,
-        functionName: "balanceOf",
-        args: [ethAddress],
-      })),
+    contracts: tokens.map((token) => ({
+      abi: erc20ABI,
+      address: token.erc20Address as Hex,
+      functionName: "balanceOf",
+      args: [ethAddress],
+    })),
   });
+
   const evmosAddress = normalizeToEvmos(address);
   return response
     .map((response, index) => {

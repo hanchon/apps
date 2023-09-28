@@ -36,6 +36,10 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.3.1 - 2023-10-28
+
+- (fix) | 1.3.1 fix stride balance in send modal
+
 ## 1.3.0 - 2023-10-28
 
 - (chore) | 1.3.0 new send/receive/request modals in assets page
