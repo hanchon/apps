@@ -1,6 +1,6 @@
 {
   "name": "vesting-page",
-  "version": "1.0.20",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3005",

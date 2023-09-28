@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) | apps/vesting 1.1.0 | vesting mainnet app
+
 ## 1.2.3 - 2023-09-11
 
 - (chore) | apps/assets 1.0.28 | adds neok support
