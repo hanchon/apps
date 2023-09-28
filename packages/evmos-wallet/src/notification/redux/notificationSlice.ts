@@ -37,7 +37,7 @@ export const notificationSlice = createSlice({
     },
     removeSnackbar: (
       state,
-      action: { type: string; payload: { id: number } }
+      action: { type: string; payload: { id: number } },
     ) => {
       const newMap: Snackbar[] = [];
       state.value.snackbars.forEach((v) => {

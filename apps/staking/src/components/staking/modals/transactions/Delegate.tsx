@@ -75,7 +75,7 @@ export const Delegate = ({
               onClick={() => {
                 const val = safeSubstraction(
                   evmosBalance,
-                  BigNumber.from(FEE_STAKING_ACTIONS)
+                  BigNumber.from(FEE_STAKING_ACTIONS),
                 );
                 setValue(numericOnly(convertFromAtto(val, 18)));
               }}
@@ -83,20 +83,22 @@ export const Delegate = ({
           </>
         </ContainerInput>
         {truncateNumber(value) === 0 && (
-          <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext} />
+          <ErrorMessage>
+            {MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext}
+          </ErrorMessage>
         )}
         {confirmClicked && value === "" && (
-          <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorAmountEmpty} />
+          <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorAmountEmpty}</ErrorMessage>
         )}
         {truncateNumber(value) >
           truncateNumber(numericOnly(convertFromAtto(evmosBalance, 18))) && (
-          <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorsAmountGt} />
+          <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorsAmountGt}</ErrorMessage>
         )}
         <p className="text-sm">
           {getReservedForFeeText(
             BigNumber.from(FEE_STAKING_ACTIONS),
             "EVMOS",
-            "EVMOS"
+            "EVMOS",
           )}
         </p>
       </div>

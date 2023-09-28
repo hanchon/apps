@@ -34,17 +34,17 @@ const Staking = ({
 
   const { handlePreClickAction: trackClickManageUndelegate } = useTracker(
     CLICK_BUTTON_MANAGE_UNDELEGATE,
-    { tabSelected: tab }
+    { tabSelected: tab },
   );
 
   const { handlePreClickAction: trackClickManageDelegate } = useTracker(
     CLICK_BUTTON_MANAGE_DELEGATE,
-    { tabSelected: tab }
+    { tabSelected: tab },
   );
 
   const { handlePreClickAction: trackClickManageRedelegate } = useTracker(
     CLICK_BUTTON_MANAGE_REDELEGATE,
-    { tabSelected: tab }
+    { tabSelected: tab },
   );
   return (
     <div className="space-y-4">

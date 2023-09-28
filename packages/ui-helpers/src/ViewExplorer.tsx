@@ -17,7 +17,7 @@ export const ViewExplorer = ({
       target="_blank"
       rel="noreferrer"
       href={`${explorerTxUrl}/${txHash}`}
-      className="flex w-fit items-center space-x-2 text-sm"
+      className="flex w-fit items-center space-x-2 text-xs"
     >
       <p>{text}</p>
       <ExternalLinkIcon width={18} height={18} />

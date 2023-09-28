@@ -12,10 +12,10 @@ import { t } from "../../locales/translate";
 
 export const NextStepsActionsDapp = ({ status }: { status: string }) => {
   const { handlePreClickAction: clickStake } = useTracker(
-    CLICK_ON_STAKE_COPILOT_BANNER
+    CLICK_ON_STAKE_COPILOT_BANNER,
   );
   const { handlePreClickAction: clickDapp } = useTracker(
-    CLICK_ON_USE_DAPP_COPILOT_BANNER
+    CLICK_ON_USE_DAPP_COPILOT_BANNER,
   );
 
   const handleStakeClick = () => {

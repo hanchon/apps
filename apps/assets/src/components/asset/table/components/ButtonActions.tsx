@@ -73,7 +73,7 @@ export const ButtonActions = ({
                 feeBalance={actionsProps.tableData.feeBalance}
                 address={value.evmosAddressCosmosFormat}
                 setShow={actionsProps.setShow}
-              />
+              />,
             );
           }}
         >
@@ -113,7 +113,7 @@ export const ButtonActions = ({
                 feeBalance={actionsProps.tableData.feeBalance}
                 address={value.evmosAddressCosmosFormat}
                 setShow={actionsProps.setShow}
-              />
+              />,
             );
           }}
         >
@@ -138,7 +138,7 @@ export const ButtonActions = ({
               feeBalance={actionsProps.tableData.feeBalance}
               address={value.evmosAddressCosmosFormat}
               setShow={actionsProps.setShow}
-            />
+            />,
           );
         }}
       >

@@ -1,6 +1,7 @@
 {
   "short_name": "EvmosMission",
   "name": "Evmos Mission",
+  "description": "Evmos app, dashboard and onboarding page.",
   "icons": [
     {
       "src": "favicon.ico",

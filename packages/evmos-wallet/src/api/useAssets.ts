@@ -3,25 +3,21 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
-import { StoreType } from "../redux/Store";
 import { ERC20BalanceResponse } from "./types";
 import { getAssetsForAddress } from "./fetch";
 import { addAssets, addDollarAssets, amountToDollars } from "helpers";
 import { BigNumber } from "@ethersproject/bignumber";
+import { useAccount } from "wagmi";
+import { normalizeToEvmos } from "../wallet";
 export const useAssets = () => {
-  const value = useSelector((state: StoreType) => state.wallet.value);
+  const { address = "" } = useAccount();
 
   const assets = useQuery<ERC20BalanceResponse, Error>({
-    queryKey: [
-      "commonAssets",
-      value.evmosAddressCosmosFormat,
-      value.evmosAddressEthFormat,
-    ],
+    queryKey: ["commonAssets", address],
     queryFn: () =>
       getAssetsForAddress(
-        value.evmosAddressCosmosFormat,
-        value.evmosAddressEthFormat
+        address ? normalizeToEvmos(address) : address,
+        address,
       ),
   });
 
@@ -64,15 +60,15 @@ export const useAssets = () => {
             amountToDollars(
               BigNumber.from(item.cosmosBalance),
               Number(item.decimals),
-              Number(item.coingeckoPrice)
-            )
+              Number(item.coingeckoPrice),
+            ),
           ) +
           parseFloat(
             amountToDollars(
               BigNumber.from(item.erc20Balance),
               Number(item.decimals),
-              Number(item.coingeckoPrice)
-            )
+              Number(item.coingeckoPrice),
+            ),
           );
       }
     });
@@ -97,11 +93,11 @@ export const useAssets = () => {
     }
 
     const evmosData = assets.data.balance.filter(
-      (i) => i.symbol.toLowerCase() === "evmos"
+      (i) => i.symbol.toLowerCase() === "evmos",
     );
 
     total = BigNumber.from(evmosData[0].cosmosBalance).add(
-      BigNumber.from(evmosData[0].erc20Balance)
+      BigNumber.from(evmosData[0].erc20Balance),
     );
 
     return total;
@@ -115,6 +111,7 @@ export const useAssets = () => {
     return `$${Number(assets.data.balance[0].coingeckoPrice).toFixed(2)}`;
   }, [assets.data]);
   return {
+    sourceData: assets.data,
     assets: getAssetsForMissionControl,
     totalAssets: getTotalAssetsForMissionControl,
     totalEvmosAsset: getTotalEvmos,

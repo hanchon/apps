@@ -11,7 +11,7 @@ export async function voteBackendCall(
   pubkey: string,
   address: string,
   id: string,
-  option: number
+  option: number,
 ): Promise<{
   error: boolean;
   message: string;

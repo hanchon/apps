@@ -15,7 +15,7 @@ const RadioElementContainer = ({
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setSelected(event.target.value);
     },
-    [setSelected]
+    [setSelected],
   );
   return (
     <div>

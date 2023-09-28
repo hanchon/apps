@@ -10,7 +10,7 @@ import { raise } from "helpers";
 import { keplrConnector } from "./connectors";
 const recoveryMessage = "generate_pubkey";
 const hashedMessage = Buffer.from(
-  fromHex(hashMessage(recoveryMessage), "bytes")
+  fromHex(hashMessage(recoveryMessage), "bytes"),
 );
 const baseKey = "evmos/pubkey";
 export const usePubKey = () => {
@@ -24,7 +24,7 @@ export const usePubKey = () => {
     initialData() {
       if (typeof window === "undefined") return;
       const cachedKey = window.localStorage.getItem(
-        [baseKey, address].join("/")
+        [baseKey, address].join("/"),
       );
       if (cachedKey) return cachedKey;
     },
@@ -40,7 +40,7 @@ export const usePubKey = () => {
 
       pubkey = await queryPubKey(
         EVMOS_GRPC_URL,
-        ethToEvmos(address ?? raise("WALLET_PROVIDER_NOT_AVAILABLE"))
+        ethToEvmos(address ?? raise("WALLET_PROVIDER_NOT_AVAILABLE")),
       );
 
       if (pubkey) return pubkey;

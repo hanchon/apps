@@ -20,7 +20,7 @@ export const Badge = ({
           "bg-red text-pearl ring-red": variant === "danger",
           "text-darkGray300 ring-darkGray300": variant === "info",
         },
-        className
+        className,
       )}
       {...rest}
     />

@@ -21,19 +21,19 @@ export const Header = ({
   launchPad: LaunchPadProps;
 }) => {
   return (
-    <div className="text-pearl mb-3 flex flex-col md:mx-0 md:h-32 md:flex-row md:items-center md:justify-between">
-      <div className="flex items-center justify-center md:justify-start">
-        <Link
-          href={EVMOS_PAGE_URL}
-          rel="noreferrer"
-          className="flex items-center space-x-3 md:pr-14"
-          aria-label="home"
-          onClick={onClick}
-        >
-          <Logo className="h-20 w-32 md:w-36" />
-          <span className="text-red text-3xl font-bold">{pageName}</span>
-        </Link>
-      </div>
+    <div className="mt-5 md:mt-0 text-pearl mb-3 flex flex-col md:mx-0 md:h-32 md:flex-row md:items-center md:justify-between">
+      <Link
+        href={EVMOS_PAGE_URL}
+        rel="noreferrer"
+        className="flex justify-center items-center h-7 md:h-8 lg:h-9"
+        aria-label="home"
+        onClick={onClick}
+      >
+        <Logo className="h-7 md:h-8 lg:h-9 w-auto mr-2 lg:mr-3" />
+        <p className="text-red relative top-[6px] text-[24px] md:text-[30px] lg:text-[36px] font-bold font-[NB] ">
+          <span className="text-pearl mr-4 md:mr-5 lg:mr-6">Evmos</span>{pageName}</p>
+      </Link>
+
       <div className="flex items-center justify-center md:space-x-16">
         <div className="font-sm text-pearl bg-darGray800 hidden cursor-default items-center justify-center space-x-3 rounded-full px-4 py-2 font-bold md:flex">
           <EvmosRedIcon width={"20"} height={"20"} />

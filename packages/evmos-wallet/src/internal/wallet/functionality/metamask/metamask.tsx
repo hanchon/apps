@@ -53,7 +53,7 @@ export class Metamask {
   constructor(
     reduxStore: ReduxWalletStore,
     notificationsEnabled = true,
-    grpcEndpoint: string = EVMOS_GRPC_URL
+    grpcEndpoint: string = EVMOS_GRPC_URL,
   ) {
     this.grpcEndpoint = grpcEndpoint;
     this.reduxStore = reduxStore;
@@ -97,7 +97,7 @@ export class Metamask {
             text: METAMASK_NOTIFICATIONS.PubkeySubtext,
           },
           store,
-          this.notificationsEnabled
+          this.notificationsEnabled,
         );
         this.reset();
         return;
@@ -113,7 +113,7 @@ export class Metamask {
           evmosPubkey: this.evmosPubkey,
           osmosisPubkey: null,
           accountName: null,
-        })
+        }),
       );
       SaveProviderToLocalStorate(METAMASK_KEY);
       // show the connect snackbar only if the user clicks on connect wallet
@@ -128,7 +128,7 @@ export class Metamask {
             "Connected with wallet " + truncateAddress(this.addressEthFormat),
         },
         store,
-        this.notificationsEnabled
+        this.notificationsEnabled,
       );
 
       SaveProviderToLocalStorate(METAMASK_KEY);
@@ -150,7 +150,7 @@ export class Metamask {
           text: METAMASK_NOTIFICATIONS.ExtensionNotFoundSubtext,
         },
         store,
-        this.notificationsEnabled
+        this.notificationsEnabled,
       );
 
       return {
@@ -180,7 +180,7 @@ export class Metamask {
           text: METAMASK_NOTIFICATIONS.AddressSubtext,
         },
         store,
-        this.notificationsEnabled
+        this.notificationsEnabled,
       );
 
       return {

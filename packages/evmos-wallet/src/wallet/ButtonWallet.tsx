@@ -20,7 +20,7 @@ export const ButtonWallet = ({
         "transition-all duration-300",
         {
           disabled: disabled,
-        }
+        },
       )}
       {...props}
     />
