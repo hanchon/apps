@@ -47,14 +47,6 @@ export const AccountContent = ({
             hexAddress={evmosToEth(vestingDetails.funderAddress)}
             title={t("vesting.account.details.funder.address.title")}
           />
-
-          <div className="space-y-2">
-            <p className="smallText">
-              {t("vesting.account.details.governance.clawback.title")}
-            </p>
-            {/* TODO: add correct value here */}
-            <p>Allowed</p>
-          </div>
         </div>
         <div className="my-5 mr-1 space-y-5 rounded-2xl bg-darkGray2 p-5 font-[IBM] text-sm text-pearl xl:mx-0 ">
           <AmountItem

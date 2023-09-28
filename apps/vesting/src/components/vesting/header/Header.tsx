@@ -6,7 +6,6 @@ import { useState } from "react";
 import { FundVestingAccount } from "./FundVestingAccount";
 import { EnableVestingModal } from "./EnableVestingModal";
 import { useTranslation } from "next-i18next";
-import { useAccount } from "wagmi";
 
 export const Header = () => {
   const handleConfirmClick = () => {

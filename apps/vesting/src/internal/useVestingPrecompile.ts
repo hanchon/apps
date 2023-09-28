@@ -1,7 +1,6 @@
 import VestingABI from "./abis/VestingABI.json";
 import { Period } from "@evmos/transactions";
 import { prepareWriteContract, writeContract } from "wagmi/actions";
-import { useAccount } from "wagmi";
 import { useSelector } from "react-redux";
 import { StoreType } from "evmos-wallet";
 

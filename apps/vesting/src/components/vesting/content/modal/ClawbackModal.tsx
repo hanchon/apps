@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useVestingPrecompile } from "../../../../internal/useVestingPrecompile";
 import { useTranslation } from "next-i18next";
+import { evmosToEth } from "@evmos/address-converter";
 
 // TODO: format totalTokens and availableClawback depending on the response
 export const ClawbackModal = ({
@@ -32,9 +33,9 @@ export const ClawbackModal = ({
       setDisabled(true);
 
       const res = await clawback(
-        vestingDetails?.funderAddress ?? "",
-        vestingDetails?.accountAddress ?? "",
-        vestingDetails?.funderAddress ?? "",
+        evmosToEth(vestingDetails?.funderAddress) ?? "",
+        evmosToEth(vestingDetails?.accountAddress) ?? "",
+        evmosToEth(vestingDetails?.funderAddress) ?? "",
       );
       dispatch(
         addSnackbar({
@@ -50,7 +51,7 @@ export const ClawbackModal = ({
       );
       setDisabled(false);
     } catch (e) {
-      // TODO: Add Sentry here!
+      setDisabled(false)      
       dispatch(
         addSnackbar({
           id: 0,

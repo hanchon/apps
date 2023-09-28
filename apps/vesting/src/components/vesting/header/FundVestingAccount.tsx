@@ -1,11 +1,11 @@
 import {
-  // ErrorContainer,
+  ErrorContainer,
   ErrorMessage,
   ModalTitle,
   SelectMenu,
-  // WizardHelper,
+  WizardHelper,
 } from "ui-helpers";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatNumber } from "helpers";
@@ -14,6 +14,8 @@ import {
   PlansType,
   dummyProps,
   getEndDate,
+  isEthereumAddressValid,
+  isEvmosAddressValid,
   schema,
   setVestingAccountNameLocalstorage,
   vestingSettingsConfig,
@@ -38,13 +40,56 @@ import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { Dayjs } from "dayjs";
 import { useTranslation } from "next-i18next";
 import { BigNumber } from "@ethersproject/bignumber";
+import { ethToEvmos } from "@evmos/address-converter";
+import { getVesting } from "../../../internal/fetch";
+import { VestingResponse } from "../../../internal/types";
 
 export const FundVestingAccount = () => {
   const [disabled, setDisabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
-
+  const [vestingAddress, setVestingAddress] = useState("")
+  const [vestingAddressError, setVestingAddressError] = useState(false)
+  const [vestingAddressData, setVestingAddressData] = useState<VestingResponse | null>(null)
   const { fundVestingAccount } = useVestingPrecompile();
+
+  useEffect(() => {
+
+    function fetchVestingData() {
+      let _vestingAddress
+
+      try {
+        if (vestingAddress.startsWith("0x")) {
+          if (!isEthereumAddressValid(vestingAddress)) {
+            return
+          }
+          _vestingAddress = ethToEvmos(vestingAddress)
+  
+        } else if (vestingAddress.startsWith("evmos")) {
+          if (!isEvmosAddressValid(vestingAddress)) {
+            return
+          }
+          _vestingAddress = vestingAddress
+        }
+        getVesting(
+          _vestingAddress
+        ).then(data => {
+          if (data === "Error while getting vesting account info") {
+            setVestingAddressError(true)
+            return
+          }
+          const vestingDataRes: VestingResponse = (data as VestingResponse)
+          setVestingAddressData(vestingDataRes)
+        }).catch(() => {
+          setVestingAddressError(true)
+        }) 
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    fetchVestingData()
+   
+  }, [vestingAddress])
 
   const handleOnClick = async (d: FieldValues) => {
     try {
@@ -54,7 +99,7 @@ export const FundVestingAccount = () => {
         generateVestingSchedule(
           d.startDate as Dayjs,
           BigNumber.from(d.amount),
-          "atevmos",
+          "aevmos",
           {
             fullVestingPeriod: d.vestingDuration as TimeWindow,
             vestingInterval: d.vestingSchedule as Intervals,
@@ -85,8 +130,6 @@ export const FundVestingAccount = () => {
       );
       setDisabled(false);
     } catch (e) {
-      console.log("catch", e);
-      // TODO: Add Sentry here!
       setDisabled(false);
       dispatch(
         addSnackbar({
@@ -244,33 +287,32 @@ export const FundVestingAccount = () => {
         <label htmlFor="address" className="text-xs font-bold">
           {t("vesting.fund.address.title")}
         </label>
-        <input id="address" {...register("address")} className="textBoxStyle" />
+        <input
+         id="address" {...register("address")}
+         onChange={(e) => setVestingAddress(e.target.value)}
+        className="textBoxStyle" />
         {errors.address?.message && (
           <ErrorMessage text={errors.address.message.toString()} />
         )}
 
         {/* TODO: show the correct message depending on the address */}
-        {/* <ErrorContainer description={t("enable.error")} />
+        { vestingAddressError &&
+          <ErrorContainer description={t("enable.error")} />
+        }
 
-        <ErrorContainer description={t("fund.create.error")} />
+        { !vestingAddressError && vestingAddressData?.account?.funder_address && vestingAddressData?.account?.funder_address?.toLowerCase() !== wallet?.evmosAddressCosmosFormat?.toLocaleLowerCase() &&
+         <ErrorContainer description={t("fund.create.error")} />
+        }
 
-        <ErrorContainer description={t("fund.already.funded.error")} />
-
-        <WizardHelper>
-          <p>
-            {t("fund.alert.governance.clawback")}{" "}
-            <b>{t("fund.alert.governance.clawback.support")}</b>{" "}
-            {t("fund.alert.governance.clawback.description")}
-          </p>
-        </WizardHelper>
-
-        <WizardHelper>
-          <p>
-            {t("fund.alert.governance.clawback")}{" "}
-            <b>{t("fund.alert.governance.clawback.not.support")}</b>{" "}
-            {t("fund.alert.governance.clawback.description")}
-          </p>
-        </WizardHelper> */}
+        { !vestingAddressError && vestingAddressData && vestingAddressData?.account?.base_vesting_account?.original_vesting?.length > 0 &&
+       
+       <WizardHelper>
+       <p>
+         {t("fund.already.funded.warning")}{" "}
+       </p>
+      </WizardHelper>
+       
+        }
 
         <label
           htmlFor="accountName"
@@ -307,7 +349,7 @@ export const FundVestingAccount = () => {
 
         <input
           type="submit"
-          disabled={disabled}
+          disabled={disabled || vestingAddressError}
           style={{ backgroundColor: "#ed4e33" }}
           className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg text-pearl"
           value={t("vesting.fund.button.action.title")}

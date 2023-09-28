@@ -4,12 +4,13 @@ import { ClawbackModal } from "./modal/ClawbackModal";
 import { getVestingAccountNameLocalstorage } from "../helpers";
 import { useVestingAccounts } from "../../../internal/hooks/useVesting";
 import { AccountContent } from "./modal/AccountContent";
+import { ethToEvmos } from "@evmos/address-converter";
 
-export const AccountDetails = ({ account }: { account?: string }) => {
+export const AccountDetails = ({ account = "" }: { account?: string }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
-
-  const { loading, error, vestingDetails } = useVestingAccounts(account);
+  const _account = account.startsWith("0x") ? ethToEvmos(account) : account;
+  const { loading, error, vestingDetails } = useVestingAccounts(_account);
 
   const handleClawbackClick = useCallback(() => {
     setShowModal(true);
