@@ -36,6 +36,10 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.3.0 - 2023-10-28
+
+- (chore) | 1.3.0 new send/receive/request modals in assets page
+
 ## 1.2.3 - 2023-09-11
 
 - (chore) | apps/assets 1.0.28 | adds neok support
