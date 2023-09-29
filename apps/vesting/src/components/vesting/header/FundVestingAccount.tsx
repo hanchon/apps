@@ -12,7 +12,6 @@ import { formatNumber } from "helpers";
 import {
   DEFAULT_FORM_VALUES,
   PlansType,
-  dummyProps,
   getEndDate,
   isEthereumAddressValid,
   isEvmosAddressValid,
@@ -43,6 +42,8 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { ethToEvmos } from "@evmos/address-converter";
 import { getVesting } from "../../../internal/fetch";
 import { VestingResponse } from "../../../internal/types";
+import { getEvmosBalance } from "evmos-wallet/src/internal/wallet/functionality/fetch";
+import { ethers } from "ethers";
 
 export const FundVestingAccount = () => {
   const [disabled, setDisabled] = useState(false);
@@ -53,6 +54,28 @@ export const FundVestingAccount = () => {
   const [vestingAddressData, setVestingAddressData] =
     useState<VestingResponse | null>(null);
   const { fundVestingAccount } = useVestingPrecompile();
+  const [funderBalance, setFunderBalance] = useState(BigNumber.from(0));
+  const [fundAmount, setAmount] = useState("0")
+
+  useEffect(() => {
+    getEvmosBalance(
+      wallet.evmosAddressCosmosFormat
+    ).then(balance => {
+      setFunderBalance(
+        BigNumber.from(balance?.balance.amount ? balance.balance.amount : 0),
+      )
+    }).catch(() => { })
+  }, [wallet.evmosAddressCosmosFormat])
+
+  useEffect(() => {
+    const _amount = BigNumber.from(ethers.parseEther(fundAmount))
+    if (_amount.gt(funderBalance)) {
+      setDisabled(true)
+    }
+    else {
+      setDisabled(false)
+    }
+  }, [fundAmount, funderBalance])
 
   useEffect(() => {
     function fetchVestingData() {
@@ -177,8 +200,7 @@ export const FundVestingAccount = () => {
 
       <form
         onSubmit={handleSubmit(async (d) => {
-          console.log(d);
-          await handleOnClick(d).then(() => {});
+          await handleOnClick(d).then(() => { });
         })}
         className="flex flex-col space-y-3"
       >
@@ -291,30 +313,32 @@ export const FundVestingAccount = () => {
           onChange={(e) => setVestingAddress(e.target.value)}
           className="textBoxStyle"
         />
-        {errors.address?.message && (
-          <ErrorMessage>{errors.address.message}</ErrorMessage>
-        )}
 
-        {/* TODO: show the correct message depending on the address */}
-        {vestingAddressError && (
-          <ErrorContainer description={t("enable.error")} />
-        )}
+        <div className="max-w-[320px]">
+          {errors.address?.message && (
+            <ErrorMessage>{errors.address.message}</ErrorMessage>
+          )}
+          {vestingAddressError && (
+            <ErrorContainer description={t("enable.error")} />
+          )}
 
-        {!vestingAddressError &&
-          vestingAddressData?.account?.funder_address &&
-          vestingAddressData?.account?.funder_address?.toLowerCase() !==
+          {!vestingAddressError &&
+            vestingAddressData?.account?.funder_address &&
+            vestingAddressData?.account?.funder_address?.toLowerCase() !==
             wallet?.evmosAddressCosmosFormat?.toLocaleLowerCase() && (
-            <ErrorContainer description={t("fund.create.error")} />
-          )}
+              <ErrorContainer description={t("fund.create.error")} />
+            )}
 
-        {!vestingAddressError &&
-          vestingAddressData &&
-          vestingAddressData?.account?.base_vesting_account?.original_vesting
-            ?.length > 0 && (
-            <WizardHelper>
-              <p>{t("fund.already.funded.warning")} </p>
-            </WizardHelper>
-          )}
+          {!vestingAddressError &&
+            vestingAddressData &&
+            vestingAddressData?.account?.base_vesting_account?.original_vesting
+              ?.length > 0 && (
+              <WizardHelper>
+                <p>{t("fund.already.funded.warning")} </p>
+              </WizardHelper>
+            )}
+        </div>
+
 
         <label
           htmlFor="accountName"
@@ -335,14 +359,14 @@ export const FundVestingAccount = () => {
           <span className="font-bold">{t("vesting.fund.amount.title")}</span>
           <span>
             {t("vesting.fund.amount.description")}{" "}
-            {/* // TODO: use the correct value */}
-            {formatNumber(dummyProps.available)} EVMOS
+            {formatNumber(ethers.formatEther(funderBalance.toString()))} EVMOS
           </span>
         </label>
         <input
           type="number"
           id="amount"
           {...register("amount", { valueAsNumber: true })}
+          onChange={(e) => setAmount(e.target.value)}
           className="textBoxStyle"
         />
         {errors.amount?.message && (
@@ -353,7 +377,7 @@ export const FundVestingAccount = () => {
           type="submit"
           disabled={disabled || vestingAddressError}
           style={{ backgroundColor: "#ed4e33" }}
-          className="w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg text-pearl"
+          className={`w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg text-pearl ${disabled ? "opacity-40" : ""}`}
           value={t("vesting.fund.button.action.title")}
         />
       </form>

@@ -1,4 +1,4 @@
-import { ErrorMessage, Label, ModalTitle, Toggle } from "ui-helpers";
+import { ErrorMessage, Label, ModalTitle } from "ui-helpers";
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,7 +21,6 @@ import { useTranslation } from "next-i18next";
 
 export const EnableVestingModal = () => {
   const [disabled, setDisabled] = useState(false);
-  const [govClawbackEnabled, setGovClawbackEnabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
   const { createClawbackVestingAccount } = useVestingPrecompile();
@@ -33,7 +32,7 @@ export const EnableVestingModal = () => {
       const res = await createClawbackVestingAccount(
         d.address as string,
         wallet.evmosAddressEthFormat,
-        govClawbackEnabled
+        false
       );
 
       dispatch(
@@ -92,26 +91,11 @@ export const EnableVestingModal = () => {
         })}
         className="flex flex-col space-y-3"
       >
-        <Label id="address">{t("enable.modal.address.title")}</Label>
+        <Label className="text-black" id="address">{t("enable.modal.address.title")}</Label>
         <input id="address" {...register("address")} className="textBoxStyle" />
         {errors.address?.message && (
           <ErrorMessage>{errors.address.message.toString()}</ErrorMessage>
         )}
-        <div className="flex text-xs justify-between">
-          <p className="flex gap-1">
-            {t("enable.modal.toggle.description")}{" "}
-            <span className="font-bold">
-              {govClawbackEnabled
-                ? t("enable.modal.toggle.description.enabled")
-                : t("enable.modal.toggle.description.disabled")}
-            </span>
-          </p>
-          <Toggle
-            enabled={govClawbackEnabled}
-            setEnabled={setGovClawbackEnabled}
-          />
-        </div>
-
         <input
           type="submit"
           disabled={disabled}

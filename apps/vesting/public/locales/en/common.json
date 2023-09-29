@@ -17,7 +17,7 @@
   "vesting.account.details.vested.title": "Vested",
   "vesting.account.details.not.vested.title": "Not Vested",
   "enable.modal.title": "Enable Vesting",
-  "enable.modal.address.title": "ADDRESS",
+  "enable.modal.address.title": "FUNDER'S ADDRESS",
   "enable.modal.governance.clawback": "GOVERNANCE CLAWBACK",
   "enable.modal.toggle.description": "Clawback through governance",
   "enable.modal.governance.clawback.tooltip.description": "If enabled, a governance proposal will be allowed to trigger the clawback.",

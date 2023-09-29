@@ -38,7 +38,7 @@ export const SelectMenu = ({
           </Label>
           <div className="relative mt-2" id={id}>
             <Listbox.Button
-              className={`cursor-pointer textBoxStyle
+              className={`cursor-pointer text-left w-full textBoxStyle
             ${disabled && "disabled"}`}
             >
               <span>{selected}</span>
