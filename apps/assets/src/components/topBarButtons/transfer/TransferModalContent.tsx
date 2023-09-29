@@ -210,6 +210,10 @@ export const TransferModalContent = ({
     if (!validation.hasSufficientBalanceForFee && !isPreparing)
       sendEvent(INSUFFICIENT_FEE_AMOUNT);
   }, [validation.hasSufficientBalanceForFee, isPreparing, sendEvent]);
+
+  const showFeeErrorMessage =
+    !validation.hasSufficientBalanceForFee &&
+    (action === "TOPUP" || action === "TRANSFER");
   return (
     <section className="space-y-8 w-full">
       <Title
@@ -411,23 +415,21 @@ export const TransferModalContent = ({
                 />
               </>
             )}
+            {showFeeErrorMessage && (
+              <ErrorMessage className="justify-center pl-0">
+                {t("message.insufficiente.fee")}
+                {feeBalance?.formatted ?? 0} {feeToken?.symbol}
+              </ErrorMessage>
+            )}
 
             {action === "TOPUP" && (
-              <>
-                {!validation.hasSufficientBalanceForFee && (
-                  <ErrorMessage className="justify-center pl-0">
-                    {t("message.insufficiente.fee")}
-                    {feeBalance?.formatted ?? 0} {feeToken?.symbol}
-                  </ErrorMessage>
-                )}
-                <PrimaryButton
-                  type="submit"
-                  variant={"outline-primary"}
-                  className="mt-8"
-                >
-                  {t("transfer.top.up.button.text")}
-                </PrimaryButton>
-              </>
+              <PrimaryButton
+                type="submit"
+                variant={"outline-primary"}
+                className="mt-8"
+              >
+                {t("transfer.top.up.button.text")}
+              </PrimaryButton>
             )}
             {action === "BRIDGE" && (
               <>
