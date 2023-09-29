@@ -62,7 +62,7 @@
     "last 3 safari version"
   ],
   "dependencies": {
-    "@playwright/test": "^1.37.1",
+    "@playwright/test": "^1.38.1",
     "dotenv": "^16.3.1"
   }
 }

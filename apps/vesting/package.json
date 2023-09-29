@@ -39,8 +39,8 @@
     "evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
     "icons": "workspace:*",
-    "next-i18next": "^14.0.0",
     "next": "13.5.2",
+    "next-i18next": "^14.0.0",
     "playwright-config-custom": "workspace:*",
     "postcss": "^8.4.20",
     "react": "18.2.0",
@@ -64,9 +64,10 @@
   ],
   "dependencies": {
     "@hookform/resolvers": "^3.1.1",
-    "@playwright/test": "^1.37.1",
+    "@playwright/test": "^1.38.1",
     "constants-helper": "workspace:*",
     "copilot": "workspace:*",
+    "dayjs": "^1.11.8",
     "dotenv": "^16.3.1",
     "evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
@@ -75,7 +76,6 @@
     "tracker": "workspace:*",
     "ui-helpers": "workspace:*",
     "vitest": "^0.34.1",
-    "zod": "^3.22.1",
-    "dayjs": "^1.11.8"
+    "zod": "^3.22.1"
   }
 }
