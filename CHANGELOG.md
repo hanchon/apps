@@ -38,6 +38,18 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 - (chore) | apps/vesting 1.1.0 | vesting mainnet app
 
+## 1.3.2 - 2023-10-29
+
+- (fix) | apps/assets 1.0.29 | fee error message was not being displayed when fee was not paid in Evmos
+
+## 1.3.1 - 2023-10-28
+
+- (fix) | 1.3.1 fix stride balance in send modal
+
+## 1.3.0 - 2023-10-28
+
+- (chore) | 1.3.0 new send/receive/request modals in assets page
+
 ## 1.2.3 - 2023-09-11
 
 - (chore) | apps/assets 1.0.28 | adds neok support
@@ -54,6 +66,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 - (ci) | Adding PR review template
 - (chore) | packages/config 1.0.1 | Adding missing headers
 - (chore) fse-735 | apps/assets 1.0.25 apps/governance 1.0.23 apps/mission 1.0.22 apps/staking 1.0.21 apps/vesting 1.0.19 packages/constants-helper 1.0.6 packages/ui-helpers 1.0.14 | Add Mava Widget to all apps.
+- (feature) | packages/registry 1.0.0 | Creates typesafe registry package
 - (refactor) | packages/config 1.0.0 packages/evmos-wallet 1.0.8 packages/evmos-wallet 1.0.15 | refactor wallet setup to use the latest Wagmi version, fixes Wallet Connect integration
 
 ## 1.2.0 - 2023-08-21

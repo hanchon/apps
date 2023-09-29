@@ -69,17 +69,19 @@ const FromContainer = ({ fee, balance, input, style }: FromProps) => {
       </div>
 
       {truncateNumber(input.value) === 0 && (
-        <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext} />
+        <ErrorMessage>
+          {MODAL_NOTIFICATIONS.ErrorZeroAmountSubtext}
+        </ErrorMessage>
       )}
 
       {input.confirmClicked && input.value === "" && (
-        <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorAmountEmpty} />
+        <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorAmountEmpty}</ErrorMessage>
       )}
 
       {truncateNumber(input.value) >
         truncateNumber(
           numericOnly(convertFromAtto(balance.amount, balance.decimals)),
-        ) && <ErrorMessage text={MODAL_NOTIFICATIONS.ErrorsAmountGt} />}
+        ) && <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorsAmountGt}</ErrorMessage>}
       <div>
         <span className="font-bold">Balance: </span>
         {convertAndFormat(balance.amount, balance.decimals, 6).replace(

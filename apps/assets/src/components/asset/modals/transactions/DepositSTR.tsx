@@ -141,7 +141,7 @@ const DepositSTR = ({
           balance = await getBalance(
             walletToUse,
             chain?.chain.toUpperCase() ?? "",
-            tokenDenom
+            tokenDenom,
           );
         }
       }

@@ -1,3 +1,4 @@
+import { serialize } from "wagmi";
 import { z } from "zod";
 
 export async function fetchAndValidate<TSchema extends z.ZodType<unknown>>(
@@ -6,6 +7,22 @@ export async function fetchAndValidate<TSchema extends z.ZodType<unknown>>(
   init?: RequestInit,
 ): Promise<z.infer<TSchema>> {
   const response = await fetch(input, init);
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
   const json = (await response.json()) as unknown;
-  return schema.parse(json);
+  const result = schema.safeParse(json);
+  if (result.success) {
+    return result.data;
+  }
+
+  const error = new Error(
+    [
+      `Failed to validate response from ${serialize(input)}.\n${
+        result.error.message
+      }`,
+      `Received:\n${JSON.stringify(json, null, 2)}`,
+    ].join("\n"),
+  );
+  throw error;
 }

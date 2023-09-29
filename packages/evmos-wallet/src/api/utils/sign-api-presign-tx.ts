@@ -12,7 +12,7 @@ import {
   apiBroadcastAmino,
   apiBroadcastEip712,
   apiBroadcastRawTx,
-} from "../broadcast";
+} from "../evmos-api/broadcast";
 import { ApiPresignTx } from "../../utils";
 import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
 const evmosInfo = getEvmosChainInfo();

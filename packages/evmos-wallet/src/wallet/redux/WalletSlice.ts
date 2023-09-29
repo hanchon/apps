@@ -4,7 +4,6 @@
 import { AnyAction, createSlice, ThunkMiddleware } from "@reduxjs/toolkit";
 import { WalletExtension } from "../../internal/wallet/functionality/wallet";
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
-import "immer";
 
 export declare type ReduxWalletStore = ToolkitStore<
   {

@@ -27,10 +27,10 @@ export const executeApiTransaction = async (
 ) => {
   const [apiError, apiResponse] = await E.try(() => fetchApi());
   const [signError, signed] = await E.try(
-    () => apiResponse && signFn(apiResponse),
+    async () => apiResponse && (await signFn(apiResponse)),
   );
   const [broadcastError, hash] = await E.try(
-    () => signed && signed.broadcast(),
+    async () => signed && (await signed.broadcast()),
   );
   const error = apiError || signError || broadcastError;
   if (error || !hash || !apiResponse) {

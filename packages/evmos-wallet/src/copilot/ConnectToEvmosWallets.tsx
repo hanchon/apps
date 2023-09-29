@@ -64,7 +64,7 @@ export const ConnectToEvmosWallets = ({
     useTracker(UNSUCCESSFUL_WALLET_CONNECTION);
 
   return (
-    <div className="space-y-3 bg-white px-4 pb-4 pt-5 sm:p-6 md:col-span-2 md:px-8">
+    <div className="space-y-3">
       {copilotModal !== undefined && copilotModal}
       <div className="flex flex-col space-y-3">
         {providers
@@ -104,7 +104,7 @@ export const ConnectToEvmosWallets = ({
                     WALLET_NOTIFICATIONS.ExtensionNotFoundSubtext,
                     {
                       walletName: label,
-                    }
+                    },
                   );
                   return;
                 }
@@ -117,7 +117,7 @@ export const ConnectToEvmosWallets = ({
                     WALLET_NOTIFICATIONS.AddressSubtext,
                     {
                       walletName: label,
-                    }
+                    },
                   );
                   return;
                 }
@@ -131,7 +131,7 @@ export const ConnectToEvmosWallets = ({
                     "The connection was rejected",
                     {
                       walletName: label,
-                    }
+                    },
                   );
                   return;
                 }

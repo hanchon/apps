@@ -124,17 +124,6 @@ export const schema = z.object({
             message: "Address must start with 'evmos' or '0x'",
           },
         ),
-    )
-    .and(
-      z
-        .string()
-        .refine(
-          (value: string) =>
-            isEthereumAddressValid(value) || isEvmosAddressValid(value),
-          {
-            message: "Incorrect format for address",
-          },
-        ),
     ),
   accountName: z.string(),
   amount: z

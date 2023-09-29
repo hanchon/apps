@@ -33,7 +33,7 @@ export const useEvmosBalance = () => {
   const evmosBalance = useQuery<BalanceResponse, Error>({
     queryKey: ["evmosBalance", value.evmosAddressCosmosFormat],
     queryFn: () => getEvmosBalance(value.evmosAddressCosmosFormat),
-    refetchInterval: 3000,
+    refetchInterval: 15_000,
   });
 
   let balance = BigNumber.from(0);

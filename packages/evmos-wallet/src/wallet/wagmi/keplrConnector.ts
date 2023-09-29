@@ -76,6 +76,7 @@ const prepareTransaction = async (
     nonce,
     chainId,
   };
+
   if (!baseFeePerGas) {
     return transaction;
   }
@@ -96,7 +97,7 @@ const prepareTransaction = async (
   return {
     ...transaction,
     type: 2,
-    gasLimit: toHex(gas),
+    gasLimit: isHex(gas) ? gas : toHex(gas),
     maxPriorityFeePerGas: toHex(maxPriorityFeePerGas),
     maxFeePerGas: toHex(maxFeePerGas),
   };
@@ -123,13 +124,15 @@ export class KeplrConnector extends Connector<Keplr, {}> {
       ...config,
       options: {},
     });
+    this.onAccountsChanged = this.onAccountsChanged.bind(this);
   }
 
-  async getPubkey() {
-    const signer = await this.getSigner();
-    const [account] = await signer.getAccounts();
-    assertIf(account, "ACCOUNT_NOT_FOUND");
-    return account.pubkey;
+  async getPubkey({ cosmosChainId }: { cosmosChainId?: string } = {}) {
+    const provider = await this.getProvider();
+    const { pubKey } = await provider.getKey(
+      cosmosChainId ?? (await this.getCosmosId())
+    );
+    return pubKey;
   }
   async getProvider() {
     if (this.provider) return this.provider;
@@ -149,7 +152,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
 
     const cosmosId =
       this.chainId in COSMOS_ID_MAP
-        ? COSMOS_ID_MAP[this.chainId as keyof typeof COSMOS_ID_MAP]
+        ? COSMOS_ID_MAP[this.chainId]
         : evmosInfo.cosmosId;
 
     assertIf(cosmosId, "UNSUPPORTED_NETWORK");
@@ -159,12 +162,12 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     return signer;
   }
 
-  async getAccount() {
+  getAccount = async () => {
     const signer = await this.getSigner();
     const [account] = await signer.getAccounts();
     assertIf(account, "ACCOUNT_NOT_FOUND");
     return evmosToEth(account.address) as Address;
-  }
+  };
   // This has to be a promise to conform to the interface
   // eslint-disable-next-line @typescript-eslint/require-await
   async getChainId(): Promise<number> {
@@ -173,6 +176,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
 
   async connect(config?: { chainId?: number }) {
     // TODO: Add event listeners here
+
     const account = await this.getAccount();
     let chainId = config?.chainId;
     if (!chainId || !(chainId in COSMOS_ID_MAP)) {
@@ -180,6 +184,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
       assertIf(chainId, "UNSUPPORTED_NETWORK");
     }
     this.chainId = chainId;
+    window.addEventListener("keplr_keystorechange", this.onAccountsChanged);
     return {
       account,
       chain: {
@@ -188,8 +193,10 @@ export class KeplrConnector extends Connector<Keplr, {}> {
       },
     };
   }
+  // This has to be a promise to conform to the interface
+  // eslint-disable-next-line @typescript-eslint/require-await
   async disconnect() {
-    // do nothing for now.. clear events events later
+    window.removeEventListener("keplr_keystorechange", this.onAccountsChanged);
   }
   async isAuthorized() {
     if (this.storage?.getItem("wallet") !== this.id) return false;
@@ -208,9 +215,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
 
     assertIf(this.isChainUnsupported(chainId), "UNSUPPORTED_NETWORK");
 
-    const cosmosId =
-      COSMOS_ID_MAP[chainId as keyof typeof COSMOS_ID_MAP] ??
-      raise("UNSUPPORTED_NETWORK");
+    const cosmosId = COSMOS_ID_MAP[chainId] ?? raise("UNSUPPORTED_NETWORK");
     return cosmosId;
   }
   async getWalletClient({ chainId }: { chainId?: number } = {}) {
@@ -251,7 +256,13 @@ export class KeplrConnector extends Connector<Keplr, {}> {
       }),
     });
   }
-  async request({ method, params }: { method: string; params: unknown[] }) {
+  request = async ({
+    method,
+    params,
+  }: {
+    method: string;
+    params: unknown[];
+  }) => {
     const [provider, account, chainId] = await Promise.all([
       this.getProvider(),
       this.getAccount(),
@@ -259,14 +270,14 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     ]);
 
     const cosmosId = await this.getCosmosId(chainId);
-    const bech32Address =
-      ADDRESS_ENCODERS[chainId as keyof typeof ADDRESS_ENCODERS](account);
+    const bech32Address = ADDRESS_ENCODERS[chainId](account);
 
     switch (method) {
       case "eth_sendTransaction": {
         const tx = TransactionRequestSchema.parse(params[0]);
 
         const request = await prepareTransaction(chainId, tx);
+
         const signature = await this.request({
           method: "account_signTransaction",
           params: [JSON.stringify(request)],
@@ -296,6 +307,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
             ? EthSignType.TRANSACTION
             : EthSignType.MESSAGE,
         );
+
         return toHex(signature);
       }
 
@@ -311,11 +323,14 @@ export class KeplrConnector extends Connector<Keplr, {}> {
       }
     }
     return null;
-  }
+  };
 
-  protected onAccountsChanged(): void {
-    throw new Error("Method not implemented.");
-  }
+  protected onAccountsChanged = async () => {
+    this.emit("change", {
+      account: await this.getAccount(),
+    });
+    // throw new Error("Method not implemented.");
+  };
   protected onChainChanged(): void {
     throw new Error("Method not implemented.");
   }

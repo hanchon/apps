@@ -37,7 +37,7 @@ const AssetsTable = () => {
   const { stakedData } = useStakedEvmos();
 
   const { data, error, isLoading } = useQuery<ERC20BalanceResponse, Error>({
-    refetchInterval: 3000,
+    refetchInterval: 15_000,
     queryKey: [
       "assets",
       value.evmosAddressCosmosFormat,
@@ -119,6 +119,7 @@ const AssetsTable = () => {
           checked={hideZeroBalance}
         />
       </div>
+      aaa
       <div className="xl:scrollbar-hide mt-5 w-full font-[IBM] text-pearl">
         <table className="w-full">
           {tableData?.length === 0 && <HeadTable />}

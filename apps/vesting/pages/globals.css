@@ -46,6 +46,12 @@
   font-weight: 500;
 }
 
+@font-face {
+  font-family: "NB";
+  src: url("../public/fonts/NBInternationalProBol.otf");
+  font-weight: 600;
+}
+
 @layer componentsGovernance {
   .disabled {
     @apply pointer-events-none select-none opacity-50 cursor-not-allowed;
@@ -186,12 +192,4 @@ h6 {
 
 .markdown a {
   @apply underline;
-}
-
-.textBoxStyle {
-  @apply w-full rounded-md bg-white px-3 text-left py-2 font-normal shadow-sm focus:outline-none relative border border-darkGray5;
-}
-
-.smallText {
-  @apply opacity-60 text-sm font-normal;
 }

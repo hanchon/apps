@@ -1,10 +1,10 @@
 export const PrimaryButton = ({
   onClick,
-  text,
+  children,
   className,
 }: {
   onClick: () => void;
-  text: string;
+  children: string;
   className?: string;
 }) => {
   return (
@@ -14,7 +14,7 @@ export const PrimaryButton = ({
     space-x-2 rounded-lg px-8  py-2 font-normal normal-case shadow transition-all duration-300 hover:shadow-md 
     ${className ? className : "ml-4"}`}
     >
-      {text}
+      {children}
     </button>
   );
 };

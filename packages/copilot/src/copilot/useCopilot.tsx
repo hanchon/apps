@@ -3,7 +3,7 @@
 
 import { useContext, useMemo } from "react";
 import { StepsContext } from "./container/StepsContext";
-import { STEP_STATUS } from "./steps/setUpAccount/buttons/utils";
+import { STEP_STATUS } from "constants-helper";
 import { StepsContainer } from "./container/StepsContainer";
 
 export const useCopilot = () => {

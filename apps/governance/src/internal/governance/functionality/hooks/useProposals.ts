@@ -15,10 +15,12 @@ import {
 import { getProposals } from "../fetch";
 import { Proposal, ProposalDetailProps, ProposalProps } from "../types";
 
-const PROPOSALS_TO_REMOVE = process.env.NEXT_PUBLIC_PROPOSALS_TO_REMOVE ?? "[]"
+const PROPOSALS_TO_REMOVE = process.env.NEXT_PUBLIC_PROPOSALS_TO_REMOVE ?? "[]";
 
 const removeProposals = (proposals: Proposal[], proposalToRemove: string[]) => {
-  return proposals.filter((proposal) => !proposalToRemove.includes(proposal.id));
+  return proposals.filter(
+    (proposal) => !proposalToRemove.includes(proposal.id),
+  );
 };
 
 export const useProposals = (pid?: string) => {
@@ -27,7 +29,7 @@ export const useProposals = (pid?: string) => {
     queryFn: () => getProposals(),
   });
 
-  const parsedProposals = JSON.parse(PROPOSALS_TO_REMOVE) as string[]
+  const parsedProposals = JSON.parse(PROPOSALS_TO_REMOVE) as string[];
 
   const proposals = useMemo(() => {
     const temp: ProposalProps[] = [];
@@ -35,7 +37,6 @@ export const useProposals = (pid?: string) => {
       const filtered = removeProposals(
         proposalsResponse.data.proposals,
         parsedProposals,
-        
       );
       filtered.map((item) => {
         const percents = getPercentage([
@@ -88,7 +89,8 @@ export const useProposals = (pid?: string) => {
     };
     if (proposalsResponse.data !== undefined) {
       const filtered = proposalsResponse.data.proposals.filter(
-        (proposal) => proposal.id === pid && !parsedProposals.includes(proposal.id)
+        (proposal) =>
+          proposal.id === pid && !parsedProposals.includes(proposal.id),
       );
       if (filtered.length === 0) {
         return "Proposal not found, please try again";
