@@ -36,12 +36,16 @@ export const BaseAccountSchema = z.object({
 
 export const apiCosmosAccountByAddress = (
   urls: Readonly<[string, ...string[]]>,
-  address: CosmosAddress,
+  address: CosmosAddress
 ) =>
   apiCosmosFetch(
     z.object({
-      account: z.union([BaseAccountSchema, EthermintAccountSchema]),
+      account: z
+        .object({
+          "@type": z.string(),
+        })
+        .passthrough(),
     }),
     urls,
-    `/cosmos/auth/v1beta1/accounts/${address}`,
+    `/cosmos/auth/v1beta1/accounts/${address}`
   );
