@@ -48,7 +48,7 @@
     "services": "workspace:*",
     "stateful-components": "workspace:*",
     "tracker": "workspace:*",
-    "typescript": "5.2.2",
+    "typescript": "^5.2.2",
     "ui-helpers": "workspace:*"
   },
   "browserslist": [

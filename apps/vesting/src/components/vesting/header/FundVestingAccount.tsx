@@ -48,48 +48,46 @@ export const FundVestingAccount = () => {
   const [disabled, setDisabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
-  const [vestingAddress, setVestingAddress] = useState("")
-  const [vestingAddressError, setVestingAddressError] = useState(false)
-  const [vestingAddressData, setVestingAddressData] = useState<VestingResponse | null>(null)
+  const [vestingAddress, setVestingAddress] = useState("");
+  const [vestingAddressError, setVestingAddressError] = useState(false);
+  const [vestingAddressData, setVestingAddressData] =
+    useState<VestingResponse | null>(null);
   const { fundVestingAccount } = useVestingPrecompile();
 
   useEffect(() => {
-
     function fetchVestingData() {
-      let _vestingAddress
+      let _vestingAddress;
 
       try {
         if (vestingAddress.startsWith("0x")) {
           if (!isEthereumAddressValid(vestingAddress)) {
-            return
+            return;
           }
-          _vestingAddress = ethToEvmos(vestingAddress)
-  
+          _vestingAddress = ethToEvmos(vestingAddress);
         } else if (vestingAddress.startsWith("evmos")) {
           if (!isEvmosAddressValid(vestingAddress)) {
-            return
+            return;
           }
-          _vestingAddress = vestingAddress
+          _vestingAddress = vestingAddress;
         }
-        getVesting(
-          _vestingAddress
-        ).then(data => {
-          if (data === "Error while getting vesting account info") {
-            setVestingAddressError(true)
-            return
-          }
-          const vestingDataRes: VestingResponse = (data as VestingResponse)
-          setVestingAddressData(vestingDataRes)
-        }).catch(() => {
-          setVestingAddressError(true)
-        }) 
+        getVesting(_vestingAddress)
+          .then((data) => {
+            if (data === "Error while getting vesting account info") {
+              setVestingAddressError(true);
+              return;
+            }
+            const vestingDataRes: VestingResponse = data as VestingResponse;
+            setVestingAddressData(vestingDataRes);
+          })
+          .catch(() => {
+            setVestingAddressError(true);
+          });
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
-    fetchVestingData()
-   
-  }, [vestingAddress])
+    fetchVestingData();
+  }, [vestingAddress]);
 
   const handleOnClick = async (d: FieldValues) => {
     try {
@@ -105,7 +103,7 @@ export const FundVestingAccount = () => {
             vestingInterval: d.vestingSchedule as Intervals,
             vestingCliff: d.vestingCliff as VestingSchedule["vestingCliff"],
             lockingPeriod: d.lockupDuration as TimeWindow,
-          },
+          }
         );
 
       const res = await fundVestingAccount(
@@ -113,7 +111,7 @@ export const FundVestingAccount = () => {
         d.address as string,
         startTime,
         lockupPeriods,
-        vestingPeriods,
+        vestingPeriods
       );
 
       dispatch(
@@ -126,7 +124,7 @@ export const FundVestingAccount = () => {
             explorerTxUrl: "www.mintscan.io/evmos/txs/",
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        }),
+        })
       );
       setDisabled(false);
     } catch (e) {
@@ -139,14 +137,14 @@ export const FundVestingAccount = () => {
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        }),
+        })
       );
     }
 
     if (d.accountName !== "") {
       setVestingAccountNameLocalstorage(
         d.address as string,
-        d.accountName as string,
+        d.accountName as string
       );
     }
   };
@@ -194,16 +192,16 @@ export const FundVestingAccount = () => {
             setValue("planType", planType);
             setValue(
               "vestingDuration",
-              vestingSettingsConfig[planType].duration[0],
+              vestingSettingsConfig[planType].duration[0]
             );
             setValue("vestingCliff", vestingSettingsConfig[planType].cliff[0]);
             setValue(
               "vestingSchedule",
-              vestingSettingsConfig[planType].schedule[0],
+              vestingSettingsConfig[planType].schedule[0]
             );
             setValue(
               "lockupDuration",
-              vestingSettingsConfig[planType].lockup[0],
+              vestingSettingsConfig[planType].lockup[0]
             );
           }}
         />
@@ -281,38 +279,42 @@ export const FundVestingAccount = () => {
           className="textBoxStyle"
         />
         {errors.startDate?.message && (
-          <ErrorMessage text={errors.startDate.message.toString()} />
+          <ErrorMessage>{errors.startDate.message.toString()}</ErrorMessage>
         )}
 
         <label htmlFor="address" className="text-xs font-bold">
           {t("vesting.fund.address.title")}
         </label>
         <input
-         id="address" {...register("address")}
-         onChange={(e) => setVestingAddress(e.target.value)}
-        className="textBoxStyle" />
+          id="address"
+          {...register("address")}
+          onChange={(e) => setVestingAddress(e.target.value)}
+          className="textBoxStyle"
+        />
         {errors.address?.message && (
-          <ErrorMessage text={errors.address.message.toString()} />
+          <ErrorMessage>{errors.address.message}</ErrorMessage>
         )}
 
         {/* TODO: show the correct message depending on the address */}
-        { vestingAddressError &&
+        {vestingAddressError && (
           <ErrorContainer description={t("enable.error")} />
-        }
+        )}
 
-        { !vestingAddressError && vestingAddressData?.account?.funder_address && vestingAddressData?.account?.funder_address?.toLowerCase() !== wallet?.evmosAddressCosmosFormat?.toLocaleLowerCase() &&
-         <ErrorContainer description={t("fund.create.error")} />
-        }
+        {!vestingAddressError &&
+          vestingAddressData?.account?.funder_address &&
+          vestingAddressData?.account?.funder_address?.toLowerCase() !==
+            wallet?.evmosAddressCosmosFormat?.toLocaleLowerCase() && (
+            <ErrorContainer description={t("fund.create.error")} />
+          )}
 
-        { !vestingAddressError && vestingAddressData && vestingAddressData?.account?.base_vesting_account?.original_vesting?.length > 0 &&
-       
-       <WizardHelper>
-       <p>
-         {t("fund.already.funded.warning")}{" "}
-       </p>
-      </WizardHelper>
-       
-        }
+        {!vestingAddressError &&
+          vestingAddressData &&
+          vestingAddressData?.account?.base_vesting_account?.original_vesting
+            ?.length > 0 && (
+            <WizardHelper>
+              <p>{t("fund.already.funded.warning")} </p>
+            </WizardHelper>
+          )}
 
         <label
           htmlFor="accountName"
@@ -326,7 +328,7 @@ export const FundVestingAccount = () => {
           className="textBoxStyle"
         />
         {errors.accountName?.message && (
-          <ErrorMessage text={errors.accountName.message.toString()} />
+          <ErrorMessage>{errors.accountName.message}</ErrorMessage>
         )}
 
         <label htmlFor="amount" className="flex justify-between text-xs">
@@ -344,7 +346,7 @@ export const FundVestingAccount = () => {
           className="textBoxStyle"
         />
         {errors.amount?.message && (
-          <ErrorMessage text={errors.amount.message.toString()} />
+          <ErrorMessage>{errors.amount.message}</ErrorMessage>
         )}
 
         <input
