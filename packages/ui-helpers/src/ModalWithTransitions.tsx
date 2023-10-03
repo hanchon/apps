@@ -63,7 +63,10 @@ export const ModalWithTransitions = ({
           />
         </Transition.Child>
 
-        <div className="fixed inset-0 pointer-events-none h-full w-full flex  py-4 overflow-y-auto">
+        <div
+          className="fixed inset-0 h-full w-full flex py-4 overflow-y-auto"
+          onClick={() => setShow(false)}
+        >
           <Transition.Child
             as={Fragment}
             enter="transition duration-100 ease-in"
@@ -74,6 +77,7 @@ export const ModalWithTransitions = ({
             leaveTo="transform scale-95 opacity-0"
           >
             <Dialog.Panel
+              onClick={(e) => e.stopPropagation()}
               className={cx(
                 "relative transform rounded-lg text-left m-auto transition-all pointer-events-auto",
                 {
