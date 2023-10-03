@@ -23,7 +23,7 @@
     "helpers": "workspace:*",
     "services": "workspace:*",
     "ui-helpers": "workspace:*",
-    "viem": "^1.11.1",
+    "viem": "^1.14.0",
     "zod": "^3.22.1"
   },
   "devDependencies": {
