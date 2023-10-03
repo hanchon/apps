@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) | apps/vesting 1.1.0 | vesting mainnet app
+
 ## 1.3.2 - 2023-10-29
 
 - (fix) | apps/assets 1.0.29 | fee error message was not being displayed when fee was not paid in Evmos

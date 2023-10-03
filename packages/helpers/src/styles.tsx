@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
-import { formatUnits } from "@ethersproject/units";
+import { formatUnits, parseEther } from "@ethersproject/units";
 
 export type addAssetsType = {
   cosmosBalance: BigNumber;
@@ -30,6 +30,11 @@ export function convertFromAtto(
     });
   }
   return formatUnits(valueAsString.split(".")[0], exponent);
+}
+
+export function convertToAtto(value: BigNumberish) {
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
+  return parseEther(value.toString());
 }
 
 export function convertAndFormat(

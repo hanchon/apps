@@ -69,3 +69,6 @@ export { ConfirmationMessage } from "./transfer-confirmation/ConfirmationMessage
 export { ContainerItem } from "./transfer-confirmation/ContainerItem";
 export { ConfirmationText } from "./transfer-confirmation/ConfirmationText";
 export { Spinner } from "./spinners/Spinner";
+export * from "./Toggle";
+export * from "./selects/SelectMenu";
+export * from "./modal/WizardHelper";

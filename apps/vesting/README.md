@@ -15,15 +15,15 @@ The wallet extensions code is inside the `wallet` folders in `src/internal` and 
 ## Run
 
 ```sh
-git clone https://github.com/tharsis/vestingPage
-cd vestingPage
-yarn install
-yarn run dev
+git clone https://github.com/evmos/apps
+cd apps/vesting
+pnpm install
+pnpm run dev
 ```
 
 ## Configuration
 
-The endpoints used by default are currently stored in `src/internal/wallet/functionality/networkConfig.ts`
+The endpoints used by default are currently stored in `packages/evmos-wallet/src/internal/wallet/functionality/networkConfig.ts`
 
 It's using the default values that should work for most of the cases, but most of the methods that consume the endpoints can overwrite the configuration with optional parameters.
 
@@ -32,5 +32,5 @@ It's using the default values that should work for most of the cases, but most o
 The tests can be run using:
 
 ```sh
-yarn run test
+pnpm run test
 ```
