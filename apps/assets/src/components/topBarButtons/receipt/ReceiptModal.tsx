@@ -8,7 +8,6 @@ import { ModalWithTransitions } from "ui-helpers";
 
 import { ReceiptModalContent } from "./ReceiptModalContent";
 import { ModalProps, useModal } from "helpers";
-import { useAccount } from "wagmi";
 
 const ReceiptModalSchema = z.object({
   hash: HexSchema,
@@ -21,8 +20,8 @@ export const useReceiptModal = () => useModal("receipt", ReceiptModalSchema);
 
 export const ReceiptModal = () => {
   const { isOpen, setIsOpen, modalProps } = useReceiptModal();
-  const { connector } = useAccount();
-  return connector?.id !== "safe" ? (
+
+  return (
     <ModalWithTransitions
       show={isOpen}
       setShow={setIsOpen}
@@ -30,7 +29,5 @@ export const ReceiptModal = () => {
     >
       {modalProps && <ReceiptModalContent {...modalProps} />}
     </ModalWithTransitions>
-  ) : (
-    <></>
   );
 };

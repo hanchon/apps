@@ -1,6 +1,7 @@
 import WETH_ABI from "../../contracts/abis/WEVMOS/WEVMOS.json";
 import { WEVMOS_CONTRACT_ADDRESS } from "../../../constants";
 import {
+  prepareSendTransaction,
   prepareWriteContract,
   sendTransaction,
   writeContract,
@@ -21,34 +22,18 @@ export function useWEVMOS() {
     return await writeContract(request);
   }
 
-  async function withdraw(
-    amount: BigNumber,
-    hexAddress: string,
-    connectorId: string | undefined
-  ) {
-    // prepareWriteContract or writeContract throws revert error for safe if account property is not of EOA type
-    if (connectorId === "safe") {
-      return await sendTransaction({
-        to: WEVMOS_CONTRACT_ADDRESS,
-        account: hexAddress as `0x${string}`,
-        value: 0n,
-        data: encodeFunctionData({
-          abi: WETH_ABI,
-          functionName: "withdraw",
-          args: [amount.toBigInt()],
-        }),
-      });
-    } else {
-      const { request } = await prepareWriteContract({
-        address: WEVMOS_CONTRACT_ADDRESS,
+  async function withdraw(amount: BigNumber, hexAddress: string) {
+    const req = await prepareSendTransaction({
+      to: WEVMOS_CONTRACT_ADDRESS,
+      account: hexAddress as `0x${string}`,
+      value: 0n,
+      data: encodeFunctionData({
         abi: WETH_ABI,
         functionName: "withdraw",
-        value: 0n,
         args: [amount.toBigInt()],
-        account: hexAddress as `0x${string}`,
-      });
-      return await writeContract(request);
-    }
+      }),
+    });
+    return await sendTransaction(req);
   }
 
   return {

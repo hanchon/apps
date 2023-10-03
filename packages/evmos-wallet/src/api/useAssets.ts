@@ -17,7 +17,7 @@ export const useAssets = () => {
     queryFn: () =>
       getAssetsForAddress(
         address ? normalizeToEvmos(address) : address,
-        address,
+        address
       ),
   });
 
@@ -60,15 +60,15 @@ export const useAssets = () => {
             amountToDollars(
               BigNumber.from(item.cosmosBalance),
               Number(item.decimals),
-              Number(item.coingeckoPrice),
-            ),
+              Number(item.coingeckoPrice)
+            )
           ) +
           parseFloat(
             amountToDollars(
               BigNumber.from(item.erc20Balance),
               Number(item.decimals),
-              Number(item.coingeckoPrice),
-            ),
+              Number(item.coingeckoPrice)
+            )
           );
       }
     });
@@ -93,11 +93,11 @@ export const useAssets = () => {
     }
 
     const evmosData = assets.data.balance.filter(
-      (i) => i.symbol.toLowerCase() === "evmos",
+      (i) => i.symbol.toLowerCase() === "evmos"
     );
 
     total = BigNumber.from(evmosData[0].cosmosBalance).add(
-      BigNumber.from(evmosData[0].erc20Balance),
+      BigNumber.from(evmosData[0].erc20Balance)
     );
 
     return total;

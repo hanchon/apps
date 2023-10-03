@@ -20,13 +20,11 @@ import {
 import { GENERATING_TX_NOTIFICATIONS } from "../../../../../internal/asset/functionality/transactions/errors";
 import { useWEVMOS } from "../contracts/hooks/useWEVMOS";
 import { parseUnits } from "@ethersproject/units";
-import { useAccount } from "wagmi";
 
 const wrapEvmos = "EVMOS <> WEVMOS";
 const unwrapEvmos = "WEVMOS <> EVMOS";
 export const useConvert = (useConvertProps: ConvertProps) => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
-  const { connector } = useAccount();
   const dispatch = useDispatch();
 
   const { deposit, withdraw } = useWEVMOS();
@@ -100,11 +98,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
       try {
         useConvertProps.setDisabled(true);
 
-        const res = await withdraw(
-          amount,
-          wallet.evmosAddressEthFormat,
-          connector?.id
-        );
+        const res = await withdraw(amount, wallet.evmosAddressEthFormat);
 
         dispatch(
           snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
