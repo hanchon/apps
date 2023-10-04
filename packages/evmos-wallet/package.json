@@ -16,9 +16,7 @@
   "peerDependencies": {
     "@tanstack/react-query": "^4.32.6",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
-    "viem": "^1.14.0",
-    "wagmi": "~1.4.2"
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
     "@evmos-apps/config": "workspace:*",

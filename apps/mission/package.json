@@ -70,7 +70,6 @@
     "@testing-library/react": "^14.0.0",
     "@types/mixpanel-browser": "2.47.1",
     "dotenv": "^16.3.1",
-    "mixpanel-browser": "^2.47.0",
-    "wagmi": "~1.4.2"
+    "mixpanel-browser": "^2.47.0"
   }
 }

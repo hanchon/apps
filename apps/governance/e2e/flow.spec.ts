@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { web3Test } from "playwright-config-custom/helpers";
+import web3Test from "playwright-config-custom/fixtures/metamask";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/governance");
@@ -46,6 +46,6 @@ test.describe("Governance page", () => {
       await page.getByRole("button", { name: /MetaMask/i }).click();
       await wallet.approve();
       await expect(page.getByText(/Connected with Metamask/i)).toBeVisible();
-    },
+    }
   );
 });

@@ -4,11 +4,21 @@
   "description": "Playwright custom config",
   "main": "index.ts",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "keplr": "tsx watch ./helpers/keplr/index.ts "
+  },
   "devDependencies": {
     "@playwright/test": "^1.38.1",
-    "@tenkeylabs/dappwright": "^2.4.0"
+    "@tenkeylabs/dappwright": "^2.4.0",
+    "tsx": "^3.12.10"
   },
   "dependencies": {
+    "@types/download": "^8.0.2",
+    "@types/lodash-es": "^4.17.8",
+    "download": "^8.0.0",
+    "lodash-es": "^4.17.21",
+    "memoize-one": "^6.0.0",
     "typescript": "^5.2.2"
   }
 }

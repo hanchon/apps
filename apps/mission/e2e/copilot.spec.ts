@@ -2,12 +2,12 @@ import { test, expect } from "@playwright/test";
 import {
   web3Test,
   web3TestWithoutNetwork,
-} from "playwright-config-custom/helpers";
+} from "playwright-config-custom/fixtures/metamask";
+import { waitLocator } from "playwright-config-custom/utils";
 
 const BALANCE_ENDPOINT =
   // eslint-disable-next-line no-secrets/no-secrets
-  "*/**/BalanceByDenom/EVMOS/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/aevmos";
-
+  "*/**/cosmos/bank/v1beta1/balances/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
 
@@ -67,7 +67,7 @@ test.describe("Mission Page - Copilot", () => {
       await switchNetworkPopup.getByRole("button", { name: /Cancel/i }).click();
 
       await expect(
-        page.getByText(/Approval Rejected, please try again/i),
+        page.getByText(/Approval Rejected, please try again/i)
       ).toBeVisible();
 
       await page
@@ -86,8 +86,8 @@ test.describe("Mission Page - Copilot", () => {
 
       await expect(
         page.getByText(
-          /You need to switch the network to Evmos, please try again/i,
-        ),
+          /You need to switch the network to Evmos, please try again/i
+        )
       ).toBeVisible();
 
       await page
@@ -110,7 +110,7 @@ test.describe("Mission Page - Copilot", () => {
       await getAccountsPopup.getByRole("button", { name: /Cancel/i }).click();
 
       await expect(
-        page.getByText(/Get accounts rejected, please try again/i),
+        page.getByText(/Get accounts rejected, please try again/i)
       ).toBeVisible();
 
       await page
@@ -121,12 +121,20 @@ test.describe("Mission Page - Copilot", () => {
 
       await wallet.approve();
 
-      await page.getByRole("button", { name: /Top up your account/i }).click();
+      await waitLocator(
+        page.getByRole("button", { name: /Top up your account/i })
+      ).click();
       await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
         const json = {
-          balance: {
-            denom: "aevmos",
-            amount: "0",
+          balances: [
+            {
+              denom: "aevmos",
+              amount: "0",
+            },
+          ],
+          pagination: {
+            next_key: null,
+            total: "1",
           },
         };
         await route.fulfill({ json });
@@ -136,14 +144,20 @@ test.describe("Mission Page - Copilot", () => {
 
       await page.getByRole("button", { name: "Debit/Credit card" }).click();
       await expect(
-        page.getByRole("button", { name: /Next steps/i }),
+        page.getByRole("button", { name: /Next steps/i })
       ).toBeHidden();
 
       await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
         const json = {
-          balance: {
-            denom: "aevmos",
-            amount: "100",
+          balances: [
+            {
+              denom: "aevmos",
+              amount: "100",
+            },
+          ],
+          pagination: {
+            next_key: null,
+            total: "1",
           },
         };
         await route.fulfill({ json });
@@ -156,7 +170,7 @@ test.describe("Mission Page - Copilot", () => {
       await page
         .getByRole("button", { name: /Interact with a dApp Recommended/i })
         .click();
-    },
+    }
   );
 
   web3Test(
@@ -182,9 +196,15 @@ test.describe("Mission Page - Copilot", () => {
       await page.getByRole("button", { name: /Top up your account/i }).click();
       await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
         const json = {
-          balance: {
-            denom: "aevmos",
-            amount: "0",
+          balances: [
+            {
+              denom: "aevmos",
+              amount: "0",
+            },
+          ],
+          pagination: {
+            next_key: null,
+            total: "1",
           },
         };
         await route.fulfill({ json });
@@ -194,7 +214,7 @@ test.describe("Mission Page - Copilot", () => {
 
       await page.getByRole("button", { name: "Debit/Credit card" }).click();
       await expect(
-        page.getByRole("button", { name: /Next steps/i }),
+        page.getByRole("button", { name: /Next steps/i })
       ).toBeHidden();
 
       const c14Widget = page.getByTestId("c14-widget");
@@ -219,9 +239,15 @@ test.describe("Mission Page - Copilot", () => {
 
       await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
         const json = {
-          balance: {
-            denom: "aevmos",
-            amount: "100",
+          balances: [
+            {
+              denom: "aevmos",
+              amount: "100",
+            },
+          ],
+          pagination: {
+            next_key: null,
+            total: "1",
           },
         };
         await route.fulfill({ json });
@@ -234,6 +260,6 @@ test.describe("Mission Page - Copilot", () => {
       await page
         .getByRole("button", { name: "Interact with a dApp Recommended" })
         .click();
-    },
+    }
   );
 });

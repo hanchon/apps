@@ -252,6 +252,7 @@ export const ReceiveContent = ({
                   sendEvent(CLICK_ON_REQUEST_FUNDS);
                 }}
                 variant="outline-primary"
+                data-testid="receive-modal-receive-button"
               >
                 {t("receive.button")}
               </PrimaryButton>

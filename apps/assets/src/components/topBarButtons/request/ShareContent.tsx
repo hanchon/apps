@@ -1,6 +1,11 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useLayoutEffect,
+  useState,
+} from "react";
 import {
   ErrorMessage,
   Label,
@@ -56,7 +61,7 @@ export const ShareContent = ({
     : null;
 
   const [origin, setOrigin] = React.useState("");
-  useEffect(() => {
+  useLayoutEffect(() => {
     setOrigin(window.location.origin);
   }, []);
 
@@ -123,8 +128,12 @@ export const ShareContent = ({
 
             <div>
               <TextInput
-                value={`${shareURL.substring(0, 40)}...`}
-                disabled={true}
+                data-testid="request-modal-share-url-input"
+                className="text-ellipsis whitespace-nowrap overflow-hidden"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={shareURL}
                 showCopyIcon={true}
                 onClickCopy={async () => {
                   await navigator.clipboard.writeText(shareURL);

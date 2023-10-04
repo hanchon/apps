@@ -462,6 +462,7 @@ export const TransferModalContent = ({
                 )}
                 <PrimaryButton
                   type="submit"
+                  data-testId="transfer-send-button"
                   className="w-full text-base md:text-lg rounded-md capitalize mt-8"
                   disabled={
                     !isReadyToTransfer || isTransferring || hasTransferred

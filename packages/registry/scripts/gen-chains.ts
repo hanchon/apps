@@ -1,21 +1,10 @@
-import { glob } from "glob";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import { ChainRegistry } from "./types/chain";
 import { TokenRegistry } from "./types/token";
 import { groupBy } from "lodash-es";
 import { fileHeader } from "./constants";
 import { lavaUrls } from "./lava-urls";
-
-const readFiles = async <T>(globPattern: string) => {
-  const files = await glob(globPattern);
-  const contents = await Promise.all(
-    files //
-      .map((file) => readFile(file, { encoding: "utf-8" }))
-  );
-  const parsed = contents //
-    .map((content) => JSON.parse(content) as T);
-  return parsed;
-};
+import { readFiles } from "./readFiles";
 
 export const readRegistryChain = async () =>
   (
