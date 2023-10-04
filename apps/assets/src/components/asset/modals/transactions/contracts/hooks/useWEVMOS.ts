@@ -1,8 +1,14 @@
 import WETH_ABI from "../../contracts/abis/WEVMOS/WEVMOS.json";
 import { WEVMOS_CONTRACT_ADDRESS } from "../../../constants";
-import { prepareWriteContract, writeContract } from "wagmi/actions";
+import {
+  prepareSendTransaction,
+  prepareWriteContract,
+  sendTransaction,
+  writeContract,
+} from "wagmi/actions";
 
 import { BigNumber } from "@ethersproject/bignumber";
+import { encodeFunctionData } from "viem";
 
 export function useWEVMOS() {
   async function deposit(amount: BigNumber, hexAddress: string) {
@@ -17,15 +23,17 @@ export function useWEVMOS() {
   }
 
   async function withdraw(amount: BigNumber, hexAddress: string) {
-    const { request } = await prepareWriteContract({
-      address: WEVMOS_CONTRACT_ADDRESS,
-      abi: WETH_ABI,
-      functionName: "withdraw",
-      value: 0n,
-      args: [amount.toBigInt()],
+    const req = await prepareSendTransaction({
+      to: WEVMOS_CONTRACT_ADDRESS,
       account: hexAddress as `0x${string}`,
+      value: 0n,
+      data: encodeFunctionData({
+        abi: WETH_ABI,
+        functionName: "withdraw",
+        args: [amount.toBigInt()],
+      }),
     });
-    return await writeContract(request);
+    return await sendTransaction(req);
   }
 
   return {
