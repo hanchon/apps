@@ -45,11 +45,6 @@ export default {
     "https://rpc-stargaze.pupmos.network",
     "https://rpc-stargaze.ezstaking.dev"
   ],
-  "evmRPC": [
-    "https://rpc.stargaze-apis.com/",
-    "https://rpc-stargaze.pupmos.network",
-    "https://rpc-stargaze.ezstaking.dev"
-  ],
   "tokens": [
     {
       "name": "Stargaze",

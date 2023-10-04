@@ -25,6 +25,7 @@ export default {
   },
   "feeToken": "uosmo",
   "cosmosRest": [
+    "https://g.w.lavanet.xyz:443/gateway/cos3/rest/ef1ad852a77275e1eeef6c7972370118",
     "https://rest.cosmos.directory/osmosis",
     "https://osmosis-lcd.quickapi.com:443",
     "https://lcd-osmosis.whispernode.com",
@@ -35,11 +36,11 @@ export default {
     "https://api.osmosis.interbloc.org"
   ],
   "tendermintRest": [
+    "https://g.w.lavanet.xyz:443/gateway/cos3/tendermint-rpc-http/ef1ad852a77275e1eeef6c7972370118",
     "https://rpc.cosmos.directory/osmosis"
   ],
   "evmRest": null,
   "cosmosGRPC": null,
-  "evmRPC": null,
   "tokens": [
     {
       "name": "Osmosis",

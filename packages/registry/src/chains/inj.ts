@@ -38,9 +38,6 @@ export default {
   "cosmosGRPC": [
     "https://tm.injective.network"
   ],
-  "evmRPC": [
-    "https://tm.injective.network"
-  ],
   "tokens": [
     {
       "name": "Injective",

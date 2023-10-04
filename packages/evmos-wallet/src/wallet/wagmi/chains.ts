@@ -4,10 +4,8 @@ import {
 } from "wagmi/chains";
 import { EVMOS_CHAIN } from "../../internal/wallet/functionality/networkConfig";
 import { Chain } from "viem";
+import { evmos as registryEvmos } from "@evmos-apps/registry";
 
-const lavaRpcUrl =
-  // eslint-disable-next-line no-secrets/no-secrets
-  "https://g.w.lavanet.xyz:443/gateway/evmos/json-rpc-http/549a760ba95638964be1942980693d34";
 export const evmos: Chain & {
   cosmosId: string;
 } = {
@@ -19,8 +17,8 @@ export const evmos: Chain & {
     },
   },
   rpcUrls: {
-    default: { http: [lavaRpcUrl] },
-    public: { http: [lavaRpcUrl] },
+    default: { http: registryEvmos.evmRest },
+    public: { http: registryEvmos.evmRest },
   },
 };
 

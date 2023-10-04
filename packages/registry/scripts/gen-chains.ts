@@ -4,6 +4,7 @@ import { ChainRegistry } from "./types/chain";
 import { TokenRegistry } from "./types/token";
 import { groupBy } from "lodash-es";
 import { fileHeader } from "./constants";
+import { lavaUrls } from "./lava-urls";
 
 const readFiles = async <T>(globPattern: string) => {
   const files = await glob(globPattern);
@@ -33,7 +34,7 @@ export const readRegistryChain = async () =>
 export const readRegistryToken = () =>
   readFiles<TokenRegistry>("node_modules/chain-token-registry/tokens/*.json");
 
-const normalizeNetworkUrls = (urls?: string[]) => {
+const normalizeNetworkUrls = (urls?: (string | undefined)[]) => {
   if (!urls) {
     return null;
   }
@@ -129,6 +130,22 @@ for (const chainRegistry of chains) {
     };
     tokens.push(feeToken);
   }
+
+  const cosmosRest = normalizeNetworkUrls([
+    lavaUrls[identifier]?.cosmosRest,
+    `https://rest.cosmos.directory/${identifier}`,
+    ...configuration.rest,
+  ]);
+  const tendermintRest = normalizeNetworkUrls([
+    lavaUrls[identifier]?.tendermintRest,
+    `https://rpc.cosmos.directory/${identifier}`,
+    ...configuration.rpc,
+  ]);
+  const evmRest = normalizeNetworkUrls([
+    lavaUrls[identifier]?.evmRest,
+    ...(configuration.web3 ?? []),
+  ]);
+
   const chain = {
     prefix: chainRegistry.prefix,
     name: configuration.chainName,
@@ -149,17 +166,10 @@ for (const chainRegistry of chains) {
 
     // Naively assume the first token is the fee token, we should probably add this to our registry
     feeToken: feeToken.minCoinDenom,
-    cosmosRest: [
-      `https://rest.cosmos.directory/${identifier}`,
-      ...(normalizeNetworkUrls(configuration.rest) ?? []),
-    ],
-    tendermintRest: [
-      `https://rpc.cosmos.directory/${identifier}`,
-      ...(normalizeNetworkUrls(configuration.rpc) ?? []),
-    ],
-    evmRest: normalizeNetworkUrls(configuration.web3),
+    cosmosRest,
+    tendermintRest,
+    evmRest,
     cosmosGRPC: normalizeNetworkUrls(configuration.rpc),
-    evmRPC: normalizeNetworkUrls(configuration.rpc),
     tokens,
     explorerUrl: configuration.explorerTxUrl,
   };

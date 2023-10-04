@@ -39,9 +39,6 @@ export default {
   "cosmosGRPC": [
     "https://lcd-gravity-bridge.keplr.app:9090/"
   ],
-  "evmRPC": [
-    "https://lcd-gravity-bridge.keplr.app:9090/"
-  ],
   "tokens": [
     {
       "name": "Wrapped Ether",

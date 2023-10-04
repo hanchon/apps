@@ -39,9 +39,6 @@ export default {
   "cosmosGRPC": [
     "https://rpc-regen.ecostake.com"
   ],
-  "evmRPC": [
-    "https://rpc-regen.ecostake.com"
-  ],
   "tokens": [
     {
       "name": "Regen Network",

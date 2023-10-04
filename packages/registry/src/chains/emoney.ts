@@ -41,9 +41,6 @@ export default {
   "cosmosGRPC": [
     "https://rpc-emoney.keplr.app"
   ],
-  "evmRPC": [
-    "https://rpc-emoney.keplr.app"
-  ],
   "tokens": [
     {
       "name": "e-Money EUR",

@@ -43,9 +43,6 @@ export default {
   "cosmosGRPC": [
     "https://stride-rpc.polkachu.com:443"
   ],
-  "evmRPC": [
-    "https://stride-rpc.polkachu.com:443"
-  ],
   "tokens": [
     {
       "name": "Stride Staked Stars",
