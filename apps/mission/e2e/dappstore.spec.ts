@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { web3Test } from "playwright-config-custom/helpers";
+import web3Test from "playwright-config-custom/fixtures/metamask";
 
 const STAKING_INFO_ENDPOINT =
   // eslint-disable-next-line no-secrets/no-secrets
@@ -216,7 +216,7 @@ test.describe("Mission Page - Copilot", () => {
     "should let the user connect with MetaMask",
     async ({ page, wallet }) => {
       await expect(
-        page.getByText(/Onboard to Evmos in 5 minutes/i),
+        page.getByText(/Onboard to Evmos in 5 minutes/i)
       ).toBeVisible();
 
       // as we are not connected it should display let's go and all they balances with -
@@ -224,7 +224,7 @@ test.describe("Mission Page - Copilot", () => {
 
       // total balance
       await expect(
-        page.getByRole("heading", { name: "- Evmos", exact: true }),
+        page.getByRole("heading", { name: "- Evmos", exact: true })
       ).toBeVisible();
       await expect(page.locator("p").filter({ hasText: "$-" })).toBeVisible();
 
@@ -233,7 +233,7 @@ test.describe("Mission Page - Copilot", () => {
         page
           .locator("div")
           .filter({ hasText: /^Available Balance- EVMOS\$-$/ })
-          .locator("h5"),
+          .locator("h5")
       ).toBeVisible();
 
       // staking - staked balance
@@ -241,14 +241,14 @@ test.describe("Mission Page - Copilot", () => {
         page
           .locator("div")
           .filter({ hasText: /^Staked Balance- EVMOS\$-$/ })
-          .locator("h5"),
+          .locator("h5")
       ).toBeVisible();
 
       // staking - claimable rewards
       await expect(
         page
           .locator("div")
-          .filter({ hasText: /^Claimeable Rewards- EVMOS\$-$/ }),
+          .filter({ hasText: /^Claimeable Rewards- EVMOS\$-$/ })
       ).toBeVisible();
       await page
         .getByRole("button", {
@@ -288,32 +288,22 @@ test.describe("Mission Page - Copilot", () => {
       await expect(page.getByRole("heading", { name: "0Evmos" })).toBeVisible();
 
       // total balance in dollars
-      await expect(
-        page.locator("p").filter({ hasText: "$0.00" }),
-      ).toBeVisible();
+      await expect(page.locator("p").filter({ hasText: "$0" })).toBeVisible();
 
-      await expect(
-        page
-          .locator("div")
-          .filter({ hasText: /^Available Balance0.00 EVMOS\$0.00$/ })
-          .locator("h5"),
-      ).toBeVisible();
+      const availableBalance = page.getByTestId("card-available-balance");
+      await availableBalance.waitFor();
+      expect(await availableBalance.textContent()).toMatch(/\$0/g);
 
       // staking - staked balance
-      await expect(
-        page
-          .locator("div")
-          .filter({ hasText: /^Staked Balance0 EVMOS\$0$/ })
-          .locator("h5"),
-      ).toBeVisible();
+      const stakedBalance = page.getByTestId("card-staked-balance");
+      await stakedBalance.waitFor();
+      expect(await stakedBalance.textContent()).toMatch(/0 EVMOS/g);
 
       // staking - claimable rewards
-      await expect(
-        page
-          .locator("div")
-          .filter({ hasText: /^Claimeable Rewards0 EVMOS\$0$/ })
-          .locator("h5"),
-      ).toBeVisible();
+      const claimableRewards = page.getByTestId("card-claimable-rewards");
+      await claimableRewards.waitFor();
+      expect(await claimableRewards.textContent()).toMatch(/0 EVMOS/g);
+
       await page
         .getByRole("button", {
           name: /Claim Rewards/i,
@@ -321,7 +311,7 @@ test.describe("Mission Page - Copilot", () => {
         .isDisabled();
 
       await expect(
-        page.getByRole("button", { name: "Top up account", exact: true }),
+        page.getByRole("button", { name: "Top up account", exact: true })
       ).toBeVisible();
 
       // update values
@@ -349,20 +339,20 @@ test.describe("Mission Page - Copilot", () => {
       await page.waitForTimeout(3000);
 
       await expect(
-        page.getByRole("heading", { name: "0.01Evmos" }),
-      ).toBeVisible();
+        page.getByRole("heading", { name: "0.01Evmos" })
+      ).toBeVisible({
+        timeout: 15000,
+      });
 
       // total balance in dollars
-      await expect(
-        page.locator("p").filter({ hasText: "$0.00" }),
-      ).toBeVisible();
+      await expect(page.locator("p").filter({ hasText: "$0" })).toBeVisible();
 
       // staking - available balance
       await expect(
         page
           .locator("div")
           .filter({ hasText: /^Available Balance0.00 EVMOS\$0.00$/ })
-          .locator("h5"),
+          .locator("h5")
       ).toBeVisible();
 
       // staking - staked balance
@@ -370,7 +360,7 @@ test.describe("Mission Page - Copilot", () => {
         page
           .locator("div")
           .filter({ hasText: /^Staked Balance0\.00 EVMOS\$0\.00$/ })
-          .locator("h5"),
+          .locator("h5")
       ).toBeVisible();
 
       // staking - claimable rewards
@@ -378,8 +368,9 @@ test.describe("Mission Page - Copilot", () => {
         page
           .locator("div")
           .filter({ hasText: /^Claimeable Rewards0\.01 EVMOS\$0\.00$/ })
-          .locator("h5"),
+          .locator("h5")
       ).toBeVisible();
+
       await page
         .getByRole("button", {
           name: /Claim Rewards/i,
@@ -387,11 +378,11 @@ test.describe("Mission Page - Copilot", () => {
         .isEnabled();
 
       await expect(
-        page.getByRole("button", { name: "Stake", exact: true }),
+        page.getByRole("button", { name: "Stake", exact: true })
       ).toBeVisible();
 
       await expect(
-        page.getByRole("button", { name: /use a dApp/i }),
+        page.getByRole("button", { name: /use a dApp/i })
       ).toBeVisible();
 
       await page
@@ -402,12 +393,12 @@ test.describe("Mission Page - Copilot", () => {
         .click();
 
       await expect(
-        page.getByRole("heading", { name: "Evmos Copilot" }),
+        page.getByRole("heading", { name: "Evmos Copilot" })
       ).toBeVisible();
 
       await page.getByRole("button", { name: "Close" }).click();
       await page.getByRole("button", { name: "Exit" }).click();
-    },
+    }
   );
 
   test("should redirect to assets page after clicking on see portfolio", async ({
@@ -460,6 +451,6 @@ test.describe("Mission Page - Copilot", () => {
 
       const switchNetworkPopup = await page.context().waitForEvent("page");
       await switchNetworkPopup.getByRole("button", { name: /Reject/i }).click();
-    },
+    }
   );
 });

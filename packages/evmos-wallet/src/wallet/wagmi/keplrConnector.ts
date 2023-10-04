@@ -81,11 +81,13 @@ const prepareTransaction = async (
     return transaction;
   }
   // EIP-1559 fees
-
-  const maxPriorityFeePerGas = request.maxPriorityFeePerGas ?? 1_500_000_000n; // 1.5 gwei;
-  const maxFeePerGas =
+  // const estimatedMaxPriorityFeePerGas =
+  //   await client.estimateMaxPriorityFeePerGas();
+  const maxPriorityFeePerGas =
     request.maxPriorityFeePerGas ??
-    (baseFeePerGas * 120n) / 100n + maxPriorityFeePerGas;
+    (await client.estimateMaxPriorityFeePerGas()); //request.maxPriorityFeePerGas ?? 1_500_000_000n; // 1.5 gwei;
+
+  const maxFeePerGas = (baseFeePerGas * 120n) / 100n + maxPriorityFeePerGas;
 
   const gas =
     request.gas ??

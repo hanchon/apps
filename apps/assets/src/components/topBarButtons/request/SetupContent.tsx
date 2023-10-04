@@ -104,6 +104,7 @@ export const SetUpContent = ({
 
               <TextInput
                 value={message}
+                data-testid="receive-modal-message-input"
                 onChange={(e) => {
                   if (e.target.value.length <= MAX_MESSAGE_LENGTH) {
                     setMessage(e.target.value);
@@ -135,6 +136,7 @@ export const SetUpContent = ({
                   sendEvent(CLICK_ON_GENERATE_PAYMENT_REQUEST);
                 }}
                 variant="primary-lg"
+                data-testid="receive-modal-generate-button"
               >
                 {t("request.generate.button")}
               </PrimaryButton>

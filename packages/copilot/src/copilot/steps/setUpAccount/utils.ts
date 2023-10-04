@@ -6,7 +6,6 @@ import {
   getWallet,
   isMetamaskInstalled,
   isEvmosChain,
-  connectHandler,
   queryPubKey,
   isWalletSelected,
   connectWith,
@@ -26,6 +25,7 @@ import {
   updateCopilotModalState,
 } from "../../utils";
 import { E } from "helpers";
+import { SetUpAccountI } from "./types";
 
 const getWalletLocal = async () => {
   // get wallet returns null or string but
@@ -36,15 +36,6 @@ const getWalletLocal = async () => {
   }
 
   return true;
-};
-
-const signPubkey = async () => {
-  const wallet = await getWallet();
-  if (wallet === null) {
-    return false;
-  }
-
-  return await connectHandler([wallet]);
 };
 
 const checkConnectionMetamask = async () => {
@@ -107,7 +98,12 @@ const installMetamask = () => {
   return isMetamaskInstalled();
 };
 
-export const stepsSetAccount = [
+const connectWithMetaMask = async () => {
+  const [err] = await E.try(() => connectWith("metaMask"));
+  if (err) return false;
+  return true;
+};
+export const stepsSetAccount: SetUpAccountI[] = [
   {
     id: "install",
     buttonText: "Install MetaMask",
@@ -141,7 +137,7 @@ export const stepsSetAccount = [
       () => changeNetworkToEvmosMainnet(),
       () => isEvmosChain(),
       () => getWalletLocal(),
-      () => signPubkey(),
+      () => connectWithMetaMask(),
     ],
     errorsText: [
       "Approval Rejected, please try again",

@@ -1,0 +1,10 @@
+{
+  "extends": "@evmos-apps/config/ts/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "ESNext"
+  },
+  "include": ["./**/*.ts"],
+
+  "exclude": ["node_modules", "build", "dist", "coverage"]
+}

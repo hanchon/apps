@@ -5,6 +5,7 @@ import { WalletExtension } from "../../internal/wallet/functionality/wallet";
 import { formatProviderAddress } from "../../internal/wallet/style/format";
 import { Dispatch, SetStateAction } from "react";
 import { ProvidersIcons } from "../utils";
+import { getActiveProviderKey } from "../../wallet";
 
 export const ButtonProfile = ({
   walletExtension,
@@ -21,6 +22,7 @@ export const ButtonProfile = ({
       onClick={() => {
         setShow(true);
       }}
+      data-testId={`wallet-profile-button wallet-profile-button-${getActiveProviderKey()}`}
     >
       {ProvidersIcons[walletExtension.extensionName]}
 

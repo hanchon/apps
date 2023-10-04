@@ -9,6 +9,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "build:registry": "NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./scripts/gen-chains.ts",
+    "check-clients": "NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./scripts/check-clients.ts",
     "lint": "eslint ."
   },
   "devDependencies": {

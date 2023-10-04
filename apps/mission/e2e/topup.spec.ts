@@ -1,10 +1,10 @@
 import { test, expect } from "@playwright/test";
-import { web3Test } from "playwright-config-custom/helpers";
+import web3Test from "playwright-config-custom/fixtures/metamask";
+import { waitLocator } from "playwright-config-custom/utils";
 
 const BALANCE_ENDPOINT =
   // eslint-disable-next-line no-secrets/no-secrets
-  "*/**/BalanceByDenom/EVMOS/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/aevmos";
-
+  "*/**/cosmos/bank/v1beta1/balances/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
 const STAKING_INFO_ENDPOINT =
   // eslint-disable-next-line no-secrets/no-secrets
   "*/**/stakingInfo/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
@@ -64,23 +64,41 @@ const responseEmptyInfoStaking = {
 };
 
 const responseEmptyBalance = {
-  balance: {
-    denom: "aevmos",
-    amount: "0",
+  balances: [
+    {
+      denom: "aevmos",
+      amount: "0",
+    },
+  ],
+  pagination: {
+    next_key: null,
+    total: "1",
   },
 };
 
 const responseBalance = {
-  balance: {
-    denom: "aevmos",
-    amount: "13234",
+  balances: [
+    {
+      denom: "aevmos",
+      amount: "13234",
+    },
+  ],
+  pagination: {
+    next_key: null,
+    total: "1",
   },
 };
 
 const responseBalanceUpdated = {
-  balance: {
-    denom: "aevmos",
-    amount: "132340",
+  balances: [
+    {
+      denom: "aevmos",
+      amount: "132340",
+    },
+  ],
+  pagination: {
+    next_key: null,
+    total: "1",
   },
 };
 
@@ -133,9 +151,9 @@ test.describe("dAppStore Page - Copilot", () => {
       await page.getByRole("button", { name: /MetaMask/i }).click();
       await wallet.approve();
 
-      await page
-        .getByRole("button", { name: "Top up account", exact: true })
-        .click();
+      await waitLocator(
+        page.getByRole("button", { name: "Top Up Account", exact: true })
+      ).click();
       await page.getByRole("button", { name: "Debit/Credit Card" }).click();
 
       await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
@@ -146,16 +164,15 @@ test.describe("dAppStore Page - Copilot", () => {
       await page.waitForTimeout(3000);
 
       await expect(
-        page.getByRole("heading", { name: /Congratulations/i }),
+        page.getByRole("heading", { name: /Congratulations/i })
       ).toBeVisible();
       await expect(
-        page.getByText(/You're now ready to use your Evmos!/i),
+        page.getByText(/You're now ready to use your Evmos!/i)
       ).toBeVisible();
 
-      await page.getByRole("button", { name: /Next steps/i }).click();
-
-      await page.getByRole("button", { name: "Close" }).click();
-      await page.getByRole("button", { name: "Exit" }).click();
+      await page
+        .getByRole("button", { name: /Continue to the dashboard/i })
+        .click();
 
       await page
         .getByRole("button", {
@@ -173,15 +190,15 @@ test.describe("dAppStore Page - Copilot", () => {
       await page.waitForTimeout(3000);
 
       await expect(
-        page.getByRole("heading", { name: /Congratulations/i }),
+        page.getByRole("heading", { name: /Congratulations/i })
       ).toBeVisible();
       await expect(
-        page.getByText(/You're now ready to use your Evmos!/i),
+        page.getByText(/You're now ready to use your Evmos!/i)
       ).toBeVisible();
 
       await page
         .getByRole("button", { name: /Continue to the dashboard/i })
         .click();
-    },
+    }
   );
 });

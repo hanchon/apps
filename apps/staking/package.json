@@ -23,7 +23,6 @@
     "helpers": "workspace:*",
     "services": "workspace:*",
     "ui-helpers": "workspace:*",
-    "viem": "^1.14.0",
     "zod": "^3.22.1"
   },
   "devDependencies": {
@@ -65,8 +64,7 @@
     "tailwindcss": "^3.3.3",
     "tracker": "workspace:*",
     "typescript": "^5.2.2",
-    "ui-helpers": "workspace:*",
-    "wagmi": "~1.4.2"
+    "ui-helpers": "workspace:*"
   },
   "browserslist": [
     "last 3 chrome version",

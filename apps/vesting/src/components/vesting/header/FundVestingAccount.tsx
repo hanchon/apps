@@ -55,27 +55,26 @@ export const FundVestingAccount = () => {
     useState<VestingResponse | null>(null);
   const { fundVestingAccount } = useVestingPrecompile();
   const [funderBalance, setFunderBalance] = useState(BigNumber.from(0));
-  const [fundAmount, setAmount] = useState("0")
+  const [fundAmount, setAmount] = useState("0");
 
   useEffect(() => {
-    getEvmosBalance(
-      wallet.evmosAddressCosmosFormat
-    ).then(balance => {
-      setFunderBalance(
-        BigNumber.from(balance?.balance.amount ? balance.balance.amount : 0),
-      )
-    }).catch(() => { })
-  }, [wallet.evmosAddressCosmosFormat])
+    getEvmosBalance(wallet.evmosAddressCosmosFormat)
+      .then((balance) => {
+        setFunderBalance(
+          BigNumber.from(balance?.balance.amount ? balance.balance.amount : 0)
+        );
+      })
+      .catch(() => {});
+  }, [wallet.evmosAddressCosmosFormat]);
 
   useEffect(() => {
-    const _amount = BigNumber.from(ethers.parseEther(fundAmount))
+    const _amount = BigNumber.from(ethers.parseEther(fundAmount));
     if (_amount.gt(funderBalance)) {
-      setDisabled(true)
+      setDisabled(true);
+    } else {
+      setDisabled(false);
     }
-    else {
-      setDisabled(false)
-    }
-  }, [fundAmount, funderBalance])
+  }, [fundAmount, funderBalance]);
 
   useEffect(() => {
     function fetchVestingData() {
@@ -200,7 +199,7 @@ export const FundVestingAccount = () => {
 
       <form
         onSubmit={handleSubmit(async (d) => {
-          await handleOnClick(d).then(() => { });
+          await handleOnClick(d).then(() => {});
         })}
         className="flex flex-col space-y-3"
       >
@@ -325,7 +324,7 @@ export const FundVestingAccount = () => {
           {!vestingAddressError &&
             vestingAddressData?.account?.funder_address &&
             vestingAddressData?.account?.funder_address?.toLowerCase() !==
-            wallet?.evmosAddressCosmosFormat?.toLocaleLowerCase() && (
+              wallet?.evmosAddressCosmosFormat?.toLocaleLowerCase() && (
               <ErrorContainer description={t("fund.create.error")} />
             )}
 
@@ -338,7 +337,6 @@ export const FundVestingAccount = () => {
               </WizardHelper>
             )}
         </div>
-
 
         <label
           htmlFor="accountName"
@@ -377,7 +375,9 @@ export const FundVestingAccount = () => {
           type="submit"
           disabled={disabled || vestingAddressError}
           style={{ backgroundColor: "#ed4e33" }}
-          className={`w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg text-pearl ${disabled ? "opacity-40" : ""}`}
+          className={`w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg text-pearl ${
+            disabled ? "opacity-40" : ""
+          }`}
           value={t("vesting.fund.button.action.title")}
         />
       </form>
