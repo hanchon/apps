@@ -1,5 +1,5 @@
 import { defineConfig } from "@playwright/test";
-import { sharedConfig } from "playwright-config-custom";
+import { sharedConfig } from "@evmosapps/test-utils";
 import { config } from "dotenv";
 
 /**

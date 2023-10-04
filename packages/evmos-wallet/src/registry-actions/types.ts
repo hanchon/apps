@@ -1,4 +1,4 @@
-import { chains } from "@evmos-apps/registry";
+import { chains } from "@evmosapps/registry";
 import { CosmosAddress } from "../wallet";
 
 export type Chain = (typeof chains)[keyof typeof chains];

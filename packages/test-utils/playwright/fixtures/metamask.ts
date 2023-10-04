@@ -66,5 +66,12 @@ export const web3TestWithoutNetwork = test.extend<{
 });
 
 export const helpers = { web3Test, web3TestWithoutNetwork };
+export const mmFixture = {
+  test: web3Test,
+  ...web3Test,
+};
 
-export default web3Test;
+export const noNetworkMMFixture = {
+  test: web3TestWithoutNetwork,
+  ...web3TestWithoutNetwork,
+};

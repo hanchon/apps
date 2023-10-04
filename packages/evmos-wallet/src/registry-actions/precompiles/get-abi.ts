@@ -1,4 +1,4 @@
-import { ics20Abi, stakingAbi } from "@evmos-apps/registry/src/abi";
+import { ics20Abi, stakingAbi } from "@evmosapps/registry/src/abi";
 import { erc20ABI } from "wagmi";
 
 export const ABI = {

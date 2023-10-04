@@ -1,4 +1,4 @@
-import { chains } from "@evmos-apps/registry";
+import { chains } from "@evmosapps/registry";
 import { getTokens } from "evmos-wallet";
 import { REGISTRY_NETWORK_BLOCK_LIST } from "evmos-wallet/src/internal/wallet/functionality/networkConfig";
 

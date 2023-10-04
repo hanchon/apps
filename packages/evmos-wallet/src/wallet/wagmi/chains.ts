@@ -4,7 +4,7 @@ import {
 } from "wagmi/chains";
 import { EVMOS_CHAIN } from "../../internal/wallet/functionality/networkConfig";
 import { Chain } from "viem";
-import { evmos as registryEvmos } from "@evmos-apps/registry";
+import { evmos as registryEvmos } from "@evmosapps/registry";
 
 export const evmos: Chain & {
   cosmosId: string;

@@ -1,5 +1,5 @@
 {
-  "name": "playwright-config-custom",
+  "name": "@evmosapps/test-utils",
   "version": "1.0.2",
   "description": "Playwright custom config",
   "main": "index.ts",

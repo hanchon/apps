@@ -1,10 +1,6 @@
-import { test, expect } from "@playwright/test";
-import web3Test from "playwright-config-custom/fixtures/metamask";
-import { waitLocator } from "playwright-config-custom/utils";
+import { waitLocator, mmFixture } from "@evmosapps/test-utils";
+import { BALANCE_ENDPOINT } from "./constants";
 
-const BALANCE_ENDPOINT =
-  // eslint-disable-next-line no-secrets/no-secrets
-  "*/**/cosmos/bank/v1beta1/balances/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
 const STAKING_INFO_ENDPOINT =
   // eslint-disable-next-line no-secrets/no-secrets
   "*/**/stakingInfo/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
@@ -102,103 +98,104 @@ const responseBalanceUpdated = {
   },
 };
 
-test.beforeEach(async ({ page }) => {
-  await page.goto("/");
+const { test, expect, describe, beforeEach } = mmFixture;
 
-  await page
-    .locator("div")
-    .filter({ hasText: /^I acknowledge to the Terms of Service\.$/ })
-    .getByRole("checkbox")
-    .check();
-  await page
-    .locator("div")
-    .filter({
-      hasText: /^I want to share usage data\. More information\.$/,
-    })
-    .getByRole("checkbox")
-    .check();
-  await page.getByRole("button", { name: "Accept", exact: true }).click();
-  await page.getByRole("button", { name: /accept and proceed/i }).click();
-});
+describe("dAppStore Page - Copilot", () => {
+  beforeEach(async ({ page }) => {
+    await page.goto("/");
 
-test.describe("dAppStore Page - Copilot", () => {
-  web3Test(
-    "should connect with MetaMask, top up the account from onboarding section and then from the top up button in account balance section",
-    async ({ page, wallet }) => {
-      await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
-        const json = responseEmptyBalance;
-        await route.fulfill({ json });
-      });
+    await page
+      .locator("div")
+      .filter({ hasText: /^I acknowledge to the Terms of Service\.$/ })
+      .getByRole("checkbox")
+      .check();
+    await page
+      .locator("div")
+      .filter({
+        hasText: /^I want to share usage data\. More information\.$/,
+      })
+      .getByRole("checkbox")
+      .check();
+    await page.getByRole("button", { name: "Accept", exact: true }).click();
+    await page.getByRole("button", { name: /accept and proceed/i }).click();
+  });
+  test("should connect with MetaMask, top up the account from onboarding section and then from the top up button in account balance section", async ({
+    page,
+    wallet,
+  }) => {
+    await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
+      const json = responseEmptyBalance;
+      await route.fulfill({ json });
+    });
 
-      await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
-        const json = responseEmptyInfoStaking;
-        await route.fulfill({ json });
-      });
+    await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
+      const json = responseEmptyInfoStaking;
+      await route.fulfill({ json });
+    });
 
-      await page.route(ERC20_MODULE_BALANCE_ENDPOINT, async (route) => {
-        const json = responseZeroBalance;
-        await route.fulfill({ json });
-      });
+    await page.route(ERC20_MODULE_BALANCE_ENDPOINT, async (route) => {
+      const json = responseZeroBalance;
+      await route.fulfill({ json });
+    });
 
-      await page.route(GET_ACCOUNT_ENDPOINT, async (route) => {
-        const json = responseEmptyAccount;
-        await route.fulfill({ json });
-      });
+    await page.route(GET_ACCOUNT_ENDPOINT, async (route) => {
+      const json = responseEmptyAccount;
+      await route.fulfill({ json });
+    });
 
-      await page.waitForTimeout(3000);
+    await page.waitForTimeout(3000);
 
-      await page.getByRole("button", { name: /Connect/i }).click();
-      await page.getByRole("button", { name: /MetaMask/i }).click();
-      await wallet.approve();
+    await page.getByRole("button", { name: /Connect/i }).click();
+    await page.getByRole("button", { name: /MetaMask/i }).click();
+    await wallet.approve();
 
-      await waitLocator(
-        page.getByRole("button", { name: "Top Up Account", exact: true })
-      ).click();
-      await page.getByRole("button", { name: "Debit/Credit Card" }).click();
+    await waitLocator(
+      page.getByRole("button", { name: "Top Up Account", exact: true })
+    ).click();
+    await page.getByRole("button", { name: "Debit/Credit Card" }).click();
 
-      await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
-        const json = responseBalance;
-        await route.fulfill({ json });
-      });
+    await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
+      const json = responseBalance;
+      await route.fulfill({ json });
+    });
 
-      await page.waitForTimeout(3000);
+    await page.waitForTimeout(3000);
 
-      await expect(
-        page.getByRole("heading", { name: /Congratulations/i })
-      ).toBeVisible();
-      await expect(
-        page.getByText(/You're now ready to use your Evmos!/i)
-      ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /Congratulations/i })
+    ).toBeVisible();
+    await expect(
+      page.getByText(/You're now ready to use your Evmos!/i)
+    ).toBeVisible();
 
-      await page
-        .getByRole("button", { name: /Continue to the dashboard/i })
-        .click();
+    await page
+      .getByRole("button", { name: /Continue to the dashboard/i })
+      .click();
 
-      await page
-        .getByRole("button", {
-          name: "Top Up Account",
-          exact: true,
-        })
-        .click();
-      await page.getByRole("button", { name: "Debit/Credit Card" }).click();
+    await page
+      .getByRole("button", {
+        name: "Top Up Account",
+        exact: true,
+      })
+      .click();
+    await page.getByRole("button", { name: "Debit/Credit Card" }).click();
 
-      await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
-        const json = responseBalanceUpdated;
-        await route.fulfill({ json });
-      });
+    await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
+      const json = responseBalanceUpdated;
+      await route.fulfill({ json });
+    });
 
-      await page.waitForTimeout(3000);
+    await page.waitForTimeout(3000);
 
-      await expect(
-        page.getByRole("heading", { name: /Congratulations/i })
-      ).toBeVisible();
-      await expect(
-        page.getByText(/You're now ready to use your Evmos!/i)
-      ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /Congratulations/i })
+    ).toBeVisible();
+    await expect(
+      page.getByText(/You're now ready to use your Evmos!/i)
+    ).toBeVisible();
 
-      await page
-        .getByRole("button", { name: /Continue to the dashboard/i })
-        .click();
-    }
-  );
+    await page
+      .getByRole("button", { name: /Continue to the dashboard/i })
+      .click();
+  });
 });
