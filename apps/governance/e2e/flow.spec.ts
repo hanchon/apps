@@ -1,7 +1,7 @@
-import { test, expect } from "@playwright/test";
-import web3Test from "playwright-config-custom/fixtures/metamask";
+import { mmFixture } from "@evmosapps/test-utils";
 
-test.beforeEach(async ({ page }) => {
+const { test, describe, expect, beforeEach } = mmFixture;
+beforeEach(async ({ page }) => {
   await page.goto("/governance");
 
   await page
@@ -20,7 +20,7 @@ test.beforeEach(async ({ page }) => {
   await page.getByRole("button", { name: /accept and proceed/i }).click();
 });
 
-test.describe("Governance page", () => {
+describe("Governance page", () => {
   test("should redirect on the right proposal when clicking", async ({
     page,
   }) => {
@@ -39,13 +39,13 @@ test.describe("Governance page", () => {
 
     expect(proposalTitleLink).toEqual(proposalTitle);
   });
-  web3Test(
-    "should let the user connect with MetaMask",
-    async ({ page, wallet }) => {
-      await page.getByRole("button", { name: /Connect/i }).click();
-      await page.getByRole("button", { name: /MetaMask/i }).click();
-      await wallet.approve();
-      await expect(page.getByText(/Connected with Metamask/i)).toBeVisible();
-    }
-  );
+  test("should let the user connect with MetaMask", async ({
+    page,
+    wallet,
+  }) => {
+    await page.getByRole("button", { name: /Connect/i }).click();
+    await page.getByRole("button", { name: /MetaMask/i }).click();
+    await wallet.approve();
+    await expect(page.getByText(/Connected with Metamask/i)).toBeVisible();
+  });
 });

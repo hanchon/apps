@@ -23,7 +23,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@evmos-apps/config": "workspace:*",
+    "@evmosapps/config": "workspace:*",
     "@testing-library/user-event": "^14.4.3",
     "husky": "^8.0.0",
     "prettier": "^3.0.1",

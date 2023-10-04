@@ -1,4 +1,4 @@
-import { chains } from "@evmos-apps/registry";
+import { chains } from "@evmosapps/registry";
 import { Token, TokenByRef, TokenRef } from "./types";
 
 const TOKEN_BY_REF = Object.fromEntries(

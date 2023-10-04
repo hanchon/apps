@@ -1,4 +1,4 @@
-import { ics20Abi } from "@evmos-apps/registry";
+import { ics20Abi } from "@evmosapps/registry";
 import { assertIf } from "helpers";
 
 import {

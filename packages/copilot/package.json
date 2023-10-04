@@ -22,7 +22,7 @@
     "redux": ">=4"
   },
   "devDependencies": {
-    "@evmos-apps/config": "workspace:*",
+    "@evmosapps/config": "workspace:*",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.20",
     "prettier": "^3.0.1",

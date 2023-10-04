@@ -1,5 +1,5 @@
 import { type BrowserContext } from "@playwright/test";
-import { waitLocator } from "../utils";
+import { waitLocator } from "../wait-locator";
 
 export class Keplr {
   constructor(

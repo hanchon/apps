@@ -1,5 +1,5 @@
 {
-  "name": "@evmos-apps/registry",
+  "name": "@evmosapps/registry",
   "version": "1.0.0",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -13,7 +13,7 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@evmos-apps/config": "workspace:helpers",
+    "@evmosapps/config": "workspace:helpers",
     "@types/lodash": "^4.14.197",
     "@types/lodash-es": "^4.17.8",
     "@types/node": "18.11.14",

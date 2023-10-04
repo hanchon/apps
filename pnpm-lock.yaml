@@ -78,7 +78,7 @@ importers:
         specifier: ^3.22.1
         version: 3.22.1
     devDependencies:
-      '@evmos-apps/config':
+      '@evmosapps/config':
         specifier: workspace:*
         version: link:packages/config
       husky:
@@ -169,12 +169,6 @@ importers:
       '@ethersproject/bignumber':
         specifier: ^5.7.0
         version: 5.7.0
-      '@evmos-apps/config':
-        specifier: workspace:*
-        version: link:../../packages/config
-      '@evmos-apps/registry':
-        specifier: workspace:*
-        version: link:../../packages/registry
       '@evmos/address-converter':
         specifier: ^0.1.9
         version: 0.1.9
@@ -187,6 +181,15 @@ importers:
       '@evmos/transactions':
         specifier: ^0.2.12
         version: 0.2.12
+      '@evmosapps/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@evmosapps/registry':
+        specifier: workspace:*
+        version: link:../../packages/registry
+      '@evmosapps/test-utils':
+        specifier: workspace:*
+        version: link:../../packages/test-utils
       '@hanchon/signature-to-pubkey':
         specifier: ^1.0.1
         version: 1.0.1
@@ -232,9 +235,6 @@ importers:
       next-i18next:
         specifier: ^14.0.0
         version: 14.0.0(i18next@23.4.4)(next@13.5.2)(react-i18next@13.1.0)(react@18.2.0)
-      playwright-config-custom:
-        specifier: workspace:*
-        version: link:../../packages/playwright-config-custom
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -278,9 +278,6 @@ importers:
       '@ethersproject/bignumber':
         specifier: ^5.7.0
         version: 5.7.0
-      '@evmos-apps/config':
-        specifier: workspace:*
-        version: link:../../packages/config
       '@evmos/address-converter':
         specifier: ^0.1.9
         version: 0.1.9
@@ -293,6 +290,12 @@ importers:
       '@evmos/transactions':
         specifier: ^0.2.12
         version: 0.2.12
+      '@evmosapps/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@evmosapps/test-utils':
+        specifier: workspace:*
+        version: link:../../packages/test-utils
       '@hanchon/signature-to-pubkey':
         specifier: ^1.0.1
         version: 1.0.1
@@ -341,9 +344,6 @@ importers:
       next:
         specifier: 13.5.2
         version: 13.5.2(@babel/core@7.23.0)(react-dom@18.2.0)(react@18.2.0)
-      playwright-config-custom:
-        specifier: workspace:*
-        version: link:../../packages/playwright-config-custom
       postcss:
         specifier: ^8.4.20
         version: 8.4.30
@@ -414,9 +414,6 @@ importers:
       '@ethersproject/bignumber':
         specifier: ^5.7.0
         version: 5.7.0
-      '@evmos-apps/config':
-        specifier: workspace:*
-        version: link:../../packages/config
       '@evmos/address-converter':
         specifier: ^0.1.9
         version: 0.1.9
@@ -429,6 +426,12 @@ importers:
       '@evmos/transactions':
         specifier: ^0.2.12
         version: 0.2.12
+      '@evmosapps/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@evmosapps/test-utils':
+        specifier: workspace:*
+        version: link:../../packages/test-utils
       '@hanchon/signature-to-pubkey':
         specifier: ^1.0.1
         version: 1.0.1
@@ -483,9 +486,6 @@ importers:
       next-i18next:
         specifier: ^14.0.0
         version: 14.0.0(i18next@23.4.4)(next@13.5.2)(react-i18next@13.1.0)(react@18.2.0)
-      playwright-config-custom:
-        specifier: workspace:*
-        version: link:../../packages/playwright-config-custom
       postcss:
         specifier: ^8.4.20
         version: 8.4.30
@@ -562,9 +562,6 @@ importers:
       '@ethersproject/units':
         specifier: ^5.7.0
         version: 5.7.0
-      '@evmos-apps/config':
-        specifier: workspace:*
-        version: link:../../packages/config
       '@evmos/address-converter':
         specifier: ^0.1.9
         version: 0.1.9
@@ -577,6 +574,12 @@ importers:
       '@evmos/transactions':
         specifier: ^0.2.12
         version: 0.2.12
+      '@evmosapps/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@evmosapps/test-utils':
+        specifier: workspace:*
+        version: link:../../packages/test-utils
       '@hanchon/signature-to-pubkey':
         specifier: ^1.0.1
         version: 1.0.1
@@ -619,9 +622,6 @@ importers:
       next:
         specifier: 13.5.2
         version: 13.5.2(@babel/core@7.23.0)(react-dom@18.2.0)(react@18.2.0)
-      playwright-config-custom:
-        specifier: workspace:*
-        version: link:../../packages/playwright-config-custom
       postcss:
         specifier: ^8.4.20
         version: 8.4.30
@@ -713,9 +713,6 @@ importers:
       '@ethersproject/providers':
         specifier: ^5.7.2
         version: 5.7.2
-      '@evmos-apps/config':
-        specifier: workspace:*
-        version: link:../../packages/config
       '@evmos/address-converter':
         specifier: ^0.1.9
         version: 0.1.9
@@ -728,6 +725,12 @@ importers:
       '@evmos/transactions':
         specifier: ^0.2.12
         version: 0.2.12
+      '@evmosapps/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@evmosapps/test-utils':
+        specifier: workspace:*
+        version: link:../../packages/test-utils
       '@hanchon/signature-to-pubkey':
         specifier: ^1.0.1
         version: 1.0.1
@@ -764,9 +767,6 @@ importers:
       next-i18next:
         specifier: ^14.0.0
         version: 14.0.0(i18next@23.4.4)(next@13.5.2)(react-i18next@13.1.0)(react@18.2.0)
-      playwright-config-custom:
-        specifier: workspace:*
-        version: link:../../packages/playwright-config-custom
       postcss:
         specifier: ^8.4.20
         version: 8.4.30
@@ -885,7 +885,7 @@ importers:
         specifier: ^20.4.8
         version: 20.5.9
     devDependencies:
-      '@evmos-apps/config':
+      '@evmosapps/config':
         specifier: workspace:*
         version: link:../config
       autoprefixer:
@@ -979,7 +979,7 @@ importers:
         specifier: workspace:*
         version: link:../ui-helpers
     devDependencies:
-      '@evmos-apps/config':
+      '@evmosapps/config':
         specifier: workspace:*
         version: link:../config
       autoprefixer:
@@ -1030,9 +1030,6 @@ importers:
       '@ethersproject/transactions':
         specifier: ^5.7.0
         version: 5.7.0
-      '@evmos-apps/registry':
-        specifier: workspace:*
-        version: link:../registry
       '@evmos/address-converter':
         specifier: ^0.1.9
         version: 0.1.9
@@ -1045,6 +1042,9 @@ importers:
       '@evmos/transactions':
         specifier: ^0.2.12
         version: 0.2.12
+      '@evmosapps/registry':
+        specifier: workspace:*
+        version: link:../registry
       '@hanchon/signature-to-pubkey':
         specifier: ^1.0.1
         version: 1.0.1
@@ -1118,7 +1118,7 @@ importers:
         specifier: ^0.34.1
         version: 0.34.1(jsdom@22.1.0)(playwright@1.38.1)
     devDependencies:
-      '@evmos-apps/config':
+      '@evmosapps/config':
         specifier: workspace:*
         version: link:../config
       '@types/node':
@@ -1194,7 +1194,7 @@ importers:
         specifier: ^0.34.1
         version: 0.34.1(jsdom@22.1.0)(playwright@1.38.1)
     devDependencies:
-      '@evmos-apps/config':
+      '@evmosapps/config':
         specifier: workspace:*
         version: link:../config
       '@types/node':
@@ -1259,37 +1259,6 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  packages/playwright-config-custom:
-    dependencies:
-      '@types/download':
-        specifier: ^8.0.2
-        version: 8.0.2
-      '@types/lodash-es':
-        specifier: ^4.17.8
-        version: 4.17.8
-      download:
-        specifier: ^8.0.0
-        version: 8.0.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      memoize-one:
-        specifier: ^6.0.0
-        version: 6.0.0
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-    devDependencies:
-      '@playwright/test':
-        specifier: ^1.38.1
-        version: 1.38.1
-      '@tenkeylabs/dappwright':
-        specifier: ^2.4.0
-        version: 2.4.0(playwright-core@1.38.1)
-      tsx:
-        specifier: ^3.12.10
-        version: 3.12.10
-
   packages/registry:
     dependencies:
       glob:
@@ -1299,7 +1268,7 @@ importers:
         specifier: ^3.12.10
         version: 3.12.10
     devDependencies:
-      '@evmos-apps/config':
+      '@evmosapps/config':
         specifier: workspace:helpers
         version: link:../config
       '@types/lodash':
@@ -1354,7 +1323,7 @@ importers:
         specifier: ^0.34.1
         version: 0.34.1(jsdom@22.1.0)(playwright@1.38.1)
     devDependencies:
-      '@evmos-apps/config':
+      '@evmosapps/config':
         specifier: workspace:*
         version: link:../config
       '@types/node':
@@ -1433,7 +1402,7 @@ importers:
         specifier: ^0.34.1
         version: 0.34.1(jsdom@22.1.0)(playwright@1.38.1)
     devDependencies:
-      '@evmos-apps/config':
+      '@evmosapps/config':
         specifier: workspace:*
         version: link:../config
       '@types/node':
@@ -1483,6 +1452,37 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
 
+  packages/test-utils:
+    dependencies:
+      '@types/download':
+        specifier: ^8.0.2
+        version: 8.0.2
+      '@types/lodash-es':
+        specifier: ^4.17.8
+        version: 4.17.8
+      download:
+        specifier: ^8.0.0
+        version: 8.0.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      memoize-one:
+        specifier: ^6.0.0
+        version: 6.0.0
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+    devDependencies:
+      '@playwright/test':
+        specifier: ^1.38.1
+        version: 1.38.1
+      '@tenkeylabs/dappwright':
+        specifier: ^2.4.0
+        version: 2.4.0(playwright-core@1.38.1)
+      tsx:
+        specifier: ^3.12.10
+        version: 3.12.10
+
   packages/tracker:
     dependencies:
       '@testing-library/react':
@@ -1504,7 +1504,7 @@ importers:
         specifier: ^0.34.1
         version: 0.34.1(jsdom@22.1.0)(playwright@1.38.1)
     devDependencies:
-      '@evmos-apps/config':
+      '@evmosapps/config':
         specifier: workspace:*
         version: link:../config
       '@types/mixpanel':
@@ -1568,7 +1568,7 @@ importers:
         specifier: ^0.34.1
         version: 0.34.1(jsdom@22.1.0)(playwright@1.38.1)
     devDependencies:
-      '@evmos-apps/config':
+      '@evmosapps/config':
         specifier: workspace:*
         version: link:../config
       '@types/node':

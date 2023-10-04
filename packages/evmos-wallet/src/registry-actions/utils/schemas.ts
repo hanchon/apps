@@ -1,4 +1,4 @@
-import { chains } from "@evmos-apps/registry";
+import { chains } from "@evmosapps/registry";
 import { z } from "zod";
 import { getTokenMinDenomList } from "../get-token-min-denom-list";
 import { TokenMinDenom, Prefix, TokenRef } from "../types";

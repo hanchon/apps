@@ -1,6 +1,6 @@
 import { test as base, chromium, type BrowserContext } from "@playwright/test";
-import { Keplr } from "./keplr-controller";
-import { downloadRelease } from "./downloadRelease";
+import { Keplr } from "../utils/keplr/keplr-controller";
+import { downloadRelease } from "../utils/keplr/download-release";
 import { tmpdir } from "os";
 import path from "path";
 
@@ -27,7 +27,7 @@ const loadContext = async () => {
   return context;
 };
 
-export const test = base.extend<{
+const test = base.extend<{
   context: BrowserContext;
   keplr: Keplr;
 }>({
@@ -48,4 +48,9 @@ export const test = base.extend<{
   },
 });
 
-export default test;
+const fixture = {
+  test,
+  ...test,
+};
+
+export default fixture;

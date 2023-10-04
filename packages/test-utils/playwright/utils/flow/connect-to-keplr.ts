@@ -1,6 +1,7 @@
 import { Page } from "playwright";
-import { Keplr } from "../../fixtures/keplr-controller";
+
 import { waitLocator } from "../wait-locator";
+import { Keplr } from "../keplr/keplr-controller";
 
 export const connectToKeplr = async (page: Page, keplr: Keplr) => {
   const keplrButton = page.getByTestId(/wallet-profile-button-keplr/);
