@@ -22,16 +22,18 @@ export const useVestingAccounts = (account?: string) => {
     if (vestingResponse.data !== undefined) {
       if (typeof vestingResponse.data === "string") {
         return "There is no vesting account linked to this address.";
+      } else if (vestingResponse?.data?.unvested === null) {
+        return "There is no vesting account linked to this address.";
       }
       temp = {
         accountAddress:
-          vestingResponse.data.account.base_vesting_account.base_account
+          vestingResponse?.data?.account?.base_vesting_account?.base_account
             .address,
-        funderAddress: vestingResponse.data.account.funder_address,
-        unvestedAmount: vestingResponse.data.unvested[0].amount,
+        funderAddress: vestingResponse?.data?.account?.funder_address,
+        unvestedAmount: vestingResponse?.data?.unvested[0]?.amount,
         originalVestingAmount:
-          vestingResponse.data.account.base_vesting_account.original_vesting[0]
-            .amount,
+          vestingResponse?.data.account?.base_vesting_account
+            ?.original_vesting[0]?.amount,
       };
     }
     return temp;

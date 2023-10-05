@@ -25,7 +25,7 @@ const config = {
         darkGray2: "#2D2925",
         darkGray3: "#4f4740",
         darkGray4: "#70655c",
-        darkGray5: "#918378",
+        darkGray5: "#A2958B",
         darkGray400: "#898175",
         darkGray300: "#6E675C",
         darGray800: "#262017",

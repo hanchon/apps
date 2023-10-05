@@ -13,6 +13,7 @@ import {
 } from "evmos-wallet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TermOfServices, Container, MavaWidget } from "ui-helpers";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 function SnackbarsInternal() {
   const valueRedux = useSelector((state: StoreType) => getAllSnackbars(state));
@@ -25,6 +26,16 @@ import { StatefulFooter, StatefulHeader } from "stateful-components";
 const Content = dynamic(() => import("../src/components/vesting/Content"));
 import { MixpanelProvider } from "tracker";
 import { GiveFeedback } from "../src/components/GiveFeedback";
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common", "home"])),
+      // Will be passed to the page component as props
+    },
+  };
+}
+
 export default function Home() {
   const queryClient = new QueryClient();
   return (

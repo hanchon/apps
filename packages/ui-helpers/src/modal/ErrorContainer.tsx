@@ -8,14 +8,14 @@ export const ErrorContainer = ({
   text,
   description,
 }: {
-  text: string;
+  text?: string;
   description: string;
 }) => {
   return (
     <div className="bg-pearl2 flex space-x-2 justify-start rounded-lg p-4">
       <IconContainer type={ICONS_TYPES.CANCEL} />
       <div className="relative -top-[3px] text-sm cursor-default">
-        <p className="text-red2 font-bold">{text}</p>
+        {text && <p className="text-red2 font-bold">{text}</p>}
         <p className="text-red1">{description}</p>
       </div>
     </div>

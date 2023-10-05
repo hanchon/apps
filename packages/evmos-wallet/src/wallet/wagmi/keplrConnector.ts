@@ -54,7 +54,7 @@ const TransactionRequestSchema = z
 
 const prepareTransaction = async (
   chainId: number,
-  request: TransactionRequest
+  request: TransactionRequest,
 ): Promise<UnsignedTransaction> => {
   const client = getPublicClient({
     chainId,
@@ -305,7 +305,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
           params[0],
           method === "account_signTransaction"
             ? EthSignType.TRANSACTION
-            : EthSignType.MESSAGE
+            : EthSignType.MESSAGE,
         );
 
         return toHex(signature);
@@ -317,7 +317,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
           cosmosId,
           bech32Address,
           params[1],
-          EthSignType.EIP712
+          EthSignType.EIP712,
         );
         return toHex(signature);
       }

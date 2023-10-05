@@ -20,6 +20,7 @@ export const useReceiptModal = () => useModal("receipt", ReceiptModalSchema);
 
 export const ReceiptModal = () => {
   const { isOpen, setIsOpen, modalProps } = useReceiptModal();
+
   return (
     <ModalWithTransitions
       show={isOpen}
