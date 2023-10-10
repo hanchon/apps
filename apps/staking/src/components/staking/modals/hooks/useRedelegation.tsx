@@ -5,14 +5,14 @@ import { useDispatch } from "react-redux";
 import { RedelegateProps } from "../types";
 import { parseUnits } from "@ethersproject/units";
 import { BigNumber } from "@ethersproject/bignumber";
-import { executeRedelegate } from "../../../../internal/staking/functionality/transactions/redelegate";
-import { snackExecuteIBCTransfer } from "evmos-wallet";
+import { GENERATING_TX_NOTIFICATIONS, snackBroadcastSuccessful, snackErrorGeneratingTx } from "evmos-wallet";
 import {
   CLICK_BUTTON_CONFIRM_REDELEGATE,
   useTracker,
   SUCCESSFUL_TX_REDELEGATE,
   UNSUCCESSFUL_TX_REDELEGATE,
 } from "tracker";
+import { useStakingPrecompile } from "../../../../internal/staking/functionality/hooks/useStakingPrecompile";
 export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
   const dispatch = useDispatch();
 
@@ -23,6 +23,9 @@ export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
     UNSUCCESSFUL_TX_REDELEGATE,
   );
+
+  const {redelegate} = useStakingPrecompile()
+
   const handleConfirmButton = async () => {
     handlePreClickAction({
       wallet: useRedelegateProps?.wallet?.evmosAddressEthFormat,
@@ -47,26 +50,31 @@ export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
     }
 
     useRedelegateProps.setDisabled(true);
-    const res = await executeRedelegate(
-      useRedelegateProps.wallet,
-      useRedelegateProps.item.validatorAddress,
-      amount,
-      useRedelegateProps.validatorDst,
-    );
-    dispatch(snackExecuteIBCTransfer(res));
-    if (res.error === true) {
-      unsuccessfulTx({
-        errorMessage: res.message,
-        wallet: useRedelegateProps.wallet?.evmosAddressEthFormat,
-        provider: useRedelegateProps.wallet?.extensionName,
-        transaction: "unsuccessful",
-      });
-    } else {
+    try {
+      const res = await redelegate(
+        useRedelegateProps.wallet.evmosAddressEthFormat,
+        useRedelegateProps.item.validatorAddress,
+        useRedelegateProps.validatorDst,
+        amount,
+      );
+
+      dispatch(
+        snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
+      );
+  
       successfulTx({
-        txHash: res.txHash,
+        txHash: res.hash,
         wallet: useRedelegateProps.wallet?.evmosAddressEthFormat,
         provider: useRedelegateProps.wallet?.extensionName,
-        transaction: "successful",
+        transaction: "successful"
+      });
+    } catch (e) {
+      dispatch(snackErrorGeneratingTx());
+      unsuccessfulTx({
+        errorMessage: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
+        wallet: useRedelegateProps.wallet?.evmosAddressEthFormat,
+        provider: useRedelegateProps.wallet?.extensionName,
+        transaction: "unsuccessful"
       });
     }
     useRedelegateProps.setShow(false);
@@ -74,3 +82,4 @@ export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
 
   return { handleConfirmButton };
 };
+
