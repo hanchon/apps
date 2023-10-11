@@ -1,7 +1,7 @@
 import { ConfirmButton, Modal } from "ui-helpers";
 import { SearchVesting } from "./SearchVesting";
 import { useSelector } from "react-redux";
-import { KEPLR_KEY, StoreType } from "evmos-wallet";
+import { StoreType } from "evmos-wallet";
 import { useState } from "react";
 import { FundVestingAccount } from "./FundVestingAccount";
 import { EnableVestingModal } from "./EnableVestingModal";
@@ -30,13 +30,13 @@ export const Header = () => {
             onClick={() => {
               setShowEnableModal(true);
             }}
-            disabled={!value.active || value.extensionName === KEPLR_KEY}
+            disabled={!value.active}
           />
           <ConfirmButton
             className="w-fit normal-case"
             text={t("fund.header.button.title")}
             onClick={handleConfirmClick}
-            disabled={!value.active || value.extensionName === KEPLR_KEY}
+            disabled={!value.active}
           />
         </div>
         <SearchVesting />
