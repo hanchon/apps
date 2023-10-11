@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { signatureToPubkey } from "@hanchon/signature-to-pubkey";
 import { raise } from "helpers";
 import { keplrConnector } from "./connectors";
+import { getActiveProviderKey } from "../actions";
 const recoveryMessage = "generate_pubkey";
 const hashedMessage = Buffer.from(
   fromHex(hashMessage(recoveryMessage), "bytes"),
@@ -47,6 +48,10 @@ export const usePubKey = () => {
       const signature = await signMessageAsync({
         message: recoveryMessage,
       });
+
+      if(getActiveProviderKey() === "safe") {
+        return ""
+      }
 
       pubkey = signatureToPubkey(signature, hashedMessage);
       if (pubkey) return pubkey;
