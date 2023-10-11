@@ -20,7 +20,7 @@ export function useVestingPrecompile() {
         address: VESTING_CONTRACT_ADDRESS,
         abi: VestingABI,
         functionName: "createClawbackVestingAccount",
-
+        value: 0n,
         account: address.evmosAddressEthFormat as `0x${string}`,
         args: [funderAddress, vestingAddress, enableGovClawback],
       },
