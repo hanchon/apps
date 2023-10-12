@@ -75,6 +75,7 @@ const config = {
         "pink-600": "#FCDBD6",
         "pink-700": "#FFC1C1",
         "purple-200": "#F8E3FF",
+        "purple-300": "#BD89FF",
       },
       fontSize: {
         h5: "1.36rem",

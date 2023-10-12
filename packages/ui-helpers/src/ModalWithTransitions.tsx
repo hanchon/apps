@@ -73,7 +73,7 @@ export const ModalWithTransitions = ({
             leaveTo="transform scale-95 opacity-0"
           >
             <Dialog.Panel
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
               className={cx(
                 "relative transform rounded-lg text-left m-auto transition-all pointer-events-auto",
                 {
