@@ -30,10 +30,10 @@ import { Prefix, Token } from "evmos-wallet/src/registry-actions/types";
 import { findToken } from "evmos-wallet/src/registry-actions/utils";
 import { useQuery } from "@tanstack/react-query";
 import { SkeletonLoading } from "../shared/SkeletonLoading";
-import { E, raise, useWatch } from "helpers";
+import { E, raise } from "helpers";
 import { ReceiptModalProps } from "./ReceiptModal";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const generateReceipt = ({
   sender,
@@ -229,11 +229,12 @@ export const ReceiptModalContent = ({
 
   const [isReceiptStillLoading, setIsReceiptStillLoading] = useState(false);
 
-  useWatch(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       setIsReceiptStillLoading(isReceiptLoading);
     }, 12000);
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const drawTextButton = () => {
