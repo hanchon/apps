@@ -232,7 +232,7 @@ export const ReceiptModalContent = ({
   useWatch(() => {
     const timer = setTimeout(() => {
       setIsReceiptStillLoading(isReceiptLoading);
-    }, 7000);
+    }, 12000);
     return () => clearTimeout(timer);
   }, []);
 
