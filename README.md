@@ -28,24 +28,24 @@ The frontend of [Evmos Dashboard Apps](https://app.evmos.org). It contains apps 
 Pre-requisites:
 
 - [Node.js](https://nodejs.org/en/download/) (v18.12.0 or higher)
-- [Yarn](https://yarnpkg.com/getting-started/install)
+- [Pnpm](https://pnpm.io/installation)
 
 ### Installation
 
 ```bash
-yarn install
+pnpm install
 ```
 
 ### Development
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
 ### Build
 
 ```bash
-yarn build
+pnpm build
 ```
 
 ### Environment variables
