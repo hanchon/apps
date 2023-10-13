@@ -61,7 +61,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0xc7e56EEc629D3728fE41baCa2f6BFc502096f94E",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "Stride Staked Osmo",
@@ -77,7 +78,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0xD32eB974468ed767338533842D2D4Cc90B9BAb46",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "Stride Staked Juno",
@@ -93,7 +95,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0xc71aAf8e486e3F33841BB56Ca3FD2aC3fa8D29a8",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "Stride Staked Inj",
@@ -109,7 +112,8 @@ export default {
       "type": "IBC",
       "decimals": 18,
       "erc20Address": "0x786744d8B40ee154FA4a74153c4d33dF09aBf015",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "Stride Staked Evmos",
@@ -125,7 +129,8 @@ export default {
       "type": "IBC",
       "decimals": 18,
       "erc20Address": "0x2C68D1d6aB986Ff4640b51e1F14C716a076E44C4",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "Stride Staked Atom",
@@ -141,7 +146,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0xB5124FA2b2cF92B2D469b249433BA1c96BDF536D",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     },
     {
       "name": "Stride",
@@ -157,7 +163,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0x8FA78CEB7F04118Ec6d06AaC37Ca854691d8e963",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     }
   ],
   "explorerUrl": "https://www.mintscan.io/stride/txs"

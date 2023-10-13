@@ -30,7 +30,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
   const { deposit, withdraw } = useWEVMOS();
 
   const { handlePreClickAction: clickConfirmWrapTx } = useTracker(
-    CLICK_BUTTON_CONFIRM_WRAP_TX,
+    CLICK_BUTTON_CONFIRM_WRAP_TX
   );
 
   const { handlePreClickAction: successfulTx } = useTracker(SUCCESSFUL_WRAP_TX);
@@ -61,7 +61,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
     }
     const amount = parseUnits(
       useConvertProps.inputValue,
-      BigNumber.from(useConvertProps.item.decimals),
+      BigNumber.from(useConvertProps.item.decimals)
     );
     if (amount.gt(useConvertProps.balance.balanceFrom)) {
       return;
@@ -73,7 +73,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
         const res = await deposit(amount, wallet.evmosAddressEthFormat);
 
         dispatch(
-          snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/"),
+          snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
         );
         successfulTx({
           txHash: res.hash,
@@ -101,7 +101,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
         const res = await withdraw(amount, wallet.evmosAddressEthFormat);
 
         dispatch(
-          snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/"),
+          snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
         );
         successfulTx({
           txHash: res.hash,

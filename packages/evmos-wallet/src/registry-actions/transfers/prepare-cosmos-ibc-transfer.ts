@@ -9,7 +9,7 @@ import {
 } from "../../wallet";
 import { getChainByAddress } from "../get-chain-by-account";
 import { Prefix, TokenAmount } from "../types";
-import { getIBCChannelId, getTimeoutTimestamp } from "../utils";
+import { getIBCChannelId } from "../utils";
 import { assignGasEstimateToProtoTx } from "../utils/assign-gas-estimate-to-proto-tx";
 import { createProtobufTransaction } from "../utils/create-protobuf-transaction";
 import { buffGasEstimate } from "../utils/buff-gas-estimate";
@@ -18,8 +18,11 @@ import { apiCosmosTxBroadcast } from "../../api/cosmos-rest/api-cosmos-tx-broadc
 import { getChainAccountInfo } from "../utils/get-chain-account-info";
 import { Hex } from "viem";
 import { getTokenByRef } from "../get-token-by-ref";
+import { Tx } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/v1beta1/tx_pb";
+import { Keplr } from "@keplr-wallet/types";
+import { getTxTimeout } from "../utils/getTxTimeout";
 
-export const createProtobufIBCTransferMsg = ({
+export const createProtobufIBCTransferMsg = async ({
   sender,
   receiver,
   token,
@@ -52,7 +55,8 @@ export const createProtobufIBCTransferMsg = ({
       receiver,
     }),
     sourcePort: "transfer",
-    timeoutTimestamp: getTimeoutTimestamp(),
+
+    timeoutHeight: await getTxTimeout(sender),
     memo: "",
     token: {
       amount: token.amount.toString(),
@@ -85,6 +89,7 @@ export const prepareCosmosIBCTransfer = async (params: {
     gasLimit: bigint;
     token: TokenAmount;
   };
+  mode?: keyof typeof SignMode;
 }) => {
   const tx = await createProtobufIBCTransferMsg(params);
   const chain = getChainByAddress(params.sender);
@@ -98,6 +103,29 @@ export const prepareCosmosIBCTransfer = async (params: {
   };
 };
 
+const signDirect = async (tx: Tx, ...args: Parameters<Keplr["signDirect"]>) => {
+  const keplr = await getKeplrProvider();
+
+  const signature = await keplr.signDirect(...args);
+  tx.signatures = [Buffer.from(signature.signature.signature, "base64")];
+  return tx;
+};
+
+const signAmino = async (
+  tx: Tx,
+  ...[chainId, sender, signDoc]: Parameters<Keplr["signAmino"]>
+) => {
+  const keplr = await getKeplrProvider();
+
+  const signer = keplr.getOfflineSignerOnlyAmino(chainId);
+
+  const signature = await signer.signAmino(sender, signDoc);
+
+  tx.signatures = [Buffer.from(signature.signature.signature, "base64")];
+
+  return tx;
+};
+
 export const executeCosmosIBCTransfer = async (params: {
   sender: Address<Prefix>;
   receiver: Address<Prefix>;
@@ -106,22 +134,56 @@ export const executeCosmosIBCTransfer = async (params: {
     gasLimit: bigint;
     token: TokenAmount;
   };
+  mode?: keyof typeof SignMode;
 }) => {
-  const tx = await createProtobufIBCTransferMsg(params);
-  const keplr = await getKeplrProvider();
+  const { mode = "DIRECT" } = params;
+  let tx = await createProtobufIBCTransferMsg(params);
+
   const chain = getChainByAddress(params.sender);
 
   const { accountNumber } = await getChainAccountInfo(params.sender);
-  const signature = await keplr.signDirect(chain.cosmosId, params.sender, {
-    // @ts-expect-error This is typed as `Long`, but it does accept a string,
-    // I'd rather not have yet another library to do what native bigint does
-    accountNumber: accountNumber.toString(),
-    authInfoBytes: tx.authInfo?.toBinary(),
-    bodyBytes: tx.body?.toBinary(),
-    chainId: chain.cosmosId,
-  });
+  if (mode === "DIRECT") {
+    tx = await signDirect(
+      tx,
+      chain.cosmosId,
+      params.sender,
+      {
+        // @ts-expect-error This is typed as `Long`, but it does accept a string,
+        // I'd rather not have yet another library to do what native bigint does
+        accountNumber: accountNumber.toString(),
+        authInfoBytes: tx.authInfo?.toBinary(),
+        bodyBytes: tx.body?.toBinary(),
+        chainId: chain.cosmosId,
+      },
+      {
+        preferNoSetFee: true,
+      }
+    );
+  } else if (mode === "LEGACY_AMINO_JSON") {
+    const fee = tx.authInfo?.fee;
+    const msgs = tx.body?.messages ?? [];
+    tx = await signAmino(tx, chain.cosmosId, params.sender, {
+      account_number: accountNumber,
+      chain_id: chain.cosmosId,
+      fee: {
+        amount: fee?.amount ?? [],
+        gas: fee?.gasLimit!.toString() ?? "0",
+      },
+      memo: tx.body?.memo ?? "",
+      msgs: [
+        {
+          type: "cosmos-sdk/MsgTransfer",
+          value: MsgTransfer.fromBinary(msgs[0].value).toJson({
+            useProtoFieldName: true,
+          }),
+        },
+      ],
 
-  tx.signatures = [Buffer.from(signature.signature.signature, "base64")];
+      sequence: tx.authInfo!.signerInfos[0].sequence.toString(),
+    });
+  } else {
+    throw new Error("UNSUPPORTED_SIGN_MODE");
+  }
 
   const response = await apiCosmosTxBroadcast(chain.cosmosRest, tx);
   const hash: Hex = `0x${response.tx_response.txhash}`;

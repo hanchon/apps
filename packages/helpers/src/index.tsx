@@ -8,4 +8,4 @@ export * from "./hash";
 export * from "./classnames";
 export * from "./bigint";
 export * from "./modals";
-export * from "./use-effect-event";
+export * from "./hooks";

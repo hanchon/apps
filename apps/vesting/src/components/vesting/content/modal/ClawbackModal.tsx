@@ -4,14 +4,65 @@ import { ExclamationIcon } from "icons";
 import { VestingAccountDetail } from "../../../../internal/types";
 import { convertFromAtto, formatNumber } from "helpers";
 
+import {
+  addSnackbar,
+  SNACKBAR_CONTENT_TYPES,
+  SNACKBAR_TYPES,
+  GENERATING_TX_NOTIFICATIONS,
+  BROADCASTED_NOTIFICATIONS,
+} from "evmos-wallet";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { useVestingPrecompile } from "../../../../internal/useVestingPrecompile";
+import { useTranslation } from "next-i18next";
+import { evmosToEth } from "@evmos/address-converter";
+
 // TODO: format totalTokens and availableClawback depending on the response
 export const ClawbackModal = ({
   vestingDetails,
 }: {
   vestingDetails: VestingAccountDetail;
 }) => {
-  const handleOnClick = () => {
-    // TODO: logic for clawback
+  const dispatch = useDispatch();
+  const [disabled, setDisabled] = useState(false);
+
+  const { clawback } = useVestingPrecompile();
+
+  const handleOnClick = async () => {
+    try {
+      setDisabled(true);
+
+      const res = await clawback(
+        evmosToEth(vestingDetails?.funderAddress) ?? "",
+        evmosToEth(vestingDetails?.accountAddress) ?? "",
+        evmosToEth(vestingDetails?.funderAddress) ?? "",
+      );
+      dispatch(
+        addSnackbar({
+          id: 0,
+          content: {
+            type: SNACKBAR_CONTENT_TYPES.LINK,
+            title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
+            hash: res?.hash,
+            explorerTxUrl: "www.mintscan.io/evmos/txs/",
+          },
+          type: SNACKBAR_TYPES.SUCCESS,
+        }),
+      );
+      setDisabled(false);
+    } catch (e) {
+      setDisabled(false)      
+      dispatch(
+        addSnackbar({
+          id: 0,
+          content: {
+            type: SNACKBAR_CONTENT_TYPES.TEXT,
+            title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
+          },
+          type: SNACKBAR_TYPES.ERROR,
+        }),
+      );
+    }
   };
 
   const totalTokens = () => {
@@ -24,33 +75,39 @@ export const ClawbackModal = ({
       6,
     );
   };
+
+  const { t } = useTranslation();
   return (
     <div className="space-y-5">
-      <ModalTitle title="Clawback Tokens" />
+      <ModalTitle title={t("clawback.title")} />
       <div className=" rounded border-2 border-darkGray2 p-4">
-        Clawback retrieves all unvested tokens from a vesting account.
+        {t("clawback.description")}
       </div>
       <ItemModal
-        title="Account Address"
+        title={t("clawback.info.account.title")}
         description={vestingDetails.accountAddress}
       />
       <ItemModal
-        title="Total Vesting Tokens"
-        description={`${totalTokens()} EVMOS `}
+        title={t("clawback.info.vesting.tokens.title")}
+        description={`${totalTokens()} EVMOS`}
       />
       <ItemModal
-        title="Available for Clawback"
-        description={`${availableClawback()} EVMOS `}
+        title={t("clawback.info.available.title")}
+        description={`${availableClawback()} EVMOS`}
       />
       <div>
         <div className="flex items-center space-x-1 ">
           <ExclamationIcon className="text-red" />
-          <span className="text-lg font-bold">CAUTION</span>
+          <span className="text-lg font-bold">{t("clawback.alert.title")}</span>
         </div>
-        Clawback cannot be undone! Please make sure you want to do this action.
+        {t("clawback.alert.description")}
       </div>
 
-      <ConfirmButton text="Clawback" onClick={handleOnClick} />
+      <ConfirmButton
+        disabled={disabled}
+        text={t("clawback.button.action.title")}
+        onClick={handleOnClick}
+      />
     </div>
   );
 };

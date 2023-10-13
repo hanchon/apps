@@ -97,8 +97,8 @@ export const SetUpContent = ({
                 <Subtitle variant="modal-black">
                   {t("request.message.subtitle")}
                 </Subtitle>
-                <span className="text-xs md:text-sm font-light text-red">
-                  {message.length}/{MAX_MESSAGE_LENGTH}
+                <span className="text-xs md:text-sm text-pink-300 font-[GreyCliff] tracking-wider">
+                  {message.length} / {MAX_MESSAGE_LENGTH}
                 </span>
               </div>
 
@@ -124,19 +124,20 @@ export const SetUpContent = ({
                 variant="primary-lg"
               />
             )}
-            {!isDisconnected && (<PrimaryButton
-              disabled={disabled}
-              onClick={() => {
-                setState((prev) => ({
-                  ...prev,
-                  step: "share",
-                }));
-                sendEvent(CLICK_ON_GENERATE_PAYMENT_REQUEST);
-              }}
-              variant="primary-lg"
-            >
-              {t("request.generate.button")}
-            </PrimaryButton>
+            {!isDisconnected && (
+              <PrimaryButton
+                disabled={disabled}
+                onClick={() => {
+                  setState((prev) => ({
+                    ...prev,
+                    step: "share",
+                  }));
+                  sendEvent(CLICK_ON_GENERATE_PAYMENT_REQUEST);
+                }}
+                variant="primary-lg"
+              >
+                {t("request.generate.button")}
+              </PrimaryButton>
             )}
           </div>
         </section>

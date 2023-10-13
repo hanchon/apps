@@ -101,7 +101,6 @@ export const useSend = ({
   const hasLoadedFee = fee !== undefined && isFeeLoading === false;
 
   const hasTransferred = transferResponse !== undefined;
-  console.log(transferError, 'transferError')
   const transferRejected = E.match.byPattern(transferError, /(Request rejected|User rejected the request)/g)
   const out = {
     transfer,

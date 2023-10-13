@@ -15,12 +15,14 @@ export const prepareContractERC20Transfer = async ({
   receiver: Address<"evmos">;
   token: TokenAmount;
 }) => {
-  const transferredToken = getTokenByRef(token.ref);
-
+  const { erc20Address } = getTokenByRef(token.ref);
+  if (!erc20Address) {
+    throw new Error("Token is not an ERC20 token");
+  }
   const args = {
     abi: erc20ABI,
     functionName: "transfer",
-    address: transferredToken.erc20Address,
+    address: erc20Address,
     args: [normalizeToEth(receiver), token.amount],
     account: normalizeToEth(sender),
   } as const;

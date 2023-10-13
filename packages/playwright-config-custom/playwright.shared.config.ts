@@ -1,5 +1,4 @@
 import { devices } from "@playwright/test";
-
 export const sharedConfig = {
   testDir: "./e2e",
   /* Run tests in files in parallel */

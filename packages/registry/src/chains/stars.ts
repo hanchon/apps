@@ -65,7 +65,8 @@ export default {
       "type": "IBC",
       "decimals": 6,
       "erc20Address": "0x5aD523d94Efb56C400941eb6F34393b84c75ba39",
-      "handledByExternalUI": null
+      "handledByExternalUI": null,
+      "listed": true
     }
   ],
   "explorerUrl": "https://www.mintscan.io/stargaze/txs"

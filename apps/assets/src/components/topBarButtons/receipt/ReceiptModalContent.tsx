@@ -25,7 +25,7 @@ import {
   getTokens,
   normalizeToCosmosAddress,
 } from "evmos-wallet";
-import { FailTxIcon, SuccessTxIcon } from "icons";
+import { FailTxIcon, ProcessingTxIcon, SuccessTxIcon } from "icons";
 import { Prefix, Token } from "evmos-wallet/src/registry-actions/types";
 import { findToken } from "evmos-wallet/src/registry-actions/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -33,6 +33,7 @@ import { SkeletonLoading } from "../shared/SkeletonLoading";
 import { E, raise } from "helpers";
 import { ReceiptModalProps } from "./ReceiptModal";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import { useEffect, useState } from "react";
 
 const generateReceipt = ({
   sender,
@@ -49,8 +50,9 @@ const generateReceipt = ({
 }) => ({
   sender: normalizeToCosmosAddress(sender as Address<Prefix>),
   receiver: normalizeToCosmosAddress(receiver as Address<Prefix>),
-  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${token.denom
-    }`,
+  formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${
+    token.denom
+  }`,
   height: BigInt(height),
 });
 
@@ -89,9 +91,10 @@ const generateERC20TransferReceipt = (result: FetchTransactionResult) => {
 
   if (!amount || !amount || !receiver) throw new Error("Missing args");
   const tokenErc20Address = result.to?.toLowerCase();
+  if (!tokenErc20Address) throw new Error("Missing token contract address");
   const token =
     getTokens().find(
-      (token) => token.erc20Address.toLowerCase() === tokenErc20Address,
+      (token) => token.erc20Address?.toLowerCase() === tokenErc20Address
     ) ?? raise("Token not found");
 
   return generateReceipt({
@@ -108,10 +111,10 @@ const generateEVMTxReceipt = (result: FetchTransactionResult) => {
     sender: result.from,
     receiver: result.to ?? raise("Missing receiver"),
     amount: result.value,
-    token: getTokenByRef('evmos:EVMOS'),
+    token: getTokenByRef("evmos:EVMOS"),
     height: result.blockNumber,
   });
-}
+};
 
 const isIBCMsgTransfer = (message: unknown): message is MsgTransfer => {
   return (
@@ -192,7 +195,7 @@ const useBlock = (prefix?: Prefix, height?: bigint) => {
       const chainConfig = getChain(prefix);
       const result = await apiCosmosBlockByHeight(
         chainConfig.cosmosRest,
-        height,
+        height
       );
       return result;
     },
@@ -215,42 +218,106 @@ export const ReceiptModalContent = ({
 
   const { data: block, isLoading: isFetchingBlock } = useBlock(
     chainPrefix,
-    receipt?.height,
+    receipt?.height
   );
   const chain = getChain(chainPrefix ?? "evmos");
   const blockDate = block?.block?.header?.time
     ? new Date(block.block.header.time)
     : undefined;
 
+  const txHasNotFoundError = E.match.byPattern(error, /(could not be found)/g);
+
+  const [isReceiptStillLoading, setIsReceiptStillLoading] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsReceiptStillLoading(isReceiptLoading);
+    }, 12000);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const drawTextButton = () => {
+    if (receipt || (!!error && !txHasNotFoundError)) {
+      return t("transfer.confirmation.button.text");
+    }
+    if (txHasNotFoundError || (isReceiptStillLoading && !error)) {
+      return t("transfer.confirmation.button.mintscan.text");
+    }
+    return (
+      <>
+        <div className="animate-pulse bg-black/20 rounded-full h-5 w-5 mr-1" />
+        {t("transfer.confirmation.button.text.loading")}
+      </>
+    );
+  };
+
   return (
     <>
       <ContainerConfirmation>
-        {/* PaymentTxIcon FailTxIcon */}
-        {!!error && <FailTxIcon />}
+        {!!error && !txHasNotFoundError && <FailTxIcon />}
         {receipt && <SuccessTxIcon />}
-        {isReceiptLoading && (
-          <div className="animate-pulse bg-white/10 rounded-full h-56 w-56" />
-        )}
+        {isReceiptLoading && <ProcessingTxIcon />}
+        {!!error && txHasNotFoundError && <ProcessingTxIcon />}
 
-        <ConfirmationTitle variant={error ? "error" : "success"}>
-          <SkeletonLoading loading={isReceiptLoading}>
-            {receipt && t("transfer.confirmation.message.successful")}
-            {!!error && t("transfer.confirmation.message.unsuccessful")}
-          </SkeletonLoading>
-        </ConfirmationTitle>
+        <div className="flex flex-col items-center space-y-2">
+          <ConfirmationTitle
+            variant={
+              receipt
+                ? "success"
+                : error && !txHasNotFoundError
+                ? "error"
+                : "loading"
+            }
+          >
+            <SkeletonLoading loading={isReceiptLoading}>
+              {receipt && t("transfer.confirmation.message.successful")}
+              {!!error &&
+                !txHasNotFoundError &&
+                t("transfer.confirmation.message.unsuccessful")}
+              {isReceiptLoading &&
+                !isReceiptStillLoading &&
+                t("transfer.confirmation.message.processing.title")}
+              {((isReceiptLoading && isReceiptStillLoading) ||
+                (isReceiptStillLoading && txHasNotFoundError)) &&
+                t("transfer.confirmation.message.taking.longer.title")}
+            </SkeletonLoading>
+          </ConfirmationTitle>
 
-        <ConfirmationMessage>
-          <SkeletonLoading loading={isReceiptLoading}>
-            {receipt && (
-              <>
-                {t("transfer.confirmation.message.successful.description")}
-                <br />
-                {t("transfer.confirmation.message.successful.description2")}
-              </>
-            )}
-            {!!error && <>{E.ensureError(error).message}</>}
-          </SkeletonLoading>
-        </ConfirmationMessage>
+          <ConfirmationMessage>
+            <SkeletonLoading loading={isReceiptLoading}>
+              {receipt && (
+                <>
+                  {t("transfer.confirmation.message.successful.description")}
+                  <br />
+                  {t("transfer.confirmation.message.successful.description2")}
+                </>
+              )}
+              {!!error && !txHasNotFoundError && (
+                <span className="break-all">
+                  {E.ensureError(error).message}
+                </span>
+              )}
+              {isReceiptLoading && !isReceiptStillLoading && (
+                <>
+                  {t("transfer.confirmation.message.processing.description")}
+                  <br />
+                  {t("transfer.confirmation.message.processing.description2")}
+                </>
+              )}
+              {((isReceiptLoading && isReceiptStillLoading) ||
+                (!!error && txHasNotFoundError)) && (
+                <>
+                  {t("transfer.confirmation.message.taking.longer.description")}
+                  <br />
+                  {t(
+                    "transfer.confirmation.message.taking.longer.description2"
+                  )}
+                </>
+              )}
+            </SkeletonLoading>
+          </ConfirmationMessage>
+        </div>
         <Divider variant="info" className="w-full">
           <ViewExplorer
             txHash={chainPrefix !== "evmos" ? hash?.slice(2) ?? "" : hash ?? ""}
@@ -258,8 +325,8 @@ export const ReceiptModalContent = ({
             text={`Transaction ID: ${hash?.slice(0, 10)}...`}
           />
         </Divider>
-        {!error && (
-          <>
+        {(!error || txHasNotFoundError) && (
+          <div className="w-full space-y-2">
             <ContainerItem>
               <ConfirmationText>
                 {t("transfer.confirmation.total.amount.sent")}
@@ -293,15 +360,28 @@ export const ReceiptModalContent = ({
                 </SkeletonLoading>
               </p>
             </ContainerItem>
-          </>
+          </div>
         )}
       </ContainerConfirmation>
 
       <PrimaryButton
-        onClick={() => setIsOpen(false)}
-        className="w-full text-lg rounded-md capitalize mt-11"
+        onClick={() => {
+          if (
+            txHasNotFoundError ||
+            (isReceiptStillLoading && !receipt && !error)
+          ) {
+            window.open(chain.explorerUrl + "/" + hash, "_blank");
+          }
+          setIsOpen(false);
+        }}
+        className="w-full text-lg rounded-md normal-case mt-11"
+        variant={
+          txHasNotFoundError || (isReceiptStillLoading && !receipt && !error)
+            ? "outline-primary"
+            : "primary"
+        }
       >
-        {isReceiptLoading || isFetchingBlock ? t("transfer.confirmation.button.text.loading") : t("transfer.confirmation.button.text")}
+        {drawTextButton()}
       </PrimaryButton>
     </>
   );

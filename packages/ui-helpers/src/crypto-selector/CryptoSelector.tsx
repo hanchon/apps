@@ -11,7 +11,7 @@ export function CryptoSelector<T>(
   props: PropsWithChildren<{
     value: T;
     onChange: (value: T) => void;
-  }>,
+  }>
 ) {
   return (
     <div className="relative">
@@ -33,15 +33,15 @@ const Button = ({
       className={cn(
         "flex space-x-2 items-center py-1 pl-1 pr-3 rounded-3xl justify-end tracking-wider",
         {
-          "bg-gray-500": variant === "default",
+          "bg-gray-500 py-2 pl-2": variant === "default",
           "bg-black-900": variant === "black",
-        },
+        }
       )}
     >
       {src && (
         <Image
           src={src}
-          className={cn("rounded-full", {
+          className={cn("rounded-full bg-white", {
             "h-7 w-7 md:h-8 md:w-8": variant === "black",
             "h-5 w-5 md:h-6 md:w-6": variant === "default",
           })}
@@ -81,7 +81,7 @@ const Options = ({
         className={cn(
           // add the following className to the CryptoSelector.Options component: left:0 or right:0
           "absolute z-10 bg-gradient-to-br from-red to-[#FFDDD880] p-[1px] rounded-2xl text-sm",
-          className,
+          className
         )}
       >
         <div className="pr-3 py-5 bg-black rounded-2xl">
@@ -96,7 +96,7 @@ const Options = ({
                 "w-44 md:w-52": variant === "default",
                 "w-56 md:w-64": variant === "wide",
                 "w-64 md:w-80 grid grid-cols-2": variant === "multiple",
-              },
+              }
             )}
           >
             {children}
@@ -127,13 +127,13 @@ const Option = <T,>({
           {
             "bg-pink-600 text-black font-medium": active || selected,
             disabled: disabled,
-          },
+          }
         )
       }
       {...props}
     >
       <Image
-        className="h-5 w-5 rounded-full"
+        className="h-5 w-5 bg-white rounded-full"
         src={src}
         alt=""
         width={30}

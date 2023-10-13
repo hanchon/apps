@@ -46,24 +46,23 @@ export const ModalWithTransitions = ({
           propClose ?? setShow(false);
         }}
       >
-        <Transition.Child
-          as={Fragment}
-          enter="transition duration-100 ease-in"
-          enterFrom="transform scale-95 opacity-0"
-          enterTo="transform scale-100 opacity-100"
-          leave="transition duration-100 ease-out"
-          leaveFrom="transform scale-100 opacity-100"
-          leaveTo="transform scale-95 opacity-0"
-        >
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50"
-            onClick={() => {
-              setShow(false);
-            }}
-          />
-        </Transition.Child>
-
-        <div className="fixed inset-0 pointer-events-none h-full w-full flex  py-4 overflow-y-auto">
+        <div className="fixed inset-0 h-full w-full flex py-4 overflow-y-auto">
+          <Transition.Child
+            as={Fragment}
+            enter="transition duration-100 ease-in"
+            enterFrom="transform scale-95 opacity-0"
+            enterTo="transform scale-100 opacity-100"
+            leave="transition duration-100 ease-out"
+            leaveFrom="transform scale-100 opacity-100"
+            leaveTo="transform scale-95 opacity-0"
+          >
+            <div
+              className="fixed inset-0 bg-black bg-opacity-50"
+              onClick={() => {
+                setShow(false);
+              }}
+            />
+          </Transition.Child>
           <Transition.Child
             as={Fragment}
             enter="transition duration-100 ease-in"
@@ -74,14 +73,15 @@ export const ModalWithTransitions = ({
             leaveTo="transform scale-95 opacity-0"
           >
             <Dialog.Panel
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
               className={cx(
                 "relative transform rounded-lg text-left m-auto transition-all pointer-events-auto",
                 {
                   "bg-pearl1 shadow-xl md:min-w-[400px] max-w-[850px]":
                     variant === "default",
-                  "bg-black-900 shadow-custom-sm px-6 pt-6 pb-16 text-white w-full max-w-md":
+                  "bg-black-900 shadow-custom-sm px-6 pt-6 pb-16 text-white w-full max-w-md font-[IBM]":
                     variant === "modal-black",
-                },
+                }
               )}
             >
               {propClose && (

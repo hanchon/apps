@@ -4,6 +4,7 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { useRouter } from "next/router";
 import { Search } from "ui-helpers";
+import { useTranslation } from "next-i18next";
 export const SearchVesting = () => {
   const router = useRouter();
 
@@ -27,8 +28,10 @@ export const SearchVesting = () => {
     setValue(e.target.value);
   };
 
+  const { t } = useTranslation();
+
   const props = {
-    placeholder: "Search Accounts",
+    placeholder: t("search.placeholder"),
     handleKeyDown,
     handleOnClick,
     value,

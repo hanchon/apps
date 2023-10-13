@@ -1,10 +1,11 @@
 import * as z from "zod";
+import { Intervals, TimeWindow } from "../../internal/helpers/types";
 
 export const getEndDate = (
   date: string | undefined,
-  vestingDuration: string,
+  vestingDuration: string
 ) => {
-  const duration = Number(vestingDuration?.split(" ")[0]);
+  const duration = Number(vestingDuration?.split("-")[0]);
   const year = Number(date?.split("-")[0]);
   if (!isNaN(duration) && !isNaN(year)) {
     const total = duration + year;
@@ -21,7 +22,7 @@ const VESTING_ACCOUNTS_NAMES_LOCALSTORAGE = "VESTING_ACCOUNTS_NAMES";
 
 export function setVestingAccountNameLocalstorage(
   walletAddress: string,
-  accountName: string,
+  accountName: string
 ) {
   const storedData = localStorage.getItem(VESTING_ACCOUNTS_NAMES_LOCALSTORAGE);
   const accounts = storedData
@@ -34,7 +35,7 @@ export function setVestingAccountNameLocalstorage(
   accounts.push({ walletAddress, accountName });
   localStorage.setItem(
     VESTING_ACCOUNTS_NAMES_LOCALSTORAGE,
-    JSON.stringify(accounts),
+    JSON.stringify(accounts)
   );
 }
 
@@ -51,16 +52,6 @@ export const getVestingAccountNameLocalstorage = (address: string) => {
   return filtered[0]?.accountName ?? "";
 };
 
-export enum Duration {
-  OneYear = "1 YEAR",
-  FourYears = "4 YEARS",
-  None = "None",
-  OneMonth = "1 MONTH",
-  OneDay = "1 DAY",
-  Monthly = "Monthly",
-  Quarterly = "Quarterly",
-}
-
 export enum PlansType {
   Team = "Team",
   Grantee = "Grantee",
@@ -72,23 +63,52 @@ export const plans = [
   PlansType.Team,
   PlansType.Grantee,
 ] as const;
-export const duration = [Duration.FourYears, Duration.OneYear] as const;
+export const duration = [TimeWindow["4-years"], TimeWindow["1-year"]] as const;
 export const cliff = [
-  Duration.None,
-  Duration.OneYear,
-  Duration.OneMonth,
-  Duration.OneDay,
+  TimeWindow["1-year"],
+  TimeWindow["1-month"],
+  TimeWindow["1-day"],
+  TimeWindow["none"],
 ] as const;
-export const schedule = [Duration.Monthly, Duration.Quarterly] as const;
+export const schedule = [Intervals["month"], Intervals["quarter"]] as const;
 export const lockup = [
-  Duration.None,
-  Duration.OneYear,
-  Duration.OneMonth,
+  TimeWindow["none"],
+  TimeWindow["1-year"],
+  TimeWindow["1-month"],
 ] as const;
 
+// TODO: use the correct value
 export const dummyProps = {
   available: "2000450.52",
 };
+
+export const enableAccountSchema = z.object({
+  address: z
+    .string()
+    .min(1, { message: "Required" })
+    .and(
+      z
+        .string()
+        .refine(
+          (value: string) =>
+            value.startsWith("evmos") || value.startsWith("0x"),
+          {
+            message: "Address must start with 'evmos' or '0x'",
+          }
+        )
+    )
+    .and(
+      z
+        .string()
+        .refine(
+          (value: string) =>
+            isEthereumAddressValid(value) || isEvmosAddressValid(value),
+          {
+            message: "Incorrect format for address",
+          }
+        )
+    ),
+});
 
 export const schema = z.object({
   address: z
@@ -98,16 +118,18 @@ export const schema = z.object({
       z
         .string()
         .refine(
-          (value) => value.startsWith("evmos") || value.startsWith("0x"),
+          (value: string) =>
+            value.startsWith("evmos") || value.startsWith("0x"),
           {
             message: "Address must start with 'evmos' or '0x'",
-          },
-        ),
+          }
+        )
     ),
   accountName: z.string(),
   amount: z
     .number({ invalid_type_error: "Required" })
     .min(0)
+    // TODO: use the correct value
     .max(Number(dummyProps.available)),
   planType: z.enum(plans),
   vestingDuration: z.enum(duration),
@@ -119,29 +141,29 @@ export const schema = z.object({
 
 export const vestingSettingsConfig = {
   [PlansType.Team]: {
-    duration: [Duration.FourYears],
-    cliff: [Duration.OneYear],
-    schedule: [Duration.Monthly],
-    lockup: [Duration.OneYear],
+    duration: [TimeWindow["4-years"]],
+    cliff: [TimeWindow["1-year"]],
+    schedule: [Intervals.month],
+    lockup: [TimeWindow["1-year"]],
     disabled: true,
   },
   [PlansType.Grantee]: {
-    duration: [Duration.OneYear],
-    cliff: [Duration.OneDay],
-    schedule: [Duration.Monthly],
-    lockup: [Duration.OneYear],
+    duration: [TimeWindow["1-year"]],
+    cliff: [TimeWindow["1-day"]],
+    schedule: [Intervals.month],
+    lockup: [TimeWindow["1-year"]],
     disabled: true,
   },
   [PlansType.Custom]: {
-    duration: [Duration.FourYears, Duration.OneYear],
+    duration: [TimeWindow["4-years"], TimeWindow["1-year"]],
     cliff: [
-      Duration.None,
-      Duration.OneYear,
-      Duration.OneMonth,
-      Duration.OneDay,
+      TimeWindow["none"],
+      TimeWindow["1-year"],
+      TimeWindow["1-month"],
+      TimeWindow["1-day"],
     ],
-    schedule: [Duration.Monthly, Duration.Quarterly],
-    lockup: [Duration.None, Duration.OneYear, Duration.OneMonth],
+    schedule: [Intervals.month, Intervals.quarter],
+    lockup: [TimeWindow["none"], TimeWindow["1-year"], TimeWindow["1-month"]],
     disabled: false,
   },
 };
@@ -151,10 +173,10 @@ export const DEFAULT_FORM_VALUES = {
   accountName: "",
   amount: "",
   planType: PlansType.Team,
-  vestingDuration: Duration.FourYears,
-  vestingCliff: Duration.OneYear,
-  vestingSchedule: Duration.Monthly,
-  lockupDuration: Duration.OneYear,
+  vestingDuration: TimeWindow["4-years"],
+  vestingCliff: TimeWindow["1-year"],
+  vestingSchedule: Intervals.month,
+  lockupDuration: TimeWindow["1-year"],
   startDate: " ",
 };
 

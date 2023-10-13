@@ -43,11 +43,11 @@ export const AmountInput = ({
   return (
     <div
       className={cx(
-        "flex w-full tracking-wider font-bold py-2 px-4 text-sm md:text-base leading-5 text-gray-900 focus:ring-1 border-2 border-pink-300 rounded bg-pink-200 text-black focus-visible:outline-none",
+        "flex w-full tracking-wider font-bold py-2 pl-4 pr-2 text-sm md:text-base leading-5 text-gray-900 focus:ring-1 border-2 border-pink-300 rounded bg-pink-200 text-black focus-visible:outline-none",
         {
           "bg-pink-700": variant === "error",
           "bg-purple-200": variant === "info",
-        },
+        }
       )}
     >
       <input
@@ -58,7 +58,7 @@ export const AmountInput = ({
             "bg-pink-700": variant === "error",
             "bg-purple-200": variant === "info",
           },
-          className,
+          className
         )}
         onChange={({ target }) => {
           target.value = target.value.replace(/^(0+)(?=[1-9])/, "");
@@ -67,7 +67,7 @@ export const AmountInput = ({
             decimal + (fractional !== undefined ? "." + fractional : "");
 
           const [error, parsed] = E.try(() =>
-            parseUnits(target.value, decimalsUnit),
+            parseUnits(target.value, decimalsUnit)
           );
 
           if (error) {
@@ -95,8 +95,8 @@ export const AmountInput = ({
       {max !== undefined && (
         <button
           className={cn(
-            "py-2 px-2.5 leading-none rounded-md bg-pink-400 text-black-900 text-xs md:text-sm tracking-wider font-normal",
-            maxButtonClassName,
+            "py-2 px-2.5 leading-none rounded-md bg-pink-400 text-black-900 text-xs md:text-sm tracking-wider font-light",
+            maxButtonClassName
           )}
           onClick={(e) => {
             e.preventDefault();
