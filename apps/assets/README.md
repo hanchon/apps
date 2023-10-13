@@ -17,9 +17,9 @@ The wallet extensions code is inside the `wallet` folders in `src/internal` and 
 ```sh
 git clone https://github.com/tharsis/assetsPage
 cd assetsPage
-yarn install
-yarn build
-yarn run dev
+pnpm install
+pnpm build
+pnpm run dev
 ```
 
 ## Configuration
@@ -33,7 +33,7 @@ It's using the default values that should work for most of the cases, but most o
 The tests can be run using:
 
 ```sh
-yarn run test
+pnpm run test
 ```
 
 ## Registering a new chain or token
