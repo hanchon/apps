@@ -1,6 +1,6 @@
 export default {
   "launchPad.dApp.title": "dApp Store",
-  "launchPad.assets.title": "Assets",
+  "launchPad.assets.title": "Portfolio",
   "launchPad.staking.title": "Staking",
   "launchPad.governance.title": "Governance",
   "launchPad.title": "Discover our new navigation",

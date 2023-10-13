@@ -36,7 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
-- (fix) | apps/assets 1.0.30 packages/icons 1.0.7 packages/ui-helpers 1.0.15 | Transaction failure message even if successful
+- (chore) fse-740 | apps/assets 1.0.31 apps/mission 1.0.24 packages/stateful-components 1.0.1 | Update head component
+- (fix) fse-784 | apps/assets 1.0.30 packages/icons 1.0.7 packages/ui-helpers 1.0.15 | Transaction failure message even if successful
 
 ## 1.3.3 - 2023-10-03
 
