@@ -11,6 +11,7 @@ import {
   numericOnly,
   safeSubstraction,
   truncateNumber,
+  getFormattedDate,
 } from "../index";
 
 import { parseUnits } from "@ethersproject/units";
@@ -21,10 +22,10 @@ describe("Test Styles for Asset", () => {
     const msg = getReservedForFeeText(
       BigNumber.from("300000000000000000"),
       "EVMOS",
-      "EVMOS",
+      "EVMOS"
     );
     expect(msg).toBe(
-      "0.3 EVMOS is reserved for transaction fees on the EVMOS network.",
+      "0.3 EVMOS is reserved for transaction fees on the EVMOS network."
     );
   });
 });
@@ -47,7 +48,7 @@ describe("safeSubstraction function", () => {
   it("Substraction greater than 0", () => {
     const value = safeSubstraction(
       createBigNumber("18008145312597981734"),
-      createBigNumber("300000000000000000"),
+      createBigNumber("300000000000000000")
     );
     expect(value._isBigNumber).toBe(true);
     expect(value._hex).toBe("0xf5bff8570c66ba26");
@@ -115,7 +116,7 @@ describe("amountToDollars function", () => {
     const value = amountToDollars(
       BigNumber.from("3608489735347276767"),
       18,
-      0.407541,
+      0.407541
     );
     expect(value).toBe("1.47");
   });
@@ -218,7 +219,7 @@ describe("checkFormatAddress function", () => {
     const value = checkFormatAddress(
       // eslint-disable-next-line no-secrets/no-secrets
       "evmos1c8wgcmqde5jzymrjrflpp8j20ss000c00zd0ak",
-      "EVMOS",
+      "EVMOS"
     );
     expect(value).toBe(true);
   });
@@ -227,7 +228,7 @@ describe("checkFormatAddress function", () => {
     const value = checkFormatAddress(
       // eslint-disable-next-line no-secrets/no-secrets
       "osmo1j30xhsxcqss0n662wrma0vqw4zcx285munun8a",
-      "EVMOS",
+      "EVMOS"
     );
     expect(value).toBe(false);
   });
@@ -285,5 +286,37 @@ describe("Test For Helpers", () => {
       86.3270570163752, 0.1905728578658595, 13.480736473460993,
       0.0016336522979564414,
     ]);
+  });
+});
+
+describe("getFormattedDate", () => {
+  it("should format the date correctly in 12-hour format", () => {
+    const date = new Date("2023-10-13T15:30:00"); // October 13, 2023, 3:30 PM
+    const formattedDate = getFormattedDate(date);
+    expect(formattedDate).to.equal("Oct 13,2023 3:30PM");
+  });
+
+  it("should format the date correctly in 12-hour format with midnight (12:00 AM)", () => {
+    const date = new Date("2023-10-13T00:00:00"); // October 13, 2023, 12:00 AM
+    const formattedDate = getFormattedDate(date);
+    expect(formattedDate).to.equal("Oct 13,2023 12:00AM");
+  });
+
+  it("should format the date correctly in 12-hour format with noon (12:00 PM)", () => {
+    const date = new Date("2023-10-13T12:00:00"); // October 13, 2023, 12:00 PM
+    const formattedDate = getFormattedDate(date);
+    expect(formattedDate).to.equal("Oct 13,2023 12:00PM");
+  });
+
+  it("should format the date correctly in 12-hour format for January", () => {
+    const date = new Date("2023-01-15T09:45:00"); // January 15, 2023, 9:45 AM
+    const formattedDate = getFormattedDate(date);
+    expect(formattedDate).to.equal("Jan 15,2023 9:45AM");
+  });
+
+  it("should format the date correctly in 12-hour format for December", () => {
+    const date = new Date("2023-12-07T18:15:00"); // December 7, 2023, 6:15 PM
+    const formattedDate = getFormattedDate(date);
+    expect(formattedDate).to.equal("Dec 7,2023 6:15PM");
   });
 });
