@@ -37,6 +37,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 ## Unreleased
 
 - (fix) fse-754 | packages/ui-helpers 1.0.16 | Add attribution to Coingecko
+- (chore) | packages/playwright-config-custom 1.0.3 packages/evmos-wallet 1.0.17 packages/copilot 1.0.6 | Using Lava RPCs as default ones
 - (fix) | apps/assets 1.0.30 packages/icons 1.0.7 packages/ui-helpers 1.0.15 | Transaction failure message even if successful
 
 ## 1.3.3 - 2023-10-03

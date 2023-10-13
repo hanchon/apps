@@ -4,7 +4,7 @@ import dappwright, { Dappwright, MetaMaskWallet } from "@tenkeylabs/dappwright";
 const E2E_TEST_EVMOS_CHAIN_NAME =
   process.env.E2E_TEST_EVMOS_CHAIN_NAME ?? "Evmos";
 const E2E_TEST_EVMOS_RPC_URL =
-  process.env.E2E_TEST_EVMOS_RPC_URL ?? "https://eth.bd.evmos.org:8545/";
+  process.env.E2E_TEST_EVMOS_RPC_URL ?? "https://evmos.lava.build/";
 const E2E_TEST_EVMOS_CHAIN_ID = parseInt(
   process.env.E2E_TEST_EVMOS_CHAIN_ID ?? "9001",
 );
