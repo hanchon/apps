@@ -48,9 +48,9 @@ the following general procedure for contributing has been established:
    6. When the code is complete it can be marked `Ready for Review`.
    7. Be sure to include a relevant change log entry in the `Unreleased` section of `CHANGELOG.md`
       (see [file](https://github.com/evmos/apps/blob/main/CHANGELOG.md) for log format).
-   8. Please make sure to run `yarn format` before every commit -
+   8. Please make sure to run `pnpm format` before every commit -
       the easiest way to do this is having your editor run it for you upon saving a file.
-      Additionally, please ensure that your code is lint compliant by running `yarn lint`.
+      Additionally, please ensure that your code is lint compliant by running `pnpm lint`.
       There are CI tests built into the Evmos repository
       and all PR’s will require that these tests pass
       before they can be merged.
