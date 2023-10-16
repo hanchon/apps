@@ -26,11 +26,16 @@ export const prepareContractERC20Transfer = async ({
     args: [normalizeToEth(receiver), token.amount],
     account: normalizeToEth(sender),
   } as const;
-
-  const { request } = await evmosClient.simulateContract(args);
+  const estimatedGas = buffGasEstimate(
+    await evmosClient.estimateContractGas(args)
+  );
+  const { request } = await evmosClient.simulateContract({
+    ...args,
+    gas: estimatedGas,
+  });
   return {
     tx: request,
-    estimatedGas: buffGasEstimate(await evmosClient.estimateContractGas(args)),
+    estimatedGas,
   };
 };
 
