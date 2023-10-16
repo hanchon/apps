@@ -13,14 +13,11 @@ import {
   CodeIcon,
 } from "icons";
 import { PRIVACY_POLICY_URL } from "constants-helper";
-import { FEEDBACK_URL } from "constants-helper";
 
 export const Footer = ({
-  onClickFeedback,
   handleCookies,
   version,
 }: {
-  onClickFeedback?: React.MouseEventHandler<HTMLAnchorElement>;
   handleCookies?: React.MouseEventHandler<HTMLButtonElement>;
   version: string;
 }) => {
@@ -33,32 +30,36 @@ export const Footer = ({
   }
 
   return (
-    <footer className=" text-pink-200 mb-10 mt-10 space-y-2 font-[IBM] flex lg:justify-between flex-col lg:flex-row items-center">
+    <footer className="opacity-50 text-pink-200 mb-10 mt-10 space-y-2 lg:space-y-0 font-[IBM] flex lg:justify-between flex-col lg:flex-row items-center">
       <div className="flex flex-col items-center space-y-3 lg:flex-row lg:space-x-10 lg:space-y-0">
-        <Link
-          href={DOCS_SMART_CONTRACTS_URL}
-          className="flex items-center space-x-3"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <CodeIcon width={30} height={30} />
-          <span className="text-sm"> Build With Us</span>
-        </Link>
-        <div className="flex flex-col space-y-1 text-center lg:text-left">
-          <p>Version: {getVersion()}</p>
+        <p>
           <Link
+            href={DOCS_SMART_CONTRACTS_URL}
+            className="flex items-center space-x-3"
             target="_blank"
             rel="noreferrer"
-            href="https://www.coingecko.com"
-            aria-label="coingecko"
-            className="text-sm"
           >
-            Data by Coingecko API
+            <CodeIcon width={30} height={30} />
+            <span className="text-sm"> Build With Us</span>
           </Link>
+        </p>
+        <div className="flex flex-col lg:flex-row space-x-2 text-center lg:text-left items-center space-y-2 lg:space-y-0">
+          <p>Version: {getVersion()}</p>
+          <p>
+            <Link
+              target="_blank"
+              rel="noreferrer"
+              href="https://www.coingecko.com"
+              aria-label="coingecko"
+              className="text-sm"
+            >
+              Data by Coingecko API
+            </Link>
+          </p>
         </div>
       </div>
       <div className="flex flex-col lg:flex-row items-center lg:space-x-10 space-y-2 lg:space-y-0">
-        <div className="flex items-center space-x-5 opacity-50 mt-2 lg:mt-0">
+        <div className="flex items-center space-x-5 mt-2 lg:mt-0">
           <Link
             target="_blank"
             rel="noreferrer"
@@ -101,7 +102,7 @@ export const Footer = ({
           </Link>
         </div>
 
-        <div className="flex flex-grow flex-col items-center space-y-2 opacity-50  lg:flex-row lg:space-x-5 lg:space-y-0 lg:px-2">
+        <div className="flex flex-grow flex-col items-center space-y-2 lg:flex-row lg:space-x-5 lg:space-y-0 lg:px-2">
           <p>
             <Link
               target="_blank"
@@ -122,18 +123,10 @@ export const Footer = ({
               Privacy Policy
             </Link>
           </p>
-          <p>
-            <Link
-              target="_blank"
-              rel="noreferrer"
-              href={FEEDBACK_URL}
-              aria-label="feedback"
-              onClick={onClickFeedback}
-            >
-              Feedback
-            </Link>
-          </p>
-          <button onClick={handleCookies}>Cookies Settings</button>
+
+          <button onClick={handleCookies}>
+            <p>Cookies Settings</p>
+          </button>
         </div>
       </div>
     </footer>
