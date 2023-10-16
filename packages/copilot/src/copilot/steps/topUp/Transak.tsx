@@ -20,7 +20,7 @@ export default function Transak() {
         // eslint-disable-next-line no-secrets/no-secrets
         src={`https://global.transak.com?apiKey=${TRANSAK_API_KEY}&themeColor=ed4e33&cryptoCurrencyCode=EVMOS&network=evmos&defaultPaymentMethod=credit_debit_card&disableWalletAddressForm=true&walletAddress=${wallet.evmosAddressEthFormat}`}
         allow="camera;microphone;fullscreen;payment"
-        // style={{ height: "100%", width: "100%", border: "none" }}
+        style={{ height: "100%", width: "100%", border: "none" }}
       ></iframe>
     </div>
   );

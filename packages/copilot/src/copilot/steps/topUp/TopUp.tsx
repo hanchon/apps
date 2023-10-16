@@ -5,18 +5,34 @@ import { useState } from "react";
 import { Intro } from "./Intro";
 import Transak from "./Transak";
 import Onboard from "./Onboard";
-import ProviderDropwdown, {
-  DropdownOption,
-  dropdownOptions,
-} from "./ProviderDropdown";
 import C14 from "./C14";
 import CypherD from "./CypherD";
+import LayerSwap from "./LayerSwap";
+import { CLICK_ON_DIFFERENT_ON_RAMP, useTracker } from "tracker";
+import ProviderDropwdown from "./ProviderDropdown";
+import { cryptoOptions, cardOptions, DropdownOption } from "./utils";
 
 export const TopUp = () => {
   const [topUpType, setTopUpType] = useState("intro");
   const [cardProvider, setCardProvider] = useState<DropdownOption>(
-    dropdownOptions[0]
+    cardOptions[0]
   );
+  const [cryptoProvider, setCryptoProvider] = useState<DropdownOption>(
+    cryptoOptions[0]
+  );
+
+  const { handlePreClickAction: handleDifferentOnRampClick } = useTracker(
+    CLICK_ON_DIFFERENT_ON_RAMP
+  );
+
+  const onItemClick = (option: DropdownOption) => {
+    handleDifferentOnRampClick({ onRampType: option.value });
+    setCardProvider(option);
+  };
+
+  const onCryptoItemClick = (option: DropdownOption) => {
+    setCryptoProvider(option);
+  };
 
   function renderScreen() {
     if (topUpType === "intro") {
@@ -27,7 +43,8 @@ export const TopUp = () => {
           <>
             <ProviderDropwdown
               selectedValue={cardProvider}
-              setProvider={setCardProvider}
+              onItemClick={onItemClick}
+              dropdownOptions={cardOptions}
             />
             {cardProvider.value === "Transak" ? <Transak /> : <C14 />}
           </>
@@ -36,7 +53,14 @@ export const TopUp = () => {
     } else if (topUpType === "crypto") {
       return (
         <Onboard setTopUpType={setTopUpType} topUpType={topUpType}>
-          <CypherD />
+          <>
+            <ProviderDropwdown
+              selectedValue={cryptoProvider}
+              onItemClick={onCryptoItemClick}
+              dropdownOptions={cryptoOptions}
+            />
+            {cryptoProvider.value === "CypherD" ? <CypherD /> : <LayerSwap />}
+          </>
         </Onboard>
       );
     }
