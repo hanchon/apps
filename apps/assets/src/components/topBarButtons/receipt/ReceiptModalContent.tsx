@@ -34,7 +34,7 @@ import { E, raise } from "helpers";
 import { ReceiptModalProps } from "./ReceiptModal";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
 import { useEffect, useState } from "react";
-
+import { getFormattedDate } from "helpers";
 const generateReceipt = ({
   sender,
   receiver,
@@ -356,7 +356,7 @@ export const ReceiptModalContent = ({
 
               <p>
                 <SkeletonLoading loading={isReceiptLoading || isFetchingBlock}>
-                  {blockDate && blockDate.toDateString()}
+                  {blockDate && getFormattedDate(blockDate)}
                 </SkeletonLoading>
               </p>
             </ContainerItem>

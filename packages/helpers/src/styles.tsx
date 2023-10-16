@@ -16,7 +16,7 @@ export interface addDolarsAssetsType extends addAssetsType {
 
 export function convertFromAtto(
   value: BigNumber | BigNumberish,
-  exponent = 18,
+  exponent = 18
 ) {
   // Convert to string and truncate past decimal
   // for appropriate conversion
@@ -40,7 +40,7 @@ export function convertToAtto(value: BigNumberish) {
 export function convertAndFormat(
   value: BigNumber,
   exponent = 18,
-  maxDigits = 2,
+  maxDigits = 2
 ) {
   return formatNumber(convertFromAtto(value, exponent), maxDigits);
 }
@@ -49,7 +49,7 @@ export function formatNumber(
   value: string | number | undefined,
   maxDigits = 2,
   options?: Intl.NumberFormatOptions,
-  notation: "standard" | "compact" = "standard",
+  notation: "standard" | "compact" = "standard"
 ) {
   if (value === undefined) {
     return "--";
@@ -99,12 +99,12 @@ export function truncateNumber(number: string) {
 export function getReservedForFeeText(
   amount: BigNumber,
   token: string,
-  network: string,
+  network: string
 ) {
   return `${convertAndFormat(
     amount,
     18,
-    6,
+    6
   )} ${token} is reserved for transaction fees on the ${network} network.`;
 }
 
@@ -145,7 +145,7 @@ export function convertStringFromAtto(value: BigNumberish, exponent = 18) {
 export function amountToDollars(
   value: BigNumber,
   decimals: number,
-  coingeckoPrice: number,
+  coingeckoPrice: number
 ) {
   if (!value || !coingeckoPrice) {
     return "0";
@@ -166,15 +166,15 @@ export function addDollarAssets(assets: addDolarsAssetsType) {
       amountToDollars(
         assets.cosmosBalance,
         assets.decimals,
-        assets.coingeckoPrice,
-      ),
+        assets.coingeckoPrice
+      )
     ) +
     parseFloat(
       amountToDollars(
         assets.erc20Balance,
         assets.decimals,
-        assets.coingeckoPrice,
-      ),
+        assets.coingeckoPrice
+      )
     )
   );
 }
@@ -202,7 +202,7 @@ export const isVotingTimeWithinRange = (date: string) => {
     now.getUTCDate(),
     now.getUTCHours(),
     now.getUTCMinutes(),
-    now.getUTCSeconds(),
+    now.getUTCSeconds()
   );
   const endPeriodVote = new Date(date);
   const endPeriodVoteUTC = Date.UTC(
@@ -211,7 +211,7 @@ export const isVotingTimeWithinRange = (date: string) => {
     endPeriodVote.getUTCDate(),
     endPeriodVote.getUTCHours(),
     endPeriodVote.getUTCMinutes(),
-    endPeriodVote.getUTCSeconds(),
+    endPeriodVote.getUTCSeconds()
   );
 
   const canVote =
@@ -266,7 +266,7 @@ export function formatAttoNumber(
   value: BigNumberish | BigNumber,
   options?: Intl.NumberFormatOptions,
   notation: "standard" | "compact" = "compact",
-  maxDigits = 2,
+  maxDigits = 2
 ) {
   const converted = convertFromAtto(value);
   return formatNumber(converted, maxDigits, options, notation);
@@ -311,17 +311,17 @@ type TableData = {
 
 export function getTotalAssets(
   normalizedAssetsData: TableData,
-  staked: Staked,
+  staked: Staked
 ) {
   let totalAssets = 0;
   normalizedAssetsData?.table?.map((item) => {
     totalAssets =
       totalAssets +
       parseFloat(
-        amountToDollars(item.cosmosBalance, item.decimals, item.coingeckoPrice),
+        amountToDollars(item.cosmosBalance, item.decimals, item.coingeckoPrice)
       ) +
       parseFloat(
-        amountToDollars(item.erc20Balance, item.decimals, item.coingeckoPrice),
+        amountToDollars(item.erc20Balance, item.decimals, item.coingeckoPrice)
       );
   });
   if (
@@ -334,8 +334,8 @@ export function getTotalAssets(
       amountToDollars(
         BigNumber.from(staked.total),
         staked.decimals,
-        staked.coingeckoPrice,
-      ),
+        staked.coingeckoPrice
+      )
     );
     totalAssets = totalAssets + val;
   }
@@ -345,7 +345,7 @@ export function getTotalAssets(
 
 export const getChainIds = (
   token: TableDataElement | undefined,
-  chain: TableDataElement | undefined,
+  chain: TableDataElement | undefined
 ) => {
   let chainId = token?.chainId;
   let chainIdentifier = token?.chainIdentifier;
@@ -360,7 +360,7 @@ export const getChainIds = (
 export const getPrefix = (
   token: TableDataElement | undefined,
   chain: TableDataElement | undefined,
-  address: string,
+  address: string
 ) => {
   let prefix = token?.prefix;
   if (chain !== undefined && address.startsWith(chain?.prefix)) {
@@ -429,4 +429,21 @@ export const displayTopBarTooltip = (value: BigNumber) => {
     return false;
   }
   return true;
+};
+
+// get formattedDate for receipt modal
+// Example: Jan 1, 2021 12:00AM
+export const getFormattedDate = (date: Date) => {
+  const month = date.toLocaleString("default", { month: "short" });
+  const day = date.getDate();
+  const year = date.getFullYear();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const amOrPm = hours >= 12 ? "PM" : "AM";
+  const displayHours = hours % 12 || 12; // Convert 0 to 12 for 12-hour format
+
+  const formattedDate = `${month} ${day},${year} ${displayHours}:${
+    minutes < 10 ? "0" + minutes : minutes
+  }${amOrPm}`;
+  return formattedDate;
 };
