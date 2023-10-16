@@ -1,6 +1,6 @@
 {
   "name": "playwright-config-custom",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Playwright custom config",
   "main": "index.ts",
   "private": true,

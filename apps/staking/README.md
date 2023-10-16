@@ -1,6 +1,6 @@
 # Staking Page
 
-This repo contains the front-end for the governance page: [https://staking.evmos.org/](https://staking.evmos.org/).
+This repo contains the front-end for the staking page: [https://staking.evmos.org/](https://staking.evmos.org/).
 
 ## Requirements
 
@@ -17,8 +17,8 @@ The wallet extensions code is inside the `wallet` folders in `src/internal` and 
 ```sh
 git clone https://github.com/tharsis/stakingPage
 cd stakingPage
-yarn install
-yarn run dev
+pnpm install
+pnpm run dev
 ```
 
 ## Configuration
@@ -32,5 +32,5 @@ It's using the default values that should work for most of the cases, but most o
 The tests can be run using:
 
 ```sh
-yarn run test
+pnpm run test
 ```
