@@ -70,7 +70,6 @@ export const prepareContractIBCTransfer = async <T extends Prefix>({
   // https://github.com/wagmi-dev/wagmi/issues/2887
   request.value = 0n;
 
-  console.log(request);
   return {
     tx: request,
     estimatedGas,
