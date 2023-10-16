@@ -61,3 +61,4 @@ export { ReceiveIcon } from "./ReceiveIcon";
 export { PayIcon } from "./PayIcon";
 export { ShareIcon } from "./ShareIcon";
 export { ProcessingTxIcon } from "./ProcessingTxIcon";
+export { LayerSwapIcon } from "./LayerSwapIcon";
