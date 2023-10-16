@@ -60,6 +60,8 @@ const config = {
         "gray-400": "#919191",
         "gray-500": "#F3F3F333",
         "gray-600": "#FFE6E233",
+        "gray-700": "#797979",
+        "gray-800": "#D1D1D1",
         lightYellow: "#F4E5BA",
         lightYellow1: "#FEFCE8",
         lightYellow2: "#F0FDF4",

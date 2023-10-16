@@ -13,14 +13,11 @@ import {
   CodeIcon,
 } from "icons";
 import { PRIVACY_POLICY_URL } from "constants-helper";
-import { FEEDBACK_URL } from "constants-helper";
 
 export const Footer = ({
-  onClickFeedback,
   handleCookies,
   version,
 }: {
-  onClickFeedback?: React.MouseEventHandler<HTMLAnchorElement>;
   handleCookies?: React.MouseEventHandler<HTMLButtonElement>;
   version: string;
 }) => {
@@ -33,18 +30,40 @@ export const Footer = ({
   }
 
   return (
-    <footer className=" text-pearl mb-10 mt-10 grid grid-cols-1 space-y-2 font-[IBM] md:grid-cols-3">
-      <div className=" flex w-full flex-col items-center space-y-3 md:flex-row md:space-x-36 md:space-y-0">
-        <Link
-          href={DOCS_SMART_CONTRACTS_URL}
-          className="flex items-center space-x-3"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <CodeIcon width={30} height={30} />
-          <span className="text-sm"> Build With Us</span>
-        </Link>
-        <div className="flex items-center space-x-5 opacity-50">
+    <footer className="text-gray-700 mb-10 mt-10 space-y-2 lg:space-y-0 font-[IBM] flex lg:justify-between flex-col lg:flex-row items-center">
+      <div className="flex flex-col items-center space-y-3 lg:flex-row lg:space-x-10 lg:space-y-0">
+        <p>
+          <Link
+            href={DOCS_SMART_CONTRACTS_URL}
+            className="flex items-center space-x-3 text-sm"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <CodeIcon
+              width={30}
+              height={30}
+              className="text-gray-700 hover:text-gray-700"
+            />
+            <span>Build With Us</span>
+          </Link>
+        </p>
+        <div className="flex flex-col lg:flex-row space-x-2 text-center lg:text-left items-center space-y-2 lg:space-y-0">
+          <h1>Version: {getVersion()}</h1>
+          <p>
+            <Link
+              target="_blank"
+              rel="noreferrer"
+              href="https://www.coingecko.com"
+              aria-label="coingecko"
+              className="text-sm"
+            >
+              Data by Coingecko API
+            </Link>
+          </p>
+        </div>
+      </div>
+      <div className="flex flex-col lg:flex-row items-center lg:space-x-10 space-y-2 lg:space-y-0">
+        <div className="flex items-center space-x-5 mt-2 lg:mt-0">
           <Link
             target="_blank"
             rel="noreferrer"
@@ -86,41 +105,33 @@ export const Footer = ({
             <CommonWealthIcon />
           </Link>
         </div>
-      </div>
-      <div className="flex w-full flex-col items-center justify-end space-y-2 opacity-50 md:col-span-2 md:flex-row md:space-x-5 md:space-y-0 md:px-2">
-        <p>Version: {getVersion()}</p>
-        <p>
-          <Link
-            target="_blank"
-            rel="noreferrer"
-            href="https://evmos.org/terms-of-service"
-            aria-label="terms of services"
-          >
-            Terms of Service
-          </Link>
-        </p>
-        <p>
-          <Link
-            target="_blank"
-            rel="noreferrer"
-            href={PRIVACY_POLICY_URL}
-            aria-label="privacy policy"
-          >
-            Privacy Policy
-          </Link>
-        </p>
-        <p>
-          <Link
-            target="_blank"
-            rel="noreferrer"
-            href={FEEDBACK_URL}
-            aria-label="feedback"
-            onClick={onClickFeedback}
-          >
-            Feedback
-          </Link>
-        </p>
-        <button onClick={handleCookies}>Cookies Settings</button>
+
+        <div className="flex flex-grow flex-col items-center space-y-2 lg:flex-row lg:space-x-5 lg:space-y-0 lg:px-2">
+          <p>
+            <Link
+              target="_blank"
+              rel="noreferrer"
+              href="https://evmos.org/terms-of-service"
+              aria-label="terms of services"
+            >
+              Terms of Service
+            </Link>
+          </p>
+          <p>
+            <Link
+              target="_blank"
+              rel="noreferrer"
+              href={PRIVACY_POLICY_URL}
+              aria-label="privacy policy"
+            >
+              Privacy Policy
+            </Link>
+          </p>
+
+          <button onClick={handleCookies}>
+            <p>Cookies Settings</p>
+          </button>
+        </div>
       </div>
     </footer>
   );
