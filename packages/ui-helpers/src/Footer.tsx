@@ -44,7 +44,7 @@ export const Footer = ({
           </Link>
         </p>
         <div className="flex flex-col lg:flex-row space-x-2 text-center lg:text-left items-center space-y-2 lg:space-y-0">
-          <p>Version: {getVersion()}</p>
+          <h1>Version: {getVersion()}</h1>
           <p>
             <Link
               target="_blank"
