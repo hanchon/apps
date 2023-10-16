@@ -59,7 +59,7 @@
 
   footer p,
   footer svg {
-    @apply hover:text-white transition-all duration-300 ease-in-out;
+    @apply hover:text-gray-800 transition-all duration-300 ease-in-out;
   }
 
   /* Chrome, Safari, Edge, Opera */
