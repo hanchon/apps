@@ -35,12 +35,16 @@ export const Footer = ({
         <p>
           <Link
             href={DOCS_SMART_CONTRACTS_URL}
-            className="flex items-center space-x-3"
+            className="flex items-center space-x-3 text-sm"
             target="_blank"
             rel="noreferrer"
           >
-            <CodeIcon width={30} height={30} />
-            <span className="text-sm"> Build With Us</span>
+            <CodeIcon
+              width={30}
+              height={30}
+              className="text-gray-700 hover:text-gray-700"
+            />
+            <span>Build With Us</span>
           </Link>
         </p>
         <div className="flex flex-col lg:flex-row space-x-2 text-center lg:text-left items-center space-y-2 lg:space-y-0">
