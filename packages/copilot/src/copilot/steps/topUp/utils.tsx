@@ -1,4 +1,4 @@
-import { C14Icon, LayerSwapIcon, TransakIcon } from "icons";
+import { C14Icon, CypherDIcon, LayerSwapIcon, TransakIcon } from "icons";
 
 export type DropdownOption = {
   name: string;
@@ -26,9 +26,8 @@ export const cryptoOptions: DropdownOption[] = [
     value: "LayerSwap",
   },
   {
-    name: "CypherD",
-    // TODO: change icon to CypherD
-    image: <LayerSwapIcon width={20} height={20} />,
-    value: "CypherD",
+    name: "Cypher",
+    image: <CypherDIcon width={20} height={20} />,
+    value: "Cypher",
   },
 ];
