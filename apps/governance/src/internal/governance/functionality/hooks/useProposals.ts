@@ -47,7 +47,7 @@ export const useProposals = (pid?: string) => {
         ]);
         temp.push({
           id: item.id,
-          title: item.messages.length > 0 ? item.messages[0].content.title : "",
+          title: item.title,
           status: item.status,
           votingStartTime:
             item.voting_start_time !== ""
@@ -159,12 +159,11 @@ export const useProposals = (pid?: string) => {
             ? formatDate(proposalFiltered.deposit_end_time)
             : "",
         description:
-          proposalFiltered.messages.length > 0
-            ? proposalFiltered.messages[0].content.description?.replace(
+          proposalFiltered.summary?.replace(
                 /\\[rn]/g,
                 "\n",
               )
-            : "",
+            ,
         total: sumBigNumber([
           proposalFiltered.final_tally_result.yes_count,
           proposalFiltered.final_tally_result.no_count,
