@@ -38,6 +38,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 - (chore) fse-740 | apps/assets 1.0.31 apps/mission 1.0.24 packages/stateful-components 1.0.1 | Update head component
 - (fix) fse-784 | apps/assets 1.0.30 packages/icons 1.0.7 packages/ui-helpers 1.0.15 | Transaction failure message even if successful
+- (chore) | packages/playwright-config-custom 1.0.3 packages/evmos-wallet 1.0.17 packages/copilot 1.0.6 | Using Lava RPCs as default ones
+- (fix) | packages/evmos-wallet 1.0.18 | Gas estimation wasn't being used in contract calls | Fixes issue with getting the public key for some accounts
 
 ## 1.3.3 - 2023-10-03
 
