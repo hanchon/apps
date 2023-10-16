@@ -16,7 +16,6 @@ export { CLICK_DISCONNECT_WALLET_BUTTON } from "./constants";
 export { CLICK_CONNECTED_WITH } from "./constants";
 export { CLICK_BACK_TO_MC } from "./constants";
 export { CLICK_EVMOS_LOGO } from "./constants";
-export { CLICK_FEEDBACK_FOOTER } from "./constants";
 export { SWITCH_BETWEEN_WALLETS } from "./constants";
 
 // assets
