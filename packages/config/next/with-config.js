@@ -35,6 +35,7 @@ export function withEvmosConfig(config = {}) {
   transpilePackages.delete("@evmos-apps/config");
   transpilePackages.delete("tailwind-config");
   transpilePackages.delete("playwright-config-custom");
+  transpilePackages.add("@0xsquid/widget");
 
   return withBundleAnalyzer({
     images: {
