@@ -11,11 +11,12 @@ import ProviderDropwdown, {
 } from "./ProviderDropdown";
 import C14 from "./C14";
 import CypherD from "./CypherD";
+import { Squid } from "./Squid";
 
 export const TopUp = () => {
   const [topUpType, setTopUpType] = useState("intro");
   const [cardProvider, setCardProvider] = useState<DropdownOption>(
-    dropdownOptions[0],
+    dropdownOptions[0]
   );
 
   function renderScreen() {
@@ -29,7 +30,13 @@ export const TopUp = () => {
               selectedValue={cardProvider}
               setProvider={setCardProvider}
             />
-            {cardProvider.value === "Transak" ? <Transak /> : <C14 />}
+            {cardProvider.value === "Transak" ? (
+              <Transak />
+            ) : cardProvider.value === "Squid" ? (
+              <Squid />
+            ) : (
+              <C14 />
+            )}
           </>
         </Onboard>
       );
