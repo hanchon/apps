@@ -67,7 +67,7 @@ test.describe("Mission Page - Copilot", () => {
       await switchNetworkPopup.getByRole("button", { name: /Cancel/i }).click();
 
       await expect(
-        page.getByText(/Approval Rejected, please try again/i),
+        page.getByText(/Approval Rejected, please try again/i)
       ).toBeVisible();
 
       await page
@@ -86,8 +86,8 @@ test.describe("Mission Page - Copilot", () => {
 
       await expect(
         page.getByText(
-          /You need to switch the network to Evmos, please try again/i,
-        ),
+          /You need to switch the network to Evmos, please try again/i
+        )
       ).toBeVisible();
 
       await page
@@ -110,7 +110,7 @@ test.describe("Mission Page - Copilot", () => {
       await getAccountsPopup.getByRole("button", { name: /Cancel/i }).click();
 
       await expect(
-        page.getByText(/Get accounts rejected, please try again/i),
+        page.getByText(/Get accounts rejected, please try again/i)
       ).toBeVisible();
 
       await page
@@ -136,7 +136,7 @@ test.describe("Mission Page - Copilot", () => {
 
       await page.getByRole("button", { name: "Debit/Credit card" }).click();
       await expect(
-        page.getByRole("button", { name: /Next steps/i }),
+        page.getByRole("button", { name: /Next steps/i })
       ).toBeHidden();
 
       await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
@@ -156,7 +156,7 @@ test.describe("Mission Page - Copilot", () => {
       await page
         .getByRole("button", { name: /Interact with a dApp Recommended/i })
         .click();
-    },
+    }
   );
 
   web3Test(
@@ -194,7 +194,7 @@ test.describe("Mission Page - Copilot", () => {
 
       await page.getByRole("button", { name: "Debit/Credit card" }).click();
       await expect(
-        page.getByRole("button", { name: /Next steps/i }),
+        page.getByRole("button", { name: /Next steps/i })
       ).toBeHidden();
 
       const c14Widget = page.getByTestId("c14-widget");
@@ -211,6 +211,14 @@ test.describe("Mission Page - Copilot", () => {
       expect(await transakWidget.count()).toBe(1);
 
       await page.getByRole("button", { name: "Cryptocurrencies" }).click();
+
+      const lawerSwapWidget = page.getByTestId("layerswap-widget");
+      await lawerSwapWidget.waitFor();
+
+      expect(await lawerSwapWidget.count()).toBe(1);
+
+      await page.getByTestId("card-provider-dropdown").click();
+      await page.getByRole("button", { name: /Cypher/i }).click();
 
       const cypherDWidget = page.getByTestId("cypher-onboading-sdk");
       await cypherDWidget.waitFor();
@@ -234,6 +242,6 @@ test.describe("Mission Page - Copilot", () => {
       await page
         .getByRole("button", { name: "Interact with a dApp Recommended" })
         .click();
-    },
+    }
   );
 });
