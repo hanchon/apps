@@ -1,11 +1,10 @@
-import { Page } from "playwright";
-
 import {
   acceptTOS,
   connectToKeplr,
   waitLocator,
   keplrFixture,
 } from "@evmosapps/test-utils";
+import { Page } from "@playwright/test";
 
 const { step, describe, beforeEach, expect, test } = keplrFixture;
 

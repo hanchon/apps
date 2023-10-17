@@ -53,6 +53,13 @@ export const downloadBinaries = memoize(async (binary: SupportedBinaries) => {
         name.toLowerCase().includes("aarch64")
       );
     }
+    if (arch === "x64") {
+      return (
+        name.toLowerCase().includes("x86_64") ||
+        name.toLowerCase().includes("amd64") ||
+        name.toLowerCase().includes("x64")
+      );
+    }
     return name.toLowerCase().includes(arch);
   });
 

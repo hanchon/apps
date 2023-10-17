@@ -1,5 +1,6 @@
-import { devices } from "@playwright/test";
-export const sharedConfig = {
+import { PlaywrightTestConfig, devices } from "@playwright/test";
+
+export const createPlaywrightConfig = (port = 3000): PlaywrightTestConfig => ({
   testDir: "./e2e",
   /* Run tests in files in parallel */
   // Remove it so the tests run in sequence
@@ -13,12 +14,7 @@ export const sharedConfig = {
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  timeout: 60 * 2 * 1000,
-  use: {
-    // Retry a test if its failing with enabled tracing. This allows you to analyse the DOM, console logs, network traffic etc.
-    // More information: https://playwright.dev/docs/trace-viewer
-    trace: "on-first-retry",
-  },
+  timeout: 60 * 1000,
 
   /* Configure projects for major browsers */
   projects: [
@@ -58,13 +54,26 @@ export const sharedConfig = {
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    command: "yarn start",
-    url: "http://127.0.0.1:3000",
-    reuseExistingServer: !process.env.CI,
-    stdout: "pipe",
-    stderr: "pipe",
-    timeout: 500 * 1000,
+  use: {
+    baseURL: `http://localhost:${port}`,
+    trace: "retry-with-trace",
   },
-};
+  /* Run your local dev server before starting the tests */
+  webServer: process.env.CI
+    ? [
+        {
+          command: "pnpm start",
+          port: port,
+          stdout: "pipe",
+          stderr: "pipe",
+          timeout: 300 * 1000,
+        },
+        {
+          command: "pnpm -w run testnet start",
+          stdout: "pipe",
+          stderr: "pipe",
+          timeout: 300 * 1000,
+        },
+      ]
+    : undefined,
+});

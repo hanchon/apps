@@ -13,9 +13,8 @@ import { getEvmosChainInfo } from "./chains";
 import { assertIf, raise } from "helpers";
 
 import { serialize, UnsignedTransaction } from "@ethersproject/transactions";
-import { ethToEvmos, evmosToEth } from "@evmos/address-converter";
+
 import {
-  Address,
   Hex,
   TransactionRequest,
   createWalletClient,
@@ -28,6 +27,7 @@ import { isHex, parseAccount } from "viem/utils";
 import { isString } from "helpers/src/assertions";
 import { z } from "zod";
 import { evmos } from "@evmosapps/registry";
+import { normalizeToEth, normalizeToEvmos } from "../utils";
 
 const evmosInfo = getEvmosChainInfo();
 
@@ -57,7 +57,7 @@ const prepareTransaction = async (
     }));
   const transaction: UnsignedTransaction = {
     data: request.data,
-    to: request.to,
+    to: request.to ?? undefined,
     value: request.value,
     nonce,
     chainId,
@@ -141,12 +141,15 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     const cosmosId = evmosInfo.cosmosId;
 
     if (cosmosId !== evmos.cosmosId) {
-      await provider.experimentalSuggestChain(
-        await import("@evmosapps/registry/src/keplr/evmoslocal.json")
-      );
-      await provider.experimentalSuggestChain(
-        await import("@evmosapps/registry/src/keplr/evmostestnet.json")
-      );
+      const config =
+        (await Promise.all([
+          import("@evmosapps/registry/src/keplr/evmoslocal.json"),
+          import("@evmosapps/registry/src/keplr/evmostestnet.json"),
+        ]).then((configs) =>
+          configs.find((x) => x.default.chainId === cosmosId)
+        )) ?? raise("UNSUPPORTED_NETWORK");
+
+      await provider.experimentalSuggestChain(config.default);
     }
     assertIf(cosmosId, "UNSUPPORTED_NETWORK");
 
@@ -159,7 +162,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     const signer = await this.getSigner();
     const [account] = await signer.getAccounts();
     assertIf(account, "ACCOUNT_NOT_FOUND");
-    return evmosToEth(account.address) as Address;
+    return normalizeToEth(account.address);
   };
   // This has to be a promise to conform to the interface
   // eslint-disable-next-line @typescript-eslint/require-await
@@ -263,7 +266,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     ]);
 
     const cosmosId = await this.getCosmosId(chainId);
-    const bech32Address = ethToEvmos(account);
+    const bech32Address = normalizeToEvmos(account);
 
     switch (method) {
       case "eth_sendTransaction": {

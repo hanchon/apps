@@ -1,7 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { ethToEvmos } from "@evmos/address-converter";
 import { BigNumber } from "@ethersproject/bignumber";
 import { parseUnits } from "@ethersproject/units";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,6 +28,7 @@ import {
   EVMOS_SYMBOL,
   StoreType,
   getKeplrAccountPubKey,
+  normalizeToEvmos,
 } from "evmos-wallet";
 import {
   CLICK_DEPOSIT_CONFIRM_BUTTON,
@@ -43,10 +43,10 @@ export const useDeposit = (useDepositProps: DepositProps) => {
   const dispatch = useDispatch();
   const { handlePreClickAction } = useTracker(CLICK_DEPOSIT_CONFIRM_BUTTON);
   const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_DEPOSIT,
+    SUCCESSFUL_TX_DEPOSIT
   );
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_DEPOSIT,
+    UNSUCCESSFUL_TX_DEPOSIT
   );
   const handleConfirmButton = async () => {
     handlePreClickAction({
@@ -55,7 +55,7 @@ export const useDeposit = (useDepositProps: DepositProps) => {
     });
     useDepositProps.setConfirmClicked(true);
     const [, osmosisPubkey] = await E.try(() =>
-      getKeplrAccountPubKey("osmosis-1"),
+      getKeplrAccountPubKey("osmosis-1")
     );
 
     if (!osmosisPubkey) {
@@ -80,7 +80,7 @@ export const useDeposit = (useDepositProps: DepositProps) => {
     }
     const amount = parseUnits(
       useDepositProps.inputValue,
-      BigNumber.from(useDepositProps.token.decimals),
+      BigNumber.from(useDepositProps.token.decimals)
     );
     if (amount.gt(useDepositProps.balance)) {
       return;
@@ -94,7 +94,7 @@ export const useDeposit = (useDepositProps: DepositProps) => {
     }
     const chainIds = getChainIds(
       useDepositProps.token,
-      useDepositProps.chain?.elements[0],
+      useDepositProps.chain?.elements[0]
     );
     if (
       chainIds.chainId === "" ||
@@ -111,10 +111,7 @@ export const useDeposit = (useDepositProps: DepositProps) => {
       return;
     }
 
-    let addressEvmos = useDepositProps.receiverAddress;
-    if (useDepositProps.receiverAddress.startsWith("0x")) {
-      addressEvmos = ethToEvmos(useDepositProps.receiverAddress);
-    }
+    const addressEvmos = normalizeToEvmos(useDepositProps.receiverAddress);
 
     const params: IBCChainParams = {
       sender: keplrAddress,
@@ -131,7 +128,7 @@ export const useDeposit = (useDepositProps: DepositProps) => {
     const prefix = getPrefix(
       useDepositProps.token,
       useDepositProps.chain?.elements[0],
-      params.sender,
+      params.sender
     );
 
     if (prefix === undefined) {
@@ -148,7 +145,7 @@ export const useDeposit = (useDepositProps: DepositProps) => {
       keplrAddress,
       params,
       prefix,
-      chainIds.chainIdentifier,
+      chainIds.chainIdentifier
     );
 
     dispatch(snackExecuteIBCTransfer(res));
@@ -168,15 +165,15 @@ export const useDeposit = (useDepositProps: DepositProps) => {
         await snackbarIncludedInBlock(
           res.txHash,
           chainIds.chainIdentifier.toUpperCase(),
-          res.explorerTxUrl,
-        ),
+          res.explorerTxUrl
+        )
       );
 
       dispatch(
         await snackbarExecutedTx(
           res.txHash,
-          chainIds.chainIdentifier.toUpperCase(),
-        ),
+          chainIds.chainIdentifier.toUpperCase()
+        )
       );
       successfulTx({
         txHash: res.txHash,

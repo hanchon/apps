@@ -1,15 +1,46 @@
-import { Page } from "playwright";
-
 import {
   acceptTOS,
   connectToKeplr,
   waitLocator,
   keplrFixture,
 } from "@evmosapps/test-utils";
+import { Page } from "@playwright/test";
 
-const { step, describe, beforeEach, expect, test } = keplrFixture;
+const { step, describe, beforeEach, beforeAll, expect, test } = keplrFixture;
 
-const fillAmount = async (page: Page, amount = "0.000000000000000001") => {
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const waitForTestnet = async () => {
+  await step("Wait for testnet to be ready", async () => {
+    while (true) {
+      try {
+        await fetch("http://127.0.0.1:1317");
+        await fetch("http://127.0.0.1:1327");
+
+        const response = await fetch(
+          `http://127.0.0.1:1317/evmos/erc20/v1/token_pairs`
+        );
+
+        const resp = (await response.json()) as {
+          token_pairs: {
+            erc20_address: string;
+          }[];
+        };
+
+        if (resp.token_pairs.length === 2) {
+          break;
+        }
+      } catch (e) {}
+      console.log("Waiting for testnet to be ready");
+      await delay(1000);
+    }
+  });
+};
+const enableLocalnet = async (page: Page) => {
+  await waitLocator(
+    page.getByTestId("network-mode-selector-localtestnet")
+  ).click();
+};
+const fillAmount = async (page: Page, amount = "10") => {
   await step("Fill amount", async () => {
     const amountInput = await waitLocator(
       page.getByTestId("asset-selector-amount-input")
@@ -87,14 +118,26 @@ const waitForBalanceToLoad = async (page: Page) => {
 };
 
 describe("Send Modal", () => {
-  beforeEach(async ({ page, keplr }) => {
+  beforeAll(async ({}, testInfo) => {
+    // Setting up testnet for the first time might take a few minutes
+    testInfo.setTimeout(5 * 60 * 1000);
+    await waitForTestnet();
+  });
+  beforeAll(async ({ page }) => {
     await step("Go to assets page", async () => {
       await page.goto("/assets");
     });
     await step("Accept TOS", async () => {
       await acceptTOS(page);
     });
-
+    await enableLocalnet(page);
+    // await page.waitForEvent("page");
+    // await keplr.approve();
+  });
+  beforeEach(async ({ page, keplr }) => {
+    await step("Go to assets page", async () => {
+      await page.goto("/assets");
+    });
     await step("Connect to Keplr", async () => {
       await connectToKeplr(page, keplr);
     });
@@ -122,7 +165,7 @@ describe("Send Modal", () => {
     keplr,
     page,
   }) => {
-    await selectToken(page, "NEOK");
+    await selectToken(page, "WIZZ");
     await waitForBalanceToLoad(page);
 
     await fillAddress(page);
@@ -137,14 +180,14 @@ describe("Send Modal", () => {
     keplr,
     page,
   }) => {
-    await selectToken(page, "OSMO");
-    await selectNetwork(page, "osmosis");
+    await selectToken(page, "ATOM");
+    await selectNetwork(page, "cosmoshublocal");
     await keplr.approve({
       timeout: 1000,
     });
     await waitForBalanceToLoad(page);
 
-    await fillAmount(page, "0.000001");
+    await fillAmount(page);
     await send(page);
 
     await keplr.approve();
@@ -155,7 +198,7 @@ describe("Send Modal", () => {
     keplr,
     page,
   }) => {
-    await selectDestinationNetwork(page, "osmosis");
+    await selectDestinationNetwork(page, "cosmoshublocal");
     await keplr.approve({
       timeout: 1000,
     });

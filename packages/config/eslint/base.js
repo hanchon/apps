@@ -85,6 +85,7 @@ const lintConfig = [
   ...extendsCompat("turbo"),
   {
     ignores: [
+      "**/playwright-report/**",
       "**/dist/**/*",
       "**/node_modules/**/*",
       "**/.next/**/*",

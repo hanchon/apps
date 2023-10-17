@@ -15,7 +15,7 @@ import {
   getBalance,
   getEvmosBalanceForDeposit,
 } from "../../../../internal/asset/functionality/fetch";
-import { ethToEvmos } from "@evmos/address-converter";
+
 import {
   snackbarExecutedTx,
   snackbarIncludedInBlock,
@@ -40,6 +40,7 @@ import {
   SNACKBAR_CONTENT_TYPES,
   SNACKBAR_TYPES,
   getKeplrAccountPubKey,
+  normalizeToEvmos,
 } from "evmos-wallet";
 import { BigNumber } from "@ethersproject/bignumber";
 import { E } from "helpers";
@@ -78,7 +79,7 @@ const Deposit = ({
     async function getData() {
       const walletKeplr = await getKeplrAddressByChain(
         chainId,
-        chainIdentifier,
+        chainIdentifier
       );
       if (walletKeplr === null) {
         dispatch(
@@ -90,7 +91,7 @@ const Deposit = ({
               text: KEPLR_NOTIFICATIONS.RequestRejectedSubtext,
             },
             type: SNACKBAR_TYPES.ERROR,
-          }),
+          })
         );
         setShow(false);
         return;
@@ -101,13 +102,13 @@ const Deposit = ({
         balance = await getEvmosBalanceForDeposit(
           walletKeplr,
           chainIdentifier.toUpperCase(),
-          item.symbol,
+          item.symbol
         );
       } else {
         balance = await getBalance(
           walletKeplr,
           item.chainIdentifier.toUpperCase(),
-          item.symbol,
+          item.symbol
         );
       }
 
@@ -121,14 +122,14 @@ const Deposit = ({
             },
 
             type: SNACKBAR_TYPES.ERROR,
-          }),
+          })
         );
         setShow(false);
         return;
       }
 
       setBalance(
-        BigNumber.from(balance.data.balance ? balance.data.balance.amount : 0),
+        BigNumber.from(balance.data.balance ? balance.data.balance.amount : 0)
       );
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -201,7 +202,7 @@ const Deposit = ({
                 className="cursor-pointer"
                 onClick={async () => {
                   const wallet = await getKeplrAddressByChain(
-                    EVMOS_CHAIN.cosmosChainId,
+                    EVMOS_CHAIN.cosmosChainId
                   );
                   if (wallet === null) {
                     dispatch(
@@ -213,7 +214,7 @@ const Deposit = ({
                           text: KEPLR_NOTIFICATIONS.RequestRejectedSubtext,
                         },
                         type: SNACKBAR_TYPES.ERROR,
-                      }),
+                      })
                     );
                     setShow(false);
                     return;
@@ -237,7 +238,7 @@ const Deposit = ({
                           text: KEPLR_NOTIFICATIONS.RequestRejectedSubtext,
                         },
                         type: SNACKBAR_TYPES.ERROR,
-                      }),
+                      })
                     );
                     setShow(false);
                     return;
@@ -253,7 +254,7 @@ const Deposit = ({
           onClick={async () => {
             setConfirmClicked(true);
             const [, osmosisPubkey] = await E.try(() =>
-              getKeplrAccountPubKey("osmosis-1"),
+              getKeplrAccountPubKey("osmosis-1")
             );
 
             if (!osmosisPubkey) {
@@ -266,7 +267,7 @@ const Deposit = ({
                     text: KEPLR_NOTIFICATIONS.RequestRejectedSubtext,
                   },
                   type: SNACKBAR_TYPES.ERROR,
-                }),
+                })
               );
               setShow(false);
               return;
@@ -285,7 +286,7 @@ const Deposit = ({
             }
             const amount = parseUnits(
               inputValue,
-              BigNumber.from(item.decimals),
+              BigNumber.from(item.decimals)
             );
             if (amount.gt(balance)) {
               return;
@@ -295,10 +296,8 @@ const Deposit = ({
               return;
             }
 
-            let addressEvmos = addressTo;
-            if (addressTo.startsWith("0x")) {
-              addressEvmos = ethToEvmos(addressTo);
-            }
+            const addressEvmos = normalizeToEvmos(addressTo);
+
             const params: IBCChainParams = {
               sender: keplrAddress,
               receiver: addressEvmos,
@@ -318,14 +317,14 @@ const Deposit = ({
                   text: EXECUTED_NOTIFICATIONS.IBCTransferInformation.subtext,
                 },
                 type: SNACKBAR_TYPES.DEFAULT,
-              }),
+              })
             );
             // create, sign and broadcast tx
             const res = await executeDeposit(
               osmosisPubkey,
               keplrAddress,
               params,
-              item.prefix,
+              item.prefix
             );
             dispatch(
               addSnackbar({
@@ -347,7 +346,7 @@ const Deposit = ({
                   res.error === true
                     ? SNACKBAR_TYPES.ERROR
                     : SNACKBAR_TYPES.SUCCESS,
-              }),
+              })
             );
             setShow(false);
             // check if tx is executed
@@ -357,15 +356,15 @@ const Deposit = ({
                 await snackbarIncludedInBlock(
                   res.txHash,
                   chainIdentifier.toUpperCase(),
-                  res.explorerTxUrl,
-                ),
+                  res.explorerTxUrl
+                )
               );
 
               dispatch(
                 await snackbarExecutedTx(
                   res.txHash,
-                  chainIdentifier.toUpperCase(),
-                ),
+                  chainIdentifier.toUpperCase()
+                )
               );
             }
           }}

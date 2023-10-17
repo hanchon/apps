@@ -39,6 +39,7 @@ const startCommand = createCommand("start")
   .option("--recreate", "Delete and recreate the testnet")
   .description("Starts local testnet")
   .action(async ({ recreate }) => {
+    console.log("Starting testnet...", recreate);
     await setupTestnet({
       enableLogging: true,
       overwrite: recreate,
@@ -210,4 +211,4 @@ accountsProgram.command("delete").action(async () => {
   logAccountsWarning();
 });
 
-program.parse();
+program.parse(process.argv);

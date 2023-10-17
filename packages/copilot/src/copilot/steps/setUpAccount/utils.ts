@@ -9,6 +9,7 @@ import {
   queryPubKey,
   isWalletSelected,
   connectWith,
+  prefetchPubkey,
 } from "evmos-wallet";
 import { METAMASK_DOWNLOAD_URL, STEP_STATUS } from "constants-helper";
 import {
@@ -26,6 +27,7 @@ import {
 } from "../../utils";
 import { E } from "helpers";
 import { SetUpAccountI } from "./types";
+import { QueryClient } from "@tanstack/react-query";
 
 const getWalletLocal = async () => {
   // get wallet returns null or string but
@@ -98,8 +100,12 @@ const installMetamask = () => {
   return isMetamaskInstalled();
 };
 
-const connectWithMetaMask = async () => {
-  const [err] = await E.try(() => connectWith("metaMask"));
+const signPubkey = async (queryClient: QueryClient) => {
+  const [err] = await E.try(async () => {
+    await connectWith("metaMask");
+
+    await prefetchPubkey(queryClient);
+  });
   if (err) return false;
   return true;
 };
@@ -137,7 +143,7 @@ export const stepsSetAccount: SetUpAccountI[] = [
       () => changeNetworkToEvmosMainnet(),
       () => isEvmosChain(),
       () => getWalletLocal(),
-      () => connectWithMetaMask(),
+      signPubkey,
     ],
     errorsText: [
       "Approval Rejected, please try again",

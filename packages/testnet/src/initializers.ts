@@ -11,6 +11,13 @@ import { registerCoinTokenPair } from "./cosmos/register-coin-token-pair";
 import { createNetwork } from "./cosmos/create-network";
 import { createLogger } from "./utils/logger";
 
+export const evmosConfig = {
+  chainName: "evmos",
+  prefix: "evmos",
+  moniker: "evmos-testnode",
+  chainId: "evmoslocal_9000-10",
+  baseDenom: "aevmos",
+} as const;
 export const setupTestnet = async (
   options: {
     enableLogging?: boolean;
@@ -23,18 +30,14 @@ export const setupTestnet = async (
     color: chalk.whiteBright,
   });
   const evmos = await createNetwork({
-    chainName: "evmos",
-    prefix: "evmos",
-    moniker: "evmos-testnode",
-    chainId: "evmoslocal_9000-10",
-    baseDenom: "aevmos",
+    ...evmosConfig,
+    ...options,
     customizeGenesis: (genesis) => {
       genesis.app_state.gov.params.max_deposit_period = "10s";
       genesis.app_state.gov.params.voting_period = "20s";
 
       return genesis;
     },
-    ...options,
   });
 
   const cosmoshub = await createNetwork({

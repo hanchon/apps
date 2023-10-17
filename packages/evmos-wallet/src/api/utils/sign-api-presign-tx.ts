@@ -1,4 +1,3 @@
-import { ethToEvmos } from "@evmos/address-converter";
 import { createTxRaw } from "@evmos/proto";
 import { getAccount, getNetwork } from "wagmi/actions";
 import { assertIf } from "helpers";
@@ -7,6 +6,7 @@ import {
   signKeplrDirect,
   getKeplrProvider,
   signKeplrAminoTransaction,
+  ethToEvmos,
 } from "../../wallet";
 import {
   apiBroadcastAmino,

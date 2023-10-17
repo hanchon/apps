@@ -26,6 +26,7 @@ export const updateConfigFiles = async ({
     },
     "grpc-web": {
       enable: false,
+      "enable-unsafe-cors": true,
     },
 
     "json-rpc": {
@@ -39,6 +40,7 @@ export const updateConfigFiles = async ({
     },
     rpc: {
       laddr: `tcp://localhost:${api.rpc}`,
+      cors_allowed_origins: ["*"],
     },
   });
 };

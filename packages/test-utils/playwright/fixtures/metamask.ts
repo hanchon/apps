@@ -1,6 +1,7 @@
 import { BrowserContext, test } from "@playwright/test";
 import dappwright, { Dappwright, MetaMaskWallet } from "@tenkeylabs/dappwright";
-
+import { tmpdir } from "os";
+import path from "path";
 const E2E_TEST_EVMOS_CHAIN_NAME =
   process.env.E2E_TEST_EVMOS_CHAIN_NAME ?? "Evmos";
 const E2E_TEST_EVMOS_RPC_URL =

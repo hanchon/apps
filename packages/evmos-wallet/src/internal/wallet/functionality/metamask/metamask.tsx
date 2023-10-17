@@ -1,7 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { ethToEvmos } from "@evmos/address-converter";
 import type { Maybe } from "@metamask/providers/dist/utils";
 import {
   ReduxWalletStore,
@@ -38,6 +37,7 @@ import {
   unsubscribeToEvents,
 } from "./metamaskHelpers";
 import { SNACKBAR_CONTENT_TYPES } from "../../../../notification/types";
+import { normalizeToEvmos } from "../../../../wallet";
 
 export class Metamask {
   active = false;
@@ -53,7 +53,7 @@ export class Metamask {
   constructor(
     reduxStore: ReduxWalletStore,
     notificationsEnabled = true,
-    grpcEndpoint: string = EVMOS_GRPC_URL,
+    grpcEndpoint: string = EVMOS_GRPC_URL
   ) {
     this.grpcEndpoint = grpcEndpoint;
     this.reduxStore = reduxStore;
@@ -86,7 +86,7 @@ export class Metamask {
     }
     if (addresses.length > 0 && addresses[0]) {
       this.addressEthFormat = addresses[0];
-      this.addressCosmosFormat = ethToEvmos(addresses[0]);
+      this.addressCosmosFormat = normalizeToEvmos(addresses[0]);
       this.evmosPubkey = await generatePubKey(this.addressCosmosFormat);
       // TODO: if the user did not sign the pubkey, pop up a message
       if (this.evmosPubkey === null) {
@@ -97,7 +97,7 @@ export class Metamask {
             text: METAMASK_NOTIFICATIONS.PubkeySubtext,
           },
           store,
-          this.notificationsEnabled,
+          this.notificationsEnabled
         );
         this.reset();
         return;
@@ -113,7 +113,7 @@ export class Metamask {
           evmosPubkey: this.evmosPubkey,
           osmosisPubkey: null,
           accountName: null,
-        }),
+        })
       );
       SaveProviderToLocalStorate(METAMASK_KEY);
       // show the connect snackbar only if the user clicks on connect wallet
@@ -128,7 +128,7 @@ export class Metamask {
             "Connected with wallet " + truncateAddress(this.addressEthFormat),
         },
         store,
-        this.notificationsEnabled,
+        this.notificationsEnabled
       );
 
       SaveProviderToLocalStorate(METAMASK_KEY);
@@ -150,7 +150,7 @@ export class Metamask {
           text: METAMASK_NOTIFICATIONS.ExtensionNotFoundSubtext,
         },
         store,
-        this.notificationsEnabled,
+        this.notificationsEnabled
       );
 
       return {
@@ -180,7 +180,7 @@ export class Metamask {
           text: METAMASK_NOTIFICATIONS.AddressSubtext,
         },
         store,
-        this.notificationsEnabled,
+        this.notificationsEnabled
       );
 
       return {

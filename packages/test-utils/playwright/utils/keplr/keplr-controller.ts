@@ -44,10 +44,9 @@ export class Keplr {
         name: "Use recovery phrase or private key",
       })
     ).click();
-    const seedPhrase = process.env.E2E_TEST_SEED;
-    if (!seedPhrase) {
-      throw new Error("E2E_TEST_SEED env variable is not defined");
-    }
+    const seedPhrase =
+      process.env.E2E_TEST_SEED ??
+      "upper recycle exhibit spin kit able pause donate region expire lumber absurd";
 
     const words = seedPhrase.split(" ");
     await keplrExt.waitForTimeout(1000);

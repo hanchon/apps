@@ -25,7 +25,6 @@ describe("Mission Page - Copilot", () => {
 
   test("should let the user connect with MetaMask, set the accounts, top up the account and redirect to the ecosystem page. Network is already set up", async ({
     page,
-    wallet,
   }) => {
     await page.getByRole("button", { name: /Connect/i }).click();
     await page
@@ -41,8 +40,11 @@ describe("Mission Page - Copilot", () => {
       .click();
 
     await expect(page.getByText(/Press Next and Connect/i)).toBeVisible();
+    const approveAllPopup = await page.context().waitForEvent("page");
 
-    await wallet.approve();
+    await approveAllPopup.getByRole("button", { name: /Next/i }).click();
+    await approveAllPopup.getByRole("button", { name: /Connect/i }).click();
+    await approveAllPopup.getByRole("button", { name: /Sign/i }).click();
 
     await page.getByRole("button", { name: /Top up your account/i }).click();
     await page.route(`${BALANCE_ENDPOINT}`, async (route) => {

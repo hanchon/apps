@@ -1,5 +1,5 @@
 import { defineConfig } from "@playwright/test";
-import { sharedConfig } from "@evmosapps/test-utils";
+import { createPlaywrightConfig } from "@evmosapps/test-utils";
 import { config } from "dotenv";
 
 /**
@@ -8,25 +8,9 @@ import { config } from "dotenv";
  */
 config();
 
-const PORT = process.env.PORT || 3005;
-const baseURL = `http://localhost:${PORT}`;
+const PORT = Number(process.env.PORT || 3005);
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig({
-  ...sharedConfig,
-  use: {
-    baseURL,
-    trace: "retry-with-trace",
-  },
-  webServer: process.env.CI
-    ? {
-        command: "yarn start",
-        port: PORT as number,
-        stdout: "pipe",
-        stderr: "pipe",
-        timeout: 300 * 1000,
-      }
-    : undefined,
-});
+export default defineConfig(createPlaywrightConfig(PORT));

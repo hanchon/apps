@@ -9,7 +9,7 @@ export const TEST_ACCOUNTS = {
 
   therich: makeAccount(
     "therich",
-    "reward crack sample fox open play pencil power hour index virtual fiction square fire nose decorate daring noise below fashion idle two regular absurd",
+    "upper recycle exhibit spin kit able pause donate region expire lumber absurd",
     100000000000000000000000000000000n
   ),
 

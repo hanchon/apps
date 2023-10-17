@@ -251,7 +251,6 @@ describe("Mission Page - Copilot", () => {
 
   test("should connect with MetaMask, trigger the Claim rewards hook and reject it", async ({
     page,
-    wallet,
   }) => {
     await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
       const json = responseInfoStaking;
@@ -262,7 +261,11 @@ describe("Mission Page - Copilot", () => {
 
     await page.getByRole("button", { name: /Connect/i }).click();
     await page.getByRole("button", { name: /MetaMask/i }).click();
-    await wallet.approve();
+    const approveAllPopup = await page.context().waitForEvent("page");
+
+    await approveAllPopup.getByRole("button", { name: /Next/i }).click();
+    await approveAllPopup.getByRole("button", { name: /Connect/i }).click();
+    await approveAllPopup.getByRole("button", { name: /Sign/i }).click();
 
     await page
       .getByRole("button", {

@@ -43,7 +43,7 @@
     "evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
     "icons": "workspace:*",
-    "next": "13.5.2",
+    "next": "13.5.5",
     "react": "18.2.0",
     "react-confetti-explosion": "^2.1.2",
     "tracker": "workspace:*",

@@ -9,10 +9,10 @@
     "build:testnodes": "tsx  watch ./testnodes/scripts/index.ts"
   },
   "devDependencies": {
-    "@playwright/test": "^1.38.1",
+    "@playwright/test": "^1.39.0",
     "@tenkeylabs/dappwright": "^2.4.0",
     "octokit": "^3.1.1",
-    "tsx": "^3.12.10"
+    "tsx": "^3.13.0"
   },
   "dependencies": {
     "@types/download": "^8.0.2",

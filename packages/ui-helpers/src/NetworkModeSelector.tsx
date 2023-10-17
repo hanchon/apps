@@ -25,6 +25,7 @@ export const NetworkModeSelector = () => {
     <div className="border-2 border-red rounded-md m-4 flex">
       {["mainnet", "testnet", "localtestnet"].map((net) => (
         <button
+          data-testid={`network-mode-selector-${net}`}
           key={net}
           onClick={() => {
             setMode(net);

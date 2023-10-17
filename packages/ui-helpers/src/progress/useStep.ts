@@ -6,10 +6,11 @@ import { GroupStateI, SetUpAccountI } from "./types";
 import { completeStep, handleStepError } from "./helpers";
 import { STEP_STATUS } from "constants-helper";
 import { useTracker } from "tracker";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const useStep = (
   step: SetUpAccountI,
-  setGroupState: React.Dispatch<React.SetStateAction<GroupStateI[]>>,
+  setGroupState: React.Dispatch<React.SetStateAction<GroupStateI[]>>
 ) => {
   const [text, setText] = useState(step.buttonText);
   const [status, setStatus] = useState(STEP_STATUS.CURRENT);
@@ -17,11 +18,12 @@ export const useStep = (
 
   const { handlePreClickAction: initTracker } = useTracker(step.tracker.init);
   const { handlePreClickAction: successfullTrack } = useTracker(
-    step.tracker.successful,
+    step.tracker.successful
   );
   const { handlePreClickAction: unsuccessfullTrack } = useTracker(
-    step.tracker.unsuccessful,
+    step.tracker.unsuccessful
   );
+  const queryClient = useQueryClient();
   const callActions = async () => {
     setStatus(STEP_STATUS.PROCESSING);
     const len = step.actions.length;
@@ -35,11 +37,11 @@ export const useStep = (
 
       // for the cases that we have to redirect when the user clicks on the button
       if (step.href !== undefined) {
-        await action();
+        await action(queryClient);
         break;
       }
 
-      const localAction = await action();
+      const localAction = await action(queryClient);
       if (localAction === false) {
         handleStepError({
           setStatus,
@@ -111,7 +113,7 @@ export const useStep = (
       return () => {
         document.removeEventListener(
           "visibilitychange",
-          handleVisibilityChange,
+          handleVisibilityChange
         );
       };
     }

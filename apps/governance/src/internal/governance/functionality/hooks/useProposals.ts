@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BigNumber } from "@ethersproject/bignumber";
 import { useMemo } from "react";
 import {
+  E,
   formatAttoNumber,
   formatDate,
   getPercentage,
@@ -13,13 +14,17 @@ import {
   sumBigNumber,
 } from "helpers";
 import { getProposals } from "../fetch";
-import { Proposal, ProposalDetailProps, ProposalProps } from "../types";
+import { Proposal, ProposalDetailProps } from "../types";
+const [, parsedProposals] = E.try(
+  () =>
+    JSON.parse(process.env.NEXT_PUBLIC_PROPOSALS_TO_REMOVE ?? "[]") as string[]
+);
 
-const PROPOSALS_TO_REMOVE = process.env.NEXT_PUBLIC_PROPOSALS_TO_REMOVE ?? "[]";
+const PROPOSALS_TO_REMOVE = parsedProposals ?? [];
 
 const removeProposals = (proposals: Proposal[], proposalToRemove: string[]) => {
   return proposals.filter(
-    (proposal) => !proposalToRemove.includes(proposal.id),
+    (proposal) => !proposalToRemove.includes(proposal.id)
   );
 };
 
@@ -29,45 +34,46 @@ export const useProposals = (pid?: string) => {
     queryFn: () => getProposals(),
   });
 
-  const parsedProposals = JSON.parse(PROPOSALS_TO_REMOVE) as string[];
-
   const proposals = useMemo(() => {
-    const temp: ProposalProps[] = [];
-    if (proposalsResponse.data !== undefined) {
-      const filtered = removeProposals(
-        proposalsResponse.data.proposals,
-        parsedProposals,
-      );
-      filtered.map((item) => {
-        const percents = getPercentage([
-          item.final_tally_result.yes_count,
-          item.final_tally_result.no_count,
-          item.final_tally_result.abstain_count,
-          item.final_tally_result.no_with_veto_count,
-        ]);
-        const title = item.title !== "" ? item.title : item.messages.length > 0 ? item.messages[0].content.title : "";
-        temp.push({
-          id: item.id,
-          title,
-          status: item.status,
-          votingStartTime:
-            item.voting_start_time !== ""
-              ? formatDate(item.voting_start_time)
-              : "",
-          votingEndTime:
-            item.voting_end_time !== "" ? formatDate(item.voting_end_time) : "",
-          // Order for tallyResults:  yes, no, abstain, no_with_veto
-          tallyResults: [
-            String(percents[0]),
-            String(percents[1]),
-            String(percents[2]),
-            String(percents[3]),
-          ],
-        });
-      });
+    if (!proposalsResponse.data) {
+      return [];
     }
-    return temp;
-  }, [proposalsResponse, parsedProposals]);
+    // if (proposalsResponse.data !== undefined) {
+    const filtered = removeProposals(
+      proposalsResponse.data.proposals,
+      PROPOSALS_TO_REMOVE
+    );
+    console.log("filtered", filtered);
+    return filtered.map((item) => {
+      const percents = getPercentage([
+        item.final_tally_result.yes_count,
+        item.final_tally_result.no_count,
+        item.final_tally_result.abstain_count,
+        item.final_tally_result.no_with_veto_count,
+      ]);
+
+      const title = item.title || item.messages[0]?.content.title || "";
+
+      return {
+        id: item.id,
+        title,
+        status: item.status,
+        votingStartTime:
+          item.voting_start_time !== ""
+            ? formatDate(item.voting_start_time)
+            : "",
+        votingEndTime:
+          item.voting_end_time !== "" ? formatDate(item.voting_end_time) : "",
+        // Order for tallyResults:  yes, no, abstain, no_with_veto
+        tallyResults: [
+          String(percents[0]),
+          String(percents[1]),
+          String(percents[2]),
+          String(percents[3]),
+        ],
+      };
+    });
+  }, [proposalsResponse]);
 
   const proposalDetail = useMemo(() => {
     let temp: ProposalDetailProps = {
@@ -91,7 +97,7 @@ export const useProposals = (pid?: string) => {
     if (proposalsResponse.data !== undefined) {
       const filtered = proposalsResponse.data.proposals.filter(
         (proposal) =>
-          proposal.id === pid && !parsedProposals.includes(proposal.id),
+          proposal.id === pid && !PROPOSALS_TO_REMOVE.includes(proposal.id)
       );
       if (filtered.length === 0) {
         return "Proposal not found, please try again";
@@ -115,13 +121,19 @@ export const useProposals = (pid?: string) => {
           Number(proposalsResponse.data.tally_params.veto_threshold) * 100
         ).toFixed(2),
       };
-      const description = proposalFiltered.summary !== "" ? proposalFiltered.summary : proposalFiltered.messages.length > 0 ? proposalFiltered.messages[0].content.description : "";
+      const description =
+        proposalFiltered.summary !== ""
+          ? proposalFiltered.summary
+          : proposalFiltered.messages.length > 0
+          ? proposalFiltered.messages[0].content.description
+          : "";
       temp = {
         id: proposalFiltered.id,
         title:
-          proposalFiltered.messages.length > 0
-            ? proposalFiltered.messages[0].content.title
-            : "",
+          proposalFiltered.title ||
+          proposalFiltered.messages[0]?.content.title ||
+          "",
+
         status: proposalFiltered.status,
         votingStartTime:
           proposalFiltered.voting_start_time !== ""
@@ -148,7 +160,7 @@ export const useProposals = (pid?: string) => {
         totalDeposit:
           proposalFiltered.total_deposit.length > 0
             ? formatAttoNumber(
-                BigNumber.from(proposalFiltered.total_deposit[0].amount),
+                BigNumber.from(proposalFiltered.total_deposit[0].amount)
               )
             : "--",
         submitTime:
@@ -159,12 +171,7 @@ export const useProposals = (pid?: string) => {
           proposalFiltered.deposit_end_time !== ""
             ? formatDate(proposalFiltered.deposit_end_time)
             : "",
-        description:
-          description.replace(
-                /\\[rn]/g,
-                "\n",
-              )
-            ,
+        description: description.replace(/\\[rn]/g, "\n"),
         total: sumBigNumber([
           proposalFiltered.final_tally_result.yes_count,
           proposalFiltered.final_tally_result.no_count,
@@ -172,12 +179,12 @@ export const useProposals = (pid?: string) => {
           proposalFiltered.final_tally_result.no_with_veto_count,
         ]),
         isVotingTimeWithinRange: isVotingTimeWithinRange(
-          proposalFiltered.voting_end_time,
+          proposalFiltered.voting_end_time
         ),
       };
     }
     return temp;
-  }, [proposalsResponse, pid, parsedProposals]);
+  }, [proposalsResponse, pid]);
 
   return {
     proposals,

@@ -1,4 +1,4 @@
-import { Page } from "playwright";
+import { Page } from "@playwright/test";
 
 export const acceptTOS = async (page: Page) => {
   const { origins } = await page.context().storageState();
