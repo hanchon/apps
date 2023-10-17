@@ -11,19 +11,19 @@ const makeKeplr = async (context: BrowserContext, extensionId: string) => {
   return keplr;
 };
 
+export const sessionPath = path.resolve(tmpdir(), "keplr", "session");
+
 const loadContext = async () => {
   const pathToExtension = await downloadRelease("v0.12.26");
 
-  const context = await chromium.launchPersistentContext(
-    path.join(tmpdir(), "keplrcontext"),
-    {
-      headless: false,
-      args: [
-        `--disable-extensions-except=${pathToExtension}`,
-        `--load-extension=${pathToExtension}`,
-      ],
-    }
-  );
+  const context = await chromium.launchPersistentContext(sessionPath, {
+    headless: false,
+    args: [
+      `--disable-extensions-except=${pathToExtension}`,
+      `--load-extension=${pathToExtension}`,
+    ],
+  });
+
   return context;
 };
 
@@ -47,7 +47,6 @@ const test = base.extend<{
     await use(keplr);
   },
 });
-
 const fixture = {
   test,
   ...test,

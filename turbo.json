@@ -34,7 +34,8 @@
     "E2E_TEST_SEED",
     "ANALYZE_NEXT_BUNDLE",
     "PORT",
-    "NODE_ENV"
+    "NODE_ENV",
+    "GITHUB_TOKEN"
   ],
   "pipeline": {
     "build": {
@@ -50,6 +51,15 @@
       "cache": false,
       "persistent": true
     },
+    "dev:testnet": {
+      "cache": false,
+      "persistent": true
+    },
+    "testnet": {
+      "cache": false,
+      "persistent": true
+    },
+
     "test": {},
     "kill": {},
     "lint": {},

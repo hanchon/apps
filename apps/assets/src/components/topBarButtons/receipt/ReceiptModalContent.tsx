@@ -245,7 +245,7 @@ export const ReceiptModalContent = ({
           <SkeletonLoading loading={isReceiptLoading}>
             {receipt && (
               <>
-                <span data-testId="tx-receipt-success-message">
+                <span data-testid="tx-receipt-success-message">
                   {t("transfer.confirmation.message.successful.description")}
                 </span>
                 <br />

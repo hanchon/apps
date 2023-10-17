@@ -5,20 +5,30 @@ import { groupBy } from "lodash-es";
 import { fileHeader } from "./constants";
 import { lavaUrls } from "./lava-urls";
 import { readFiles } from "./readFiles";
+import { testnetConfigByChain, testnetTokensByIdentifiers } from "./testnets";
 
 export const readRegistryChain = async () =>
   (
     await readFiles<ChainRegistry>(
       "node_modules/chain-token-registry/chainConfig/*.json"
     )
-  ).flatMap(({ configurations, ...rest }) =>
-    configurations
-      ? configurations.map((configuration) => ({
-          ...rest,
-          configuration,
-        }))
-      : []
-  );
+  )
+    .map((chain) => {
+      const { prefix } = chain;
+      const testnets = testnetConfigByChain[prefix];
+      if (testnets) {
+        chain.configurations = [...(chain.configurations ?? []), ...testnets];
+      }
+      return chain;
+    })
+    .flatMap(({ configurations, ...rest }) =>
+      configurations
+        ? configurations.map((configuration) => ({
+            ...rest,
+            configuration,
+          }))
+        : []
+    );
 
 export const readRegistryToken = () =>
   readFiles<TokenRegistry>("node_modules/chain-token-registry/tokens/*.json");
@@ -33,34 +43,52 @@ const normalizeNetworkUrls = (urls?: (string | undefined)[]) => {
   }
   return http;
 };
+const normalizeIdentifier = (
+  configuration: (ChainRegistry["configurations"] & {})[number]
+) => {
+  let identifier = configuration.identifier.toLowerCase();
+  if (configuration.identifier === "gravity") {
+    identifier = "gravitybridge";
+  }
 
-const tokenByPrefix = groupBy(
+  return identifier;
+};
+const chains = await readRegistryChain();
+
+const tokenByIdentifier = groupBy(
   await readRegistryToken(),
-  ({ coinSourcePrefix }) => coinSourcePrefix
-);
+  ({ ibc, prefix }) => {
+    const chain = chains.find(({ configuration }) => {
+      return (
+        configuration.identifier.toLowerCase() === ibc?.source?.toLowerCase()
+      );
+    });
+    if (!chain) {
+      return prefix;
+    }
 
-// This might be handy when we start supporting IBC between other chains
-// const fetchChainOnCosmosRegistry = async (id: string) => {
-//   if (id === "gravity") {
-//     id = "gravitybridge";
-//   }
-//   const response = await fetch(
-//     `https://raw.githubusercontent.com/cosmos/chain-registry/master/${id}/chain.json`
-//   );
-//   const json = await response.json();
-//   return json as CosmosRegistryChain;
-// };
+    return normalizeIdentifier(chain.configuration);
+  }
+);
+Object.entries(testnetTokensByIdentifiers).forEach(([identifier, tokens]) => {
+  tokenByIdentifier[identifier] = [
+    ...(tokenByIdentifier[identifier] ?? []),
+    ...tokens,
+  ];
+});
 
 await mkdir("src/chains", { recursive: true });
-
-const chains = await readRegistryChain();
 
 for (const chainRegistry of chains) {
   if (chainRegistry.prefix === "kujira") {
     // TODO: We need to add Kujira fee token to our registry
     continue;
   }
-  const tokens = tokenByPrefix[chainRegistry.prefix]?.map((token) => {
+  const configuration = chainRegistry.configuration;
+
+  const identifier = normalizeIdentifier(configuration);
+
+  const tokens = tokenByIdentifier[identifier]?.map((token) => {
     return {
       name: token.name,
       ref: `${chainRegistry.prefix}:${token.coinDenom}`,
@@ -85,13 +113,7 @@ for (const chainRegistry of chains) {
     };
   });
 
-  const configuration = chainRegistry.configuration;
-
   const isTestnet = configuration.configurationType === "testnet";
-  let identifier = configuration.identifier.toLowerCase();
-  if (identifier === "gravity") {
-    identifier = "gravitybridge";
-  }
   const feeTokenFromChainConfig = configuration.currencies[0];
   let feeToken = tokens.find(
     (token) =>
@@ -120,14 +142,16 @@ for (const chainRegistry of chains) {
     tokens.push(feeToken);
   }
 
+  const isMainnet = configuration.configurationType === "mainnet";
+
   const cosmosRest = normalizeNetworkUrls([
     lavaUrls[identifier]?.cosmosRest,
-    `https://rest.cosmos.directory/${identifier}`,
+    isMainnet ? `https://rest.cosmos.directory/${identifier}` : "",
     ...configuration.rest,
   ]);
   const tendermintRest = normalizeNetworkUrls([
     lavaUrls[identifier]?.tendermintRest,
-    `https://rpc.cosmos.directory/${identifier}`,
+    isMainnet ? `https://rpc.cosmos.directory/${identifier}` : "",
     ...configuration.rpc,
   ]);
   const evmRest = normalizeNetworkUrls([
@@ -161,8 +185,9 @@ for (const chainRegistry of chains) {
     cosmosGRPC: normalizeNetworkUrls(configuration.rpc),
     tokens,
     explorerUrl: configuration.explorerTxUrl,
+    env: configuration.configurationType,
   };
-  await writeFile(`src/chains/${chain.prefix}.ts`, [
+  await writeFile(`src/chains/${chain.identifier}.ts`, [
     fileHeader,
     `export default ${JSON.stringify(chain, null, 2)} as const;`,
   ]);
@@ -172,6 +197,11 @@ await writeFile("src/chains/index.ts", [
   fileHeader,
   chains
     .filter(({ prefix }) => prefix !== "kujira")
-    .map(({ prefix }) => `export { default as ${prefix} } from "./${prefix}";`)
+    .map(
+      ({ configuration }) =>
+        `export { default as ${normalizeIdentifier(
+          configuration
+        )} } from "./${normalizeIdentifier(configuration)}";`
+    )
     .join("\n"),
 ]);

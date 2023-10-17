@@ -22,7 +22,7 @@ export const ButtonProfile = ({
       onClick={() => {
         setShow(true);
       }}
-      data-testId={`wallet-profile-button wallet-profile-button-${getActiveProviderKey()}`}
+      data-testid={`wallet-profile-button wallet-profile-button-${getActiveProviderKey()}`}
     >
       {ProvidersIcons[walletExtension.extensionName]}
 

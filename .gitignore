@@ -44,3 +44,5 @@ dist/
 # Local Netlify folder
 .netlify
 
+# Testnet cli files
+.testnet

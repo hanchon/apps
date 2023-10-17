@@ -1,39 +1,40 @@
 import {
   evmos as wagmiEvmos,
-  evmosTestnet as wagmiEvmosTestnet,
+  // evmosTestnet as wagmiEvmosTestnet,
 } from "wagmi/chains";
-import { EVMOS_CHAIN } from "../../internal/wallet/functionality/networkConfig";
 import { Chain } from "viem";
-import { evmos as registryEvmos } from "@evmosapps/registry";
 
-export const evmos: Chain & {
+import { evmos, evmoslocal, evmostestnet } from "@evmosapps/registry";
+import { getSelectedNetworkMode } from "ui-helpers";
+
+let registry: typeof evmos | typeof evmoslocal | typeof evmostestnet = evmos;
+if (getSelectedNetworkMode() === "localtestnet") {
+  registry = evmoslocal;
+} else if (getSelectedNetworkMode() === "testnet") {
+  registry = evmostestnet;
+}
+
+export const config: Chain & {
   cosmosId: string;
 } = {
   ...wagmiEvmos,
-  cosmosId: "evmos_9001-2",
+  id: parseInt(registry.cosmosId.split(/[-_]/)[1]),
+  cosmosId: registry.cosmosId,
   contracts: {
     multicall3: {
-      address: "0xca11bde05977b3631167028862be2a173976ca11",
+      address:
+        getSelectedNetworkMode() === "localtestnet"
+          ? // eslint-disable-next-line no-secrets/no-secrets
+            "0x89F3a75bAEd526dCE06c72774dD7867D16e4caB7"
+          : "0xca11bde05977b3631167028862be2a173976ca11",
     },
   },
   rpcUrls: {
-    default: { http: registryEvmos.evmRest },
-    public: { http: registryEvmos.evmRest },
-  },
-};
-
-export const evmosTestnet: Chain & {
-  cosmosId: string;
-} = {
-  ...wagmiEvmosTestnet,
-  cosmosId: "evmos_9000-4",
-  contracts: {
-    multicall3: {
-      address: "0xca11bde05977b3631167028862be2a173976ca11",
-    },
+    default: { http: registry.evmRest },
+    public: { http: registry.evmRest },
   },
 };
 
 export function getEvmosChainInfo(): Chain & { cosmosId: string } {
-  return EVMOS_CHAIN.chainId === evmos.id ? evmos : evmosTestnet;
+  return config;
 }

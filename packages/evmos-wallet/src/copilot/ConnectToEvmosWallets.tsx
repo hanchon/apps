@@ -72,7 +72,7 @@ export const ConnectToEvmosWallets = ({
           .map(({ icon, label, id }) => (
             <ButtonWallet
               key={id}
-              data-testId={`connect-with-${id}`}
+              data-testid={`connect-with-${id}`}
               onClick={async () => {
                 /**
                  * TODO: discuss:
