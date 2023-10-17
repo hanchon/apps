@@ -33,7 +33,6 @@
     "last 3 safari version"
   ],
   "dependencies": {
-    "@0xsquid/widget": "^1.6.8",
     "@babel/plugin-syntax-import-assertions": "^7.22.5",
     "@evmos-apps/config": "workspace:*",
     "@fireworks-js/react": "^2.10.7",
