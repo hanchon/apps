@@ -10,15 +10,15 @@ import CypherD from "./CypherD";
 import LayerSwap from "./LayerSwap";
 import { CLICK_ON_DIFFERENT_ON_RAMP, useTracker } from "tracker";
 import ProviderDropwdown from "./ProviderDropdown";
-import { cryptoOptions, cardOptions, DropdownOption } from "./utils";
+import { providerOptions, DropdownOption } from "./utils";
 
 export const TopUp = () => {
   const [topUpType, setTopUpType] = useState("intro");
   const [cardProvider, setCardProvider] = useState<DropdownOption>(
-    cardOptions[0]
+    providerOptions.card[0]
   );
   const [cryptoProvider, setCryptoProvider] = useState<DropdownOption>(
-    cryptoOptions[0]
+    providerOptions.crypto[0]
   );
 
   const { handlePreClickAction: handleDifferentOnRampClick } = useTracker(
@@ -44,7 +44,7 @@ export const TopUp = () => {
             <ProviderDropwdown
               selectedValue={cardProvider}
               onItemClick={onItemClick}
-              dropdownOptions={cardOptions}
+              dropdownOptions={providerOptions.card}
             />
             {cardProvider.value === "Transak" ? <Transak /> : <C14 />}
           </>
@@ -57,7 +57,7 @@ export const TopUp = () => {
             <ProviderDropwdown
               selectedValue={cryptoProvider}
               onItemClick={onCryptoItemClick}
-              dropdownOptions={cryptoOptions}
+              dropdownOptions={providerOptions.crypto}
             />
             {cryptoProvider.value === "Cypher" ? <CypherD /> : <LayerSwap />}
           </>
