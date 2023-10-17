@@ -152,7 +152,7 @@ export const AssetSelector = ({
             <CryptoSelector.Button
               src={`/assets/tokens/${selectedToken?.denom}.png`}
               variant="black"
-              data-testId="asset-selector-token-selector-button"
+              data-testid="asset-selector-token-selector-button"
             >
               {selectedToken?.symbol}
             </CryptoSelector.Button>
@@ -167,7 +167,7 @@ export const AssetSelector = ({
                     src={`/assets/tokens/${token.denom}.png`}
                     key={`${token.sourcePrefix}-${token.minCoinDenom}`}
                     value={token}
-                    data-testId={`asset-selector-token-selector-option-${token.denom}`}
+                    data-testid={`asset-selector-token-selector-option-${token.denom}`}
                   >
                     {token.denom}
                   </CryptoSelector.Option>
@@ -197,7 +197,7 @@ export const AssetSelector = ({
           >
             <CryptoSelector.Button
               src={`/assets/chains/${value.networkPrefix}.png`}
-              data-testId="asset-selector-network-selector-button"
+              data-testid="asset-selector-network-selector-button"
             >
               {selectedChain.name}
             </CryptoSelector.Button>
@@ -212,7 +212,7 @@ export const AssetSelector = ({
                     src={`/assets/chains/${value}.png`}
                     key={value}
                     value={value}
-                    data-testId={`asset-selector-network-selector-option-${chain.identifier}`}
+                    data-testid={`asset-selector-network-selector-option-${chain.identifier}`}
                   >
                     {chain.name}
                   </CryptoSelector.Option>
@@ -227,7 +227,7 @@ export const AssetSelector = ({
           variant={
             insufficientBalance ? "error" : isMaxClicked ? "info" : "default"
           }
-          data-testId="asset-selector-amount-input"
+          data-testid="asset-selector-amount-input"
           value={value.amount}
           max={maxAllowedTransferAmount}
           onChange={(amount) => {

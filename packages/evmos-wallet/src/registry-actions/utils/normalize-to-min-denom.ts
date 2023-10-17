@@ -1,10 +1,12 @@
-import { chains } from "@evmosapps/registry";
 import { Token } from "../types";
 import { getIBCDenom } from "./get-ibc-denom";
 import { getTokens } from "../get-tokens";
+import { getChains } from "../get-chain";
 
 export const IBC_DENOMS_MAP: Record<string, Token> = {};
-const { evmos, ...others } = chains;
+const chains = getChains();
+const evmos = chains.find(({ prefix }) => prefix === "evmos")!;
+const others = chains.filter(({ prefix }) => prefix !== "evmos")!;
 /**
  * Evmos tokens in other networks
  */

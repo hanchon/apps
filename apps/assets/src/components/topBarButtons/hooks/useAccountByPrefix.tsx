@@ -11,6 +11,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { E } from "helpers";
 import { useId } from "react";
 import { getAccount } from "wagmi/actions";
+import { getSelectedNetworkMode } from "ui-helpers";
 
 const suggestChain = async (prefix: Prefix) => {
   const keplr = await getKeplrProvider();
@@ -38,6 +39,23 @@ const suggestChain = async (prefix: Prefix) => {
     );
     await keplr.experimentalSuggestChain(chainInfo);
   }
+
+  if (getSelectedNetworkMode() !== "mainnet") {
+    if (prefix === "evmos") {
+      await keplr.experimentalSuggestChain(
+        await import("@evmosapps/registry/src/keplr/evmoslocal.json")
+      );
+      await keplr.experimentalSuggestChain(
+        await import("@evmosapps/registry/src/keplr/evmostestnet.json")
+      );
+    }
+    if (prefix === "cosmos") {
+      await keplr.experimentalSuggestChain(
+        await import("@evmosapps/registry/src/keplr/cosmoshublocal.json")
+      );
+    }
+  }
+
   // If not in this list, it's supported by keplr by default
 };
 
