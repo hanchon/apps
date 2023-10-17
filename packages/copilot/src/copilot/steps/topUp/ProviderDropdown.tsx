@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { Dispatch, SetStateAction } from "react";
-import { DropdownArrow, TransakIcon, C14Icon, SquidIcon } from "icons";
+import { DropdownArrow, TransakIcon, C14Icon } from "icons";
 import { t } from "../../../locales/translate";
 import { useTracker, CLICK_ON_DIFFERENT_ON_RAMP } from "tracker";
 
@@ -23,11 +23,6 @@ export const dropdownOptions: DropdownOption[] = [
     name: "Transak",
     image: <TransakIcon width={20} height={20} />,
     value: "Transak",
-  },
-  {
-    name: "Squid",
-    image: <SquidIcon width={20} height={20} />,
-    value: "Squid",
   },
 ];
 
