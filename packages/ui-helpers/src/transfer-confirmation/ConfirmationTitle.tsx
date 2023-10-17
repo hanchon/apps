@@ -7,12 +7,13 @@ import cx from "clsx";
 export function ConfirmationTitle({
   variant = "success",
   ...rest
-}: ComponentProps<"h1"> & { variant?: "success" | "error" }) {
+}: ComponentProps<"h1"> & { variant?: "success" | "error" | "loading" }) {
   return (
     <h1
-      className={cx("text-lg md:text-xl font-bold", {
+      className={cx("text-lg md:text-xl font-bold tracking-wider", {
         "text-green-200": variant === "success",
         "text-red-900": variant === "error",
+        "text-purple-300": variant === "loading",
       })}
       {...rest}
     />

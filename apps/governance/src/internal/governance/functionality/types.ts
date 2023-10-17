@@ -40,6 +40,8 @@ export type Proposal = {
   total_deposit: AmountProposal[];
   voting_end_time: string;
   voting_start_time: string;
+  title: string;
+  summary: string;
 };
 
 export type ProposalProps = {

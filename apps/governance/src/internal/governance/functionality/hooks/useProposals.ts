@@ -45,9 +45,10 @@ export const useProposals = (pid?: string) => {
           item.final_tally_result.abstain_count,
           item.final_tally_result.no_with_veto_count,
         ]);
+        const title = item.title !== "" ? item.title : item.messages.length > 0 ? item.messages[0].content.title : "";
         temp.push({
           id: item.id,
-          title: item.messages.length > 0 ? item.messages[0].content.title : "",
+          title,
           status: item.status,
           votingStartTime:
             item.voting_start_time !== ""
@@ -114,7 +115,7 @@ export const useProposals = (pid?: string) => {
           Number(proposalsResponse.data.tally_params.veto_threshold) * 100
         ).toFixed(2),
       };
-
+      const description = proposalFiltered.summary !== "" ? proposalFiltered.summary : proposalFiltered.messages.length > 0 ? proposalFiltered.messages[0].content.description : "";
       temp = {
         id: proposalFiltered.id,
         title:
@@ -159,12 +160,11 @@ export const useProposals = (pid?: string) => {
             ? formatDate(proposalFiltered.deposit_end_time)
             : "",
         description:
-          proposalFiltered.messages.length > 0
-            ? proposalFiltered.messages[0].content.description?.replace(
+          description.replace(
                 /\\[rn]/g,
                 "\n",
               )
-            : "",
+            ,
         total: sumBigNumber([
           proposalFiltered.final_tally_result.yes_count,
           proposalFiltered.final_tally_result.no_count,

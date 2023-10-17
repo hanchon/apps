@@ -7,7 +7,7 @@ import {
   notifySuccess,
 } from "../../internal/wallet/functionality/errors";
 import { truncateAddress } from "../../internal/wallet/style/format";
-import { store } from "../..";
+import { getActiveProviderKey, store } from "../..";
 import { resetWallet, setWallet } from "../redux/WalletSlice";
 import { ethToEvmos } from "@evmos/address-converter";
 import {
@@ -46,7 +46,7 @@ function Provider({ children }: WalletProviderProps) {
 
   useEffect(() => {
     const connectorId = connector?.id.toLowerCase();
-    if (!connectorId || !address || !pubkey) return;
+    if (!connectorId || !address || (!pubkey && getActiveProviderKey() !== "safe")) return;
     /**
      * TODO: this is to sync with the current wallet redux store
      * In a future PR I intent to remove this store
@@ -59,7 +59,7 @@ function Provider({ children }: WalletProviderProps) {
         extensionName: connectorId,
         evmosAddressEthFormat: address,
         evmosAddressCosmosFormat: ethToEvmos(address),
-        evmosPubkey: pubkey,
+        evmosPubkey: pubkey ?? "",
         osmosisPubkey: null,
         accountName: null,
       }),
@@ -67,7 +67,7 @@ function Provider({ children }: WalletProviderProps) {
   }, [isConnected, connector, pubkey, address]);
 
   useEffect(() => {
-    if (!pubkeyError) return;
+    if (!pubkeyError || getActiveProviderKey() === "safe") return;
     disconnect();
     notifyError(
       WALLET_NOTIFICATIONS.ErrorTitle,
