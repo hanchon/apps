@@ -160,6 +160,8 @@ export const CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT =
 export const CLICK_ON_BUY_NOW_COPILOT = "Click on “Buy now” inside Copilot";
 export const CLICK_ON_DIFFERENT_ON_RAMP =
   "Click on different On-Ramp options inside Copilot";
+export const CLICK_ON_DIFFERENT_CRYPTO_OPTION =
+  "Click on different cryptocurrency top-up options inside Copilot";
 export const CLICK_ON_NEXT_STEPS_COPILOT =
   "Click on “Next Steps” after topping up inside Copilot";
 export const CLICK_ON_INTERACT_WITH_DAPP_COPILOT =

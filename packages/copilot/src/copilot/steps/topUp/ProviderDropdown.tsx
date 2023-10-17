@@ -7,7 +7,7 @@ import { DropdownArrow } from "icons";
 import { t } from "../../../locales/translate";
 import { DropdownOption } from "./utils";
 
-export default function ProvDropwdown({
+export default function ProviderDropwdown({
   selectedValue,
   dropdownOptions,
   onItemClick,

@@ -1,4 +1,10 @@
-import { C14Icon, CypherDIcon, LayerSwapIcon, TransakIcon } from "icons";
+import {
+  C14Icon,
+  CypherDIcon,
+  LayerSwapIcon,
+  SquidIcon,
+  TransakIcon,
+} from "icons";
 
 export type DropdownOption = {
   name: string;
@@ -20,6 +26,11 @@ export const providerOptions = {
     },
   ],
   crypto: [
+    {
+      name: "Squid",
+      image: <SquidIcon width={20} height={20} />,
+      value: "Squid",
+    },
     {
       name: "LayerSwap",
       image: <LayerSwapIcon width={20} height={20} />,

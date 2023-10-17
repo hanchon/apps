@@ -123,6 +123,7 @@ export { CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT } from "./constants";
 export { CLICK_ON_TOP_UP_WITH_CARD_COPILOT } from "./constants";
 export { CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT } from "./constants";
 export { CLICK_ON_DIFFERENT_ON_RAMP } from "./constants";
+export { CLICK_ON_DIFFERENT_CRYPTO_OPTION } from "./constants";
 export { CLICK_ON_BUY_NOW_COPILOT } from "./constants";
 export { CLICK_ON_NEXT_STEPS_COPILOT } from "./constants";
 export { CLICK_ON_INTERACT_WITH_DAPP_COPILOT } from "./constants";

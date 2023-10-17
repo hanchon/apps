@@ -2,7 +2,7 @@ import { SquidWidget } from "@0xsquid/widget";
 
 export const Squid = () => {
   return (
-    <div className="relative mx-auto mt-[25px] h-[700px] w-[300px] overflow-hidden overflow-y-auto md:h-[545px] md:w-[400px]">
+    <div className="relative mx-auto mt-[25px] h-[700px] w-[300px] overflow-hidden overflow-y-auto md:h-[545px] md:w-[500px]">
       <SquidWidget
         config={{
           integratorId: "evmosdappstore-swap-widget",

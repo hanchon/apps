@@ -8,9 +8,14 @@ import Onboard from "./Onboard";
 import C14 from "./C14";
 import CypherD from "./CypherD";
 import LayerSwap from "./LayerSwap";
-import { CLICK_ON_DIFFERENT_ON_RAMP, useTracker } from "tracker";
+import {
+  CLICK_ON_DIFFERENT_ON_RAMP,
+  useTracker,
+  CLICK_ON_DIFFERENT_CRYPTO_OPTION,
+} from "tracker";
 import ProviderDropwdown from "./ProviderDropdown";
 import { providerOptions, DropdownOption } from "./utils";
+import { Squid } from "./Squid";
 
 export const TopUp = () => {
   const [topUpType, setTopUpType] = useState("intro");
@@ -21,17 +26,15 @@ export const TopUp = () => {
     providerOptions.crypto[0]
   );
 
-  const { handlePreClickAction: handleDifferentOnRampClick } = useTracker(
-    CLICK_ON_DIFFERENT_ON_RAMP
-  );
+  const { sendEvent } = useTracker();
 
   const onItemClick = (option: DropdownOption) => {
-    handleDifferentOnRampClick({ onRampType: option.value });
+    sendEvent(CLICK_ON_DIFFERENT_ON_RAMP, { onRampType: option.value });
     setCardProvider(option);
   };
 
   const onCryptoItemClick = (option: DropdownOption) => {
-    handleDifferentOnRampClick({ onRampType: option.value });
+    sendEvent(CLICK_ON_DIFFERENT_CRYPTO_OPTION, { "Swap Type": option.value });
     setCryptoProvider(option);
   };
 
@@ -60,7 +63,13 @@ export const TopUp = () => {
               onItemClick={onCryptoItemClick}
               dropdownOptions={providerOptions.crypto}
             />
-            {cryptoProvider.value === "Cypher" ? <CypherD /> : <LayerSwap />}
+            {cryptoProvider.value === "Cypher" ? (
+              <CypherD />
+            ) : cryptoProvider.value === "LayerSwap" ? (
+              <LayerSwap />
+            ) : (
+              <Squid />
+            )}
           </>
         </Onboard>
       );
