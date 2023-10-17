@@ -31,6 +31,7 @@ export const TopUp = () => {
   };
 
   const onCryptoItemClick = (option: DropdownOption) => {
+    handleDifferentOnRampClick({ onRampType: option.value });
     setCryptoProvider(option);
   };
 
