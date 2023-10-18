@@ -22,7 +22,7 @@ const config = {
   slippage: 1.5,
   infiniteApproval: false,
   enableExpress: true,
-  apiUrl: "https://api.0xsquid.com",
+  apiUrl: "https://api.squidrouter.com",
   comingSoonChainIds: [],
   titles: {
     swap: "Swap",
