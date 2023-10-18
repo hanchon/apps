@@ -36,7 +36,7 @@ export default {
     "https://api.osmosis.interbloc.org"
   ],
   "tendermintRest": [
-    "https://g.w.lavanet.xyz:443/gateway/cos3/tendermint-rpc-http/ef1ad852a77275e1eeef6c7972370118",
+    "https://g.w.lavanet.xyz:443/gateway/cos3/rpc-http/ef1ad852a77275e1eeef6c7972370118",
     "https://rpc.cosmos.directory/osmosis"
   ],
   "evmRest": null,

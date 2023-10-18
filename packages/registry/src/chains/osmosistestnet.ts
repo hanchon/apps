@@ -29,7 +29,7 @@ export default {
     "https://lcd.osmotest5.osmosis.zone"
   ],
   "tendermintRest": [
-    "https://g.w.lavanet.xyz:443/gateway/cos4/tendermint-rpc-http/ef1ad852a77275e1eeef6c7972370118"
+    "https://g.w.lavanet.xyz:443/gateway/cos4/rpc-http/ef1ad852a77275e1eeef6c7972370118"
   ],
   "evmRest": null,
   "cosmosGRPC": null,
@@ -47,7 +47,7 @@ export default {
       "tokenRepresentation": "OSMO",
       "type": "IBC",
       "decimals": 6,
-      "erc20Address": "0xFA3C22C069B9556A4B2f7EcE1Ee3B467909f4864",
+      "erc20Address": "0x3452e23F9c4cC62c70B7ADAd699B264AF3549C19",
       "handledByExternalUI": null,
       "listed": true
     }

@@ -36,7 +36,7 @@ export default {
     "https://api-cosmoshub-ia.notional.ventures/"
   ],
   "tendermintRest": [
-    "https://g.w.lavanet.xyz:443/gateway/cos5/tendermint-rpc-http/ef1ad852a77275e1eeef6c7972370118",
+    "https://g.w.lavanet.xyz:443/gateway/cos5/rpc-http/ef1ad852a77275e1eeef6c7972370118",
     "https://rpc.cosmos.directory/cosmoshub",
     "https://cosmoshub-rpc.stakely.io/"
   ],

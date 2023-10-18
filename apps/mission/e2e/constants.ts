@@ -1,14 +1,13 @@
 /* eslint-disable no-secrets/no-secrets */
-export const BALANCE_ENDPOINT =
-  "*/**/cosmos/bank/v1beta1/balances/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
+export const BALANCE_ENDPOINT = "*/**/cosmos/bank/v1beta1/balances/*";
 export const STAKING_INFO_ENDPOINT =
   // eslint-disable-next-line no-secrets/no-secrets
-  "*/**/stakingInfo/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
+  "*/**/stakingInfo/*";
 // eslint-disable-next-line no-secrets/no-secrets
-export const ERC20_MODULE_BALANCE_ENDPOINT = `*/**/ERC20ModuleBalance/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266`;
+export const ERC20_MODULE_BALANCE_ENDPOINT = `*/**/ERC20ModuleBalance/*/*`;
 export const GET_ACCOUNT_ENDPOINT =
   // eslint-disable-next-line no-secrets/no-secrets
-  "*/**/cosmos/auth/v1beta1/accounts/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
+  "*/**/cosmos/auth/v1beta1/accounts/*";
 
 export const responseZeroBalance = {
   balance: [

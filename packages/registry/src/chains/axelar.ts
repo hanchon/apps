@@ -36,7 +36,7 @@ export default {
     "https://axelar-api.polkachu.com"
   ],
   "tendermintRest": [
-    "https://g.w.lavanet.xyz:443/gateway/axelar/tendermint-rpc-http/ef1ad852a77275e1eeef6c7972370118",
+    "https://g.w.lavanet.xyz:443/gateway/axelar/rpc-http/ef1ad852a77275e1eeef6c7972370118",
     "https://rpc.cosmos.directory/axelar",
     "https://axelar-grpc.quantnode.tech:9090"
   ],

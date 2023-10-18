@@ -30,18 +30,16 @@ export default {
     "https://evmos-rest.publicnode.com"
   ],
   "tendermintRest": [
-    "https://g.w.lavanet.xyz:443/gateway/evmos/tendermint-rpc-http/ef1ad852a77275e1eeef6c7972370118",
+    "https://g.w.lavanet.xyz:443/gateway/evmos/rpc-http/ef1ad852a77275e1eeef6c7972370118",
     "https://rpc.cosmos.directory/evmos",
     "https://grpc.bd.evmos.org:9090"
   ],
   "evmRest": [
     "https://g.w.lavanet.xyz:443/gateway/evmos/json-rpc-http/ef1ad852a77275e1eeef6c7972370118",
-    "https://jsonrpc-rpcaas-evmos-mainnet.ubiquity.blockdaemon.tech",
-    "https://eth.bd.evmos.org:8545",
     "https://jsonrpc-evmos-ia.cosmosia.notional.ventures",
-    "https://evmos-json-rpc.stakely.io",
-    "https://jsonrpc.evmos.nodestake.top",
-    "https://json-rpc.evmos.bh.rocks"
+    "https://evmos-mainnet.public.blastapi.io",
+    "https://evmos-evm.publicnode.com",
+    "https://evmos.lava.build"
   ],
   "cosmosGRPC": [
     "https://grpc.bd.evmos.org:9090"

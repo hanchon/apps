@@ -22,7 +22,7 @@ export const testnetConfigByChain: Record<
       identifier: "evmostestnet",
       rpc: [
         // eslint-disable-next-line no-secrets/no-secrets
-        "https://g.w.lavanet.xyz:443/gateway/evmost/tendermint-rpc-http/549a760ba95638964be1942980693d34",
+        "https://g.w.lavanet.xyz:443/gateway/evmost/rpc-http/549a760ba95638964be1942980693d34",
         "https://tendermint.bd.evmos.dev:26657",
         "https://evmos.test.rpc.coldyvalidator.net",
         "https://evmos-testnet-rpc.polkachu.com",
@@ -177,13 +177,15 @@ export const testnetTokensByIdentifiers: Record<string, TokenRegistry[]> = {
       pngSrc: "",
       type: "IBC",
       exponent: "18",
-      cosmosDenom: "erc20/0xcf4e2cae6193f943c8f39b6012b735cad37d8f4a",
+      // eslint-disable-next-line no-secrets/no-secrets
+      cosmosDenom: "erc20/0xCF4E2cae6193f943C8f39B6012B735CAD37d8F4a",
       description: "Wizzard Coin",
       name: "Wizzard Token",
       tokenRepresentation: "WIZZ",
       channel: "",
       isEnabled: true,
-      erc20Address: "0xcf4e2cae6193f943c8f39b6012b735cad37d8f4a",
+      // eslint-disable-next-line no-secrets/no-secrets
+      erc20Address: "0xCF4E2cae6193f943C8f39B6012B735CAD37d8F4a",
       ibc: {
         sourceDenom: "wizz",
         source: "Evmos",
@@ -286,13 +288,13 @@ export const testnetTokensByIdentifiers: Record<string, TokenRegistry[]> = {
       type: "IBC",
       exponent: "6",
       cosmosDenom:
-        "ibc/ED07A3391A112B175915CD8FAF43A2DA8E4790EDE12566649D0C2F97716B8518",
+        "ibc/2FBDAF744D3750564479C8E014CCD9522D59A264288E79644D139AE3203A9A71",
       description: "The native token of Osmosis",
       name: "Osmosis",
       tokenRepresentation: "OSMO",
       channel: "channel-0",
       isEnabled: true,
-      erc20Address: "0xFA3C22C069B9556A4B2f7EcE1Ee3B467909f4864",
+      erc20Address: "0x3452e23F9c4cC62c70B7ADAd699B264AF3549C19",
       ibc: {
         sourceDenom: "uosmo",
         source: "Osmosis",

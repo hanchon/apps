@@ -29,8 +29,8 @@ export default {
     "https://evmos-testnet-lcd.qubelabs.io"
   ],
   "tendermintRest": [
-    "https://g.w.lavanet.xyz:443/gateway/evmost/tendermint-rpc-http/ef1ad852a77275e1eeef6c7972370118",
-    "https://g.w.lavanet.xyz:443/gateway/evmost/tendermint-rpc-http/549a760ba95638964be1942980693d34",
+    "https://g.w.lavanet.xyz:443/gateway/evmost/rpc-http/ef1ad852a77275e1eeef6c7972370118",
+    "https://g.w.lavanet.xyz:443/gateway/evmost/rpc-http/549a760ba95638964be1942980693d34",
     "https://tendermint.bd.evmos.dev:26657",
     "https://evmos.test.rpc.coldyvalidator.net",
     "https://evmos-testnet-rpc.polkachu.com",
@@ -46,7 +46,7 @@ export default {
     "https://evmos-testnet-json.qubelabs.io"
   ],
   "cosmosGRPC": [
-    "https://g.w.lavanet.xyz:443/gateway/evmost/tendermint-rpc-http/549a760ba95638964be1942980693d34",
+    "https://g.w.lavanet.xyz:443/gateway/evmost/rpc-http/549a760ba95638964be1942980693d34",
     "https://tendermint.bd.evmos.dev:26657",
     "https://evmos.test.rpc.coldyvalidator.net",
     "https://evmos-testnet-rpc.polkachu.com",
@@ -79,13 +79,13 @@ export default {
       "symbol": "WIZZ",
       "denom": "WIZZ",
       "sourcePrefix": "evmos",
-      "sourceDenom": "erc20/0xcf4e2cae6193f943c8f39b6012b735cad37d8f4a",
+      "sourceDenom": "erc20/0xCF4E2cae6193f943C8f39B6012B735CAD37d8F4a",
       "minCoinDenom": "wizz",
       "category": "cosmos",
       "tokenRepresentation": "WIZZ",
       "type": "IBC",
       "decimals": 18,
-      "erc20Address": "0xcf4e2cae6193f943c8f39b6012b735cad37d8f4a",
+      "erc20Address": "0xCF4E2cae6193f943C8f39B6012B735CAD37d8F4a",
       "handledByExternalUI": null,
       "listed": true
     }
