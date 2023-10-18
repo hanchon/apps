@@ -14,7 +14,7 @@ export default function LayerSwap() {
     >
       <iframe
         style={{ height: "100%", width: "100%", border: "none" }}
-        src={`https://layerswap.io/app/?to=EVMOS_MAINNET&destAddress=${address.evmosAddressEthFormat}&addressSource=evmos`}
+        src={`https://layerswap.io/app/?to=EVMOS_MAINNET&destAddress=${address?.evmosAddressEthFormat}&addressSource=evmos`}
       ></iframe>
     </div>
   );

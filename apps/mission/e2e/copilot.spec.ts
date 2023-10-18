@@ -218,6 +218,14 @@ test.describe("Mission Page - Copilot", () => {
       expect(await lawerSwapWidget.count()).toBe(1);
 
       await page.getByTestId("card-provider-dropdown").click();
+      await page.getByRole("button", { name: /Squid/i }).click();
+
+      const squidDWidget = page.getByTestId("squid-widget");
+      await squidDWidget.waitFor();
+
+      expect(await squidDWidget.count()).toBe(1);
+
+      await page.getByTestId("card-provider-dropdown").click();
       await page.getByRole("button", { name: /Cypher/i }).click();
 
       const cypherDWidget = page.getByTestId("cypher-onboading-sdk");

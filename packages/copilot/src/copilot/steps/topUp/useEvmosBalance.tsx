@@ -22,7 +22,7 @@ export const getEvmosBalance = async (address: string) => {
     return { balance: { denom: "", amount: "" } };
   }
   const res = await fetch(
-    `${EVMOS_BACKEND}/BalanceByDenom/${EVMOS_SYMBOL}/${address}/${EVMOS_MINIMAL_COIN_DENOM}`,
+    `${EVMOS_BACKEND}/BalanceByDenom/${EVMOS_SYMBOL}/${address}/${EVMOS_MINIMAL_COIN_DENOM}`
   );
   return res.json() as Promise<BalanceResponse>;
 };
@@ -31,8 +31,8 @@ export const useEvmosBalance = () => {
   const value = useSelector((state: StoreType) => state.wallet.value);
 
   const evmosBalance = useQuery<BalanceResponse, Error>({
-    queryKey: ["evmosBalance", value.evmosAddressCosmosFormat],
-    queryFn: () => getEvmosBalance(value.evmosAddressCosmosFormat),
+    queryKey: ["evmosBalance", value?.evmosAddressCosmosFormat],
+    queryFn: () => getEvmosBalance(value?.evmosAddressCosmosFormat),
     refetchInterval: 15_000,
   });
 
