@@ -71,7 +71,7 @@ describe("Mission Page - Copilot", () => {
 
     // staking - claimable rewards
     await expect(
-      page.locator("div").filter({ hasText: /^Claimeable Rewards- EVMOS\$-$/ })
+      page.locator("div").filter({ hasText: /^Claimable Rewards- EVMOS\$-$/ })
     ).toBeVisible();
     await page
       .getByRole("button", {
@@ -188,7 +188,7 @@ describe("Mission Page - Copilot", () => {
     await expect(
       page
         .locator("div")
-        .filter({ hasText: /^Claimeable Rewards0\.01 EVMOS\$0\.00$/ })
+        .filter({ hasText: /^Claimable Rewards0\.01 EVMOS\$0\.00$/ })
         .locator("h5")
     ).toBeVisible();
 
