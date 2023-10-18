@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.3.4 - 2023-10-17
+
 - (fix) fse-754 | packages/ui-helpers 1.0.16 | Add attribution to Coingecko
 - (fix) fse-778 | apps/assets 1.0.32 packages/helpers 1.0.9 | Update Timestamp for success transactions
 - (chore) fse-740 | apps/assets 1.0.31 apps/mission 1.0.24 packages/stateful-components 1.0.1 | Update head component

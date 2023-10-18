@@ -111,11 +111,14 @@ describe("Mission Page - Copilot", () => {
     await expect(page.getByRole("heading", { name: "0Evmos" })).toBeVisible();
 
     // total balance in dollars
-    await expect(page.locator("p").filter({ hasText: "$0" })).toBeVisible();
+    await expect(page.locator("p").filter({ hasText: "$0.00" })).toBeVisible();
 
-    const availableBalance = page.getByTestId("card-available-balance");
-    await availableBalance.waitFor();
-    expect(await availableBalance.textContent()).toMatch(/\$0/g);
+    await expect(
+      page
+        .locator("div")
+        .filter({ hasText: /^Available Balance0.00 EVMOS\$0.00$/ })
+        .locator("h5")
+    ).toBeVisible();
 
     // staking - staked balance
     const stakedBalance = page.getByTestId("card-staked-balance");
@@ -123,10 +126,12 @@ describe("Mission Page - Copilot", () => {
     expect(await stakedBalance.textContent()).toMatch(/0 EVMOS/g);
 
     // staking - claimable rewards
-    const claimableRewards = page.getByTestId("card-claimable-rewards");
-    await claimableRewards.waitFor();
-    expect(await claimableRewards.textContent()).toMatch(/0 EVMOS/g);
-
+    await expect(
+      page
+        .locator("div")
+        .filter({ hasText: /^Claimeable Rewards0 EVMOS\$0$/ })
+        .locator("h5")
+    ).toBeVisible();
     await page
       .getByRole("button", {
         name: /Claim Rewards/i,
@@ -134,7 +139,7 @@ describe("Mission Page - Copilot", () => {
       .isDisabled();
 
     await expect(
-      page.getByRole("button", { name: "Top Up Account", exact: true })
+      page.getByRole("button", { name: "Top up account", exact: true })
     ).toBeVisible();
 
     // update values
@@ -161,12 +166,12 @@ describe("Mission Page - Copilot", () => {
 
     await page.waitForTimeout(3000);
 
-    await expect(page.getByRole("heading", { name: "0.01Evmos" })).toBeVisible({
-      timeout: 15000,
-    });
+    await expect(
+      page.getByRole("heading", { name: "0.01Evmos" })
+    ).toBeVisible();
 
     // total balance in dollars
-    await expect(page.locator("p").filter({ hasText: "$0" })).toBeVisible();
+    await expect(page.locator("p").filter({ hasText: "$0.00" })).toBeVisible();
 
     // staking - available balance
     await expect(
@@ -191,7 +196,6 @@ describe("Mission Page - Copilot", () => {
         .filter({ hasText: /^Claimeable Rewards0\.01 EVMOS\$0\.00$/ })
         .locator("h5")
     ).toBeVisible();
-
     await page
       .getByRole("button", {
         name: /Claim Rewards/i,
