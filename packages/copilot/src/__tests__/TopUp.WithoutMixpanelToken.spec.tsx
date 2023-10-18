@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MixpanelProvider } from "tracker";
 import mixpanel from "mixpanel-browser";
+
 describe("TopUp component", () => {
   vi.mock("react-redux", () => {
     return {
@@ -20,6 +21,10 @@ describe("TopUp component", () => {
         track: vi.fn(),
       },
     };
+  });
+
+  vi.mock("evmos-wallet", () => {
+    return {};
   });
 
   const queryClient = new QueryClient();

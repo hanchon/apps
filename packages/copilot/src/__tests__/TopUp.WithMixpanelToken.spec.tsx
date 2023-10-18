@@ -23,6 +23,10 @@ describe("TopUp component", () => {
     };
   });
 
+  vi.mock("evmos-wallet", () => {
+    return {};
+  });
+
   const queryClient = new QueryClient();
 
   const wrapper = ({ children }: { children: JSX.Element }) => {
