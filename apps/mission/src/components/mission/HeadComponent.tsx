@@ -3,7 +3,7 @@ import Head from "next/head";
 export const HeadComponent = () => {
   return (
     <Head>
-      <title>Mission Control</title>
+      <title>Evmos Apps</title>
       <link rel="icon" href="/favicon.ico" />
 
       <meta charSet="utf-8" />
@@ -15,7 +15,7 @@ export const HeadComponent = () => {
       <link rel="canonical" href="https://app.evmos.org/" />
 
       {/* <!--  Essential META Tags --> */}
-      <meta property="og:title" content="Evmos Mission Control" />
+      <meta property="og:title" content="Evmos Apps" />
       <meta property="og:type" content="article" />
       <meta
         property="og:image"
@@ -35,12 +35,12 @@ export const HeadComponent = () => {
 
       <meta
         property="og:description"
-        content="Mission Control is the official landing page of Evmos, giving you an overview of your Evmos portfolio and any updates from the Evmos development team."
+        content="Evmos Apps is the official landing page of Evmos, giving you an overview of your Evmos portfolio and any updates from the Evmos development team."
       />
-      <meta property="og:site_name" content="Evmos Mission Control" />
+      <meta property="og:site_name" content="Evmos Apps" />
       <meta
         name="twitter:description"
-        content="Mission Control is the official landing page of Evmos, giving you an overview of your Evmos portfolio and any updates from the Evmos development team."
+        content="Evmos Apps is the official landing page of Evmos, giving you an overview of your Evmos portfolio and any updates from the Evmos development team."
       />
       <meta name="twitter:site" content="@EvmosOrg" />
 

@@ -4,7 +4,7 @@ export const HeadComponent = () => {
   return (
     <>
       <Head>
-        <title>Assets Page</title>
+        <title>Assets Portfolio</title>
         <link rel="icon" href="/favicon.ico" />
 
         <meta charSet="utf-8" />
@@ -16,7 +16,7 @@ export const HeadComponent = () => {
         <link rel="canonical" href="https://app.evmos.org/assets" />
 
         {/* <!--  Essential META Tags --> */}
-        <meta property="og:title" content="Evmos Assets" />
+        <meta property="og:title" content="Evmos Portfolio" />
         <meta property="og:type" content="article" />
         <meta
           property="og:image"
@@ -35,12 +35,12 @@ export const HeadComponent = () => {
         {/* <!--  Non-Essential, But Recommended --> */}
         <meta
           property="og:description"
-          content="Evmos Assets is the official Evmos dApp to withdraw, deposit and convert your Evmos assets."
+          content="Evmos Portfolio is the official Evmos dApp to withdraw, deposit and convert your Evmos assets."
         />
-        <meta property="og:site_name" content="Evmos Assets" />
+        <meta property="og:site_name" content="Evmos Portfolio" />
         <meta
           name="twitter:description"
-          content="Evmos Assets is the official Evmos dApp to withdraw, deposit and convert your Evmos assets."
+          content="Evmos Portfolio is the official Evmos dApp to withdraw, deposit and convert your Evmos assets."
         />
         <meta name="twitter:site" content="@EvmosOrg" />
 

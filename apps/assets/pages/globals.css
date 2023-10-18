@@ -61,6 +61,11 @@
     @apply p-5 bg-darkGray2 border-b-2 border-b-black;
   }
 
+  footer p,
+  footer svg {
+    @apply hover:text-gray-800 transition-all duration-300 ease-in-out;
+  }
+
   .asset:first-of-type td {
     @apply first:rounded-bl-none first:border-l-darkGray2 first:rounded-l-3xl
     last:rounded-br-none last:border-r-darkGray2 last:rounded-r-3xl;

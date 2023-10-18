@@ -28,7 +28,6 @@ export const CLICK_DISCONNECT_WALLET_BUTTON = "Disconnect wallet";
 export const CLICK_CONNECTED_WITH = "Connect Wallet with a specific Wallet";
 export const CLICK_BACK_TO_MC = "Click “Back to Mission Control”";
 export const CLICK_EVMOS_LOGO = "Click on Evmos Logo";
-export const CLICK_FEEDBACK_FOOTER = "Click on Give Feedback on Footer";
 export const SWITCH_BETWEEN_WALLETS = "Switch between wallets";
 
 // assets

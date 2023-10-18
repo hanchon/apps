@@ -1,6 +1,7 @@
 {
   "short_name": "EvmosVesting",
   "name": "Evmos Vesting",
+  "description": "The vesting page allows users to create and fund evmos vesting accounts.",
   "icons": [
     {
       "src": "favicon.ico",
