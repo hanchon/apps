@@ -24,7 +24,7 @@ export const StatefulHeader = ({
   const dispatch = useDispatch();
 
   const { handlePreClickAction } = useTracker(CLICK_EVMOS_LOGO);
-  const { evmosPriceFixed } = useAssets();
+  const { evmosPriceFixed, evmosPriceChange } = useAssets();
 
   const launchPad = {
     dApps: launchPadItems,
@@ -59,6 +59,7 @@ export const StatefulHeader = ({
                 page: page,
               });
             }}
+            evmosPriceChange={parseFloat(evmosPriceChange)}
             price={evmosPriceFixed}
           />
         </TranslationContextProvider>
