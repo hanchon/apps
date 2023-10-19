@@ -18,6 +18,6 @@
   "dappStore.card.staking.button.text": "Stake & manage delegations",
   "dappStore.card.staking.available": "Available Balance",
   "dappStore.card.staking.staked": "Staked Balance",
-  "dappStore.card.staking.rewards": "Claimeable Rewards",
+  "dappStore.card.staking.rewards": "Claimable Rewards",
   "dappStore.card.staking.button.claim": "Claim Rewards"
 }

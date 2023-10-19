@@ -84,6 +84,14 @@ export const useAssets = () => {
     return assets.data.balance[0].coingeckoPrice;
   }, [assets.data]);
 
+  const getEvmosPriceChange = useMemo(() => {
+    if (assets.data === undefined || assets.data.balance.length === 0) {
+      return "--";
+    }
+
+    return assets.data.balance[0].price24HChange;
+  }, [assets.data]);
+
   const getTotalEvmos = useMemo(() => {
     // returns the amount of evmos and wrap evmos
     let total = BigNumber.from(0);
@@ -116,6 +124,7 @@ export const useAssets = () => {
     totalAssets: getTotalAssetsForMissionControl,
     totalEvmosAsset: getTotalEvmos,
     evmosPrice: getEvmosPrice,
+    evmosPriceChange: getEvmosPriceChange,
     evmosPriceFixed,
     loading: assets.isLoading,
     error: assets.error,
