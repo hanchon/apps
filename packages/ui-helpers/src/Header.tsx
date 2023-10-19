@@ -36,7 +36,7 @@ export const Header = ({
           {pageName}
         </p>
       </Link>
-      {process.env.NODE_ENV === "development" && <NetworkModeSelector />}
+      {!!process.env.NEXT_PUBLIC_ENABLE_TESTNET && <NetworkModeSelector />}
       <div className="flex items-center justify-center md:space-x-16">
         <div className="font-sm text-pearl bg-darGray800 hidden cursor-default items-center justify-center space-x-3 rounded-full px-4 py-2 font-bold md:flex">
           <EvmosRedIcon width={"20"} height={"20"} />
