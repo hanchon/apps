@@ -9,7 +9,7 @@ export const TEST_ACCOUNTS = {
 
   therich: makeAccount(
     "therich",
-    "upper recycle exhibit spin kit able pause donate region expire lumber absurd",
+    "height lunar harbor pretty perfect rigid split garlic elder lady baby boss sea foil goose primary tiger music they avoid chalk dynamic please wear",
     100000000000000000000000000000000n
   ),
 
@@ -27,7 +27,7 @@ export const TEST_ACCOUNTS = {
   ci: makeAccount(
     "ci",
     process.env.E2E_TEST_SEED ??
-      "height lunar harbor pretty perfect rigid split garlic elder lady baby boss sea foil goose primary tiger music they avoid chalk dynamic please wear",
+      "upper recycle exhibit spin kit able pause donate region expire lumber absurd",
     100000000000000000000000000000000n
   ),
 

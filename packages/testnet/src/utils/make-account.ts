@@ -8,7 +8,6 @@ export const makeAccount = (
 ) => {
   const { address, publicKey } = mnemonicToAccount(mnemonic);
   const words = bech32.toWords(Buffer.from(address.slice(2), "hex"));
-
   return {
     key,
     mnemonic,

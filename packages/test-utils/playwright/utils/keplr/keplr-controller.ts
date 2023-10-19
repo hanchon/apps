@@ -23,8 +23,22 @@ export class Keplr {
     await keplrExt.close();
   };
   setup = async () => {
-    const keplrExt = await this.context.newPage();
-    await keplrExt.goto(`chrome-extension://${this.extensionId}/register.html`);
+    try {
+      await this.context.waitForEvent("page", { timeout: 2000 });
+    } catch (e) {}
+    let keplrExt = this.context.pages().find((page) => {
+      const url = page.url();
+
+      if (url.includes("register.html")) {
+        return true;
+      }
+    });
+    if (!keplrExt) {
+      keplrExt = await this.context.newPage();
+      await keplrExt.goto(
+        `chrome-extension://${this.extensionId}/register.html`
+      );
+    }
     try {
       await keplrExt.waitForEvent("close", {
         timeout: 1000,
@@ -45,7 +59,7 @@ export class Keplr {
       })
     ).click();
     const seedPhrase =
-      process.env.E2E_TEST_SEED ??
+      process.env.E2E_TEST_SEED ||
       "upper recycle exhibit spin kit able pause donate region expire lumber absurd";
 
     const words = seedPhrase.split(" ");
@@ -90,15 +104,30 @@ export class Keplr {
     } = {}
   ) => {
     try {
-      const extensionPage = await this.context.waitForEvent("page", options);
+      const extensionPage =
+        this.context.pages().find((page) => {
+          const url = page.url();
 
-      await waitLocator(
-        extensionPage.getByRole("button", {
-          name: "Approve",
-          disabled: false,
-          exact: true,
-        })
-      ).click();
+          if (url.includes(this.extensionId) && url.includes("popup.html")) {
+            return true;
+          }
+        }) || (await this.context.waitForEvent("page", options));
+
+      const approveButton = extensionPage.getByRole("button", {
+        name: "Approve",
+        disabled: false,
+        exact: true,
+      });
+      await approveButton.waitFor();
+      // await extensionPage.waitForTimeout(1000);
+      await approveButton.click();
+      try {
+        await extensionPage.waitForEvent("close", {
+          timeout: 500,
+        });
+      } catch (e) {
+        await extensionPage.close();
+      }
     } catch (e) {}
   };
 }
