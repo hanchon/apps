@@ -36,11 +36,13 @@ const accountsProgram = createCommand("accounts").description(
 );
 
 const startCommand = createCommand("start")
+  .option("--compact-logging", "Log only the height of the chains")
   .option("--recreate", "Delete and recreate the testnet")
   .description("Starts local testnet")
-  .action(async ({ recreate }) => {
-    console.log("Starting testnet...", recreate);
+  .action(async ({ recreate, compactLogging }) => {
+    console.log("Starting testnet...", recreate, compactLogging);
     await setupTestnet({
+      compactLogging,
       enableLogging: true,
       overwrite: recreate,
     });

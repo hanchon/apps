@@ -21,6 +21,7 @@ export const evmosConfig = {
 export const setupTestnet = async (
   options: {
     enableLogging?: boolean;
+    compactLogging?: boolean;
     overwrite?: boolean;
   } = {}
 ) => {
@@ -50,7 +51,7 @@ export const setupTestnet = async (
     ...options,
   });
 
-  const { enableLogging } = options;
+  const { enableLogging, compactLogging } = options;
 
   logger.info("Let's wait a few blocks to make sure everything is synced");
 
@@ -103,13 +104,19 @@ export const setupTestnet = async (
     throw new Error(
       [
         "Something went wrong with the token registration",
-        "please, reset your testnet by running `pnpm run testnet -- --recreate`",
+        "please, reset your testnet by running `pnpm run testnet start --recreate`",
       ].join("\n")
     );
   }
 
   if (enableLogging) {
     const log = () => {
+      const cosmosHeight = cosmoshub.getHeight().toString();
+      const evmosHeight = evmos.getHeight().toString();
+      if (compactLogging) {
+        console.log(`Cosmos: ${cosmosHeight} | Evmos: ${evmosHeight}`);
+        return;
+      }
       const table = new Table({
         head: ["Chain", "Height", ...Object.keys(cosmoshub.config.api)],
 
@@ -121,12 +128,12 @@ export const setupTestnet = async (
       table.push(
         [
           cosmoshub.config.chainId,
-          cosmoshub.getHeight().toString(),
+          cosmosHeight,
           ...Object.values(cosmoshub.config.api).map((port) => `:${port}`),
         ],
         [
           evmos.config.chainId,
-          evmos.getHeight().toString(),
+          evmosHeight,
           ...Object.values(evmos.config.api).map((port) => `:${port}`),
         ]
       );

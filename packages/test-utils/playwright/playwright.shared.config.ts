@@ -1,6 +1,9 @@
 import { PlaywrightTestConfig, devices } from "@playwright/test";
 
-export const createPlaywrightConfig = (port = 3000): PlaywrightTestConfig => ({
+export const createPlaywrightConfig = (
+  port = 3000,
+  enableTestnet = false
+): PlaywrightTestConfig => ({
   testDir: "./e2e",
   /* Run tests in files in parallel */
   // Remove it so the tests run in sequence
@@ -68,12 +71,16 @@ export const createPlaywrightConfig = (port = 3000): PlaywrightTestConfig => ({
           stderr: "pipe",
           timeout: 300 * 1000,
         },
-        {
-          command: "pnpm -w run testnet start",
-          stdout: "pipe",
-          stderr: "pipe",
-          timeout: 300 * 1000,
-        },
+        ...(enableTestnet
+          ? [
+              {
+                command: "pnpm -w run testnet start --compact-logging",
+                stdout: "pipe",
+                stderr: "pipe",
+                timeout: 300 * 1000,
+              } as const,
+            ]
+          : []),
       ]
     : undefined,
 });

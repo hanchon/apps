@@ -13,4 +13,4 @@ const PORT = Number(process.env.PORT || 3002);
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig(createPlaywrightConfig(PORT));
+export default defineConfig(createPlaywrightConfig(PORT, true));
