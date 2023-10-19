@@ -10,7 +10,7 @@ import { truncateAddress } from "../internal/wallet/style/format";
 import { ButtonDisconnect } from "./buttons/Button.Disconnect";
 import { ModalWithTransitions } from "ui-helpers";
 import { ProvidersIcons } from "./utils";
-
+import { EXPLORER_URL } from "constants-helper";
 export const WalletProfileModal = ({
   walletExtension,
   dispatch,
@@ -44,7 +44,7 @@ export const WalletProfileModal = ({
                     className="text-xs font-normal"
                     onClick={async () => {
                       await navigator.clipboard.writeText(
-                        walletExtension.evmosAddressCosmosFormat,
+                        walletExtension.evmosAddressCosmosFormat
                       );
                       setIsCopied(true);
                     }}
@@ -58,7 +58,7 @@ export const WalletProfileModal = ({
                 <p>{truncateAddress(walletExtension.evmosAddressEthFormat)}</p>
               </div>
               <ViewExplorer
-                explorerTxUrl="https://www.mintscan.io/evmos/account"
+                explorerTxUrl={EXPLORER_URL + "/address"}
                 txHash={walletExtension.evmosAddressEthFormat}
               />
             </>
