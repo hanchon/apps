@@ -15,6 +15,7 @@ export type ERC20Element = {
   pngSrc: string;
   erc20Address: string;
   tokenIdentifier: string;
+  price24HChange: string;
 };
 
 export type ERC20BalanceResponse = {
