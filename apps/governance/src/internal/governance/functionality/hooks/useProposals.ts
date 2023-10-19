@@ -115,13 +115,13 @@ export const useProposals = (pid?: string) => {
           Number(proposalsResponse.data.tally_params.veto_threshold) * 100
         ).toFixed(2),
       };
+      
       const description = proposalFiltered.summary !== "" ? proposalFiltered.summary : proposalFiltered.messages.length > 0 ? proposalFiltered.messages[0].content.description : "";
+      const title = proposalFiltered.title !== "" ? proposalFiltered.title : proposalFiltered.messages.length > 0 ? proposalFiltered.messages[0].content.title : "";
+
       temp = {
         id: proposalFiltered.id,
-        title:
-          proposalFiltered.messages.length > 0
-            ? proposalFiltered.messages[0].content.title
-            : "",
+        title,
         status: proposalFiltered.status,
         votingStartTime:
           proposalFiltered.voting_start_time !== ""
