@@ -23,7 +23,7 @@ const createSubRow = (
   setShow: Dispatch<SetStateAction<boolean>>,
   setModalContent: Dispatch<SetStateAction<JSX.Element>>,
   feeBalance: BigNumber,
-  isIBCBalance: boolean,
+  isIBCBalance: boolean
 ) => {
   return (
     <div
@@ -102,7 +102,7 @@ const ContentTable = ({
 
     data.forEach((v, k) => {
       let content: JSX.Element[] | null = null;
-
+      console.log("icon", v, v.icon);
       let valueInDollars = 0;
       let valueInTokens = 0;
 
@@ -115,8 +115,8 @@ const ContentTable = ({
               setShow,
               setModalContent,
               tableData.feeBalance,
-              false,
-            ),
+              false
+            )
           );
           content?.unshift(
             createSubRow(
@@ -124,8 +124,8 @@ const ContentTable = ({
               setShow,
               setModalContent,
               tableData.feeBalance,
-              true,
-            ),
+              true
+            )
           );
         } else {
           content?.push(
@@ -134,8 +134,8 @@ const ContentTable = ({
               setShow,
               setModalContent,
               tableData.feeBalance,
-              false,
-            ),
+              false
+            )
           );
         }
         valueInTokens += addAssets({
@@ -167,7 +167,7 @@ const ContentTable = ({
               valueInDollars={valueInDollars.toFixed(2)}
             />
           }
-        />,
+        />
       );
     });
     return ret;
