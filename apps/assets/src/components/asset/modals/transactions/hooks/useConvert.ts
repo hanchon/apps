@@ -20,6 +20,7 @@ import {
 import { GENERATING_TX_NOTIFICATIONS } from "../../../../../internal/asset/functionality/transactions/errors";
 import { useWEVMOS } from "../contracts/hooks/useWEVMOS";
 import { parseUnits } from "@ethersproject/units";
+import { EXPLORER_URL } from "constants-helper";
 
 const wrapEvmos = "EVMOS <> WEVMOS";
 const unwrapEvmos = "WEVMOS <> EVMOS";
@@ -72,9 +73,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
 
         const res = await deposit(amount, wallet.evmosAddressEthFormat);
 
-        dispatch(
-          snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
-        );
+        dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx/`));
         successfulTx({
           txHash: res.hash,
           wallet: wallet?.evmosAddressEthFormat,
@@ -100,9 +99,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
 
         const res = await withdraw(amount, wallet.evmosAddressEthFormat);
 
-        dispatch(
-          snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
-        );
+        dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx/`));
         successfulTx({
           txHash: res.hash,
           wallet: wallet?.evmosAddressEthFormat,
