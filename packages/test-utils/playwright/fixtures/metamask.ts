@@ -1,5 +1,8 @@
 import { BrowserContext, test } from "@playwright/test";
-import dappwright, { Dappwright, MetaMaskWallet } from "@tenkeylabs/dappwright";
+import dappwright, { Dappwright } from "@tenkeylabs/dappwright";
+import os from "os";
+import path from "path";
+import { rm } from "fs/promises";
 const E2E_TEST_EVMOS_CHAIN_NAME =
   process.env.E2E_TEST_EVMOS_CHAIN_NAME ?? "Evmos";
 const E2E_TEST_EVMOS_RPC_URL =
@@ -9,11 +12,20 @@ const E2E_TEST_EVMOS_CHAIN_ID = parseInt(
 );
 const E2E_TEST_EVMOS_SYMBOL = process.env.E2E_TEST_EVMOS_SYMBOL ?? "EVMOS";
 const mmVersion = "10.26.2";
+
+const clearDappwright = async () => {
+  try {
+    await rm(path.resolve(os.tmpdir(), "dappwright"), {
+      recursive: true,
+    });
+  } catch (e) {}
+};
 export const web3Test = test.extend<{
   context: BrowserContext;
   wallet: Dappwright;
 }>({
   context: async ({}, use) => {
+    await clearDappwright();
     const [wallet, , context] = await dappwright.bootstrap("", {
       wallet: "metamask",
       version: mmVersion,
@@ -45,10 +57,11 @@ export const web3TestWithoutNetwork = test.extend<{
   wallet: Dappwright;
 }>({
   context: async ({}, use) => {
-    console.log(MetaMaskWallet);
+    await clearDappwright();
     const [, , context] = await dappwright.bootstrap("", {
       wallet: "metamask",
       version: mmVersion,
+
       seed:
         process.env.E2E_TEST_SEED ??
         "test test test test test test test test test test test junk",

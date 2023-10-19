@@ -1,4 +1,11 @@
 
+# This docker file is to simulate the CI environment on github actions
+# Sometimes testing in there takes too long so this might be useful for debugging e2e tests
+# To run this, you can do the following:
+#
+# docker build -f ./Dockerfile.e2e --build-arg PAGE=assets-page -t e2e-assets-page .
+# docker run --init e2e-assets-page
+
 FROM mcr.microsoft.com/playwright:v1.39.0-jammy  AS base
 ENV CI=true
 ENV PNPM_HOME="/pnpm"
@@ -32,11 +39,6 @@ FROM base AS runner
 WORKDIR /app
 COPY --from=installer /app .
 CMD ["xvfb-run","pnpm", "test:e2e"]
-# This docker file is to simulate the CI environment on github actions
-# Sometimes testing in there takes too long so this might be useful for debugging e2e tests
-# To run this, you can do the following:
-#
-# docker build --build-arg PAGE=assets-page -t e2e-assets-page .
-# docker run --init e2e-assets-page
+
 
  

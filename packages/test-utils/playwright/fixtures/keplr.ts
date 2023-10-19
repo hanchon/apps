@@ -12,7 +12,6 @@ const makeKeplr = async (context: BrowserContext, extensionId: string) => {
 };
 
 export const sessionPath = path.resolve(tmpdir(), "keplr", "session");
-console.log(sessionPath);
 
 const loadContext = async () => {
   const pathToExtension = await downloadRelease("v0.12.35");
