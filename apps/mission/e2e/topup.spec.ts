@@ -3,13 +3,13 @@ import { BALANCE_ENDPOINT } from "./constants";
 
 const STAKING_INFO_ENDPOINT =
   // eslint-disable-next-line no-secrets/no-secrets
-  "*/**/stakingInfo/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
+  "*/**/stakingInfo/*";
 // eslint-disable-next-line no-secrets/no-secrets
-const ERC20_MODULE_BALANCE_ENDPOINT = `*/**/ERC20ModuleBalance/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g/0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266`;
+const ERC20_MODULE_BALANCE_ENDPOINT = `*/**/ERC20ModuleBalance/*/*`;
 
 const GET_ACCOUNT_ENDPOINT =
   // eslint-disable-next-line no-secrets/no-secrets
-  "*/**/cosmos/auth/v1beta1/accounts/evmos17w0adeg64ky0daxwd2ugyuneellmjgnxpu2u3g";
+  "*/**/cosmos/auth/v1beta1/accounts/*";
 
 const responseZeroBalance = {
   balance: [
