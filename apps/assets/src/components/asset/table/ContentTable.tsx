@@ -102,7 +102,6 @@ const ContentTable = ({
 
     data.forEach((v, k) => {
       let content: JSX.Element[] | null = null;
-      console.log("icon", v, v.icon);
       let valueInDollars = 0;
       let valueInTokens = 0;
 
