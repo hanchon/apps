@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (fix) | apps/governance 1.0.27 apps/staking 1.1.1 apps/vesting 1.1.1 packages/copilot 1.0.7 packages/evmos-wallet 1.0.20 packages/helpers 1.0.10 | Handle error in backend calls
 - (chore) fse-754 packages/stateful-components 1.0.2 packages/icons 1.0.8 packages/evmos-wallet 1.0.19
 - (chore) apps/governance 1.0.26 | support v1 and v1beta1 prop title in detail page
 - (chore) apps/staking 1.1.0 constants-helper 1.0.8 | use staking precompile
