@@ -12,10 +12,8 @@ export const setSelectedNetworkMode = (mode: string) => {
   localStorage.setItem("networkMode", mode);
 };
 
-const modes = ["mainnet", "testnet"];
-if (process.env.NODE_ENV === "development") {
-  modes.push("localtestnet");
-}
+const modes = ["mainnet", "testnet", "localtestnet"];
+
 export const isMainnet = () => getSelectedNetworkMode() === "mainnet";
 export const NetworkModeSelector = () => {
   const [mode, setMode] = useState<null | string>(null);
