@@ -155,7 +155,7 @@ export const useCopilotCard = () => {
       }
       const sequenceNumber = await getSequence(
         "https://rest.evmos.lava.build",
-        tempValue.evmosAddressCosmosFormat
+        tempValue.evmosAddressCosmosFormat,
       );
       if (sequenceNumber === "0" || sequenceNumber === null) {
         setSequence(false);
