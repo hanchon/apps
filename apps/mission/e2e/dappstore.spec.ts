@@ -81,7 +81,7 @@ describe("Mission Page - Copilot", () => {
 
     // mocks: case where the user doesn't have any balance
 
-    await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
+    await page.route(STAKING_INFO_ENDPOINT, async (route) => {
       const json = responseEmptyInfoStaking;
       await route.fulfill({ json });
     });
@@ -252,7 +252,7 @@ describe("Mission Page - Copilot", () => {
   test("should connect with MetaMask, trigger the Claim rewards hook and reject it", async ({
     page,
   }) => {
-    await page.route(`${STAKING_INFO_ENDPOINT}`, async (route) => {
+    await page.route(STAKING_INFO_ENDPOINT, async (route) => {
       const json = responseInfoStaking;
       await route.fulfill({ json });
     });

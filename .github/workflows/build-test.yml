@@ -67,8 +67,8 @@ jobs:
       - name: Install Playwright Browsers
         run: pnpx playwright install chromium
       - name: Run tests
-        env:
-          E2E_TEST_SEED: ${{ secrets.E2E_TEST_SEED }}
+        # env:
+        #   E2E_TEST_SEED: ${{ secrets.E2E_TEST_SEED }}
         run: xvfb-run pnpm test:e2e
       - uses: actions/upload-artifact@v3
         if: always()
