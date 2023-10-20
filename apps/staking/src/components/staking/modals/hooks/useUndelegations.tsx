@@ -5,7 +5,11 @@ import { useDispatch } from "react-redux";
 import { UndelegateProps } from "../types";
 import { parseUnits } from "@ethersproject/units";
 import { BigNumber } from "@ethersproject/bignumber";
-import { GENERATING_TX_NOTIFICATIONS, snackBroadcastSuccessful, snackErrorGeneratingTx } from "evmos-wallet";
+import {
+  GENERATING_TX_NOTIFICATIONS,
+  snackBroadcastSuccessful,
+  snackErrorGeneratingTx,
+} from "evmos-wallet";
 
 import {
   CLICK_BUTTON_CONFIRM_UNDELEGATE,
@@ -14,17 +18,18 @@ import {
   UNSUCCESSFUL_TX_UNDELEGATE,
 } from "tracker";
 import { useStakingPrecompile } from "../../../../internal/staking/functionality/hooks/useStakingPrecompile";
+import { EXPLORER_URL } from "constants-helper";
 export const useUndelegation = (useUndelegateProps: UndelegateProps) => {
   const dispatch = useDispatch();
   const { handlePreClickAction } = useTracker(CLICK_BUTTON_CONFIRM_UNDELEGATE);
   const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_UNDELEGATE,
+    SUCCESSFUL_TX_UNDELEGATE
   );
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_UNDELEGATE,
+    UNSUCCESSFUL_TX_UNDELEGATE
   );
 
-  const {undelegate} = useStakingPrecompile()
+  const { undelegate } = useStakingPrecompile();
 
   const handleConfirmButton = async () => {
     handlePreClickAction({
@@ -52,18 +57,16 @@ export const useUndelegation = (useUndelegateProps: UndelegateProps) => {
       const res = await undelegate(
         useUndelegateProps.wallet.evmosAddressEthFormat,
         useUndelegateProps.item.validatorAddress,
-        amount,
+        amount
       );
 
-      dispatch(
-        snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
-      );
-  
+      dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx/`));
+
       successfulTx({
         txHash: res.hash,
         wallet: useUndelegateProps.wallet?.evmosAddressEthFormat,
         provider: useUndelegateProps.wallet?.extensionName,
-        transaction: "successful"
+        transaction: "successful",
       });
     } catch (e) {
       dispatch(snackErrorGeneratingTx());
@@ -71,7 +74,7 @@ export const useUndelegation = (useUndelegateProps: UndelegateProps) => {
         errorMessage: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
         wallet: useUndelegateProps.wallet?.evmosAddressEthFormat,
         provider: useUndelegateProps.wallet?.extensionName,
-        transaction: "unsuccessful"
+        transaction: "unsuccessful",
       });
     }
     useUndelegateProps.setShow(false);

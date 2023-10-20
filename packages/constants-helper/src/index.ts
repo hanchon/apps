@@ -29,3 +29,4 @@ export { METAMASK_DOWNLOAD_URL } from "./constants";
 export { KEPLR_DOWNLOAD_URL } from "./constants";
 export { ICONS_TYPES } from "./constants";
 export { EMOJIS } from "./constants";
+export { EXPLORER_URL } from "./constants";
