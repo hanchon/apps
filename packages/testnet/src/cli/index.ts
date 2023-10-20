@@ -13,9 +13,10 @@ import { TEST_ACCOUNTS } from "../utils/test-accounts";
 import Table from "cli-table";
 import { makeAccount } from "../utils/make-account";
 import chalk from "chalk";
+import { Log } from "helpers";
 
 const logAccountsWarning = () => {
-  console.log("\n\n");
+  Log.info("\n\n");
   const table = new Table({
     colAligns: ["middle"],
   });
@@ -29,7 +30,7 @@ const logAccountsWarning = () => {
       "",
     ].join("\n"),
   ]);
-  console.log(table.toString());
+  Log.info(table.toString());
 };
 const accountsProgram = createCommand("accounts").description(
   "Manage your testnet accounts"
@@ -40,7 +41,7 @@ const startCommand = createCommand("start")
   .option("--recreate", "Delete and recreate the testnet")
   .description("Starts local testnet")
   .action(async ({ recreate, compactLogging }) => {
-    console.log("Starting testnet...", recreate, compactLogging);
+    Log.info("Starting testnet...", recreate, compactLogging);
     await setupTestnet({
       compactLogging,
       enableLogging: true,
@@ -103,8 +104,8 @@ accountsProgram.command("add").action(async () => {
 
   await pushAccount(answers);
 
-  console.log("\n\n", "Account added successfully 🎉");
-  console.log(answers);
+  Log.info("\n\n", "Account added successfully 🎉");
+  Log.info(answers);
   logAccountsWarning();
 });
 
@@ -136,25 +137,25 @@ const logAccounts = (accounts: ReturnType<typeof makeAccount>[]) => {
         wordBreak(String(value), 45),
       ]);
     });
-    console.log(table.toString());
+    Log.info(table.toString());
     table.length = 0;
   });
 };
 accountsProgram.command("list").action(async () => {
   const accounts = await readAccounts();
 
-  console.log("Default test accounts:");
-  console.log("(Feel free to use them, but they can't be deleted or modified)");
+  Log.info("Default test accounts:");
+  Log.info("(Feel free to use them, but they can't be deleted or modified)");
 
   const testAccounts = Object.values(TEST_ACCOUNTS);
   logAccounts(testAccounts);
 
   if (accounts.length === 0) {
-    console.log("You don't have any custom account yet");
+    Log.info("You don't have any custom account yet");
     logAccountsWarning();
     return;
   }
-  console.log("\n\n", "Your accounts:");
+  Log.info("\n\n", "Your accounts:");
   logAccounts(accounts);
 
   logAccountsWarning();
@@ -163,7 +164,7 @@ accountsProgram.command("list").action(async () => {
 accountsProgram.command("delete").action(async () => {
   const accounts = await readAccounts();
   if (accounts.length === 0) {
-    console.log("You don't have any accounts yet");
+    Log.info("You don't have any accounts yet");
     return;
   }
   const answers = (await inquirer.prompt([
@@ -191,7 +192,7 @@ accountsProgram.command("delete").action(async () => {
   ])) as { keys: string[]; confirm: boolean };
 
   if (!answers.confirm) {
-    console.log("Aborted");
+    Log.info("Aborted");
     return;
   }
 
@@ -209,7 +210,7 @@ accountsProgram.command("delete").action(async () => {
     })
   );
 
-  console.log("\n\n", "Account deleted successfully 🎉");
+  Log.info("\n\n", "Account deleted successfully 🎉");
   logAccountsWarning();
 });
 

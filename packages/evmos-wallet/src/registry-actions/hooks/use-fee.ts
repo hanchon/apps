@@ -50,7 +50,7 @@ export const useFee = ({
           },
         })
       );
-      console.log(err);
+
       if (err) {
         if (E.match.byPattern(err, /NotFound/g)) {
           throw new Error("ACCOUNT_NOT_FOUND");

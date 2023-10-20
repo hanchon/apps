@@ -5,6 +5,7 @@ import {
   keplrFixture,
 } from "@evmosapps/test-utils";
 import { Page } from "@playwright/test";
+import { Log } from "helpers";
 
 const { step, describe, beforeEach, beforeAll, expect, test } = keplrFixture;
 
@@ -30,7 +31,7 @@ const waitForTestnet = async () => {
           break;
         }
       } catch (e) {}
-      console.log("Waiting for testnet to be ready");
+      Log.info("Waiting for testnet to be ready");
       await delay(1000);
     }
   });

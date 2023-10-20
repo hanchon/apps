@@ -22,7 +22,6 @@ export const createConfig = ({
   moniker: string;
   chainId: string;
   prefix: string;
-  // executable: string;
   baseDir?: string;
   baseDenom: string;
 

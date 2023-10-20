@@ -43,7 +43,7 @@ export const useProposals = (pid?: string) => {
       proposalsResponse.data.proposals,
       PROPOSALS_TO_REMOVE
     );
-    console.log("filtered", filtered);
+
     return filtered.map((item) => {
       const percents = getPercentage([
         item.final_tally_result.yes_count,

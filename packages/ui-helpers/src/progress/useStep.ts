@@ -94,7 +94,7 @@ export const useStep = (
     };
 
     if (firstUpdate.current) {
-      check().catch(console.error);
+      void check();
       firstUpdate.current = false;
     }
 

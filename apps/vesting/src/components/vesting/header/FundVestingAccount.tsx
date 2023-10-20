@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatNumber } from "helpers";
+import { Log, formatNumber } from "helpers";
 import {
   DEFAULT_FORM_VALUES,
   PlansType,
@@ -106,7 +106,7 @@ export const FundVestingAccount = () => {
             setVestingAddressError(true);
           });
       } catch (e) {
-        console.log(e);
+        Log.error(e);
       }
     }
     fetchVestingData();

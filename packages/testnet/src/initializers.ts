@@ -1,9 +1,6 @@
 import chalk from "chalk";
-
 import { setupRelayer, startRelayer } from "./relayer/setup-relayer";
-
 import Table from "cli-table";
-
 import { getTokenPairsFromNetwork } from "./cosmos/get-token-pairs-from-network";
 import { deployMulticallContract } from "./cosmos/deploy-multicall-contract";
 import { deployERC20Contract } from "./cosmos/deploy-erc20-contract";
@@ -65,9 +62,7 @@ export const setupTestnet = async (
     await setupRelayer(evmos.config, cosmoshub.config, options);
 
     await startRelayer(options);
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 
   logger.info("Checking if the token pairs are already registered");
   const registeredTokenPairs = await getTokenPairsFromNetwork(evmos.config);
@@ -114,7 +109,7 @@ export const setupTestnet = async (
       const cosmosHeight = cosmoshub.getHeight().toString();
       const evmosHeight = evmos.getHeight().toString();
       if (compactLogging) {
-        console.log(`Cosmos: ${cosmosHeight} | Evmos: ${evmosHeight}`);
+        logger.info(`Cosmos: ${cosmosHeight} | Evmos: ${evmosHeight}`);
         return;
       }
       const table = new Table({
@@ -139,7 +134,7 @@ export const setupTestnet = async (
       );
       process.stdout.write("\x1Bc");
       logger.info("All set 🚀");
-      console.log(table.toString());
+      logger.raw(table.toString());
     };
     evmos.subscribe(log);
 

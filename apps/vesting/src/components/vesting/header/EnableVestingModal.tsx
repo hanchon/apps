@@ -18,6 +18,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { useTranslation } from "next-i18next";
+import { Log } from "helpers";
 
 export const EnableVestingModal = () => {
   const [disabled, setDisabled] = useState(false);
@@ -49,7 +50,7 @@ export const EnableVestingModal = () => {
       );
       setDisabled(false);
     } catch (e) {
-      console.log(e);
+      Log.error(e);
       setDisabled(false);
       // TODO: Add Sentry here!
       dispatch(
@@ -91,7 +92,9 @@ export const EnableVestingModal = () => {
         })}
         className="flex flex-col space-y-3"
       >
-        <Label className="text-black" id="address">{t("enable.modal.address.title")}</Label>
+        <Label className="text-black" id="address">
+          {t("enable.modal.address.title")}
+        </Label>
         <input id="address" {...register("address")} className="textBoxStyle" />
         {errors.address?.message && (
           <ErrorMessage>{errors.address.message.toString()}</ErrorMessage>

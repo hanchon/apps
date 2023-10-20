@@ -20,6 +20,7 @@ import {
 import { GENERATING_TX_NOTIFICATIONS } from "../../../../../internal/asset/functionality/transactions/errors";
 import { useWEVMOS } from "../contracts/hooks/useWEVMOS";
 import { parseUnits } from "@ethersproject/units";
+import { Log } from "helpers";
 
 const wrapEvmos = "EVMOS <> WEVMOS";
 const unwrapEvmos = "WEVMOS <> EVMOS";
@@ -83,7 +84,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
           convert: wrapEvmos,
         });
       } catch (e) {
-        console.log("error", e);
+        Log.error(e);
         // TODO: Add Sentry here!
         dispatch(snackErrorGeneratingTx());
         unsuccessfulTx({
@@ -111,7 +112,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
           convert: unwrapEvmos,
         });
       } catch (e) {
-        console.log("error", e);
+        Log.error(e);
         // TODO: Add Sentry here!
         dispatch(snackErrorGeneratingTx());
         unsuccessfulTx({

@@ -1,6 +1,7 @@
 import { get } from "lodash-es";
 import { readFiles } from "./readFiles";
 import { ChainRegistry } from "./types/chain";
+import { Log } from "helpers";
 
 const chains = await readFiles<ChainRegistry>(
   "node_modules/chain-token-registry/chainConfig/*.json"
@@ -25,10 +26,10 @@ for (const chainRegistry of chains) {
       `${url}/ibc/core/client/v1/client_status/${clientId}`
     );
     const json = (await clientStatus.json()) as unknown;
-    console.log(identifier);
-    console.log(clientId, get(json, "status"));
+    Log.info(identifier);
+    Log.info(clientId, get(json, "status"));
     if (!source) {
-      console.log("no source");
+      Log.info("no source");
       continue;
     }
     const channelInfo = await fetch(
@@ -40,8 +41,8 @@ for (const chainRegistry of chains) {
       | undefined;
 
     if (!connectionId) {
-      console.log("no connection id");
-      console.log("------------------");
+      Log.info("no connection id");
+      Log.info("------------------");
       continue;
     }
     const connectionInfo = await fetch(
@@ -54,22 +55,19 @@ for (const chainRegistry of chains) {
     ) as string | undefined;
 
     if (!counterpartyClientId) {
-      console.log("no client id");
-      console.log("------------------");
+      Log.info("no client id");
+      Log.info("------------------");
 
       continue;
     }
-    console.log("Counterparty");
+    Log.info("Counterparty");
     const counterpartyClientStatus = await fetch(
       `${rest[0]}/ibc/core/client/v1/client_status/${counterpartyClientId}`
     );
     const counterpartyClientStatusJson =
       (await counterpartyClientStatus.json()) as unknown;
 
-    console.log(
-      counterpartyClientId,
-      get(counterpartyClientStatusJson, "status")
-    );
-    console.log("------------------");
+    Log.info(counterpartyClientId, get(counterpartyClientStatusJson, "status"));
+    Log.info("------------------");
   }
 }
