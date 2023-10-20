@@ -18,6 +18,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { useTranslation } from "next-i18next";
+import { Log } from "helpers";
 import { EXPLORER_URL } from "constants-helper";
 
 export const EnableVestingModal = () => {
@@ -50,7 +51,7 @@ export const EnableVestingModal = () => {
       );
       setDisabled(false);
     } catch (e) {
-      console.log(e);
+      Log.error(e);
       setDisabled(false);
       // TODO: Add Sentry here!
       dispatch(

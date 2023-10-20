@@ -1,0 +1,44 @@
+
+# This docker file is to simulate the CI environment on github actions
+# Sometimes testing in there takes too long so this might be useful for debugging e2e tests
+# To run this, you can do the following:
+#
+# docker build -f ./Dockerfile.e2e --build-arg PAGE=assets-page -t e2e-assets-page .
+# docker run --init e2e-assets-page
+
+FROM mcr.microsoft.com/playwright:v1.39.0-jammy  AS base
+ENV CI=true
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+FROM base AS builder
+ARG PAGE
+WORKDIR /app
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install -g turbo
+COPY . .
+RUN  turbo prune ${PAGE} --docker
+RUN rm -rf /app/out/full/*/*/node_modules
+
+FROM base AS installer
+WORKDIR /app
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN pnpm exec playwright install 
+
+# Build the project
+WORKDIR /app
+ARG PAGE
+COPY --from=builder /app/out/full .
+ENV NEXT_PUBLIC_ENABLE_TESTNET=true
+RUN pnpm turbo run build --filter=${PAGE} 
+
+FROM base AS runner
+WORKDIR /app
+COPY --from=installer /app .
+CMD ["xvfb-run","pnpm", "test:e2e"]
+
+
+ 

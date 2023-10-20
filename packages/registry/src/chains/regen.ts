@@ -39,9 +39,6 @@ export default {
   "cosmosGRPC": [
     "https://rpc-regen.ecostake.com"
   ],
-  "evmRPC": [
-    "https://rpc-regen.ecostake.com"
-  ],
   "tokens": [
     {
       "name": "Regen Network",
@@ -61,5 +58,6 @@ export default {
       "listed": true
     }
   ],
-  "explorerUrl": "https://www.mintscan.io/regen/txs"
+  "explorerUrl": "https://www.mintscan.io/regen/txs",
+  "env": "mainnet"
 } as const;

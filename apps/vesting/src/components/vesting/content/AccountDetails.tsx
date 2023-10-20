@@ -4,12 +4,12 @@ import { ClawbackModal } from "./modal/ClawbackModal";
 import { getVestingAccountNameLocalstorage } from "../helpers";
 import { useVestingAccounts } from "../../../internal/hooks/useVesting";
 import { AccountContent } from "./modal/AccountContent";
-import { ethToEvmos } from "@evmos/address-converter";
+import { normalizeToEvmos } from "evmos-wallet";
 
 export const AccountDetails = ({ account = "" }: { account?: string }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
-  const _account = account.startsWith("0x") ? ethToEvmos(account) : account;
+  const _account = normalizeToEvmos(account);
   const { loading, error, vestingDetails } = useVestingAccounts(_account);
 
   const handleClawbackClick = useCallback(() => {
@@ -30,7 +30,7 @@ export const AccountDetails = ({ account = "" }: { account?: string }) => {
       return <BannerMessages text={vestingDetails} />;
     }
     const accountName = getVestingAccountNameLocalstorage(
-      vestingDetails.accountAddress,
+      vestingDetails.accountAddress
     );
 
     return (

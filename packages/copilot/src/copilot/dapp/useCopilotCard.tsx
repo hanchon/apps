@@ -32,10 +32,10 @@ export const useCopilotCard = () => {
   const { handlePreClickAction: notConnected } = useTracker(USER_NOT_CONNECTED);
 
   const { handlePreClickAction: connectedWithTokensEvent } = useTracker(
-    USER_CONNECTED_AND_HAS_TOKENS,
+    USER_CONNECTED_AND_HAS_TOKENS
   );
   const { handlePreClickAction: connectedWithoutTokensEvent } = useTracker(
-    USER_CONNECTED_AND_HAS_NO_TOKENS,
+    USER_CONNECTED_AND_HAS_NO_TOKENS
   );
 
   // Track if user is not connected to an account
@@ -155,7 +155,7 @@ export const useCopilotCard = () => {
       }
       const sequenceNumber = await getSequence(
         "https://rest.evmos.lava.build",
-        tempValue.evmosAddressCosmosFormat,
+        tempValue.evmosAddressCosmosFormat
       );
       if (sequenceNumber === "0" || sequenceNumber === null) {
         setSequence(false);
@@ -166,7 +166,7 @@ export const useCopilotCard = () => {
       }
     }
 
-    getSequenceNumber().catch(console.error);
+    void getSequenceNumber();
   }, [sequence, tempValue]);
 
   return { stepsToDraw, drawButton, sequence };

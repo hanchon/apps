@@ -7,13 +7,13 @@ import {
   notifySuccess,
 } from "../../internal/wallet/functionality/errors";
 import { truncateAddress } from "../../internal/wallet/style/format";
-import { getActiveProviderKey, store } from "../..";
+import { getActiveProviderKey, normalizeToEvmos, store } from "../..";
 import { resetWallet, setWallet } from "../redux/WalletSlice";
-import { ethToEvmos } from "@evmos/address-converter";
 import {
   RemoveWalletFromLocalStorage,
   SaveProviderToLocalStorate,
 } from "../../internal/wallet/functionality/localstorage";
+import { useWatch } from "helpers";
 
 type WalletProviderProps = PropsWithChildren<{}>;
 
@@ -27,7 +27,7 @@ function Provider({ children }: WalletProviderProps) {
         {
           walletName: connector?.name ?? "",
           address: truncateAddress(address) ?? "",
-        },
+        }
       );
     },
 
@@ -39,14 +39,19 @@ function Provider({ children }: WalletProviderProps) {
 
   const { variables } = useConnect();
   const { disconnect } = useDisconnect();
-  const { pubkey, error: pubkeyError } = usePubKey();
+  const { pubkey, error: pubkeyError, isFetching } = usePubKey();
   useEffect(() => {
     void wagmiConfig.autoConnect();
   }, []);
 
   useEffect(() => {
     const connectorId = connector?.id.toLowerCase();
-    if (!connectorId || !address || (!pubkey && getActiveProviderKey() !== "safe")) return;
+    if (
+      !connectorId ||
+      !address ||
+      (!pubkey && getActiveProviderKey() !== "safe")
+    )
+      return;
     /**
      * TODO: this is to sync with the current wallet redux store
      * In a future PR I intent to remove this store
@@ -58,23 +63,27 @@ function Provider({ children }: WalletProviderProps) {
         active: true,
         extensionName: connectorId,
         evmosAddressEthFormat: address,
-        evmosAddressCosmosFormat: ethToEvmos(address),
+        evmosAddressCosmosFormat: normalizeToEvmos(address),
         evmosPubkey: pubkey ?? "",
         osmosisPubkey: null,
         accountName: null,
-      }),
+      })
     );
   }, [isConnected, connector, pubkey, address]);
 
-  useEffect(() => {
-    if (!pubkeyError || getActiveProviderKey() === "safe") return;
+  useWatch(() => {
+    if (getActiveProviderKey() === "safe") return;
+    if (!pubkeyError || isFetching) return;
+
     disconnect();
+
+    // disconnect();
     notifyError(
       WALLET_NOTIFICATIONS.ErrorTitle,
       WALLET_NOTIFICATIONS.PubkeySubtext,
-      { walletName: variables?.connector?.name ?? "" },
+      { walletName: variables?.connector?.name ?? "" }
     );
-  }, [disconnect, pubkeyError, variables?.connector?.name]);
+  }, [isFetching]);
   return <>{children}</>;
 }
 

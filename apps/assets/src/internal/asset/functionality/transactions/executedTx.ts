@@ -10,6 +10,7 @@ import {
   txStatusErrorResponse,
   txStatusResponse,
 } from "evmos-wallet";
+import { Log } from "helpers";
 
 export async function checkIBCState(txHash: string, network: string) {
   try {
@@ -18,7 +19,7 @@ export async function checkIBCState(txHash: string, network: string) {
       {
         method: "get",
         headers: { "Content-Type": "application/json" },
-      },
+      }
     );
     const data = (await res.json()) as executedTx;
     if (data.executed) {
@@ -42,7 +43,7 @@ export async function checkIBCState(txHash: string, network: string) {
         title: EXECUTED_NOTIFICATIONS.ErrorTitle,
       };
     } else {
-      console.error(e);
+      Log.error(e);
       return {
         error: true,
         message: EXECUTED_NOTIFICATIONS.UnexpectedSubtext,
@@ -85,7 +86,7 @@ export async function checkTx(txHash: string, network: string) {
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
-      },
+      }
     );
     const res = (await rawRes.json()) as
       | txStatusErrorResponse
@@ -118,7 +119,7 @@ export async function checkTx(txHash: string, network: string) {
 
 export async function checkTxInclusionInABlock(
   txHash: string,
-  network: string,
+  network: string
 ) {
   let count = 0;
   while (count < 10) {

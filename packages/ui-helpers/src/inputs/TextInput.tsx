@@ -4,12 +4,14 @@
 import { CopyPasteIcon } from "icons";
 import { ComponentProps } from "react";
 import { IconContainer } from "../IconContainer";
+import { cn } from "helpers";
 
 export function TextInput({
   showCopyIcon = false,
   extensionIcon,
   placeholder = "",
   onClickCopy,
+  className,
   ...rest
 }: {
   showCopyIcon?: boolean;
@@ -25,14 +27,19 @@ export function TextInput({
         </div>
       )}
       <input
-        className="w-full bg-transparent focus-visible:outline-none placeholder:text-gray-400 placeholder:font-normal"
+        className={cn(
+          "w-full bg-transparent focus-visible:outline-none placeholder:text-gray-400 placeholder:font-normal",
+          className
+        )}
         placeholder={placeholder}
         {...rest}
       />
       {showCopyIcon && (
         <button
           type="button"
-          className="w-auto h-4 flex items-center active:transform active:scale-75 active:duration-300"
+          className={
+            "w-auto h-4 flex items-center active:transform active:scale-75 active:duration-300"
+          }
           onClick={async () => {
             await navigator.clipboard.writeText(rest.value as string);
             onClickCopy && onClickCopy();

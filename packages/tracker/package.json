@@ -19,7 +19,7 @@
     "react-dom": ">=18"
   },
   "devDependencies": {
-    "@evmos-apps/config": "workspace:*",
+    "@evmosapps/config": "workspace:*",
     "@types/mixpanel": "2.14.1",
     "@types/mixpanel-browser": "2.47.1",
     "@types/node": "18.11.14",

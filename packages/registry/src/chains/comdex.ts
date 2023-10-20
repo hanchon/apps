@@ -42,9 +42,6 @@ export default {
   "cosmosGRPC": [
     "https://rpc.comdex.one"
   ],
-  "evmRPC": [
-    "https://rpc.comdex.one"
-  ],
   "tokens": [
     {
       "name": "CMST Stablecoin of Harbor protocol",
@@ -81,5 +78,6 @@ export default {
       "listed": true
     }
   ],
-  "explorerUrl": "https://www.mintscan.io/comdex/txs"
+  "explorerUrl": "https://www.mintscan.io/comdex/txs",
+  "env": "mainnet"
 } as const;
