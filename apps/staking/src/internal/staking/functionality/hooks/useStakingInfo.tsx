@@ -57,9 +57,11 @@ export const useStakingInfo = () => {
     let total = "0";
     if (stakingInfo.data !== undefined) {
       if (stakingInfo.data.rewards !== undefined) {
-        if (stakingInfo.data.rewards.total.length !== 0) {
-          // the sum is already done in the backend
-          total = stakingInfo.data.rewards.total[0].amount;
+        if (stakingInfo.data.rewards.total !== null) {
+          if (stakingInfo.data.rewards.total.length !== 0) {
+            // the sum is already done in the backend
+            total = stakingInfo.data.rewards.total[0].amount;
+          }
         }
       }
     }
