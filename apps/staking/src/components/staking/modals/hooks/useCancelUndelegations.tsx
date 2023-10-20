@@ -5,7 +5,11 @@ import { useDispatch } from "react-redux";
 import { CancelUndelegationsProps } from "../types";
 import { parseUnits } from "@ethersproject/units";
 import { BigNumber } from "@ethersproject/bignumber";
-import { GENERATING_TX_NOTIFICATIONS, snackBroadcastSuccessful, snackErrorGeneratingTx } from "evmos-wallet";
+import {
+  GENERATING_TX_NOTIFICATIONS,
+  snackBroadcastSuccessful,
+  snackErrorGeneratingTx,
+} from "evmos-wallet";
 import {
   CLICK_CONFIRM_CANCEL_UNDELEGATION_BUTTON,
   useTracker,
@@ -13,22 +17,23 @@ import {
   UNSUCCESSFUL_TX_CANCEL_UNDELEGATION,
 } from "tracker";
 import { useStakingPrecompile } from "../../../../internal/staking/functionality/hooks/useStakingPrecompile";
+import { EXPLORER_URL } from "constants-helper";
 
 export const useCancelUndelegations = (
-  useCancelUndelegationProps: CancelUndelegationsProps,
+  useCancelUndelegationProps: CancelUndelegationsProps
 ) => {
   const dispatch = useDispatch();
   const { handlePreClickAction } = useTracker(
-    CLICK_CONFIRM_CANCEL_UNDELEGATION_BUTTON,
+    CLICK_CONFIRM_CANCEL_UNDELEGATION_BUTTON
   );
   const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_CANCEL_UNDELEGATION,
+    SUCCESSFUL_TX_CANCEL_UNDELEGATION
   );
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_CANCEL_UNDELEGATION,
+    UNSUCCESSFUL_TX_CANCEL_UNDELEGATION
   );
 
-  const {cancelUnbondingDelegation} = useStakingPrecompile()
+  const { cancelUnbondingDelegation } = useStakingPrecompile();
 
   //   async
   const handleConfirmButton = async () => {
@@ -47,7 +52,7 @@ export const useCancelUndelegations = (
     }
     const amount = parseUnits(
       useCancelUndelegationProps.value,
-      BigNumber.from(18),
+      BigNumber.from(18)
     );
 
     if (amount.gt(BigNumber.from(useCancelUndelegationProps.item.balance))) {
@@ -60,18 +65,16 @@ export const useCancelUndelegations = (
         useCancelUndelegationProps.wallet.evmosAddressEthFormat,
         useCancelUndelegationProps.item.validatorAddress,
         amount,
-        useCancelUndelegationProps.item.creationHeight,
+        useCancelUndelegationProps.item.creationHeight
       );
 
-      dispatch(
-        snackBroadcastSuccessful(res.hash, "www.mintscan.io/evmos/txs/")
-      );
-  
+      dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx/`));
+
       successfulTx({
         txHash: res.hash,
         wallet: useCancelUndelegationProps.wallet?.evmosAddressEthFormat,
         provider: useCancelUndelegationProps.wallet?.extensionName,
-        transaction: "successful"
+        transaction: "successful",
       });
     } catch (e) {
       dispatch(snackErrorGeneratingTx());
@@ -79,7 +82,7 @@ export const useCancelUndelegations = (
         errorMessage: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
         wallet: useCancelUndelegationProps.wallet?.evmosAddressEthFormat,
         provider: useCancelUndelegationProps.wallet?.extensionName,
-        transaction: "unsuccessful"
+        transaction: "unsuccessful",
       });
     }
     useCancelUndelegationProps.setShow(false);
