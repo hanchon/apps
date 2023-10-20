@@ -1,7 +1,4 @@
-import {
-  evmos as wagmiEvmos,
-  // evmosTestnet as wagmiEvmosTestnet,
-} from "wagmi/chains";
+import { evmos as wagmiEvmos } from "wagmi/chains";
 import { Chain } from "viem";
 
 import { evmos, evmoslocal, evmostestnet } from "@evmosapps/registry";

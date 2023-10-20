@@ -12,6 +12,10 @@ export const setSelectedNetworkMode = (mode: string) => {
   localStorage.setItem("networkMode", mode);
 };
 
+const modes = ["mainnet", "testnet"];
+if (process.env.NODE_ENV === "development") {
+  modes.push("localtestnet");
+}
 export const isMainnet = () => getSelectedNetworkMode() === "mainnet";
 export const NetworkModeSelector = () => {
   const [mode, setMode] = useState<null | string>(null);
@@ -23,7 +27,7 @@ export const NetworkModeSelector = () => {
   if (!mode) return null;
   return (
     <div className="border-2 border-red rounded-md m-4 flex">
-      {["mainnet", "testnet", "localtestnet"].map((net) => (
+      {modes.map((net) => (
         <button
           data-testid={`network-mode-selector-${net}`}
           key={net}

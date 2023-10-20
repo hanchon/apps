@@ -71,7 +71,7 @@ const prepareTransaction = async (
   //   await client.estimateMaxPriorityFeePerGas();
   const maxPriorityFeePerGas =
     request.maxPriorityFeePerGas ??
-    (await client.estimateMaxPriorityFeePerGas()); //request.maxPriorityFeePerGas ?? 1_500_000_000n; // 1.5 gwei;
+    (await client.estimateMaxPriorityFeePerGas());
 
   const maxFeePerGas = (baseFeePerGas * 120n) / 100n + maxPriorityFeePerGas;
 
@@ -176,10 +176,6 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     const account = await this.getAccount();
     const chainId = config?.chainId ?? evmosInfo.id;
 
-    // if (!chainId ) {
-    //   chainId = this.chains.find(({ id }) => id === )?.id;
-    //   assertIf(chainId, "UNSUPPORTED_NETWORK");
-    // }
     this.chainId = chainId;
     window.addEventListener("keplr_keystorechange", this.onAccountsChanged);
     return {

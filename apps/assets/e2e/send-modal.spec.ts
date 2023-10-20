@@ -132,8 +132,6 @@ describe("Send Modal", () => {
       await acceptTOS(page);
     });
     await enableLocalnet(page);
-    // await page.waitForEvent("page");
-    // await keplr.approve();
   });
   beforeEach(async ({ page, keplr }) => {
     await step("Go to assets page", async () => {
