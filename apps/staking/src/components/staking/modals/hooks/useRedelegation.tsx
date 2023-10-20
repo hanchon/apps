@@ -63,7 +63,7 @@ export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
         amount
       );
 
-      dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx/`));
+      dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx`));
 
       successfulTx({
         txHash: res.hash,

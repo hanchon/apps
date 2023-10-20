@@ -68,7 +68,7 @@ export const useCancelUndelegations = (
         useCancelUndelegationProps.item.creationHeight
       );
 
-      dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx/`));
+      dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx`));
 
       successfulTx({
         txHash: res.hash,
