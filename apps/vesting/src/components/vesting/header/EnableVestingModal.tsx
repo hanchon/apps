@@ -19,6 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { useTranslation } from "next-i18next";
 import { Log } from "helpers";
+import { EXPLORER_URL } from "constants-helper";
 
 export const EnableVestingModal = () => {
   const [disabled, setDisabled] = useState(false);
@@ -43,7 +44,7 @@ export const EnableVestingModal = () => {
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
             hash: res.hash,
-            explorerTxUrl: "www.mintscan.io/evmos/txs/",
+            explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
         })

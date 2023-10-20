@@ -45,6 +45,7 @@ import { getVesting } from "../../../internal/fetch";
 import { VestingResponse } from "../../../internal/types";
 import { getEvmosBalance } from "evmos-wallet/src/internal/wallet/functionality/fetch";
 import { ethers } from "ethers";
+import { EXPLORER_URL } from "constants-helper";
 
 export const FundVestingAccount = () => {
   const [disabled, setDisabled] = useState(false);
@@ -144,7 +145,7 @@ export const FundVestingAccount = () => {
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
             hash: res.hash,
-            explorerTxUrl: "www.mintscan.io/evmos/txs/",
+            explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
         })

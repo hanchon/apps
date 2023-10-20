@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useVestingPrecompile } from "../../../../internal/useVestingPrecompile";
 import { useTranslation } from "next-i18next";
+import { EXPLORER_URL } from "constants-helper";
 
 // TODO: format totalTokens and availableClawback depending on the response
 export const ClawbackModal = ({
@@ -44,7 +45,7 @@ export const ClawbackModal = ({
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
             hash: res?.hash,
-            explorerTxUrl: "www.mintscan.io/evmos/txs/",
+            explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
         })
