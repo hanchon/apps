@@ -88,8 +88,10 @@ export const Undelegate = ({
         )}
         {confirmClicked &&
           safeSubstraction(
-            evmosBalance,
-            BigNumber.from(FEE_STAKING_ACTIONS),
+            evmosBalance.eq(BigNumber.from(-1))
+              ? BigNumber.from(0)
+              : evmosBalance,
+            BigNumber.from(FEE_STAKING_ACTIONS)
           ).lte(BigNumber.from(0)) && (
             <ErrorMessage>
               {MODAL_NOTIFICATIONS.ErrorInsufficientFeeSubtext}
@@ -102,9 +104,9 @@ export const Undelegate = ({
                 item.balance !== ""
                   ? BigNumber.from(item.balance)
                   : BigNumber.from(0),
-                18,
-              ),
-            ),
+                18
+              )
+            )
           ) && (
           <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorsAmountGt}</ErrorMessage>
         )}
@@ -112,7 +114,7 @@ export const Undelegate = ({
           {getReservedForFeeText(
             BigNumber.from(FEE_STAKING_ACTIONS),
             "EVMOS",
-            "EVMOS",
+            "EVMOS"
           )}
         </p>
       </div>

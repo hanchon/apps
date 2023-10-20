@@ -137,7 +137,7 @@ importers:
         version: 2.47.1
       chainapsis-suggest-chain:
         specifier: github:chainapsis/keplr-chain-registry
-        version: github.com/chainapsis/keplr-chain-registry/68aa636c810332c561a6c41cb7a045db55e66713(@babel/core@7.23.0)(react-is@18.2.0)
+        version: github.com/chainapsis/keplr-chain-registry/09bf711adb6f9f451b4e6535d5b82956b9ccc48a(@babel/core@7.23.0)(react-is@18.2.0)
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
@@ -1325,7 +1325,7 @@ importers:
         version: 8.12.0
       chain-token-registry:
         specifier: github:evmos/chain-token-registry#main
-        version: github.com/evmos/chain-token-registry/eb5eb43e9b294354b280c319a045440b051b8e34
+        version: github.com/evmos/chain-token-registry/8d5a26ca23fcfc1ecba95da5c10d748dbe84db72
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -12969,9 +12969,9 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
 
-  github.com/chainapsis/keplr-chain-registry/68aa636c810332c561a6c41cb7a045db55e66713(@babel/core@7.23.0)(react-is@18.2.0):
-    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/68aa636c810332c561a6c41cb7a045db55e66713}
-    id: github.com/chainapsis/keplr-chain-registry/68aa636c810332c561a6c41cb7a045db55e66713
+  github.com/chainapsis/keplr-chain-registry/09bf711adb6f9f451b4e6535d5b82956b9ccc48a(@babel/core@7.23.0)(react-is@18.2.0):
+    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/09bf711adb6f9f451b4e6535d5b82956b9ccc48a}
+    id: github.com/chainapsis/keplr-chain-registry/09bf711adb6f9f451b4e6535d5b82956b9ccc48a
     name: chainapsis-suggest-chain
     version: 0.0.1
     dependencies:
@@ -12999,8 +12999,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  github.com/evmos/chain-token-registry/eb5eb43e9b294354b280c319a045440b051b8e34:
-    resolution: {tarball: https://codeload.github.com/evmos/chain-token-registry/tar.gz/eb5eb43e9b294354b280c319a045440b051b8e34}
+  github.com/evmos/chain-token-registry/8d5a26ca23fcfc1ecba95da5c10d748dbe84db72:
+    resolution: {tarball: https://codeload.github.com/evmos/chain-token-registry/tar.gz/8d5a26ca23fcfc1ecba95da5c10d748dbe84db72}
     name: chain-token-registry#main
     version: 0.0.0
     dev: true

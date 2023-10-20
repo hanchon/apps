@@ -16,6 +16,7 @@ import { useRewards } from "evmos-wallet";
 import { StoreType } from "evmos-wallet";
 import { convertFromAtto, displayTopBarTooltip } from "helpers";
 import { FULL_DAY_MINUS_ONE_SECOND } from "constants-helper";
+import { BigNumber } from "@ethersproject/bignumber";
 
 const TopBarStaking = () => {
   const value = useSelector((state: StoreType) => state.wallet.value);
@@ -31,20 +32,30 @@ const TopBarStaking = () => {
           text="Available"
           value={
             !displayTopBarTooltip(evmosBalance) ? (
-              <p> {Number(convertFromAtto(evmosBalance)).toFixed(2)} EVMOS </p>
+              <p>
+                {evmosBalance.eq(BigNumber.from(-1))
+                  ? "0.00"
+                  : Number(convertFromAtto(evmosBalance)).toFixed(2)}{" "}
+                EVMOS
+              </p>
             ) : (
               <Tooltip
                 className="left-1/2 top-5"
                 element={
                   <p className="cursor-default">
-                    {Number(convertFromAtto(evmosBalance)).toFixed(2)} EVMOS
+                    {evmosBalance.eq(BigNumber.from(-1))
+                      ? "0.00"
+                      : Number(convertFromAtto(evmosBalance)).toFixed(2)}{" "}
+                    EVMOS
                   </p>
                 }
                 text={
                   <p className="text-sm opacity-80">
-                    {Number(convertFromAtto(evmosBalance))
-                      .toFixed(6)
-                      .replace(/\.?0+$/, "")}{" "}
+                    {evmosBalance.eq(BigNumber.from(-1))
+                      ? "0.00"
+                      : Number(convertFromAtto(evmosBalance))
+                          .toFixed(6)
+                          .replace(/\.?0+$/, "")}{" "}
                     EVMOS
                   </p>
                 }
