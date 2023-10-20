@@ -5,7 +5,6 @@ import { BASEDIR } from "../utils/constants";
 import { SupportedBinaries } from "../utils/download-binaries";
 import { createLogger } from "../utils/logger";
 const chainColors = [
-  // chalk.redBright,
   chalk.yellowBright,
   chalk.magentaBright,
   chalk.blueBright,

@@ -1,13 +1,10 @@
 {
   "name": "@evmosapps/test-utils",
-  "version": "1.0.3",
-  "description": "Playwright custom config",
+  "version": "1.0.4",
+  "description": "Test utilities",
   "main": "index.ts",
   "private": true,
   "type": "module",
-  "scripts": {
-    "build:testnodes": "tsx  watch ./testnodes/scripts/index.ts"
-  },
   "devDependencies": {
     "@playwright/test": "^1.39.0",
     "@tenkeylabs/dappwright": "^2.4.0",
