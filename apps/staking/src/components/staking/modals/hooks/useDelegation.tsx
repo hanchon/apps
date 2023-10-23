@@ -47,7 +47,10 @@ export const useDelegation = (useDelegateProps: DelegateProps) => {
     }
     const amount = parseUnits(useDelegateProps.value, BigNumber.from(18));
 
-    if (amount.gt(useDelegateProps.evmosBalance)) {
+    if (
+      useDelegateProps.evmosBalance.eq(BigNumber.from(-1)) ||
+      amount.gt(useDelegateProps.evmosBalance)
+    ) {
       return;
     }
 

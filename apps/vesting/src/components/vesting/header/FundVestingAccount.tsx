@@ -61,10 +61,16 @@ export const FundVestingAccount = () => {
 
   useEffect(() => {
     getEvmosBalance(wallet.evmosAddressCosmosFormat)
-      .then((balance) => {
-        setFunderBalance(
-          BigNumber.from(balance?.balance.amount ? balance.balance.amount : 0)
-        );
+      .then((response) => {
+        if ("code" in response) {
+          setFunderBalance(BigNumber.from(0));
+        } else {
+          setFunderBalance(
+            BigNumber.from(
+              response?.balance.amount ? response.balance.amount : 0
+            )
+          );
+        }
       })
       .catch(() => {});
   }, [wallet.evmosAddressCosmosFormat]);

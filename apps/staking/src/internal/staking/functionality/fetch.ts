@@ -5,6 +5,7 @@ import {
   EVMOS_BACKEND,
   EVMOS_MINIMAL_COIN_DENOM,
   EVMOS_SYMBOL,
+  txStatusError,
 } from "evmos-wallet";
 import {
   BalanceResponse,
@@ -29,9 +30,9 @@ export const getEvmosBalance = async (address: string) => {
     return { balance: { denom: "", amount: "" } };
   }
   const res = await fetch(
-    `${EVMOS_BACKEND}/BalanceByDenom/${EVMOS_SYMBOL}/${address}/${EVMOS_MINIMAL_COIN_DENOM}`,
+    `${EVMOS_BACKEND}/BalanceByDenom/${EVMOS_SYMBOL}/${address}/${EVMOS_MINIMAL_COIN_DENOM}`
   );
-  return res.json() as Promise<BalanceResponse>;
+  return res.json() as Promise<BalanceResponse | txStatusError>;
 };
 
 export type ValidatorsResponse = {

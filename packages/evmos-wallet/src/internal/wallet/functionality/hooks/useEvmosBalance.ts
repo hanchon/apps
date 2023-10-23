@@ -8,11 +8,12 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { getEvmosBalance } from "../fetch";
 import { BalanceResponse } from "../types";
 import { useMemo } from "react";
+import { txStatusError } from "../../../../notification/transactionsTypes";
 
 export const useEvmosBalance = () => {
   const value = useSelector((state: StoreType) => state.wallet.value);
 
-  const evmosBalance = useQuery<BalanceResponse, Error>({
+  const evmosBalance = useQuery<BalanceResponse | txStatusError, Error>({
     queryKey: ["evmosBalance", value.evmosAddressCosmosFormat],
     queryFn: () => getEvmosBalance(value.evmosAddressCosmosFormat),
     refetchInterval: 15_000,
@@ -21,6 +22,9 @@ export const useEvmosBalance = () => {
   const tempEvmosBalance = useMemo(() => {
     let balance = BigNumber.from(0);
     if (evmosBalance.data !== undefined) {
+      if ("code" in evmosBalance.data) {
+        return BigNumber.from(-1);
+      }
       const amount = evmosBalance.data.balance.amount;
       if (amount !== "") {
         balance = BigNumber.from(amount);
