@@ -70,7 +70,10 @@ export type { IBCTransferResponse } from "./notification/transactionsTypes";
 export type { ConvertMsg } from "./notification/transactionsTypes";
 export type { executedTx } from "./notification/transactionsTypes";
 export { TransactionStatus } from "./notification/transactionsTypes";
-export type { txStatusErrorResponse } from "./notification/transactionsTypes";
+export type {
+  txStatusErrorResponse,
+  txStatusError,
+} from "./notification/transactionsTypes";
 export type { txStatusResponse } from "./notification/transactionsTypes";
 
 export {

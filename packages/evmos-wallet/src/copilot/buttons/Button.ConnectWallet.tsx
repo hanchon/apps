@@ -28,11 +28,12 @@ export const ButtonConnectWallet = ({
             ? query.action === "transfer"
               ? "send modal"
               : query.action === "pay"
-                ? "payment request modal"
-                : "receive modal"
+              ? "payment request modal"
+              : "receive modal"
             : "dApp Store",
         });
       }}
+      data-testid="open-connect-modal"
       className={cn("", {
         "w-full text-base md:text-lg":
           variant === "outline-primary" || variant === "primary-lg",

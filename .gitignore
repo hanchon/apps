@@ -9,6 +9,7 @@ node_modules
 # testing
 coverage
 playwright-report
+test-results
 
 # next.js
 .next/
@@ -42,3 +43,7 @@ dist/
 
 # Local Netlify folder
 .netlify
+
+# Testnet cli files
+.testnet
+

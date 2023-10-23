@@ -7,7 +7,7 @@ import { useProposals } from "../../internal/governance/functionality/hooks/useP
 import { COMMONWEALTH_URL } from "constants-helper";
 const BannerBlack = dynamic(() => import("../common/banners/BannerBlack"));
 const ContainerProposals = dynamic(
-  () => import("./proposals/ContainerProposals"),
+  () => import("./proposals/ContainerProposals")
 );
 const ContentProposal = dynamic(() => import("./proposalPage/ContentProposal"));
 
@@ -16,7 +16,7 @@ const Content = () => {
   const { id } = router.query;
 
   const { proposals, loading, error, proposalDetail } = useProposals(
-    id !== undefined ? (id as string) : "",
+    id !== undefined ? (id as string) : ""
   );
 
   return (

@@ -1,0 +1,23 @@
+{
+  "name": "@evmosapps/test-utils",
+  "version": "1.0.4",
+  "description": "Test utilities",
+  "main": "index.ts",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@playwright/test": "^1.39.0",
+    "@tenkeylabs/dappwright": "^2.4.0",
+    "octokit": "^3.1.1",
+    "tsx": "^3.13.0"
+  },
+  "dependencies": {
+    "@types/download": "^8.0.2",
+    "@types/lodash-es": "^4.17.8",
+    "download": "^8.0.0",
+    "lodash-es": "^4.17.21",
+    "memoize-one": "^6.0.0",
+    "toml": "^3.0.0",
+    "typescript": "^5.2.2"
+  }
+}

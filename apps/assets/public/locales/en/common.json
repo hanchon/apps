@@ -85,7 +85,7 @@
   "transfer.confirmation.recipient.address": "Recipient Address",
   "transfer.confirmation.date": "Transaction Date (UTC+0)",
   "transfer.confirmation.button.text": "Got it",
-  "transfer.confirmation.button.mintscan.text": "Check on Mintscan",
+  "transfer.confirmation.button.explorer.text": "Track on Explorer",
   "transfer.confirmation.button.text.loading": "Processing...",
   "transfer.confirmation.message.unsuccessful": "Transaction failed",
   "transfer.confirmation.message.processing": {
@@ -96,7 +96,7 @@
   "transfer.confirmation.message.taking.longer": {
     "title": "Taking longer",
     "description": "It might take longer to retrieve the transaction,",
-    "description2": "you could track it on Mintscan or check your balance."
+    "description2": "you could track it on the explorer or check your balance."
   },
   "pay.confirmation.message.successful": "Successfully Paid",
   "pay.confirmation.message.successful.description": "Your payment has been processed on the blockchain.",

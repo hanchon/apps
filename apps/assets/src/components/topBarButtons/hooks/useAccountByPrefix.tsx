@@ -11,6 +11,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { E } from "helpers";
 import { useId } from "react";
 import { getAccount } from "wagmi/actions";
+import { getSelectedNetworkMode } from "ui-helpers";
 
 const suggestChain = async (prefix: Prefix) => {
   const keplr = await getKeplrProvider();
@@ -38,6 +39,33 @@ const suggestChain = async (prefix: Prefix) => {
     );
     await keplr.experimentalSuggestChain(chainInfo);
   }
+
+  if (prefix === "osmo" && getSelectedNetworkMode() === "testnet") {
+    const chainInfo = await import(
+      "chainapsis-suggest-chain/cosmos/osmo-test.json"
+    );
+    await keplr.experimentalSuggestChain(chainInfo);
+  }
+
+  if (prefix === "evmos" && getSelectedNetworkMode() === "testnet") {
+    await keplr.experimentalSuggestChain(
+      await import("@evmosapps/registry/src/keplr/evmostestnet.json")
+    );
+  }
+
+  if (getSelectedNetworkMode() === "localtestnet") {
+    if (prefix === "evmos") {
+      await keplr.experimentalSuggestChain(
+        await import("@evmosapps/registry/src/keplr/evmoslocal.json")
+      );
+    }
+    if (prefix === "cosmos") {
+      await keplr.experimentalSuggestChain(
+        await import("@evmosapps/registry/src/keplr/cosmoshublocal.json")
+      );
+    }
+  }
+
   // If not in this list, it's supported by keplr by default
 };
 
@@ -57,7 +85,9 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
       if (!activeProvider) return;
       if (activeProvider === "keplr") {
         const keplr = await getKeplrProvider();
+
         const [suggestChainErr] = await E.try(() => suggestChain(chain.prefix));
+
         if (suggestChainErr) {
           throw new Error("USER_REJECTED_REQUEST", { cause: suggestChainErr });
         }
@@ -97,7 +127,6 @@ export const requestWalletAccount = async (prefix: Prefix) => {
   if (activeProvider === "keplr") {
     const keplr = await getKeplrProvider();
     const [suggestChainErr] = await E.try(() => suggestChain(prefix));
-
     if (suggestChainErr) {
       throw new Error("USER_REJECTED_REQUEST", { cause: suggestChainErr });
     }

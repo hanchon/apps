@@ -26,6 +26,7 @@ const ProposalDescription = ({
   if (error) {
     return <BannerMessages text="No results" />;
   }
+
   return (
     <div>
       <section className="mx-5 mb-5 space-y-5 rounded-2xl bg-darkGray2 p-5 px-5 font-[IBM] text-sm text-pearl xl:mx-0 ">

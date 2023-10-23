@@ -1,6 +1,8 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+import { QueryClient } from "@tanstack/react-query";
+
 export interface SetUpAccountI {
   // update the names
   id: string;
@@ -8,7 +10,7 @@ export interface SetUpAccountI {
   checkAction: () => boolean | Promise<boolean>;
   loadingText: string[];
   doneText: string;
-  actions: Array<() => boolean | Promise<boolean>>;
+  actions: Array<(queryClient: QueryClient) => boolean | Promise<boolean>>;
   href?: string;
   hrefAction?: () => boolean;
   status: string;

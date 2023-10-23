@@ -24,7 +24,7 @@ import { CLICK_ON_STAKE_AND_MANAGE_DELEGATION, useTracker } from "tracker";
 export const StakingCard = () => {
   const router = useRouter();
   const { handlePreClickAction } = useTracker(
-    CLICK_ON_STAKE_AND_MANAGE_DELEGATION,
+    CLICK_ON_STAKE_AND_MANAGE_DELEGATION
   );
   const handleOnClick = async () => {
     handlePreClickAction();
@@ -55,8 +55,9 @@ export const StakingCard = () => {
             amountInDollars={getBalanceInDollars(
               totalEvmosAsset,
               wallet.active,
-              evmosPrice,
+              evmosPrice
             )}
+            data-testid="card-available-balance"
           />
           <BalanceContainer
             title={t("dappStore.card.staking.staked")}
@@ -64,8 +65,9 @@ export const StakingCard = () => {
             amountInDollars={getBalanceInDollars(
               totalDelegations,
               wallet.active,
-              evmosPrice,
+              evmosPrice
             )}
+            data-testid="card-staked-balance"
           />
         </div>
         <div className="flex flex-col items-start space-y-3 rounded-lg bg-[#FFFFFF0F] p-3 md:flex-row md:items-center md:justify-between md:space-y-0">
@@ -75,8 +77,9 @@ export const StakingCard = () => {
             amountInDollars={getNumberBalanceInDollars(
               totalRewards,
               wallet.active,
-              evmosPrice,
+              evmosPrice
             )}
+            data-testid="card-claimable-rewards"
           />
           <button
             onClick={handleConfirmButton}

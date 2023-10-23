@@ -71,7 +71,7 @@ export const getChainAccountInfo = async (address: Address<Prefix>) => {
     address: cosmosAddress,
     sequence: BigInt(baseAccount.sequence),
     publicKey:
-      chain.identifier === "evmos"
+      chain.prefix === "evmos"
         ? new ethsecp256k1.PubKey({
             key: pubkey,
           })

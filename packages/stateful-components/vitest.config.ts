@@ -1,3 +1,3 @@
-import sharedConfig from "@evmos-apps/config/vitest/base.js";
+import sharedConfig from "@evmosapps/config/vitest/base.js";
 
 export default sharedConfig;

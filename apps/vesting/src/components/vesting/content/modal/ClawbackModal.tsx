@@ -10,12 +10,13 @@ import {
   SNACKBAR_TYPES,
   GENERATING_TX_NOTIFICATIONS,
   BROADCASTED_NOTIFICATIONS,
+  normalizeToEth,
 } from "evmos-wallet";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useVestingPrecompile } from "../../../../internal/useVestingPrecompile";
 import { useTranslation } from "next-i18next";
-import { evmosToEth } from "@evmos/address-converter";
+import { EXPLORER_URL } from "constants-helper";
 
 // TODO: format totalTokens and availableClawback depending on the response
 export const ClawbackModal = ({
@@ -33,9 +34,9 @@ export const ClawbackModal = ({
       setDisabled(true);
 
       const res = await clawback(
-        evmosToEth(vestingDetails?.funderAddress) ?? "",
-        evmosToEth(vestingDetails?.accountAddress) ?? "",
-        evmosToEth(vestingDetails?.funderAddress) ?? "",
+        normalizeToEth(vestingDetails?.funderAddress) ?? "",
+        normalizeToEth(vestingDetails?.accountAddress) ?? "",
+        normalizeToEth(vestingDetails?.funderAddress) ?? ""
       );
       dispatch(
         addSnackbar({
@@ -44,14 +45,14 @@ export const ClawbackModal = ({
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
             hash: res?.hash,
-            explorerTxUrl: "www.mintscan.io/evmos/txs/",
+            explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        }),
+        })
       );
       setDisabled(false);
     } catch (e) {
-      setDisabled(false)      
+      setDisabled(false);
       dispatch(
         addSnackbar({
           id: 0,
@@ -60,7 +61,7 @@ export const ClawbackModal = ({
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        }),
+        })
       );
     }
   };
@@ -72,7 +73,7 @@ export const ClawbackModal = ({
   const availableClawback = () => {
     return formatNumber(
       convertFromAtto(vestingDetails.originalVestingAmount, 18),
-      6,
+      6
     );
   };
 
