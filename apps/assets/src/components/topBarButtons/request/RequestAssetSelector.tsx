@@ -114,6 +114,7 @@ export const RequestAssetSelector = ({
             <CryptoSelector.Button
               src={`/assets/tokens/${selectedToken?.denom}.png`}
               variant="black"
+              data-testid="request-asset-selector-token-button"
             >
               {selectedToken?.symbol}
             </CryptoSelector.Button>
@@ -128,6 +129,7 @@ export const RequestAssetSelector = ({
                     src={`/assets/tokens/${token.denom}.png`}
                     key={`${token.sourcePrefix}-${token.minCoinDenom}`}
                     value={token}
+                    data-testid={`request-asset-selector-token-option-${token.denom}`}
                   >
                     {token.denom}
                   </CryptoSelector.Option>
@@ -182,6 +184,7 @@ export const RequestAssetSelector = ({
         variant={"default"}
         value={value.amount}
         max={undefined}
+        data-testid="request-asset-selector-amount-input"
         onChange={(amount) => {
           onChange({
             ...value,

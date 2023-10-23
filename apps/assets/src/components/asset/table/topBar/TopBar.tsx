@@ -37,6 +37,7 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
           className="py-2"
           disabled={isDisconnected}
           icon={<SendIcon />}
+          data-testid="open-send-modal-button"
           onClick={() => {
             transferModal.setIsOpen(true);
             sendEvent(CLICK_ON_SEND_BUTTON);
@@ -48,6 +49,7 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
           className="py-2"
           disabled={isDisconnected}
           icon={<ReceiveIcon />}
+          data-testid="open-request-modal-button"
           onClick={() => {
             requestModal.setIsOpen(true);
             sendEvent(CLICK_ON_RECEIVE_BUTTON);

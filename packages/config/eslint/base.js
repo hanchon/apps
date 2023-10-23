@@ -63,6 +63,7 @@ const lintConfig = [
       sonarjs,
     },
     rules: {
+      "no-console": "error",
       "no-unused-vars": "error",
       "security/detect-object-injection": "off",
       "no-secrets/no-secrets": ["error", { tolerance: 4.1 }],
@@ -85,6 +86,7 @@ const lintConfig = [
   ...extendsCompat("turbo"),
   {
     ignores: [
+      "**/playwright-report/**",
       "**/dist/**/*",
       "**/node_modules/**/*",
       "**/.next/**/*",

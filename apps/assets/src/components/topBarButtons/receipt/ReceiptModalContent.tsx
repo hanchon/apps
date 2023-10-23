@@ -129,7 +129,7 @@ const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
   const { data, ...rest } = useQuery({
     queryKey: ["receipt", hash],
     enabled: !!hash && !!chainPrefix,
-    retry: 10,
+    retry: 100,
     retryDelay: 3000,
     refetchOnWindowFocus: false,
     queryFn: async () => {
@@ -287,11 +287,11 @@ export const ReceiptModalContent = ({
           <ConfirmationMessage>
             <SkeletonLoading loading={isReceiptLoading}>
               {receipt && (
-                <>
+                <span data-testid="tx-receipt-success-message">
                   {t("transfer.confirmation.message.successful.description")}
                   <br />
                   {t("transfer.confirmation.message.successful.description2")}
-                </>
+                </span>
               )}
               {!!error && !txHasNotFoundError && (
                 <span className="break-all">

@@ -5,13 +5,14 @@ export const BalanceContainer = ({
   title,
   amount,
   amountInDollars,
+  ...rest
 }: {
   title: string;
   amount: string;
   amountInDollars: string;
 }) => {
   return (
-    <div>
+    <div {...rest}>
       <h3 className="font-semibold text-pearl">{title}</h3>
       <h4 className="text-xl text-white md:text-3xl">
         {amount} <span className="opacity-50">EVMOS</span>

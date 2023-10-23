@@ -6,10 +6,10 @@ import {
   getWallet,
   isMetamaskInstalled,
   isEvmosChain,
-  connectHandler,
   queryPubKey,
   isWalletSelected,
   connectWith,
+  prefetchPubkey,
 } from "evmos-wallet";
 import { METAMASK_DOWNLOAD_URL, STEP_STATUS } from "constants-helper";
 import {
@@ -26,6 +26,8 @@ import {
   updateCopilotModalState,
 } from "../../utils";
 import { E } from "helpers";
+import { SetUpAccountI } from "./types";
+import { QueryClient } from "@tanstack/react-query";
 
 const getWalletLocal = async () => {
   // get wallet returns null or string but
@@ -36,15 +38,6 @@ const getWalletLocal = async () => {
   }
 
   return true;
-};
-
-const signPubkey = async () => {
-  const wallet = await getWallet();
-  if (wallet === null) {
-    return false;
-  }
-
-  return await connectHandler([wallet]);
 };
 
 const checkConnectionMetamask = async () => {
@@ -107,7 +100,16 @@ const installMetamask = () => {
   return isMetamaskInstalled();
 };
 
-export const stepsSetAccount = [
+const signPubkey = async (queryClient: QueryClient) => {
+  const [err] = await E.try(async () => {
+    await connectWith("metaMask");
+
+    await prefetchPubkey(queryClient);
+  });
+  if (err) return false;
+  return true;
+};
+export const stepsSetAccount: SetUpAccountI[] = [
   {
     id: "install",
     buttonText: "Install MetaMask",
@@ -141,7 +143,7 @@ export const stepsSetAccount = [
       () => changeNetworkToEvmosMainnet(),
       () => isEvmosChain(),
       () => getWalletLocal(),
-      () => signPubkey(),
+      signPubkey,
     ],
     errorsText: [
       "Approval Rejected, please try again",

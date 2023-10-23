@@ -1,0 +1,50 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+**/node_modules
+.pnp
+.pnp.js
+.yarn
+
+# testing
+coverage
+playwright-report
+test-results
+
+# next.js
+.next/
+out/
+build
+.swc/
+
+# misc
+.DS_Store
+*.pem
+vitest.config.ts.timestamp-*
+vitest.config.mts.timestamp-*
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env
+
+# turbo
+.turbo
+
+# ui
+dist/
+
+# Local Netlify folder
+.netlify
+
+# Testnet cli files
+.testnet
+

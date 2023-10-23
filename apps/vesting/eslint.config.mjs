@@ -1,2 +1,2 @@
-import eslint from "@evmos-apps/config/eslint/base.js";
+import eslint from "@evmosapps/config/eslint/base.js";
 export default eslint;

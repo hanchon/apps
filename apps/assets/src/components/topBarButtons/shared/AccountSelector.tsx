@@ -120,6 +120,7 @@ export const AccountSelector = ({
       </div>
       <div className="space-y-2">
         <TextInput
+          data-testid="account-selector-input"
           placeholder={activeWalletTab != "WALLET" ? inputPlaceholder : ""}
           extensionIcon={
             activeWalletTab == "WALLET"
@@ -200,7 +201,10 @@ const NetworkSelector = ({
   const selectedChain = getChain(value);
   return (
     <CryptoSelector value={value} onChange={onChange}>
-      <CryptoSelector.Button src={`/assets/chains/${selectedChain.prefix}.png`}>
+      <CryptoSelector.Button
+        src={`/assets/chains/${selectedChain.prefix}.png`}
+        data-testid="account-selector-network-selector-button"
+      >
         {selectedChain.name}
       </CryptoSelector.Button>
       <CryptoSelector.Options
@@ -214,6 +218,7 @@ const NetworkSelector = ({
               src={`/assets/chains/${value}.png`}
               key={value}
               value={value}
+              data-testid={`account-selector-network-selector-option-${chain.identifier}`}
             >
               {chain.name}
             </CryptoSelector.Option>

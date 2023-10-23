@@ -37,8 +37,11 @@ Ref: https://keepachangelog.com/en/1.0.0/
 ## Unreleased
 
 - (chore) fse-772 apps/assets 1.0.33 apps/vesting 1.1.1 packages/constants-helper 1.0.7 packages/evmos-wallet 1.0.20 | Link out to escan
+- (feat) packages/test-utils 1.0.4 | support for Keplr on E2E tests | E2E tests for transfer modals | Testnet support for E2E tests
+- (feat) packages/testnet 1.0.0 | new testnet package with a CLI to start a local testnet environment
 - (chore) fse-754 packages/stateful-components 1.0.2 packages/icons 1.0.8 packages/evmos-wallet 1.0.19
 - (chore) apps/governance 1.0.26 | support v1 and v1beta1 prop title in detail page
+- (chore) apps/staking 1.1.0 constants-helper 1.0.8 | use staking precompile
 
 ## 1.3.4 - 2023-10-17
 

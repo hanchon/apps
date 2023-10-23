@@ -1,4 +1,4 @@
-import { chains } from "@evmos-apps/registry";
+import { chains } from "@evmosapps/registry";
 import { TokenByDenom, TokenDenom } from "./types";
 
 export const TOKENS_BY_DENOM = Object.values(chains).reduce((acc, chain) => {

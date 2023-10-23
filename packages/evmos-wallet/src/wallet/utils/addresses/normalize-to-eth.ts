@@ -1,6 +1,6 @@
 import { isHex } from "viem";
 import { evmosToEth } from "./evmos-to-eth";
-import { Address, HexAddress } from "./types";
+import { HexAddress } from "./types";
 
 /**
  * Normalizes an address to an Ethereum address.
@@ -10,6 +10,6 @@ import { Address, HexAddress } from "./types";
  * @returns The normalized Ethereum address.
  */
 
-export const normalizeToEth = (address: Address<"evmos">): HexAddress => {
-  return isHex(address) ? address : evmosToEth(address);
+export const normalizeToEth = (address: string): HexAddress => {
+  return isHex(address) ? address : evmosToEth(address as never);
 };

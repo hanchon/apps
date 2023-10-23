@@ -1,9 +1,10 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+import { normalizeToEvmos } from "evmos-wallet";
 import { CopyContainer } from "../transfer/CopyContainer";
 import { useAccount } from "wagmi";
-import { ethToEvmos } from "@evmos/address-converter";
+
 export const AddressesContainer = () => {
   const copyToClipboard = async (wallet: string) => {
     await navigator.clipboard.writeText(wallet);
@@ -12,7 +13,7 @@ export const AddressesContainer = () => {
   const { address } = useAccount();
 
   const handleCosmosFormat = async () => {
-    await copyToClipboard(ethToEvmos(address as string));
+    await copyToClipboard(normalizeToEvmos(address as string));
   };
 
   const handleEthFormat = async () => {
@@ -22,7 +23,7 @@ export const AddressesContainer = () => {
   return (
     <div className="flex flex-col space-y-1">
       <CopyContainer
-        address={address && ethToEvmos(address)}
+        address={address && normalizeToEvmos(address)}
         handleOnClick={handleCosmosFormat}
       />
 

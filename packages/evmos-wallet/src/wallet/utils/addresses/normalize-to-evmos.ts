@@ -1,6 +1,6 @@
 import { isHex } from "viem";
 import { ethToEvmos } from "./eth-to-evmos";
-import { Address, HexAddress, CosmosAddress } from "./types";
+import { CosmosAddress } from "./types";
 
 /**
  * Normalizes an address to an Evmos address with the "evmos" prefix.
@@ -11,7 +11,10 @@ import { Address, HexAddress, CosmosAddress } from "./types";
  */
 
 export const normalizeToEvmos = (
-  address: Address<"evmos"> | HexAddress,
-): CosmosAddress<"evmos"> => {
-  return isHex(address) ? ethToEvmos(address) : address;
+  // address: Address<"evmos"> | HexAddress,
+  address: string
+) => {
+  return isHex(address)
+    ? ethToEvmos(address)
+    : (address as CosmosAddress<"evmos">);
 };

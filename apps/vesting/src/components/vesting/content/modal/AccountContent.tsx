@@ -1,9 +1,8 @@
-import { KEPLR_KEY, StoreType } from "evmos-wallet";
+import { KEPLR_KEY, StoreType, normalizeToEth } from "evmos-wallet";
 import { useTranslation } from "next-i18next";
 import { useSelector } from "react-redux";
 import { ConfirmButton } from "ui-helpers";
 import { VestingAccountDetail } from "../../../../internal/types";
-import { evmosToEth } from "@evmos/address-converter";
 import { AmountItem } from "./AmountItem";
 import { AddresItem } from "./AddressItem";
 import { ethers } from "ethers";
@@ -38,13 +37,13 @@ export const AccountContent = ({
           </div>
           <AddresItem
             bech32Address={vestingDetails.accountAddress}
-            hexAddress={evmosToEth(vestingDetails.accountAddress)}
+            hexAddress={normalizeToEth(vestingDetails.accountAddress)}
             title={t("vesting.account.details.account.address.title")}
           />
 
           <AddresItem
             bech32Address={vestingDetails.funderAddress}
-            hexAddress={evmosToEth(vestingDetails.funderAddress)}
+            hexAddress={normalizeToEth(vestingDetails.funderAddress)}
             title={t("vesting.account.details.funder.address.title")}
           />
         </div>

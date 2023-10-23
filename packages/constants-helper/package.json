@@ -1,6 +1,6 @@
 {
   "name": "constants-helper",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "sideEffects": false,
@@ -11,7 +11,7 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@evmos-apps/config": "workspace:*",
+    "@evmosapps/config": "workspace:*",
     "autoprefixer": "^10.4.13",
     "eslint-config-next": "13.0.6",
     "postcss": "^8.4.20",
