@@ -1,5 +1,5 @@
 {
-  "extends": "@evmos-apps/config/ts/base.json",
+  "extends": "@evmosapps/config/ts/base.json",
   "compilerOptions": {
     "module": "ESNext"
   },

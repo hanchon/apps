@@ -10,12 +10,12 @@ import {
   SNACKBAR_TYPES,
   GENERATING_TX_NOTIFICATIONS,
   BROADCASTED_NOTIFICATIONS,
+  normalizeToEth,
 } from "evmos-wallet";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useVestingPrecompile } from "../../../../internal/useVestingPrecompile";
 import { useTranslation } from "next-i18next";
-import { evmosToEth } from "@evmos/address-converter";
 import { EXPLORER_URL } from "constants-helper";
 
 // TODO: format totalTokens and availableClawback depending on the response
@@ -34,9 +34,9 @@ export const ClawbackModal = ({
       setDisabled(true);
 
       const res = await clawback(
-        evmosToEth(vestingDetails?.funderAddress) ?? "",
-        evmosToEth(vestingDetails?.accountAddress) ?? "",
-        evmosToEth(vestingDetails?.funderAddress) ?? ""
+        normalizeToEth(vestingDetails?.funderAddress) ?? "",
+        normalizeToEth(vestingDetails?.accountAddress) ?? "",
+        normalizeToEth(vestingDetails?.funderAddress) ?? ""
       );
       dispatch(
         addSnackbar({

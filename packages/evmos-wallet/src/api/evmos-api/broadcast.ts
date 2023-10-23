@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { protoTxNamespace } from "@evmos/proto";
+import type { createTxRaw } from "@evmos/proto";
 
 import { StdSignDoc, StdSignature } from "@keplr-wallet/types";
 import { raise } from "helpers";
@@ -36,7 +36,7 @@ export const apiBroadcastEip712 = makeApiRequester(
       raise("BROADCAST_EIP712_FAILED");
     }
     return tx_hash;
-  }),
+  })
 );
 
 export const apiBroadcastRawTx = makeApiRequester(
@@ -45,15 +45,12 @@ export const apiBroadcastRawTx = makeApiRequester(
     rawTx,
     network = EVMOS_NETWORK_FOR_BACKEND,
   }: {
-    rawTx: {
-      message: protoTxNamespace.txn.TxRaw;
-      path: string;
-    };
+    rawTx: ReturnType<typeof createTxRaw>;
     network?: string;
   }) => {
     const message = rawTx.message.serializeBinary().toString();
     return JSON.parse(
-      `{ "tx_bytes": [${message}], "network": "${network}" }`,
+      `{ "tx_bytes": [${message}], "network": "${network}" }`
     ) as {
       tx_bytes: number[];
       network: string;
@@ -64,7 +61,7 @@ export const apiBroadcastRawTx = makeApiRequester(
       raise("BROADCAST_BYTES_FAILED");
     }
     return data.tx_hash;
-  }),
+  })
 );
 
 export const apiBroadcastAmino = makeApiRequester(
@@ -78,5 +75,5 @@ export const apiBroadcastAmino = makeApiRequester(
       raise("BROADCAST_AMINO_FAILED");
     }
     return data.tx_hash;
-  }),
+  })
 );

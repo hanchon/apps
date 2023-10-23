@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatNumber } from "helpers";
+import { Log, formatNumber } from "helpers";
 import {
   DEFAULT_FORM_VALUES,
   PlansType,
@@ -27,6 +27,7 @@ import {
   SNACKBAR_TYPES,
   GENERATING_TX_NOTIFICATIONS,
   BROADCASTED_NOTIFICATIONS,
+  normalizeToEvmos,
 } from "evmos-wallet";
 import { useSelector, useDispatch } from "react-redux";
 import { generateVestingSchedule } from "../../../internal/helpers/generate-vesting-schedule";
@@ -39,7 +40,7 @@ import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { Dayjs } from "dayjs";
 import { useTranslation } from "next-i18next";
 import { BigNumber } from "@ethersproject/bignumber";
-import { ethToEvmos } from "@evmos/address-converter";
+
 import { getVesting } from "../../../internal/fetch";
 import { VestingResponse } from "../../../internal/types";
 import { getEvmosBalance } from "evmos-wallet/src/internal/wallet/functionality/fetch";
@@ -92,7 +93,7 @@ export const FundVestingAccount = () => {
           if (!isEthereumAddressValid(vestingAddress)) {
             return;
           }
-          _vestingAddress = ethToEvmos(vestingAddress);
+          _vestingAddress = normalizeToEvmos(vestingAddress);
         } else if (vestingAddress.startsWith("evmos")) {
           if (!isEvmosAddressValid(vestingAddress)) {
             return;
@@ -112,7 +113,7 @@ export const FundVestingAccount = () => {
             setVestingAddressError(true);
           });
       } catch (e) {
-        console.log(e);
+        Log.error(e);
       }
     }
     fetchVestingData();

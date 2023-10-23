@@ -1,5 +1,5 @@
 {
-  "extends": "@evmos-apps/config/ts/nextjs.json",
+  "extends": "@evmosapps/config/ts/nextjs.json",
 
   "compilerOptions": {
     "plugins": [{ "name": "next" }]

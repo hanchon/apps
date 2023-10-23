@@ -32,9 +32,9 @@ export function withEvmosConfig(config = {}) {
     }
     return acc;
   }, new Set());
-  transpilePackages.delete("@evmos-apps/config");
+  transpilePackages.delete("@evmosapps/config");
   transpilePackages.delete("tailwind-config");
-  transpilePackages.delete("playwright-config-custom");
+  transpilePackages.delete("@evmosapps/test-utils");
 
   return withBundleAnalyzer({
     images: {

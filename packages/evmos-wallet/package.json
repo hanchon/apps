@@ -16,12 +16,10 @@
   "peerDependencies": {
     "@tanstack/react-query": "^4.32.6",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
-    "viem": "^1.14.0",
-    "wagmi": "~1.4.2"
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
-    "@evmos-apps/config": "workspace:*",
+    "@evmosapps/config": "workspace:*",
     "@types/node": "18.11.14",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.0.9",
@@ -48,11 +46,10 @@
     "@ethersproject/providers": "^5.7.0",
     "@ethersproject/transaction": "6.0.0-beta.2",
     "@ethersproject/transactions": "^5.7.0",
-    "@evmos-apps/registry": "workspace:*",
-    "@evmos/address-converter": "^0.1.9",
     "@evmos/proto": "^0.1.26",
     "@evmos/provider": "^0.2.8",
     "@evmos/transactions": "^0.2.12",
+    "@evmosapps/registry": "workspace:*",
     "@hanchon/signature-to-pubkey": "^1.0.1",
     "@keplr-wallet/types": "^0.12.20",
     "@metamask/providers": "^11.1.0",

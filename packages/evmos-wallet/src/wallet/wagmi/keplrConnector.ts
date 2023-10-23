@@ -9,13 +9,12 @@ import { Chain, Connector } from "wagmi";
 
 import { getKeplrProvider } from "../utils/keplr";
 
-import { evmos, evmosTestnet, getEvmosChainInfo } from "./chains";
+import { getEvmosChainInfo } from "./chains";
 import { assertIf, raise } from "helpers";
 
 import { serialize, UnsignedTransaction } from "@ethersproject/transactions";
-import { ethToEvmos, evmosToEth } from "@evmos/address-converter";
+
 import {
-  Address,
   Hex,
   TransactionRequest,
   createWalletClient,
@@ -27,23 +26,10 @@ import {
 import { isHex, parseAccount } from "viem/utils";
 import { isString } from "helpers/src/assertions";
 import { z } from "zod";
+import { evmos } from "@evmosapps/registry";
+import { normalizeToEth, normalizeToEvmos } from "../utils";
 
 const evmosInfo = getEvmosChainInfo();
-
-// Right now this only supports evmos, but it'd be nice to figure out how to support
-// other chains as well.
-const COSMOS_ID_MAP = {
-  [evmos.id]: evmos.cosmosId,
-  [evmosTestnet.id]: evmosTestnet.cosmosId,
-} as const;
-
-const ADDRESS_ENCODERS: Record<
-  keyof typeof COSMOS_ID_MAP,
-  (address: string) => string
-> = {
-  [evmos.id]: ethToEvmos,
-  [evmosTestnet.id]: ethToEvmos,
-};
 
 const TransactionRequestSchema = z
   .object({
@@ -71,7 +57,7 @@ const prepareTransaction = async (
     }));
   const transaction: UnsignedTransaction = {
     data: request.data,
-    to: request.to,
+    to: request.to ?? undefined,
     value: request.value,
     nonce,
     chainId,
@@ -81,11 +67,13 @@ const prepareTransaction = async (
     return transaction;
   }
   // EIP-1559 fees
-
-  const maxPriorityFeePerGas = request.maxPriorityFeePerGas ?? 1_500_000_000n; // 1.5 gwei;
-  const maxFeePerGas =
+  // const estimatedMaxPriorityFeePerGas =
+  //   await client.estimateMaxPriorityFeePerGas();
+  const maxPriorityFeePerGas =
     request.maxPriorityFeePerGas ??
-    (baseFeePerGas * 120n) / 100n + maxPriorityFeePerGas;
+    (await client.estimateMaxPriorityFeePerGas());
+
+  const maxFeePerGas = (baseFeePerGas * 120n) / 100n + maxPriorityFeePerGas;
 
   const gas =
     request.gas ??
@@ -150,11 +138,19 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     if (this.offlineSigner) return this.offlineSigner;
     const provider = await this.getProvider();
 
-    const cosmosId =
-      this.chainId in COSMOS_ID_MAP
-        ? COSMOS_ID_MAP[this.chainId]
-        : evmosInfo.cosmosId;
+    const cosmosId = evmosInfo.cosmosId;
 
+    if (cosmosId !== evmos.cosmosId) {
+      const config =
+        (await Promise.all([
+          import("@evmosapps/registry/src/keplr/evmoslocal.json"),
+          import("@evmosapps/registry/src/keplr/evmostestnet.json"),
+        ]).then((configs) =>
+          configs.find((x) => x.default.chainId === cosmosId)
+        )) ?? raise("UNSUPPORTED_NETWORK");
+
+      await provider.experimentalSuggestChain(config.default);
+    }
     assertIf(cosmosId, "UNSUPPORTED_NETWORK");
 
     const signer = provider.getOfflineSigner(cosmosId);
@@ -166,7 +162,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     const signer = await this.getSigner();
     const [account] = await signer.getAccounts();
     assertIf(account, "ACCOUNT_NOT_FOUND");
-    return evmosToEth(account.address) as Address;
+    return normalizeToEth(account.address);
   };
   // This has to be a promise to conform to the interface
   // eslint-disable-next-line @typescript-eslint/require-await
@@ -178,18 +174,15 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     // TODO: Add event listeners here
 
     const account = await this.getAccount();
-    let chainId = config?.chainId;
-    if (!chainId || !(chainId in COSMOS_ID_MAP)) {
-      chainId = this.chains.find(({ id }) => id in COSMOS_ID_MAP)?.id;
-      assertIf(chainId, "UNSUPPORTED_NETWORK");
-    }
+    const chainId = config?.chainId ?? evmosInfo.id;
+
     this.chainId = chainId;
     window.addEventListener("keplr_keystorechange", this.onAccountsChanged);
     return {
       account,
       chain: {
         id: chainId,
-        unsupported: !(chainId in COSMOS_ID_MAP),
+        unsupported: chainId !== evmosInfo.id,
       },
     };
   }
@@ -208,15 +201,14 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     }
   }
   protected isChainUnsupported(chainId: number) {
-    return chainId in COSMOS_ID_MAP;
+    return chainId === evmosInfo.id;
   }
   async getCosmosId(chainId?: number) {
     chainId ??= await this.getChainId();
 
     assertIf(this.isChainUnsupported(chainId), "UNSUPPORTED_NETWORK");
 
-    const cosmosId = COSMOS_ID_MAP[chainId] ?? raise("UNSUPPORTED_NETWORK");
-    return cosmosId;
+    return evmosInfo.cosmosId;
   }
   async getWalletClient({ chainId }: { chainId?: number } = {}) {
     chainId ??= await this.getChainId();
@@ -270,7 +262,7 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     ]);
 
     const cosmosId = await this.getCosmosId(chainId);
-    const bech32Address = ADDRESS_ENCODERS[chainId](account);
+    const bech32Address = normalizeToEvmos(account);
 
     switch (method) {
       case "eth_sendTransaction": {

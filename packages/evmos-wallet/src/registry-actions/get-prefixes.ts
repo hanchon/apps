@@ -1,4 +1,4 @@
-import { chains } from "@evmos-apps/registry";
+import { chains } from "@evmosapps/registry";
 import { Prefix } from "./types";
 
 export const prefixes = Object.values(chains).reduce((acc, chain) => {
