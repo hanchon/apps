@@ -242,7 +242,7 @@ export const ReceiptModalContent = ({
       return t("transfer.confirmation.button.text");
     }
     if (txHasNotFoundError || (isReceiptStillLoading && !error)) {
-      return t("transfer.confirmation.button.mintscan.text");
+      return t("transfer.confirmation.button.explorer.text");
     }
     return (
       <>
