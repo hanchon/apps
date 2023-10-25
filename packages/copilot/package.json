@@ -48,7 +48,12 @@
     "react-confetti-explosion": "^2.1.2",
     "tracker": "workspace:*",
     "typescript": "^5.2.2",
-    "ui-helpers": "workspace:*"
+    "ui-helpers": "workspace:*",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/mixpanel-browser": "2.47.1",
+    "mixpanel-browser": "^2.47.0",
+    "@types/mixpanel": "2.14.1"
   },
   "browserslist": [
     "last 3 chrome version",

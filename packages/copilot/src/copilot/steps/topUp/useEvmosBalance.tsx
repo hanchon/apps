@@ -31,8 +31,8 @@ export const useEvmosBalance = () => {
   const value = useSelector((state: StoreType) => state.wallet.value);
 
   const evmosBalance = useQuery<BalanceResponse | txStatusError, Error>({
-    queryKey: ["evmosBalance", value.evmosAddressCosmosFormat],
-    queryFn: () => getEvmosBalance(value.evmosAddressCosmosFormat),
+    queryKey: ["evmosBalance", value?.evmosAddressCosmosFormat],
+    queryFn: () => getEvmosBalance(value?.evmosAddressCosmosFormat),
     refetchInterval: 15_000,
   });
 

@@ -7,6 +7,11 @@ import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { Dispatch, SetStateAction } from "react";
 import { Tabs } from "ui-helpers";
+import {
+  CLICK_ON_TOP_UP_WITH_CARD_COPILOT,
+  CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT,
+  useTracker,
+} from "tracker";
 
 const TOP_UP_TYPES = {
   CARD: "card",
@@ -22,16 +27,27 @@ export default function Onboard({
   children: JSX.Element;
   setTopUpType: Dispatch<SetStateAction<string>>;
 }) {
+  const { sendEvent } = useTracker();
+  const handleCardOnClick = () => {
+    setTopUpType(TOP_UP_TYPES.CARD);
+    sendEvent(CLICK_ON_TOP_UP_WITH_CARD_COPILOT);
+  };
+
+  const handleCryptoOnClick = () => {
+    setTopUpType(TOP_UP_TYPES.CRYPTO);
+    sendEvent(CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT);
+  };
+
   const onboardProps = [
     {
-      onClick: () => setTopUpType(TOP_UP_TYPES.CARD),
+      onClick: handleCardOnClick,
       icon: <CreditCardsIcon />,
       type: TOP_UP_TYPES.CARD,
       option: topUpType,
       text: t("topup.card.button") as string,
     },
     {
-      onClick: () => setTopUpType(TOP_UP_TYPES.CRYPTO),
+      onClick: handleCryptoOnClick,
       icon: <EthereumIcon />,
       type: TOP_UP_TYPES.CRYPTO,
       option: topUpType,
