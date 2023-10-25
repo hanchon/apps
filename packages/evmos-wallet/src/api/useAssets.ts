@@ -86,7 +86,7 @@ export const useAssets = () => {
 
   const getEvmosPriceChange = useMemo(() => {
     if (assets.data === undefined || assets.data.balance.length === 0) {
-      return "--";
+      return "0";
     }
 
     return assets.data.balance[0].price24HChange;
