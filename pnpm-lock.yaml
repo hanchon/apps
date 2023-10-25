@@ -1300,7 +1300,7 @@ importers:
         version: 8.12.0
       chain-token-registry:
         specifier: github:evmos/chain-token-registry#main
-        version: github.com/evmos/chain-token-registry/8d5a26ca23fcfc1ecba95da5c10d748dbe84db72
+        version: github.com/evmos/chain-token-registry/2be54462eec4f6f9fb876c3caeca11f7e4d6d898
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -15032,8 +15032,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  github.com/evmos/chain-token-registry/8d5a26ca23fcfc1ecba95da5c10d748dbe84db72:
-    resolution: {tarball: https://codeload.github.com/evmos/chain-token-registry/tar.gz/8d5a26ca23fcfc1ecba95da5c10d748dbe84db72}
+  github.com/evmos/chain-token-registry/2be54462eec4f6f9fb876c3caeca11f7e4d6d898:
+    resolution: {tarball: https://codeload.github.com/evmos/chain-token-registry/tar.gz/2be54462eec4f6f9fb876c3caeca11f7e4d6d898}
     name: chain-token-registry#main
     version: 0.0.0
     dev: true
