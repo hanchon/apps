@@ -2,36 +2,19 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useEffect, useState } from "react";
-import { Dispatch, SetStateAction } from "react";
-import { DropdownArrow, TransakIcon, C14Icon } from "icons";
+
+import { DropdownArrow } from "icons";
 import { t } from "../../../locales/translate";
-import { useTracker, CLICK_ON_DIFFERENT_ON_RAMP } from "tracker";
-
-export type DropdownOption = {
-  name: string;
-  image: JSX.Element;
-  value: string;
-};
-
-export const dropdownOptions: DropdownOption[] = [
-  {
-    name: "C14",
-    image: <C14Icon width={20} height={20} />,
-    value: "C14",
-  },
-  {
-    name: "Transak",
-    image: <TransakIcon width={20} height={20} />,
-    value: "Transak",
-  },
-];
+import { DropdownOption } from "./utils";
 
 export default function ProviderDropwdown({
-  setProvider,
   selectedValue,
+  dropdownOptions,
+  onItemClick,
 }: {
-  setProvider: Dispatch<SetStateAction<DropdownOption>>;
   selectedValue: DropdownOption;
+  dropdownOptions: DropdownOption[];
+  onItemClick: (option: DropdownOption) => void;
 }) {
   const [showMenu, setShowMenu] = useState(false);
   useEffect(() => {
@@ -42,18 +25,9 @@ export default function ProviderDropwdown({
     };
   }, []);
 
-  const { handlePreClickAction: handleDifferentOnRampClick } = useTracker(
-    CLICK_ON_DIFFERENT_ON_RAMP,
-  );
-
   const handleInputClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     setShowMenu(!showMenu);
-  };
-
-  const onItemClick = (option: DropdownOption) => {
-    handleDifferentOnRampClick({ onRampType: option.value });
-    setProvider(option);
   };
 
   return (
