@@ -36,6 +36,9 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.3.5 - 2023-10-25
+
+- (chore) | packages/copilot 1.0.8 packages/icons 1.0.9 packages/tracker 1.0.8 packages/registry 1.0.1 apps/mission 1.0.25 | Add squid and lawerswap iframes
 - (chore) | packages/evmos-wallet 1.0.21 fix NaN price change
 - (fix) | apps/governance 1.0.27 apps/staking 1.1.1 apps/vesting 1.1.1 packages/copilot 1.0.7 packages/evmos-wallet 1.0.20 packages/helpers 1.0.10 | Handle error in backend calls
 - (chore) fse-772 apps/assets 1.0.33 apps/vesting 1.1.1 packages/constants-helper 1.0.7 packages/evmos-wallet 1.0.20 | Link out to escan
