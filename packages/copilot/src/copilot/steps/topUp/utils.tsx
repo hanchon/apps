@@ -37,9 +37,9 @@ export const providerOptions = {
       value: "LayerSwap",
     },
     {
-      name: "Cypher",
+      name: "Cypher Wallet",
       image: <CypherDIcon width={20} height={20} />,
-      value: "Cypher",
+      value: "Cypher Wallet",
     },
   ],
 };

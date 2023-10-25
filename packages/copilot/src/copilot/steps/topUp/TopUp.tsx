@@ -63,7 +63,7 @@ export const TopUp = () => {
               onItemClick={onCryptoItemClick}
               dropdownOptions={providerOptions.crypto}
             />
-            {cryptoProvider.value === "Cypher" ? (
+            {cryptoProvider.value === "Cypher Wallet" ? (
               <CypherD />
             ) : cryptoProvider.value === "LayerSwap" ? (
               <LayerSwap />

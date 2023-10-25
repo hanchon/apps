@@ -41,6 +41,12 @@ const config = {
   },
   showOnRampLink: true,
   initialToChainId: "evmos_9001-2",
+  defaultTokens: [
+    {
+      address: "aevmos", // Token address for EVMOS
+      chainId: "evmos_9001-2", // Chain ID for EVMOS
+    },
+  ],
 };
 
 const configJSON = JSON.stringify(config); // Convert the config object to a JSON string
