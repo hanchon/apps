@@ -4,11 +4,12 @@ export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 export const registryDir = path.resolve(
   fileURLToPath(
+    // eslint-disable-next-line @typescript-eslint/await-thenable
     (await import.meta.resolve?.(
-      "chain-token-registry/chainConfig/evmos.json",
-    )) || "",
+      "chain-token-registry/chainConfig/evmos.json"
+    )) || ""
   ),
-  "../..",
+  "../.."
 );
 
 export const chainRegistryDir = path.resolve(registryDir, "chainConfig");
