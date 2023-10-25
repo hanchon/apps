@@ -99,11 +99,11 @@ describe("TopUp component", () => {
     expect(mixpanel.track).toHaveBeenCalledTimes(5);
 
     await userEvent.click(dropdownProvider);
-    const cypherOption = getByText(/cypher/i);
+    const cypherOption = getByText(/cypher wallet/i);
     await userEvent.click(cypherOption);
     expect(mixpanel.track).toHaveBeenCalledWith(
       "Click on different cryptocurrency top-up options inside Copilot",
-      { "Swap Type": "Cypher" }
+      { "Swap Type": "Cypher Wallet" }
     );
     expect(mixpanel.track).toHaveBeenCalledTimes(6);
 

@@ -99,7 +99,7 @@ describe("Mission Page - Copilot", () => {
     expect(await squidDWidget.count()).toBe(1);
 
     await page.getByTestId("card-provider-dropdown").click();
-    await page.getByRole("button", { name: /Cypher/i }).click();
+    await page.getByRole("button", { name: /Cypher Wallet/i }).click();
 
     const cypherDWidget = page.getByTestId("cypher-onboading-sdk");
     await cypherDWidget.waitFor();

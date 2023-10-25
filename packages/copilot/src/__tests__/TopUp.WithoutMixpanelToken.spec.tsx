@@ -75,7 +75,7 @@ describe("TopUp component", () => {
     await userEvent.click(layerSwapOption);
 
     await userEvent.click(dropdownProvider);
-    const cypherOption = getByText(/cypher/i);
+    const cypherOption = getByText(/cypher wallet/i);
     await userEvent.click(cypherOption);
 
     await userEvent.click(dropdownProvider);
