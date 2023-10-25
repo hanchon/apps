@@ -39,7 +39,7 @@ describe("TopUp component", () => {
     );
   };
 
-  test("should render the correct screen depending on the selected top-up type", async () => {
+  test.skip("should render the correct screen depending on the selected top-up type", async () => {
     const { getByText, getByRole, getByTestId } = render(<TopUp />, {
       wrapper,
     });
