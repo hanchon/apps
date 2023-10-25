@@ -13,16 +13,15 @@ import {
 
 import type { Maybe } from "@metamask/providers/dist/utils";
 import { signatureToPubkey } from "@hanchon/signature-to-pubkey";
-import { evmosToEth } from "@evmos/address-converter";
 import { queryPubKey } from "../pubkey";
 import { METAMASK_NOTIFICATIONS } from "../errors";
 import { SaveProviderToLocalStorate } from "../localstorage";
 import { Metamask } from "./metamask";
 import { store } from "../../../../redux/Store";
-import { ethToEvmos } from "@evmos/address-converter";
 import { setWallet } from "../../../../wallet/redux/WalletSlice";
 import { METAMASK_KEY } from "../wallet";
 import type { MetaMaskInpageProvider } from "@metamask/providers";
+import { normalizeToEth, normalizeToEvmos } from "../../../../wallet";
 export const getMetamaskProvider = () => {
   if (typeof window === "undefined") return null;
   if (!("ethereum" in window)) {
@@ -91,7 +90,7 @@ export async function changeNetworkToEvmosMainnet(): Promise<boolean> {
 }
 
 export function subscribeToAccountChange(
-  handler: (a: Maybe<string[]>) => void,
+  handler: (a: Maybe<string[]>) => void
 ): boolean {
   const mmProvider = getMetamaskProvider();
   if (!mmProvider) return false;
@@ -167,7 +166,7 @@ export async function generatePubkeyFromSignature(wallet: string) {
   if (!mmProvider) return null;
   try {
     if (wallet.startsWith("evmos1")) {
-      wallet = evmosToEth(wallet);
+      wallet = normalizeToEth(wallet);
     }
     // Make the user sign the generate_pubkey message
     const signature = await mmProvider.request({
@@ -193,7 +192,7 @@ export async function generatePubkeyFromSignature(wallet: string) {
 
 export async function generatePubKey(
   account: string,
-  evmosGRPCUrl = EVMOS_GRPC_URL,
+  evmosGRPCUrl = EVMOS_GRPC_URL
 ) {
   let pubkey = await queryPubKey(evmosGRPCUrl, account);
   if (pubkey === null) {
@@ -257,7 +256,7 @@ export async function connectHandler(addresses: Maybe<string[]>) {
   }
   if (addresses.length > 0 && addresses[0]) {
     metamask.addressEthFormat = addresses[0];
-    metamask.addressCosmosFormat = ethToEvmos(addresses[0]);
+    metamask.addressCosmosFormat = normalizeToEvmos(addresses[0]);
     metamask.evmosPubkey = await generatePubKey(metamask.addressCosmosFormat);
     // TODO: if the user did not sign the pubkey, pop up a message
     if (metamask.evmosPubkey === null) {
@@ -275,7 +274,7 @@ export async function connectHandler(addresses: Maybe<string[]>) {
         evmosPubkey: metamask.evmosPubkey,
         osmosisPubkey: null,
         accountName: null,
-      }),
+      })
     );
     SaveProviderToLocalStorate(METAMASK_KEY);
     return true;

@@ -55,7 +55,12 @@ export const Delegate = ({
     <div className="space-y-4">
       <div className="flex justify-between">
         <p className="font-bold">Available Balance</p>
-        <p>{convertAndFormat(evmosBalance)} EVMOS</p>
+        <p>
+          {evmosBalance.eq(BigNumber.from(-1))
+            ? "0"
+            : convertAndFormat(evmosBalance)}{" "}
+          EVMOS
+        </p>
       </div>
       <div className="space-y-2">
         <p className="font-bold">Amount to delegate</p>
@@ -74,8 +79,10 @@ export const Delegate = ({
               text="MAX"
               onClick={() => {
                 const val = safeSubstraction(
-                  evmosBalance,
-                  BigNumber.from(FEE_STAKING_ACTIONS),
+                  evmosBalance.eq(BigNumber.from(-1))
+                    ? BigNumber.from(0)
+                    : evmosBalance,
+                  BigNumber.from(FEE_STAKING_ACTIONS)
                 );
                 setValue(numericOnly(convertFromAtto(val, 18)));
               }}
@@ -91,14 +98,20 @@ export const Delegate = ({
           <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorAmountEmpty}</ErrorMessage>
         )}
         {truncateNumber(value) >
-          truncateNumber(numericOnly(convertFromAtto(evmosBalance, 18))) && (
+          truncateNumber(
+            numericOnly(
+              evmosBalance.eq(BigNumber.from(-1))
+                ? "0"
+                : convertFromAtto(evmosBalance, 18)
+            )
+          ) && (
           <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorsAmountGt}</ErrorMessage>
         )}
         <p className="text-sm">
           {getReservedForFeeText(
             BigNumber.from(FEE_STAKING_ACTIONS),
             "EVMOS",
-            "EVMOS",
+            "EVMOS"
           )}
         </p>
       </div>

@@ -41,9 +41,6 @@ export default {
   "cosmosGRPC": [
     "https://rpc-emoney.keplr.app"
   ],
-  "evmRPC": [
-    "https://rpc-emoney.keplr.app"
-  ],
   "tokens": [
     {
       "name": "e-Money EUR",
@@ -63,5 +60,6 @@ export default {
       "listed": true
     }
   ],
-  "explorerUrl": "https://www.mintscan.io/emoney/txs"
+  "explorerUrl": "https://www.mintscan.io/emoney/txs",
+  "env": "mainnet"
 } as const;

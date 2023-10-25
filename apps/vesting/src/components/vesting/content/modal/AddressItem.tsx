@@ -1,3 +1,4 @@
+import { EXPLORER_URL } from "constants-helper";
 import { ViewExplorer } from "ui-helpers";
 
 type AddressItemProps = {
@@ -15,7 +16,7 @@ export const AddresItem = ({
       <div className="smallText">
         <ViewExplorer
           txHash={bech32Address}
-          explorerTxUrl="https://www.mintscan.io/evmos/account"
+          explorerTxUrl={EXPLORER_URL + "/address"}
           text={title}
         />
       </div>

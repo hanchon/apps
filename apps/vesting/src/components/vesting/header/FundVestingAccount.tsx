@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatNumber } from "helpers";
+import { Log, formatNumber } from "helpers";
 import {
   DEFAULT_FORM_VALUES,
   PlansType,
@@ -27,6 +27,7 @@ import {
   SNACKBAR_TYPES,
   GENERATING_TX_NOTIFICATIONS,
   BROADCASTED_NOTIFICATIONS,
+  normalizeToEvmos,
 } from "evmos-wallet";
 import { useSelector, useDispatch } from "react-redux";
 import { generateVestingSchedule } from "../../../internal/helpers/generate-vesting-schedule";
@@ -39,11 +40,12 @@ import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { Dayjs } from "dayjs";
 import { useTranslation } from "next-i18next";
 import { BigNumber } from "@ethersproject/bignumber";
-import { ethToEvmos } from "@evmos/address-converter";
+
 import { getVesting } from "../../../internal/fetch";
 import { VestingResponse } from "../../../internal/types";
 import { getEvmosBalance } from "evmos-wallet/src/internal/wallet/functionality/fetch";
 import { ethers } from "ethers";
+import { EXPLORER_URL } from "constants-helper";
 
 export const FundVestingAccount = () => {
   const [disabled, setDisabled] = useState(false);
@@ -55,27 +57,32 @@ export const FundVestingAccount = () => {
     useState<VestingResponse | null>(null);
   const { fundVestingAccount } = useVestingPrecompile();
   const [funderBalance, setFunderBalance] = useState(BigNumber.from(0));
-  const [fundAmount, setAmount] = useState("0")
+  const [fundAmount, setAmount] = useState("0");
 
   useEffect(() => {
-    getEvmosBalance(
-      wallet.evmosAddressCosmosFormat
-    ).then(balance => {
-      setFunderBalance(
-        BigNumber.from(balance?.balance.amount ? balance.balance.amount : 0),
-      )
-    }).catch(() => { })
-  }, [wallet.evmosAddressCosmosFormat])
+    getEvmosBalance(wallet.evmosAddressCosmosFormat)
+      .then((response) => {
+        if ("code" in response) {
+          setFunderBalance(BigNumber.from(0));
+        } else {
+          setFunderBalance(
+            BigNumber.from(
+              response?.balance.amount ? response.balance.amount : 0
+            )
+          );
+        }
+      })
+      .catch(() => {});
+  }, [wallet.evmosAddressCosmosFormat]);
 
   useEffect(() => {
-    const _amount = BigNumber.from(ethers.parseEther(fundAmount))
+    const _amount = BigNumber.from(ethers.parseEther(fundAmount));
     if (_amount.gt(funderBalance)) {
-      setDisabled(true)
+      setDisabled(true);
+    } else {
+      setDisabled(false);
     }
-    else {
-      setDisabled(false)
-    }
-  }, [fundAmount, funderBalance])
+  }, [fundAmount, funderBalance]);
 
   useEffect(() => {
     function fetchVestingData() {
@@ -86,7 +93,7 @@ export const FundVestingAccount = () => {
           if (!isEthereumAddressValid(vestingAddress)) {
             return;
           }
-          _vestingAddress = ethToEvmos(vestingAddress);
+          _vestingAddress = normalizeToEvmos(vestingAddress);
         } else if (vestingAddress.startsWith("evmos")) {
           if (!isEvmosAddressValid(vestingAddress)) {
             return;
@@ -106,7 +113,7 @@ export const FundVestingAccount = () => {
             setVestingAddressError(true);
           });
       } catch (e) {
-        console.log(e);
+        Log.error(e);
       }
     }
     fetchVestingData();
@@ -144,7 +151,7 @@ export const FundVestingAccount = () => {
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
             hash: res.hash,
-            explorerTxUrl: "www.mintscan.io/evmos/txs/",
+            explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
         })
@@ -200,7 +207,7 @@ export const FundVestingAccount = () => {
 
       <form
         onSubmit={handleSubmit(async (d) => {
-          await handleOnClick(d).then(() => { });
+          await handleOnClick(d).then(() => {});
         })}
         className="flex flex-col space-y-3"
       >
@@ -325,7 +332,7 @@ export const FundVestingAccount = () => {
           {!vestingAddressError &&
             vestingAddressData?.account?.funder_address &&
             vestingAddressData?.account?.funder_address?.toLowerCase() !==
-            wallet?.evmosAddressCosmosFormat?.toLocaleLowerCase() && (
+              wallet?.evmosAddressCosmosFormat?.toLocaleLowerCase() && (
               <ErrorContainer description={t("fund.create.error")} />
             )}
 
@@ -338,7 +345,6 @@ export const FundVestingAccount = () => {
               </WizardHelper>
             )}
         </div>
-
 
         <label
           htmlFor="accountName"
@@ -377,7 +383,9 @@ export const FundVestingAccount = () => {
           type="submit"
           disabled={disabled || vestingAddressError}
           style={{ backgroundColor: "#ed4e33" }}
-          className={`w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg text-pearl ${disabled ? "opacity-40" : ""}`}
+          className={`w-full cursor-pointer rounded p-2 font-[GreyCliff] text-lg text-pearl ${
+            disabled ? "opacity-40" : ""
+          }`}
           value={t("vesting.fund.button.action.title")}
         />
       </form>

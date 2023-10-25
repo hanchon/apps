@@ -1,6 +1,6 @@
 {
   "name": "assets-page",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3002",
@@ -18,12 +18,12 @@
   },
   "devDependencies": {
     "@ethersproject/bignumber": "^5.7.0",
-    "@evmos-apps/config": "workspace:*",
-    "@evmos-apps/registry": "workspace:*",
-    "@evmos/address-converter": "^0.1.9",
     "@evmos/proto": "^0.1.26",
     "@evmos/provider": "^0.2.8",
     "@evmos/transactions": "^0.2.12",
+    "@evmosapps/config": "workspace:*",
+    "@evmosapps/registry": "workspace:*",
+    "@evmosapps/test-utils": "workspace:*",
     "@hanchon/signature-to-pubkey": "^1.0.1",
     "@keplr-wallet/types": "^0.12.20",
     "@types/node": "20.4.1",
@@ -37,9 +37,8 @@
     "helpers": "workspace:*",
     "i18next": "^23.4.4",
     "icons": "workspace:*",
-    "next": "13.5.2",
+    "next": "13.5.5",
     "next-i18next": "^14.0.0",
-    "playwright-config-custom": "workspace:*",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-i18next": "^13.1.0",
@@ -57,13 +56,15 @@
     "last 3 safari version"
   ],
   "dependencies": {
+    "@buf/cosmos_cosmos-sdk.bufbuild_es": "1.3.0-20230822104619-a12828247088.1",
+    "@buf/evmos_evmos.bufbuild_es": "1.3.0-20230822152208-9101da12dca9.1",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bytes": "^5.7.0",
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@ethersproject/units": "^5.7.0",
     "@metamask/providers": "^10.2.1",
-    "@playwright/test": "^1.38.1",
+    "@playwright/test": "^1.39.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-query": "^4.32.6",
     "@tanstack/react-query-devtools": "^4.35.0",
@@ -77,9 +78,7 @@
     "mixpanel-browser": "^2.47.0",
     "react-qr-code": "^2.0.12",
     "tailwind-config": "workspace:*",
-    "viem": "^1.14.0",
     "vitest": "^0.34.1",
-    "wagmi": "~1.4.2",
     "zod": "^3.22.1"
   }
 }

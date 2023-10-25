@@ -1,9 +1,9 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { ethToEvmos } from "@evmos/address-converter";
 import { generateEndpointAccount } from "@evmos/provider";
 import { fetchWithTimeout } from "./fetch";
+import { normalizeToEvmos } from "../../../wallet";
 
 declare type EndpointAccountResponse = {
   code_hash?: number;
@@ -33,11 +33,7 @@ type BaseAccount = {
 };
 
 const getBaseAccountData = async (evmosEndpoint: string, address: string) => {
-  let converted = address;
-  if (converted.startsWith("0x")) {
-    converted = ethToEvmos(converted);
-  }
-
+  const converted = normalizeToEvmos(address);
   const get = {
     method: "GET",
     headers: { "Content-Type": "application/json" },
@@ -46,7 +42,7 @@ const getBaseAccountData = async (evmosEndpoint: string, address: string) => {
   try {
     const addr = await fetchWithTimeout(
       `${evmosEndpoint}${generateEndpointAccount(converted)}`,
-      get,
+      get
     );
     // If error 400 wallet doesn't exists
     const resp = (await addr.json()) as EndpointAccountResponse;

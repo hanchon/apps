@@ -1,6 +1,6 @@
 {
   "name": "stateful-components",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
   "type": "module",
@@ -24,7 +24,7 @@
     "ui-helpers": "workspace:*"
   },
   "devDependencies": {
-    "@evmos-apps/config": "workspace:*",
+    "@evmosapps/config": "workspace:*",
     "@types/node": "18.11.14",
     "@types/react": "^18.2.21",
     "@types/react-dom": "18.0.9",

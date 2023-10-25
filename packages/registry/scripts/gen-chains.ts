@@ -1,39 +1,39 @@
-import { glob } from "glob";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import { ChainRegistry } from "./types/chain";
 import { TokenRegistry } from "./types/token";
 import { groupBy } from "lodash-es";
 import { fileHeader } from "./constants";
-
-const readFiles = async <T>(globPattern: string) => {
-  const files = await glob(globPattern);
-  const contents = await Promise.all(
-    files //
-      .map((file) => readFile(file, { encoding: "utf-8" }))
-  );
-  const parsed = contents //
-    .map((content) => JSON.parse(content) as T);
-  return parsed;
-};
+import { lavaUrls } from "./lava-urls";
+import { readFiles } from "./readFiles";
+import { testnetConfigByChain, testnetTokensByIdentifiers } from "./testnets";
 
 export const readRegistryChain = async () =>
   (
     await readFiles<ChainRegistry>(
       "node_modules/chain-token-registry/chainConfig/*.json"
     )
-  ).flatMap(({ configurations, ...rest }) =>
-    configurations
-      ? configurations.map((configuration) => ({
-          ...rest,
-          configuration,
-        }))
-      : []
-  );
+  )
+    .map((chain) => {
+      const { prefix } = chain;
+      const testnets = testnetConfigByChain[prefix];
+      if (testnets) {
+        chain.configurations = [...(chain.configurations ?? []), ...testnets];
+      }
+      return chain;
+    })
+    .flatMap(({ configurations, ...rest }) =>
+      configurations
+        ? configurations.map((configuration) => ({
+            ...rest,
+            configuration,
+          }))
+        : []
+    );
 
 export const readRegistryToken = () =>
   readFiles<TokenRegistry>("node_modules/chain-token-registry/tokens/*.json");
 
-const normalizeNetworkUrls = (urls?: string[]) => {
+const normalizeNetworkUrls = (urls?: (string | undefined)[]) => {
   if (!urls) {
     return null;
   }
@@ -43,34 +43,52 @@ const normalizeNetworkUrls = (urls?: string[]) => {
   }
   return http;
 };
+const normalizeIdentifier = (
+  configuration: (ChainRegistry["configurations"] & {})[number]
+) => {
+  let identifier = configuration.identifier.toLowerCase();
+  if (configuration.identifier === "gravity") {
+    identifier = "gravitybridge";
+  }
 
-const tokenByPrefix = groupBy(
+  return identifier;
+};
+const chains = await readRegistryChain();
+
+const tokenByIdentifier = groupBy(
   await readRegistryToken(),
-  ({ coinSourcePrefix }) => coinSourcePrefix
-);
+  ({ ibc, prefix }) => {
+    const chain = chains.find(({ configuration }) => {
+      return (
+        configuration.identifier.toLowerCase() === ibc?.source?.toLowerCase()
+      );
+    });
+    if (!chain) {
+      return prefix;
+    }
 
-// This might be handy when we start supporting IBC between other chains
-// const fetchChainOnCosmosRegistry = async (id: string) => {
-//   if (id === "gravity") {
-//     id = "gravitybridge";
-//   }
-//   const response = await fetch(
-//     `https://raw.githubusercontent.com/cosmos/chain-registry/master/${id}/chain.json`
-//   );
-//   const json = await response.json();
-//   return json as CosmosRegistryChain;
-// };
+    return normalizeIdentifier(chain.configuration);
+  }
+);
+Object.entries(testnetTokensByIdentifiers).forEach(([identifier, tokens]) => {
+  tokenByIdentifier[identifier] = [
+    ...(tokenByIdentifier[identifier] ?? []),
+    ...tokens,
+  ];
+});
 
 await mkdir("src/chains", { recursive: true });
-
-const chains = await readRegistryChain();
 
 for (const chainRegistry of chains) {
   if (chainRegistry.prefix === "kujira") {
     // TODO: We need to add Kujira fee token to our registry
     continue;
   }
-  const tokens = tokenByPrefix[chainRegistry.prefix]?.map((token) => {
+  const configuration = chainRegistry.configuration;
+
+  const identifier = normalizeIdentifier(configuration);
+
+  const tokens = tokenByIdentifier[identifier]?.map((token) => {
     return {
       name: token.name,
       ref: `${chainRegistry.prefix}:${token.coinDenom}`,
@@ -95,13 +113,7 @@ for (const chainRegistry of chains) {
     };
   });
 
-  const configuration = chainRegistry.configuration;
-
   const isTestnet = configuration.configurationType === "testnet";
-  let identifier = configuration.identifier.toLowerCase();
-  if (identifier === "gravity") {
-    identifier = "gravitybridge";
-  }
   const feeTokenFromChainConfig = configuration.currencies[0];
   let feeToken = tokens.find(
     (token) =>
@@ -129,6 +141,24 @@ for (const chainRegistry of chains) {
     };
     tokens.push(feeToken);
   }
+
+  const isMainnet = configuration.configurationType === "mainnet";
+
+  const cosmosRest = normalizeNetworkUrls([
+    lavaUrls[identifier]?.cosmosRest,
+    isMainnet ? `https://rest.cosmos.directory/${identifier}` : "",
+    ...configuration.rest,
+  ]);
+  const tendermintRest = normalizeNetworkUrls([
+    lavaUrls[identifier]?.tendermintRest,
+    isMainnet ? `https://rpc.cosmos.directory/${identifier}` : "",
+    ...configuration.rpc,
+  ]);
+  const evmRest = normalizeNetworkUrls([
+    lavaUrls[identifier]?.evmRest,
+    ...(configuration.web3 ?? []),
+  ]);
+
   const chain = {
     prefix: chainRegistry.prefix,
     name: configuration.chainName,
@@ -149,21 +179,15 @@ for (const chainRegistry of chains) {
 
     // Naively assume the first token is the fee token, we should probably add this to our registry
     feeToken: feeToken.minCoinDenom,
-    cosmosRest: [
-      `https://rest.cosmos.directory/${identifier}`,
-      ...(normalizeNetworkUrls(configuration.rest) ?? []),
-    ],
-    tendermintRest: [
-      `https://rpc.cosmos.directory/${identifier}`,
-      ...(normalizeNetworkUrls(configuration.rpc) ?? []),
-    ],
-    evmRest: normalizeNetworkUrls(configuration.web3),
+    cosmosRest,
+    tendermintRest,
+    evmRest,
     cosmosGRPC: normalizeNetworkUrls(configuration.rpc),
-    evmRPC: normalizeNetworkUrls(configuration.rpc),
     tokens,
     explorerUrl: configuration.explorerTxUrl,
+    env: configuration.configurationType,
   };
-  await writeFile(`src/chains/${chain.prefix}.ts`, [
+  await writeFile(`src/chains/${chain.identifier}.ts`, [
     fileHeader,
     `export default ${JSON.stringify(chain, null, 2)} as const;`,
   ]);
@@ -173,6 +197,11 @@ await writeFile("src/chains/index.ts", [
   fileHeader,
   chains
     .filter(({ prefix }) => prefix !== "kujira")
-    .map(({ prefix }) => `export { default as ${prefix} } from "./${prefix}";`)
+    .map(
+      ({ configuration }) =>
+        `export { default as ${normalizeIdentifier(
+          configuration
+        )} } from "./${normalizeIdentifier(configuration)}";`
+    )
     .join("\n"),
 ]);

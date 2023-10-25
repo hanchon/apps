@@ -1,6 +1,6 @@
 {
   "name": "copilot",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
   "type": "module",
@@ -22,7 +22,7 @@
     "redux": ">=4"
   },
   "devDependencies": {
-    "@evmos-apps/config": "workspace:*",
+    "@evmosapps/config": "workspace:*",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.20",
     "prettier": "^3.0.1",
@@ -43,12 +43,17 @@
     "evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
     "icons": "workspace:*",
-    "next": "13.5.2",
+    "next": "13.5.5",
     "react": "18.2.0",
     "react-confetti-explosion": "^2.1.2",
     "tracker": "workspace:*",
     "typescript": "^5.2.2",
-    "ui-helpers": "workspace:*"
+    "ui-helpers": "workspace:*",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/mixpanel-browser": "2.47.1",
+    "mixpanel-browser": "^2.47.0",
+    "@types/mixpanel": "2.14.1"
   },
   "browserslist": [
     "last 3 chrome version",

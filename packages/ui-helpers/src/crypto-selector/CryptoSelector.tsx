@@ -24,6 +24,7 @@ const Button = ({
   children,
   src,
   variant = "default",
+  ...rest
 }: PropsWithChildren<{
   src?: string;
   variant?: "default" | "black";
@@ -37,6 +38,7 @@ const Button = ({
           "bg-black-900": variant === "black",
         }
       )}
+      {...rest}
     >
       {src && (
         <Image

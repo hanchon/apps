@@ -1,5 +1,5 @@
 {
-  "extends": "@evmos-apps/config/ts/react-library.json",
+  "extends": "@evmosapps/config/ts/react-library.json",
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"]
 }

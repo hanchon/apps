@@ -62,6 +62,83 @@ If you need to change the value of any of these constants we recommend the follo
 2. Change the value of the env variables in the .env.local file you copied into the apps folder
 3. Build and run the apps as highlighted by the instructions above
 
+Certainly! Here's a more detailed version with separate sections for local and live testnets, as well as an introduction:
+
+## Testnet Environment Setup
+
+### Local Testnet
+
+The CLI tool available in the `packages/testnet` package starts a local network for Evmos and Cosmoshub. It also sets up a relayer between the two using hermes.
+
+Note that not all features are currently supported in this simulated environment. As of now, only the assets page transactions are compatible with this testnet mode.
+
+#### Basic Setup
+
+1. **Set Environment Variable**: Modify your `.env` file to include:
+
+   ```
+   NEXT_PUBLIC_ENABLE_TESTNET=true
+   ```
+
+2. **Start the Local Testnet**:
+   Execute the command:
+
+   ```
+   pnpm testnet start
+   ```
+
+   This will initiate the local testnet setup the first time you call it, which takes about 2-3 minutes. Subsequent calls will reuse the existing configuration.
+
+3. **Resetting the Local Testnet Setup**:
+   To reset your local configuration, utilize the `--recreate` flag:
+   ```
+   pnpm testnet start --recreate
+   ```
+   This will remove the existing configuration and start over.
+
+#### Custom Accounts on Local Testnet
+
+Some accounts are preconfigured on the local testnet, you can access their
+mnemonics and other details by calling `pnpm testnet accounts list`. Feel free to use these accounts for testing.
+
+If you wish to setup a custom account, you can do so through the CLI tool, the following commands are available:
+
+- **Add an Account**:
+
+  ```shell
+  pnpm testnet accounts add
+  ```
+
+  It will prompt you to enter a name, mnemonic, and an initial balance. It will suggest a random mnemonic if you leave it blank.
+
+- **List Accounts**:
+  ```shell
+  pnpm testnet accounts list
+  ```
+- **Delete an Account**:
+  ```shell
+  pnpm testnet accounts delete
+  ```
+  It will prompt you to select an account to delete.
+
+After registering new mnemonics or making modifications, utilize the `--recreate` flag to refresh and refill accounts.
+
+#### Available tokens
+
+- WIZZ: a test ERC-20 token registered on testnet
+- Evmos: Evmos native token
+- Cosmoshub: Cosmos native token
+
+### Public Testnet
+
+Currently we have support for Evmos and Osmosis public testnets.
+
+#### Available tokens
+
+- WIZZ: a test ERC-20 token registered on testnet
+- Evmos: Evmos native token
+- Osmo: Osmosis native token
+
 ## Community
 
 The following chat channels and forums are a great spot to ask questions about Evmos:

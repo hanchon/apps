@@ -20,6 +20,7 @@ export default {
   "channels": null,
   "feeToken": "aevmos",
   "cosmosRest": [
+    "https://g.w.lavanet.xyz:443/gateway/evmos/rest/ef1ad852a77275e1eeef6c7972370118",
     "https://rest.cosmos.directory/evmos",
     "https://rest.bd.evmos.org:1317",
     "https://api-evmos-ia.cosmosia.notional.ventures",
@@ -29,21 +30,18 @@ export default {
     "https://evmos-rest.publicnode.com"
   ],
   "tendermintRest": [
+    "https://g.w.lavanet.xyz:443/gateway/evmos/rpc-http/ef1ad852a77275e1eeef6c7972370118",
     "https://rpc.cosmos.directory/evmos",
     "https://grpc.bd.evmos.org:9090"
   ],
   "evmRest": [
-    "https://jsonrpc-rpcaas-evmos-mainnet.ubiquity.blockdaemon.tech",
-    "https://eth.bd.evmos.org:8545",
+    "https://g.w.lavanet.xyz:443/gateway/evmos/json-rpc-http/ef1ad852a77275e1eeef6c7972370118",
     "https://jsonrpc-evmos-ia.cosmosia.notional.ventures",
-    "https://evmos-json-rpc.stakely.io",
-    "https://jsonrpc.evmos.nodestake.top",
-    "https://json-rpc.evmos.bh.rocks"
+    "https://evmos-mainnet.public.blastapi.io",
+    "https://evmos-evm.publicnode.com",
+    "https://evmos.lava.build"
   ],
   "cosmosGRPC": [
-    "https://grpc.bd.evmos.org:9090"
-  ],
-  "evmRPC": [
     "https://grpc.bd.evmos.org:9090"
   ],
   "tokens": [
@@ -99,5 +97,6 @@ export default {
       "listed": true
     }
   ],
-  "explorerUrl": "https://www.mintscan.io/evmos/txs"
+  "explorerUrl": "https://www.mintscan.io/evmos/txs",
+  "env": "mainnet"
 } as const;

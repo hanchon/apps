@@ -4,7 +4,7 @@ import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-re
 
 export const getTokenValidDestinations = (
   tokenRef: TokenRef,
-  network: Prefix,
+  network: Prefix
 ): Prefix[] => {
   // If asset is being held on an EVMOS ACCOUNT
   if (network === "evmos") {
@@ -14,6 +14,7 @@ export const getTokenValidDestinations = (
     // if it's NOT native to Evmos,than it can go to:
     // - other evmos accounts
     // - its native network
+
     return ["evmos", token.sourcePrefix];
   }
 

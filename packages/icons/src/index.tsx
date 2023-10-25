@@ -61,3 +61,8 @@ export { ReceiveIcon } from "./ReceiveIcon";
 export { PayIcon } from "./PayIcon";
 export { ShareIcon } from "./ShareIcon";
 export { ProcessingTxIcon } from "./ProcessingTxIcon";
+export { SquidIcon } from "./SquidIcon";
+export { LayerSwapIcon } from "./LayerSwapIcon";
+export { CypherDIcon } from "./CypherD";
+export { PriceDown } from "./PriceDown"
+export { PriceUp } from "./PriceUp"
