@@ -25,7 +25,6 @@ export default {
   },
   "feeToken": "uosmo",
   "cosmosRest": [
-    "https://g.w.lavanet.xyz:443/gateway/cos3/rest/ef1ad852a77275e1eeef6c7972370118",
     "https://rest.cosmos.directory/osmosis",
     "https://osmosis-lcd.quickapi.com:443",
     "https://lcd-osmosis.whispernode.com",
