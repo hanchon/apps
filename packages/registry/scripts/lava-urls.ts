@@ -3,7 +3,7 @@ const lavaUserId = "ef1ad852a77275e1eeef6c7972370118";
 export const lavaUrls: Record<
   string,
   {
-    cosmosRest: string;
+    cosmosRest?: string;
     tendermintRest: string;
     evmRest?: string;
   }
@@ -35,7 +35,8 @@ export const lavaUrls: Record<
     tendermintRest: `https://g.w.lavanet.xyz:443/gateway/junt1/rpc-http/${lavaUserId}`,
   },
   osmosis: {
-    cosmosRest: `https://g.w.lavanet.xyz:443/gateway/cos3/rest/${lavaUserId}`,
+    // Temporarily commenting this, lava endpoint is having issues with osmosis
+    // cosmosRest: `https://g.w.lavanet.xyz:443/gateway/cos3/rest/${lavaUserId}`,
     tendermintRest: `https://g.w.lavanet.xyz:443/gateway/cos3/rpc-http/${lavaUserId}`,
   },
   osmosistestnet: {
