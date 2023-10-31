@@ -36,7 +36,11 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
-## 1.3.6 - 2023-10-25
+## 1.3.7 - 2023-10-31
+
+- (chore) apps/assets 1.0.34 | Add noble USDC image
+
+## 1.3.6 - 2023-10-27
 
 - (fix) | packages packages/registry 1.0.2 | temporarily disable osmosis lava endpoint
 
