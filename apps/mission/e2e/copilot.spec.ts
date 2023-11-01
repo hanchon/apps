@@ -1,5 +1,6 @@
 import { mmFixture } from "@evmosapps/test-utils";
 import { BALANCE_ENDPOINT } from "./constants";
+import { pageListener } from "@evmosapps/test-utils";
 
 const { test, beforeEach, describe, expect } = mmFixture;
 
@@ -39,12 +40,15 @@ describe("Mission Page - Copilot", () => {
       })
       .click();
 
+    const approveAllPopup = pageListener(page.context());
     await expect(page.getByText(/Press Next and Connect/i)).toBeVisible();
-    const approveAllPopup = await page.context().waitForEvent("page");
+    await approveAllPopup.load;
 
-    await approveAllPopup.getByRole("button", { name: /Next/i }).click();
-    await approveAllPopup.getByRole("button", { name: /Connect/i }).click();
-    await approveAllPopup.getByRole("button", { name: /Sign/i }).click();
+    await approveAllPopup.page.getByRole("button", { name: /Next/i }).click();
+    await approveAllPopup.page
+      .getByRole("button", { name: /Connect/i })
+      .click();
+    await approveAllPopup.page.getByRole("button", { name: /Sign/i }).click();
 
     await page.getByRole("button", { name: /Top up your account/i }).click();
     await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
