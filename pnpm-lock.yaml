@@ -1492,8 +1492,8 @@ importers:
         specifier: ^1.39.0
         version: 1.39.0
       '@tenkeylabs/dappwright':
-        specifier: ^2.4.0
-        version: 2.4.0(playwright-core@1.39.0)
+        specifier: ^2.5.2
+        version: 2.5.2(playwright-core@1.39.0)
       octokit:
         specifier: ^3.1.1
         version: 3.1.1
@@ -1574,7 +1574,7 @@ importers:
         version: 1.0.34
       ws:
         specifier: ^8.14.2
-        version: 8.14.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+        version: 8.14.2
     devDependencies:
       '@evmosapps/config':
         specifier: workspace:*
@@ -1583,8 +1583,8 @@ importers:
         specifier: ^1.39.0
         version: 1.39.0
       '@tenkeylabs/dappwright':
-        specifier: ^2.4.0
-        version: 2.4.0(playwright-core@1.39.0)
+        specifier: ^2.5.2
+        version: 2.5.2(playwright-core@1.39.0)
       '@types/inquirer':
         specifier: ^9.0.4
         version: 9.0.4
@@ -5361,8 +5361,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: true
 
-  /@tenkeylabs/dappwright@2.4.0(playwright-core@1.39.0):
-    resolution: {integrity: sha512-6Y62KnqcWx6QvgMDpIcwtTbg+1AWtq+ZWTHd5Pgq0E5kjP4UPZnbhIqtYyEUT5WH+h9RNkNo8Zs3Av1liYRuyg==}
+  /@tenkeylabs/dappwright@2.5.2(playwright-core@1.39.0):
+    resolution: {integrity: sha512-90bYZxYDBKadsl783zqp6Sa+Kj4RJHK4RydDcaVjik5WD3xLwXgl0J/9ktCPXBvWHh/68ExvP4EadxOvdhfVag==}
     engines: {node: '>=16'}
     peerDependencies:
       playwright-core: '>1.0'
@@ -14845,6 +14845,19 @@ packages:
       utf-8-validate:
         optional: true
     dev: true
+
+  /ws@8.14.2:
+    resolution: {integrity: sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: false
 
   /ws@8.14.2(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     resolution: {integrity: sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==}

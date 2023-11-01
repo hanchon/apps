@@ -64,6 +64,11 @@ describe("Mission Page - Copilot", () => {
         .click();
 
       await switchNetworkPopupRetry
+        .getByRole("heading", {
+          name: "Allow this site to switch the network?",
+        })
+        .waitFor();
+      await switchNetworkPopupRetry
         .getByRole("button", { name: /Cancel/i })
         .click();
 

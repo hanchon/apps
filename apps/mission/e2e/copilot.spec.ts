@@ -85,18 +85,18 @@ describe("Mission Page - Copilot", () => {
 
     await page.getByRole("button", { name: "Cryptocurrencies" }).click();
 
-    const lawerSwapWidget = page.getByTestId("layerswap-widget");
-    await lawerSwapWidget.waitFor();
-
-    expect(await lawerSwapWidget.count()).toBe(1);
-
-    await page.getByTestId("card-provider-dropdown").click();
-    await page.getByRole("button", { name: /Squid/i }).click();
-
     const squidDWidget = page.getByTestId("squid-widget");
     await squidDWidget.waitFor();
 
     expect(await squidDWidget.count()).toBe(1);
+
+    await page.getByTestId("card-provider-dropdown").click();
+    await page.getByRole("button", { name: /LayerSwap/i }).click();
+
+    const lawerSwapWidget = page.getByTestId("layerswap-widget");
+    await lawerSwapWidget.waitFor();
+
+    expect(await lawerSwapWidget.count()).toBe(1);
 
     await page.getByTestId("card-provider-dropdown").click();
     await page.getByRole("button", { name: /Cypher Wallet/i }).click();

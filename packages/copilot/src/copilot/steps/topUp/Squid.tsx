@@ -54,7 +54,10 @@ const encodedConfig = encodeURIComponent(configJSON); // Encode the JSON string
 
 export const Squid = () => {
   return (
-    <div className="relative mx-auto mt-[25px] h-[700px] w-[300px] overflow-hidden rounded-[15px] md:h-[690px] md:w-[400px]">
+    <div
+      className="relative mx-auto mt-[25px] h-[700px] w-[300px] overflow-hidden rounded-[15px] md:h-[690px] md:w-[400px]"
+      data-testid="squid-widget"
+    >
       <iframe
         title="squid-widget"
         width="100%"
