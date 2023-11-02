@@ -1,4 +1,5 @@
 import { pageListener } from "@evmosapps/test-utils";
+import { E } from "helpers";
 import { BrowserContext } from "playwright";
 
 export const cleanupTabs = async (context: BrowserContext) => {
@@ -29,9 +30,14 @@ export const connectSwitchAndSignPubkey = async (
   await popupPage.getByRole("button", { name: /Next/i }).click();
   await popupPage.getByRole("button", { name: /Connect/i }).click();
 
-  if (popupPage.isClosed()) {
-    popupPage = await getMMPopup(context);
+  while (true) {
+    const [err] = await E.try(() =>
+      popupPage.getByRole("button", { name: /Sign/i }).click()
+    );
+    if (err?.message.includes("Page closed")) {
+      popupPage = await getMMPopup(context);
+      continue;
+    }
+    break;
   }
-
-  await popupPage.getByRole("button", { name: /Sign/i }).click();
 };

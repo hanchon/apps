@@ -15,17 +15,29 @@ const E2E_TEST_EVMOS_SYMBOL = process.env.E2E_TEST_EVMOS_SYMBOL ?? "EVMOS";
 
 const clearDappwright = async () => {
   try {
-    await rm(path.resolve(os.tmpdir(), "dappwright"), {
-      recursive: true,
-    });
+    const workerIndex = process.env.TEST_WORKER_INDEX || "0";
+
+    await rm(
+      path.resolve(
+        os.tmpdir(),
+        "dappwright",
+        "session",
+        "metamask",
+        workerIndex
+      ),
+      {
+        recursive: true,
+      }
+    );
   } catch (e) {}
 };
+const cleanupPromise = clearDappwright();
 export const web3Test = test.extend<{
   context: BrowserContext;
   wallet: Dappwright;
 }>({
   context: async ({}, use) => {
-    await clearDappwright();
+    await cleanupPromise;
     const [wallet, , context] = await dappwright.bootstrap("", {
       wallet: "metamask",
       version: MetaMaskWallet.recommendedVersion,
@@ -57,7 +69,7 @@ export const web3TestWithoutNetwork = test.extend<{
   wallet: Dappwright;
 }>({
   context: async ({}, use) => {
-    await clearDappwright();
+    await cleanupPromise;
     const [, , context] = await dappwright.bootstrap("", {
       wallet: "metamask",
       version: MetaMaskWallet.recommendedVersion,
