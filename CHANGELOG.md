@@ -37,6 +37,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 ## Unreleased
 
 - (chore) fse-794 | apps/mission 1.0.26 apps/assets 1.0.35 packages/stateful-components 1.0.3 | Update redirects: replace assets with portfolio
+- (fix) fse-801 | packages/copilot 1.0.9 | Change LayerSwap to Layerswap
 
 ## 1.3.7 - 2023-10-31
 
