@@ -10,7 +10,7 @@
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
     "@playwright/test": "^1.39.0",
-    "@tenkeylabs/dappwright": "^2.4.0",
+    "@tenkeylabs/dappwright": "^2.5.2",
     "@types/inquirer": "^9.0.4",
     "octokit": "^3.1.1",
     "tsx": "^3.13.0"

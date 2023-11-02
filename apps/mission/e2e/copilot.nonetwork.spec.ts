@@ -1,5 +1,6 @@
 import { noNetworkMMFixture, waitLocator } from "@evmosapps/test-utils";
 import { BALANCE_ENDPOINT } from "./constants";
+import { pageListener } from "@evmosapps/test-utils";
 
 const { test, beforeEach, describe, expect, step } = noNetworkMMFixture;
 
@@ -26,6 +27,7 @@ describe("Mission Page - Copilot", () => {
 
   test("should let the user connect with MetaMask, set the network, the accounts, top up the account and redirect to the ecosystem page", async ({
     page,
+    context,
   }) => {
     await step("Reject Connect", async () => {
       await page.getByRole("button", { name: /Connect/i }).click();
@@ -35,17 +37,20 @@ describe("Mission Page - Copilot", () => {
           name: /Evmos Copilot Recommended for first time users New/i,
         })
         .click();
-
+      const switchNetworkPopup = pageListener(context);
       await page
         .getByRole("button", {
           name: /Connect with MetaMask/i,
         })
         .click();
-      const switchNetworkPopup = await page.context().waitForEvent("page");
+
+      await switchNetworkPopup.load;
 
       await expect(page.getByText(/Approve on MetaMask/i)).toBeVisible();
 
-      await switchNetworkPopup.getByRole("button", { name: /Cancel/i }).click();
+      await switchNetworkPopup.page
+        .getByRole("button", { name: /Cancel/i })
+        .click();
 
       await expect(
         page.getByText(/Approval Rejected, please try again/i)
@@ -53,17 +58,24 @@ describe("Mission Page - Copilot", () => {
     });
 
     await step("Reject switch network", async () => {
+      const switchNetworkPopupRetry = pageListener(context);
       await page
         .getByRole("button", {
           name: /Try again/i,
         })
         .click();
-      const switchNetworkPopupRetry = await page.context().waitForEvent("page");
-      await switchNetworkPopupRetry
+      await switchNetworkPopupRetry.load;
+
+      await switchNetworkPopupRetry.page
         .getByRole("button", { name: /Approve/i })
         .click();
 
-      await switchNetworkPopupRetry
+      await switchNetworkPopupRetry.page
+        .getByRole("heading", {
+          name: "Allow this site to switch the network?",
+        })
+        .waitFor();
+      await switchNetworkPopupRetry.page
         .getByRole("button", { name: /Cancel/i })
         .click();
 
@@ -75,24 +87,27 @@ describe("Mission Page - Copilot", () => {
     });
 
     await step("Reject get accounts", async () => {
+      const switchNetworkPopupRetryAfterApprove = pageListener(context);
       await page
         .getByRole("button", {
           name: /Try again/i,
         })
         .click();
+      await switchNetworkPopupRetryAfterApprove.load;
 
-      const switchNetworkPopupRetryAfterApprove = await page
-        .context()
-        .waitForEvent("page");
-
-      await switchNetworkPopupRetryAfterApprove
+      await switchNetworkPopupRetryAfterApprove.page
         .getByRole("button", { name: /Switch Network/i })
         .click();
 
+      const getAccountsPopup = pageListener(context);
+
       await expect(page.getByText(/Press Next and Connect/i)).toBeVisible();
 
-      const getAccountsPopup = await page.context().waitForEvent("page");
-      await getAccountsPopup.getByRole("button", { name: /Cancel/i }).click();
+      await getAccountsPopup.load;
+
+      await getAccountsPopup.page
+        .getByRole("button", { name: /Cancel/i })
+        .click();
 
       await expect(
         page.getByText(/Get accounts rejected, please try again/i)
@@ -100,17 +115,21 @@ describe("Mission Page - Copilot", () => {
     });
 
     await step("Approve Pubkey", async () => {
+      const approveAllPopup = pageListener(context);
+
       await page
         .getByRole("button", {
           name: /Try again/i,
         })
         .click();
 
-      const approveAllPopup = await page.context().waitForEvent("page");
+      await approveAllPopup.load;
 
-      await approveAllPopup.getByRole("button", { name: /Next/i }).click();
-      await approveAllPopup.getByRole("button", { name: /Connect/i }).click();
-      await approveAllPopup.getByRole("button", { name: /Sign/i }).click();
+      await approveAllPopup.page.getByRole("button", { name: /Next/i }).click();
+      await approveAllPopup.page
+        .getByRole("button", { name: /Connect/i })
+        .click();
+      await approveAllPopup.page.getByRole("button", { name: /Sign/i }).click();
     });
 
     await step("Top up account", async () => {
