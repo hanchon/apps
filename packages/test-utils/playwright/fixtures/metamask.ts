@@ -1,12 +1,5 @@
 import { BrowserContext, test } from "@playwright/test";
-import dappwright, {
-  Dappwright,
-  MetaMaskWallet,
-  getWallet,
-} from "@tenkeylabs/dappwright";
-import os from "os";
-import path from "path";
-import { rm } from "fs/promises";
+import dappwright, { Dappwright, MetaMaskWallet } from "@tenkeylabs/dappwright";
 import { launch } from "./metamask-utils";
 
 const E2E_TEST_EVMOS_CHAIN_NAME =
@@ -18,25 +11,6 @@ const E2E_TEST_EVMOS_CHAIN_ID = parseInt(
 );
 const E2E_TEST_EVMOS_SYMBOL = process.env.E2E_TEST_EVMOS_SYMBOL ?? "EVMOS";
 
-const clearDappwright = async () => {
-  try {
-    const workerIndex = process.env.TEST_WORKER_INDEX || "0";
-
-    await rm(
-      path.resolve(
-        os.tmpdir(),
-        "dappwright",
-        "session",
-        "metamask",
-        workerIndex
-      ),
-      {
-        recursive: true,
-      }
-    );
-  } catch (e) {}
-};
-const cleanupPromise = clearDappwright();
 export const web3Test = test.extend<{
   context: BrowserContext;
   wallet: Dappwright;
@@ -51,14 +25,6 @@ export const web3Test = test.extend<{
         "test test test test test test test test test test test junk",
       headless: false,
     });
-    // const [wallet, , context] = await dappwright.bootstrap("", {
-    //   wallet: "metamask",
-    //   version: MetaMaskWallet.recommendedVersion,
-    //   seed:
-    //     process.env.E2E_TEST_SEED ??
-    //     "test test test test test test test test test test test junk",
-    //   headless: false,
-    // });
 
     await wallet.addNetwork({
       networkName: E2E_TEST_EVMOS_CHAIN_NAME,
@@ -82,16 +48,6 @@ export const web3TestWithoutNetwork = test.extend<{
   wallet: Dappwright;
 }>({
   context: async ({}, use) => {
-    // await cleanupPromise;
-    // const [, , context] = await dappwright.bootstrap("", {
-    //   wallet: "metamask",
-    //   version: MetaMaskWallet.recommendedVersion,
-
-    //   seed:
-    //     process.env.E2E_TEST_SEED ??
-    //     "test test test test test test test test test test test junk",
-    //   headless: false,
-    // });
     const { browserContext } = await launch("nonetweb3", {
       wallet: "metamask",
       version: MetaMaskWallet.recommendedVersion,
