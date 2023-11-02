@@ -372,7 +372,9 @@ export const FundVestingAccount = () => {
           type="number"
           id="amount"
           {...register("amount", { valueAsNumber: true })}
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={(e) => {
+            e.target.value === "" ? setAmount("0") : setAmount(e.target.value);
+          }}
           className="textBoxStyle"
         />
         {errors.amount?.message && (
