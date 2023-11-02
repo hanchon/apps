@@ -22,6 +22,11 @@ import { useWEVMOS } from "../contracts/hooks/useWEVMOS";
 import { parseUnits } from "@ethersproject/units";
 import { Log } from "helpers";
 import { EXPLORER_URL } from "constants-helper";
+import { getNetwork, switchNetwork } from "wagmi/actions";
+import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
+import { E } from "helpers";
+
+const evmos = getEvmosChainInfo();
 
 const wrapEvmos = "EVMOS <> WEVMOS";
 const unwrapEvmos = "WEVMOS <> EVMOS";
@@ -41,6 +46,15 @@ export const useConvert = (useConvertProps: ConvertProps) => {
     useTracker(UNSUCCESSFUL_WRAP_TX);
 
   const handleConfirmButton = async () => {
+    const connectedNetwork = getNetwork();
+    if (connectedNetwork.chain?.id !== evmos.id) {
+      const [err] = await E.try(() =>
+        switchNetwork({
+          chainId: evmos.id,
+        })
+      );
+      if (err) return;
+    }
     clickConfirmWrapTx({
       convert: useConvertProps.balance.isIBCBalance ? wrapEvmos : unwrapEvmos,
       wallet: wallet?.evmosAddressEthFormat,

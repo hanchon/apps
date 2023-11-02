@@ -20,7 +20,11 @@ import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { useTranslation } from "next-i18next";
 import { Log } from "helpers";
 import { EXPLORER_URL } from "constants-helper";
+import { getNetwork, switchNetwork } from "wagmi/actions";
+import { E } from "helpers";
+import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
 
+const evmos = getEvmosChainInfo();
 export const EnableVestingModal = () => {
   const [disabled, setDisabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
@@ -28,6 +32,15 @@ export const EnableVestingModal = () => {
   const { createClawbackVestingAccount } = useVestingPrecompile();
 
   const handleOnClick = async (d: FieldValues) => {
+    const connectedNetwork = getNetwork();
+    if (connectedNetwork.chain?.id !== evmos.id) {
+      const [err] = await E.try(() =>
+        switchNetwork({
+          chainId: evmos.id,
+        })
+      );
+      if (err) return;
+    }
     try {
       setDisabled(true);
 

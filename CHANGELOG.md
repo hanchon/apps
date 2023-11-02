@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (fix) fse-800 | apps/assets 1.0.36 apps/governance 1.0.28 apps/staking 1.1.2 apps/vesting 1.1.2 packages/evmos-wallet 1.0.22 | Suggest changing network to evmos (MetaMask)
 - (chore) fse-794 | apps/mission 1.0.26 apps/assets 1.0.35 packages/stateful-components 1.0.3 | Update redirects: replace assets with portfolio
 
 ## 1.3.7 - 2023-10-31
