@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (fix) fse-834 | apps/assets 1.0.36 | Fix error generating txns appear twice in pay modal
 - (chore) fse-794 | apps/mission 1.0.26 apps/assets 1.0.35 packages/stateful-components 1.0.3 | Update redirects: replace assets with portfolio
 
 ## 1.3.7 - 2023-10-31
