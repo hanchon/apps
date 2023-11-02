@@ -71,7 +71,7 @@ describe("TopUp component", () => {
     expect(defaultCryptoOption).toBeDefined();
 
     await userEvent.click(dropdownProvider);
-    const layerSwapOption = getByText(/layerSwap/i);
+    const layerSwapOption = getByText(/layerswap/i);
     await userEvent.click(layerSwapOption);
 
     await userEvent.click(dropdownProvider);

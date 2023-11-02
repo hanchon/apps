@@ -32,9 +32,9 @@ export const providerOptions = {
       value: "Squid",
     },
     {
-      name: "LayerSwap",
+      name: "Layerswap",
       image: <LayerSwapIcon width={20} height={20} />,
-      value: "LayerSwap",
+      value: "Layerswap",
     },
     {
       name: "Cypher Wallet",
