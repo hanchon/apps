@@ -14,7 +14,7 @@ export const Header = ({
   price,
   pageName,
   launchPad,
-  evmosPriceChange
+  evmosPriceChange,
 }: {
   walletConnectionButton?: JSX.Element;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
@@ -23,7 +23,6 @@ export const Header = ({
   launchPad: LaunchPadProps;
   evmosPriceChange: number;
 }) => {
-
   return (
     <div className="mt-5 md:mt-0 text-pearl mb-3 flex flex-col md:mx-0 md:h-32 md:flex-row md:items-center md:justify-between">
       <Link
@@ -34,7 +33,7 @@ export const Header = ({
         onClick={onClick}
       >
         <Logo className="h-7 md:h-8 lg:h-9 w-auto mr-2 lg:mr-3" />
-        <p className="text-red relative top-[6px] text-[24px] md:text-[30px] lg:text-[36px] font-bold font-[NB] ">
+        <p className="text-red relative top-[6px] text-[24px] md:text-[30px] lg:text-[36px] font-bold font-brand ">
           <span className="text-pearl mr-4 md:mr-5 lg:mr-6">Evmos</span>
           {pageName}
         </p>
@@ -47,7 +46,13 @@ export const Header = ({
 
           <div className="flex items-center gap-1">
             {evmosPriceChange > 0 ? <PriceUp /> : <PriceDown />}
-            <span className={`${evmosPriceChange > 0 ? "text-[#31B886]" : "text-[#ED4E33]"} font-normal`}>{evmosPriceChange.toFixed(2)}%</span>
+            <span
+              className={`${
+                evmosPriceChange > 0 ? "text-[#31B886]" : "text-[#ED4E33]"
+              } font-normal`}
+            >
+              {evmosPriceChange.toFixed(2)}%
+            </span>
           </div>
         </div>
         <div className="flex items-center space-x-3">

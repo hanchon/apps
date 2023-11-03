@@ -11,6 +11,11 @@ const config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        body: ["var(--font-body)"],
+        display: ["var(--font-display)"],
+        brand: ["var(--font-brand)"],
+      },
       boxShadow: {
         custom: "0px 4px 30px 0px #62575599",
         "custom-sm": "0px 4px 15px 0px #9C848199",

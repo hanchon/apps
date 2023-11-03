@@ -12,7 +12,14 @@ import {
   WalletProvider,
 } from "evmos-wallet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { TermOfServices, Container, MavaWidget } from "ui-helpers";
+import {
+  TermOfServices,
+  Container,
+  MavaWidget,
+  greyCliff,
+  ibm,
+  nb,
+} from "ui-helpers";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 function SnackbarsInternal() {
@@ -26,6 +33,7 @@ import { StatefulFooter, StatefulHeader } from "stateful-components";
 const Content = dynamic(() => import("../src/components/vesting/Content"));
 import { MixpanelProvider } from "tracker";
 import { GiveFeedback } from "../src/components/GiveFeedback";
+import { cn } from "helpers";
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -49,7 +57,9 @@ export default function Home() {
             <>
               <HeadComponent />
               <GoogleAnalytics />
-              <main>
+              <main
+                className={cn(greyCliff.variable, ibm.variable, nb.variable)}
+              >
                 <TermOfServices />
                 <GiveFeedback />
                 <Container>

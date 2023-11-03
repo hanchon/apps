@@ -10,7 +10,14 @@ import {
   getAllSnackbars,
   WalletProvider,
 } from "evmos-wallet";
-import { Container, MavaWidget, TermOfServices } from "ui-helpers";
+import {
+  Container,
+  MavaWidget,
+  TermOfServices,
+  greyCliff,
+  ibm,
+  nb,
+} from "ui-helpers";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { StatefulHeader } from "stateful-components";
 import { HeadComponent } from "./asset/HeadComponent";
@@ -28,6 +35,7 @@ import { RequestModal } from "./topBarButtons/request/RequestModal";
 import { TopupModal } from "./topBarButtons/topup/TopupModal";
 import { PayModal } from "./topBarButtons/pay/Modal";
 import { PropsWithChildren } from "react";
+import { cn } from "helpers";
 
 function SnackbarsInternal() {
   const valueRedux = useSelector((state: StoreType) => getAllSnackbars(state));
@@ -48,7 +56,9 @@ export function Providers({ children }: PropsWithChildren) {
             <>
               <HeadComponent />
               <GoogleAnalytics />
-              <main>
+              <main
+                className={cn(greyCliff.variable, ibm.variable, nb.variable)}
+              >
                 <GiveFeedback />
                 <Container>
                   <>

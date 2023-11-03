@@ -21,7 +21,7 @@ export const Button = ({
       onClick={tab.onClick}
       disabled={tab.disabled}
       className={cx(
-        "flex items-center justify-center gap-1 rounded-md py-1 px-3 font-[IBM]",
+        "flex items-center justify-center gap-1 rounded-md py-1 px-3 font-display",
         {
           "border-red border-2":
             variant === "default" && tab.option === tab.type,

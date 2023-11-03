@@ -22,7 +22,7 @@ const Content = () => {
       {account !== undefined && <Navigation href="/" text={NAV_TO_VESTING} />}
       <Header />
 
-      <div className="mt-8 w-full font-[IBM] text-pearl">
+      <div className="mt-8 w-full font-display text-pearl">
         {account === undefined ? (
           <p className="flex justify-center ">
             {t("vesting.content.placeholder.title")}

@@ -12,12 +12,14 @@ import {
 } from "evmos-wallet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Container, MavaWidget, TermOfServices } from "ui-helpers";
-import MainContainer from "../src/components/mission/MainContainer";
-import { HeadComponent } from "../src/components/mission/HeadComponent";
-import { GoogleAnalytics } from "../src/components/mission/GoogleAnalytics";
+import MainContainer from "../components/mission/MainContainer";
+import { HeadComponent } from "../components/mission/HeadComponent";
+import { GoogleAnalytics } from "../components/mission/GoogleAnalytics";
 import { MixpanelProvider } from "tracker";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GiveFeedback } from "../src/components/mission/GiveFeedback";
+import { GiveFeedback } from "../components/mission/GiveFeedback";
+import { greyCliff, ibm, nb } from "ui-helpers";
+import { cn } from "helpers";
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -48,7 +50,9 @@ export default function Mission() {
             <>
               <HeadComponent />
               <GoogleAnalytics />
-              <main>
+              <main
+                className={cn(greyCliff.variable, ibm.variable, nb.variable)}
+              >
                 <TermOfServices />
                 <GiveFeedback />
                 <Container>
