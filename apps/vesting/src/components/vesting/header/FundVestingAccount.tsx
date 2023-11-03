@@ -106,10 +106,13 @@ export const FundVestingAccount = () => {
         }
         getVesting(_vestingAddress)
           .then((data) => {
-            if (data === "Error while getting vesting account info") {
-              setVestingAddressError(true);
-              return;
+            if ("error" in data) {
+              if (data.error === "Error while getting vesting account info") {
+                setVestingAddressError(true);
+                return;
+              }
             }
+
             const vestingDataRes: VestingResponse = data as VestingResponse;
             setVestingAddressData(vestingDataRes);
           })
@@ -385,7 +388,9 @@ export const FundVestingAccount = () => {
           type="number"
           id="amount"
           {...register("amount", { valueAsNumber: true })}
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={(e) => {
+            e.target.value === "" ? setAmount("0") : setAmount(e.target.value);
+          }}
           className="textBoxStyle"
         />
         {errors.amount?.message && (
