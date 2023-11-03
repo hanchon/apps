@@ -4,39 +4,44 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { getVesting } from "../fetch";
-import { VestingAccountDetail } from "../types";
+import { VestingResponse } from "../types";
 
 export const useVestingAccounts = (account?: string) => {
-  const vestingResponse = useQuery({
+  const vestingResponse = useQuery<VestingResponse | { error: string }>({
     queryKey: ["vesting", account],
     queryFn: () => getVesting(account),
   });
 
   const vestingDetails = useMemo(() => {
-    let temp: VestingAccountDetail = {
-      accountAddress: "",
-      funderAddress: "",
-      unvestedAmount: "",
-      originalVestingAmount: "",
-    };
-    if (vestingResponse.data !== undefined) {
-      if (typeof vestingResponse.data === "string") {
-        return "There is no vesting account linked to this address.";
-      } else if (vestingResponse?.data?.unvested === null) {
-        return "There is no vesting account linked to this address.";
-      }
-      temp = {
-        accountAddress:
-          vestingResponse?.data?.account?.base_vesting_account?.base_account
-            .address,
-        funderAddress: vestingResponse?.data?.account?.funder_address,
-        unvestedAmount: vestingResponse?.data?.unvested[0]?.amount,
-        originalVestingAmount:
-          vestingResponse?.data.account?.base_vesting_account
-            ?.original_vesting[0]?.amount,
+    if (vestingResponse.data === undefined) {
+      return {
+        accountAddress: "",
+        funderAddress: "",
+        unvestedAmount: "",
+        originalVestingAmount: "",
       };
     }
-    return temp;
+
+    if ("error" in vestingResponse.data) {
+      return vestingResponse.data.error;
+    }
+
+    if (
+      vestingResponse?.data?.unvested === undefined ||
+      vestingResponse?.data?.unvested === null
+    ) {
+      return "Something went wrong, please try again later";
+    }
+    return {
+      accountAddress:
+        vestingResponse?.data?.account?.base_vesting_account?.base_account
+          .address,
+      funderAddress: vestingResponse?.data?.account?.funder_address,
+      unvestedAmount: vestingResponse?.data?.unvested[0]?.amount,
+      originalVestingAmount:
+        vestingResponse?.data.account?.base_vesting_account?.original_vesting[0]
+          ?.amount,
+    };
   }, [vestingResponse]);
 
   return {

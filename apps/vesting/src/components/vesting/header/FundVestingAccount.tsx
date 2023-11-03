@@ -106,10 +106,13 @@ export const FundVestingAccount = () => {
         }
         getVesting(_vestingAddress)
           .then((data) => {
-            if (data === "Error while getting vesting account info") {
-              setVestingAddressError(true);
-              return;
+            if ("error" in data) {
+              if (data.error === "Error while getting vesting account info") {
+                setVestingAddressError(true);
+                return;
+              }
             }
+
             const vestingDataRes: VestingResponse = data as VestingResponse;
             setVestingAddressData(vestingDataRes);
           })
