@@ -42,7 +42,7 @@
     "@types/mixpanel-browser": "2.47.1",
     "clsx": "^2.0.0",
     "mixpanel-browser": "^2.47.0",
-    "vitest": "^0.34.1"
+    "vitest": "^0.34.6"
   },
   "browserslist": [
     "last 3 chrome version",

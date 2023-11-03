@@ -39,6 +39,6 @@
     "eslint-plugin-vitest": "^0.2.8",
     "jsdom": "^22.1.0",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.1"
+    "vitest": "^0.34.6"
   }
 }

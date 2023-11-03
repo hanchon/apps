@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 import { IBM_Plex_Sans } from "next/font/google";
+
 export const greyCliff = localFont({
   variable: "--font-body",
   src: [

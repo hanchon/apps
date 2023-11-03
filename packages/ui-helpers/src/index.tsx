@@ -73,4 +73,3 @@ export { Spinner } from "./spinners/Spinner";
 export * from "./Toggle";
 export * from "./selects/SelectMenu";
 export * from "./modal/WizardHelper";
-export * from "./fonts";

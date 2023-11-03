@@ -67,13 +67,13 @@
     "evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
     "icons": "workspace:*",
+    "next": "^14.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.2",
     "tracker": "workspace:*",
     "ui-helpers": "workspace:*",
-    "vitest": "^0.34.1",
-    "zod": "^3.22.1",
-    "next": "^14.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "vitest": "^0.34.6",
+    "zod": "^3.22.1"
   }
 }

@@ -11,14 +11,8 @@ import {
   WalletProvider,
 } from "evmos-wallet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  TermOfServices,
-  Container,
-  MavaWidget,
-  greyCliff,
-  ibm,
-  nb,
-} from "ui-helpers";
+import { TermOfServices, Container, MavaWidget } from "ui-helpers";
+import { greyCliff, ibm, nb } from "ui-helpers/src/fonts";
 import { StatefulHeader } from "stateful-components";
 import { HeadComponent } from "../src/components/governance/HeadComponent";
 import { GoogleAnalytics } from "../src/components/GoogleAnalytics";

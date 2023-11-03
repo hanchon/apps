@@ -62,13 +62,16 @@
     "lodash-es": "^4.17.21",
     "long": "^5.2.3",
     "mixpanel-browser": "^2.47.0",
+    "next": "^14.0.1",
     "pino": "^8.15.0",
     "pino-pretty": "^10.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-redux": "^8.1.2",
     "redux": "^4.2.1",
     "schummar-translate": "^1.19.0",
     "ui-helpers": "workspace:*",
-    "vitest": "^0.34.1"
+    "vitest": "^0.34.6"
   },
   "browserslist": [
     "last 3 chrome version",

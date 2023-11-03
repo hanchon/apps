@@ -12,14 +12,9 @@ import {
   WalletProvider,
 } from "evmos-wallet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  TermOfServices,
-  Container,
-  MavaWidget,
-  greyCliff,
-  ibm,
-  nb,
-} from "ui-helpers";
+import { TermOfServices, Container, MavaWidget } from "ui-helpers";
+import { greyCliff, ibm, nb } from "ui-helpers/src/fonts";
+
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 function SnackbarsInternal() {

@@ -13,14 +13,8 @@ import {
 } from "evmos-wallet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import {
-  TermOfServices,
-  Container,
-  MavaWidget,
-  greyCliff,
-  ibm,
-  nb,
-} from "ui-helpers";
+import { TermOfServices, Container, MavaWidget } from "ui-helpers";
+import { greyCliff, ibm, nb } from "ui-helpers/src/fonts";
 import { MixpanelProvider } from "tracker";
 function SnackbarsInternal() {
   const valueRedux = useSelector((state: StoreType) => getAllSnackbars(state));

@@ -10,14 +10,8 @@ import {
   getAllSnackbars,
   WalletProvider,
 } from "evmos-wallet";
-import {
-  Container,
-  MavaWidget,
-  TermOfServices,
-  greyCliff,
-  ibm,
-  nb,
-} from "ui-helpers";
+import { Container, MavaWidget, TermOfServices } from "ui-helpers";
+import { greyCliff, ibm, nb } from "ui-helpers/src/fonts";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { StatefulHeader } from "stateful-components";
 import { HeadComponent } from "./asset/HeadComponent";
