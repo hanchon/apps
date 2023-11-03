@@ -37,6 +37,11 @@ Ref: https://keepachangelog.com/en/1.0.0/
 ## Unreleased
 
 - (chore) fse-799 | packages/copilot 1.0.10 | Use wagmi value instead of redux value
+- (fix) fse-816 | packages/ui-helpers 1.0.17 packages/icons 1.0.10 | Replace Twitter logo to X logo in the footer
+- (fix) fse-831 | apps/assets 1.0.39 | Fix usdc.grv image
+- (fix) fse-837 | apps/vesting 1.1.4 | Fix error in account details page for vesting
+- (fix) fse-836 | apps/vesting 1.1.3 | Fix error on creating vesting account
+- (fix) fse-834 | apps/assets 1.0.38 | Fix error generating txns appear twice in pay modal
 - (fix) fse-800 | apps/assets 1.0.37 apps/governance 1.0.28 apps/staking 1.1.2 apps/vesting 1.1.2 packages/evmos-wallet 1.0.23 | Suggest changing network to evmos (MetaMask)
 
 ## 1.3.8 - 2023-11-02

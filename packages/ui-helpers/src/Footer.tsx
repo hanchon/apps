@@ -78,7 +78,7 @@ export const Footer = ({
             href="https://twitter.com/evmosorg"
             aria-label="twitter evmos"
           >
-            <TwitterIcon />
+            <TwitterIcon width={20} height={20} />
           </Link>
           <Link
             target="_blank"
