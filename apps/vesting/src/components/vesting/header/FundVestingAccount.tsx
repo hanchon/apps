@@ -46,7 +46,11 @@ import { VestingResponse } from "../../../internal/types";
 import { getEvmosBalance } from "evmos-wallet/src/internal/wallet/functionality/fetch";
 import { ethers } from "ethers";
 import { EXPLORER_URL } from "constants-helper";
+import { getNetwork, switchNetwork } from "wagmi/actions";
+import { E } from "helpers";
+import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
 
+const evmos = getEvmosChainInfo();
 export const FundVestingAccount = () => {
   const [disabled, setDisabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
@@ -102,10 +106,13 @@ export const FundVestingAccount = () => {
         }
         getVesting(_vestingAddress)
           .then((data) => {
-            if (data === "Error while getting vesting account info") {
-              setVestingAddressError(true);
-              return;
+            if ("error" in data) {
+              if (data.error === "Error while getting vesting account info") {
+                setVestingAddressError(true);
+                return;
+              }
             }
+
             const vestingDataRes: VestingResponse = data as VestingResponse;
             setVestingAddressData(vestingDataRes);
           })
@@ -120,6 +127,15 @@ export const FundVestingAccount = () => {
   }, [vestingAddress]);
 
   const handleOnClick = async (d: FieldValues) => {
+    const connectedNetwork = getNetwork();
+    if (connectedNetwork.chain?.id !== evmos.id) {
+      const [err] = await E.try(() =>
+        switchNetwork({
+          chainId: evmos.id,
+        })
+      );
+      if (err) return;
+    }
     try {
       setDisabled(true);
 
@@ -372,7 +388,9 @@ export const FundVestingAccount = () => {
           type="number"
           id="amount"
           {...register("amount", { valueAsNumber: true })}
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={(e) => {
+            e.target.value === "" ? setAmount("0") : setAmount(e.target.value);
+          }}
           className="textBoxStyle"
         />
         {errors.amount?.message && (

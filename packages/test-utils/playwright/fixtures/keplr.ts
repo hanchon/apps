@@ -10,8 +10,14 @@ const makeKeplr = async (context: BrowserContext, extensionId: string) => {
   await keplr.setup();
   return keplr;
 };
+const workerIndex = process.env.TEST_WORKER_INDEX || "0";
 
-export const sessionPath = path.resolve(tmpdir(), "keplr", "session");
+export const sessionPath = path.resolve(
+  tmpdir(),
+  "keplr",
+  "session",
+  workerIndex
+);
 
 const loadContext = async () => {
   const pathToExtension = await downloadRelease("v0.12.35");

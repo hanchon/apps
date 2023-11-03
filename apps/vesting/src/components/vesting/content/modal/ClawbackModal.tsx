@@ -17,6 +17,11 @@ import { useState } from "react";
 import { useVestingPrecompile } from "../../../../internal/useVestingPrecompile";
 import { useTranslation } from "next-i18next";
 import { EXPLORER_URL } from "constants-helper";
+import { getNetwork, switchNetwork } from "wagmi/actions";
+import { E } from "helpers";
+import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
+
+const evmos = getEvmosChainInfo();
 
 // TODO: format totalTokens and availableClawback depending on the response
 export const ClawbackModal = ({
@@ -30,6 +35,15 @@ export const ClawbackModal = ({
   const { clawback } = useVestingPrecompile();
 
   const handleOnClick = async () => {
+    const connectedNetwork = getNetwork();
+    if (connectedNetwork.chain?.id !== evmos.id) {
+      const [err] = await E.try(() =>
+        switchNetwork({
+          chainId: evmos.id,
+        })
+      );
+      if (err) return;
+    }
     try {
       setDisabled(true);
 
