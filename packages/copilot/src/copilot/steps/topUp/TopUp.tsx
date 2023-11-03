@@ -65,7 +65,7 @@ export const TopUp = () => {
             />
             {cryptoProvider.value === "Cypher Wallet" ? (
               <CypherD />
-            ) : cryptoProvider.value === "LayerSwap" ? (
+            ) : cryptoProvider.value === "Layerswap" ? (
               <LayerSwap />
             ) : (
               <Squid />

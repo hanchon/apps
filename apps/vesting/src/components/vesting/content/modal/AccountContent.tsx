@@ -52,7 +52,6 @@ export const AccountContent = ({
             text={t("vesting.account.details.total.vesting.title")}
             amount={vestedEvmos}
           />
-          {/* TODO: add correct value here */}
           <AmountItem
             text={t("vesting.account.details.vested.title")}
             amount={(

@@ -39,6 +39,11 @@ import {
 } from "tracker";
 import { prepareWriteContract, writeContract } from "wagmi/actions";
 import { EXPLORER_URL } from "constants-helper";
+import { getNetwork, switchNetwork } from "wagmi/actions";
+import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
+import { E } from "helpers";
+
+const evmos = getEvmosChainInfo();
 
 const IBC_ERC20 = "IBC<>ERC-20";
 const ERC20_IBC = "ERC-20 <> IBC";
@@ -163,6 +168,15 @@ const Convert = ({
         <ConfirmButton
           disabled={disabled}
           onClick={async () => {
+            const connectedNetwork = getNetwork();
+            if (connectedNetwork.chain?.id !== evmos.id) {
+              const [err] = await E.try(() =>
+                switchNetwork({
+                  chainId: evmos.id,
+                })
+              );
+              if (err) return;
+            }
             clickConfirmConvertTx({
               convert: isERC20Selected ? ERC20_IBC : IBC_ERC20,
               wallet: wallet?.evmosAddressEthFormat,
