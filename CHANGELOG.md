@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) fse-799 | packages/copilot 1.0.10 | Use wagmi value instead of redux value
 - (fix) fse-800 | apps/assets 1.0.37 apps/governance 1.0.28 apps/staking 1.1.2 apps/vesting 1.1.2 packages/evmos-wallet 1.0.23 | Suggest changing network to evmos (MetaMask)
 
 ## 1.3.8 - 2023-11-02
