@@ -1,11 +1,12 @@
 import { mmFixture } from "@evmosapps/test-utils";
 import { BALANCE_ENDPOINT } from "./constants";
-import { pageListener } from "@evmosapps/test-utils";
+import { cleanupTabs, connectSwitchAndSignPubkey } from "./cleanupTabs";
 
 const { test, beforeEach, describe, expect } = mmFixture;
 
 describe("Mission Page - Copilot", () => {
-  beforeEach(async ({ page }) => {
+  beforeEach(async ({ page, context }) => {
+    await cleanupTabs(context);
     await page.goto("/");
 
     await page
@@ -34,21 +35,9 @@ describe("Mission Page - Copilot", () => {
       })
       .click();
 
-    await page
-      .getByRole("button", {
-        name: /Connect with MetaMask/i,
-      })
-      .click();
-
-    const approveAllPopup = pageListener(page.context());
-    await expect(page.getByText(/Press Next and Connect/i)).toBeVisible();
-    await approveAllPopup.load;
-
-    await approveAllPopup.page.getByRole("button", { name: /Next/i }).click();
-    await approveAllPopup.page
-      .getByRole("button", { name: /Connect/i })
-      .click();
-    await approveAllPopup.page.getByRole("button", { name: /Sign/i }).click();
+    await connectSwitchAndSignPubkey(page.context(), () =>
+      page.getByRole("button", { name: /Connect with MetaMask/i }).click()
+    );
 
     await page.getByRole("button", { name: /Top up your account/i }).click();
     await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
