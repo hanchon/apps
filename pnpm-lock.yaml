@@ -50,24 +50,15 @@ importers:
       kill-port:
         specifier: ^2.0.1
         version: 2.0.1
-      next:
-        specifier: ^14.0.1
-        version: 14.0.1(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)
       nibble:
         specifier: ^0.0.2
         version: 0.0.2
       playwright:
         specifier: ^1.39.0
         version: 1.39.0
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
       react-confetti-explosion:
         specifier: ^2.1.2
         version: 2.1.2(react-dom@18.2.0)(react@18.2.0)
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
       react-hook-form:
         specifier: ^7.44.3
         version: 7.45.2(react@18.2.0)
@@ -171,6 +162,15 @@ importers:
       mixpanel-browser:
         specifier: ^2.47.0
         version: 2.47.0
+      next:
+        specifier: ^14.0.1
+        version: 14.0.1(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
       react-qr-code:
         specifier: ^2.0.12
         version: 2.0.12(react@18.2.0)
@@ -280,6 +280,15 @@ importers:
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
+      next:
+        specifier: ^14.0.1
+        version: 14.0.1(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
     devDependencies:
       '@ethersproject/bignumber':
         specifier: ^5.7.0
@@ -404,6 +413,15 @@ importers:
       mixpanel-browser:
         specifier: ^2.47.0
         version: 2.47.0
+      next:
+        specifier: ^14.0.1
+        version: 14.0.1(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
     devDependencies:
       '@ethersproject/bignumber':
         specifier: ^5.7.0
@@ -598,9 +616,18 @@ importers:
       icons:
         specifier: workspace:*
         version: link:../../packages/icons
+      next:
+        specifier: ^14.0.1
+        version: 14.0.1(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)
       postcss:
         specifier: ^8.4.20
         version: 8.4.31
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
       react-markdown:
         specifier: ^8.0.5
         version: 8.0.5(@types/react@18.2.21)(react@18.2.0)
@@ -658,6 +685,15 @@ importers:
       icons:
         specifier: workspace:*
         version: link:../../packages/icons
+      next:
+        specifier: ^14.0.1
+        version: 14.0.1(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
       react-hook-form:
         specifier: ^7.45.2
         version: 7.45.2(react@18.2.0)
