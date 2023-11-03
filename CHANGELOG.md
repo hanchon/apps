@@ -37,6 +37,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 ## Unreleased
 
 - (fix) fse-837 | apps/vesting 1.1.2 | Fix error in account details page for vesting
+- (fix) fse-832 | packages/registry 1.0.3 apps/assets 1.0.36 | Fix Noble USDC not showing up in send modal
+- (fix) | packages/evmos-wallet 1.0.22 | hardcode estimation for ics transfers while core team fixes the issue with precompile gas estimation
 - (chore) fse-794 | apps/mission 1.0.26 apps/assets 1.0.35 packages/stateful-components 1.0.3 | Update redirects: replace assets with portfolio
 
 ## 1.3.7 - 2023-10-31
