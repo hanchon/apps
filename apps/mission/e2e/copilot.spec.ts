@@ -1,5 +1,6 @@
 import { mmFixture } from "@evmosapps/test-utils";
 import { BALANCE_ENDPOINT } from "./constants";
+import { pageListener } from "@evmosapps/test-utils";
 
 const { test, beforeEach, describe, expect } = mmFixture;
 
@@ -39,12 +40,15 @@ describe("Mission Page - Copilot", () => {
       })
       .click();
 
+    const approveAllPopup = pageListener(page.context());
     await expect(page.getByText(/Press Next and Connect/i)).toBeVisible();
-    const approveAllPopup = await page.context().waitForEvent("page");
+    await approveAllPopup.load;
 
-    await approveAllPopup.getByRole("button", { name: /Next/i }).click();
-    await approveAllPopup.getByRole("button", { name: /Connect/i }).click();
-    await approveAllPopup.getByRole("button", { name: /Sign/i }).click();
+    await approveAllPopup.page.getByRole("button", { name: /Next/i }).click();
+    await approveAllPopup.page
+      .getByRole("button", { name: /Connect/i })
+      .click();
+    await approveAllPopup.page.getByRole("button", { name: /Sign/i }).click();
 
     await page.getByRole("button", { name: /Top up your account/i }).click();
     await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
@@ -85,18 +89,18 @@ describe("Mission Page - Copilot", () => {
 
     await page.getByRole("button", { name: "Cryptocurrencies" }).click();
 
-    const lawerSwapWidget = page.getByTestId("layerswap-widget");
-    await lawerSwapWidget.waitFor();
-
-    expect(await lawerSwapWidget.count()).toBe(1);
-
-    await page.getByTestId("card-provider-dropdown").click();
-    await page.getByRole("button", { name: /Squid/i }).click();
-
     const squidDWidget = page.getByTestId("squid-widget");
     await squidDWidget.waitFor();
 
     expect(await squidDWidget.count()).toBe(1);
+
+    await page.getByTestId("card-provider-dropdown").click();
+    await page.getByRole("button", { name: /LayerSwap/i }).click();
+
+    const lawerSwapWidget = page.getByTestId("layerswap-widget");
+    await lawerSwapWidget.waitFor();
+
+    expect(await lawerSwapWidget.count()).toBe(1);
 
     await page.getByTestId("card-provider-dropdown").click();
     await page.getByRole("button", { name: /Cypher Wallet/i }).click();
