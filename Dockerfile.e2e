@@ -3,8 +3,8 @@
 # Sometimes testing in there takes too long so this might be useful for debugging e2e tests
 # To run this, you can do the following:
 #
-# docker build -f ./Dockerfile.e2e --build-arg PAGE=assets-page -t e2e-assets-page .
-# docker run --init e2e-assets-page
+# docker build -f ./Dockerfile.e2e --build-arg PAGE=mission-page -t e2e-mission-page .
+# docker run --init e2e-mission-page
 
 FROM mcr.microsoft.com/playwright:v1.39.0-jammy  AS base
 ENV CI=true

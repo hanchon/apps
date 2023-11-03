@@ -1,11 +1,17 @@
 import { noNetworkMMFixture, waitLocator } from "@evmosapps/test-utils";
 import { BALANCE_ENDPOINT } from "./constants";
 import { pageListener } from "@evmosapps/test-utils";
+import {
+  cleanupTabs,
+  connectSwitchAndSignPubkey,
+  getMMPopup,
+} from "./cleanupTabs";
 
 const { test, beforeEach, describe, expect, step } = noNetworkMMFixture;
 
 describe("Mission Page - Copilot", () => {
-  beforeEach(async ({ page }) => {
+  beforeEach(async ({ page, context }) => {
+    await cleanupTabs(context);
     await page.goto("/");
 
     await page
@@ -94,10 +100,10 @@ describe("Mission Page - Copilot", () => {
         })
         .click();
       await switchNetworkPopupRetryAfterApprove.load;
-
-      await switchNetworkPopupRetryAfterApprove.page
-        .getByRole("button", { name: /Switch Network/i })
-        .click();
+      const popup = switchNetworkPopupRetryAfterApprove.page.isClosed()
+        ? await getMMPopup(context)
+        : switchNetworkPopupRetryAfterApprove.page;
+      await popup.getByRole("button", { name: /Switch Network/i }).click();
 
       const getAccountsPopup = pageListener(context);
 
@@ -115,21 +121,9 @@ describe("Mission Page - Copilot", () => {
     });
 
     await step("Approve Pubkey", async () => {
-      const approveAllPopup = pageListener(context);
-
-      await page
-        .getByRole("button", {
-          name: /Try again/i,
-        })
-        .click();
-
-      await approveAllPopup.load;
-
-      await approveAllPopup.page.getByRole("button", { name: /Next/i }).click();
-      await approveAllPopup.page
-        .getByRole("button", { name: /Connect/i })
-        .click();
-      await approveAllPopup.page.getByRole("button", { name: /Sign/i }).click();
+      await connectSwitchAndSignPubkey(page.context(), () =>
+        page.getByRole("button", { name: /Try again/i }).click()
+      );
     });
 
     await step("Top up account", async () => {

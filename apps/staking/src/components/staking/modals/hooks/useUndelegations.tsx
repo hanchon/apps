@@ -19,6 +19,12 @@ import {
 } from "tracker";
 import { useStakingPrecompile } from "../../../../internal/staking/functionality/hooks/useStakingPrecompile";
 import { EXPLORER_URL } from "constants-helper";
+import { getNetwork, switchNetwork } from "wagmi/actions";
+import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
+import { E } from "helpers";
+
+const evmos = getEvmosChainInfo();
+
 export const useUndelegation = (useUndelegateProps: UndelegateProps) => {
   const dispatch = useDispatch();
   const { handlePreClickAction } = useTracker(CLICK_BUTTON_CONFIRM_UNDELEGATE);
@@ -32,6 +38,15 @@ export const useUndelegation = (useUndelegateProps: UndelegateProps) => {
   const { undelegate } = useStakingPrecompile();
 
   const handleConfirmButton = async () => {
+    const connectedNetwork = getNetwork();
+    if (connectedNetwork.chain?.id !== evmos.id) {
+      const [err] = await E.try(() =>
+        switchNetwork({
+          chainId: evmos.id,
+        })
+      );
+      if (err) return;
+    }
     handlePreClickAction({
       wallet: useUndelegateProps?.wallet?.evmosAddressEthFormat,
       provider: useUndelegateProps?.wallet?.extensionName,
