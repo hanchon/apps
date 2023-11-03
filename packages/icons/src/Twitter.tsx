@@ -4,7 +4,7 @@
 type TwitterIconProps = React.SVGAttributes<SVGElement> & {
   color?: string;
 };
-// <!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+
 export const TwitterIcon: React.FC<TwitterIconProps> = ({
   width = "1200",
   height = "1227",
