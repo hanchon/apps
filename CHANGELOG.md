@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (fix) fse-831 | apps/assets 1.0.39 | Fix usdc.grv image
 - (fix) fse-837 | apps/vesting 1.1.4 | Fix error in account details page for vesting
 - (fix) fse-836 | apps/vesting 1.1.3 | Fix error on creating vesting account
 - (fix) fse-834 | apps/assets 1.0.38 | Fix error generating txns appear twice in pay modal
