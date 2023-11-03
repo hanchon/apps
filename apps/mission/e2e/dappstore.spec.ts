@@ -1,4 +1,4 @@
-import { mmFixture } from "@evmosapps/test-utils";
+import { mmFixture, pageListener } from "@evmosapps/test-utils";
 import {
   STAKING_INFO_ENDPOINT,
   responseEmptyInfoStaking,
@@ -221,12 +221,12 @@ describe("Mission Page - Copilot", () => {
     await page.getByRole("button", { name: "Exit" }).click();
   });
 
-  test("should redirect to assets page after clicking on see portfolio", async ({
+  test("should redirect to portfolio page after clicking on see portfolio", async ({
     page,
   }) => {
     await page.getByRole("button", { name: /See portfolio/i }).click();
     await page.waitForTimeout(1000);
-    await page.goto("http://localhost:3004/assets");
+    await page.goto("http://localhost:3004/portfolio");
   });
 
   test("should redirect to governance page after clicking on participate in governance", async ({
@@ -260,20 +260,26 @@ describe("Mission Page - Copilot", () => {
     await page.waitForTimeout(3000);
 
     await page.getByRole("button", { name: /Connect/i }).click();
+    const approveAllPopup = pageListener(page.context());
+
     await page.getByRole("button", { name: /MetaMask/i }).click();
-    const approveAllPopup = await page.context().waitForEvent("page");
+    await approveAllPopup.load;
 
-    await approveAllPopup.getByRole("button", { name: /Next/i }).click();
-    await approveAllPopup.getByRole("button", { name: /Connect/i }).click();
-    await approveAllPopup.getByRole("button", { name: /Sign/i }).click();
-
+    await approveAllPopup.page.getByRole("button", { name: /Next/i }).click();
+    await approveAllPopup.page
+      .getByRole("button", { name: /Connect/i })
+      .click();
+    await approveAllPopup.page.getByRole("button", { name: /Sign/i }).click();
+    const switchNetworkPopup = pageListener(page.context());
     await page
       .getByRole("button", {
         name: /Claim Rewards/i,
       })
       .click();
+    await switchNetworkPopup.load;
 
-    const switchNetworkPopup = await page.context().waitForEvent("page");
-    await switchNetworkPopup.getByRole("button", { name: /Reject/i }).click();
+    await switchNetworkPopup.page
+      .getByRole("button", { name: /Reject/i })
+      .click();
   });
 });
