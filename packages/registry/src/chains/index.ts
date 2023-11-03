@@ -13,6 +13,7 @@ export { default as regen } from "./regen";
 export { default as quicksilver } from "./quicksilver";
 export { default as osmosis } from "./osmosis";
 export { default as osmosistestnet } from "./osmosistestnet";
+export { default as noble } from "./noble";
 export { default as kava } from "./kava";
 export { default as juno } from "./juno";
 export { default as injective } from "./injective";

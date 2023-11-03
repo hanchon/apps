@@ -325,11 +325,6 @@ export const Content = ({
                     )}
                   </div>
                 )}
-                {transferRejected && (
-                  <ErrorMessage className="justify-center mt-0 pl-0">
-                    {t("error.generating.transaction")}
-                  </ErrorMessage>
-                )}
 
                 {action === "PAY" && (
                   <PrimaryButton

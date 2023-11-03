@@ -12,7 +12,11 @@ import {
   UNSUCCESSFUL_TX_VOTE,
 } from "tracker";
 import { useTracker } from "tracker";
+import { getNetwork, switchNetwork } from "wagmi/actions";
+import { E } from "helpers";
+import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
 
+const evmos = getEvmosChainInfo();
 export const useVote = (useVoteProps: VoteProps) => {
   const dispatch = useDispatch();
   const { handlePreClickAction } = useTracker(CLICK_CONFIRM_VOTE_BUTTON);
@@ -20,6 +24,16 @@ export const useVote = (useVoteProps: VoteProps) => {
   const { handlePreClickAction: unsuccessfulTx } =
     useTracker(UNSUCCESSFUL_TX_VOTE);
   const handleConfirmButton = async () => {
+    const connectedNetwork = getNetwork();
+    if (connectedNetwork.chain?.id !== evmos.id) {
+      const [err] = await E.try(() =>
+        switchNetwork({
+          chainId: evmos.id,
+        })
+      );
+      if (err) return;
+    }
+
     handlePreClickAction({
       wallet: useVoteProps?.wallet?.evmosAddressEthFormat,
       provider: useVoteProps?.wallet?.extensionName,
