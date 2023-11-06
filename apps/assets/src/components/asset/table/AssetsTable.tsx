@@ -46,7 +46,7 @@ const AssetsTable = () => {
     queryFn: () =>
       getAssetsForAddress(
         value.evmosAddressCosmosFormat,
-        value.evmosAddressEthFormat,
+        value.evmosAddressEthFormat
       ),
   });
 
@@ -66,7 +66,7 @@ const AssetsTable = () => {
       status: !hideZeroBalance,
       wallet: value?.evmosAddressEthFormat,
       provider: value?.extensionName,
-    },
+    }
   );
   const zeroBalance = () => {
     localStorage.setItem("zeroBalance", String(!hideZeroBalance));
@@ -120,7 +120,7 @@ const AssetsTable = () => {
         />
       </div>
       aaa
-      <div className="xl:scrollbar-hide mt-5 w-full font-[IBM] text-pearl">
+      <div className="xl:scrollbar-hide mt-5 w-full font-display text-pearl">
         <table className="w-full">
           {tableData?.length === 0 && <HeadTable />}
           <tbody>

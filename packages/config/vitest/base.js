@@ -4,10 +4,12 @@ import { defineConfig } from "vitest/config";
 
 const config = defineConfig({
   plugins: [react()],
+
   test: {
     environment: "jsdom",
 
     exclude: [
+      "**/.netlify/**",
       "**/node_modules/**",
       "**/dist/**",
       "**/e2e/**",

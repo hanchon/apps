@@ -13,10 +13,6 @@
     "test:coverage": "vitest run --coverage --passWithNoTests",
     "lint": "eslint ."
   },
-  "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18"
-  },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
     "@types/node": "18.11.14",
@@ -35,6 +31,6 @@
     "last 3 safari version"
   ],
   "dependencies": {
-    "vitest": "^0.34.1"
+    "vitest": "^0.34.6"
   }
 }

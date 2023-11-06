@@ -15,9 +15,6 @@
   },
   "peerDependencies": {
     "@reduxjs/toolkit": "~1.9.5",
-    "next": ">=13",
-    "react": ">=18",
-    "react-dom": ">=18",
     "react-redux": "^8.1.2",
     "redux": ">=4"
   },
@@ -34,6 +31,10 @@
     "@fireworks-js/react": "^2.10.7",
     "@headlessui/react": "^1.7.15",
     "@tanstack/react-query": "^4.32.6",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/mixpanel": "2.14.1",
+    "@types/mixpanel-browser": "2.47.1",
     "@types/node": "18.11.14",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.0.9",
@@ -43,17 +44,14 @@
     "evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
     "icons": "workspace:*",
-    "next": "13.5.5",
-    "react": "18.2.0",
+    "mixpanel-browser": "^2.47.0",
+    "next": "^14.0.1",
+    "react": "^18.2.0",
     "react-confetti-explosion": "^2.1.2",
+    "react-dom": "^18.2.0",
     "tracker": "workspace:*",
     "typescript": "^5.2.2",
-    "ui-helpers": "workspace:*",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
-    "@types/mixpanel-browser": "2.47.1",
-    "mixpanel-browser": "^2.47.0",
-    "@types/mixpanel": "2.14.1"
+    "ui-helpers": "workspace:*"
   },
   "browserslist": [
     "last 3 chrome version",

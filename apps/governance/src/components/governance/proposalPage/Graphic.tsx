@@ -81,7 +81,7 @@ const Graphic = ({
     data.total,
   ]);
   return (
-    <section className="mx-5 mb-5 h-fit space-y-5 rounded-2xl bg-darkGray2 p-5 font-[IBM] lg:mx-0">
+    <section className="mx-5 mb-5 h-fit space-y-5 rounded-2xl bg-darkGray2 p-5 font-display lg:mx-0">
       {isNotInDepositPeriod && (
         <div className="fonst-bold flex justify-between text-pearl">
           <p>Total</p>

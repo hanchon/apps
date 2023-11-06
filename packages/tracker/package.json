@@ -13,11 +13,6 @@
     "test:coverage": "vitest run --coverage --passWithNoTests",
     "lint": "eslint ."
   },
-  "peerDependencies": {
-    "next": ">=13",
-    "react": ">=18",
-    "react-dom": ">=18"
-  },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
     "@types/mixpanel": "2.14.1",
@@ -31,7 +26,7 @@
   "dependencies": {
     "@testing-library/react": "^14.0.0",
     "mixpanel-browser": "2.47.0",
-    "vitest": "^0.34.1"
+    "vitest": "^0.34.6"
   },
   "browserslist": [
     "last 3 chrome version",

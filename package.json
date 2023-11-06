@@ -54,7 +54,6 @@
     "eslint-nibble": "^8.1.0",
     "helpers": "workspace:*",
     "kill-port": "^2.0.1",
-    "next": "^13.5.5",
     "nibble": "^0.0.2",
     "playwright": "^1.39.0",
     "react-confetti-explosion": "^2.1.2",
@@ -62,7 +61,7 @@
     "tsx": "^3.13.0",
     "turbo": "^1.10.15",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.1",
+    "vitest": "^0.34.6",
     "zod": "^3.22.1"
   }
 }

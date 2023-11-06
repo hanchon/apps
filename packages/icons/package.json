@@ -10,10 +10,6 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint ."
   },
-  "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18"
-  },
   "devDependencies": {
     "@types/node": "18.11.14",
     "@types/react": "^18.2.21",
