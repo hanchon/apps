@@ -26,7 +26,7 @@ const Tabs = ({
   const v10Link =
     "https://commonwealth.im/evmos/discussion/8501-evmos-software-upgrade-v10";
   return (
-    <div className="flex w-full items-center justify-center rounded border border-darkGray1 bg-pearl font-[IBM] font-bold ">
+    <div className="flex w-full items-center justify-center rounded border border-darkGray1 bg-pearl font-display font-bold ">
       <button
         className={`${
           isERC20Selected ? " bg-darkGray1 text-pearl" : "text-darkGray1"

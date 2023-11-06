@@ -6,7 +6,7 @@ import { PropsWithChildren } from "react";
 export const Container = ({ children }: PropsWithChildren) => {
   return (
     <div className="grid min-h-screen min-w-[300px] bg-black">
-      <div className="flex h-full w-full flex-col overflow-auto bg-auto bg-center bg-repeat px-0 font-[GreyCliff] sm:px-5 xl:px-14">
+      <div className="flex h-full w-full flex-col overflow-auto bg-auto bg-center bg-repeat px-0 font-body sm:px-5 xl:px-14">
         {children}
       </div>
     </div>

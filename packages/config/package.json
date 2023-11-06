@@ -14,8 +14,7 @@
     "@babel/core": "^7.22.10",
     "@babel/plugin-syntax-import-assertions": "^7.22.5",
     "eslint": "^8.47.0",
-    "eslint-config-next": "^13.4.13",
-    "next": ">=13"
+    "eslint-config-next": "^13.4.13"
   },
   "dependencies": {
     "@babel/cli": "^7.22.10",
@@ -40,6 +39,6 @@
     "eslint-plugin-vitest": "^0.2.8",
     "jsdom": "^22.1.0",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.1"
+    "vitest": "^0.34.6"
   }
 }

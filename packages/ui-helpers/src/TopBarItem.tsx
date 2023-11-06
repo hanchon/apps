@@ -15,11 +15,11 @@ export const TopBarItem = ({
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }) => {
   const drawDiv = () => (
-    <div className="">
+    <div>
       <div className="flex items-center justify-center space-x-2">
         <h5 className="text-sm font-normal opacity-80 ">{text}</h5>
       </div>
-      <h2 className="font-[GreyCliff] text-2xl font-bold flex justify-center">
+      <h2 className="font-body text-2xl font-bold flex justify-center">
         {value}
       </h2>
     </div>
