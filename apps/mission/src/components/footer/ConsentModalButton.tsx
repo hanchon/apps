@@ -1,5 +1,5 @@
 "use client";
-import { useConsentModal } from "./ConsentModal";
+import { useConsentModal } from "stateful-components/src/modals/ConsentModal/ConsentModal";
 
 export const ConsentModalButton = () => {
   const { setIsOpen } = useConsentModal();

@@ -12,7 +12,7 @@ import {
   TelegramIcon,
   TwitterIcon,
 } from "icons";
-import { ConsentModalButton } from "../modals/ConsentModal/ConsentModalButton";
+import { ConsentModalButton } from "./ConsentModalButton";
 
 export const Footer = () => {
   return (

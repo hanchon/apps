@@ -2,6 +2,7 @@
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import { Menu, Transition } from "@headlessui/react";
 import { ECOSYSTEM_URL } from "constants-helper";
+import { cn } from "helpers";
 import {
   CalculatorIcon,
   CoinIcon,
@@ -11,7 +12,7 @@ import {
 } from "icons";
 import { ComponentProps, Fragment, PropsWithChildren } from "react";
 import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
-import { Badge } from "ui-helpers";
+import { Badge, NetworkModeSelector } from "ui-helpers";
 import { PingIndicator } from "ui-helpers/src/PingIndicator";
 import { usePingIndicator } from "ui-helpers/src/launchPad/usePingIndicator";
 
@@ -61,18 +62,14 @@ export function LaunchPad({}: { showPing?: boolean }) {
   ];
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className="sm:relative">
       <PingIndicator showPing={showPing}>
         <Menu.Button
           aria-label="launchpad"
-          className="flex items-center justify-center rounded-full p-2"
+          className="transtion-all bg-darkGray700 p-2 rounded-full duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]"
           onClick={handlePingIndicator}
         >
-          <LaunchIcon
-            width={40}
-            height={40}
-            className="transtion-all bg-darkGray700 rounded-full duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]"
-          />
+          <LaunchIcon width={"1.4em"} height={"1.4em"} />
         </Menu.Button>
       </PingIndicator>
 
@@ -85,7 +82,11 @@ export function LaunchPad({}: { showPing?: boolean }) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className=" absolute z-10 mt-2 w-64 origin-top-right rounded-md bg-[#262017] pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none md:right-0 md:w-96">
+        <Menu.Items
+          className={cn(
+            "fixed md:absolute w-full left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
+          )}
+        >
           {showPing && (
             <div className="bg-darkGray700 mx-8 mb-8 cursor-default space-y-1 rounded-lg p-5">
               <div className="flex items-center justify-between">
@@ -113,6 +114,8 @@ export function LaunchPad({}: { showPing?: boolean }) {
               />
             ))}
           </div>
+          {!!process.env.NEXT_PUBLIC_ENABLE_TESTNET && <NetworkModeSelector />}
+
           <a
             onClick={() => {
               sendEvent(CLICK_ON_DAPP_INSIDE_LAUNCHER, {

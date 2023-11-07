@@ -10,8 +10,8 @@ import { StoreType, useAssets, useStake } from "evmos-wallet";
 import { useSelector } from "react-redux";
 import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, useTracker } from "tracker";
 
-import { useTopupModal } from "../../../modals/TopupModal/TopupModal";
 import { useAccount } from "wagmi";
+import { useTopupModal } from "stateful-components/src/modals/TopupModal/TopupModal";
 
 export const AccountBalance = () => {
   const { isConnected } = useAccount();
