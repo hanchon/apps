@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 import {
   PrimaryButton,

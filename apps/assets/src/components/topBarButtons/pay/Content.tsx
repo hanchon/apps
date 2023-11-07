@@ -10,7 +10,7 @@ import {
   Subtitle,
   Title,
 } from "ui-helpers";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "@evmosapps/i18n/client";
 import { FormattedBalance } from "evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
 import {

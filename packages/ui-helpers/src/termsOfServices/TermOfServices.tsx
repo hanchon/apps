@@ -1,8 +1,9 @@
+"use client";
 import { useEffect, useState } from "react";
 
 import { ModalTOS } from "./Modal";
 import { ConfirmButton } from "../ConfirmButton";
-import Content from "./Content";
+import TOSContent from "./Content";
 import CheckboxTOS from "./CheckboxTOS";
 
 import {
@@ -52,7 +53,7 @@ export const TermOfServices = () => {
     <ModalTOS title="Evmos Terms of Service" show={show}>
       <div className="space-y-3">
         <div className="border-darkGray5 h-80 w-full space-y-3 overflow-y-auto border p-4 font-display">
-          <Content />
+          <TOSContent />
         </div>
         <div className="space-y-3">
           <CheckboxTOS

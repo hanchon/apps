@@ -18,22 +18,19 @@ export const WalletConnectModal = ({
 }) => {
   const { connectors } = useConnect();
   const connectorIds = connectors.map((c) => c.id);
-  const contentModal = (
-    <ModalContainer
-      introduction={<ConnectToEvmos />}
-      content={
-        <ConnectToEvmosWallets
-          copilotModal={copilotModal}
-          setShow={setShow}
-          connectorIds={connectorIds}
-        />
-      }
-    />
-  );
 
   return (
     <ModalWithTransitions show={show} setShow={setShow} propClose={true}>
-      {contentModal}
+      <ModalContainer
+        introduction={<ConnectToEvmos />}
+        content={
+          <ConnectToEvmosWallets
+            copilotModal={copilotModal}
+            setShow={setShow}
+            connectorIds={connectorIds}
+          />
+        }
+      />
     </ModalWithTransitions>
   );
 };

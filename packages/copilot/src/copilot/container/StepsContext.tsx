@@ -1,3 +1,4 @@
+"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
@@ -73,7 +74,7 @@ const StepsContextProvider = ({
   const updateStepsStatus = () => {
     const updatedState = [...stepsStatus];
     const currentElement = updatedState.find(
-      (element) => element.status === STEP_STATUS.CURRENT,
+      (element) => element.status === STEP_STATUS.CURRENT
     );
     if (currentElement === undefined) {
       return;

@@ -1,3 +1,4 @@
+"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
@@ -5,7 +6,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { StepsContainerDapp } from "./StepsContainarDapp";
 import { StoreType, getSequence, useEvmosBalance } from "evmos-wallet";
 import { useSelector } from "react-redux";
-import { steps } from "../container/data";
+import { setupSteps } from "../container/data";
 import {
   USER_CONNECTED_AND_HAS_NO_TOKENS,
   USER_CONNECTED_AND_HAS_TOKENS,
@@ -15,7 +16,7 @@ import {
 import { StepsContext } from "../container/StepsContext";
 
 export const useCopilotCard = () => {
-  const [copilotSteps, setCopilotSteps] = useState(steps);
+  const [copilotSteps, setCopilotSteps] = useState(setupSteps);
   const [sequence, setSequence] = useState(false);
   const value = useSelector((state: StoreType) => state.wallet.value);
   const { evmosBalance } = useEvmosBalance();

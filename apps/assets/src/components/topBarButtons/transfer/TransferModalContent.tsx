@@ -12,7 +12,7 @@ import {
   InfoPanel,
   Spinner,
 } from "ui-helpers";
-import { Trans, useTranslation } from "next-i18next";
+import { Trans } from "next-i18next";
 import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../shared/AssetSelector";
 import { useAccount } from "wagmi";
@@ -58,6 +58,7 @@ import { createPortal } from "react-dom";
 import { useSend } from "../hooks/useSend";
 import { getTokenValidDestinations } from "../shared/getTokenValidDestinations";
 import { TransactionInspector } from "../shared/TransactionInspector";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 export const TransferModalContent = ({
   receiver,
@@ -279,6 +280,7 @@ export const TransferModalContent = ({
                 <div className="space-y-2 md:space-y-4">
                   <p>
                     <Trans
+                      t={t}
                       i18nKey="error.user.rejected.network.title"
                       components={{
                         strong: <span className="text-pink-300" />,
@@ -288,6 +290,7 @@ export const TransferModalContent = ({
                       {getChain(networkPrefix).name}
                     </span>
                     <Trans
+                      t={t}
                       i18nKey="error.user.rejected.network.title2"
                       components={{
                         strong: <span className="text-pink-300" />,
@@ -297,6 +300,7 @@ export const TransferModalContent = ({
 
                   <p>
                     <Trans
+                      t={t}
                       i18nKey="error.user.rejected.network.subtitle"
                       components={{
                         strong: <span className="text-pink-300" />,
@@ -317,6 +321,7 @@ export const TransferModalContent = ({
                 <div className="space-y-2 md:space-y-4">
                   <p>
                     <Trans
+                      t={t}
                       i18nKey="error.network.not.support.by-wallet.title"
                       components={{
                         strong: <span className="text-pink-300" />,
@@ -325,6 +330,7 @@ export const TransferModalContent = ({
                   </p>
                   <p>
                     <Trans
+                      t={t}
                       i18nKey="error.network.not.support.by-wallet.subtitle"
                       components={{
                         strong: <span className="text-pink-300" />,
@@ -400,6 +406,7 @@ export const TransferModalContent = ({
                 >
                   <p className="pb-1"> {t("error.getting.balance")}</p>
                   <Trans
+                    t={t}
                     i18nKey="error.getting.balance.connect.wallet"
                     components={{
                       strong: <span className="text-pink-300" />,
@@ -438,6 +445,7 @@ export const TransferModalContent = ({
               <>
                 <ErrorMessage className="justify-center pl-0" variant="info">
                   <Trans
+                    t={t}
                     i18nKey="error.send.axelar.assets.text"
                     components={{
                       strong: <span className="text-pink-300" />,

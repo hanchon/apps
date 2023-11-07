@@ -8,9 +8,10 @@ import {
 import { CryptoSelector, ErrorMessage, Tabs, TextInput } from "ui-helpers";
 import { Prefix } from "evmos-wallet/src/registry-actions/types";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
-import { Trans, useTranslation } from "next-i18next";
+import { Trans } from "next-i18next";
 import { SELECT_TO_NETWORK_SEND_FLOW, useTracker } from "tracker";
 import { useEffectEvent } from "helpers";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 type WalletTabKey = "WALLET" | "OTHER";
 export const AccountSelector = ({
@@ -134,6 +135,7 @@ export const AccountSelector = ({
         {networkOptions.length === 1 && networkOptions.includes("evmos") && (
           <ErrorMessage variant="info" className="justify-center font-normal">
             <Trans
+              t={t}
               i18nKey="message.only.evmos.supported"
               components={{
                 strong: <span className="text-pink-300" />,

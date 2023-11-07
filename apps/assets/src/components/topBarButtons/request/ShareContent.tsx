@@ -13,7 +13,7 @@ import {
   TextInput,
   Title,
 } from "ui-helpers";
-import { Trans, useTranslation } from "next-i18next";
+import { Trans } from "next-i18next";
 import { BackArrowIcon, RequestIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { tokenToUSD } from "../common/utils";
@@ -33,6 +33,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAccount } from "wagmi";
 import { StoreType, WalletConnection } from "evmos-wallet";
 import { CopilotButton } from "copilot";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 export const ShareContent = ({
   message,
@@ -148,6 +149,7 @@ export const ShareContent = ({
                   displayIcon={false}
                 >
                   <Trans
+                    t={t}
                     i18nKey="request.copied"
                     components={{
                       strong: <span className="text-pink-300" />,

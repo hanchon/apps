@@ -4,5 +4,5 @@
 import { withEvmosConfig } from "@evmosapps/config/next/with-config.js";
 import locale from "./next-i18next.config.js";
 export default withEvmosConfig({
-  i18n: locale.i18n,
+  // i18n: locale.i18n,
 });

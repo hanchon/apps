@@ -3,7 +3,7 @@
 
 import { Tooltip } from "ui-helpers";
 import { AddressesContainer } from "./AddressesContainer";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "@evmosapps/i18n/client";
 import { InformationIcon } from "icons";
 
 export const AccountInformation = () => {

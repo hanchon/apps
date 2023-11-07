@@ -11,7 +11,7 @@ import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "ui-helpers";
 import { Address, getChain, useTokenBalance } from "evmos-wallet";
 import { CryptoSelectorTitle } from "ui-helpers";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "@evmosapps/i18n/client";
 import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
 import { max, useEffectEvent } from "helpers";

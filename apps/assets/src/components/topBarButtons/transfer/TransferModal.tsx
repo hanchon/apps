@@ -9,7 +9,6 @@ import { ModalWithTransitions } from "ui-helpers";
 import { TransferModalContent } from "./TransferModalContent";
 import { ModalProps, useModal } from "helpers";
 
-
 const TransferModalSchema = z.object({
   receiver: AddressSchema.optional(),
   networkPrefix: ChainPrefixSchema.default("evmos"),

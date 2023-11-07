@@ -77,8 +77,7 @@ export const ModalWithTransitions = ({
               className={cx(
                 "relative transform rounded-lg text-left m-auto transition-all pointer-events-auto",
                 {
-                  "bg-pearl1 shadow-xl md:min-w-[400px] max-w-[850px]":
-                    variant === "default",
+                  "bg-pearl1 shadow-xl": variant === "default",
                   "bg-black-900 shadow-custom-sm px-6 pt-6 pb-16 text-white w-full max-w-md font-display":
                     variant === "modal-black",
                 }

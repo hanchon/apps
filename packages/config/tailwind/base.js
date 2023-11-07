@@ -1,7 +1,11 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 import tailwindForms from "@tailwindcss/forms";
+import typography from "@tailwindcss/typography";
+/** @type {import('tailwindcss').Config} */
 const config = {
+  darkMode: "class",
+
   content: [
     // app content
     "src/**/*.{js,ts,jsx,tsx}",
@@ -91,6 +95,7 @@ const config = {
       },
     },
   },
-  plugins: [tailwindForms],
+  plugins: [tailwindForms, typography],
 };
+
 export default config;

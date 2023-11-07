@@ -1,14 +1,14 @@
+"use client";
 import { PRIVACY_POLICY_URL, COOKIE_POLICY_URL } from "constants-helper";
 import Link from "next/link";
 import GrayButton from "../GrayButton";
 import { DISABLE_TRACKER_LOCALSTORAGE } from "tracker";
 import { Dispatch, SetStateAction } from "react";
-export const ConsentModal = ({
-  setShow,
-  setConsent,
-}: {
-  setShow: Dispatch<SetStateAction<boolean>>;
-  setConsent?: Dispatch<SetStateAction<boolean>>;
+export const ConsentModal = ({} // setShow,
+// setConsent,
+: {
+  // setShow: Dispatch<SetStateAction<boolean>>;
+  // setConsent?: Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
     <div className="space-y-5">
@@ -40,17 +40,17 @@ export const ConsentModal = ({
         <GrayButton
           text={<p>Accept</p>}
           onClick={() => {
-            localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "false");
-            setShow(false);
-            setConsent && setConsent(true);
+            // localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "false");
+            // setShow(false);
+            // setConsent && setConsent(true);
           }}
         />
         <GrayButton
           text={<p>Reject</p>}
           onClick={() => {
-            localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "true");
-            setShow(false);
-            setConsent && setConsent(false);
+            // localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "true");
+            // setShow(false);
+            // setConsent && setConsent(false);
           }}
         />
       </div>

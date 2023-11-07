@@ -13,7 +13,7 @@ import { IconContainer } from "ui-helpers";
 export const SuccessSetUp = () => {
   const { updateStepsStatus } = useContext(StepsContext);
   const { handlePreClickAction } = useTracker(
-    CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT,
+    CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT
   );
 
   const handleClick = () => {

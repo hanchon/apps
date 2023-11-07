@@ -47,7 +47,7 @@
     "remark-gfm": "^3.0.1",
     "stateful-components": "workspace:*",
     "tailwind-config": "workspace:*",
-    "tailwindcss": "^3.3.3",
+    "tailwindcss": "^3.3.5",
     "tracker": "workspace:*",
     "typescript": "^5.2.2",
     "ui-helpers": "workspace:*"

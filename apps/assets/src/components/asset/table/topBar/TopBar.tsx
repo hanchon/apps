@@ -1,3 +1,4 @@
+"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
@@ -6,7 +7,7 @@ import { TopBarProps } from "./types";
 
 import { useAccount } from "wagmi";
 import { ReceiveIcon, SendIcon } from "icons";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "@evmosapps/i18n/client";
 import { useTransferModal } from "../../../topBarButtons/transfer/TransferModal";
 import { useRequestModal } from "../../../topBarButtons/request/RequestModal";
 import {
@@ -18,6 +19,7 @@ import {
 const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
   const { isDisconnected } = useAccount();
   const { t } = useTranslation();
+
   const transferModal = useTransferModal();
   const requestModal = useRequestModal();
   const { sendEvent } = useTracker();

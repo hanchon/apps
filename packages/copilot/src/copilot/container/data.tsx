@@ -12,7 +12,7 @@ import { SetUpContainer } from "../dapp/SteUpContainer";
 const TOP_UP_TEXT = "Top up your account";
 const NEXT_STEPS_TEXT = "Next steps";
 
-export const steps = [
+export const setupSteps = [
   {
     title: "Set up your account",
     component: <SetUpAccountContainer />,

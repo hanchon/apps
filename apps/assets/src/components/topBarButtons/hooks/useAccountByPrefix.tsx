@@ -11,7 +11,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { E } from "helpers";
 import { useId } from "react";
 import { getAccount } from "wagmi/actions";
-import { getSelectedNetworkMode } from "ui-helpers";
+import { getSelectedNetworkMode } from "ui-helpers/src/getSelectedNetworkMode";
 
 const suggestChain = async (prefix: Prefix) => {
   const keplr = await getKeplrProvider();

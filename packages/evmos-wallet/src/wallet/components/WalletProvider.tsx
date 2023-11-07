@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, PropsWithChildren } from "react";
 import { WagmiConfig, useAccount, useConnect, useDisconnect } from "wagmi";
 import { usePubKey, wagmiConfig } from "../wagmi";

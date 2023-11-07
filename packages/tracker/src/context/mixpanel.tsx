@@ -1,3 +1,4 @@
+"use client";
 import { OverridedMixpanel } from "mixpanel-browser";
 import { createContext, useContext } from "react";
 

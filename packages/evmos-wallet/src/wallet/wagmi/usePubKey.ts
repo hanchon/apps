@@ -1,3 +1,4 @@
+"use client";
 import { useAccount } from "wagmi";
 import { hashMessage, fromHex } from "viem";
 import { EVMOS_GRPC_URL } from "../../internal/wallet/functionality/networkConfig";

@@ -54,7 +54,8 @@ export default {
       "decimals": 6,
       "erc20Address": "0xB8f812B5943ab3BF941D5D4F1de90A4b326c5d8f",
       "handledByExternalUI": null,
-      "listed": true
+      "listed": true,
+      "coingeckoId": "tether"
     },
     {
       "category": "cosmos",
@@ -71,6 +72,7 @@ export default {
       "sourcePrefix": "kava",
       "symbol": "KAVA",
       "tokenRepresentation": null,
+      "coingeckoId": null,
       "type": "IBC"
     }
   ],

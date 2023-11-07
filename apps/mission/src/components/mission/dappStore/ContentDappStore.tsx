@@ -7,12 +7,15 @@ import { GovernanceCard } from "./governance/Card";
 import { EcosystemContainer } from "./ecosystem/Container";
 import { AccountBalanceContainer } from "./accountBalance/Container";
 import { Onboard } from "./onboard/Onboard";
+import { AccountBalance } from "./accountBalance/AccountBalance";
+import { CopilotCard } from "copilot";
 export const ContentDappStore = () => {
   return (
     <div className="space-y-8 px-5 text-display">
       <div className="grid items-center gap-x-8 gap-y-11 md:grid-cols-2">
-        <AccountBalanceContainer />
-        <Onboard />
+        <AccountBalance />
+
+        <CopilotCard />
       </div>
       <div className="grid gap-8 md:grid-cols-2">
         <StakingCard />

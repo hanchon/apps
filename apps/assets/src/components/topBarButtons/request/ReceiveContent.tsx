@@ -16,7 +16,8 @@ import {
   TextInput,
   Title,
 } from "ui-helpers";
-import { Trans, useTranslation } from "next-i18next";
+import { Trans } from "next-i18next";
+
 import { CryptoSelector } from "ui-helpers";
 import QRCode from "react-qr-code";
 
@@ -44,6 +45,7 @@ import {
 import { CopilotButton } from "copilot";
 import { useAccount } from "wagmi";
 import { sortedChains } from "../shared/sortedChains";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 export const ReceiveContent = ({
   setState,
@@ -221,6 +223,7 @@ export const ReceiveContent = ({
                   displayIcon={false}
                 >
                   <Trans
+                    t={t}
                     i18nKey="receive.copied"
                     components={{
                       strong: <span className="text-pink-300" />,

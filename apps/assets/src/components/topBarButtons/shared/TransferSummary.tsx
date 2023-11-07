@@ -13,7 +13,7 @@ import {
 } from "evmos-wallet";
 import { AddressDisplay, Arrow } from "ui-helpers";
 
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "@evmosapps/i18n/client";
 import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
 import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
 

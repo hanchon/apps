@@ -2,7 +2,8 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { cn } from "helpers";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
+
 import { Dispatch, SetStateAction } from "react";
 import { CLICK_CONNECT_WALLET_BUTTON, useTracker } from "tracker";
 import { PrimaryButton } from "ui-helpers";
@@ -14,8 +15,9 @@ export const ButtonConnectWallet = ({
   setShow: Dispatch<SetStateAction<boolean>>;
   variant: "primary" | "outline-primary" | "primary-lg";
 }) => {
-  const { query } = useRouter();
+  const query = useSearchParams();
 
+  const modalAction = query.get("action");
   const { sendEvent } = useTracker(CLICK_CONNECT_WALLET_BUTTON);
 
   return (
@@ -23,14 +25,19 @@ export const ButtonConnectWallet = ({
       variant={variant}
       onClick={() => {
         setShow(true);
+
+        let location = "dApp Store";
+        if (modalAction) {
+          if (modalAction === "transfer") {
+            location = "send modal";
+          } else if (modalAction === "pay") {
+            location = "payment request modal";
+          } else {
+            location = "receive modal";
+          }
+        }
         sendEvent(CLICK_CONNECT_WALLET_BUTTON, {
-          location: query.action
-            ? query.action === "transfer"
-              ? "send modal"
-              : query.action === "pay"
-              ? "payment request modal"
-              : "receive modal"
-            : "dApp Store",
+          location,
         });
       }}
       data-testid="open-connect-modal"

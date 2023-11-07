@@ -127,6 +127,7 @@ export const UNSUCCESSFUL_TX_CLAIM_REWARDS =
   "Unsuccessful transaction of Claim Rewards";
 
 export const DISABLE_TRACKER_LOCALSTORAGE = "disableTracker";
+
 export const DISABLE_MIXPANEL_TRACKER = "Disable mixpanel tracker";
 export const ENABLE_MIXPANEL_TRACKER = "Enable mixpanel tracker";
 

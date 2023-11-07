@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 import React, { Dispatch, SetStateAction } from "react";
 import { PrimaryButton, Subtitle, TextInput, Title } from "ui-helpers";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "@evmosapps/i18n/client";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { BackArrowIcon, RequestIcon } from "icons";
 import { TokenAmount, TokenRef } from "evmos-wallet/src/registry-actions/types";

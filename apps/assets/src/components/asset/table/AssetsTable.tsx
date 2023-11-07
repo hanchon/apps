@@ -1,3 +1,4 @@
+"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
@@ -119,7 +120,6 @@ const AssetsTable = () => {
           checked={hideZeroBalance}
         />
       </div>
-      aaa
       <div className="xl:scrollbar-hide mt-5 w-full font-display text-pearl">
         <table className="w-full">
           {tableData?.length === 0 && <HeadTable />}

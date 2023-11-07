@@ -1,3 +1,4 @@
+"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
@@ -5,7 +6,8 @@ import Link from "next/link";
 import { Button } from "../Button";
 import { EcosystemCard } from "./Card";
 import { EcosystemProps, ecosystemData } from "./ecosystemData";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "@evmosapps/i18n/client";
+
 import { ECOSYSTEM_URL, GOOGLE_FORM_URL } from "constants-helper";
 import {
   useTracker,
@@ -15,7 +17,7 @@ import {
 export const EcosystemContainer = () => {
   const { handlePreClickAction } = useTracker(CLICK_ON_VIEW_ALL_DAPPS);
   const { handlePreClickAction: clickApply } = useTracker(
-    CLCIK_ON_APPLY_TO_BE_PART_OF_THE_ECOSYSTEM,
+    CLCIK_ON_APPLY_TO_BE_PART_OF_THE_ECOSYSTEM
   );
   const handleViewAlldApps = () => {
     handlePreClickAction();

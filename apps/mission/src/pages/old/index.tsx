@@ -12,12 +12,12 @@ import {
 } from "evmos-wallet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Container, MavaWidget, TermOfServices } from "ui-helpers";
-import MainContainer from "../components/mission/MainContainer";
-import { HeadComponent } from "../components/mission/HeadComponent";
-import { GoogleAnalytics } from "../components/mission/GoogleAnalytics";
+import MainContainer from "../../components/mission/MainContainer";
+import { HeadComponent } from "../../components/mission/HeadComponent";
+import { GoogleAnalytics } from "../../components/mission/GoogleAnalytics";
 import { MixpanelProvider } from "tracker";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GiveFeedback } from "../components/mission/GiveFeedback";
+import { GiveFeedback } from "../../components/mission/GiveFeedback";
 import { greyCliff, ibm, nb } from "ui-helpers/src/fonts";
 
 import { cn } from "helpers";

@@ -1,7 +1,8 @@
+"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Button } from "../Button";
 import { BalanceContainer } from "../card/BalanceContainer";
 import { Card } from "../card/Card";
@@ -18,7 +19,7 @@ import {
   getNumberBalance,
   getNumberBalanceInDollars,
 } from "evmos-wallet";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "@evmosapps/i18n/client";
 import { CLICK_ON_STAKE_AND_MANAGE_DELEGATION, useTracker } from "tracker";
 
 export const StakingCard = () => {

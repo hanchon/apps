@@ -1,12 +1,14 @@
+"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Button } from "../Button";
 import { Card } from "../card/Card";
 import { Description } from "../card/Description";
 import { Title } from "../card/Title";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "@evmosapps/i18n/client";
+
 import { CLICK_ON_SEE_PORTFOLIO, useTracker } from "tracker";
 
 export const AssetsCard = () => {
@@ -15,7 +17,7 @@ export const AssetsCard = () => {
   const router = useRouter();
   const handleOnClick = async () => {
     handlePreClickAction();
-    await router.push("/portfolio");
+    router.push("/portfolio");
   };
 
   const { t } = useTranslation();
