@@ -62,3 +62,6 @@ export const EMOJIS = {
   KEY: "🔑",
   SHRUG: "🤷",
 };
+
+export const REGISTER_TOKEN_URL =
+  "https://github.com/evmos/chain-token-registry";

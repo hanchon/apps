@@ -25,7 +25,6 @@ export { CLICK_WITHDRAW_CHOOSE_TOKEN } from "./constants";
 export { CLICK_WITHDRAW_CONFIRM_BUTTON } from "./constants";
 export { CLICK_HIDE_ZERO_BALANCE } from "./constants";
 export { CLICK_CTA_LINKS_REGISTER_TOKEN } from "./constants";
-export { CLICK_CTA_LINKS_ASSETS_GUIDE } from "./constants";
 
 export { CLICK_ON_SEND_BUTTON } from "./constants";
 export { CLICK_ON_RECEIVE_BUTTON } from "./constants";
