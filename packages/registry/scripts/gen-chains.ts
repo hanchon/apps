@@ -80,10 +80,6 @@ Object.entries(testnetTokensByIdentifiers).forEach(([identifier, tokens]) => {
 await mkdir("src/chains", { recursive: true });
 
 for (const chainRegistry of chains) {
-  if (chainRegistry.prefix === "kujira") {
-    // TODO: We need to add Kujira fee token to our registry
-    continue;
-  }
   const configuration = chainRegistry.configuration;
 
   const identifier = normalizeIdentifier(configuration);
@@ -196,7 +192,6 @@ for (const chainRegistry of chains) {
 await writeFile("src/chains/index.ts", [
   fileHeader,
   chains
-    .filter(({ prefix }) => prefix !== "kujira")
     .map(
       ({ configuration }) =>
         `export { default as ${normalizeIdentifier(
