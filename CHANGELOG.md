@@ -36,7 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
-- (chore) fse-819 | packages/constants-helper 1.0.9 packages/icons 1.0.11 packages/ui-helpers 1.0.18 | Add medium to footer
+- (chore) fse-819 | packages/constants-helper 1.0.9 packages/icons 1.0.11 packages/ui-helpers 1.0.19 | Add medium to footer
+- (fix) fse-802 | packages/ui-helpers 1.0.18 | Center text in staking app
 - (chore) fse-799 | packages/copilot 1.0.10 | Use wagmi value instead of redux value
 - (fix) fse-816 | packages/ui-helpers 1.0.17 packages/icons 1.0.10 | Replace Twitter logo to X logo in the footer
 - (fix) fse-831 | apps/assets 1.0.39 | Fix usdc.grv image
