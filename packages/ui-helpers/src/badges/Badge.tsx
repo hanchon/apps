@@ -18,9 +18,10 @@ export const Badge = ({
           "text-green2 ring-lightGreen bg-lightYellow2": variant === "success",
           "ring-lightYellow bg-lightYellow1 text-brown": variant === "warning",
           "bg-red text-pearl ring-red": variant === "danger",
-          "text-darkGray300 ring-darkGray300": variant === "info",
+          // {/* TODO: add color to tailwind file */}
+          "ring-darkGray300 text-[#FFF4E1]": variant === "info",
         },
-        className,
+        className
       )}
       {...rest}
     />

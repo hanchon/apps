@@ -1,12 +1,10 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import {
-  STRIDE_URL,
-  FORGE_URL,
-  TASHI_URL,
-  ORBITAL_APES_URL,
-} from "constants-helper";
-
+import { STRIDE_URL, FORGE_URL, TASHI_URL } from "constants-helper";
+import galaxy from "../../../../../public/ecosystem/galaxy.png";
+import tashi from "../../../../../public/ecosystem/tashi.svg";
+import forge from "../../../../../public/ecosystem/forge.png";
+import stride from "../../../../../public/ecosystem/stride.png";
 export type EcosystemProps = {
   image: string;
   name: string;
@@ -14,43 +12,56 @@ export type EcosystemProps = {
   description: string;
   href: string;
 };
-enum dAppsTypes {
-  DEFI = "DEFI",
-  NFT = "NFT",
-  LIQUID_STAKING = "Liquid Staking",
-}
 
 export const ecosystemData = [
   {
-    image: "/ecosystem/forge.png",
+    image: forge.src,
     name: "Forge",
-    type: dAppsTypes.DEFI,
+    type: "Instant dApp",
     description:
       "Swap, earn, and build on the premier Evmos community owned DEX.",
     href: FORGE_URL,
   },
-
   {
-    image: "/ecosystem/tashi.svg",
+    image: stride.src,
+    name: "Stride",
+    type: "Instant dApp",
+    description: "Liquid staking for Cosmos blockchains.",
+    href: STRIDE_URL,
+  },
+  {
+    image: galaxy.src,
+    name: "Squid",
+    type: "Instant dApp",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    href: "/",
+  },
+  {
+    image: tashi.src,
     name: "Tashi",
-    type: dAppsTypes.DEFI,
+    type: "Instant dApp",
     description: "Tashi is your path to Borrow Lend DeFi on Evmos.",
     href: TASHI_URL,
   },
   {
-    // update image
-    image: "/ecosystem/orbitalApes.png",
-    name: "Orbit Market",
-    type: dAppsTypes.NFT,
-    description:
-      "The largest NFT Marketplace in Evmos. Built by the community, for the community.",
-    href: ORBITAL_APES_URL,
+    image: galaxy.src,
+    name: "Wormhole",
+    type: "Instant dApp",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    href: "/",
   },
   {
-    image: "/ecosystem/stride.png",
-    name: "Stride",
-    type: dAppsTypes.LIQUID_STAKING,
-    description: "Liquid staking for Cosmos blockchains.",
-    href: STRIDE_URL,
+    image: galaxy.src,
+    name: "Layerswap",
+    type: "Instant dApp",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    href: "/",
+  },
+  {
+    image: galaxy.src,
+    name: "Cypher Wallet",
+    type: "Instant dApp",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    href: "/",
   },
 ];

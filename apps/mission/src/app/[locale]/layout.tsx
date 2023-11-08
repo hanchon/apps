@@ -4,7 +4,7 @@ import { PropsWithChildren } from "react";
 import { languages } from "@evmosapps/i18n";
 import { withLocale } from "@evmosapps/i18n/server";
 import { cn } from "helpers";
-import { greyCliff, ibm, nb } from "ui-helpers/src/fonts";
+import { greyCliff, ibm, nb, evmos } from "ui-helpers/src/fonts";
 import { RootProviders } from "./RootProviders";
 import { GoogleAnalytics } from "../../components/mission/GoogleAnalytics";
 import { ConsentModal } from "stateful-components/src/modals/ConsentModal/ConsentModal";
@@ -27,7 +27,14 @@ function RootLayout({
   return (
     <html lang={locale} dir={dir(locale)} className="dark">
       <head />
-      <body className={cn(greyCliff.variable, ibm.variable, nb.variable)}>
+      <body
+        className={cn(
+          greyCliff.variable,
+          ibm.variable,
+          nb.variable,
+          evmos.variable
+        )}
+      >
         <RootProviders>
           <main className="flex flex-col dark:text-white">
             <Header />

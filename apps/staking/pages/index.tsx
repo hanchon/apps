@@ -14,7 +14,7 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { TermOfServices, Container, MavaWidget } from "ui-helpers";
-import { greyCliff, ibm, nb } from "ui-helpers/src/fonts";
+import { greyCliff, ibm, nb, evmos } from "ui-helpers/src/fonts";
 import { MixpanelProvider } from "tracker";
 function SnackbarsInternal() {
   const valueRedux = useSelector((state: StoreType) => getAllSnackbars(state));
@@ -44,7 +44,12 @@ export default function Home() {
               <HeadComponent />
               <GoogleAnalytics />
               <main
-                className={cn(greyCliff.variable, ibm.variable, nb.variable)}
+                className={cn(
+                  greyCliff.variable,
+                  ibm.variable,
+                  nb.variable,
+                  evmos.variable
+                )}
               >
                 <TermOfServices />
                 <GiveFeedback />

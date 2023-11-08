@@ -19,6 +19,7 @@ const config = {
         body: ["var(--font-body)"],
         display: ["var(--font-display)"],
         brand: ["var(--font-brand)"],
+        evmos: ["var(--font-evmos)"],
       },
       boxShadow: {
         custom: "0px 4px 30px 0px #62575599",

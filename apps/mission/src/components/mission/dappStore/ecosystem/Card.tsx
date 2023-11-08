@@ -31,7 +31,12 @@ export const EcosystemCard = ({ data }: { data: EcosystemProps }) => {
 
       <div className="flex space-x-8 px-5 pt-5">
         <h3 className="text-sm font-bold text-pearl">{data.name}</h3>
-        <Badge className="text-[8px]">{data.type}</Badge>
+        <Badge className="text-sm space-x-2">
+          {/* TODO: check if we need to create a component for this */}
+          {/* TODO: add color to tailwind file */}
+          <span className="w-[8px] h-[8px] bg-[#AE00FF] rounded-full" />
+          <p>{data.type}</p>
+        </Badge>
       </div>
       <p className="px-5 text-sm text-white opacity-70">{data.description}</p>
     </Link>

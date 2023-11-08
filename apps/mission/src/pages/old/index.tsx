@@ -18,7 +18,7 @@ import { GoogleAnalytics } from "../../components/mission/GoogleAnalytics";
 import { MixpanelProvider } from "tracker";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GiveFeedback } from "../../components/mission/GiveFeedback";
-import { greyCliff, ibm, nb } from "ui-helpers/src/fonts";
+import { greyCliff, ibm, nb, evmos } from "ui-helpers/src/fonts";
 
 import { cn } from "helpers";
 
@@ -52,7 +52,12 @@ export default function Mission() {
               <HeadComponent />
               <GoogleAnalytics />
               <main
-                className={cn(greyCliff.variable, ibm.variable, nb.variable)}
+                className={cn(
+                  greyCliff.variable,
+                  ibm.variable,
+                  nb.variable,
+                  evmos.variable
+                )}
               >
                 <TermOfServices />
                 <GiveFeedback />
