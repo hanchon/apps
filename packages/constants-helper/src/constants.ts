@@ -65,3 +65,4 @@ export const EMOJIS = {
 
 export const REGISTER_TOKEN_URL =
   "https://github.com/evmos/chain-token-registry";
+export const MEDIUM_URL = "https://medium.com/evmos";
