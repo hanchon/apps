@@ -2,7 +2,7 @@
 
 import { ModalWithTransitions } from "ui-helpers";
 
-import { useModal } from "helpers";
+import { modalLink, useModal } from "helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { COOKIE_POLICY_URL, PRIVACY_POLICY_URL } from "constants-helper";
 import GrayButton from "ui-helpers/src/GrayButton";
@@ -10,7 +10,7 @@ import { DISABLE_TRACKER_LOCALSTORAGE } from "tracker";
 import { Trans } from "react-i18next";
 
 export const useConsentModal = () => useModal("consent");
-
+export const ConsentModalButton = modalLink("consent");
 export const ConsentModal = () => {
   const { t } = useTranslation();
   const { isOpen, setIsOpen, modalProps } = useConsentModal();

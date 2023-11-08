@@ -8,10 +8,15 @@ import { Button } from "../Button";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { StoreType, useAssets, useStake } from "evmos-wallet";
 import { useSelector } from "react-redux";
-import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, useTracker } from "tracker";
+import {
+  CLICK_ON_TOP_UP_ACCOUNT_DAPP,
+  DISABLE_TRACKER_LOCALSTORAGE,
+  useTracker,
+} from "tracker";
 
 import { useAccount } from "wagmi";
 import { useTopupModal } from "stateful-components/src/modals/TopupModal/TopupModal";
+import { TrackerEvent } from "ui-helpers";
 
 export const AccountBalance = () => {
   const { isConnected } = useAccount();
@@ -45,7 +50,7 @@ export const AccountBalance = () => {
     return totalBalanceInDollars.toFixed(0);
   };
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("dappStore");
 
   const { handlePreClickAction } = useTracker(CLICK_ON_TOP_UP_ACCOUNT_DAPP);
 
@@ -53,17 +58,18 @@ export const AccountBalance = () => {
     handlePreClickAction({ location: "On the main page" });
     topupmodal.setIsOpen(true);
   };
+
   return (
     <section className="mb-7 text-left md:mx-0">
-      <p className="mb-2 text-xl text-pearl md:text-2xl ">
-        {t("dappStore.account.balance.title")}
+      <p className="mb-2 text-xl text-pearl md:text-2xl">
+        {t("account.balance.title")}
       </p>
       <div className="flex flex-col space-y-3 md:flex-row md:space-x-3 md:space-y-0 ">
         <div>
           <h6 className="text-4xl font-bold text-white md:text-6xl">
             {isConnected ? drawTotalBalance() : "- "}
             <span className="ml-2 text-4xl font-bold uppercase text-white opacity-50 md:text-6xl">
-              {t("evmos.token")}
+              EVMOS
             </span>
           </h6>
           <p className="mt-4 text-xl text-white opacity-50">
@@ -74,7 +80,7 @@ export const AccountBalance = () => {
           <div className="md:relative md:left-[16px] md:top-[11px] ">
             <Button
               handleOnClick={handleClick}
-              text={t("dappStore.account.balance.topUp")}
+              text={t("account.balance.topUp")}
             />
           </div>
         )}

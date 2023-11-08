@@ -12,7 +12,7 @@ const initI18next = async (locale: string, namespace: string) => {
     .use(
       resourcesToBackend((language: string, namespace: string) => {
         try {
-          return import(`/locales/${language}/${namespace}.json`);
+          return import(`../locales/${language}/${namespace}.json`);
         } catch (error) {
           console.warn(
             `Missing translation file: ${language}/${namespace}.json`
@@ -26,7 +26,7 @@ const initI18next = async (locale: string, namespace: string) => {
 };
 
 export async function translation(
-  namespace: string = "translation",
+  namespace: string = "common",
   options: {
     keyPrefix?: string;
   } = {}

@@ -45,7 +45,7 @@ export const TransferSummary = ({
     tokenRef: token.ref,
   });
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("portfolio");
   const feeChain = getChainByAddress(sender);
   const feeToken = getToken(feeChain.prefix, feeChain.feeToken);
   return (

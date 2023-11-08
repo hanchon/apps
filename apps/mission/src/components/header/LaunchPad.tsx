@@ -101,13 +101,13 @@ export function LaunchPad({}: { showPing?: boolean }) {
             </div>
           )}
           <div className="grid grid-cols-3 gap-y-10 px-8 pb-8">
-            {launchPadItems.map(({ href, ...rest }) => (
+            {launchPadItems.map(({ href, mixpanelId, ...rest }) => (
               <LaunchPadItem
                 key={href}
                 href={href}
                 onClick={() => {
                   sendEvent(CLICK_ON_DAPP_INSIDE_LAUNCHER, {
-                    dApp: rest.mixpanelId,
+                    dApp: mixpanelId,
                   });
                 }}
                 {...rest}

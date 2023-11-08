@@ -1,13 +1,16 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import i18next from "i18next";
+import i18next, { type FlatNamespace, type KeyPrefix } from "i18next";
 import {
   initReactI18next,
   useTranslation as useTranslationOrg,
+  type FallbackNs,
+  type UseTranslationOptions,
 } from "react-i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { getOptions, languages } from "../settings";
+import { useEffectEvent } from "helpers";
 
 const isServer = typeof window === "undefined";
 
@@ -15,7 +18,7 @@ i18next
   .use(initReactI18next)
   .use(
     resourcesToBackend((language: string, namespace: string) => {
-      return import(`/locales/${language}/${namespace}.json`);
+      return import(`../locales/${language}/${namespace}.json`);
     })
   )
   .init({
@@ -24,30 +27,48 @@ i18next
     detection: {
       order: ["path", "htmlTag", "cookie", "navigator"],
     },
+    debug: true,
     preload: isServer ? languages : [],
   });
 
-export function useTranslation(
-  namespace = "translation",
-  options: IDBTransactionOptions = {}
-) {
+export function useTranslation<
+  Ns extends
+    | FlatNamespace
+    | readonly [FlatNamespace?, ...FlatNamespace[]]
+    | undefined = undefined,
+  KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined,
+>(namespace?: Ns, options?: UseTranslationOptions<KPrefix>) {
   const [locale] = usePathname().split("/").filter(Boolean);
+
   if (!locale || !languages.includes(locale)) {
     throw new Error(`Invalid locale: ${locale}`);
   }
-  if (isServer) {
-    i18next.changeLanguage(locale);
-  } else {
-    i18next.language = locale;
-  }
 
-  useEffect(() => {
-    if (locale === i18next.language) return;
-    i18next.changeLanguage(locale);
-  }, [locale]);
-  return useTranslationOrg(namespace, {
-    lng: locale,
-    i18n: i18next,
-    ...options,
-  });
+  const ret = useTranslationOrg<Ns, KPrefix>(namespace, options);
+
+  const { i18n } = ret;
+
+  if (isServer && locale && i18n.resolvedLanguage !== locale) {
+    i18n.changeLanguage(locale);
+  } else {
+    const [activeLocale, setActiveLng] = useState(i18n.resolvedLanguage);
+
+    const syncActiveLanguageState = useEffectEvent(() => {
+      if (activeLocale === i18n.resolvedLanguage) return;
+      setActiveLng(i18n.resolvedLanguage);
+    });
+
+    useEffect(() => {
+      syncActiveLanguageState();
+    }, [activeLocale, i18n.resolvedLanguage]);
+
+    const synci18nActiveLanguage = useEffectEvent(() => {
+      if (!locale || i18n.resolvedLanguage === locale) return;
+      i18n.changeLanguage(locale);
+    });
+    useEffect(() => {
+      synci18nActiveLanguage();
+    }, [locale, i18n]);
+  }
+  return ret;
 }

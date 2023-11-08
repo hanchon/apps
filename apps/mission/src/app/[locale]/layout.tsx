@@ -15,6 +15,7 @@ import { ProfileModal } from "stateful-components/src/modals/ProfileModal/Profil
 import { TopupModal } from "stateful-components/src/modals/TopupModal/TopupModal";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
+import { Container } from "ui-helpers";
 
 export async function generateStaticParams() {
   return languages.map((locale) => ({ lng: locale }));
@@ -25,7 +26,7 @@ function RootLayout({
   params: { locale },
 }: PropsWithChildren<{ params: { locale: string } }>) {
   return (
-    <html lang={locale} dir={dir(locale)} className="dark">
+    <html lang={locale} dir={dir(locale)} className="dark bg-darkGray1">
       <head />
       <body
         className={cn(
@@ -38,7 +39,7 @@ function RootLayout({
         <RootProviders>
           <main className="flex flex-col dark:text-white">
             <Header />
-            <div className="container mx-auto">{children}</div>
+            <Container>{children}</Container>
             <Footer />
           </main>
           <ConsentModal />

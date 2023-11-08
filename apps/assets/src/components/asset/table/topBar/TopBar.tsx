@@ -18,13 +18,13 @@ import {
 
 const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
   const { isDisconnected } = useAccount();
-  const { t } = useTranslation();
+  const { t } = useTranslation("portfolio");
 
   const transferModal = useTransferModal();
   const requestModal = useRequestModal();
   const { sendEvent } = useTracker();
   return (
-    <TopBarContainer>
+    <div className="grid bg-darkGray2 text-pearl rounded-2xl p-4 text-center gap-y-6 md:grid-cols-3">
       <TopBarItem text="Total Assets" value={`$${topProps.totalAssets}`} />
       <TopBarItem
         text="EVMOS Price"
@@ -34,7 +34,7 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
             : `$${topProps.evmosPrice.toString()}`
         }
       />
-      <div className="flex items-center justify-center space-x-2 lg:justify-end">
+      <div className="flex items-center space-x-2 md:justify-end">
         <PrimaryButton
           className="py-2"
           disabled={isDisconnected}
@@ -60,7 +60,7 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
           <p>{t("request.button")}</p>
         </PrimaryButton>
       </div>
-    </TopBarContainer>
+    </div>
   );
 };
 

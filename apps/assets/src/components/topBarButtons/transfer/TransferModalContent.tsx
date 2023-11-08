@@ -67,7 +67,7 @@ export const TransferModalContent = ({
   amount,
   setState,
 }: TransferModalProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("portfolio");
   const { sendEvent } = useTracker();
   const { isDisconnected } = useAccount();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
@@ -438,7 +438,7 @@ export const TransferModalContent = ({
                 variant={"outline-primary"}
                 className="mt-8"
               >
-                {t("transfer.top.up.button.text")}
+                {t("topup.button")}
               </PrimaryButton>
             )}
             {action === "BRIDGE" && (

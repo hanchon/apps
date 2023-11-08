@@ -1,4 +1,4 @@
-const { log, error, trace } = console;
+const { log, error, trace, table } = console;
 /**
  * This works just as console.log, but it's to be used when we intentionally want to keep logs in production.
  * using console.log directly will trigger eslint errors.
@@ -12,5 +12,8 @@ export const Log = {
   },
   trace: (message: unknown, ...messages: unknown[]) => {
     trace(message, ...messages);
+  },
+  table(...data: unknown[]) {
+    table(...data);
   },
 };

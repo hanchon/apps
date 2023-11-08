@@ -27,7 +27,7 @@ export const AccountSelector = ({
   networkOptions: Prefix[];
   senderPrefix: Prefix;
 }>) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("portfolio");
   const { sendEvent } = useTracker();
   const { address, inputProps, errors, setValue } = useAddressInput(value);
   const [selectedNetwork, setSelectedNetwork] = useState<Prefix>("evmos");
@@ -165,7 +165,7 @@ const ModeSelector = ({
   onChange: (mode: WalletTabKey) => void;
   disableWalletRequest?: boolean;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("portfolio");
   return (
     <Tabs
       tabsProps={[
@@ -199,7 +199,7 @@ const NetworkSelector = ({
   onChange: (prefix: Prefix) => void;
   options: Prefix[];
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("portfolio");
   const selectedChain = getChain(value);
   return (
     <CryptoSelector value={value} onChange={onChange}>

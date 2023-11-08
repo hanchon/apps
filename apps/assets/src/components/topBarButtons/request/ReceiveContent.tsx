@@ -52,7 +52,7 @@ export const ReceiveContent = ({
 }: {
   setState: RequestModalProps["setState"];
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("portfolio");
   const { sendEvent } = useTracker();
   const [walletFormat, setWalletFormat] = useState("0x");
   const wallet = useSelector((state: StoreType) => state.wallet.value);

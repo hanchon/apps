@@ -22,7 +22,7 @@ export const EcosystemContainer = () => {
     return dApps.map((dApp) => <EcosystemCard data={dApp} key={dApp.name} />);
   };
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("dappStore");
 
   return (
     <section className="space-y-6 pt-11">

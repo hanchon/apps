@@ -1,6 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import tailwindForms from "@tailwindcss/forms";
+
 import typography from "@tailwindcss/typography";
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -12,6 +12,7 @@ const config = {
     "./pages/**/*.{ts,tsx}",
     "./public/**/*.html",
     "../../packages/*/src/**/*.{js,ts,jsx,tsx}",
+    "../../pages/*/src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -96,7 +97,7 @@ const config = {
       },
     },
   },
-  plugins: [tailwindForms, typography],
+  plugins: [typography],
 };
 
 export default config;

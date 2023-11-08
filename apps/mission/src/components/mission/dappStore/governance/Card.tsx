@@ -21,18 +21,15 @@ export const GovernanceCard = () => {
     router.push("/governance");
   };
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("dappStore");
   return (
     <Card>
       <div>
-        <Title
-          firstWord={t("evmos.token")}
-          secondWord={t("dappStore.card.governance.title")}
-        />
-        <Description text={t("dappStore.card.governance.description")} />
+        <Title firstWord={"Evmos"} secondWord={t("card.governance.title")} />
+        <Description text={t("card.governance.description")} />
       </div>
       <Button
-        text={t("dappStore.card.governance.button.text")}
+        text={t("card.governance.button.text")}
         handleOnClick={handleOnClick}
       />
     </Card>

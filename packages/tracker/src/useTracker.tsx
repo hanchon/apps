@@ -1,24 +1,27 @@
-import { Dict } from "mixpanel-browser";
-import { useMixpanel } from "./context/mixpanel";
+import mixpanel, { Dict } from "mixpanel-browser";
+
 import { DISABLE_TRACKER_LOCALSTORAGE } from "./constants";
-import { useCallback } from "react";
+import { Log } from "helpers";
 
+mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN ?? "", {
+  ip: false,
+});
+
+export const sendEvent = (trackingID: string, extraProperties?: Dict) => {
+  const mixpanelIsActive =
+    Object.prototype.hasOwnProperty.call(mixpanel, "config") &&
+    (localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === null ||
+      localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === "false");
+
+  Log.table({
+    ["Tracking ID"]: trackingID,
+    ["Extra Properties"]: extraProperties,
+    ["Mixpanel is active"]: mixpanelIsActive,
+  });
+
+  if (mixpanelIsActive) mixpanel.track(trackingID, { ...extraProperties });
+};
 export const useTracker = (event?: string, properties?: Dict) => {
-  const mixpanel = useMixpanel();
-
-  const handlePreClickAction = (extraProperties?: Dict) => {
-    if (
-      mixpanel !== null &&
-      Object.prototype.hasOwnProperty.call(mixpanel, "config") &&
-      event !== undefined &&
-      (localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === null ||
-        localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === "false")
-    ) {
-      // Check that a token was provided (useful if you have environments without Mixpanel)
-      mixpanel?.track(event, { ...properties, ...extraProperties });
-    }
-  };
-
   const disableMixpanel = () => {
     localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "true");
   };
@@ -27,19 +30,10 @@ export const useTracker = (event?: string, properties?: Dict) => {
     localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "false");
   };
 
-  const sendEvent = useCallback(
-    (trackingID: string, extraProperties?: Dict) => {
-      if (
-        mixpanel !== null &&
-        Object.prototype.hasOwnProperty.call(mixpanel, "config") &&
-        (localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === null ||
-          localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === "false")
-      ) {
-        mixpanel?.track(trackingID, { ...extraProperties });
-      }
-    },
-    [mixpanel],
-  );
+  const handlePreClickAction = (extraProperties?: Dict) => {
+    if (event === undefined) return;
+    sendEvent(event, { ...properties, ...extraProperties });
+  };
 
   return {
     handlePreClickAction,

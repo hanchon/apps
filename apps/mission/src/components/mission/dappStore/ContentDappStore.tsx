@@ -15,7 +15,7 @@ import { Button } from "./Button";
 
 export const ContentDappStore = () => {
   return (
-    <div className="space-y-8 px-5 text-display">
+    <div className="space-y-8 text-display">
       <div className="grid items-center gap-x-8 gap-y-11 md:grid-cols-2">
         <AccountBalance />
         <CopilotCard />
@@ -28,7 +28,8 @@ export const ContentDappStore = () => {
       <div className="grid gap-8 md:grid-cols-2">
         <StakingCard />
         <div className="grid grid-rows-2 gap-y-8">
-          <AssetsCard /> <GovernanceCard />
+          <AssetsCard />
+          <GovernanceCard />
         </div>
       </div>
 

@@ -49,7 +49,7 @@ export const AssetSelector = ({
   address?: Address<Prefix>;
   fee?: TokenAmount;
 }>) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("portfolio");
   const { sendEvent } = useTracker();
   const { isDisconnected } = useAccount();
   const selectedChain = getChain(value.networkPrefix);

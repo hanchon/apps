@@ -75,3 +75,4 @@ export * from "./selects/SelectMenu";
 export * from "./modal/WizardHelper";
 export * from "./titles/Title";
 export * from "./titles/Subtitle";
+export * from "./TrackerEvent";

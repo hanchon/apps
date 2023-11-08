@@ -60,7 +60,7 @@ export const Content = ({
   const dispatch = useDispatch();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("portfolio");
   const { sendEvent } = useTracker();
 
   const selectedToken = getTokenByRef(token);

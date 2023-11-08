@@ -29,7 +29,7 @@ export const SetUpContent = ({
   setMessage: Dispatch<SetStateAction<string>>;
   setState: RequestModalProps["setState"];
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("portfolio");
   const { sendEvent } = useTracker();
   const dispatch = useDispatch();
   const { isDisconnected } = useAccount();

@@ -29,7 +29,7 @@ export const StakingCard = () => {
   );
   const handleOnClick = async () => {
     handlePreClickAction();
-    await router.push("/staking");
+    router.push("/staking");
   };
 
   const wallet = useSelector((state: StoreType) => state.wallet.value);
@@ -38,20 +38,17 @@ export const StakingCard = () => {
   const { evmosPrice, totalEvmosAsset } = useAssets();
   const { handleConfirmButton } = useRewards(wallet, totalRewards);
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("dappStore");
   return (
     <Card>
       <>
         <div>
-          <Title
-            firstWord={t("evmos.token")}
-            secondWord={t("dappStore.card.staking.title")}
-          />
-          <Description text={t("dappStore.card.staking.description")} />
+          <Title firstWord={"Evmos"} secondWord={t("card.staking.title")} />
+          <Description text={t("card.staking.description")} />
         </div>
         <div className="grid grid-cols-1 space-y-3 md:grid-cols-2 md:space-y-0">
           <BalanceContainer
-            title={t("dappStore.card.staking.available")}
+            title={t("card.staking.available")}
             amount={getBalance(totalEvmosAsset, wallet.active)}
             amountInDollars={getBalanceInDollars(
               totalEvmosAsset,
@@ -61,7 +58,7 @@ export const StakingCard = () => {
             data-testid="card-available-balance"
           />
           <BalanceContainer
-            title={t("dappStore.card.staking.staked")}
+            title={t("card.staking.staked")}
             amount={getBalance(totalDelegations, wallet.active)}
             amountInDollars={getBalanceInDollars(
               totalDelegations,
@@ -73,7 +70,7 @@ export const StakingCard = () => {
         </div>
         <div className="flex flex-col items-start space-y-3 rounded-lg bg-[#FFFFFF0F] p-3 md:flex-row md:items-center md:justify-between md:space-y-0">
           <BalanceContainer
-            title={t("dappStore.card.staking.rewards")}
+            title={t("card.staking.rewards")}
             amount={getNumberBalance(totalRewards, wallet.active)}
             amountInDollars={getNumberBalanceInDollars(
               totalRewards,
@@ -92,11 +89,11 @@ export const StakingCard = () => {
           }
         `}
           >
-            {t("dappStore.card.staking.button.claim")}
+            {t("card.staking.button.claim")}
           </button>
         </div>
         <Button
-          text={t("dappStore.card.staking.button.text")}
+          text={t("card.staking.button.text")}
           handleOnClick={handleOnClick}
         />
       </>

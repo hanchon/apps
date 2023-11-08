@@ -6,10 +6,13 @@ import { readLocale } from "@evmosapps/i18n/server";
 acceptLanguage.languages(languages);
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|.*png).*)",
+  ],
 };
 
 export function middleware(request: NextRequest) {
+  console.log("request", request.nextUrl);
   let [routeLocale]: string[] = request.nextUrl.pathname
     .split("/")
     .filter(Boolean);

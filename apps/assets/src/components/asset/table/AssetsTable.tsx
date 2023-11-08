@@ -110,7 +110,8 @@ const AssetsTable = () => {
   return (
     <>
       <TopBar topProps={topProps} />
-      <div className="mx-5 flex flex-col justify-center lg:flex-row lg:justify-between xl:mx-0">
+
+      <div className="flex flex-col justify-center lg:flex-row lg:justify-between">
         <Guide />
         <Switch
           label="Hide Zero Balance"

@@ -20,19 +20,17 @@ export const AssetsCard = () => {
     router.push("/portfolio");
   };
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("dappStore");
+
   return (
     <Card>
       <>
         <div>
-          <Title
-            firstWord={t("evmos.token")}
-            secondWord={t("dappStore.card.assets.title")}
-          />
-          <Description text={t("dappStore.card.assets.description")} />
+          <Title firstWord={"Evmos"} secondWord={t("card.assets.title")} />
+          <Description text={t("card.assets.description")} />
         </div>
         <Button
-          text={t("dappStore.card.assets.button.text")}
+          text={t("card.assets.button.text")}
           handleOnClick={handleOnClick}
         />
       </>

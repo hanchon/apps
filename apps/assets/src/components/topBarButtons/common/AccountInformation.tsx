@@ -7,7 +7,7 @@ import { useTranslation } from "@evmosapps/i18n/client";
 import { InformationIcon } from "icons";
 
 export const AccountInformation = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("portfolio");
   return (
     <div className="flex flex-col space-y-2 text-[10px] h-full justify-end">
       <div>

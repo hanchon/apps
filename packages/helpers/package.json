@@ -39,6 +39,7 @@
     "clsx": "^2.0.0",
     "deep-equal": "^2.2.2",
     "lodash-es": "^4.17.21",
+    "querystring": "^0.2.1",
     "tailwind-merge": "^1.14.0",
     "vitest": "^0.34.6"
   }

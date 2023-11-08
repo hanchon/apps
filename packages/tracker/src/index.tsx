@@ -80,6 +80,7 @@ export { CLICK_CONFIRM_VOTE_BUTTON } from "./constants";
 export { MixpanelProvider } from "./MixPanelProvider";
 export { useMixpanel } from "./context/mixpanel";
 export { useTracker } from "./useTracker";
+export * from "./useTracker";
 
 // track un/successful transactions
 export { SUCCESSFUL_TX_DEPOSIT } from "./constants";
