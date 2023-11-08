@@ -1,7 +1,6 @@
 import WETH_ABI from "../../contracts/abis/WEVMOS/WEVMOS.json";
 import { WEVMOS_CONTRACT_ADDRESS } from "../../../constants";
 import {
-  prepareSendTransaction,
   prepareWriteContract,
   sendTransaction,
   writeContract,
@@ -23,7 +22,7 @@ export function useWEVMOS() {
   }
 
   async function withdraw(amount: BigNumber, hexAddress: string) {
-    const req = await prepareSendTransaction({
+    return await sendTransaction({
       to: WEVMOS_CONTRACT_ADDRESS,
       account: hexAddress as `0x${string}`,
       value: 0n,
@@ -33,7 +32,6 @@ export function useWEVMOS() {
         args: [amount.toBigInt()],
       }),
     });
-    return await sendTransaction(req);
   }
 
   return {
