@@ -1,3 +1,4 @@
+"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
@@ -10,6 +11,7 @@ import { CopilotCard } from "copilot";
 import { Title } from "ui-helpers/src/titles/Title";
 import { Subtitle } from "ui-helpers/src/titles/Subtitle";
 import { HeroSection } from "./HeroSection";
+import { Button } from "./Button";
 
 export const ContentDappStore = () => {
   return (
@@ -34,6 +36,10 @@ export const ContentDappStore = () => {
         <HeroSection />
       </div>
       <EcosystemContainer />
+      <div className="border-t border-b rounded-lg py-4 px-3 border-[#A29F88]">
+        {/* TODO: className as prop to give w-full */}
+        <Button text="See all amount dApps" handleOnClick={() => {}} />
+      </div>
     </div>
   );
 };

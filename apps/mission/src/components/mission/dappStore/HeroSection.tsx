@@ -15,16 +15,19 @@ export const HeroSection = () => {
         }}
       >
         {/* TODO: add localization */}
-        {/* TODO: check why font-evmos is not working */}
-        <h1 className="font-evmos text-3xl">
+        <h1
+          className="font-evmos font-bold text-5xl tracking-wide text-[#FFF4E1]"
+          style={{ fontFeatureSettings: "'ss02' on, 'ss01' on" }}
+        >
           Earn revenue by deploying your dApp
         </h1>
         <p className="border-b border-t border-[#FFF4E1] border-opacity-40 py-2 text-sm  text-[#FFF4E1] font-brand w-fit">
           Interested in adding your dApp to our dApp Store and earning revenue?
         </p>
         <div className="flex items-center space-x-2">
-          <PrimaryButton>Add your dApp</PrimaryButton>
+          <PrimaryButton className="flex-1">Add your dApp</PrimaryButton>
           <PrimaryButton
+            className="flex-1"
             variant="secondary"
             onClick={() => {
               window.open(DOCS_EVMOS, "_blank");
