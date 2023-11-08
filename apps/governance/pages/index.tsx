@@ -12,7 +12,7 @@ import {
 } from "evmos-wallet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TermOfServices, Container, MavaWidget } from "ui-helpers";
-import { greyCliff, ibm, nb } from "ui-helpers/src/fonts";
+import { greyCliff, ibm, nb, evmos } from "ui-helpers/src/fonts";
 import { StatefulHeader } from "stateful-components";
 import { HeadComponent } from "../src/components/governance/HeadComponent";
 import { GoogleAnalytics } from "../src/components/GoogleAnalytics";
@@ -41,7 +41,12 @@ export default function Home() {
               <HeadComponent />
               <GoogleAnalytics />
               <main
-                className={cn(greyCliff.variable, ibm.variable, nb.variable)}
+                className={cn(
+                  greyCliff.variable,
+                  ibm.variable,
+                  nb.variable,
+                  evmos.variable
+                )}
               >
                 <TermOfServices />
                 <GiveFeedback />

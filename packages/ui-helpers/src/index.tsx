@@ -73,3 +73,5 @@ export { Spinner } from "./spinners/Spinner";
 export * from "./Toggle";
 export * from "./selects/SelectMenu";
 export * from "./modal/WizardHelper";
+export * from "./titles/Title";
+export * from "./titles/Subtitle";

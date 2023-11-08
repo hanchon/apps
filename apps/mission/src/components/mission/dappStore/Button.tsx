@@ -10,7 +10,7 @@ export const Button = ({
 }) => {
   return (
     <button
-      className="w-fit rounded bg-[#423D37] px-5 py-3 text-sm font-bold text-pearl transition-all duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]"
+      className="w-fit self-start rounded bg-[#423D37] px-5 py-3 text-sm text-pearl transition-all duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]"
       onClick={handleOnClick}
     >
       {text}

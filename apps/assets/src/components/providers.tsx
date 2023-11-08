@@ -11,7 +11,7 @@ import {
   WalletProvider,
 } from "evmos-wallet";
 import { Container, MavaWidget, TermOfServices } from "ui-helpers";
-import { greyCliff, ibm, nb } from "ui-helpers/src/fonts";
+import { greyCliff, ibm, nb, evmos } from "ui-helpers/src/fonts";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { StatefulHeader } from "stateful-components";
 import { HeadComponent } from "./asset/HeadComponent";
@@ -51,7 +51,12 @@ export function Providers({ children }: PropsWithChildren) {
               <HeadComponent />
               <GoogleAnalytics />
               <main
-                className={cn(greyCliff.variable, ibm.variable, nb.variable)}
+                className={cn(
+                  greyCliff.variable,
+                  ibm.variable,
+                  nb.variable,
+                  evmos.variable
+                )}
               >
                 <GiveFeedback />
                 <Container>

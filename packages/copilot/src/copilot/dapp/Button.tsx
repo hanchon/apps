@@ -19,6 +19,7 @@ export const Button = ({
     <>
       <Copilot />
       {status === STEP_STATUS.CURRENT && (
+        // TODO: reuse primarybutton with variant secondary
         <button
           onClick={onClick}
           className={` w-fit rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out ${
