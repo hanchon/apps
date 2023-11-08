@@ -38,9 +38,6 @@ export const CLICK_WITHDRAW_CONFIRM_BUTTON = "Confirm withdraw transaction";
 export const CLICK_HIDE_ZERO_BALANCE = "Hide Zero Balance";
 export const CLICK_CTA_LINKS_REGISTER_TOKEN =
   "Click on CTA link to register token";
-export const CLICK_CTA_LINKS_ASSETS_GUIDE =
-  "Click on CTA link to view assets guide";
-
 export const CLICK_ON_SEND_BUTTON = "Open up Send modal";
 export const CLICK_ON_RECEIVE_BUTTON = "Open up Receive modal";
 export const SELECT_TOKEN_SEND_FLOW = "Select Token to send to a network";
