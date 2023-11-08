@@ -8,7 +8,7 @@
 
 export default {
   "prefix": "kujira",
-  "name": "kujira",
+  "name": "Kujira",
   "cosmosId": "kaiyo-1",
   "identifier": "kujira",
   "gasPriceStep": {
@@ -67,6 +67,6 @@ export default {
       "type": "IBC"
     }
   ],
-  "explorerUrl": "https://www.mintscan.io/kujira/txs",
+  "explorerUrl": "https://finder.kujira.network/kaiyo-1/tx",
   "env": "mainnet"
 } as const;
