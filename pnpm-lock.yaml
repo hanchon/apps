@@ -456,6 +456,9 @@ importers:
       '@evmosapps/config':
         specifier: workspace:*
         version: link:../../packages/config
+      '@evmosapps/dappstore-page':
+        specifier: workspace:*
+        version: link:../../pages/dappstore
       '@evmosapps/portfolio-page':
         specifier: workspace:*
         version: link:../../pages/portfolio
@@ -1735,6 +1738,48 @@ importers:
       '@evmosapps/config':
         specifier: workspace:*
         version: link:../config
+
+  pages/dappstore:
+    dependencies:
+      '@evmosapps/registry':
+        specifier: workspace:*
+        version: link:../../packages/registry
+      constants-helper:
+        specifier: workspace:*
+        version: link:../../packages/constants-helper
+      copilot:
+        specifier: workspace:*
+        version: link:../../packages/copilot
+      evmos-wallet:
+        specifier: workspace:*
+        version: link:../../packages/evmos-wallet
+      helpers:
+        specifier: workspace:*
+        version: link:../../packages/helpers
+      icons:
+        specifier: workspace:*
+        version: link:../../packages/icons
+      next:
+        specifier: ^14.0.1
+        version: 14.0.1(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      services:
+        specifier: workspace:*
+        version: link:../../packages/services
+      stateful-components:
+        specifier: workspace:*
+        version: link:../../packages/stateful-components
+      tracker:
+        specifier: workspace:*
+        version: link:../../packages/tracker
+      ui-helpers:
+        specifier: workspace:*
+        version: link:../../packages/ui-helpers
 
   pages/portfolio:
     dependencies:

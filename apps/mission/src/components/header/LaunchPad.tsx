@@ -16,19 +16,6 @@ import { Badge, NetworkModeSelector } from "ui-helpers";
 import { PingIndicator } from "ui-helpers/src/PingIndicator";
 import { usePingIndicator } from "ui-helpers/src/launchPad/usePingIndicator";
 
-const localPorts = {
-  "/": 3004,
-  "/portfolio": 3002,
-  "/staking": 3003,
-  "/governance": 3001,
-  "/vesting": 3005,
-} as const;
-
-const getHref = (path: keyof typeof localPorts) => {
-  if (process.env.NODE_ENV !== "development") return path;
-  return `http://localhost:${localPorts[path]}${path}`;
-};
-
 export function LaunchPad({}: { showPing?: boolean }) {
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
@@ -38,25 +25,25 @@ export function LaunchPad({}: { showPing?: boolean }) {
     {
       icon: <NutIcon width="40" height="40" />,
       children: t("launchPad.dApp.title"),
-      href: getHref("/"),
+      href: "/",
       mixpanelId: "dAppStore",
     },
     {
       icon: <CoinIcon width="40" height="40" />,
       children: t("launchPad.assets.title"),
-      href: getHref("/portfolio"),
+      href: "/portfolio",
       mixpanelId: "Assets",
     },
     {
       icon: <CalculatorIcon width="40" height="40" />,
       children: t("launchPad.staking.title"),
-      href: getHref("/staking"),
+      href: "/staking",
       mixpanelId: "Staking",
     },
     {
       icon: <GovernanceIcon width="40" height="40" />,
       children: t("launchPad.governance.title"),
-      href: getHref("/governance"),
+      href: "/governance",
       mixpanelId: "Governance",
     },
   ];
@@ -143,7 +130,7 @@ export const LaunchPadItem = ({
   icon: JSX.Element;
 }) => {
   return (
-    <a
+    <Link
       rel="noopener noreferrer"
       className="text-pearl flex flex-col items-center text-center"
       {...rest}
@@ -152,6 +139,6 @@ export const LaunchPadItem = ({
         {icon}
       </div>
       <p>{children}</p>
-    </a>
+    </Link>
   );
 };

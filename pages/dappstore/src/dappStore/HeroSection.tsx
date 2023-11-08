@@ -3,7 +3,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { DOCS_EVMOS } from "constants-helper";
-import galaxy from "../../../../public/ecosystem/galaxy.png";
+// import galaxy from "../../../../public/ecosystem/galaxy.png";
 import { PrimaryButton } from "ui-helpers";
 export const HeroSection = () => {
   return (
@@ -11,7 +11,7 @@ export const HeroSection = () => {
       <div
         className="w-full bg-cover bg-no-repeat flex flex-col space-y-8 p-5"
         style={{
-          backgroundImage: `url(${galaxy.src})`,
+          backgroundImage: `url(/ecosystem/galaxy.png)`,
         }}
       >
         {/* TODO: add localization */}
