@@ -21,7 +21,7 @@ import { EXPLORER_URL } from "constants-helper";
 import { getNetwork, switchNetwork } from "wagmi/actions";
 import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
 import { E } from "helpers";
-import { useStakingPrecompile } from "../../../../internal/staking/functionality/hooks/useStakingPrecompile";
+import { useStakingPrecompile } from "../../../../utils/hooks/useStakingPrecompile";
 
 const evmos = getEvmosChainInfo();
 

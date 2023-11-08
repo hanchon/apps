@@ -26,6 +26,7 @@
     "@evmosapps/portfolio-page": "workspace:*",
     "@evmosapps/dappstore-page": "workspace:*",
     "@evmosapps/governance-page": "workspace:*",
+    "@evmosapps/staking-page": "workspace:*",
     "@hanchon/signature-to-pubkey": "^1.0.1",
     "@keplr-wallet/types": "^0.12.20",
     "@metamask/providers": "^10.2.1",
