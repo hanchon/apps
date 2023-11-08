@@ -62,3 +62,4 @@ export const EMOJIS = {
   KEY: "🔑",
   SHRUG: "🤷",
 };
+export const MEDIUM_URL = "https://medium.com/evmos";

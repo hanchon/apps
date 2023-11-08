@@ -1,6 +1,6 @@
 {
   "name": "ui-helpers",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
   "type": "module",
