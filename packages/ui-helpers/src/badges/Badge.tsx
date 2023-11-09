@@ -13,7 +13,7 @@ export const Badge = ({
   return (
     <span
       className={cx(
-        "inline-flex items-center rounded-full px-3 py-1 text-[10px] ring-1 ring-inset leading-snug",
+        "inline-flex items-center rounded-full px-3 py-1 text-[10px] ring-1 ring-inset",
         {
           "text-green2 ring-lightGreen bg-lightYellow2": variant === "success",
           "ring-lightYellow bg-lightYellow1 text-brown": variant === "warning",

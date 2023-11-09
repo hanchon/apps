@@ -34,7 +34,7 @@ export const ContentDappStore = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 space-x-8">
         <HeroSection />
       </div>
       <EcosystemContainer />
