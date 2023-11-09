@@ -31,3 +31,4 @@ export { ICONS_TYPES } from "./constants";
 export { EMOJIS } from "./constants";
 export { EXPLORER_URL } from "./constants";
 export { DOCS_EVMOS } from "./constants";
+export { ADD_DAPP_FORM_URL } from "./constants";

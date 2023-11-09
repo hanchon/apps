@@ -2,7 +2,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { DOCS_EVMOS } from "constants-helper";
+import { ADD_DAPP_FORM_URL, DOCS_EVMOS } from "constants-helper";
 import Image from "next/image";
 import { Frameline, PrimaryButton } from "ui-helpers";
 export const HeroSection = () => {
@@ -25,7 +25,12 @@ export const HeroSection = () => {
           Interested in adding your dApp to our dApp Store and earning revenue?
         </p>
         <div className="flex items-center space-x-2 xl:w-[80%] 2xl:w-[61%]">
-          <PrimaryButton className="flex-1 font-normal rounded">
+          <PrimaryButton
+            className="flex-1 font-normal rounded"
+            onClick={() => {
+              window.open(ADD_DAPP_FORM_URL, "_blank");
+            }}
+          >
             Add your dApp
           </PrimaryButton>
           <PrimaryButton
