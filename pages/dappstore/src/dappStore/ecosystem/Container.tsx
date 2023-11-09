@@ -11,6 +11,7 @@ import { ECOSYSTEM_URL } from "constants-helper";
 import { useTracker, CLICK_ON_VIEW_ALL_DAPPS } from "tracker";
 import { Title } from "ui-helpers/src/titles/Title";
 import { Subtitle } from "ui-helpers/src/titles/Subtitle";
+import { RightArrow } from "icons";
 export const EcosystemContainer = () => {
   const { handlePreClickAction } = useTracker(CLICK_ON_VIEW_ALL_DAPPS);
   const handleViewAlldApps = () => {
@@ -35,7 +36,12 @@ export const EcosystemContainer = () => {
           </Subtitle>
         </div>
         {/* TODO: add arrow  */}
-        <Button text="See More" handleOnClick={handleViewAlldApps} />
+        <Button onClick={handleViewAlldApps}>
+          <div className="flex items-center space-x-2">
+            <p>See More</p>
+            <RightArrow width={11} height={11} />
+          </div>
+        </Button>
       </div>
       <div className="grid gap-x-8 md:grid-cols-4">
         {drawEcosystemdApps(ecosystemData)}

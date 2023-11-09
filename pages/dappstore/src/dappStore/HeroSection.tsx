@@ -3,8 +3,8 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { DOCS_EVMOS } from "constants-helper";
-// import galaxy from "../../../../public/ecosystem/galaxy.png";
-import { PrimaryButton } from "ui-helpers";
+import Image from "next/image";
+import { Frameline, PrimaryButton } from "ui-helpers";
 export const HeroSection = () => {
   return (
     <>
@@ -24,10 +24,12 @@ export const HeroSection = () => {
         <p className="border-b border-t border-[#FFF4E1] border-opacity-40 py-2 text-sm  text-[#FFF4E1] font-brand w-fit">
           Interested in adding your dApp to our dApp Store and earning revenue?
         </p>
-        <div className="flex items-center space-x-2">
-          <PrimaryButton className="flex-1">Add your dApp</PrimaryButton>
+        <div className="flex items-center space-x-2 xl:w-[80%] 2xl:w-[65%]">
+          <PrimaryButton className="flex-1 font-normal rounded">
+            Add your dApp
+          </PrimaryButton>
           <PrimaryButton
-            className="flex-1"
+            className="flex-1 font-normal rounded"
             variant="secondary"
             onClick={() => {
               window.open(DOCS_EVMOS, "_blank");
@@ -37,9 +39,18 @@ export const HeroSection = () => {
           </PrimaryButton>
         </div>
       </div>
-      <div className="bg-red-300/30 flex items-center justify-center">
-        Image here
-      </div>
+
+      <Frameline variant="secondary">
+        <div className="flex items-center justify-center relative">
+          <Image
+            src="/ecosystem/hero-img.svg"
+            alt="hero-img"
+            width={250}
+            height={150}
+            className="object-contain "
+          />
+        </div>
+      </Frameline>
     </>
   );
 };

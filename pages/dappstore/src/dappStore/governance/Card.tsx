@@ -16,7 +16,7 @@ export const GovernanceCard = () => {
   const { handlePreClickAction } = useTracker(
     CLICK_ON_PARTICIPATE_IN_GOVERNANCE
   );
-  const handleOnClick = async () => {
+  const handleOnClick = () => {
     handlePreClickAction();
     router.push("/governance");
   };
@@ -28,10 +28,9 @@ export const GovernanceCard = () => {
         <Title firstWord={"Evmos"} secondWord={t("card.governance.title")} />
         <Description text={t("card.governance.description")} />
       </div>
-      <Button
-        text={t("card.governance.button.text")}
-        handleOnClick={handleOnClick}
-      />
+      <Button onClick={handleOnClick}>
+        {t("card.governance.button.text")}
+      </Button>
     </Card>
   );
 };

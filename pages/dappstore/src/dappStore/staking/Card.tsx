@@ -92,10 +92,7 @@ export const StakingCard = () => {
             {t("card.staking.button.claim")}
           </button>
         </div>
-        <Button
-          text={t("card.staking.button.text")}
-          handleOnClick={handleOnClick}
-        />
+        <Button onClick={handleOnClick}>{t("card.staking.button.text")}</Button>
       </>
     </Card>
   );

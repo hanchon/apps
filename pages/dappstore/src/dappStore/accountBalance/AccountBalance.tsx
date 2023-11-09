@@ -78,10 +78,7 @@ export const AccountBalance = () => {
         </div>
         {isConnected && (
           <div className="md:relative md:left-[16px] md:top-[11px] ">
-            <Button
-              handleOnClick={handleClick}
-              text={t("account.balance.topUp")}
-            />
+            <Button onClick={handleClick}>{t("account.balance.topUp")}</Button>
           </div>
         )}
       </div>
