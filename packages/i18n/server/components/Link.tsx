@@ -11,5 +11,6 @@ export const Link: typeof NextLink = forwardRef(({ href, ...props }, ref) => {
     locale = getLocale();
     href = `/${locale}${href}`;
   }
+
   return <NextLink href={href} {...props} ref={ref} />;
 });

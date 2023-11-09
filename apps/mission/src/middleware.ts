@@ -7,26 +7,31 @@ acceptLanguage.languages(languages);
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|.*png|.*svg|.*sjpg).*)",
+    "/((?!api|_next/static|_next/image|assets|favicon.ico|manifest.json|sw.js|.*png|.*svg|.*sjpg).*)",
   ],
 };
 
 export function middleware(request: NextRequest) {
-  console.log("request", request.nextUrl);
   let [routeLocale]: string[] = request.nextUrl.pathname
     .split("/")
     .filter(Boolean);
+  /**
+   * if path locale is defaultLocale, remove it from path and redirect
+   */
+  if (routeLocale === defaultLanguage) {
+    const url = request.nextUrl.clone();
+    url.pathname = url.pathname.replace(`/${defaultLanguage}`, "");
+    return NextResponse.redirect(url);
+  }
 
   /**
-   * Redirect if there is no locale in path
+   * If path has no locale, serve defaultLocale
    */
-  if (!routeLocale || !languages.includes(routeLocale)) {
-    const locale = readLocale();
-    const response = NextResponse.redirect(
-      new URL(`/${locale}${request.nextUrl.pathname}`, request.url)
-    );
 
-    return response;
+  if (!routeLocale || !languages.includes(routeLocale)) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${defaultLanguage}${request.nextUrl.pathname}`;
+    return NextResponse.rewrite(url);
   }
 
   const response = NextResponse.next();

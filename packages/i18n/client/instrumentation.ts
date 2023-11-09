@@ -27,7 +27,7 @@ i18next
     detection: {
       order: ["path", "htmlTag", "cookie", "navigator"],
     },
-    debug: true,
+
     preload: isServer ? languages : [],
   });
 
@@ -38,10 +38,11 @@ export function useTranslation<
     | undefined = undefined,
   KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined,
 >(namespace?: Ns, options?: UseTranslationOptions<KPrefix>) {
-  const [locale] = usePathname().split("/").filter(Boolean);
+  let [locale] = usePathname().split("/").filter(Boolean);
 
   if (!locale || !languages.includes(locale)) {
-    throw new Error(`Invalid locale: ${locale}`);
+    // throw new Error(`Invalid locale: ${locale}`);
+    locale = "en";
   }
 
   const ret = useTranslationOrg<Ns, KPrefix>(namespace, options);
