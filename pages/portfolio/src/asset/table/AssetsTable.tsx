@@ -10,7 +10,7 @@ import { ERC20BalanceResponse } from "./types";
 
 import dynamic from "next/dynamic";
 
-import { MessageTable, Switch } from "ui-helpers";
+import { MessageTable, Modal, Switch } from "ui-helpers";
 
 import HeadTable from "./HeadTable";
 import { cn, getTotalAssets } from "helpers";
@@ -25,12 +25,12 @@ import {
 } from "../../utils/table/normalizeData";
 import { useStakedEvmos } from "../../utils/hooks/useStakedEvmos";
 import { getAssetsForAddress } from "../../utils/fetch";
-import ModalAsset from "../modals/ModalAsset";
+
 import ContentTable from "./ContentTable";
 import TopBar from "./topBar/TopBar";
 
 const AssetsTable = () => {
-  const [show, setShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const value = useSelector((state: StoreType) => state.wallet.value);
 
@@ -100,7 +100,7 @@ const AssetsTable = () => {
       decimals: normalizedAssetsData?.table[0]?.decimals,
       coingeckoPrice: normalizedAssetsData.table[0]?.coingeckoPrice,
     }),
-    setShow: setShow,
+    setIsOpen: setIsOpen,
     setModalContent: setModalContent,
     tableData: {
       table: normalizedAssetsData.table,
@@ -121,7 +121,6 @@ const AssetsTable = () => {
           checked={hideZeroBalance}
         />
       </div>
-
       <div className="xl:scrollbar-hide mt-5 w-full font-display text-pearl">
         <HeadAssets />
         <div
@@ -153,20 +152,16 @@ const AssetsTable = () => {
                 table: tableData,
                 feeBalance: normalizedAssetsData.feeBalance,
               }}
-              setShow={setShow}
+              setIsOpen={setIsOpen}
               setModalContent={setModalContent}
             />
           )}
         </div>
       </div>
 
-      <ModalAsset
-        show={show}
-        modalContent={modalContent}
-        close={() => {
-          setShow(false);
-        }}
-      />
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+        <Modal.Body className="bg-pearl">{modalContent}</Modal.Body>
+      </Modal>
     </>
   );
 };

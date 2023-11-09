@@ -5,7 +5,7 @@ import {
 } from "evmos-wallet/src/registry-actions/utils";
 import { z } from "zod";
 
-import { ModalWithTransitions } from "ui-helpers";
+import { Modal } from "ui-helpers";
 import { TransferModalContent } from "./TransferModalContent";
 import { ModalProps, useModal } from "helpers";
 
@@ -23,13 +23,13 @@ export const useTransferModal = () => useModal("transfer", TransferModalSchema);
 export const TransferModal = () => {
   const { isOpen, setIsOpen, modalProps } = useTransferModal();
   return (
-    <ModalWithTransitions
-      show={isOpen}
-      setShow={setIsOpen}
+    <Modal
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
       variant="modal-black"
       propClose={true}
     >
       {modalProps && <TransferModalContent {...modalProps} />}
-    </ModalWithTransitions>
+    </Modal>
   );
 };

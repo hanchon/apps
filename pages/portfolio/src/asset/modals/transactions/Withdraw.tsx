@@ -9,7 +9,7 @@ import { TableDataElement } from "../../../utils/table/normalizeData";
 import { executeWithdraw } from "../../../utils/transactions/withdraw";
 
 import { getReservedForFeeText } from "helpers";
-import { ConfirmButton, ModalTitle, ErrorMessage } from "ui-helpers";
+import { ConfirmButton, ErrorMessage, Modal } from "ui-helpers";
 import { KeplrIcon } from "icons";
 import Arrow from "../common/Arrow";
 import FromContainer from "../common/FromContainer";
@@ -42,12 +42,12 @@ const Withdraw = ({
   item,
   feeBalance,
   address,
-  setShow,
+  setIsOpen,
 }: {
   item: TableDataElement;
   feeBalance: BigNumber;
   address: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const [confirmClicked, setConfirmClicked] = useState(false);
@@ -97,7 +97,9 @@ const Withdraw = ({
   }
   return (
     <>
-      <ModalTitle title={`Withdraw ${item.symbol}`} />
+      <Modal.Header>
+        <h2 className="font-bold mb-4">{`Withdraw ${item.symbol}`}</h2>
+      </Modal.Header>
       <div className="text-darkGray3">
         <p className="max-w-[500px] pb-3 text-sm italic">
           Since Evmos{" "}
@@ -229,7 +231,7 @@ const Withdraw = ({
                   type: SNACKBAR_TYPES.ERROR,
                 })
               );
-              setShow(false);
+              setIsOpen(false);
               return;
             }
 
@@ -305,7 +307,7 @@ const Withdraw = ({
                     : SNACKBAR_TYPES.SUCCESS,
               })
             );
-            setShow(false);
+            setIsOpen(false);
             // check if tx is executed
             if (res.title === BROADCASTED_NOTIFICATIONS.SuccessTitle) {
               dispatch(snackbarWaitingBroadcast());

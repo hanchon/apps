@@ -73,9 +73,9 @@ export const ButtonWallet = ({
   );
 };
 export const ConnectModalContent = ({
-  setShow,
+  setIsOpen,
 }: {
-  setShow: (show: boolean) => void;
+  setIsOpen: (isOpen: boolean) => void;
 }) => {
   const { sendEvent } = useTracker();
   const { connectors } = useConnect();
@@ -85,9 +85,9 @@ export const ConnectModalContent = ({
   const { isConnected } = useAccount();
   useEffect(() => {
     if (isConnected) {
-      setShow(false);
+      setIsOpen(false);
     }
-  }, [isConnected, setShow]);
+  }, [isConnected, setIsOpen]);
   return (
     <div className="space-y-3">
       <>
@@ -124,7 +124,7 @@ export const ConnectModalContent = ({
                  * I'm not sure if we need to do that though
                  */
                 const provider = id.toLocaleLowerCase();
-                setShow(false);
+                setIsOpen(false);
 
                 sendEvent(CLICK_CONNECTED_WITH, {
                   provider,
@@ -179,7 +179,7 @@ export const ConnectModalContent = ({
                   );
                   return;
                 }
-                // Didn't find a match, so we'll just show the error
+                // Didn't find a match, so we'll just isOpen the error
                 notifyError(WALLET_NOTIFICATIONS.ErrorTitle, "", {
                   walletName: label,
                 });

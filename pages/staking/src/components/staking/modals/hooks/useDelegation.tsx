@@ -97,7 +97,7 @@ export const useDelegation = (useDelegateProps: DelegateProps) => {
       });
     }
 
-    useDelegateProps.setShow(false);
+    useDelegateProps.setIsOpen(false);
   };
   return { handleConfirmButton };
 };

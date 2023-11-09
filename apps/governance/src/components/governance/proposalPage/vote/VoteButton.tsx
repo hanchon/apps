@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { EVMOS_SYMBOL } from "evmos-wallet";
-import { Modal, ErrorMessage, ConfirmButton } from "ui-helpers";
+import { Modal, ErrorMessage, ConfirmButton, Modal } from "ui-helpers";
 import { useVote } from "../../modals/hooks/useVote";
 import IdContainer from "../../common/IdContainer";
 import { VoteProps } from "../../common/types";
@@ -16,7 +16,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { CLICK_VOTE_BUTTON, useTracker } from "tracker";
 import { useEvmosBalance } from "./useEvmosBalance";
 const VoteButton = ({ voteProps }: { voteProps: VoteProps }) => {
-  const [show, setShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("");
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const { evmosBalance } = useEvmosBalance();
@@ -24,7 +24,7 @@ const VoteButton = ({ voteProps }: { voteProps: VoteProps }) => {
     id: voteProps.id,
     isVotingTimeWithinRange: voteProps.isVotingTimeWithinRange,
     option: selected,
-    setShow,
+    setIsOpen,
     wallet,
   };
 
@@ -36,7 +36,7 @@ const VoteButton = ({ voteProps }: { voteProps: VoteProps }) => {
       <ConfirmButton
         text="Vote"
         onClick={() => {
-          setShow(true);
+          setIsOpen(true);
           handlePreClickAction({
             wallet: wallet?.evmosAddressEthFormat,
             provider: wallet?.extensionName,
@@ -44,12 +44,7 @@ const VoteButton = ({ voteProps }: { voteProps: VoteProps }) => {
         }}
         disabled={!wallet.active || !voteProps.isVotingTimeWithinRange}
       />
-      <Modal
-        show={show}
-        onClose={() => {
-          setShow(false);
-        }}
-      >
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
         <div className="space-y-4">
           <p className="font-bold">Your Vote</p>
           <div className="flex items-center space-x-2">

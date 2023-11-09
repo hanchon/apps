@@ -10,11 +10,11 @@ import { ButtonActions } from "../table/components/ButtonActions";
 
 const ContentCard = ({
   tableData,
-  setShow,
+  setIsOpen,
   setModalContent,
 }: {
   tableData: TableData;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   setModalContent: Dispatch<SetStateAction<JSX.Element>>;
 }) => {
   return (
@@ -22,7 +22,7 @@ const ContentCard = ({
       {tableData?.table.map((item, index: number) => {
         const actionsProps = {
           item: item,
-          setShow,
+          setIsOpen,
           setModalContent,
           tableData,
         };

@@ -15,7 +15,7 @@ const WithdrawSTR = ({
   data,
   feeBalance,
   address,
-  setShow,
+  setIsOpen,
 }: ButtonActionsProps) => {
   const [confirmClicked, setConfirmClicked] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -25,7 +25,7 @@ const WithdrawSTR = ({
   const [chain, setChain] = useState<TableDataElement>();
   const useWithdrawProps = {
     setConfirmClicked,
-    setShow,
+    setIsOpen,
     token,
     inputValue,
     receiverAddress,

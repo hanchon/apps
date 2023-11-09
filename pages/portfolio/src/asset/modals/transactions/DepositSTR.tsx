@@ -28,7 +28,7 @@ const DepositSTR = ({
   data,
   feeBalance,
   address,
-  setShow,
+  setIsOpen,
 }: ButtonActionsProps) => {
   const [inputValue, setInputValue] = useState("");
   const [confirmClicked, setConfirmClicked] = useState(false);
@@ -78,7 +78,7 @@ const DepositSTR = ({
 
   const useDepositProps = {
     setConfirmClicked,
-    setShow,
+    setIsOpen,
     token,
     inputValue,
     receiverAddress,
@@ -101,7 +101,7 @@ const DepositSTR = ({
         );
         if (wallet === null) {
           dispatch(snackErrorConnectingKeplr());
-          setShow(false);
+          setIsOpen(false);
           return;
         }
         setWalletToUse(wallet);
@@ -109,7 +109,7 @@ const DepositSTR = ({
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getData();
-  }, [address, token, dispatch, setShow, chain]);
+  }, [address, token, dispatch, setIsOpen, chain]);
 
   const tokenData = useMemo(() => {
     const tokens = depositData.find((e) => {
@@ -144,7 +144,7 @@ const DepositSTR = ({
       }
       if (balance?.error === true || balance?.data === null) {
         dispatch(snackErrorGettingBalanceExtChain());
-        setShow(false);
+        setIsOpen(false);
         return;
       }
 
@@ -154,7 +154,7 @@ const DepositSTR = ({
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getData();
-  }, [chain, token, walletToUse, dispatch, setShow]);
+  }, [chain, token, walletToUse, dispatch, setIsOpen]);
 
   const amountProps = {
     data: tokenData,
@@ -181,7 +181,7 @@ const DepositSTR = ({
         <DepositReceiver
           receiver={receiverAddress}
           setReceiver={setReceiverAddress}
-          setShow={setShow}
+          setIsOpen={setIsOpen}
           confirmClicked={confirmClicked}
           token={token}
         />

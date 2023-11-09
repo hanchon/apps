@@ -34,7 +34,7 @@ export const WalletConnection = ({
   }) => JSX.Element;
   variant?: "primary" | "outline-primary" | "primary-lg";
 }) => {
-  const [show, setShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const { handlePreClickAction: trackChangeWallet } = useTracker(
     SWITCH_BETWEEN_WALLETS
@@ -55,15 +55,15 @@ export const WalletConnection = ({
   }, [walletExtension]);
 
   return walletExtension.active === true ? (
-    drawWalletProfileModal({ setShow, walletExtension, show, dispatch })
+    drawWalletProfileModal({ setIsOpen, walletExtension, isOpen, dispatch })
   ) : (
     <ConnectModal
-      setShow={setShow}
-      show={show}
+      setIsOpen={setIsOpen}
+      isOpen={isOpen}
       dispatch={dispatch}
       copilotModal={copilotModal}
       variant={variant}
-      // ({ setShow, show, dispatch, copilotModal, variant })
+      // ({ setIsOpen, isOpen, dispatch, copilotModal, variant })
     />
   );
 };

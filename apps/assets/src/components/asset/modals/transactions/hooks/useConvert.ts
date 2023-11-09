@@ -64,7 +64,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
     useConvertProps.setConfirmClicked(true);
     if (wallet.evmosPubkey === null) {
       dispatch(snackRequestRejected());
-      useConvertProps.setShow(false);
+      useConvertProps.setIsOpen(false);
       return;
     }
     if (
@@ -135,7 +135,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
         });
       }
     }
-    useConvertProps.setShow(false);
+    useConvertProps.setIsOpen(false);
   };
 
   return { handleConfirmButton };

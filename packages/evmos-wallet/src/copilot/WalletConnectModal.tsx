@@ -4,33 +4,33 @@
 import { Dispatch, SetStateAction } from "react";
 import { ConnectToEvmos } from "./ConnectToEvmos";
 import { ConnectToEvmosWallets } from "./ConnectToEvmosWallets";
-import { ModalContainer, ModalWithTransitions } from "ui-helpers";
+import { ModalContainer, Modal } from "ui-helpers";
 import { useConnect } from "wagmi";
 
 export const WalletConnectModal = ({
-  show,
-  setShow,
+  isOpen,
+  setIsOpen,
   copilotModal,
 }: {
-  show: boolean;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   copilotModal?: JSX.Element;
 }) => {
   const { connectors } = useConnect();
   const connectorIds = connectors.map((c) => c.id);
 
   return (
-    <ModalWithTransitions show={show} setShow={setShow} propClose={true}>
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen} propClose={true}>
       <ModalContainer
         introduction={<ConnectToEvmos />}
         content={
           <ConnectToEvmosWallets
             copilotModal={copilotModal}
-            setShow={setShow}
+            setIsOpen={setIsOpen}
             connectorIds={connectorIds}
           />
         }
       />
-    </ModalWithTransitions>
+    </Modal>
   );
 };

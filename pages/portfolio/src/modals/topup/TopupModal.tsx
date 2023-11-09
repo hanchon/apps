@@ -8,21 +8,20 @@ export const useTopupModal = () => useModal("topup");
 
 export const TopupModalController = () => {
   const { isOpen, setIsOpen } = useTopupModal();
-  const { showModal, setShowModal } = useContext(StepsContext);
+  const { showModal, setIsOpenModal } = useContext(StepsContext);
   const setSyncedIsOpen = useEffectEvent((syncedIsOpen: boolean) => {
     if (syncedIsOpen !== isOpen) {
       setIsOpen(syncedIsOpen);
     }
     if (syncedIsOpen !== showModal) {
-      setShowModal(syncedIsOpen);
+      setIsOpenModal(syncedIsOpen);
     }
-  })
+  });
   useEffect(() => {
     setSyncedIsOpen(showModal);
   }, [showModal, setSyncedIsOpen]);
 
   useEffect(() => {
-
     setSyncedIsOpen(isOpen);
   }, [isOpen, setSyncedIsOpen]);
 

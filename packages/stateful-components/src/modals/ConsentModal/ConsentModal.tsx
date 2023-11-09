@@ -1,6 +1,6 @@
 "use client";
 
-import { ModalWithTransitions } from "ui-helpers";
+import { Modal } from "ui-helpers";
 
 import { modalLink, useModal } from "helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
@@ -16,56 +16,60 @@ export const ConsentModal = () => {
   const { isOpen, setIsOpen, modalProps } = useConsentModal();
 
   return (
-    <ModalWithTransitions show={isOpen} setShow={setIsOpen} propClose={true}>
-      {modalProps && (
-        <div className="space-y-5 bg-pearl relative max-h-[75vh] min-w-[300px] max-w-[600px] overflow-scroll rounded-lg px-5 py-8 text-black sm:max-h-full sm:overflow-auto sm:px-10 md:min-w-[400px]">
-          <p className="font-bold">{t("tos.title")}</p>
-          <div>
-            <Trans
-              t={t}
-              i18nKey="consent.description"
-              components={{
-                privacy: (
-                  <a
-                    className="cursor-pointer underline"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    href={PRIVACY_POLICY_URL}
-                  />
-                ),
-                cookies: (
-                  <a
-                    className="cursor-pointer underline"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    href={COOKIE_POLICY_URL}
-                  />
-                ),
-              }}
-            />
-          </div>
-          <div className="flex items-center justify-center space-x-5">
-            <GrayButton
-              onClick={() => {
-                localStorage.removeItem(DISABLE_TRACKER_LOCALSTORAGE);
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+      <Modal.Body className="bg-pearl">
+        {modalProps && (
+          <div className="space-y-5">
+            <Modal.Header>
+              <h2 className="font-bold">{t("tos.title")}</h2>
+            </Modal.Header>
+            <div>
+              <Trans
+                t={t}
+                i18nKey="consent.description"
+                components={{
+                  privacy: (
+                    <a
+                      className="cursor-pointer underline"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      href={PRIVACY_POLICY_URL}
+                    />
+                  ),
+                  cookies: (
+                    <a
+                      className="cursor-pointer underline"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      href={COOKIE_POLICY_URL}
+                    />
+                  ),
+                }}
+              />
+            </div>
+            <div className="flex items-center justify-center space-x-5">
+              <GrayButton
+                onClick={() => {
+                  localStorage.removeItem(DISABLE_TRACKER_LOCALSTORAGE);
 
-                setIsOpen(false);
-              }}
-            >
-              {t("consent.acceptButton")}
-            </GrayButton>
-            <GrayButton
-              onClick={() => {
-                localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "false");
+                  setIsOpen(false);
+                }}
+              >
+                {t("consent.acceptButton")}
+              </GrayButton>
+              <GrayButton
+                onClick={() => {
+                  localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "false");
 
-                setIsOpen(false);
-              }}
-            >
-              {t("consent.rejectButton")}
-            </GrayButton>
+                  setIsOpen(false);
+                }}
+              >
+                {t("consent.rejectButton")}
+              </GrayButton>
+            </div>
           </div>
-        </div>
-      )}
-    </ModalWithTransitions>
+        )}
+      </Modal.Body>
+    </Modal>
   );
 };

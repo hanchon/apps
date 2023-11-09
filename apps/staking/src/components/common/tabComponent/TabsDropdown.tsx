@@ -20,10 +20,10 @@ const TabsDropdown = ({
   content: tabContent[];
   setActiveTab: Dispatch<SetStateAction<string>>;
 }) => {
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setIsOpenMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   useEffect(() => {
-    const handler = () => setShowMenu(false);
+    const handler = () => setIsOpenMenu(false);
     window.addEventListener("click", handler);
     return () => {
       window.removeEventListener("click", handler);
@@ -33,9 +33,9 @@ const TabsDropdown = ({
   const handleInputClick = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       e.stopPropagation();
-      setShowMenu(!showMenu);
+      setIsOpenMenu(!showMenu);
     },
-    [showMenu],
+    [showMenu]
   );
 
   const getDisplay = useCallback(() => {
@@ -61,7 +61,7 @@ const TabsDropdown = ({
         tabSelected: option.title,
       });
     },
-    [setActiveTab, handlePreClickAction],
+    [setActiveTab, handlePreClickAction]
   );
 
   return (

@@ -9,10 +9,10 @@ import { CLICK_CONNECT_WALLET_BUTTON, useTracker } from "tracker";
 import { PrimaryButton } from "ui-helpers";
 
 export const ButtonConnectWallet = ({
-  setShow,
+  setIsOpen,
   variant,
 }: {
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   variant: "primary" | "outline-primary" | "primary-lg";
 }) => {
   const query = useSearchParams();
@@ -24,7 +24,7 @@ export const ButtonConnectWallet = ({
     <PrimaryButton
       variant={variant}
       onClick={() => {
-        setShow(true);
+        setIsOpen(true);
 
         let location = "dApp Store";
         if (modalAction) {

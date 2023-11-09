@@ -51,12 +51,12 @@ const Convert = ({
   item,
   feeBalance,
   address,
-  setShow,
+  setIsOpen,
 }: {
   item: TableDataElement;
   feeBalance: BigNumber;
   address: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -197,7 +197,7 @@ const Convert = ({
                   type: SNACKBAR_TYPES.ERROR,
                 })
               );
-              setShow(false);
+              setIsOpen(false);
               return;
             }
 
@@ -296,7 +296,7 @@ const Convert = ({
                         type: SNACKBAR_TYPES.ERROR,
                       })
                     );
-                    setShow(false);
+                    setIsOpen(false);
                     return;
                   }
                   setDisabled(true);
@@ -346,7 +346,7 @@ const Convert = ({
                         type: SNACKBAR_TYPES.ERROR,
                       })
                     );
-                    setShow(false);
+                    setIsOpen(false);
                     return;
                   }
                   setDisabled(true);
@@ -378,7 +378,7 @@ const Convert = ({
                 }
               }
             }
-            setShow(false);
+            setIsOpen(false);
           }}
           text="Convert"
         />

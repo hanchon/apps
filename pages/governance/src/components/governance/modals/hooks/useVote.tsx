@@ -70,7 +70,7 @@ export const useVote = (useVoteProps: VoteProps) => {
         transaction: "successful",
       });
     }
-    useVoteProps.setShow(false);
+    useVoteProps.setIsOpen(false);
   };
 
   return { handleConfirmButton };

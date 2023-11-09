@@ -7,7 +7,7 @@ import { CLICK_CTA_LINKS_ASSETS_GUIDE, useTracker } from "tracker";
 const ModalAsset = dynamic(() => import("./ModalAsset"));
 
 const AssetsGuide = () => {
-  const [show, setShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { handlePreClickAction } = useTracker(CLICK_CTA_LINKS_ASSETS_GUIDE);
   const modalContent = (
     <div className="space-y-5">
@@ -38,7 +38,7 @@ const AssetsGuide = () => {
     <>
       <span
         onClick={() => {
-          setShow(true);
+          setIsOpen(true);
           handlePreClickAction();
         }}
         className="cursor-pointer text-red"
@@ -46,10 +46,10 @@ const AssetsGuide = () => {
         view the assets guide
       </span>
       <ModalAsset
-        show={show}
+        isOpen={isOpen}
         modalContent={modalContent}
         close={() => {
-          setShow(false);
+          setIsOpen(false);
         }}
       />
     </>

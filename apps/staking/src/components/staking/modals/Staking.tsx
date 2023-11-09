@@ -21,30 +21,30 @@ import { EVMOS_DECIMALS } from "evmos-wallet";
 
 const Staking = ({
   item,
-  setShow,
+  setIsOpen,
   tab,
 }: {
   item: ModalDelegate;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   tab: string;
 }) => {
-  const [showDelegate, setShowDelegate] = useState(false);
-  const [showRedelegate, setShowRedelegate] = useState(false);
-  const [showUndelegate, setShowUndelegate] = useState(false);
+  const [showDelegate, setIsOpenDelegate] = useState(false);
+  const [showRedelegate, setIsOpenRedelegate] = useState(false);
+  const [showUndelegate, setIsOpenUndelegate] = useState(false);
 
   const { handlePreClickAction: trackClickManageUndelegate } = useTracker(
     CLICK_BUTTON_MANAGE_UNDELEGATE,
-    { tabSelected: tab },
+    { tabSelected: tab }
   );
 
   const { handlePreClickAction: trackClickManageDelegate } = useTracker(
     CLICK_BUTTON_MANAGE_DELEGATE,
-    { tabSelected: tab },
+    { tabSelected: tab }
   );
 
   const { handlePreClickAction: trackClickManageRedelegate } = useTracker(
     CLICK_BUTTON_MANAGE_REDELEGATE,
-    { tabSelected: tab },
+    { tabSelected: tab }
   );
   return (
     <div className="space-y-4">
@@ -108,23 +108,23 @@ const Staking = ({
       {showDelegate && (
         <Delegate
           item={item}
-          setShow={setShow}
-          setShowDelegate={setShowDelegate}
+          setIsOpen={setIsOpen}
+          setIsOpenDelegate={setIsOpenDelegate}
         />
       )}
 
       {showRedelegate && (
         <Redelegate
           item={item}
-          setShow={setShow}
-          setShowRedelegate={setShowRedelegate}
+          setIsOpen={setIsOpen}
+          setIsOpenRedelegate={setIsOpenRedelegate}
         />
       )}
       {showUndelegate && (
         <Undelegate
           item={item}
-          setShow={setShow}
-          setShowUndelegate={setShowUndelegate}
+          setIsOpen={setIsOpen}
+          setIsOpenUndelegate={setIsOpenUndelegate}
         />
       )}
       {!showDelegate && !showRedelegate && !showUndelegate && (
@@ -133,7 +133,7 @@ const Staking = ({
             text="UNDELEGATE"
             onClick={() => {
               trackClickManageUndelegate();
-              setShowUndelegate(true);
+              setIsOpenUndelegate(true);
             }}
             className="w-fit text-xs"
           />
@@ -141,7 +141,7 @@ const Staking = ({
             text="Delegate"
             onClick={() => {
               trackClickManageDelegate();
-              setShowDelegate(true);
+              setIsOpenDelegate(true);
             }}
             className="w-fit py-1 text-sm"
           />
@@ -151,7 +151,7 @@ const Staking = ({
               text="Redelegate"
               onClick={() => {
                 trackClickManageRedelegate();
-                setShowRedelegate(true);
+                setIsOpenRedelegate(true);
               }}
               className="w-fit py-1 text-sm"
             />

@@ -42,14 +42,14 @@ export type undelegationData = {
 const Undelegations = () => {
   const { undelegations } = useStakingInfo();
 
-  const [show, setShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
   const { handlePreClickAction } = useTracker(CLICK_CANCEL_UNDELEGATION_BUTTON);
   const handleOnClick = useCallback(
     (item: undelegationData) => {
       handlePreClickAction();
-      setShow(true);
-      setModalContent(<CancelUndelegation item={item} setShow={setShow} />);
+      setIsOpen(true);
+      setModalContent(<CancelUndelegation item={item} setIsOpen={setIsOpen} />);
     },
     [handlePreClickAction]
   );
@@ -210,13 +210,11 @@ const Undelegations = () => {
   return (
     <>
       <Table tableProps={tableProps} />
-      <Modal
-        show={show}
-        onClose={() => {
-          setShow(false);
-        }}
-      >
-        {modalContent}
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+        <Modal.Body className="bg-pearl">
+          <Modal.Header />
+          {modalContent}
+        </Modal.Body>
       </Modal>
     </>
   );

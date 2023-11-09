@@ -24,30 +24,30 @@ import {
 const DepositReceiver = ({
   receiver,
   setReceiver,
-  setShow,
+  setIsOpen,
   confirmClicked,
   token,
 }: {
   receiver: string;
   setReceiver: Dispatch<SetStateAction<string>>;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   confirmClicked: boolean;
   token: TableDataElement | undefined;
 }) => {
   const dispatch = useDispatch();
 
-  const [showInput, setShowInput] = useState(false);
-  const [showEditButton, setShowEditButton] = useState(true);
+  const [showInput, setIsOpenInput] = useState(false);
+  const [showEditButton, setIsOpenEditButton] = useState(true);
   const handleOnClickEdit = () => {
-    setShowInput(true);
-    setShowEditButton(false);
+    setIsOpenInput(true);
+    setIsOpenEditButton(false);
   };
 
   const handleOnClickKeplr = async () => {
     const wallet = await getKeplrAddressByChain(EVMOS_CHAIN.cosmosChainId);
     if (wallet === null) {
       dispatch(snackErrorConnectingKeplr());
-      setShow(false);
+      setIsOpen(false);
       return;
     }
     setReceiver(wallet);
@@ -57,7 +57,7 @@ const DepositReceiver = ({
     const address = await getWallet();
     if (address === null) {
       dispatch(snackErrorConnectingMetaMask());
-      setShow(false);
+      setIsOpen(false);
       return;
     }
     setReceiver(address);

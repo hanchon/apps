@@ -27,12 +27,12 @@ import { useEvmosBalance } from "../../../../utils/hooks/useEvmosBalance";
 
 export const Delegate = ({
   item,
-  setShow,
-  setShowDelegate,
+  setIsOpen,
+  setIsOpenDelegate,
 }: {
   item: ModalDelegate;
-  setShow: Dispatch<SetStateAction<boolean>>;
-  setShowDelegate: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setIsOpenDelegate: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { evmosBalance } = useEvmosBalance();
   const [value, setValue] = useState("");
@@ -42,7 +42,7 @@ export const Delegate = ({
 
   const useDelegateProps = {
     value,
-    setShow,
+    setIsOpen,
     wallet,
     item,
     setConfirmClicked,
@@ -121,7 +121,7 @@ export const Delegate = ({
           className="w-fit"
           text="BACK"
           onClick={() => {
-            setShowDelegate(false);
+            setIsOpenDelegate(false);
           }}
         />
         <ConfirmButton

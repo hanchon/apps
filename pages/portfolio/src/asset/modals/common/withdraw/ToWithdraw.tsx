@@ -25,8 +25,8 @@ const ToWithdraw = ({
   confirmClicked,
   dropChainProps,
 }: WithdrawReceiverProps) => {
-  const [showInput, setShowInput] = useState(false);
-  const [showEditButton, setShowEditButton] = useState(true);
+  const [showInput, setIsOpenInput] = useState(false);
+  const [showEditButton, setIsOpenEditButton] = useState(true);
   const [prefix, setPrefix] = useState("");
 
   useEffect(() => {
@@ -46,8 +46,8 @@ const ToWithdraw = ({
   }, [token, dropChainProps.chain]);
 
   const handleOnClickEdit = () => {
-    setShowInput(true);
-    setShowEditButton(false);
+    setIsOpenInput(true);
+    setIsOpenEditButton(false);
   };
   const dispatch = useDispatch();
 

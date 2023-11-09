@@ -7,7 +7,7 @@ import { TableDataElement } from "../../../../internal/asset/functionality/table
 
 export type SubRowProps = {
   item: TableDataElement;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   setModalContent: Dispatch<SetStateAction<JSX.Element>>;
   isIBCBalance?: boolean;
   feeBalance: BigNumber;

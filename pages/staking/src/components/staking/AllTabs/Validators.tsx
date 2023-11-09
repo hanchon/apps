@@ -25,7 +25,7 @@ import {
   formatPercentage,
 } from "helpers";
 
-import { Modal, Button, MessageTable } from "ui-helpers";
+import { Button, MessageTable, Modal } from "ui-helpers";
 import { SearchContext, useSearchContext } from "../../context/SearchContext";
 import { useAllValidators } from "../../../utils/hooks/useAllValidators";
 import { ValidatorsList } from "../../../utils/types";
@@ -39,10 +39,10 @@ const dataHead = ["Rank", "Name", "Voting Power", "Staked", "Commission", ""];
 const Validators = () => {
   const { validators } = useAllValidators();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
-  const [show, setShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
   const handleOnClick = useCallback((item: ValidatorsList) => {
-    setShow(true);
+    setIsOpen(true);
     setModalContent(
       <Staking
         item={{
@@ -53,7 +53,7 @@ const Validators = () => {
           website: item.validator.description.website,
           validatorAddress: item.validator.operator_address,
         }}
-        setShow={setShow}
+        setIsOpen={setIsOpen}
         tab="Validators"
       />
     );
@@ -260,13 +260,11 @@ const Validators = () => {
   return (
     <>
       <Table tableProps={tableProps} />
-      <Modal
-        show={show}
-        onClose={() => {
-          setShow(false);
-        }}
-      >
-        {modalContent}
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+        <Modal.Body className="bg-pearl">
+          <Modal.Header />
+          {modalContent}
+        </Modal.Body>
       </Modal>
     </>
   );

@@ -18,13 +18,13 @@ import { BigNumber } from "@ethersproject/bignumber";
 export const ConvertSTR = ({
   item,
   address,
-  setShow,
+  setIsOpen,
   isIBCBalance = false,
   feeBalance,
 }: {
   item: TableDataElement;
   address: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   isIBCBalance?: boolean;
   feeBalance: BigNumber;
 }) => {
@@ -51,7 +51,7 @@ export const ConvertSTR = ({
 
   const useConvertProps = {
     setConfirmClicked,
-    setShow,
+    setIsOpen,
     inputValue,
     item,
     setDisabled,

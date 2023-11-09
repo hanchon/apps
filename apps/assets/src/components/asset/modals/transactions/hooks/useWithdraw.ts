@@ -33,10 +33,10 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
   const dispatch = useDispatch();
   const { handlePreClickAction } = useTracker(CLICK_WITHDRAW_CONFIRM_BUTTON);
   const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_WITHDRAW,
+    SUCCESSFUL_TX_WITHDRAW
   );
   const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_WITHDRAW,
+    UNSUCCESSFUL_TX_WITHDRAW
   );
   const handleConfirmButton = async () => {
     handlePreClickAction({
@@ -46,7 +46,7 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
     useWithdrawProps.setConfirmClicked(true);
     if (wallet.evmosPubkey === null) {
       dispatch(snackRequestRejected());
-      useWithdrawProps.setShow(false);
+      useWithdrawProps.setIsOpen(false);
       return;
     }
     // avoid withdraw if token is not selected
@@ -67,7 +67,7 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
     }
     const amount = parseUnits(
       useWithdrawProps.inputValue,
-      BigNumber.from(useWithdrawProps.token.decimals),
+      BigNumber.from(useWithdrawProps.token.decimals)
     );
     let prefixTemp = useWithdrawProps.token.prefix;
     let chainIdentifier = useWithdrawProps.token.chainIdentifier;
@@ -110,7 +110,7 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
     const prefix = getPrefix(
       useWithdrawProps.token,
       useWithdrawProps.chain,
-      params.receiver,
+      params.receiver
     );
 
     if (prefix === undefined) {
@@ -122,7 +122,7 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
       wallet,
       params,
       useWithdrawProps.feeBalance,
-      useERC20Denom,
+      useERC20Denom
     );
 
     dispatch(snackExecuteIBCTransfer(res));
@@ -134,7 +134,7 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
         transaction: "unsuccessful",
       });
     }
-    useWithdrawProps.setShow(false);
+    useWithdrawProps.setIsOpen(false);
     // check if tx is executed
     if (res.title === BROADCASTED_NOTIFICATIONS.SuccessTitle) {
       dispatch(snackbarWaitingBroadcast());
@@ -142,8 +142,8 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
         await snackbarIncludedInBlock(
           res.txHash,
           EVMOS_SYMBOL,
-          res.explorerTxUrl,
-        ),
+          res.explorerTxUrl
+        )
       );
       dispatch(await snackbarExecutedTx(res.txHash, EVMOS_SYMBOL));
       successfulTx({

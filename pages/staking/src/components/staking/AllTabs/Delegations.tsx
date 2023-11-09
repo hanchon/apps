@@ -25,7 +25,7 @@ import {
   formatPercentage,
 } from "helpers";
 
-import { Modal, Button, MessageTable } from "ui-helpers";
+import { Button, MessageTable, Modal } from "ui-helpers";
 import { DelegationsResponse } from "evmos-wallet/src/api/types";
 import { useStakingInfo } from "../../../utils/hooks/useStakingInfo";
 import { useSearchContext, SearchContext } from "../../context/SearchContext";
@@ -36,7 +36,7 @@ const Delegations = () => {
   const { delegations } = useStakingInfo();
   const { value } = useSearchContext() as SearchContext;
   const wallet = useSelector((state: StoreType) => state.wallet.value);
-  const [show, setShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
   const filtered = useMemo(() => {
     // it filters by rank or name
@@ -55,7 +55,7 @@ const Delegations = () => {
   }, [delegations, value]);
 
   const handleOnClick = useCallback((item: DelegationsResponse) => {
-    setShow(true);
+    setIsOpen(true);
     setModalContent(
       <Staking
         item={{
@@ -67,7 +67,7 @@ const Delegations = () => {
           website: item.delegation.validator.description.website,
           validatorAddress: item.delegation.validator_address,
         }}
-        setShow={setShow}
+        setIsOpen={setIsOpen}
         tab="Delegations"
       />
     );
@@ -250,13 +250,11 @@ const Delegations = () => {
   return (
     <>
       <Table tableProps={tableProps} />
-      <Modal
-        show={show}
-        onClose={() => {
-          setShow(false);
-        }}
-      >
-        {modalContent}
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+        <Modal.Body className="bg-pearl">
+          <Modal.Header />
+          {modalContent}
+        </Modal.Body>
       </Modal>
     </>
   );

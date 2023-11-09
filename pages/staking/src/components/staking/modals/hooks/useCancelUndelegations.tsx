@@ -100,7 +100,7 @@ export const useCancelUndelegations = (
         transaction: "unsuccessful",
       });
     }
-    useCancelUndelegationProps.setShow(false);
+    useCancelUndelegationProps.setIsOpen(false);
   };
 
   return { handleConfirmButton };

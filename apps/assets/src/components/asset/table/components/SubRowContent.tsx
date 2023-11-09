@@ -16,7 +16,7 @@ import { useCallback } from "react";
 import { CLICK_BUTTON_CONVERT, useTracker } from "tracker";
 export const SubRowContent = ({
   item,
-  setShow,
+  setIsOpen,
   setModalContent,
   isIBCBalance = false,
   feeBalance,
@@ -38,12 +38,12 @@ export const SubRowContent = ({
   }
 
   const openModalConvertEvmos = () => {
-    setShow(true);
+    setIsOpen(true);
     setModalContent(
       <ConvertSTR
         item={item}
         address={wallet.evmosAddressCosmosFormat}
-        setShow={setShow}
+        setIsOpen={setIsOpen}
         isIBCBalance={isIBCBalance}
         feeBalance={feeBalance}
       />,
@@ -58,13 +58,13 @@ export const SubRowContent = ({
       chain: item.chainIdentifier,
     });
     if (wallet.evmosAddressCosmosFormat !== "") {
-      setShow(true);
+      setIsOpen(true);
       setModalContent(
         <Convert
           item={item}
           feeBalance={feeBalance}
           address={wallet.evmosAddressCosmosFormat}
-          setShow={setShow}
+          setIsOpen={setIsOpen}
         />,
       );
     } else {

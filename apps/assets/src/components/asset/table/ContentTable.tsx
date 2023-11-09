@@ -20,7 +20,7 @@ type accordionData = {
 
 const createSubRow = (
   item: TableDataElement,
-  setShow: Dispatch<SetStateAction<boolean>>,
+  setIsOpen: Dispatch<SetStateAction<boolean>>,
   setModalContent: Dispatch<SetStateAction<JSX.Element>>,
   feeBalance: BigNumber,
   isIBCBalance: boolean
@@ -32,7 +32,7 @@ const createSubRow = (
     >
       <SubRowContent
         item={item}
-        setShow={setShow}
+        setIsOpen={setIsOpen}
         setModalContent={setModalContent}
         feeBalance={feeBalance}
         isIBCBalance={isIBCBalance}
@@ -43,7 +43,7 @@ const createSubRow = (
 
 const ContentTable = ({
   tableData,
-  setShow,
+  setIsOpen,
   setModalContent,
 }: ContentTableProps) => {
   const data = useMemo(() => {
@@ -111,7 +111,7 @@ const ContentTable = ({
           content?.unshift(
             createSubRow(
               e,
-              setShow,
+              setIsOpen,
               setModalContent,
               tableData.feeBalance,
               false
@@ -120,7 +120,7 @@ const ContentTable = ({
           content?.unshift(
             createSubRow(
               e,
-              setShow,
+              setIsOpen,
               setModalContent,
               tableData.feeBalance,
               true
@@ -130,7 +130,7 @@ const ContentTable = ({
           content?.push(
             createSubRow(
               e,
-              setShow,
+              setIsOpen,
               setModalContent,
               tableData.feeBalance,
               false
@@ -172,7 +172,7 @@ const ContentTable = ({
       );
     });
     return ret;
-  }, [data, setModalContent, setShow, tableData.feeBalance]);
+  }, [data, setModalContent, setIsOpen, tableData.feeBalance]);
 
   return <div className="flex w-full flex-col">{renderData}</div>;
 };

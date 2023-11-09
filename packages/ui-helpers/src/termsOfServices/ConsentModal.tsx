@@ -4,10 +4,10 @@ import Link from "next/link";
 import GrayButton from "../GrayButton";
 import { DISABLE_TRACKER_LOCALSTORAGE } from "tracker";
 import { Dispatch, SetStateAction } from "react";
-export const ConsentModal = ({} // setShow,
+export const ConsentModal = ({} // setIsOpen,
 // setConsent,
 : {
-  // setShow: Dispatch<SetStateAction<boolean>>;
+  // setIsOpen: Dispatch<SetStateAction<boolean>>;
   // setConsent?: Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
@@ -41,7 +41,7 @@ export const ConsentModal = ({} // setShow,
           text={<p>Accept</p>}
           onClick={() => {
             // localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "false");
-            // setShow(false);
+            // setIsOpen(false);
             // setConsent && setConsent(true);
           }}
         />
@@ -49,7 +49,7 @@ export const ConsentModal = ({} // setShow,
           text={<p>Reject</p>}
           onClick={() => {
             // localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "true");
-            // setShow(false);
+            // setIsOpen(false);
             // setConsent && setConsent(false);
           }}
         />

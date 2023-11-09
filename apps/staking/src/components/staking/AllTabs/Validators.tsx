@@ -41,10 +41,10 @@ const dataHead = ["Rank", "Name", "Voting Power", "Staked", "Commission", ""];
 const Validators = () => {
   const { validators } = useAllValidators();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
-  const [show, setShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
   const handleOnClick = useCallback((item: ValidatorsList) => {
-    setShow(true);
+    setIsOpen(true);
     setModalContent(
       <Staking
         item={{
@@ -55,9 +55,9 @@ const Validators = () => {
           website: item.validator.description.website,
           validatorAddress: item.validator.operator_address,
         }}
-        setShow={setShow}
+        setIsOpen={setIsOpen}
         tab="Validators"
-      />,
+      />
     );
   }, []);
 
@@ -75,7 +75,7 @@ const Validators = () => {
         i.validator.description.moniker
           .toLowerCase()
           .includes(value.toLowerCase()) ||
-        i.validator.rank.toString().includes(value),
+        i.validator.rank.toString().includes(value)
     );
 
     if (!showInactive) {
@@ -106,7 +106,7 @@ const Validators = () => {
       if (sorting.column === 2) {
         // sort by voting power
         const temp = BigNumber.from(a.validator.tokens).gt(
-          BigNumber.from(b.validator.tokens),
+          BigNumber.from(b.validator.tokens)
         )
           ? 1
           : -1;
@@ -163,7 +163,7 @@ const Validators = () => {
               tdProps={{
                 title: dataHead[2],
                 value: formatNumber(
-                  convertStringFromAtto(item.validator.tokens).toFixed(2),
+                  convertStringFromAtto(item.validator.tokens).toFixed(2)
                 ),
               }}
             />
@@ -177,7 +177,7 @@ const Validators = () => {
                     ? convertAndFormat(
                         BigNumber.from(item.balance.balance.amount),
                         EVMOS_DECIMALS,
-                        6,
+                        6
                       )
                     : "--",
               }}
@@ -188,7 +188,7 @@ const Validators = () => {
               tdProps={{
                 title: dataHead[4],
                 value: formatPercentage(
-                  item.validator.commission?.commission_rates?.rate,
+                  item.validator.commission?.commission_rates?.rate
                 ),
               }}
             />
@@ -263,9 +263,9 @@ const Validators = () => {
     <>
       <Table tableProps={tableProps} />
       <Modal
-        show={show}
+        isOpen={isOpen}
         onClose={() => {
-          setShow(false);
+          setIsOpen(false);
         }}
       >
         {modalContent}

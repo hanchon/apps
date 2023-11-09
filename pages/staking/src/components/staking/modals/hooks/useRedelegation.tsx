@@ -97,7 +97,7 @@ export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
         transaction: "unsuccessful",
       });
     }
-    useRedelegateProps.setShow(false);
+    useRedelegateProps.setIsOpen(false);
   };
 
   return { handleConfirmButton };

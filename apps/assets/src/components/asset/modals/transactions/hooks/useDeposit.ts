@@ -60,7 +60,7 @@ export const useDeposit = (useDepositProps: DepositProps) => {
 
     if (!osmosisPubkey) {
       dispatch(snackRequestRejected());
-      useDepositProps.setShow(false);
+      useDepositProps.setIsOpen(false);
       return;
     }
     if (useDepositProps.token === undefined) {
@@ -157,7 +157,7 @@ export const useDeposit = (useDepositProps: DepositProps) => {
         transaction: "unsuccessful",
       });
     }
-    useDepositProps.setShow(false);
+    useDepositProps.setIsOpen(false);
     // check if tx is executed
     if (res.title === BROADCASTED_NOTIFICATIONS.SuccessTitle) {
       dispatch(snackbarWaitingBroadcast());

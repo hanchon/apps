@@ -18,16 +18,16 @@ import {
 import { ECOSYSTEM_URL, STAKING_URL } from "constants-helper";
 
 export const ButtonsNextSteps = () => {
-  const { setShowModal, resetSteps } = useContext(StepsContext);
+  const { setIsOpenModal, resetSteps } = useContext(StepsContext);
 
   const { handlePreClickAction: trackInteractWithdAppClick } = useTracker(
-    CLICK_ON_INTERACT_WITH_DAPP_COPILOT,
+    CLICK_ON_INTERACT_WITH_DAPP_COPILOT
   );
   const { handlePreClickAction: trackStakeEvmosClick } = useTracker(
-    CLICK_ON_STAKE_YOUR_EVMOS_COPILOT,
+    CLICK_ON_STAKE_YOUR_EVMOS_COPILOT
   );
   const { handlePreClickAction: trackLearnMoreClick } = useTracker(
-    CLICK_ON_LEARN_MORE_COPILOT,
+    CLICK_ON_LEARN_MORE_COPILOT
   );
   // TODO: use ecosystem, staking and academy link from locales
   return (
@@ -35,7 +35,7 @@ export const ButtonsNextSteps = () => {
       <div className="grid w-full grid-cols-1 space-y-3 pb-3 pt-5 md:grid-cols-2 md:space-x-4 md:space-y-0">
         <Button
           handleClick={() => {
-            handleInteractWithdApp(ECOSYSTEM_URL, setShowModal);
+            handleInteractWithdApp(ECOSYSTEM_URL, setIsOpenModal);
             trackInteractWithdAppClick();
             resetSteps();
           }}
@@ -48,7 +48,7 @@ export const ButtonsNextSteps = () => {
 
         <Button
           handleClick={() => {
-            handleStakeWithEvmos(STAKING_URL, setShowModal);
+            handleStakeWithEvmos(STAKING_URL, setIsOpenModal);
             trackStakeEvmosClick();
             resetSteps();
           }}
@@ -61,7 +61,7 @@ export const ButtonsNextSteps = () => {
       <button
         className="border-gray300 w-full cursor-pointer rounded-lg border py-3 shadow transition-all duration-300 hover:shadow-md"
         onClick={() => {
-          handleLearnMore("https://academy.evmos.org/faq", setShowModal);
+          handleLearnMore("https://academy.evmos.org/faq", setIsOpenModal);
           trackLearnMoreClick();
           resetSteps();
         }}

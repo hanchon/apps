@@ -31,7 +31,7 @@ const DepositSTR = ({
   data,
   feeBalance,
   address,
-  setShow,
+  setIsOpen,
 }: ButtonActionsProps) => {
   const [inputValue, setInputValue] = useState("");
   const [confirmClicked, setConfirmClicked] = useState(false);
@@ -81,7 +81,7 @@ const DepositSTR = ({
 
   const useDepositProps = {
     setConfirmClicked,
-    setShow,
+    setIsOpen,
     token,
     inputValue,
     receiverAddress,
@@ -100,11 +100,11 @@ const DepositSTR = ({
       if (chain !== undefined) {
         const wallet = await getKeplrAddressByChain(
           chain.elements[0].chainId,
-          chain.elements[0].chainIdentifier,
+          chain.elements[0].chainIdentifier
         );
         if (wallet === null) {
           dispatch(snackErrorConnectingKeplr());
-          setShow(false);
+          setIsOpen(false);
           return;
         }
         setWalletToUse(wallet);
@@ -112,7 +112,7 @@ const DepositSTR = ({
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getData();
-  }, [address, token, dispatch, setShow, chain]);
+  }, [address, token, dispatch, setIsOpen, chain]);
 
   const tokenData = useMemo(() => {
     const tokens = depositData.find((e) => {
@@ -130,7 +130,7 @@ const DepositSTR = ({
           balance = await getEvmosBalanceForDeposit(
             walletToUse,
             chain.chain.toUpperCase(),
-            token.symbol,
+            token.symbol
           );
         } else {
           let tokenDenom = token.symbol;
@@ -141,23 +141,23 @@ const DepositSTR = ({
           balance = await getBalance(
             walletToUse,
             chain?.chain.toUpperCase() ?? "",
-            tokenDenom,
+            tokenDenom
           );
         }
       }
       if (balance?.error === true || balance?.data === null) {
         dispatch(snackErrorGettingBalanceExtChain());
-        setShow(false);
+        setIsOpen(false);
         return;
       }
 
       setBalance(
-        BigNumber.from(balance?.data.balance ? balance.data.balance.amount : 0),
+        BigNumber.from(balance?.data.balance ? balance.data.balance.amount : 0)
       );
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getData();
-  }, [chain, token, walletToUse, dispatch, setShow]);
+  }, [chain, token, walletToUse, dispatch, setIsOpen]);
 
   const amountProps = {
     data: tokenData,
@@ -184,7 +184,7 @@ const DepositSTR = ({
         <DepositReceiver
           receiver={receiverAddress}
           setReceiver={setReceiverAddress}
-          setShow={setShow}
+          setIsOpen={setIsOpen}
           confirmClicked={confirmClicked}
           token={token}
         />

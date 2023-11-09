@@ -15,13 +15,13 @@ export const getFirstClickLauncherPad = () => {
 };
 
 export const usePingIndicator = () => {
-  const [showPing, setShowPing] = useState(false);
+  const [showPing, setIsOpenPing] = useState(false);
 
   const handlePingIndicator = useCallback(() => {
     if (getFirstClickLauncherPad() === null) {
       setFirstClickLauncherPad("true");
       setTimeout(() => {
-        setShowPing(false);
+        setIsOpenPing(false);
       }, 30000);
     }
   }, []);
@@ -29,7 +29,7 @@ export const usePingIndicator = () => {
   useEffect(() => {
     const firstClickLauncherPad = getFirstClickLauncherPad();
     if (firstClickLauncherPad === null) {
-      setShowPing(true);
+      setIsOpenPing(true);
     }
   }, [showPing]);
 

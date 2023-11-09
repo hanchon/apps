@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { ModalWithTransitions } from "ui-helpers";
+import { Modal } from "ui-helpers";
 import { Content } from "./Content";
 import { z } from "zod";
 import {
@@ -29,13 +29,10 @@ export const usePayModal = () => useModal("pay", PayModalSchema);
 export const PayModal = () => {
   const { isOpen, setIsOpen, modalProps } = usePayModal();
   return (
-    <ModalWithTransitions
-      show={isOpen}
-      setShow={setIsOpen}
-      variant="modal-black"
-      propClose={true}
-    >
-      {modalProps && <Content {...modalProps} />}
-    </ModalWithTransitions>
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen} propClose={true}>
+      <Modal.Body className="bg-black-900 shadow-custom-sm">
+        {modalProps && <Content {...modalProps} />}
+      </Modal.Body>
+    </Modal>
   );
 };

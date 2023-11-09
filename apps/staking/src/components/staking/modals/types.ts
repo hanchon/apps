@@ -11,7 +11,7 @@ import { WalletExtension } from "evmos-wallet/src/internal/wallet/functionality/
 
 export type DelegateProps = {
   value: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   wallet: WalletExtension;
   item: ModalDelegate;
   setConfirmClicked: Dispatch<SetStateAction<boolean>>;
@@ -21,7 +21,7 @@ export type DelegateProps = {
 
 export type RedelegateProps = {
   value: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   wallet: WalletExtension;
   item: ModalDelegate;
   setConfirmClicked: Dispatch<SetStateAction<boolean>>;
@@ -31,7 +31,7 @@ export type RedelegateProps = {
 
 export type UndelegateProps = {
   value: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   wallet: WalletExtension;
   item: ModalDelegate;
   setConfirmClicked: Dispatch<SetStateAction<boolean>>;
@@ -40,7 +40,7 @@ export type UndelegateProps = {
 
 export type CancelUndelegationsProps = {
   value: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   wallet: WalletExtension;
   item: ModalCancelUndelegations;
   setConfirmClicked: Dispatch<SetStateAction<boolean>>;

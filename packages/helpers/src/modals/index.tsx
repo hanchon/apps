@@ -61,7 +61,7 @@ export const useModal = <T extends z.AnyZodObject>(
     if (parsed.success) return parsed.data;
     return null;
   }, [query]);
-  const isOpen = query.action === id && state;
+  const isOpen = !!(query.action === id && state);
   const setState = useEffectEvent((next: SetStateAction<z.output<T>>) => {
     if (!isOpen) throw new Error("You can't set state on a closed modal");
 
@@ -76,9 +76,14 @@ export const useModal = <T extends z.AnyZodObject>(
   });
 
   const setIsOpen = useEffectEvent(
-    (open: boolean, initialState: z.output<T> = {}, redirectBack = false) => {
-      console.log("set is open ", open);
-      if (open) {
+    (
+      open: SetStateAction<boolean>,
+      initialState: z.output<T> = {},
+      redirectBack = false
+    ) => {
+      const nextOpenState = typeof open === "function" ? open(isOpen) : open;
+
+      if (nextOpenState) {
         const next = safeParse(initialState);
 
         if (next.success) {

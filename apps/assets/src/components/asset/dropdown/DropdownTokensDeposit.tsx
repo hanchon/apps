@@ -13,12 +13,12 @@ const DropdownTokensDeposit = ({
   setValue,
   token,
 }: DropdownTokensDepositProps) => {
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setIsOpenMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState<TableDataElement | null>(
     null
   );
   useEffect(() => {
-    const handler = () => setShowMenu(false);
+    const handler = () => setIsOpenMenu(false);
     window.addEventListener("click", handler);
     return () => {
       window.removeEventListener("click", handler);
@@ -27,7 +27,7 @@ const DropdownTokensDeposit = ({
 
   const handleInputClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    setShowMenu(!showMenu);
+    setIsOpenMenu(!showMenu);
   };
 
   const getDisplay = () => {

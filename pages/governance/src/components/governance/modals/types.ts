@@ -7,7 +7,7 @@ import { WalletExtension } from "evmos-wallet/src/internal/wallet/functionality/
 export type VoteProps = {
   id: string;
   option: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   wallet: WalletExtension;
   isVotingTimeWithinRange: boolean;
 };

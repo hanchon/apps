@@ -23,12 +23,12 @@ const ValidatorsDropdown = ({
   setIsValidatorSelected: Dispatch<SetStateAction<boolean>>;
   validatorName: string;
 }) => {
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setIsOpenMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string>("");
   const { validators } = useAllValidators();
 
   useEffect(() => {
-    const handler = () => setShowMenu(false);
+    const handler = () => setIsOpenMenu(false);
     window.addEventListener("click", handler);
     return () => {
       window.removeEventListener("click", handler);
@@ -38,7 +38,7 @@ const ValidatorsDropdown = ({
   const handleInputClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     if (showMenu === false) {
-      setShowMenu(true);
+      setIsOpenMenu(true);
     }
   };
 
@@ -54,9 +54,9 @@ const ValidatorsDropdown = ({
       setSelectedValue(option.validator.description.moniker);
       setValidator(option.validator.operator_address);
       setIsValidatorSelected(true);
-      setShowMenu(!showMenu);
+      setIsOpenMenu(!showMenu);
     },
-    [setValidator, setIsValidatorSelected, showMenu],
+    [setValidator, setIsValidatorSelected, showMenu]
   );
 
   const handleOnChange = useCallback(
@@ -69,7 +69,7 @@ const ValidatorsDropdown = ({
         setValidator("");
       }
     },
-    [setIsValidatorSelected, setValidator],
+    [setIsValidatorSelected, setValidator]
   );
 
   const filtered = useMemo(() => {
@@ -77,7 +77,7 @@ const ValidatorsDropdown = ({
     const filteredData = validators.filter((i) =>
       i.validator.description.moniker
         .toLowerCase()
-        .includes(selectedValue.toLowerCase()),
+        .includes(selectedValue.toLowerCase())
     );
     if (selectedValue !== "") {
       return filteredData;

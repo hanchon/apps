@@ -29,7 +29,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { CLICK_HIDE_ZERO_BALANCE, useTracker } from "tracker";
 
 const AssetsTable = () => {
-  const [show, setShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const value = useSelector((state: StoreType) => state.wallet.value);
 
@@ -99,7 +99,7 @@ const AssetsTable = () => {
       decimals: normalizedAssetsData?.table[0]?.decimals,
       coingeckoPrice: normalizedAssetsData.table[0]?.coingeckoPrice,
     }),
-    setShow: setShow,
+    setIsOpen: setIsOpen,
     setModalContent: setModalContent,
     tableData: {
       table: normalizedAssetsData.table,
@@ -157,17 +157,17 @@ const AssetsTable = () => {
                 table: tableData,
                 feeBalance: normalizedAssetsData.feeBalance,
               }}
-              setShow={setShow}
+              setIsOpen={setIsOpen}
               setModalContent={setModalContent}
             />
           </div>
         )}
       </div>
       <ModalAsset
-        show={show}
+        isOpen={isOpen}
         modalContent={modalContent}
         close={() => {
-          setShow(false);
+          setIsOpen(false);
         }}
       />
     </>

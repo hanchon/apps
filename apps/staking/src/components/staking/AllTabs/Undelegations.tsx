@@ -43,23 +43,23 @@ export type undelegationData = {
 const Undelegations = () => {
   const { undelegations } = useStakingInfo();
 
-  const [show, setShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
   const { handlePreClickAction } = useTracker(CLICK_CANCEL_UNDELEGATION_BUTTON);
   const handleOnClick = useCallback(
     (item: undelegationData) => {
       handlePreClickAction();
-      setShow(true);
-      setModalContent(<CancelUndelegation item={item} setShow={setShow} />);
+      setIsOpen(true);
+      setModalContent(<CancelUndelegation item={item} setIsOpen={setIsOpen} />);
     },
-    [handlePreClickAction],
+    [handlePreClickAction]
   );
 
   const { value } = useSearchContext() as SearchContext;
   const filtered = useMemo(() => {
     // it filters by name
     const filteredData = undelegations.filter((i) =>
-      i.validator.description.moniker.toLowerCase().includes(value),
+      i.validator.description.moniker.toLowerCase().includes(value)
     );
     if (value !== "") {
       return filteredData;
@@ -132,7 +132,7 @@ const Undelegations = () => {
                 value: `${convertAndFormat(
                   BigNumber.from(item.balance),
                   EVMOS_DECIMALS,
-                  6,
+                  6
                 )} EVMOS`,
               }}
             />
@@ -212,9 +212,9 @@ const Undelegations = () => {
     <>
       <Table tableProps={tableProps} />
       <Modal
-        show={show}
+        isOpen={isOpen}
         onClose={() => {
-          setShow(false);
+          setIsOpen(false);
         }}
       >
         {modalContent}

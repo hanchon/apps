@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useContext } from "react";
-import { CloseModal, ModalWithTransitions } from "ui-helpers";
+import { CloseModal, Modal } from "ui-helpers";
 import { StepsContext } from "./container/StepsContext";
 import { useTracker, EXIT_OUT_COPILOT } from "tracker";
 import { STEP_STATUS } from "constants-helper";
@@ -10,8 +10,8 @@ import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../locales/translate";
 export const CancelModal = () => {
   const {
-    setShowModal,
-    setShowCloseModal,
+    setIsOpenModal,
+    setIsOpenCloseModal,
     showCloseModal,
     resetSteps,
     stepsStatus,
@@ -23,13 +23,13 @@ export const CancelModal = () => {
       step: getCurrentStep()?.title,
       exitConfirmation: "stay",
     });
-    setShowCloseModal(false);
+    setIsOpenCloseModal(false);
   };
 
   const getCurrentStep = () => {
     // TODO: create a function to get the currentElement
     const currentElement = stepsStatus.find(
-      (element) => element.status === STEP_STATUS.CURRENT,
+      (element) => element.status === STEP_STATUS.CURRENT
     );
     return currentElement;
   };
@@ -40,20 +40,23 @@ export const CancelModal = () => {
       exitConfirmation: "exit",
     });
     resetSteps();
-    setShowCloseModal(false);
-    setShowModal(false);
+    setIsOpenCloseModal(false);
+    setIsOpenModal(false);
   };
 
   return (
     <TranslationContextProvider locale="en">
-      <ModalWithTransitions show={showCloseModal} setShow={setShowCloseModal}>
+      <Modal
+        isOpen={showCloseModal}
+        setIsOpen={setIsOpenCloseModal}
+      >
         <CloseModal
           handleReject={handleReject}
           handleAccept={handleAccept}
           description={t("exitcopilot.description") as string}
           title={t("exitcopilot.title") as string}
         />
-      </ModalWithTransitions>
+      </Modal>
     </TranslationContextProvider>
   );
 };

@@ -29,6 +29,6 @@ export type ERC20BalanceResponse = {
 
 export type ContentTableProps = {
   tableData: TableData;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   setModalContent: Dispatch<SetStateAction<JSX.Element>>;
 };

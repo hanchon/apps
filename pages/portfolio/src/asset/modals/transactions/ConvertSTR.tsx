@@ -3,7 +3,7 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { ConfirmButton, ModalTitle } from "ui-helpers";
+import { ConfirmButton, Modal } from "ui-helpers";
 import { ContainerModal } from "../common/ContainerModal";
 import FromConvert from "../common/convert/FromConvert";
 import ToConvert from "../common/convert/ToConvert";
@@ -19,13 +19,13 @@ import { TableDataElement } from "../../../utils/table/normalizeData";
 export const ConvertSTR = ({
   item,
   address,
-  setShow,
+  setIsOpen,
   isIBCBalance = false,
   feeBalance,
 }: {
   item: TableDataElement;
   address: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   isIBCBalance?: boolean;
   feeBalance: BigNumber;
 }) => {
@@ -52,7 +52,7 @@ export const ConvertSTR = ({
 
   const useConvertProps = {
     setConfirmClicked,
-    setShow,
+    setIsOpen,
     inputValue,
     item,
     setDisabled,
@@ -66,7 +66,7 @@ export const ConvertSTR = ({
 
   return (
     <>
-      <ModalTitle title={`Convert ${symbolFrom}`} />
+      <h2 className="font-bold mb-4">{`Convert ${symbolFrom}`}</h2>
       <div className="space-y-3 text-darkGray3">
         <ContainerModal>
           <>

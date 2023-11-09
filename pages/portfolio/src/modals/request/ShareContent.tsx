@@ -70,7 +70,7 @@ export const ShareContent = ({
     message
   )}&requester=${sender}`;
 
-  const [showCopied, setShowCopied] = useState(false);
+  const [showCopied, setIsOpenCopied] = useState(false);
   const dispatch = useDispatch();
   const { isDisconnected } = useAccount();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
@@ -139,7 +139,7 @@ export const ShareContent = ({
                 onClickCopy={async () => {
                   await navigator.clipboard.writeText(shareURL);
                   sendEvent(CLICK_ON_COPY_ICON_REQUEST_FLOW);
-                  setShowCopied(true);
+                  setIsOpenCopied(true);
                 }}
               />
               {showCopied && (

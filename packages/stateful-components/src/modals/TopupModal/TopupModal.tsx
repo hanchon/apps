@@ -8,16 +8,16 @@ import { stepsSetAccount } from "copilot/src/copilot/steps/setUpAccount/utils";
 
 import { useModal } from "helpers";
 
-import { ModalWithTransitions } from "ui-helpers";
+import { Modal } from "ui-helpers";
 export const useTopupModal = () => useModal("topup");
 
 export const TopupModal = () => {
   const { isOpen, setIsOpen } = useTopupModal();
   return (
-    <ModalWithTransitions show={isOpen} setShow={setIsOpen} propClose={true}>
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen} propClose={true}>
       <StepsContextProvider steps={topUpStep}>
         <Content />
       </StepsContextProvider>
-    </ModalWithTransitions>
+    </Modal>
   );
 };

@@ -16,9 +16,9 @@ export default function ProviderDropwdown({
   dropdownOptions: DropdownOption[];
   onItemClick: (option: DropdownOption) => void;
 }) {
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setIsOpenMenu] = useState(false);
   useEffect(() => {
-    const handler = () => setShowMenu(false);
+    const handler = () => setIsOpenMenu(false);
     window.addEventListener("click", handler);
     return () => {
       window.removeEventListener("click", handler);
@@ -27,7 +27,7 @@ export default function ProviderDropwdown({
 
   const handleInputClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    setShowMenu(!showMenu);
+    setIsOpenMenu(!showMenu);
   };
 
   return (

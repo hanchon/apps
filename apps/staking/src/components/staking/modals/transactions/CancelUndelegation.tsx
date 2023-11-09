@@ -26,10 +26,10 @@ import { undelegationData } from "../../AllTabs/Undelegations";
 
 export const CancelUndelegation = ({
   item,
-  setShow,
+  setIsOpen,
 }: {
   item: undelegationData;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { evmosBalance } = useEvmosBalance();
   const [value, setValue] = useState("");
@@ -38,7 +38,7 @@ export const CancelUndelegation = ({
   const [disabled, setDisabled] = useState(false);
   const useCancelUndelegationsProps = {
     value,
-    setShow,
+    setIsOpen,
     wallet,
     item,
     setConfirmClicked,

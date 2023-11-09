@@ -71,9 +71,9 @@ export const ButtonWallet = ({
   );
 };
 export const ConnectToEvmosWallets = ({
-  setShow,
+  setIsOpen,
 }: {
-  setShow: (show: boolean) => void;
+  setIsOpen: (show: boolean) => void;
 }) => {
   const { sendEvent } = useTracker();
   const { connectors } = useConnect();
@@ -86,7 +86,7 @@ export const ConnectToEvmosWallets = ({
           <ButtonWallet
             className="text-left flex "
             onClick={() => {
-              // setShowModal(true);
+              // setIsOpenModal(true);
               // handlePreClickAction();
               // if (beforeStartHook) {
               //   beforeStartHook(false);
@@ -119,7 +119,7 @@ export const ConnectToEvmosWallets = ({
                  * I'm not sure if we need to do that though
                  */
                 const provider = id.toLocaleLowerCase();
-                setShow(false);
+                setIsOpen(false);
 
                 sendEvent(CLICK_CONNECTED_WITH, {
                   provider,

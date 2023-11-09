@@ -8,12 +8,12 @@ import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, useTracker } from "tracker";
 import { t } from "../../locales/translate";
 
 export const TopUpDapp = ({ status }: { status: string }) => {
-  const { setShowModal } = useContext(StepsContext);
+  const { setIsOpenModal } = useContext(StepsContext);
   const { handlePreClickAction } = useTracker(CLICK_ON_TOP_UP_ACCOUNT_DAPP);
 
   const handleClick = () => {
     handlePreClickAction({ location: "Inside Copilot onboarding banner" });
-    setShowModal(true);
+    setIsOpenModal(true);
   };
   return (
     <Button

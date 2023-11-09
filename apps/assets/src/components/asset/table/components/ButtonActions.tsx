@@ -25,7 +25,7 @@ import Convert from "../../modals/transactions/Convert";
 
 type actionsProps = {
   item: TableDataElement;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   setModalContent: Dispatch<SetStateAction<JSX.Element>>;
   tableData: TableData;
 };
@@ -66,13 +66,13 @@ export const ButtonActions = ({
             value.extensionName === WALLECT_CONNECT_KEY
           }
           onClick={() => {
-            actionsProps.setShow(true);
+            actionsProps.setIsOpen(true);
             actionsProps.setModalContent(
               <Deposit
                 item={actionsProps.item}
                 feeBalance={actionsProps.tableData.feeBalance}
                 address={value.evmosAddressCosmosFormat}
-                setShow={actionsProps.setShow}
+                setIsOpen={actionsProps.setIsOpen}
               />,
             );
           }}
@@ -106,13 +106,13 @@ export const ButtonActions = ({
         <Button
           disabled={!value.active}
           onClick={() => {
-            actionsProps.setShow(true);
+            actionsProps.setIsOpen(true);
             actionsProps.setModalContent(
               <Withdraw
                 item={actionsProps.item}
                 feeBalance={actionsProps.tableData.feeBalance}
                 address={value.evmosAddressCosmosFormat}
-                setShow={actionsProps.setShow}
+                setIsOpen={actionsProps.setIsOpen}
               />,
             );
           }}
@@ -131,13 +131,13 @@ export const ButtonActions = ({
             actionsProps.item.symbol === EVMOS_SYMBOL)
         }
         onClick={() => {
-          actionsProps.setShow(true);
+          actionsProps.setIsOpen(true);
           actionsProps.setModalContent(
             <Convert
               item={actionsProps.item}
               feeBalance={actionsProps.tableData.feeBalance}
               address={value.evmosAddressCosmosFormat}
-              setShow={actionsProps.setShow}
+              setIsOpen={actionsProps.setIsOpen}
             />,
           );
         }}

@@ -4,16 +4,16 @@
 import { Modal } from "ui-helpers";
 
 const ModalAsset = ({
-  show,
+  isOpen,
   close,
   modalContent,
 }: {
-  show: boolean;
+  isOpen: boolean;
   modalContent: JSX.Element;
   close: () => void;
 }) => {
   return (
-    <Modal show={show} onClose={close}>
+    <Modal isOpen={isOpen} setIsOpen={close}>
       {modalContent}
     </Modal>
   );

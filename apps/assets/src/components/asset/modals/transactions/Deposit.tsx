@@ -49,12 +49,12 @@ const Deposit = ({
   item,
   feeBalance,
   address,
-  setShow,
+  setIsOpen,
 }: {
   item: TableDataElement;
   feeBalance: BigNumber;
   address: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [confirmClicked, setConfirmClicked] = useState(false);
@@ -93,7 +93,7 @@ const Deposit = ({
             type: SNACKBAR_TYPES.ERROR,
           })
         );
-        setShow(false);
+        setIsOpen(false);
         return;
       }
       setWalletToUse(walletKeplr);
@@ -124,7 +124,7 @@ const Deposit = ({
             type: SNACKBAR_TYPES.ERROR,
           })
         );
-        setShow(false);
+        setIsOpen(false);
         return;
       }
 
@@ -134,7 +134,7 @@ const Deposit = ({
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getData();
-  }, [address, item, dispatch, setShow, chainId, chainIdentifier]);
+  }, [address, item, dispatch, setIsOpen, chainId, chainIdentifier]);
 
   const token: Token = {
     erc20Address: item.erc20Address,
@@ -216,7 +216,7 @@ const Deposit = ({
                         type: SNACKBAR_TYPES.ERROR,
                       })
                     );
-                    setShow(false);
+                    setIsOpen(false);
                     return;
                   }
                   setAddressTo(wallet);
@@ -240,7 +240,7 @@ const Deposit = ({
                         type: SNACKBAR_TYPES.ERROR,
                       })
                     );
-                    setShow(false);
+                    setIsOpen(false);
                     return;
                   }
                   setAddressTo(address);
@@ -269,7 +269,7 @@ const Deposit = ({
                   type: SNACKBAR_TYPES.ERROR,
                 })
               );
-              setShow(false);
+              setIsOpen(false);
               return;
             }
 
@@ -348,7 +348,7 @@ const Deposit = ({
                     : SNACKBAR_TYPES.SUCCESS,
               })
             );
-            setShow(false);
+            setIsOpen(false);
             // check if tx is executed
             if (res.title === BROADCASTED_NOTIFICATIONS.SuccessTitle) {
               dispatch(snackbarWaitingBroadcast());

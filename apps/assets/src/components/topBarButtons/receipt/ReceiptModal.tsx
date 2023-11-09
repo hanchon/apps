@@ -4,7 +4,7 @@ import {
 } from "evmos-wallet/src/registry-actions/utils";
 import { z } from "zod";
 
-import { ModalWithTransitions } from "ui-helpers";
+import { Modal } from "ui-helpers";
 
 import { ReceiptModalContent } from "./ReceiptModalContent";
 import { ModalProps, useModal } from "helpers";
@@ -22,12 +22,8 @@ export const ReceiptModal = () => {
   const { isOpen, setIsOpen, modalProps } = useReceiptModal();
 
   return (
-    <ModalWithTransitions
-      show={isOpen}
-      setShow={setIsOpen}
-      variant="modal-black"
-    >
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen} variant="modal-black">
       {modalProps && <ReceiptModalContent {...modalProps} />}
-    </ModalWithTransitions>
+    </Modal>
   );
 };

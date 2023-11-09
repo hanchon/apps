@@ -19,12 +19,12 @@ import { useAccount } from "wagmi";
 import { useWatch } from "helpers";
 
 export const SuccessTopUp = () => {
-  const { updateStepsStatus, hasSingleTopUpStep, setShowModal } =
+  const { updateStepsStatus, hasSingleTopUpStep, setIsOpenModal } =
     useContext(StepsContext);
   // when evmosBalance is different that 0, show the component
   const { address } = useAccount();
   const { balance, refetch } = useTokenBalance(address, "evmos:EVMOS");
-  const [showMessage, setShowMessage] = useState(false);
+  const [showMessage, setIsOpenMessage] = useState(false);
   const initialBalance = useRef(balance);
 
   useWatch(() => {
@@ -35,7 +35,7 @@ export const SuccessTopUp = () => {
     }
     if (!initialBalance.current) return;
     if (initialBalance.current.value < balance.value) {
-      setShowMessage(true);
+      setIsOpenMessage(true);
     }
   }, [balance?.value]);
 
@@ -59,7 +59,7 @@ export const SuccessTopUp = () => {
 
   const handleOnClickTopUp = () => {
     clickContinue();
-    setShowModal(false);
+    setIsOpenModal(false);
   };
 
   const drawButton = () => {

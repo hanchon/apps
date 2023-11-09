@@ -171,7 +171,7 @@ export const TransferModalContent = ({
       "destination network": getChain(networkPrefix).name,
       "transaction ID": transferResponse.hash,
     });
-    // If the user is using the safe wallet, we don't show the receipt modal
+    // If the user is using the safe wallet, we don't isOpen the receipt modal
     // because the transaction progress is handled by the safe UI
     if (getActiveProviderKey() === "safe") return;
     receiptModal.setIsOpen(true, {

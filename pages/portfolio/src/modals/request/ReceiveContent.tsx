@@ -110,7 +110,7 @@ export const ReceiveContent = ({
     },
   ];
 
-  const [showCopied, setShowCopied] = useState(false);
+  const [showCopied, setIsOpenCopied] = useState(false);
   const dispatch = useDispatch();
   const { isDisconnected } = useAccount();
 
@@ -213,7 +213,7 @@ export const ReceiveContent = ({
                 onClickCopy={async () => {
                   await navigator.clipboard.writeText(sender ?? "");
                   sendEvent(CLICK_ON_COPY_ICON_RECEIVE_FLOW);
-                  setShowCopied(true);
+                  setIsOpenCopied(true);
                 }}
               />
               {showCopied && (

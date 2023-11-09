@@ -5,7 +5,7 @@ import { useState } from "react";
 import FromWithdraw from "../common/withdraw/FromWithdraw";
 import AmountWithdraw from "../common/withdraw/AmountWithdraw";
 import { TableDataElement } from "../../../utils/table/normalizeData";
-import { ConfirmButton, ModalTitle } from "ui-helpers";
+import { ConfirmButton, Modal } from "ui-helpers";
 import ToWithdraw from "../common/withdraw/ToWithdraw";
 import RedirectLink from "../common/RedirectLink";
 import { ButtonActionsProps } from "./types";
@@ -15,7 +15,7 @@ const WithdrawSTR = ({
   data,
   feeBalance,
   address,
-  setShow,
+  setIsOpen,
 }: ButtonActionsProps) => {
   const [confirmClicked, setConfirmClicked] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -25,7 +25,7 @@ const WithdrawSTR = ({
   const [chain, setChain] = useState<TableDataElement>();
   const useWithdrawProps = {
     setConfirmClicked,
-    setShow,
+    setIsOpen,
     token,
     inputValue,
     receiverAddress,
@@ -121,7 +121,9 @@ const WithdrawSTR = ({
 
   return (
     <>
-      <ModalTitle title="Withdraw Tokens" />
+      <Modal.Header>
+        <h2 className="font-bold mb-4">{`Withdraw Tokens`}</h2>
+      </Modal.Header>
       <div className="space-y-3 text-darkGray3">
         <FromWithdraw address={address} />
         <AmountWithdraw amountProps={amountProps} />

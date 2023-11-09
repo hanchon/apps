@@ -8,12 +8,12 @@ import { CLICK_ON_START_COPILOT_MAIN_PAGE, useTracker } from "tracker";
 import { t } from "../../locales/translate";
 
 export const SetUpDapp = ({ status }: { status: string }) => {
-  const { setShowModal } = useContext(StepsContext);
+  const { setIsOpenModal } = useContext(StepsContext);
   const { handlePreClickAction } = useTracker(CLICK_ON_START_COPILOT_MAIN_PAGE);
 
   const handleClick = () => {
     handlePreClickAction();
-    setShowModal(true);
+    setIsOpenModal(true);
   };
   return (
     <Button

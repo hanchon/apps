@@ -21,11 +21,11 @@ export const SetUpAccountContainer = () => {
     return checkAllDoneStatus(groupState);
   }, [groupState]);
 
-  const [showComponent, setShowComponent] = useState(false);
+  const [showComponent, setIsOpenComponent] = useState(false);
   useEffect(() => {
     setInterval(() => {
       if (isSetUpDone) {
-        setShowComponent(true);
+        setIsOpenComponent(true);
       }
     }, 800);
   }, [isSetUpDone]);

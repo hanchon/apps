@@ -28,13 +28,13 @@ const ButtonsActions = ({ actionsProps }: { actionsProps: actionsProps }) => {
         className="w-auto px-4 py-3 text-sm"
         text="Deposit"
         onClick={() => {
-          actionsProps.setShow(true);
+          actionsProps.setIsOpen(true);
           actionsProps.setModalContent(
             <DepositSTR
               data={actionsProps.tableData}
               feeBalance={actionsProps.tableData.feeBalance}
               address={wallet.evmosAddressCosmosFormat}
-              setShow={actionsProps.setShow}
+              setIsOpen={actionsProps.setIsOpen}
             />
           );
         }}
@@ -45,13 +45,13 @@ const ButtonsActions = ({ actionsProps }: { actionsProps: actionsProps }) => {
         text="Withdraw"
         onClick={() => {
           if (wallet.evmosAddressCosmosFormat !== "") {
-            actionsProps.setShow(true);
+            actionsProps.setIsOpen(true);
             actionsProps.setModalContent(
               <WithdrawSTR
                 data={actionsProps.tableData}
                 feeBalance={actionsProps.tableData.feeBalance}
                 address={wallet.evmosAddressCosmosFormat}
-                setShow={actionsProps.setShow}
+                setIsOpen={actionsProps.setIsOpen}
               />
             );
           } else {

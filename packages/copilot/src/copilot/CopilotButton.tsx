@@ -11,7 +11,7 @@ export const CopilotButton = ({
 }: {
   beforeStartHook?: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { setShowModal } = useContext(StepsContext);
+  const { setIsOpenModal } = useContext(StepsContext);
   const { handlePreClickAction } = useTracker(CLICK_EVMOS_COPILOT_START_FLOW);
 
   return (
@@ -20,7 +20,7 @@ export const CopilotButton = ({
         <ButtonWallet
           className="text-left flex "
           onClick={() => {
-            setShowModal(true);
+            setIsOpenModal(true);
             handlePreClickAction();
             if (beforeStartHook) {
               beforeStartHook(false);

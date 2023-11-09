@@ -8,19 +8,19 @@ import { AnyAction } from "redux";
 import { CopyIcon } from "icons";
 import { truncateAddress } from "../internal/wallet/style/format";
 import { ButtonDisconnect } from "./buttons/Button.Disconnect";
-import { ModalWithTransitions } from "ui-helpers";
+import { Modal } from "ui-helpers";
 import { ProvidersIcons } from "./utils";
 import { EXPLORER_URL } from "constants-helper";
 export const WalletProfileModal = ({
   walletExtension,
   dispatch,
-  show,
-  setShow,
+  isOpen,
+  setIsOpen,
 }: {
   walletExtension: WalletExtension;
   dispatch: Dispatch<AnyAction>; // eslint-disable-next-line sonarjs/cognitive-complexity
-  show: boolean;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const [isCopied, setIsCopied] = useState(false);
   const contentModal = (
@@ -71,15 +71,15 @@ export const WalletProfileModal = ({
         <ButtonDisconnect
           walletExtension={walletExtension}
           dispatch={dispatch}
-          setShow={setShow}
+          setIsOpen={setIsOpen}
           setIsCopied={setIsCopied}
         />
       </div>
     </div>
   );
   return (
-    <ModalWithTransitions show={show} setShow={setShow}>
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       {contentModal}
-    </ModalWithTransitions>
+    </Modal>
   );
 };

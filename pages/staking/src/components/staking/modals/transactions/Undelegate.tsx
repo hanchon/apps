@@ -27,12 +27,12 @@ import { useEvmosBalance } from "../../../../utils/hooks/useEvmosBalance";
 
 export const Undelegate = ({
   item,
-  setShow,
-  setShowUndelegate,
+  setIsOpen,
+  setIsOpenUndelegate,
 }: {
   item: ModalDelegate;
-  setShow: Dispatch<SetStateAction<boolean>>;
-  setShowUndelegate: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setIsOpenUndelegate: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { evmosBalance } = useEvmosBalance();
   const [value, setValue] = useState("");
@@ -42,7 +42,7 @@ export const Undelegate = ({
 
   const useUndelegateProps = {
     value,
-    setShow,
+    setIsOpen,
     wallet,
     item,
     setConfirmClicked,
@@ -123,7 +123,7 @@ export const Undelegate = ({
           className="w-fit"
           text="BACK"
           onClick={() => {
-            setShowUndelegate(false);
+            setIsOpenUndelegate(false);
           }}
         />
         <ConfirmButton

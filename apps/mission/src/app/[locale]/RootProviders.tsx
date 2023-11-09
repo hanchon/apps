@@ -5,8 +5,7 @@ import { WalletProvider } from "evmos-wallet/src/wallet/components/WalletProvide
 import { PropsWithChildren } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { MixpanelProvider } from "tracker";
-import { GoogleAnalytics } from "../../components/mission/GoogleAnalytics";
-import { MavaWidget, TermOfServices } from "ui-helpers";
+import { MavaWidget } from "ui-helpers";
 import { Snackbars, getAllSnackbars } from "evmos-wallet";
 import { GiveFeedback } from "../../components/mission/GiveFeedback";
 const queryClient = new QueryClient();

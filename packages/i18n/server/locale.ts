@@ -1,6 +1,6 @@
-import { defaultLanguage } from "../settings";
+import { defaultLocale } from "../settings";
 
-let LOCALE = defaultLanguage;
+let LOCALE = defaultLocale;
 export const setLocale = (locale: string) => {
   LOCALE = locale;
 };

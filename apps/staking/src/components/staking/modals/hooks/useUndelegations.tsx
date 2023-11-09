@@ -92,7 +92,7 @@ export const useUndelegation = (useUndelegateProps: UndelegateProps) => {
         transaction: "unsuccessful",
       });
     }
-    useUndelegateProps.setShow(false);
+    useUndelegateProps.setIsOpen(false);
   };
 
   return { handleConfirmButton };

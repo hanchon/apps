@@ -41,12 +41,12 @@ const Withdraw = ({
   item,
   feeBalance,
   address,
-  setShow,
+  setIsOpen,
 }: {
   item: TableDataElement;
   feeBalance: BigNumber;
   address: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const [confirmClicked, setConfirmClicked] = useState(false);
@@ -228,7 +228,7 @@ const Withdraw = ({
                   type: SNACKBAR_TYPES.ERROR,
                 })
               );
-              setShow(false);
+              setIsOpen(false);
               return;
             }
 
@@ -304,7 +304,7 @@ const Withdraw = ({
                     : SNACKBAR_TYPES.SUCCESS,
               })
             );
-            setShow(false);
+            setIsOpen(false);
             // check if tx is executed
             if (res.title === BROADCASTED_NOTIFICATIONS.SuccessTitle) {
               dispatch(snackbarWaitingBroadcast());

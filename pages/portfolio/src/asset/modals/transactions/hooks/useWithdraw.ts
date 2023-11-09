@@ -47,7 +47,7 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
     useWithdrawProps.setConfirmClicked(true);
     if (wallet.evmosPubkey === null) {
       dispatch(snackRequestRejected());
-      useWithdrawProps.setShow(false);
+      useWithdrawProps.setIsOpen(false);
       return;
     }
     // avoid withdraw if token is not selected
@@ -135,7 +135,7 @@ export const useWithdraw = (useWithdrawProps: WithdrawProps) => {
         transaction: "unsuccessful",
       });
     }
-    useWithdrawProps.setShow(false);
+    useWithdrawProps.setIsOpen(false);
     // check if tx is executed
     if (res.title === BROADCASTED_NOTIFICATIONS.SuccessTitle) {
       dispatch(snackbarWaitingBroadcast());

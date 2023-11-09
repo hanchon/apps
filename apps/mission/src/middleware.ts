@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import acceptLanguage from "accept-language";
-import { defaultLanguage, languages, cookieName } from "@evmosapps/i18n";
+import { defaultLocale, languages, cookieName } from "@evmosapps/i18n";
 import { readLocale } from "@evmosapps/i18n/server";
 
 acceptLanguage.languages(languages);
@@ -18,9 +18,9 @@ export function middleware(request: NextRequest) {
   /**
    * if path locale is defaultLocale, remove it from path and redirect
    */
-  if (routeLocale === defaultLanguage) {
+  if (routeLocale === defaultLocale) {
     const url = request.nextUrl.clone();
-    url.pathname = url.pathname.replace(`/${defaultLanguage}`, "");
+    url.pathname = url.pathname.replace(`/${defaultLocale}`, "");
     return NextResponse.redirect(url);
   }
 
@@ -30,7 +30,7 @@ export function middleware(request: NextRequest) {
 
   if (!routeLocale || !languages.includes(routeLocale)) {
     const url = request.nextUrl.clone();
-    url.pathname = `/${defaultLanguage}${request.nextUrl.pathname}`;
+    url.pathname = `/${defaultLocale}${request.nextUrl.pathname}`;
     return NextResponse.rewrite(url);
   }
 

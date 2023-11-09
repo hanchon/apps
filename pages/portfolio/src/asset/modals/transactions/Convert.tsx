@@ -4,7 +4,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getReservedForFeeText } from "helpers";
-import { ConfirmButton, ModalTitle } from "ui-helpers";
+import { ConfirmButton, Modal } from "ui-helpers";
 import Arrow from "../common/Arrow";
 import FromContainer from "../common/FromContainer";
 import Tabs from "../common/Tabs";
@@ -51,12 +51,12 @@ const Convert = ({
   item,
   feeBalance,
   address,
-  setShow,
+  setIsOpen,
 }: {
   item: TableDataElement;
   feeBalance: BigNumber;
   address: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -114,7 +114,10 @@ const Convert = ({
 
   return (
     <>
-      <ModalTitle title={`Convert ${item.symbol}`} />
+      <Modal.Header>
+        <h2 className="font-bold mb-4">{`Convert ${item.symbol}`}</h2>
+      </Modal.Header>
+
       <div className="text-darkGray3">
         <div className="space-y-3 rounded-lg bg-skinTan px-8 py-4 ">
           <FromContainer
@@ -197,7 +200,7 @@ const Convert = ({
                   type: SNACKBAR_TYPES.ERROR,
                 })
               );
-              setShow(false);
+              setIsOpen(false);
               return;
             }
 
@@ -296,7 +299,7 @@ const Convert = ({
                         type: SNACKBAR_TYPES.ERROR,
                       })
                     );
-                    setShow(false);
+                    setIsOpen(false);
                     return;
                   }
                   setDisabled(true);
@@ -346,7 +349,7 @@ const Convert = ({
                         type: SNACKBAR_TYPES.ERROR,
                       })
                     );
-                    setShow(false);
+                    setIsOpen(false);
                     return;
                   }
                   setDisabled(true);
@@ -378,7 +381,7 @@ const Convert = ({
                 }
               }
             }
-            setShow(false);
+            setIsOpen(false);
           }}
           text="Convert"
         />

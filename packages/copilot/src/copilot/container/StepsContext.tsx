@@ -21,9 +21,9 @@ type StepsPropsContext = {
     buttonDapp: (status: string) => JSX.Element;
   }[];
   updateStepsStatus: () => void;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
+  setIsOpenModal: Dispatch<SetStateAction<boolean>>;
   showModal: boolean;
-  setShowCloseModal: Dispatch<SetStateAction<boolean>>;
+  setIsOpenCloseModal: Dispatch<SetStateAction<boolean>>;
   showCloseModal: boolean;
   resetSteps: () => void;
   hasSingleTopUpStep: boolean;
@@ -34,12 +34,12 @@ const StepsContext = createContext<StepsPropsContext>({
   updateStepsStatus: () => {
     /**/
   },
-  setShowModal: () => {
+  setIsOpenModal: () => {
     /**/
   },
   showModal: false,
   showCloseModal: false,
-  setShowCloseModal: () => {
+  setIsOpenCloseModal: () => {
     /**/
   },
   resetSteps: () => {
@@ -68,8 +68,8 @@ const StepsContextProvider = ({
   }));
 
   const [stepsStatus, setStepsStatus] = useState(initialValue);
-  const [showModal, setShowModal] = useState(false);
-  const [showCloseModal, setShowCloseModal] = useState(false);
+  const [showModal, setIsOpenModal] = useState(false);
+  const [showCloseModal, setIsOpenCloseModal] = useState(false);
 
   const updateStepsStatus = () => {
     const updatedState = [...stepsStatus];
@@ -106,10 +106,10 @@ const StepsContextProvider = ({
       value={{
         stepsStatus,
         updateStepsStatus,
-        setShowModal,
+        setIsOpenModal,
         showModal,
         showCloseModal,
-        setShowCloseModal,
+        setIsOpenCloseModal,
         resetSteps,
         hasSingleTopUpStep: hasSingleTopUpStep(),
       }}

@@ -13,12 +13,12 @@ export type ButtonActionsProps = {
   data: TableData;
   feeBalance: BigNumber;
   address: string;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 export type WithdrawProps = {
   setConfirmClicked: Dispatch<SetStateAction<boolean>>;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   token: TableDataElement | undefined;
   inputValue: string;
   receiverAddress: string;
@@ -30,7 +30,7 @@ export type WithdrawProps = {
 
 export type DepositProps = {
   setConfirmClicked: Dispatch<SetStateAction<boolean>>;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   token: TableDataElement | undefined;
   inputValue: string;
   receiverAddress: string;
@@ -41,7 +41,7 @@ export type DepositProps = {
 
 export type ConvertProps = {
   setConfirmClicked: Dispatch<SetStateAction<boolean>>;
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   inputValue: string;
   item: TableDataElement;
   balance: {

@@ -4,7 +4,7 @@ import {
 } from "evmos-wallet/src/registry-actions/utils";
 import { z } from "zod";
 
-import { ModalWithTransitions } from "ui-helpers";
+import { Modal } from "ui-helpers";
 
 import { ModalProps, useModal } from "helpers";
 import { Content } from "./Content";
@@ -25,13 +25,13 @@ export const useRequestModal = () => useModal("request", RequestModalSchema);
 export const RequestModal = () => {
   const { isOpen, setIsOpen, modalProps } = useRequestModal();
   return (
-    <ModalWithTransitions
-      show={isOpen}
-      setShow={setIsOpen}
+    <Modal
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
       variant="modal-black"
       propClose={true}
     >
       {modalProps && <Content {...modalProps} />}
-    </ModalWithTransitions>
+    </Modal>
   );
 };

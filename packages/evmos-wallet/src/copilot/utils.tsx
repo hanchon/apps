@@ -65,9 +65,9 @@ export const handleWalletInLocalStorage = (
 };
 
 type WalletProfileModalProps = {
-  setShow: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   walletExtension: WalletExtension;
-  show: boolean;
+  isOpen: boolean;
   dispatch: Dispatch<AnyAction>;
 };
 
@@ -76,23 +76,23 @@ export const drawWalletProfileModal = (props: WalletProfileModalProps) => {
     <>
       {/* open profile modal */}
       <ButtonProfile
-        setShow={props.setShow}
+        setIsOpen={props.setIsOpen}
         walletExtension={props.walletExtension}
       />
       {/* display profile modal */}
       <WalletProfileModal
         walletExtension={props.walletExtension}
         dispatch={props.dispatch}
-        show={props.show}
-        setShow={props.setShow}
+        isOpen={props.isOpen}
+        setIsOpen={props.setIsOpen}
       />
     </>
   );
 };
 
 type WalletConnectModalProps = {
-  setShow: Dispatch<SetStateAction<boolean>>;
-  show: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  isOpen: boolean;
   dispatch: Dispatch<AnyAction>;
   copilotModal?: ({
     beforeStartHook,
@@ -106,18 +106,21 @@ export const ConnectModal = (props: WalletConnectModalProps) => {
   return (
     <div className="flex justify-center">
       {/* open connect modal */}
-      <ButtonConnectWallet setShow={props.setShow} variant={props.variant} />
+      <ButtonConnectWallet
+        setIsOpen={props.setIsOpen}
+        variant={props.variant}
+      />
       {/* display connect modal */}
       <WalletConnectModal
         copilotModal={
           props.copilotModal
             ? props.copilotModal({
-                beforeStartHook: () => props.setShow(false),
+                beforeStartHook: () => props.setIsOpen(false),
               })
             : undefined
         }
-        show={props.show}
-        setShow={props.setShow}
+        isOpen={props.isOpen}
+        setIsOpen={props.setIsOpen}
       />
     </div>
   );

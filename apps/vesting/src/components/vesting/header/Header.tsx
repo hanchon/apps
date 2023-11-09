@@ -10,13 +10,13 @@ import { useTranslation } from "next-i18next";
 export const Header = () => {
   const handleConfirmClick = () => {
     // TODO: open modal for creating vesting account
-    setShowModal(true);
+    setIsOpenModal(true);
     setModalContent(<FundVestingAccount />);
   };
 
   const value = useSelector((state: StoreType) => state.wallet.value);
-  const [showModal, setShowModal] = useState(false);
-  const [showEnableModal, setShowEnableModal] = useState(false);
+  const [showModal, setIsOpenModal] = useState(false);
+  const [showEnableModal, setIsOpenEnableModal] = useState(false);
 
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
   const { t } = useTranslation();
@@ -28,7 +28,7 @@ export const Header = () => {
             className="w-fit normal-case"
             text={t("enable.header.button.title")}
             onClick={() => {
-              setShowEnableModal(true);
+              setIsOpenEnableModal(true);
             }}
             disabled={!value.active}
           />
@@ -43,18 +43,18 @@ export const Header = () => {
       </div>
 
       <Modal
-        show={showEnableModal}
+        isOpen={showEnableModal}
         onClose={() => {
-          setShowEnableModal(false);
+          setIsOpenEnableModal(false);
         }}
       >
         <EnableVestingModal />
       </Modal>
 
       <Modal
-        show={showModal}
+        isOpen={showModal}
         onClose={() => {
-          setShowModal(false);
+          setIsOpenModal(false);
         }}
       >
         {modalContent}
