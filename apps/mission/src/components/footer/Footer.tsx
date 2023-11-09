@@ -16,6 +16,7 @@ import {
 import { translation } from "@evmosapps/i18n/server";
 import { ConsentModalButton } from "stateful-components/src/modals/ConsentModal/ConsentModal";
 import { Container } from "ui-helpers";
+import { Link } from "@evmosapps/i18n/client";
 
 export const Footer = async () => {
   const { t } = await translation();
@@ -99,14 +100,9 @@ export const Footer = async () => {
 
           <div className="flex flex-grow flex-col items-center space-y-2 lg:flex-row lg:space-x-5 lg:space-y-0 lg:px-2">
             <p>
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href="https://evmos.org/terms-of-service"
-                aria-label="terms of services"
-              >
+              <Link href="/terms-of-service" aria-label="terms of services">
                 {t("footer.termsOfService")}
-              </a>
+              </Link>
             </p>
             <p>
               <a
