@@ -12,6 +12,7 @@ import { Title } from "ui-helpers/src/titles/Title";
 import { Subtitle } from "ui-helpers/src/titles/Subtitle";
 import { HeroSection } from "./HeroSection";
 import { Button } from "./Button";
+import { Frameline } from "ui-helpers";
 
 export const ContentDappStore = () => {
   return (
@@ -33,14 +34,16 @@ export const ContentDappStore = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 space-x-8">
         <HeroSection />
       </div>
       <EcosystemContainer />
-      <div className="border-t border-b rounded-lg py-4 px-3 border-[#A29F88]">
+      <Frameline>
         {/* TODO: className as prop to give w-full */}
-        <Button text="See all amount dApps" handleOnClick={() => {}} />
-      </div>
+        <Button className="w-full" onClick={() => {}}>
+          See all amount dApps
+        </Button>
+      </Frameline>
     </div>
   );
 };

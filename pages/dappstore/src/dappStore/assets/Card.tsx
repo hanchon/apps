@@ -29,10 +29,7 @@ export const AssetsCard = () => {
           <Title firstWord={"Evmos"} secondWord={t("card.assets.title")} />
           <Description text={t("card.assets.description")} />
         </div>
-        <Button
-          text={t("card.assets.button.text")}
-          handleOnClick={handleOnClick}
-        />
+        <Button onClick={handleOnClick}>{t("card.assets.button.text")}</Button>
       </>
     </Card>
   );

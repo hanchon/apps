@@ -64,5 +64,6 @@ export { ProcessingTxIcon } from "./ProcessingTxIcon";
 export { SquidIcon } from "./SquidIcon";
 export { LayerSwapIcon } from "./LayerSwapIcon";
 export { CypherDIcon } from "./CypherD";
-export { PriceDown } from "./PriceDown"
-export { PriceUp } from "./PriceUp"
+export { PriceDown } from "./PriceDown";
+export { PriceUp } from "./PriceUp";
+export { RightArrow } from "./RightArrow";

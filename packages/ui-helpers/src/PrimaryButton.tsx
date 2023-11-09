@@ -24,7 +24,7 @@ export const PrimaryButton = ({
       onClick={onClick}
       className={cn(
         "w-fit text-sm px-4 py-3 rounded-lg transition-all duration-300 hover:shadow-md flex items-center justify-center space-x-3 tracking-wider",
-        className,
+
         {
           "bg-red text-pearl hover:bg-red1 active:bg-red2":
             variant === "primary",
@@ -35,6 +35,7 @@ export const PrimaryButton = ({
           "w-fit rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out text-red bg-pearl hover:bg-[#e3d6c3] active:bg-[#ccc0af]":
             variant === "secondary",
         },
+        className,
         disabled ? "disabled" : ""
       )}
       disabled={disabled}

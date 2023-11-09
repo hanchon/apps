@@ -34,13 +34,6 @@ export const ecosystemData = [
     href: "/",
   },
   {
-    image: "/ecosystem/tashi.svg",
-    name: "Tashi",
-    type: "Instant dApp",
-    description: "Tashi is your path to Borrow Lend DeFi on Evmos.",
-    href: TASHI_URL,
-  },
-  {
     image: "/ecosystem/galaxy.png",
     name: "Wormhole",
     type: "Instant dApp",
