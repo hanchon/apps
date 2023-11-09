@@ -7,7 +7,10 @@ export const Breadcrumb = ({
 }) => {
   return (
     <nav className="flex" aria-label="breadcrumb">
-      <ol role="list" className="flex items-center space-x-1">
+      <ol
+        role="list"
+        className="flex items-center space-x-1 font-brand tracking-wide"
+      >
         {pages.map((page, index) => (
           <li key={page.name}>
             <div className="flex items-center">
@@ -19,10 +22,10 @@ export const Breadcrumb = ({
               )}
               <a
                 href={page.href}
-                className={`pl-1 font-medium transition-all duration-200 ${
+                className={`pl-1 transition-all duration-200 ${
                   page.current === "page"
-                    ? "text-[#FFF4E1] hover:text-white/90"
-                    : "text-white/70 hover:text-[#FFF4E1]"
+                    ? "text-[#FFF4E1] hover:text-white/90 font-bold"
+                    : "text-white/70 hover:text-[#FFF4E1] font-light"
                 }`}
                 aria-current={page.current ? "page" : undefined}
               >
