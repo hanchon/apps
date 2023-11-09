@@ -1,4 +1,3 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
@@ -13,8 +12,9 @@ import { Subtitle } from "ui-helpers/src/titles/Subtitle";
 import { HeroSection } from "./HeroSection";
 import { Button } from "./Button";
 import { Frameline } from "ui-helpers";
+import { Link } from "@evmosapps/i18n/client";
 
-export const ContentDappStore = () => {
+export const DappStorePage = () => {
   return (
     <div className="space-y-8 text-display">
       <div className="grid items-center gap-x-8 gap-y-11 md:grid-cols-2">
@@ -40,9 +40,9 @@ export const ContentDappStore = () => {
       <EcosystemContainer />
       <Frameline>
         {/* TODO: className as prop to give w-full */}
-        <Button className="w-full" onClick={() => {}}>
+        <Link className="w-full" href="/dapps">
           See all amount dApps
-        </Button>
+        </Link>
       </Frameline>
     </div>
   );

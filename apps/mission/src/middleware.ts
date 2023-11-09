@@ -2,19 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import acceptLanguage from "accept-language";
 import { defaultLocale, languages, cookieName } from "@evmosapps/i18n";
 import { readLocale } from "@evmosapps/i18n/server";
+import { getLocaleFromPath } from "@evmosapps/i18n";
 
 acceptLanguage.languages(languages);
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|assets|favicon.ico|manifest.json|sw.js|.*png|.*svg|.*sjpg).*)",
+    "/((?!api|_next/static|_next/image|assets|favicon.ico|manifest.json|sw.js|.*png|.*svg|.*jpg).*)",
   ],
 };
 
 export function middleware(request: NextRequest) {
-  let [routeLocale]: string[] = request.nextUrl.pathname
-    .split("/")
-    .filter(Boolean);
+  const routeLocale = getLocaleFromPath(request.nextUrl);
+
   /**
    * if path locale is defaultLocale, remove it from path and redirect
    */
@@ -35,22 +35,21 @@ export function middleware(request: NextRequest) {
   }
 
   const response = NextResponse.next();
-
-  response.cookies.set(cookieName, routeLocale);
-
   /**
    * If referer has a locale in path, set language cookie
    */
   if (request.headers.has("referer")) {
     const referer = request.headers.get("referer");
-    const [refererLocale] = referer
-      ? new URL(referer).pathname.split("/").filter(Boolean)
-      : [];
+    const refererLocale = referer ? getLocaleFromPath(referer) : null;
+
+    // const response = NextResponse.next();
 
     if (refererLocale && languages.includes(refererLocale)) {
       response.cookies.set(cookieName, refererLocale);
     }
+    return response;
   }
+  response.cookies.set(cookieName, routeLocale);
 
   return response;
 }

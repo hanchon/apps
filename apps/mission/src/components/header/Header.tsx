@@ -1,7 +1,6 @@
 import { Branding } from "./Branding";
 import { EvmosPrice } from "./TokenPrice";
 import { LaunchPad } from "./LaunchPad";
-import Image from "next/image";
 
 import { ConnectModalButton } from "./ConnectModalButton";
 import { Container } from "ui-helpers";

@@ -22,9 +22,9 @@ export const RightArrow: React.FC<RightArrow> = ({
       <path
         d="M2 2L11 11L2 20"
         stroke="#E8DFD3"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

@@ -1,7 +1,8 @@
 {
   "header": {
     "titles": {
-      "dappstore": "Apps",
+      "dappstore": "Dapp Store",
+      "dapps": "Dapp Store",
       "portfolio": "Portfolio",
       "staking": "Staking",
       "governance": "Governance",

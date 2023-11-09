@@ -1,14 +1,16 @@
 "use client";
 import { Logo } from "icons";
-import { EVMOS_PAGE_URL } from "constants-helper";
 
 import { useTranslation, Link } from "@evmosapps/i18n/client";
 import { usePathname } from "next/navigation";
+import { getLocaleFromPath } from "@evmosapps/i18n";
 
 export const Branding = () => {
   const { t } = useTranslation();
+  const pathname = usePathname();
+  const locale = getLocaleFromPath(pathname);
 
-  const pageRoute = usePathname()?.split("/")[2] ?? ["dappstore"];
+  const pageRoute = usePathname()?.split("/")[locale ? 2 : 1] || "dappstore";
 
   return (
     <Link

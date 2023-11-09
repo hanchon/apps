@@ -1,30 +1,18 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { Button } from "../Button";
 import { EcosystemCard } from "./Card";
-import { EcosystemProps, ecosystemData } from "./ecosystemData";
-import { useTranslation } from "@evmosapps/i18n/client";
+
+import { Link } from "@evmosapps/i18n/client";
 
 import { ECOSYSTEM_URL } from "constants-helper";
-import { useTracker, CLICK_ON_VIEW_ALL_DAPPS } from "tracker";
+import { CLICK_ON_VIEW_ALL_DAPPS } from "tracker";
 import { Title } from "ui-helpers/src/titles/Title";
 import { Subtitle } from "ui-helpers/src/titles/Subtitle";
 import { RightArrow } from "icons";
+import { dApps } from "../../data";
+import { TrackerEvent } from "ui-helpers";
 export const EcosystemContainer = () => {
-  const { handlePreClickAction } = useTracker(CLICK_ON_VIEW_ALL_DAPPS);
-  const handleViewAlldApps = () => {
-    handlePreClickAction();
-    window.open(ECOSYSTEM_URL, "_blank");
-  };
-
-  const drawEcosystemdApps = (dApps: EcosystemProps[]) => {
-    return dApps.map((dApp) => <EcosystemCard data={dApp} key={dApp.name} />);
-  };
-
-  const { t } = useTranslation("dappStore");
-
   return (
     <section className="space-y-6 pt-11">
       <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
@@ -36,15 +24,19 @@ export const EcosystemContainer = () => {
           </Subtitle>
         </div>
         {/* TODO: add arrow  */}
-        <Button onClick={handleViewAlldApps}>
-          <div className="flex items-center space-x-2">
-            <p>See More</p>
-            <RightArrow width={11} height={11} />
-          </div>
-        </Button>
+        <TrackerEvent event={CLICK_ON_VIEW_ALL_DAPPS}>
+          <Link href={ECOSYSTEM_URL} target={"_blank"}>
+            <div className="flex items-center space-x-2">
+              <p>See More</p>
+              <RightArrow width={11} height={11} />
+            </div>
+          </Link>
+        </TrackerEvent>
       </div>
       <div className="grid gap-x-8 md:grid-cols-4">
-        {drawEcosystemdApps(ecosystemData)}
+        {dApps.map((dApp) => (
+          <EcosystemCard data={dApp} key={dApp.name} />
+        ))}
       </div>
     </section>
   );

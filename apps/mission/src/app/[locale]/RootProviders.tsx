@@ -7,7 +7,7 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { MixpanelProvider } from "tracker";
 import { MavaWidget } from "ui-helpers";
 import { Snackbars, getAllSnackbars } from "evmos-wallet";
-import { GiveFeedback } from "../../components/mission/GiveFeedback";
+import { GiveFeedback } from "../../components/GiveFeedback";
 const queryClient = new QueryClient();
 function SnackbarsInternal() {
   const valueRedux = useSelector((state: StoreType) => getAllSnackbars(state));

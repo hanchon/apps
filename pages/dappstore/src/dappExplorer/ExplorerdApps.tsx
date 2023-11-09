@@ -1,25 +1,20 @@
-"use client";
-import { Badge, Breadcrumb } from "ui-helpers";
+"use server";
+import { Badge } from "ui-helpers";
 import { Title } from "ui-helpers/src/titles/Title";
 import { Subtitle } from "ui-helpers/src/titles/Subtitle";
-import { categories, pages, dApps } from "./data";
-import { useMemo, useState } from "react";
+import { categories, pages, dApps } from "../data";
 import { EcosystemCard } from "../dappStore/ecosystem/Card";
+import { Link } from "@evmosapps/i18n/client";
+import { cn } from "helpers";
 
-export const ExplorerdApps = () => {
+export const ExplorerdApps = ({ params }: { params: { category: string } }) => {
   // TODO: add the correct categories to the type
-  const [selectedCategory, setSelectedCategory] = useState<null | string>(null);
-
-  const filteredApps = useMemo(() => {
-    if (!selectedCategory) {
-      return dApps;
-    }
-    return dApps.filter((dapp) => dapp.category === selectedCategory);
-  }, [selectedCategory]);
+  const filteredApps = dApps.filter(
+    (dapp) => dapp.categorySlug === params.category
+  );
 
   return (
-    <div className="flex flex-col space-y-8">
-      <Breadcrumb pages={pages} />
+    <>
       <div className="flex space-y-2 flex-col">
         <Title>
           Explore the{" "}
@@ -32,21 +27,18 @@ export const ExplorerdApps = () => {
       </div>
       <div className="flex gap-5 flex-wrap">
         {categories.map((category) => (
-          <Badge
-            onClick={() => {
-              setSelectedCategory(category.name);
-            }}
-            className={`${
-              selectedCategory === category.name
-                ? // TODO:  create reusable component for circle
-                  "bg-[#FFF4E14D] pl-9 relative before:content-[''] before:absolute before:top-[50%] before:left-3 before:-translate-y-1/2 before:w-[15px] before:h-[15px] before:bg-red-300 before:rounded-full "
-                : ""
-            }`}
-            key={category.name}
-            variant="dark"
-          >
-            {category.name}
-          </Badge>
+          <Link href={`/dapps/${category.slug}`} key={category.slug}>
+            <Badge
+              className={cn({
+                // TODO:  create reusable component for circle
+                "bg-[#FFF4E14D] pl-9 relative before:content-[''] before:absolute before:top-[50%] before:left-3 before:-translate-y-1/2 before:w-[15px] before:h-[15px] before:bg-red-300 before:rounded-full":
+                  params.category === category.slug,
+              })}
+              variant="dark"
+            >
+              {category.name}
+            </Badge>
+          </Link>
         ))}
       </div>
 
@@ -55,6 +47,6 @@ export const ExplorerdApps = () => {
           <EcosystemCard data={dApp} key={dApp.name} />
         ))}
       </div>
-    </div>
+    </>
   );
 };

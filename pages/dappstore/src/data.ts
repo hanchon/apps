@@ -1,4 +1,6 @@
 import { STRIDE_URL, FORGE_URL } from "constants-helper";
+import { kebabCase } from "lodash-es";
+const slugify = (name: string) => kebabCase(name.toLowerCase());
 export const pages = [
   {
     name: "dapp Store",
@@ -63,15 +65,12 @@ export const categories = [
   {
     name: "Centralized Exchanges",
   },
-];
+].map((item) => ({
+  ...item,
+  slug: slugify(item.name),
+}));
 
-export type EcosystemProps = {
-  image: string;
-  name: string;
-  type: string;
-  description: string;
-  href: string;
-};
+export type EcosystemProps = (typeof dApps)[number];
 
 export const dApps = [
   {
@@ -131,4 +130,8 @@ export const dApps = [
     href: "/",
     category: "Staking",
   },
-];
+].map((item) => ({
+  ...item,
+  slug: slugify(item.name),
+  categorySlug: slugify(item.category),
+}));

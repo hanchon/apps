@@ -11,6 +11,7 @@ import {
 import resourcesToBackend from "i18next-resources-to-backend";
 import { getOptions, languages } from "../settings";
 import { useEffectEvent } from "helpers";
+import { getLocaleFromPath } from "..";
 
 const isServer = typeof window === "undefined";
 
@@ -38,12 +39,7 @@ export function useTranslation<
     | undefined = undefined,
   KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined,
 >(namespace?: Ns, options?: UseTranslationOptions<KPrefix>) {
-  let [locale] = usePathname().split("/").filter(Boolean);
-
-  if (!locale || !languages.includes(locale)) {
-    // throw new Error(`Invalid locale: ${locale}`);
-    locale = "en";
-  }
+  const locale = getLocaleFromPath(usePathname()) || "en";
 
   const ret = useTranslationOrg<Ns, KPrefix>(namespace, options);
 

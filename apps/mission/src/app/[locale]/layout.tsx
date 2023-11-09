@@ -6,7 +6,7 @@ import { withLocale } from "@evmosapps/i18n/server";
 import { cn } from "helpers";
 import { greyCliff, ibm, nb, evmos } from "ui-helpers/src/fonts";
 import { RootProviders } from "./RootProviders";
-import { GoogleAnalytics } from "../../components/mission/GoogleAnalytics";
+import { GoogleAnalytics } from "../../components/GoogleAnalytics";
 import { ConsentModal } from "stateful-components/src/modals/ConsentModal/ConsentModal";
 import { TermsOfServicesModal } from "stateful-components/src/modals/TermsOfServices/TermsOfServices";
 import { ConnectModal } from "stateful-components/src/modals/ConnectModal/ConnectModal";
@@ -16,20 +16,26 @@ import { TopupModal } from "stateful-components/src/modals/TopupModal/TopupModal
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import { Container } from "ui-helpers";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 
 export async function generateStaticParams() {
   return languages.map((locale) => ({ lng: locale }));
 }
+export const viewport: Viewport = {
+  themeColor: "black",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: "Evmos Apps",
-  viewport: "width=device-width, initial-scale=1",
+  metadataBase: new URL("https://app.evmos.org"),
+
   keywords:
     "evmos, landing page, portfolio, overview, assets, stake, governance, vote",
   alternates: {
-    canonical: "https://app.evmos.org/",
+    canonical: "/",
   },
 
   openGraph: {
