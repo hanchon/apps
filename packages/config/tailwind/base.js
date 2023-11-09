@@ -46,7 +46,7 @@ const config = {
         red: "#ed4e33",
         red1: "#AA2912",
         red2: "#6b1c0e",
-        "red-300": "#FF6565",
+        "red-300": "#FE5F05",
         "red-900": "#F83E3E",
         green: "#97ad11",
         "green-200": "#70FF7E",

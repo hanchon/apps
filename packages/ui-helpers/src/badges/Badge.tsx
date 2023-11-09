@@ -8,7 +8,7 @@ export const Badge = ({
   className,
   ...rest
 }: ComponentProps<"span"> & {
-  variant?: "success" | "warning" | "danger" | "info";
+  variant?: "success" | "warning" | "danger" | "info" | "dark";
 }) => {
   return (
     <span
@@ -20,6 +20,8 @@ export const Badge = ({
           "bg-red text-pearl ring-red": variant === "danger",
           // {/* TODO: add color to tailwind file */}
           "ring-darkGray300 text-[#FFF4E1]": variant === "info",
+          "ring-[#FFF4E173] text-[#FFF4E1] text-lg font-brand tracking-wide px-5 py-2 font-bold cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]":
+            variant === "dark",
         },
         className
       )}

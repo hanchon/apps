@@ -14,7 +14,7 @@ export const Title = ({
     <h1
       className={cx("font-brand", {
         // {/* TODO: add color to tailwind file */}
-        "font-bold text-[#E8DFD3] text-5xl tracking-wide": variant === "h1",
+        "text-[#E8DFD3] text-5xl tracking-wide": variant === "h1",
       })}
     >
       {children}
