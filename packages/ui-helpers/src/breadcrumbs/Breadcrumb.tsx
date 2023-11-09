@@ -1,0 +1,37 @@
+import { RightArrow } from "icons";
+
+export const Breadcrumb = ({
+  pages,
+}: {
+  pages: { name: string; href: string; current?: string }[];
+}) => {
+  return (
+    <nav className="flex" aria-label="breadcrumb">
+      <ol role="list" className="flex items-center space-x-1">
+        {pages.map((page, index) => (
+          <li key={page.name}>
+            <div className="flex items-center">
+              {index > 0 && (
+                <RightArrow
+                  className="h-3 w-3 flex-shrink-0 text-white/70"
+                  aria-hidden="true"
+                />
+              )}
+              <a
+                href={page.href}
+                className={`pl-1 font-medium transition-all duration-200 ${
+                  page.current === "page"
+                    ? "text-[#FFF4E1] hover:text-white/90"
+                    : "text-white/70 hover:text-[#FFF4E1]"
+                }`}
+                aria-current={page.current ? "page" : undefined}
+              >
+                {page.name}
+              </a>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  );
+};
