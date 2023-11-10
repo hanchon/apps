@@ -1,1 +1,1 @@
-export { DappDetails as default } from "@evmosapps/dappstore-page";
+export { DappDetailsPage as default } from "@evmosapps/dappstore-page";

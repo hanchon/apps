@@ -1,1 +1,1 @@
-export { DappStorePage as default } from "@evmosapps/dappstore-page";
+export { LandingPage as default } from "@evmosapps/dappstore-page";

@@ -1,5 +1,1 @@
-import { redirect } from "next/navigation";
-
-export default function Page({ params }: { params: { locale: string } }) {
-  redirect(`${params.locale}/dapps/instant-dapps`);
-}
+export { DappExplorerPage as default } from "@evmosapps/dappstore-page";

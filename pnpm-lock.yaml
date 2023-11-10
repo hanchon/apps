@@ -1783,6 +1783,9 @@ importers:
       services:
         specifier: workspace:*
         version: link:../../packages/services
+      slugify:
+        specifier: ^1.6.6
+        version: 1.6.6
       stateful-components:
         specifier: workspace:*
         version: link:../../packages/stateful-components
@@ -13823,6 +13826,11 @@ packages:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
       is-fullwidth-code-point: 3.0.0
+    dev: false
+
+  /slugify@1.6.6:
+    resolution: {integrity: sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==}
+    engines: {node: '>=8.0.0'}
     dev: false
 
   /smol-toml@1.1.2:

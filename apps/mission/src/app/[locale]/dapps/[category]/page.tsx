@@ -1,1 +1,1 @@
-export { ExplorerdApps as default } from "@evmosapps/dappstore-page";
+export { DappExplorerPage as default } from "@evmosapps/dappstore-page";
