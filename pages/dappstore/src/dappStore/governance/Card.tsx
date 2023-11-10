@@ -2,25 +2,15 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useRouter } from "next/navigation";
-import { Button } from "../Button";
 import { Card } from "../card/Card";
 import { Description } from "../card/Description";
 import { Title } from "../card/Title";
 import { useTranslation } from "@evmosapps/i18n/client";
 
-import { CLICK_ON_PARTICIPATE_IN_GOVERNANCE, useTracker } from "tracker";
+import { CLICK_ON_PARTICIPATE_IN_GOVERNANCE } from "tracker";
+import { ButtonWithLink, TrackerEvent } from "ui-helpers";
 
 export const GovernanceCard = () => {
-  const router = useRouter();
-  const { handlePreClickAction } = useTracker(
-    CLICK_ON_PARTICIPATE_IN_GOVERNANCE
-  );
-  const handleOnClick = () => {
-    handlePreClickAction();
-    router.push("/governance");
-  };
-
   const { t } = useTranslation("dappStore");
   return (
     <Card>
@@ -28,9 +18,11 @@ export const GovernanceCard = () => {
         <Title firstWord={"Evmos"} secondWord={t("card.governance.title")} />
         <Description text={t("card.governance.description")} />
       </div>
-      <Button onClick={handleOnClick}>
-        {t("card.governance.button.text")}
-      </Button>
+      <TrackerEvent event={CLICK_ON_PARTICIPATE_IN_GOVERNANCE}>
+        <ButtonWithLink href="/governance">
+          {t("card.governance.button.text")}
+        </ButtonWithLink>
+      </TrackerEvent>
     </Card>
   );
 };
