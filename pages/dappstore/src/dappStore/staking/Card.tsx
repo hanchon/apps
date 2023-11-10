@@ -2,8 +2,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useRouter } from "next/navigation";
-import { Button } from "../Button";
 import { BalanceContainer } from "../card/BalanceContainer";
 import { Card } from "../card/Card";
 import { Description } from "../card/Description";
@@ -20,18 +18,10 @@ import {
   getNumberBalanceInDollars,
 } from "evmos-wallet";
 import { useTranslation } from "@evmosapps/i18n/client";
-import { CLICK_ON_STAKE_AND_MANAGE_DELEGATION, useTracker } from "tracker";
+import { CLICK_ON_STAKE_AND_MANAGE_DELEGATION } from "tracker";
+import { ButtonWithLink, TrackerEvent } from "ui-helpers";
 
 export const StakingCard = () => {
-  const router = useRouter();
-  const { handlePreClickAction } = useTracker(
-    CLICK_ON_STAKE_AND_MANAGE_DELEGATION
-  );
-  const handleOnClick = async () => {
-    handlePreClickAction();
-    router.push("/staking");
-  };
-
   const wallet = useSelector((state: StoreType) => state.wallet.value);
 
   const { totalDelegations, totalRewards } = useStake();
@@ -92,7 +82,12 @@ export const StakingCard = () => {
             {t("card.staking.button.claim")}
           </button>
         </div>
-        <Button onClick={handleOnClick}>{t("card.staking.button.text")}</Button>
+
+        <TrackerEvent event={CLICK_ON_STAKE_AND_MANAGE_DELEGATION}>
+          <ButtonWithLink href="/staking">
+            {t("card.staking.button.text")}
+          </ButtonWithLink>
+        </TrackerEvent>
       </>
     </Card>
   );

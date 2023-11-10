@@ -3,7 +3,6 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { convertFromAtto } from "helpers";
-import { Button } from "../Button";
 
 import { useTranslation } from "@evmosapps/i18n/client";
 import { StoreType, useAssets, useStake } from "evmos-wallet";
@@ -16,7 +15,7 @@ import {
 
 import { useAccount } from "wagmi";
 import { useTopupModal } from "stateful-components/src/modals/TopupModal/TopupModal";
-import { TrackerEvent } from "ui-helpers";
+import { ButtonWithoutLink, TrackerEvent } from "ui-helpers";
 
 export const AccountBalance = () => {
   const { isConnected } = useAccount();
@@ -78,7 +77,9 @@ export const AccountBalance = () => {
         </div>
         {isConnected && (
           <div className="md:relative md:left-[16px] md:top-[11px] ">
-            <Button onClick={handleClick}>{t("account.balance.topUp")}</Button>
+            <ButtonWithoutLink onClick={handleClick}>
+              {t("account.balance.topUp")}
+            </ButtonWithoutLink>
           </div>
         )}
       </div>

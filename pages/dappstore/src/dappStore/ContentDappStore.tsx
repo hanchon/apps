@@ -10,9 +10,7 @@ import { CopilotCard } from "copilot";
 import { Title } from "ui-helpers/src/titles/Title";
 import { Subtitle } from "ui-helpers/src/titles/Subtitle";
 import { HeroSection } from "./HeroSection";
-import { Button } from "./Button";
-import { Frameline } from "ui-helpers";
-import { Link } from "@evmosapps/i18n/client";
+import { ButtonWithLink, Frameline } from "ui-helpers";
 
 export const DappStorePage = () => {
   return (
@@ -39,10 +37,9 @@ export const DappStorePage = () => {
       </div>
       <EcosystemContainer />
       <Frameline>
-        {/* TODO: className as prop to give w-full */}
-        <Link className="w-full" href="/dapps">
+        <ButtonWithLink className="w-full " href="/dapps">
           See all amount dApps
-        </Link>
+        </ButtonWithLink>
       </Frameline>
     </div>
   );
