@@ -1,49 +1,37 @@
 "use server";
-import { Badge } from "ui-helpers";
-import { Title } from "ui-helpers/src/titles/Title";
-import { Subtitle } from "ui-helpers/src/titles/Subtitle";
-import { categories, pages, dApps } from "../data";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+import { categories, dApps } from "../data";
 import { EcosystemCard } from "../dappStore/ecosystem/Card";
-import { Link } from "@evmosapps/i18n/client";
-import { cn } from "helpers";
+import { HeaderCategories } from "../dappStore/categories/Header";
 
 export const ExplorerdApps = ({ params }: { params: { category: string } }) => {
-  // TODO: add the correct categories to the type
-  const filteredApps = dApps.filter(
-    (dapp) => dapp.categorySlug === params.category
-  );
+  // TODO: create a function and test it
+  const sortedApps = dApps
+    .filter((dapp) => dapp.categorySlug === params.category)
+    .sort((a, b) =>
+      a.type !== b.type
+        ? // show instant dapps first
+          a.type === "Instant dApps"
+          ? -1
+          : 1
+        : // sort by name
+        a.name > b.name
+        ? 1
+        : -1
+    );
 
   return (
     <>
-      <div className="flex space-y-2 flex-col">
-        <Title>
-          Explore the{" "}
-          <span className="font-bold">{filteredApps?.length} dApps</span> on
-          Evmos
-        </Title>
-        <Subtitle>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit
-        </Subtitle>
-      </div>
-      <div className="flex gap-5 flex-wrap">
-        {categories.map((category) => (
-          <Link href={`/dapps/${category.slug}`} key={category.slug}>
-            <Badge
-              className={cn({
-                // TODO:  create reusable component for circle
-                "bg-[#FFF4E14D] pl-9 relative before:content-[''] before:absolute before:top-[50%] before:left-3 before:-translate-y-1/2 before:w-[15px] before:h-[15px] before:bg-red-300 before:rounded-full":
-                  params.category === category.slug,
-              })}
-              variant="dark"
-            >
-              {category.name}
-            </Badge>
-          </Link>
-        ))}
-      </div>
-
-      <div className="grid gap-x-8 md:grid-cols-4">
-        {filteredApps?.map((dApp) => (
+      <HeaderCategories
+        apps={dApps}
+        amountAppsSelected={sortedApps?.length ?? 0}
+        categories={categories}
+        params={params}
+      />
+      <div className="grid gap-x-8 md:grid-cols-4 pt-20">
+        {sortedApps?.map((dApp) => (
           <EcosystemCard data={dApp} key={dApp.name} />
         ))}
       </div>
