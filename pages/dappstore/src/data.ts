@@ -74,9 +74,25 @@ export type EcosystemProps = (typeof dApps)[number];
 
 export const dApps = [
   {
+    image: "/ecosystem/galaxy.png",
+    name: "Wormhole",
+    type: "Instant dApps",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    href: "/",
+    category: "Instant dApps",
+  },
+  {
+    image: "/ecosystem/galaxy.png",
+    name: "Layerswap",
+    type: "Instant dApps",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    href: "/",
+    category: "Staking",
+  },
+  {
     image: "/ecosystem/forge.png",
     name: "Forge",
-    type: "Instant dApp",
+    type: "Instant dApps",
     description:
       "Swap, earn, and build on the premier Evmos community owned DEX.",
     href: FORGE_URL,
@@ -85,7 +101,7 @@ export const dApps = [
   {
     image: "/ecosystem/stride.png",
     name: "Stride",
-    type: "Instant dApp",
+    type: "Instant dApps",
     description: "Liquid staking for Cosmos blockchains.",
     href: STRIDE_URL,
     category: "Instant dApps",
@@ -93,23 +109,7 @@ export const dApps = [
   {
     image: "/ecosystem/galaxy.png",
     name: "Squid",
-    type: "Instant dApp",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    href: "/",
-    category: "Instant dApps",
-  },
-  {
-    image: "/ecosystem/galaxy.png",
-    name: "Wormhole",
-    type: "Instant dApp",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    href: "/",
-    category: "Instant dApps",
-  },
-  {
-    image: "/ecosystem/galaxy.png",
-    name: "Layerswap",
-    type: "Instant dApp",
+    type: "Redirect",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     href: "/",
     category: "Instant dApps",
@@ -117,17 +117,17 @@ export const dApps = [
   {
     image: "/ecosystem/galaxy.png",
     name: "Cypher Wallet",
-    type: "Instant dApp",
+    type: "Instant dApps",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     href: "/",
-    category: "Instant dApps",
+    category: "Staking",
   },
   {
     image: "/ecosystem/galaxy.png",
     name: "Evmos Staking",
     type: "Redirect",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    href: "/",
+    href: "https://app.evmos.org/staking",
     category: "Staking",
   },
 ].map((item) => ({

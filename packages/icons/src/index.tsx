@@ -67,3 +67,4 @@ export { CypherDIcon } from "./CypherD";
 export { PriceDown } from "./PriceDown";
 export { PriceUp } from "./PriceUp";
 export { RightArrow } from "./RightArrow";
+export { UpRightArrowIcon } from "./UpRightArrowIcon";
