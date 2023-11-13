@@ -3,7 +3,7 @@ import { z } from "zod";
 import { categorySchema } from "./schemas/entities/categorySchema";
 import { dappSchema } from "./schemas/entities/dappSchema";
 import { Log } from "helpers";
-import { notion } from "./notion";
+import { notion } from "./notion-client";
 
 const categoriesDbId = "1bb5db7703bf4ba9bf11fc845433bdc4";
 const dappsDbId = "f6c8a6f4b169463fa338c18917bf3af9";
@@ -13,17 +13,18 @@ export const fetchDapps = async () => {
     database_id: dappsDbId,
   });
   const dappsMap = new Map<string, z.output<typeof dappSchema>>();
-  for (const result of await Promise.all(
+
+  const parsedDapps = await Promise.all(
     dapps.results.map((value) => dappSchema.safeParseAsync(value))
-  )) {
+  );
+  for (const result of parsedDapps) {
     if (!result.success) {
-      Log.error(`Error parsing dapp: ${result.error}`);
       continue;
     }
 
     const parsed = result.data;
     parsed.localized = Object.fromEntries(
-      parsed.subItemNotionIds.map((notionId) => {
+      parsed.subItem.map((notionId) => {
         const subItem = dappsMap.get(notionId);
         dappsMap.delete(notionId);
         if (!subItem) {
@@ -32,7 +33,7 @@ export const fetchDapps = async () => {
         return [
           subItem?.name,
           {
-            name: subItem?.displayName,
+            name: subItem?.name,
             description: subItem?.description,
           },
         ];
@@ -52,27 +53,24 @@ export const fetchCategories = async () => {
   >((acc, category) => {
     const parsed = categorySchema.safeParse(category);
 
-    if (parsed.success) {
-      parsed.data.localized = Object.fromEntries(
-        parsed.data.subItemNotionIds.map((notionId) => {
-          const subItem = acc.get(notionId);
-          acc.delete(notionId);
-          if (!subItem) {
-            throw new Error("Sub-item not found");
-          }
-          return [
-            subItem?.name,
-            {
-              name: subItem?.displayName,
-              description: subItem?.description,
-            },
-          ];
-        })
-      );
-      acc.set(parsed.data.notionId, parsed.data);
-
-      return acc;
-    }
+    if (!parsed.success) return acc;
+    parsed.data.localized = Object.fromEntries(
+      parsed.data.subItem.map((notionId) => {
+        const subItem = acc.get(notionId);
+        acc.delete(notionId);
+        if (!subItem) {
+          throw new Error("Sub-item not found");
+        }
+        return [
+          subItem?.name,
+          {
+            name: subItem?.displayName,
+            description: subItem?.description,
+          },
+        ];
+      })
+    );
+    acc.set(parsed.data.notionId, parsed.data);
 
     return acc;
   }, new Map());

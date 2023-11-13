@@ -126,7 +126,7 @@ export const LaunchPadItem = ({
   icon,
   children,
   ...rest
-}: ComponentProps<"a"> & {
+}: ComponentProps<typeof Link> & {
   icon: JSX.Element;
 }) => {
   return (

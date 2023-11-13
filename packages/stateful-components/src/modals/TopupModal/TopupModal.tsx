@@ -14,10 +14,12 @@ export const useTopupModal = () => useModal("topup");
 export const TopupModal = () => {
   const { isOpen, setIsOpen } = useTopupModal();
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} propClose={true}>
-      <StepsContextProvider steps={topUpStep}>
-        <Content />
-      </StepsContextProvider>
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+      <Modal.Body className="p-0 overflow-hidden max-w-3xl">
+        <StepsContextProvider steps={topUpStep}>
+          <Content />
+        </StepsContextProvider>
+      </Modal.Body>
     </Modal>
   );
 };

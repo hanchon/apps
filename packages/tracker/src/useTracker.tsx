@@ -13,7 +13,7 @@ export const sendEvent = (trackingID: string, extraProperties?: Dict) => {
     (localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === null ||
       localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === "false");
 
-  Log.table({
+  Log().table({
     ["Tracking ID"]: trackingID,
     ["Extra Properties"]: extraProperties,
     ["Mixpanel is active"]: mixpanelIsActive,

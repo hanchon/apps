@@ -19,7 +19,7 @@ export const DappExplorerPage = async ({
         .sort((a, b) =>
           a.categorySlug !== b.categorySlug
             ? // show instant dapps first
-              a.isInstantDapp
+              a.instantDapp
               ? -1
               : 1
             : // sort by name

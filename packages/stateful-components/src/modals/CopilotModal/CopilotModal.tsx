@@ -14,10 +14,12 @@ export const useSetupCopilotModal = () => useModal("setup-copilot");
 export const Copilot = () => {
   const { isOpen, setIsOpen } = useSetupCopilotModal();
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} propClose={true}>
-      <StepsContextProvider steps={setupSteps}>
-        <Content />
-      </StepsContextProvider>
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+      <Modal.Body className="p-0 overflow-hidden max-w-3xl">
+        <StepsContextProvider steps={setupSteps}>
+          <Content />
+        </StepsContextProvider>
+      </Modal.Body>
     </Modal>
   );
 };

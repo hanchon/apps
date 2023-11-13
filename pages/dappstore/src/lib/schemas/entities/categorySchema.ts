@@ -3,22 +3,17 @@ import { z } from "zod";
 import { relationSchema } from "../partials/relationSchema";
 import { richTextSchema } from "../partials/richTextSchema";
 import { titleSchema } from "../partials/titleSchema";
+import { createNotionPropertiesSchema } from "./createNotionPropertiesSchema";
 
-export const categoryPropertiesSchema = z
-  .object({
-    "Display Name": richTextSchema,
-    Projects: relationSchema,
-    Name: titleSchema,
-    Description: richTextSchema,
-    "Sub-item": relationSchema,
+const categoryPropertiesSchema = createNotionPropertiesSchema(
+  z.object({
+    displayName: richTextSchema,
+    projects: relationSchema,
+    name: titleSchema,
+    description: richTextSchema,
+    subItem: relationSchema,
   })
-  .transform((data) => ({
-    projectNotionIds: data.Projects,
-    subItemNotionIds: data["Sub-item"],
-    name: data.Name,
-    displayName: data["Display Name"],
-    description: data.Description,
-  }));
+);
 
 export const categorySchema = z
   .object({
