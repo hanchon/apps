@@ -48,10 +48,12 @@ export async function GET(
     })
   );
   if (!img) {
+    console.error(params.id, imgUrl, processingError);
+
     notFound();
   }
   const buffer = await img.arrayBuffer();
-  const [, processedBuffer] = await E.try(() =>
+  const [processingError, processedBuffer] = await E.try(() =>
     sharp(buffer)
       .resize({
         width: 1024,
@@ -61,7 +63,9 @@ export async function GET(
       .png()
       .toBuffer()
   );
+
   if (!processedBuffer) {
+    console.error(params.id, imgUrl, processingError);
     notFound();
   }
   return new Response(processedBuffer, {

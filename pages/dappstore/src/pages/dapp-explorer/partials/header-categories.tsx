@@ -60,7 +60,14 @@ export const HeaderCategories = ({
       </div>
       <div className="flex gap-5 flex-wrap" onMouseLeave={handleCategoryLeave}>
         {categories.map((category) => (
-          <Link href={`/dapps/${category.slug}`} key={category.slug}>
+          <Link
+            href={
+              category.slug === params.category
+                ? "/dapps"
+                : `/dapps/${category.slug}`
+            }
+            key={category.slug}
+          >
             <Badge
               className={cn({
                 // TODO:  create reusable component for circle
