@@ -11,14 +11,15 @@ import { Subtitle } from "ui-helpers/src/titles/Subtitle";
 import { Category, DApp } from "../../../lib/fetch-explorer-data";
 
 export const HeaderCategories = ({
-  dApps,
-  amountAppsSelected,
   categories,
   params,
 }: {
   dApps: DApp[];
   amountAppsSelected: number;
-  categories: Category[];
+  categories: Pick<
+    Category,
+    "categoryDapps" | "name" | "slug" | "description"
+  >[];
   params: { category?: string };
 }) => {
   const [hoveredCategorySlug, setHoveredCategory] = useState<null | string>(
@@ -39,7 +40,7 @@ export const HeaderCategories = ({
 
   const selectedCategory = useMemo(() => {
     return categories.find((category) => category.slug === params.category);
-  }, [params.category]);
+  }, [categories, params.category]);
 
   const displayedCategory = hoveredCategory || selectedCategory;
   return (

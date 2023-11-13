@@ -6,7 +6,12 @@ export { DappExplorerPage as default } from "@evmosapps/dappstore-page";
 export const generateStaticParams = async () => {
   const { categories } = await fetchExplorerData();
 
-  return categories.map((category) => ({
-    category: category.slug,
-  }));
+  return [
+    {
+      category: "instant-dapps",
+    },
+    ...categories.map((category) => ({
+      category: category.slug,
+    })),
+  ];
 };

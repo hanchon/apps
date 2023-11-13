@@ -26,6 +26,12 @@ export const AppsExplorerLayout = async ({
       href: `/dapps/${category.slug}`,
       current: false,
     });
+  } else if (params.category === "instant-dapps") {
+    pages.push({
+      name: "Instant dApps",
+      href: "/dapps/instant-dapps",
+      current: false,
+    });
   } else {
     pages.push({
       name: "All",
