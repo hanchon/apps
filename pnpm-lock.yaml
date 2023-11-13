@@ -155,7 +155,7 @@ importers:
         version: 2.47.1
       chainapsis-suggest-chain:
         specifier: github:chainapsis/keplr-chain-registry
-        version: github.com/chainapsis/keplr-chain-registry/992a6d9119aeb9240cef47d34a7256d07321a170(@babel/core@7.23.2)(react-is@18.2.0)
+        version: github.com/chainapsis/keplr-chain-registry/3101e381c8ea2d6dd793ee732e77908d54ea359f(@babel/core@7.23.2)(react-is@18.2.0)
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
@@ -4353,44 +4353,44 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@keplr-wallet/chain-validator@0.12.34:
-    resolution: {integrity: sha512-EoBSO/Rvd2YyeogcklwpqIta4Y46f/TmppSPRbs+eej08WYJdeZRLLNQHC4o8yR/tfTYzu9bsATr6cqx1CXbVA==}
+  /@keplr-wallet/chain-validator@0.12.42:
+    resolution: {integrity: sha512-RCEym0pf8hZz0AuDrqCE9s9PLYL4CrAv0GONsx7LQKEDD7szKV9walgF7awOLvhmrQv2ZnQYYaDuwzrRTNjJJg==}
     dependencies:
-      '@keplr-wallet/cosmos': 0.12.34
-      '@keplr-wallet/simple-fetch': 0.12.34
-      '@keplr-wallet/types': 0.12.34
+      '@keplr-wallet/cosmos': 0.12.42
+      '@keplr-wallet/simple-fetch': 0.12.42
+      '@keplr-wallet/types': 0.12.42
       joi: 17.11.0
       utility-types: 3.10.0
     dev: false
 
-  /@keplr-wallet/common@0.12.34:
-    resolution: {integrity: sha512-46FF3B/SDT6nB8Xb96SFIMt7sU48OGy+Zcdk79gnYBok4fSMO4e6XKm/HrTqsb7UoCMDNYRasyVOF6UYFN8xUA==}
+  /@keplr-wallet/common@0.12.42:
+    resolution: {integrity: sha512-xGADbV2Z7cTZqQVbbgSOudin3/7LY+FNseoc9yLTfIJuzoNcnHq3uBE8Sp+GCkax+tGc73LCtxmrB2NIqhmbkA==}
     dependencies:
-      '@keplr-wallet/crypto': 0.12.34
-      '@keplr-wallet/types': 0.12.34
+      '@keplr-wallet/crypto': 0.12.42
+      '@keplr-wallet/types': 0.12.42
       buffer: 6.0.3
       delay: 4.4.1
       mobx: 6.10.2
     dev: false
 
-  /@keplr-wallet/cosmos@0.12.34:
-    resolution: {integrity: sha512-373tfafi11fcKtA8J/QIReDFEl8mqOkvaHsfAgfS7FvlQtQzVUmiMaHF/xiNmY8Y+RhpqtA7dHEE+P/SBcLJNQ==}
+  /@keplr-wallet/cosmos@0.12.42:
+    resolution: {integrity: sha512-+HcldGPREaxI+FkIBNWlT9NDPktws+5YwMmLuwAwCD9baeEadCBI5NTbAbCuWoRSc6YSYZvxeKsjpSgPisysjw==}
     dependencies:
       '@ethersproject/address': 5.7.0
-      '@keplr-wallet/common': 0.12.34
-      '@keplr-wallet/crypto': 0.12.34
-      '@keplr-wallet/proto-types': 0.12.34
-      '@keplr-wallet/simple-fetch': 0.12.34
-      '@keplr-wallet/types': 0.12.34
-      '@keplr-wallet/unit': 0.12.34
+      '@keplr-wallet/common': 0.12.42
+      '@keplr-wallet/crypto': 0.12.42
+      '@keplr-wallet/proto-types': 0.12.42
+      '@keplr-wallet/simple-fetch': 0.12.42
+      '@keplr-wallet/types': 0.12.42
+      '@keplr-wallet/unit': 0.12.42
       bech32: 1.1.4
       buffer: 6.0.3
       long: 4.0.0
       protobufjs: 6.11.4
     dev: false
 
-  /@keplr-wallet/crypto@0.12.34:
-    resolution: {integrity: sha512-rdlC6psLHdvQI/icUnQPlkU8W5BkXjraV5txGq7MCFVc0XQWZenWn+I7BcgAXYUTD8UF/HLV1nNzdH7Of5DbJw==}
+  /@keplr-wallet/crypto@0.12.42:
+    resolution: {integrity: sha512-fo+TlK5tDeS1drSP3uNHgTX3SYlERWeQUqtR1sTR2JyY5ShU56CwtNM+nwygl1ZQVtHxPZW5XBZiq9ZtjXddpw==}
     dependencies:
       '@ethersproject/keccak256': 5.7.0
       bip32: 2.0.6
@@ -4402,15 +4402,15 @@ packages:
       sha.js: 2.4.11
     dev: false
 
-  /@keplr-wallet/proto-types@0.12.34:
-    resolution: {integrity: sha512-1K5iQxYR6irZnWw6d4O/r4BcxWkYcuxOifTWTnonOZn4hGmFcagEYDpwPE3JoWeOQ4wjiAzI53qsOoFu6H5Y3Q==}
+  /@keplr-wallet/proto-types@0.12.42:
+    resolution: {integrity: sha512-iJsUpPmeKZOxKGv44nDhxrYbvbSBnLoEnatVfdPYngFHfSM7tYSHRliZ+riRCwliWLRGA9HhlGFD4/UyDpMyXg==}
     dependencies:
       long: 4.0.0
       protobufjs: 6.11.4
     dev: false
 
-  /@keplr-wallet/simple-fetch@0.12.34:
-    resolution: {integrity: sha512-lLwftuVZxATR3a7ZFm9N2+U/LIBaepRQMA3Md3RA9EBCUgf1Rq/znZbDc02WrEueYxNzsPG5HWHjpERic2DGnw==}
+  /@keplr-wallet/simple-fetch@0.12.42:
+    resolution: {integrity: sha512-6xgIVhH473OX4raDI9X/KQLSZso2JhWqmnCZB/OQ+5m0fAsPGHTt6oYampYPQfnJdBGG95vGQ4//7QGEhmrrqg==}
     dev: false
 
   /@keplr-wallet/types@0.12.34:
@@ -4418,10 +4418,16 @@ packages:
     dependencies:
       long: 4.0.0
 
-  /@keplr-wallet/unit@0.12.34:
-    resolution: {integrity: sha512-qdg/P2hXaFqKiSVY1tc8wr+B8SYp8+Wu33hvHwIcsX91gbwjsbRWE1+xV0aQjpIhHcMZzNpSs6TklV7OWcySLQ==}
+  /@keplr-wallet/types@0.12.42:
+    resolution: {integrity: sha512-o+BkY45xsONTzqTrmfL/ZU+I9dp6ACqB0dhmlRg4E03NRoj2olggWPgt7TPnoM3aB6rt+XK//kbrHvc9bRQrRA==}
     dependencies:
-      '@keplr-wallet/types': 0.12.34
+      long: 4.0.0
+    dev: false
+
+  /@keplr-wallet/unit@0.12.42:
+    resolution: {integrity: sha512-FdPI12+jEn23sQ1CiTNtcP0N6QJOd0hcvmbFXb0RpJQ04Nh28cK0uxIXAqNzz0Y2WAaDBaS33grqdaaLkYkhbA==}
+    dependencies:
+      '@keplr-wallet/types': 0.12.42
       big-integer: 1.6.51
       utility-types: 3.10.0
     dev: false
@@ -15759,16 +15765,16 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
 
-  github.com/chainapsis/keplr-chain-registry/992a6d9119aeb9240cef47d34a7256d07321a170(@babel/core@7.23.2)(react-is@18.2.0):
-    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/992a6d9119aeb9240cef47d34a7256d07321a170}
-    id: github.com/chainapsis/keplr-chain-registry/992a6d9119aeb9240cef47d34a7256d07321a170
+  github.com/chainapsis/keplr-chain-registry/3101e381c8ea2d6dd793ee732e77908d54ea359f(@babel/core@7.23.2)(react-is@18.2.0):
+    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/3101e381c8ea2d6dd793ee732e77908d54ea359f}
+    id: github.com/chainapsis/keplr-chain-registry/3101e381c8ea2d6dd793ee732e77908d54ea359f
     name: chainapsis-suggest-chain
     version: 0.0.1
     dependencies:
-      '@keplr-wallet/chain-validator': 0.12.34
-      '@keplr-wallet/common': 0.12.34
-      '@keplr-wallet/cosmos': 0.12.34
-      '@keplr-wallet/types': 0.12.34
+      '@keplr-wallet/chain-validator': 0.12.42
+      '@keplr-wallet/common': 0.12.42
+      '@keplr-wallet/cosmos': 0.12.42
+      '@keplr-wallet/types': 0.12.42
       axios: 0.27.2
       cors: 2.8.5
       image-size: 1.0.2

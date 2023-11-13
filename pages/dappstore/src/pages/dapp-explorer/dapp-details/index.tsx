@@ -1,5 +1,9 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { notFound, redirect } from "next/navigation";
 import { fetchExplorerData } from "../../../lib/fetch-explorer-data";
+import { DescriptiondApp } from "../partials/description-section";
 
 export const DappDetailsPage = async ({
   params,
@@ -20,13 +24,6 @@ export const DappDetailsPage = async ({
   if (params.category !== dapp.categorySlug) {
     redirect(`/${params.locale}/dapps/${dapp.categorySlug}/${params.dapp}`);
   }
-  return (
-    <div>
-      <h1>{dapp.name}</h1>
-      <p>{dapp.description}</p>
-      <pre>
-        <code>{JSON.stringify(dapp, null, 2)}</code>
-      </pre>
-    </div>
-  );
+
+  return <DescriptiondApp dapp={dapp} />;
 };

@@ -4,6 +4,7 @@
 import { Link } from "@evmosapps/i18n/client";
 import { ComponentProps } from "react";
 import cx from "clsx";
+import { cn } from "helpers";
 
 export const ButtonWithLink = ({
   className,
@@ -11,9 +12,9 @@ export const ButtonWithLink = ({
 }: ComponentProps<"a">) => {
   return (
     <Link
-      className={cx(
-        className,
-        "w-fit flex justify-center self-start rounded bg-[#423D37] px-5 py-3 text-sm text-pearl transition-all duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]"
+      className={cn(
+        "w-fit flex justify-center self-start rounded bg-[#423D37] px-5 py-3 text-sm text-pearl transition-all duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]",
+        className
       )}
       {...props}
     />
