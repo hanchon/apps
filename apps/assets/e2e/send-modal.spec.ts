@@ -31,7 +31,7 @@ const waitForTestnet = async () => {
           break;
         }
       } catch (e) {}
-      Log.info("Waiting for testnet to be ready");
+      Log().info("Waiting for testnet to be ready");
       await delay(1000);
     }
   });

@@ -80,6 +80,9 @@ const StepsContextProvider = ({
       return;
     }
     const currentStep = updatedState[currentElement.index];
+    if (currentStep === undefined) {
+      return;
+    }
     const updatedStep = { ...currentStep, status: STEP_STATUS.DONE };
     const nextStep = updatedState[currentElement.index + 1];
     if (nextStep) {
@@ -95,7 +98,7 @@ const StepsContextProvider = ({
   }
 
   function hasSingleTopUpStep() {
-    if (steps.length === 1 && steps[0].title === "Top up your account") {
+    if (steps.length === 1 && steps[0]?.title === "Top up your account") {
       return true;
     }
     return false;

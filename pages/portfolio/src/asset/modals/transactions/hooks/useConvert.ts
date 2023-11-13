@@ -98,7 +98,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
           convert: wrapEvmos,
         });
       } catch (e) {
-        Log.error(e);
+        Log().error(e);
         // TODO: Add Sentry here!
         dispatch(snackErrorGeneratingTx());
         unsuccessfulTx({
@@ -124,7 +124,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
           convert: unwrapEvmos,
         });
       } catch (e) {
-        Log.error(e);
+        Log().error(e);
         // TODO: Add Sentry here!
         dispatch(snackErrorGeneratingTx());
         unsuccessfulTx({

@@ -11,7 +11,7 @@ export const ConnectModal = () => {
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Modal.Body>
+      <Modal.Body className="p-0 overflow-hidden max-w-3xl">
         <ModalContainer
           introduction={<ConnectToEvmos />}
           content={<ConnectModalContent setIsOpen={setIsOpen} />}

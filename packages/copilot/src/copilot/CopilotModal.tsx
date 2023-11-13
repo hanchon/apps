@@ -20,12 +20,7 @@ export const CopilotModal = () => {
   }, [setIsOpenModal]);
 
   return (
-    <Modal
-      isOpen={showModal}
-      setIsOpen={setIsOpenModal}
-      propClose={true}
-      handleCloseAction={setIsOpenCloseModal}
-    >
+    <Modal isOpen={showModal} setIsOpen={setIsOpenModal}>
       <Content />
     </Modal>
   );

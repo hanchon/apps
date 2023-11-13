@@ -64,7 +64,7 @@ export const EnableVestingModal = () => {
       );
       setDisabled(false);
     } catch (e) {
-      Log.error(e);
+      Log().error(e);
       setDisabled(false);
       // TODO: Add Sentry here!
       dispatch(

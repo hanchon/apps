@@ -39,6 +39,7 @@ export const useCopilotCard = () => {
     USER_CONNECTED_AND_HAS_NO_TOKENS
   );
 
+  console.log(copilotSteps);
   // Track if user is not connected to an account
   useEffect(() => {
     if (copilotSteps[0].status === "current" && !tempValue.active) {
