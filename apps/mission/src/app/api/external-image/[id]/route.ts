@@ -1,5 +1,5 @@
 import { fetchExplorerData } from "@evmosapps/dappstore-page/src/lib/fetch-explorer-data";
-import { NextApiRequest, NextApiResponse } from "next";
+
 import { type NextRequest } from "next/server";
 import { cache } from "react";
 
@@ -18,10 +18,10 @@ const getImageMap = cache(async () => {
     }
   }
   return imageMap;
-})();
+});
 
 export async function generateStaticParams() {
-  const imgMap = await getImageMap;
+  const imgMap = await getImageMap();
 
   return Array.from(imgMap.keys()).map((id) => ({
     params: {
@@ -34,9 +34,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const { dApps } = await fetchExplorerData();
-
-  const imgMap = await getImageMap;
+  const imgMap = await getImageMap();
 
   const imgUrl = imgMap.get(params.id);
 
