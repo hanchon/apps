@@ -17,6 +17,7 @@ import {
 import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
 export const DescriptiondApp = ({ dapp }) => {
+  console.log(dapp);
   return (
     <div className="space-y-24 pb-24">
       <div className="font-brand relative">
@@ -31,7 +32,7 @@ export const DescriptiondApp = ({ dapp }) => {
 
         <div className="flex flex-col absolute left-20 -bottom-14">
           <Image
-            src={dapp.icon}
+            src={dapp.icon.url}
             alt={dapp.name}
             width={500}
             height={250}
@@ -48,7 +49,7 @@ export const DescriptiondApp = ({ dapp }) => {
           </p>
         </div>
 
-        {dapp.isInstantDapp && (
+        {dapp.instantDapp && (
           <div className="flex flex-col  absolute right-20 bottom-6">
             {/* TODO: check if we need to create a component for this */}
             {/* TODO: add color to tailwind file */}
@@ -67,17 +68,17 @@ export const DescriptiondApp = ({ dapp }) => {
             <p>{dapp.description}</p>
           </DescriptionItem>
           <DescriptionItem title="Social">
-            {dapp.links.twitter && (
+            {dapp.twitter && (
               <Link
-                href={dapp.links.twitter}
+                href={dapp.twitter}
                 className="flex flex-row space-x-2 items-center "
               >
                 <TwitterIcon width={20} height={20} /> <p>{dapp.name}</p>
               </Link>
             )}
-            {dapp.links.discord && (
+            {dapp.discord && (
               <Link
-                href={dapp.links.discord}
+                href={dapp.discord}
                 className="flex flex-row space-x-2 items-center "
               >
                 <DiscordIcon width={20} height={20} /> <p>{dapp.name}</p>
@@ -95,18 +96,18 @@ export const DescriptiondApp = ({ dapp }) => {
           </DescriptionItem>
 
           <DescriptionItem title="Contact Details">
-            {dapp.links.github && (
+            {dapp.github && (
               <Link
-                href={dapp.links.github}
+                href={dapp.github}
                 className="flex flex-row space-x-2 items-center "
               >
                 <GithubIcon width={20} height={20} /> <p>Github</p>
               </Link>
             )}
             {/* TODO: add documentation */}
-            {/* {dapp.links.documentation && (
+            {/* {dapp.documentation && (
               <Link
-                href={dapp.links.documentation}
+                href={dapp.documentation}
                 className="flex flex-row space-x-2 items-center "
               >
                 <DocumentationIcon width={20} height={20} /> <p>Documentation</p>
