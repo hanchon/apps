@@ -14,6 +14,7 @@ import { DApp } from "../../../lib/fetch-explorer-data";
 
 export const EcosystemCard = ({ data }: { data: DApp }) => {
   const imgId = data.cover?.id ?? data.icon?.id;
+
   return (
     <TrackerEvent
       event={CLICK_ON_FEATURED_DAPP}
@@ -32,9 +33,9 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
         <div className="aspect-[3/2] w-full rounded-t-2xl object-cover bg-white/5 relative overflow-hidden">
           {imgId && (
             <Image
+              className="object-cover"
               src={`/api/external-image/${imgId}`}
               alt={data.name}
-              objectFit="cover"
               fill={true}
             />
           )}
