@@ -6,18 +6,18 @@ import cx from "clsx";
 
 export const Title = ({
   variant = "h1",
-  children,
+  ...rest
 }: PropsWithChildren<{
-  variant?: "h1";
+  variant?: "h1" | "small";
 }>) => {
   return (
     <h1
-      className={cx("font-brand", {
+      className={cx("font-brand text-[#E8DFD3] tracking-wide", {
         // {/* TODO: add color to tailwind file */}
-        "text-[#E8DFD3] text-5xl tracking-wide": variant === "h1",
+        "text-5xl tracking-wide": variant === "h1",
+        "text-3xl": variant === "small",
       })}
-    >
-      {children}
-    </h1>
+      {...rest}
+    />
   );
 };

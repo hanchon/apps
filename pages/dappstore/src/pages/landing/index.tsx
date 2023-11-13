@@ -35,9 +35,7 @@ export const LandingPage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 space-x-8">
-        <HeroSection />
-      </div>
+      <HeroSection />
       <EcosystemSection />
       <Frameline>
         <ButtonWithLink className="w-full " href="/dapps">

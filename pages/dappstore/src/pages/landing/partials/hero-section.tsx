@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Frameline, PrimaryButton } from "ui-helpers";
 export const HeroSection = () => {
   return (
-    <>
+    <div className="grid grid-cols-1 md:grid-cols-2 space-x-8">
       <div
         className="w-full bg-cover bg-no-repeat flex flex-col space-y-8 p-5 pr-0 "
         style={{
@@ -60,6 +60,6 @@ export const HeroSection = () => {
           />
         </div>
       </Frameline>
-    </>
+    </div>
   );
 };
