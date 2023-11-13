@@ -17,7 +17,8 @@ import {
 import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
 export const DescriptiondApp = ({ dapp }) => {
-  console.log(dapp);
+  const imgId = dapp.cover?.id ?? dapp.icon?.id;
+
   return (
     <div className="space-y-24 pb-24">
       <div className="font-brand relative">
@@ -32,7 +33,7 @@ export const DescriptiondApp = ({ dapp }) => {
 
         <div className="flex flex-col absolute left-20 -bottom-14">
           <Image
-            src={dapp.icon.url}
+            src={`/api/external-image/${imgId}`}
             alt={dapp.name}
             width={500}
             height={250}
