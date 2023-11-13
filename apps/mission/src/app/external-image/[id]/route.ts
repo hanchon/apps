@@ -69,6 +69,7 @@ export async function GET(
     notFound();
   }
   return new Response(processedBuffer, {
+    status: 200,
     headers: {
       "Content-Type": "image/png",
     },

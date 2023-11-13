@@ -33,7 +33,7 @@ export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
 
         <div className="flex flex-col absolute left-20 -bottom-14">
           <Image
-            src={`/api/external-image/${imgId}`}
+            src={`/external-image/${imgId}`}
             alt={dapp.name}
             width={500}
             height={250}

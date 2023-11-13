@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import acceptLanguage from "accept-language";
 import { defaultLocale, languages, cookieName } from "@evmosapps/i18n";
-import { readLocale } from "@evmosapps/i18n/server";
+
 import { getLocaleFromPath } from "@evmosapps/i18n";
 
 acceptLanguage.languages(languages);
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|assets|favicon.ico|manifest.json|sw.js|.*png|.*svg|.*jpg).*)",
+    "/((?!api|_next/static|external-image|_next/image|assets|favicon.ico|manifest.json|sw.js|.*png|.*svg|.*jpg).*)",
   ],
 };
 

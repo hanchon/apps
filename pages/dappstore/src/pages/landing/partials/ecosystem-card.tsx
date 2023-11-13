@@ -34,7 +34,7 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
           {imgId && (
             <Image
               className="object-cover"
-              src={`/api/external-image/${imgId}`}
+              src={`/external-image/${imgId}`}
               alt={data.name}
               fill={true}
             />
