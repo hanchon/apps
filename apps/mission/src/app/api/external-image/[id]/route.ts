@@ -1,5 +1,6 @@
 import { fetchExplorerData } from "@evmosapps/dappstore-page/src/lib/fetch-explorer-data";
 import { E } from "helpers";
+import { notFound } from "next/navigation";
 
 import { type NextRequest } from "next/server";
 import { cache } from "react";
@@ -38,7 +39,7 @@ export async function GET(
   const imgUrl = imgMap.get(params.id);
 
   if (!imgUrl) {
-    return new Response("Not found", { status: 404 });
+    notFound();
   }
 
   const [, img] = await E.try(() =>
@@ -47,22 +48,25 @@ export async function GET(
     })
   );
   if (!img) {
-    return new Response("Not found", { status: 404 });
+    notFound();
   }
   const buffer = await img.arrayBuffer();
-
-  return new Response(
-    await sharp(buffer)
+  const [, processedBuffer] = await E.try(() =>
+    sharp(buffer)
       .resize({
         width: 1024,
         withoutEnlargement: true,
       })
+
       .png()
-      .toBuffer(),
-    {
-      headers: {
-        "Content-Type": "image/png",
-      },
-    }
+      .toBuffer()
   );
+  if (!processedBuffer) {
+    notFound();
+  }
+  return new Response(processedBuffer, {
+    headers: {
+      "Content-Type": "image/png",
+    },
+  });
 }
