@@ -36,7 +36,8 @@
     "PORT",
     "NODE_ENV",
     "GITHUB_TOKEN",
-    "TEST_WORKER_INDEX"
+    "TEST_WORKER_INDEX",
+    "NOTION_API_KEY"
   ],
   "pipeline": {
     "build": {

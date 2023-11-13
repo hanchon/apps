@@ -17,14 +17,15 @@ import {
 import ProviderDropwdown from "./ProviderDropdown";
 import { providerOptions, DropdownOption } from "./utils";
 import { Squid } from "./Squid";
+import { raise } from "helpers";
 
 export const TopUp = () => {
   const [topUpType, setTopUpType] = useState("intro");
   const [cardProvider, setCardProvider] = useState<DropdownOption>(
-    providerOptions.card[0]
+    providerOptions.card[0] ?? raise("No card provider")
   );
   const [cryptoProvider, setCryptoProvider] = useState<DropdownOption>(
-    providerOptions.crypto[0]
+    providerOptions.crypto[0] ?? raise("No crypto provider")
   );
 
   const { sendEvent } = useTracker();

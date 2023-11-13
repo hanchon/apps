@@ -53,7 +53,7 @@ const checkConnectionMetamask = async () => {
 
   // get the wallet to query the pubkey
   const account = await getWallet();
-  if (account === null) {
+  if (!account) {
     return false;
   }
 

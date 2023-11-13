@@ -29,16 +29,13 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
         key={data.name}
         className="relative mb-16 space-y-2 rounded-lg bg-[#262017] pb-8 transition-all duration-150 ease-out hover:scale-105"
       >
-        <div className="aspect-[3/2] w-full rounded-t-2xl object-cover bg-white/5 relative">
+        <div className="aspect-[3/2] w-full rounded-t-2xl object-cover bg-white/5 relative overflow-hidden">
           {imgId && (
             <Image
-              src={`/api/external-image/${
-                data.cover?.id ?? data.icon?.id ?? ""
-              }`}
+              src={`/api/external-image/${imgId}`}
               alt={data.name}
               objectFit="cover"
               fill={true}
-              className="aspect-[1.66] object-cover w-full rounded-t-2xl bg-white/5"
             />
           )}
         </div>

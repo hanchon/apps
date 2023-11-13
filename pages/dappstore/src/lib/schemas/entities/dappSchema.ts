@@ -2,7 +2,7 @@ import { z } from "zod";
 import { richTextSchema } from "../partials/richTextSchema";
 import { relationSchema } from "../partials/relationSchema";
 import { titleSchema } from "../partials/titleSchema";
-import fs from "fs/promises";
+
 import { checkboxSchema } from "./checkboxSchema";
 import { urlSchema } from "./urlSchema";
 import { emojiSchema } from "./emojiSchema";
@@ -10,29 +10,10 @@ import { fileSchema } from "./fileSchema";
 import { externalSchema } from "./externalSchema";
 import { createNotionPropertiesSchema } from "./createNotionPropertiesSchema";
 import { sha256 } from "@noble/hashes/sha256";
+import { createdAtSchema } from "./createdAtSchema";
+import { updatedAtSchema } from "./updatedAtSchema";
+import { selectSchema } from "./selectSchema";
 
-const selectSchema = z
-  .object({
-    select: z.union([
-      z.object({
-        name: z.string(),
-      }),
-      z.null(),
-    ]),
-  })
-  .transform(({ select }) => select?.name ?? null);
-
-const updatedAtSchema = z
-  .object({
-    last_edited_time: z.string(),
-  })
-  .transform(({ last_edited_time }) => last_edited_time);
-
-const createdAtSchema = z
-  .object({
-    created_time: z.string(),
-  })
-  .transform(({ created_time }) => created_time);
 const dappPropertiesSchema = createNotionPropertiesSchema(
   z.object({
     locale: selectSchema,
@@ -49,19 +30,6 @@ const dappPropertiesSchema = createNotionPropertiesSchema(
     createdAt: createdAtSchema,
   })
 );
-
-const fetchImageAsBase64 = async (url: string) => {
-  try {
-    const res = await fetch(url);
-    const buffer = await res.arrayBuffer();
-
-    return `data:${res.headers.get("content-type")};base64,${Buffer.from(
-      buffer
-    ).toString("base64")}`;
-  } catch (e) {
-    return null;
-  }
-};
 
 const hashUrl = (url: string) => {
   return Buffer.from(sha256(url)).toString("hex");

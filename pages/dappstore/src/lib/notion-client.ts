@@ -15,7 +15,7 @@ const revalidate = async (
 ) => {
   const response = await fetcher();
   const cachePath = path.join(cacheDir, cacheKey);
-  await fs.mkdir(path.dirname(cachePath), { recursive: true });
+  await E.try(() => fs.mkdir(path.dirname(cachePath), { recursive: true }));
   await fs.writeFile(
     cachePath,
     JSON.stringify({
@@ -31,7 +31,16 @@ const readCache = cache(async (key: string) => {
   const fileCachePath = path.join(cacheDir, key);
 
   const cached = await fs.readFile(fileCachePath, "utf-8");
-  const { content, timestamp } = JSON.parse(cached);
+  const parsed = JSON.parse(cached) as unknown;
+  if (
+    !parsed ||
+    typeof parsed !== "object" ||
+    !("content" in parsed) ||
+    !("timestamp" in parsed)
+  ) {
+    throw new Error("Invalid cache");
+  }
+  const { content, timestamp } = parsed;
   if (typeof content !== "string" || typeof timestamp !== "number") {
     throw new Error("Invalid cache");
   }
@@ -63,26 +72,26 @@ export const notion = new Client({
 
           const key = [
             `Method ${args[1]?.method}`,
-            `URL: ${args[0]}`,
-            `Body ${args[1]?.body}`,
+            `URL: ${String(args[0])}`,
+            `Body ${String(args[1]?.body)}`,
           ].join("\n");
           const hashedKey = Buffer.from(sha256(key)).toString("hex");
 
-          const [_, cachedResponse] = await E.try(() => readCache(hashedKey));
+          const [, cachedResponse] = await E.try(() => readCache(hashedKey));
 
           if (!cachedResponse) {
             return await revalidate(hashedKey, () => fetch(...args));
           }
 
-          /**
-           * We don't want to wait for revalidation to finish. Let's use the current cached value until the new one is ready.
-           * This could cause some race conditions in case we have multiple hot reload requests at the same time, but a hard refresh should fix it,
-           * so it should be fine for dev mode
-           *
-           * works in a similar way to stale-while-revalidate strategy
-           */
           if (cachedResponse.isStale)
-            revalidate(hashedKey, () => fetch(...args));
+            /**
+             * We don't want to wait for revalidation to finish. Let's use the current cached value until the new one is ready.
+             * This could cause some race conditions in case we have multiple hot reload requests at the same time, but a hard refresh should fix it,
+             * so it should be fine for dev mode
+             *
+             * works in a similar way to stale-while-revalidate strategy
+             */
+            void revalidate(hashedKey, () => fetch(...args));
 
           return new Response(cachedResponse.content, {
             status: 200,
