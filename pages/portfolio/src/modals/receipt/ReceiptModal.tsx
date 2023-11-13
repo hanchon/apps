@@ -22,7 +22,7 @@ export const ReceiptModal = () => {
   const { isOpen, setIsOpen, modalProps } = useReceiptModal();
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} propClose={true}>
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Modal.Body className="bg-black-900 shadow-custom-sm">
         {modalProps && <ReceiptModalContent {...modalProps} />}
       </Modal.Body>

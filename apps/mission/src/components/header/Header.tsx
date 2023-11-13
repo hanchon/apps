@@ -1,11 +1,11 @@
 import { Branding } from "./Branding";
-import { EvmosPrice } from "./TokenPrice";
+// import { EvmosPrice } from "./TokenPrice";
 import { LaunchPad } from "./LaunchPad";
 
 import { ConnectModalButton } from "./ConnectModalButton";
 import { Container } from "ui-helpers";
 
-export const Header = async () => {
+export const Header = () => {
   return (
     <Container
       full
@@ -14,7 +14,7 @@ export const Header = async () => {
       <Branding />
 
       <div className="flex items-center space-x-3 text-xs sm:text-base leading-none">
-        <EvmosPrice />
+        {/* <EvmosPrice /> */}
         <LaunchPad />
         <ConnectModalButton />
       </div>

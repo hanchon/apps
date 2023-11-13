@@ -48,10 +48,7 @@ export const useVote = (useVoteProps: VoteProps) => {
       return;
     }
 
-    let option = 0;
-    if (useVoteProps.option in optionVoteSelected) {
-      option = optionVoteSelected[useVoteProps.option];
-    }
+    const option = optionVoteSelected[useVoteProps.option] ?? 0;
 
     const res = await executeVote(useVoteProps.wallet, useVoteProps.id, option);
     dispatch(snackExecuteIBCTransfer(res));

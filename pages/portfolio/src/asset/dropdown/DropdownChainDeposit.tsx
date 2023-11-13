@@ -11,6 +11,13 @@ import { DepositElement } from "../modals/transactions/DepositSTR";
 import { DropdownChainsDepositProps } from "./types";
 import { CLICK_DEPOSIT_CHOOSE_FROM_CHAIN, useTracker } from "tracker";
 
+export function getChainIdentifier(identifier: string) {
+  if (identifier === "cosmoshub") {
+    return "Cosmos Hub";
+  }
+  return identifier;
+}
+
 const DropdownChainDeposit = ({
   dropChainProps,
 }: {
@@ -35,24 +42,17 @@ const DropdownChainDeposit = ({
 
   const getDisplay = () => {
     if (selectedValue) {
-      function getChainIdentifier(
-        chainIdentifier: string
-      ): React.ReactNode | Iterable<React.ReactNode> {
-        throw new Error("Function not implemented.");
-      }
-
+      const identifier = selectedValue.elements[0]?.chainIdentifier ?? "";
       return (
         <div className="flex items-center space-x-3 font-bold">
           <Image
-            src={`/chains/${selectedValue.elements[0].chainIdentifier}.png`}
-            alt={selectedValue.elements[0].chainIdentifier}
+            src={`/chains/${identifier}.png`}
+            alt={identifier ?? ""}
             width={25}
             height={25}
             className="h-6 w-6"
           />
-          <span>
-            {getChainIdentifier(selectedValue.elements[0].chainIdentifier)}
-          </span>
+          <span>{getChainIdentifier(identifier)}</span>
         </div>
       );
     }

@@ -99,10 +99,11 @@ export const useProposals = (pid?: string) => {
         (proposal) =>
           proposal.id === pid && !PROPOSALS_TO_REMOVE.includes(proposal.id)
       );
-      if (filtered.length === 0) {
+      const proposalFiltered = filtered[0];
+      if (!proposalFiltered) {
         return "Proposal not found, please try again";
       }
-      const proposalFiltered = filtered[0];
+
       const percents = getPercentage([
         proposalFiltered.final_tally_result.yes_count,
         proposalFiltered.final_tally_result.no_count,
@@ -123,17 +124,14 @@ export const useProposals = (pid?: string) => {
       };
 
       const description =
-        proposalFiltered.summary !== ""
-          ? proposalFiltered.summary
-          : proposalFiltered.messages.length > 0
-          ? proposalFiltered.messages[0].content.description
-          : "";
+        proposalFiltered.summary ||
+        proposalFiltered.messages?.[0]?.content.description ||
+        "";
+
       const title =
-        proposalFiltered.title !== ""
-          ? proposalFiltered.title
-          : proposalFiltered.messages.length > 0
-          ? proposalFiltered.messages[0].content.title
-          : "";
+        proposalFiltered.title ||
+        proposalFiltered.messages?.[0]?.content.title ||
+        "";
 
       temp = {
         id: proposalFiltered.id,
@@ -149,7 +147,7 @@ export const useProposals = (pid?: string) => {
             : "",
 
         // Order for tallyResults:  yes, no, abstain, no_with_veto
-        tallyPercents: [percents[0], percents[1], percents[2], percents[3]],
+        tallyPercents: [...percents],
         tallyResults: [
           proposalFiltered.final_tally_result.yes_count,
           proposalFiltered.final_tally_result.no_count,
@@ -159,12 +157,14 @@ export const useProposals = (pid?: string) => {
         tallying: tallyingData,
         type:
           proposalFiltered.messages.length > 0
-            ? splitString(proposalFiltered.messages[0].content["@type"])
+            ? splitString(
+                proposalFiltered.messages?.[0]?.content["@type"] ?? ""
+              )
             : "",
         totalDeposit:
           proposalFiltered.total_deposit.length > 0
             ? formatAttoNumber(
-                BigNumber.from(proposalFiltered.total_deposit[0].amount)
+                BigNumber.from(proposalFiltered.total_deposit?.[0]?.amount ?? 0)
               )
             : "--",
         submitTime:

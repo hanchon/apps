@@ -9,7 +9,7 @@ import { cn } from "helpers";
 export const ButtonWithLink = ({
   className,
   ...props
-}: ComponentProps<"a">) => {
+}: ComponentProps<typeof Link>) => {
   return (
     <Link
       className={cn(

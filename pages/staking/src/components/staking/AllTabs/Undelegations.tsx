@@ -118,7 +118,7 @@ const Undelegations = () => {
           >
             <TdContent
               tdProps={{
-                title: dataHead[0],
+                title: dataHead?.[0] ?? "",
                 value: item.moniker,
               }}
             />
@@ -127,7 +127,7 @@ const Undelegations = () => {
           <td className={`${tdBodyStyle}`}>
             <TdContent
               tdProps={{
-                title: dataHead[1],
+                title: dataHead?.[1] ?? "",
                 value: `${convertAndFormat(
                   BigNumber.from(item.balance),
                   EVMOS_DECIMALS,
@@ -140,7 +140,7 @@ const Undelegations = () => {
           <td className={`${tdBodyStyle}`}>
             <TdContent
               tdProps={{
-                title: dataHead[2],
+                title: dataHead?.[2] ?? "",
                 //   TODO: update this value when time pass
                 value: getRemainingTime(item.completionTime),
               }}

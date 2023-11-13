@@ -145,13 +145,16 @@ const Validators = () => {
           </td>
           <td className={`${tdBodyStyle} firstRow md:pl-8`}>
             <TdContent
-              tdProps={{ title: dataHead[0], value: item.validator.rank }}
+              tdProps={{
+                title: dataHead?.[0] ?? "",
+                value: item.validator.rank,
+              }}
             />
           </td>
           <td className={`${tdBodyStyle} hidden md:table-cell`}>
             <TdContent
               tdProps={{
-                title: dataHead[2],
+                title: dataHead?.[2] ?? "",
                 value: item.validator.description.moniker,
               }}
             />
@@ -159,7 +162,7 @@ const Validators = () => {
           <td className={`${tdBodyStyle}`}>
             <TdContent
               tdProps={{
-                title: dataHead[2],
+                title: dataHead?.[2] ?? "",
                 value: formatNumber(
                   convertStringFromAtto(item.validator.tokens).toFixed(2)
                 ),
@@ -169,7 +172,7 @@ const Validators = () => {
           <td className={`${tdBodyStyle}`}>
             <TdContent
               tdProps={{
-                title: dataHead[3],
+                title: dataHead?.[3] ?? "",
                 value:
                   item.balance.balance.amount !== ""
                     ? convertAndFormat(
@@ -184,7 +187,7 @@ const Validators = () => {
           <td className={`${tdBodyStyle}`}>
             <TdContent
               tdProps={{
-                title: dataHead[4],
+                title: dataHead?.[4] ?? "",
                 value: formatPercentage(
                   item.validator.commission?.commission_rates?.rate
                 ),

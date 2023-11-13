@@ -33,7 +33,7 @@ export const TermsOfServicesModal = () => {
   useEffect(() => {
     if (window.localStorage.getItem(EVMOS_TOS_VERSION) !== null) return;
     setIsOpen(true);
-  }, []);
+  }, [setIsOpen]);
 
   const guardedSetIsOpen: React.Dispatch<React.SetStateAction<boolean>> = (
     isOpen

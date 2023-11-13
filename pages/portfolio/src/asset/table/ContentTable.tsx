@@ -75,7 +75,12 @@ const ContentTable = ({
             // TODO: remove this condition when stEvmos price is available on coingecko
             e.symbol.toLowerCase() === "stevmos"
               ? // it uses the evmos price for stEvmos
-                [{ ...e, coingeckoPrice: tableData?.table[0].coingeckoPrice }]
+                [
+                  {
+                    ...e,
+                    coingeckoPrice: tableData?.table?.[0]?.coingeckoPrice ?? 0,
+                  },
+                ]
               : [e],
         });
       } else if (map.has(e.tokenIdentifier) === true) {

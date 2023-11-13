@@ -1,10 +1,9 @@
 import { raise } from "helpers";
 import slugify from "slugify";
-import { omit } from "lodash";
+
 import { cache } from "react";
-import path from "path";
+
 import { fetchCategories, fetchDapps } from "./fetch-categories";
-import fs from "fs/promises";
 
 export const fetchExplorerData = cache(async () => {
   const categoriesMap = await fetchCategories();

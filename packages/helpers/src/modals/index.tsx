@@ -24,7 +24,7 @@ const sanitize = (obj: z.output<z.AnyZodObject>) => {
   return JSON.parse(serialize(obj)) as ParsedUrlQueryInput;
 };
 
-const usePrevious = <T extends unknown>(value: T) => {
+const usePrevious = <T,>(value: T) => {
   const ref = useRef<T>(value);
   useEffect(() => {
     return () => {
@@ -50,17 +50,17 @@ export const useModal = <T extends z.AnyZodObject>(
   const searchParams = useSearchParams();
   const query = useMemo(() => {
     return qs.decode(searchParams.toString());
-  }, [searchParams.toString()]);
+  }, [searchParams]);
 
   const prevAction = usePrevious(query?.action);
 
   const routeTo = prevAction !== query.action ? push : replace;
 
-  const state = useMemo(() => {
+  const state: z.output<T> | null = useMemo(() => {
     const parsed = safeParse(query);
     if (parsed.success) return parsed.data;
     return null;
-  }, [query]);
+  }, [query, safeParse]);
   const isOpen = !!(query.action === id && state);
   const setState = useEffectEvent((next: SetStateAction<z.output<T>>) => {
     if (!isOpen) throw new Error("You can't set state on a closed modal");
@@ -117,7 +117,7 @@ export const useModal = <T extends z.AnyZodObject>(
       setState: () => {},
       setIsOpen,
       modalProps: null,
-    };
+    } as const;
   }
 
   return {
@@ -129,7 +129,7 @@ export const useModal = <T extends z.AnyZodObject>(
       setState,
       setIsOpen,
     },
-  };
+  } as const;
 };
 
 type ModalLinkProps<T extends z.AnyZodObject> = {
@@ -140,9 +140,8 @@ type ModalLinkProps<T extends z.AnyZodObject> = {
   redirectBack?: boolean;
   children: React.ReactNode;
 };
-export const modalLink =
-  <T extends z.AnyZodObject>(id: string) =>
-  (props: ModalLinkProps<T> & ComponentProps<"button">) => {
+export const modalLink = <T extends z.AnyZodObject>(id: string) =>
+  function ModalLink(props: ModalLinkProps<T> & ComponentProps<"button">) {
     const { setIsOpen } = useModal<T>(id);
 
     return (
@@ -151,6 +150,7 @@ export const modalLink =
           e.preventDefault();
           if (props.initialState instanceof Function) {
             const state = await props.initialState();
+            setIsOpen(true, state, props.redirectBack);
             return;
           }
           setIsOpen(true, props.initialState, props.redirectBack);

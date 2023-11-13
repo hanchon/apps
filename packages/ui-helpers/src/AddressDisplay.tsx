@@ -21,7 +21,7 @@ export const AddressDisplay = ({
     );
   }
 
-  const [prefix, tail] = address.split("1");
+  const [prefix = "", tail = ""] = address.split("1");
   const tailLength = maxLength - prefix.length - 3;
   return (
     <span title={address} {...rest}>{`${prefix}…${tail.slice(

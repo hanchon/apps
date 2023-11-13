@@ -26,7 +26,7 @@ export const useRequestModal = () => useModal("request", RequestModalSchema);
 export const RequestModal = () => {
   const { isOpen, setIsOpen, modalProps } = useRequestModal();
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} propClose={true}>
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Modal.Body className="bg-black-900 shadow-custom-sm">
         {modalProps && <Content {...modalProps} />}
       </Modal.Body>

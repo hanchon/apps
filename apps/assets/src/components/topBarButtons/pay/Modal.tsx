@@ -29,12 +29,7 @@ export const usePayModal = () => useModal("pay", PayModalSchema);
 export const PayModal = () => {
   const { isOpen, setIsOpen, modalProps } = usePayModal();
   return (
-    <Modal
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      variant="modal-black"
-      propClose={true}
-    >
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen} variant="modal-black">
       {modalProps && <Content {...modalProps} />}
     </Modal>
   );

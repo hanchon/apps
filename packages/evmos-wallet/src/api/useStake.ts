@@ -62,7 +62,7 @@ export const useStake = () => {
       stakingInfo.data.rewards.total.length !== 0
     ) {
       // the sum is already done in the backend
-      total = stakingInfo.data.rewards.total[0].amount;
+      total = stakingInfo.data.rewards.total[0]?.amount ?? "0";
     }
 
     return convertStringFromAtto(total);

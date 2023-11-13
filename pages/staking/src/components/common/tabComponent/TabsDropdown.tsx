@@ -47,7 +47,7 @@ const TabsDropdown = ({
       );
     }
     return (
-      <div className="px-3 font-semibold capitalize">{content[0].title}</div>
+      <div className="px-3 font-semibold capitalize">{content?.[0]?.title}</div>
     );
   }, [content, selectedValue]);
 

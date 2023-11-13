@@ -84,7 +84,7 @@ export const AccountSelector = ({
    * If not, we select the first available network
    */
   const selectAvailableNetwork = useEffectEvent(() => {
-    if (!networkOptions.includes(selectedNetwork)) {
+    if (!networkOptions.includes(selectedNetwork) && networkOptions[0]) {
       setSelectedNetwork(networkOptions[0]);
     }
   });

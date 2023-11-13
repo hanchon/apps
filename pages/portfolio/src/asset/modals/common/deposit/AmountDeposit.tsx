@@ -39,14 +39,14 @@ const AmountDeposit = ({
       ) {
         amountProps.setValue(
           numericOnly(
-            convertFromAtto(amountProps.balance, amountProps.token.decimals),
-          ),
+            convertFromAtto(amountProps.balance, amountProps.token.decimals)
+          )
         );
         setMaxClicked(true);
       } else {
         const val = safeSubstraction(amountProps.balance, amountProps.fee.fee);
         amountProps.setValue(
-          numericOnly(convertFromAtto(val, amountProps.token.decimals)),
+          numericOnly(convertFromAtto(val, amountProps.token.decimals))
         );
         setMaxClicked(true);
       }
@@ -61,7 +61,7 @@ const AmountDeposit = ({
     // If chain select is a bridge with their own ui, link the bridge page
     if (
       amountProps.chain !== undefined &&
-      amountProps.chain.elements[0].handledByExternalUI !== null
+      amountProps.chain.elements?.[0]?.handledByExternalUI !== null
     ) {
       return (
         <>
@@ -84,7 +84,7 @@ const AmountDeposit = ({
       (amountProps.token !== undefined &&
         amountProps.token.handledByExternalUI !== null) ||
       (amountProps.chain !== undefined &&
-        amountProps.chain.elements[0].handledByExternalUI !== null)
+        amountProps.chain.elements?.[0]?.handledByExternalUI !== null)
     ) {
       return <></>;
     }
@@ -114,7 +114,7 @@ const AmountDeposit = ({
       (amountProps.token !== undefined &&
         amountProps.token.handledByExternalUI !== null) ||
       (amountProps.chain !== undefined &&
-        amountProps.chain.elements[0].handledByExternalUI !== null)
+        amountProps.chain.elements?.[0]?.handledByExternalUI !== null)
     ) {
       return <></>;
     }
@@ -126,7 +126,7 @@ const AmountDeposit = ({
             {convertAndFormat(
               amountProps.balance,
               amountProps.token?.decimals,
-              6,
+              6
             )}{" "}
             {amountProps.token?.symbol}
           </span>
@@ -173,9 +173,9 @@ const AmountDeposit = ({
                 numericOnly(
                   convertFromAtto(
                     amountProps.balance,
-                    amountProps.token.decimals,
-                  ),
-                ),
+                    amountProps.token.decimals
+                  )
+                )
               ) && (
               <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorsAmountGt}</ErrorMessage>
             )}

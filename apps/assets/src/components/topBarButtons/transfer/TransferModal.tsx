@@ -23,12 +23,7 @@ export const useTransferModal = () => useModal("transfer", TransferModalSchema);
 export const TransferModal = () => {
   const { isOpen, setIsOpen, modalProps } = useTransferModal();
   return (
-    <Modal
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      variant="modal-black"
-      propClose={true}
-    >
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       {modalProps && <TransferModalContent {...modalProps} />}
     </Modal>
   );

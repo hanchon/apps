@@ -120,7 +120,7 @@ export const FundVestingAccount = () => {
             setVestingAddressError(true);
           });
       } catch (e) {
-        Log().).error(e);
+        Log().error(e);
       }
     }
     fetchVestingData();

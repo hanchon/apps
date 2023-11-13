@@ -25,12 +25,7 @@ export const useRequestModal = () => useModal("request", RequestModalSchema);
 export const RequestModal = () => {
   const { isOpen, setIsOpen, modalProps } = useRequestModal();
   return (
-    <Modal
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      variant="modal-black"
-      propClose={true}
-    >
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       {modalProps && <Content {...modalProps} />}
     </Modal>
   );

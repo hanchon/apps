@@ -10,13 +10,13 @@ import {
   DiscordIcon,
   GithubIcon,
   RightArrow,
-  TelegramIcon,
   TwitterIcon,
   WebsiteIcon,
 } from "icons";
 import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
-export const DescriptiondApp = ({ dapp }) => {
+import { DApp } from "../../../lib/fetch-explorer-data";
+export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
   const imgId = dapp.cover?.id ?? dapp.icon?.id;
 
   return (
