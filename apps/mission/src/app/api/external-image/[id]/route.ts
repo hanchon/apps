@@ -42,13 +42,13 @@ export async function GET(
     notFound();
   }
 
-  const [, img] = await E.try(() =>
+  const [fetchingError, img] = await E.try(() =>
     fetch(imgUrl, {
       signal: AbortSignal.timeout(10000),
     })
   );
   if (!img) {
-    console.error(params.id, imgUrl, processingError);
+    console.error("failed to fetch", params.id, imgUrl, fetchingError);
 
     notFound();
   }
@@ -65,7 +65,7 @@ export async function GET(
   );
 
   if (!processedBuffer) {
-    console.error(params.id, imgUrl, processingError);
+    console.error("failed to process", params.id, imgUrl, processingError);
     notFound();
   }
   return new Response(processedBuffer, {
