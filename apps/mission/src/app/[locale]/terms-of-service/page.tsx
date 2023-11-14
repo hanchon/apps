@@ -1,5 +1,6 @@
 import React from "react";
 import { NotionBlocks, NotionPage } from "../../../components/NotionBlocks";
+import { TERMS_OF_SERVICE_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 
 async function Page() {
   return <TermsOfServiceContent />;
@@ -7,10 +8,7 @@ async function Page() {
 
 const TermsOfServiceContent = () => {
   return (
-    <NotionPage
-      className="mx-auto"
-      blockId="8f2d02c7ba924e4a88d502f8e220e557"
-    />
+    <NotionPage className="mx-auto" blockId={TERMS_OF_SERVICE_PAGE_NOTION_ID} />
   );
 };
 export default Page;

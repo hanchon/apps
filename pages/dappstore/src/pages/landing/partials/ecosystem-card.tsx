@@ -28,9 +28,9 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
         }
         target={data.isInstantDapp ? "" : "_blank"}
         key={data.name}
-        className="relative mb-16 space-y-2 rounded-lg bg-[#262017] pb-8 transition-all duration-150 ease-out hover:scale-105"
+        className="relative mb-16 space-y-2 rounded-lg bg-[#262017] pb-8 transition-all duration-150 ease-out hover:scale-105 overflow-hidden"
       >
-        <div className="aspect-[3/2] w-full rounded-t-2xl object-cover bg-white/5 relative overflow-hidden">
+        <div className="relative aspect-[3/2] w-full bg-white/5 overflow-hidden">
           {img && (
             <Image
               className="object-cover"
@@ -55,7 +55,9 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
             </div>
           )}
         </div>
-        <p className="px-5 text-sm text-white opacity-70">{data.description}</p>
+        <p className="px-5 text-sm text-white opacity-70 overflow-hidden line-clamp-3">
+          {data.description}
+        </p>
       </Link>
     </TrackerEvent>
   );
