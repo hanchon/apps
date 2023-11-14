@@ -12,9 +12,12 @@ import {
   Title,
   InfoPanel,
   Spinner,
-} from "ui-helpers";
+} from "@evmosapps/ui-helpers";
 import { Trans } from "next-i18next";
-import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
+import {
+  Prefix,
+  TokenAmount,
+} from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../shared/AssetSelector";
 import { useAccount } from "wagmi";
 import {
@@ -24,17 +27,17 @@ import {
   getActiveProviderKey,
   getChain,
   getGlobalKeplrProvider,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { AccountSelector } from "../shared/AccountSelector";
 
 import { TransferSummary } from "../shared/TransferSummary";
 import { SendIcon, WizardIcon } from "icons";
 import { E, useWatch } from "helpers";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
-import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
+import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";
 
 import { ICONS_TYPES } from "constants-helper";
-import { CopilotButton } from "copilot";
+import { CopilotButton } from "@evmosapps/copilot";
 import { connectKeplr, installKeplr, reloadPage } from "./utils";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -54,7 +57,7 @@ import { TransferModalProps } from "./TransferModal";
 import { useReceiptModal } from "../receipt/ReceiptModal";
 import { useTopupModal } from "../topup/TopupModal";
 
-import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { createPortal } from "react-dom";
 import { useSend } from "../hooks/useSend";
 import { getTokenValidDestinations } from "../shared/getTokenValidDestinations";

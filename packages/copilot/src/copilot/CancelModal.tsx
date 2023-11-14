@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useContext } from "react";
-import { CloseModal, Modal } from "ui-helpers";
+import { CloseModal, Modal } from "@evmosapps/ui-helpers";
 import { StepsContext } from "./container/StepsContext";
 import { useTracker, EXIT_OUT_COPILOT } from "tracker";
 import { STEP_STATUS } from "constants-helper";
@@ -46,10 +46,7 @@ export const CancelModal = () => {
 
   return (
     <TranslationContextProvider locale="en">
-      <Modal
-        isOpen={showCloseModal}
-        setIsOpen={setIsOpenCloseModal}
-      >
+      <Modal isOpen={showCloseModal} setIsOpen={setIsOpenCloseModal}>
         <CloseModal
           handleReject={handleReject}
           handleAccept={handleAccept}

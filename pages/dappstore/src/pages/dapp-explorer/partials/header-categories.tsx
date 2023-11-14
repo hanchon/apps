@@ -5,9 +5,9 @@
 import { useMemo, useState } from "react";
 import { Link } from "@evmosapps/i18n/client";
 import { cn } from "helpers";
-import { Badge } from "ui-helpers";
-import { Title } from "ui-helpers/src/titles/Title";
-import { Subtitle } from "ui-helpers/src/titles/Subtitle";
+import { Badge } from "@evmosapps/ui-helpers";
+import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
+import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { Category, DApp } from "../../../lib/fetch-explorer-data";
 
 export const HeaderCategories = ({

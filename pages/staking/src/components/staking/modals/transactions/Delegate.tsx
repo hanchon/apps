@@ -4,7 +4,7 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useSelector } from "react-redux";
-import { MODAL_NOTIFICATIONS, StoreType } from "evmos-wallet";
+import { MODAL_NOTIFICATIONS, StoreType } from "@evmosapps/evmos-wallet";
 
 import { useDelegation } from "../hooks/useDelegation";
 import {
@@ -21,7 +21,7 @@ import {
   ErrorMessage,
   ConfirmButton,
   SmallButton,
-} from "ui-helpers";
+} from "@evmosapps/ui-helpers";
 import { ModalDelegate } from "../../../../utils/types";
 import { useEvmosBalance } from "../../../../utils/hooks/useEvmosBalance";
 

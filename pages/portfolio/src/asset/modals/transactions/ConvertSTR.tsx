@@ -3,12 +3,12 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { ConfirmButton, Modal } from "ui-helpers";
+import { ConfirmButton, Modal } from "@evmosapps/ui-helpers";
 import { ContainerModal } from "../common/ContainerModal";
 import FromConvert from "../common/convert/FromConvert";
 import ToConvert from "../common/convert/ToConvert";
 
-import { Token, EVMOS_SYMBOL } from "evmos-wallet";
+import { Token, EVMOS_SYMBOL } from "@evmosapps/evmos-wallet";
 import { getReservedForFeeText } from "helpers";
 
 import Note from "../common/Note";

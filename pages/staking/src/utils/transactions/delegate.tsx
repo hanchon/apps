@@ -6,16 +6,16 @@ import {
   BROADCASTED_NOTIFICATIONS,
   executeApiTransaction,
   mapExecuteResponse,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 
-import { WalletExtension } from "evmos-wallet/src/internal/wallet/functionality/wallet";
-import { apiStakingDelegate } from "evmos-wallet";
+import { WalletExtension } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/wallet";
+import { apiStakingDelegate } from "@evmosapps/evmos-wallet";
 import { raise } from "helpers";
 
 export const executeDelegate = async (
   wallet: WalletExtension,
   valAddress: string,
-  amount: BigNumber,
+  amount: BigNumber
 ) => {
   const { apiResponse, error, hash } = await executeApiTransaction(() =>
     apiStakingDelegate({
@@ -23,7 +23,7 @@ export const executeDelegate = async (
       validatorAddress: valAddress,
       address: wallet.evmosAddressCosmosFormat,
       pubkey: wallet.evmosPubkey ?? raise("ACCOUNT_NOT_FOUND"),
-    }),
+    })
   );
   if (error) {
     return mapExecuteResponse({

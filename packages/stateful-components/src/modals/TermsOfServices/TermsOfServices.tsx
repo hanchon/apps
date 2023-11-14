@@ -1,12 +1,12 @@
 "use client";
 
-import { Modal } from "ui-helpers";
+import { Modal } from "@evmosapps/ui-helpers";
 
 import { cn, useModal } from "helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { EVMOS_TOS_VERSION } from "constants-helper";
 import { DISABLE_TRACKER_LOCALSTORAGE } from "tracker";
-import TOSContent from "ui-helpers/src/termsOfServices/Content";
+import TOSContent from "@evmosapps/ui-helpers/src/termsOfServices/Content";
 import { useEffect, useState } from "react";
 
 import { useConsentModal } from "../ConsentModal/ConsentModal";

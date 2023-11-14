@@ -2,17 +2,20 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import typography from "@tailwindcss/typography";
+import path from "path";
+
+const cwd = process.cwd();
+const rootDir =
+  cwd?.split("/")?.at?.(-2) === "apps" ? path.join(cwd, "../../") : cwd;
+
 /** @type {import('tailwindcss').Config} */
 const config = {
   darkMode: "class",
 
   content: [
-    // app content
-    "src/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{ts,tsx}",
-    "./public/**/*.html",
-    "../../packages/*/src/**/*.{js,ts,jsx,tsx}",
-    "../../pages/*/src/**/*.{js,ts,jsx,tsx}",
+    "src/**/*.tsx",
+    path.join(rootDir, "packages/*/src/**/*.tsx"),
+    path.join(rootDir, "pages/*/src/**/*.tsx"),
   ],
   theme: {
     extend: {

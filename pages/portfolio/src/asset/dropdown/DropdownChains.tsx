@@ -4,7 +4,7 @@
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 import { TableDataElement } from "../../../internal/asset/functionality/table/normalizeData";
-import { EVMOS_SYMBOL } from "evmos-wallet";
+import { EVMOS_SYMBOL } from "@evmosapps/evmos-wallet";
 import { DropdownArrow } from "icons";
 import { DropdownChainsProps } from "./types";
 

@@ -9,8 +9,8 @@ import {
   WALLECT_CONNECT_KEY,
   EVMOS_SYMBOL,
   StoreType,
-} from "evmos-wallet";
-import { Button } from "ui-helpers";
+} from "@evmosapps/evmos-wallet";
+import { Button } from "@evmosapps/ui-helpers";
 import { ExternalLinkIcon } from "icons";
 
 import Withdraw from "../../modals/transactions/Withdraw";

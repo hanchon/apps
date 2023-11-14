@@ -7,8 +7,8 @@ import {
   METAMASK_KEY,
   WALLECT_CONNECT_KEY,
   StoreType,
-} from "evmos-wallet";
-import { ConfirmButton } from "ui-helpers";
+} from "@evmosapps/evmos-wallet";
+import { ConfirmButton } from "@evmosapps/ui-helpers";
 import DepositSTR from "../../modals/transactions/DepositSTR";
 import WithdrawSTR from "../../modals/transactions/WithdrawSTR";
 import { actionsProps } from "./types";

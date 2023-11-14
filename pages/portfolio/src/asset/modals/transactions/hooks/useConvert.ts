@@ -10,7 +10,7 @@ import {
   snackErrorGeneratingTx,
   snackRequestRejected,
   StoreType,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import {
   useTracker,
   CLICK_BUTTON_CONFIRM_WRAP_TX,
@@ -23,7 +23,7 @@ import { parseUnits } from "@ethersproject/units";
 import { Log } from "helpers";
 import { EXPLORER_URL } from "constants-helper";
 import { getNetwork, switchNetwork } from "wagmi/actions";
-import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
+import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { E } from "helpers";
 import { GENERATING_TX_NOTIFICATIONS } from "../../../../utils/transactions/errors";
 

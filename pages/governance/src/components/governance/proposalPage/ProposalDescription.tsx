@@ -8,7 +8,7 @@ import DescriptionItem from "./DescriptionItem";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
 
-import { BannerMessages } from "ui-helpers";
+import { BannerMessages } from "@evmosapps/ui-helpers";
 
 const ProposalDescription = ({
   loading,

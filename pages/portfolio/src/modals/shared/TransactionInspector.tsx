@@ -1,6 +1,6 @@
 import React from "react";
 import { serialize } from "wagmi";
-import { getActiveProviderKey } from "evmos-wallet";
+import { getActiveProviderKey } from "@evmosapps/evmos-wallet";
 import { E, cn } from "helpers";
 import { useSend } from "../hooks/useSend";
 

@@ -4,7 +4,7 @@
 import { useDispatch } from "react-redux";
 
 import { VoteProps } from "../types";
-import { snackExecuteIBCTransfer } from "evmos-wallet";
+import { snackExecuteIBCTransfer } from "@evmosapps/evmos-wallet";
 import {
   CLICK_CONFIRM_VOTE_BUTTON,
   SUCCESSFUL_TX_VOTE,
@@ -13,7 +13,7 @@ import {
 import { useTracker } from "tracker";
 import { getNetwork, switchNetwork } from "wagmi/actions";
 import { E } from "helpers";
-import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
+import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { optionVoteSelected } from "../../../../utils/types";
 import { executeVote } from "../../../../utils/transactions/vote";
 

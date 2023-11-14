@@ -5,7 +5,7 @@ import { parseUnits } from "@ethersproject/units";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { ConfirmButton, ErrorMessage, Modal } from "ui-helpers";
+import { ConfirmButton, ErrorMessage, Modal } from "@evmosapps/ui-helpers";
 import { KeplrIcon, MetamaskIcon } from "icons";
 import Arrow from "../common/Arrow";
 import FromContainer from "../common/FromContainer";
@@ -31,7 +31,7 @@ import {
   SNACKBAR_TYPES,
   getKeplrAccountPubKey,
   normalizeToEvmos,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { BigNumber } from "@ethersproject/bignumber";
 import { E } from "helpers";
 import { getBalance, getEvmosBalanceForDeposit } from "../../../utils/fetch";

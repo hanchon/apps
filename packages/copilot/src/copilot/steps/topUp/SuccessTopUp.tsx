@@ -12,9 +12,9 @@ import {
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { PrimaryButton } from "../../PrimaryButton";
-import { IconContainer } from "ui-helpers";
+import { IconContainer } from "@evmosapps/ui-helpers";
 import { ICONS_TYPES } from "constants-helper";
-import { useTokenBalance } from "evmos-wallet";
+import { useTokenBalance } from "@evmosapps/evmos-wallet";
 import { useAccount } from "wagmi";
 import { useWatch } from "helpers";
 

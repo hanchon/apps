@@ -2,11 +2,11 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { EcosystemCard } from "./ecosystem-card";
-import { Title } from "ui-helpers/src/titles/Title";
-import { Subtitle } from "ui-helpers/src/titles/Subtitle";
+import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
+import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { RightArrow } from "icons";
 
-import { ButtonWithLink } from "ui-helpers";
+import { ButtonWithLink } from "@evmosapps/ui-helpers";
 import { fetchExplorerData } from "../../../lib/fetch-explorer-data";
 
 export const EcosystemSection = async () => {

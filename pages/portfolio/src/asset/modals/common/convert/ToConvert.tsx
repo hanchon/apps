@@ -5,9 +5,9 @@ import Image from "next/image";
 
 import { convertFromAtto, formatNumber } from "helpers";
 
-import { Token } from "evmos-wallet";
+import { Token } from "@evmosapps/evmos-wallet";
 import AddTokenMetamask from "../../transactions/AddTokenMetamask";
-import { ContainerInput } from "ui-helpers";
+import { ContainerInput } from "@evmosapps/ui-helpers";
 import { BigNumber } from "@ethersproject/bignumber";
 
 const ToConvert = ({

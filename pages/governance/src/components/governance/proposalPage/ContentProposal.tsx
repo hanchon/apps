@@ -4,7 +4,7 @@
 import ProposalDescription from "./ProposalDescription";
 import Graphic from "./Graphic";
 import { useCallback } from "react";
-import { BannerMessages } from "ui-helpers";
+import { BannerMessages } from "@evmosapps/ui-helpers";
 
 import UserVote from "./UserVote";
 import { useVote } from "../../../utils/hooks/useVote";

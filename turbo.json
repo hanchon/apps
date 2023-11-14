@@ -69,7 +69,9 @@
     },
 
     "test": {},
-    "kill": {},
+    "kill": {
+      "cache": false
+    },
     "lint": {},
     "test:coverage": {
       "cache": false,

@@ -4,7 +4,7 @@ import {
   ModalTitle,
   SelectMenu,
   WizardHelper,
-} from "ui-helpers";
+} from "@evmosapps/ui-helpers";
 import React, { useEffect, useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,7 +28,7 @@ import {
   GENERATING_TX_NOTIFICATIONS,
   BROADCASTED_NOTIFICATIONS,
   normalizeToEvmos,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { useSelector, useDispatch } from "react-redux";
 import { generateVestingSchedule } from "../../../internal/helpers/generate-vesting-schedule";
 import {
@@ -43,12 +43,12 @@ import { BigNumber } from "@ethersproject/bignumber";
 
 import { getVesting } from "../../../internal/fetch";
 import { VestingResponse } from "../../../internal/types";
-import { getEvmosBalance } from "evmos-wallet/src/internal/wallet/functionality/fetch";
+import { getEvmosBalance } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/fetch";
 import { ethers } from "ethers";
 import { EXPLORER_URL } from "constants-helper";
 import { getNetwork, switchNetwork } from "wagmi/actions";
 import { E } from "helpers";
-import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
+import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 
 const evmos = getEvmosChainInfo();
 export const FundVestingAccount = () => {

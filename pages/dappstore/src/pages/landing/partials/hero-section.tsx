@@ -4,7 +4,7 @@
 
 import { ADD_DAPP_FORM_URL, DOCS_EVMOS } from "constants-helper";
 import Image from "next/image";
-import { Frameline, PrimaryButton } from "ui-helpers";
+import { Frameline, PrimaryButton } from "@evmosapps/ui-helpers";
 export const HeroSection = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 space-x-8">

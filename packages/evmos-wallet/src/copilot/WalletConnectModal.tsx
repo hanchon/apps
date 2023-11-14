@@ -4,7 +4,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { ConnectToEvmos } from "./ConnectToEvmos";
 import { ConnectToEvmosWallets } from "./ConnectToEvmosWallets";
-import { ModalContainer, Modal } from "ui-helpers";
+import { ModalContainer, Modal } from "@evmosapps/ui-helpers";
 
 export const WalletConnectModal = ({
   isOpen,

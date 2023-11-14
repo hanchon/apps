@@ -8,7 +8,7 @@ import {
   GENERATING_TX_NOTIFICATIONS,
   snackBroadcastSuccessful,
   snackErrorGeneratingTx,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { DelegateProps } from "../types";
 import {
   CLICK_BUTTON_CONFIRM_DELEGATE,
@@ -19,7 +19,7 @@ import {
 
 import { EXPLORER_URL } from "constants-helper";
 import { getNetwork, switchNetwork } from "wagmi/actions";
-import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
+import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { E } from "helpers";
 import { useStakingPrecompile } from "../../../../utils/hooks/useStakingPrecompile";
 

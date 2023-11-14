@@ -5,7 +5,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { stepsSetAccount } from "./utils";
 import { SuccessSetUp } from "./SuccessSetUp";
-import { checkAllDoneStatus } from "ui-helpers/src/progress/helpers";
+import { checkAllDoneStatus } from "@evmosapps/ui-helpers/src/progress/helpers";
 import { SetUpAccount } from "./SetUpAccount";
 
 export const SetUpAccountContainer = () => {

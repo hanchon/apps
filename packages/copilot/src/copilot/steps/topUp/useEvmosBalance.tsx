@@ -3,13 +3,13 @@
 
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import { StoreType, txStatusError } from "evmos-wallet";
+import { StoreType, txStatusError } from "@evmosapps/evmos-wallet";
 import { BigNumber } from "@ethersproject/bignumber";
 import {
   EVMOS_BACKEND,
   EVMOS_MINIMAL_COIN_DENOM,
   EVMOS_SYMBOL,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 
 type BalanceResponse = {
   balance: {

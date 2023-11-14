@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { EVMOS_BACKEND, BALANCE_NOTIFICATIONS } from "evmos-wallet";
+import { EVMOS_BACKEND, BALANCE_NOTIFICATIONS } from "@evmosapps/evmos-wallet";
 import { ERC20BalanceResponse } from "../asset/table/types";
 
 export const getAssets = async () => {

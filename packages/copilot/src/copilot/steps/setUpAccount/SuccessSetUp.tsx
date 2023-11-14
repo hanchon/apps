@@ -8,12 +8,12 @@ import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT, useTracker } from "tracker";
 import { PrimaryButton } from "../../PrimaryButton";
-import { IconContainer } from "ui-helpers";
+import { IconContainer } from "@evmosapps/ui-helpers";
 
 export const SuccessSetUp = () => {
   const { updateStepsStatus } = useContext(StepsContext);
   const { handlePreClickAction } = useTracker(
-    CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT
+    CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT,
   );
 
   const handleClick = () => {

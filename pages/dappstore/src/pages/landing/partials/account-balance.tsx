@@ -5,7 +5,7 @@
 import { convertFromAtto } from "helpers";
 
 import { useTranslation } from "@evmosapps/i18n/client";
-import { StoreType, useAssets, useStake } from "evmos-wallet";
+import { StoreType, useAssets, useStake } from "@evmosapps/evmos-wallet";
 import { useSelector } from "react-redux";
 import {
   CLICK_ON_TOP_UP_ACCOUNT_DAPP,
@@ -15,7 +15,7 @@ import {
 
 import { useAccount } from "wagmi";
 import { useTopupModal } from "stateful-components/src/modals/TopupModal/TopupModal";
-import { ButtonWithoutLink, TrackerEvent } from "ui-helpers";
+import { ButtonWithoutLink, TrackerEvent } from "@evmosapps/ui-helpers";
 
 export const AccountBalance = () => {
   const { isConnected } = useAccount();

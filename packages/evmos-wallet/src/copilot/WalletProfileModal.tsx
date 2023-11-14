@@ -1,14 +1,14 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { Tooltip, ViewExplorer } from "ui-helpers";
+import { Tooltip, ViewExplorer } from "@evmosapps/ui-helpers";
 import { WalletExtension } from "../internal/wallet/functionality/wallet";
 import { Dispatch, SetStateAction, useState } from "react";
 import { AnyAction } from "redux";
 import { CopyIcon } from "icons";
 import { truncateAddress } from "../internal/wallet/style/format";
 import { ButtonDisconnect } from "./buttons/Button.Disconnect";
-import { Modal } from "ui-helpers";
+import { Modal } from "@evmosapps/ui-helpers";
 import { ProvidersIcons } from "./utils";
 import { EXPLORER_URL } from "constants-helper";
 export const WalletProfileModal = ({

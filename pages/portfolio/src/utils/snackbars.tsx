@@ -13,7 +13,7 @@ import {
   SNACKBAR_TYPES,
   KEPLR_NOTIFICATIONS,
   METAMASK_NOTIFICATIONS,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { executeIBCTransferResponse } from "../functionality/transactions/types";
 
 export function snackRequestRejected() {

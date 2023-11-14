@@ -1,7 +1,11 @@
-import { StepsContext } from "copilot";
-import { setupSteps } from "copilot/src/copilot/container/data";
-import { StepsContainerDapp } from "copilot/src/copilot/dapp/StepsContainarDapp";
-import { StoreType, useEvmosBalance, getSequence } from "evmos-wallet";
+import { StepsContext } from "@evmosapps/copilot";
+import { setupSteps } from "@evmosapps/copilot/src/copilot/container/data";
+import { StepsContainerDapp } from "@evmosapps/copilot/src/copilot/dapp/StepsContainarDapp";
+import {
+  StoreType,
+  useEvmosBalance,
+  getSequence,
+} from "@evmosapps/evmos-wallet";
 import { useSelector } from "react-redux";
 import { useState, useContext, useMemo, useEffect } from "react";
 import {

@@ -1,11 +1,16 @@
 "use client";
-import { ConnectToEvmos } from "evmos-wallet/src/copilot/ConnectToEvmos";
-import { ConnectToEvmosWallets } from "evmos-wallet/src/copilot/ConnectToEvmosWallets";
+import { ConnectToEvmos } from "@evmosapps/evmos-wallet/src/copilot/ConnectToEvmos";
+import { ConnectToEvmosWallets } from "@evmosapps/evmos-wallet/src/copilot/ConnectToEvmosWallets";
 import { cn, useModal } from "helpers";
-import { AddressDisplay, ModalContainer, Modal, Tooltip } from "ui-helpers";
+import {
+  AddressDisplay,
+  ModalContainer,
+  Modal,
+  Tooltip,
+} from "@evmosapps/ui-helpers";
 import { ProvidersIcons } from "../../providerIcons";
 import { useAccount, useDisconnect } from "wagmi";
-import { normalizeToEvmos } from "evmos-wallet";
+import { normalizeToEvmos } from "@evmosapps/evmos-wallet";
 import { EXPLORER_URL } from "constants-helper";
 import { CopyIcon, ExternalLinkIcon } from "icons";
 import { useEffect, useState } from "react";

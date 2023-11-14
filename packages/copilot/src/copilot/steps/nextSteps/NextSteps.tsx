@@ -8,7 +8,7 @@ import { useEffect, useRef } from "react";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { ButtonsNextSteps } from "./ButtonsNextSteps";
-import { IconContainer } from "ui-helpers";
+import { IconContainer } from "@evmosapps/ui-helpers";
 import { ICONS_TYPES } from "constants-helper";
 export const NextSteps = () => {
   const { fireworksRef, portalContainer } = useFireworks();

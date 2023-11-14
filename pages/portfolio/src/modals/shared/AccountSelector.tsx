@@ -4,9 +4,14 @@ import {
   getActiveProviderKey,
   getChain,
   useAddressInput,
-} from "evmos-wallet";
-import { CryptoSelector, ErrorMessage, Tabs, TextInput } from "ui-helpers";
-import { Prefix } from "evmos-wallet/src/registry-actions/types";
+} from "@evmosapps/evmos-wallet";
+import {
+  CryptoSelector,
+  ErrorMessage,
+  Tabs,
+  TextInput,
+} from "@evmosapps/ui-helpers";
+import { Prefix } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { Trans } from "next-i18next";
 import { SELECT_TO_NETWORK_SEND_FLOW, useTracker } from "tracker";

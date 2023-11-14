@@ -3,7 +3,7 @@
 
 import { useRouter } from "next/router";
 import { Header } from "./header/Header";
-import { Navigation } from "ui-helpers";
+import { Navigation } from "@evmosapps/ui-helpers";
 import { NAV_TO_VESTING } from "constants-helper";
 import { AccountDetails } from "./content/AccountDetails";
 import { useTranslation } from "next-i18next";

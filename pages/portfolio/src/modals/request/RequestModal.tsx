@@ -2,10 +2,10 @@
 import {
   AddressSchema,
   TokenRefSchema,
-} from "evmos-wallet/src/registry-actions/utils";
+} from "@evmosapps/evmos-wallet/src/registry-actions/utils";
 import { z } from "zod";
 
-import { Modal } from "ui-helpers";
+import { Modal } from "@evmosapps/ui-helpers";
 
 import { ModalProps, useModal } from "helpers";
 import { Content } from "./Content";

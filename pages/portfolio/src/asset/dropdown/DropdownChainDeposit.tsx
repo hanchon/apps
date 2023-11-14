@@ -4,7 +4,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-import { EVMOS_SYMBOL } from "evmos-wallet";
+import { EVMOS_SYMBOL } from "@evmosapps/evmos-wallet";
 import { DropdownArrow } from "icons";
 
 import { DepositElement } from "../modals/transactions/DepositSTR";

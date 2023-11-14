@@ -3,13 +3,13 @@
 
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { SmallButton } from "ui-helpers";
+import { SmallButton } from "@evmosapps/ui-helpers";
 import {
   addToken,
   Token,
   addSnackbar,
   SNACKBAR_CONTENT_TYPES,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 
 const AddTokenMetamask = ({ token }: { token: Token }) => {
   const dispatch = useDispatch();

@@ -6,7 +6,7 @@ import { TranslationContextProvider } from "schummar-translate/react";
 import { EvmosCopilotIcon } from "icons";
 import { t } from "../locales/translate";
 import { useCopilot } from "./useCopilot";
-import { IntroductionModal, ModalContainer } from "ui-helpers";
+import { IntroductionModal, ModalContainer } from "@evmosapps/ui-helpers";
 
 export const Content = () => {
   const { componentToDraw, stepsToDraw } = useCopilot();

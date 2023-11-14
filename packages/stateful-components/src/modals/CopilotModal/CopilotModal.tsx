@@ -1,14 +1,18 @@
 "use client";
 import { useTranslation } from "@evmosapps/i18n/client";
-import { StepsContextProvider } from "copilot";
-import { Content } from "copilot/src/copilot/Content";
-import { CopilotModal } from "copilot/src/copilot/CopilotModal";
-import { setupSteps } from "copilot/src/copilot/container/data";
-import { stepsSetAccount } from "copilot/src/copilot/steps/setUpAccount/utils";
-import { useCopilot } from "copilot/src/copilot/useCopilot";
+import { StepsContextProvider } from "@evmosapps/copilot";
+import { Content } from "@evmosapps/copilot/src/copilot/Content";
+import { CopilotModal } from "@evmosapps/copilot/src/copilot/CopilotModal";
+import { setupSteps } from "@evmosapps/copilot/src/copilot/container/data";
+import { stepsSetAccount } from "@evmosapps/copilot/src/copilot/steps/setUpAccount/utils";
+import { useCopilot } from "@evmosapps/copilot/src/copilot/useCopilot";
 import { useModal } from "helpers";
 import { EvmosCopilotIcon } from "icons";
-import { IntroductionModal, ModalContainer, Modal } from "ui-helpers";
+import {
+  IntroductionModal,
+  ModalContainer,
+  Modal,
+} from "@evmosapps/ui-helpers";
 export const useSetupCopilotModal = () => useModal("setup-copilot");
 
 export const Copilot = () => {

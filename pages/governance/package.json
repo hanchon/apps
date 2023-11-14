@@ -8,8 +8,8 @@
   "dependencies": {
     "@evmosapps/registry": "workspace:*",
     "constants-helper": "workspace:*",
-    "copilot": "workspace:*",
-    "evmos-wallet": "workspace:*",
+    "@evmosapps/copilot": "workspace:*",
+    "@evmosapps/evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
     "icons": "workspace:*",
     "next": "^14.0.2",
@@ -18,6 +18,6 @@
     "services": "workspace:*",
     "stateful-components": "workspace:*",
     "tracker": "workspace:*",
-    "ui-helpers": "workspace:*"
+    "@evmosapps/ui-helpers": "workspace:*"
   }
 }

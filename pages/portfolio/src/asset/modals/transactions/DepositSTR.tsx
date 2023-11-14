@@ -4,7 +4,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { TableDataElement } from "../../../utils/table/normalizeData";
-import { ConfirmButton, Modal } from "ui-helpers";
+import { ConfirmButton, Modal } from "@evmosapps/ui-helpers";
 import { getBalance, getEvmosBalanceForDeposit } from "../../../utils/fetch";
 import DepositReceiver from "../common/deposit/DepositReceiver";
 import AmountDeposit from "../common/deposit/AmountDeposit";
@@ -17,7 +17,7 @@ import {
   snackErrorConnectingKeplr,
   snackErrorGettingBalanceExtChain,
   EVMOS_SYMBOL,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { BigNumber } from "@ethersproject/bignumber";
 import { NEOK_IBC_DENOM_MAP } from "./neok-ibc-map";
 export type DepositElement = {

@@ -10,7 +10,7 @@ import {
   isWalletSelected,
   connectWith,
   prefetchPubkey,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { METAMASK_DOWNLOAD_URL, STEP_STATUS } from "constants-helper";
 import {
   CLICK_ON_CONNECT_ACCOUNT_COPILOT,

@@ -1,5 +1,5 @@
 "use server";
-import { getTokens } from "evmos-wallet/src/registry-actions/get-tokens";
+import { getTokens } from "@evmosapps/evmos-wallet/src/registry-actions/get-tokens";
 import { cache } from "react";
 import { z } from "zod";
 

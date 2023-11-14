@@ -4,7 +4,7 @@ import {
   metamaskConnector,
   keplrConnector,
   walletConnectConnector,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 
 export const ProvidersIcons: {
   [key: string]: React.FC<React.SVGAttributes<SVGElement>>;

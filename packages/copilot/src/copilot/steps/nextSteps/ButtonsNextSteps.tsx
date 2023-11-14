@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { StepsContext } from "../../container/StepsContext";
 import { Button } from "./button/Button";
-import { Badge } from "ui-helpers";
+import { Badge } from "@evmosapps/ui-helpers";
 import { TitleButton } from "./button/TitleButton";
 import { t } from "../../../locales/translate";
 import {

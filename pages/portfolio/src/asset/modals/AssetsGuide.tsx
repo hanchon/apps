@@ -4,7 +4,7 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { CLICK_CTA_LINKS_ASSETS_GUIDE, useTracker } from "tracker";
-import { Modal } from "ui-helpers";
+import { Modal } from "@evmosapps/ui-helpers";
 
 const AssetsGuide = () => {
   const [isOpen, setIsOpen] = useState(false);

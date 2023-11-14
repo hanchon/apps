@@ -36,7 +36,7 @@
     "autoprefixer": "^10.4.13",
     "constants-helper": "workspace:*",
     "ethers": "^6.7.1",
-    "evmos-wallet": "workspace:*",
+    "@evmosapps/evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
     "icons": "workspace:*",
     "next-i18next": "^14.0.0",
@@ -50,7 +50,7 @@
     "tailwindcss": "^3.3.5",
     "tracker": "workspace:*",
     "typescript": "^5.2.2",
-    "ui-helpers": "workspace:*"
+    "@evmosapps/ui-helpers": "workspace:*"
   },
   "browserslist": [
     "last 3 chrome version",
@@ -61,10 +61,10 @@
     "@hookform/resolvers": "^3.1.1",
     "@playwright/test": "^1.39.0",
     "constants-helper": "workspace:*",
-    "copilot": "workspace:*",
+    "@evmosapps/copilot": "workspace:*",
     "dayjs": "^1.11.8",
     "dotenv": "^16.3.1",
-    "evmos-wallet": "workspace:*",
+    "@evmosapps/evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
     "icons": "workspace:*",
     "next": "^14.0.2",
@@ -72,7 +72,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.2",
     "tracker": "workspace:*",
-    "ui-helpers": "workspace:*",
+    "@evmosapps/ui-helpers": "workspace:*",
     "vitest": "^0.34.6",
     "zod": "^3.22.1"
   }

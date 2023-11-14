@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { dappSchema } from "./schemas/entities/dappSchema";
 import { notion } from "./notion-client";
-import { ECOSYSTEM_PAGE_NOTION_ID } from "evmos-wallet/src/internal/wallet/functionality/networkConfig";
+import { ECOSYSTEM_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 import { Log } from "helpers";
 
 export const fetchDapps = async () => {

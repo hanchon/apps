@@ -1,5 +1,8 @@
 import { useMemo } from "react";
-import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
+import {
+  Prefix,
+  TokenAmount,
+} from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import {
   Address,
   isValidCosmosAddress,
@@ -9,12 +12,12 @@ import {
   useFee,
   useTokenBalance,
   useTransfer,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import {
   Prefixish,
   normalizeToPrefix,
-} from "evmos-wallet/src/registry-actions/utils/normalize-to-prefix";
-import { getFeeToken } from "evmos-wallet/src/registry-actions/getFeeToken";
+} from "@evmosapps/evmos-wallet/src/registry-actions/utils/normalize-to-prefix";
+import { getFeeToken } from "@evmosapps/evmos-wallet/src/registry-actions/getFeeToken";
 import { E } from "helpers";
 
 export const useSend = ({
@@ -94,14 +97,17 @@ export const useSend = ({
     receiverAddress &&
     sender &&
     normalizeToCosmosAddress(sender) !==
-    normalizeToCosmosAddress(receiverAddress);
+      normalizeToCosmosAddress(receiverAddress);
 
   const hasValidAmount = token?.amount !== undefined && token?.amount > 0n;
 
   const hasLoadedFee = fee !== undefined && isFeeLoading === false;
 
   const hasTransferred = transferResponse !== undefined;
-  const transferRejected = E.match.byPattern(transferError, /(Request rejected|User rejected the request)/g)
+  const transferRejected = E.match.byPattern(
+    transferError,
+    /(Request rejected|User rejected the request)/g
+  );
   const out = {
     transfer,
     isReady:

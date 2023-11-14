@@ -1,8 +1,11 @@
 import Image from "next/image";
 import React from "react";
-import { formatUnits } from "evmos-wallet/src/registry-actions/utils";
+import { formatUnits } from "@evmosapps/evmos-wallet/src/registry-actions/utils";
 import { cn } from "helpers";
-import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
+import {
+  Prefix,
+  TokenAmount,
+} from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import {
   Address,
   getChain,
@@ -10,12 +13,12 @@ import {
   getToken,
   normalizeToCosmosAddress,
   useFee,
-} from "evmos-wallet";
-import { AddressDisplay, Arrow } from "ui-helpers";
+} from "@evmosapps/evmos-wallet";
+import { AddressDisplay, Arrow } from "@evmosapps/ui-helpers";
 
 import { useTranslation } from "@evmosapps/i18n/client";
-import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
-import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";
+import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 
 export const TransferSummary = ({
   sender,

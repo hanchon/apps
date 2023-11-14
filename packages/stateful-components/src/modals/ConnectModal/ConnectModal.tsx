@@ -1,7 +1,7 @@
 "use client";
-import { ConnectToEvmos } from "evmos-wallet/src/copilot/ConnectToEvmos";
+import { ConnectToEvmos } from "@evmosapps/evmos-wallet/src/copilot/ConnectToEvmos";
 import { useModal } from "helpers";
-import { ModalContainer, Modal } from "ui-helpers";
+import { ModalContainer, Modal } from "@evmosapps/ui-helpers";
 import { ConnectModalContent } from "./ConnectModalContent";
 
 export const useConnectModal = () => useModal("connect");

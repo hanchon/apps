@@ -4,7 +4,7 @@
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { getStakingInfo } from "../fetch";
-import { StoreType } from "evmos-wallet";
+import { StoreType } from "@evmosapps/evmos-wallet";
 import {
   DelegationsResponse,
   StakingInfoResponse,

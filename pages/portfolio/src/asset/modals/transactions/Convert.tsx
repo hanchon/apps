@@ -4,7 +4,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getReservedForFeeText } from "helpers";
-import { ConfirmButton, Modal } from "ui-helpers";
+import { ConfirmButton, Modal } from "@evmosapps/ui-helpers";
 import Arrow from "../common/Arrow";
 import FromContainer from "../common/FromContainer";
 import Tabs from "../common/Tabs";
@@ -30,7 +30,7 @@ import {
   Token,
   SNACKBAR_CONTENT_TYPES,
   SNACKBAR_TYPES,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import {
   useTracker,
   CLICK_BUTTON_CONFIRM_CONVERT_TX,
@@ -40,7 +40,7 @@ import {
 import { prepareWriteContract, writeContract } from "wagmi/actions";
 import { EXPLORER_URL } from "constants-helper";
 import { getNetwork, switchNetwork } from "wagmi/actions";
-import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
+import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { E } from "helpers";
 
 const evmos = getEvmosChainInfo();

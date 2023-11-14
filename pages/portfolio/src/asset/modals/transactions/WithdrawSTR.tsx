@@ -5,7 +5,7 @@ import { useState } from "react";
 import FromWithdraw from "../common/withdraw/FromWithdraw";
 import AmountWithdraw from "../common/withdraw/AmountWithdraw";
 import { TableDataElement } from "../../../utils/table/normalizeData";
-import { ConfirmButton, Modal } from "ui-helpers";
+import { ConfirmButton, Modal } from "@evmosapps/ui-helpers";
 import ToWithdraw from "../common/withdraw/ToWithdraw";
 import RedirectLink from "../common/RedirectLink";
 import { ButtonActionsProps } from "./types";

@@ -4,7 +4,11 @@
 
 import { useContext, useEffect, useMemo, useState } from "react";
 import { StepsContainerDapp } from "./StepsContainarDapp";
-import { StoreType, getSequence, useEvmosBalance } from "evmos-wallet";
+import {
+  StoreType,
+  getSequence,
+  useEvmosBalance,
+} from "@evmosapps/evmos-wallet";
 import { useSelector } from "react-redux";
 import { setupSteps } from "../container/data";
 import {

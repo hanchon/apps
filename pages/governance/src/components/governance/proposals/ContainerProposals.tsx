@@ -3,7 +3,7 @@
 
 import { useCallback } from "react";
 
-import { BannerMessages } from "ui-helpers";
+import { BannerMessages } from "@evmosapps/ui-helpers";
 import ProposalCard from "./ProposalCard";
 import { CLICK_GOVERNANCE_PROPOSAL, useTracker } from "tracker";
 import { Link } from "@evmosapps/i18n/client";

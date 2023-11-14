@@ -1,7 +1,7 @@
-import { ConfirmButton, Modal } from "ui-helpers";
+import { ConfirmButton, Modal } from "@evmosapps/ui-helpers";
 import { SearchVesting } from "./SearchVesting";
 import { useSelector } from "react-redux";
-import { StoreType } from "evmos-wallet";
+import { StoreType } from "@evmosapps/evmos-wallet";
 import { useState } from "react";
 import { FundVestingAccount } from "./FundVestingAccount";
 import { EnableVestingModal } from "./EnableVestingModal";

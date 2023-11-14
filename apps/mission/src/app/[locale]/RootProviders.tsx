@@ -1,12 +1,12 @@
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { StoreType, store } from "evmos-wallet/src/redux/Store";
-import { WalletProvider } from "evmos-wallet/src/wallet/components/WalletProvider";
+import { StoreType, store } from "@evmosapps/evmos-wallet/src/redux/Store";
+import { WalletProvider } from "@evmosapps/evmos-wallet/src/wallet/components/WalletProvider";
 import { PropsWithChildren, useState } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { MixpanelProvider } from "tracker";
-import { MavaWidget } from "ui-helpers";
-import { Snackbars, getAllSnackbars } from "evmos-wallet";
+import { MavaWidget } from "@evmosapps/ui-helpers";
+import { Snackbars, getAllSnackbars } from "@evmosapps/evmos-wallet";
 import { GiveFeedback } from "../../components/GiveFeedback";
 function SnackbarsInternal() {
   const valueRedux = useSelector((state: StoreType) => getAllSnackbars(state));

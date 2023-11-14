@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { checkFormatAddress } from "helpers";
 import { KeplrIcon } from "icons";
-import { SmallButton, ContainerInput, ErrorMessage } from "ui-helpers";
+import {
+  SmallButton,
+  ContainerInput,
+  ErrorMessage,
+} from "@evmosapps/ui-helpers";
 import AddTokenMetamask from "../../transactions/AddTokenMetamask";
 import { ContainerModal } from "../ContainerModal";
 import { TextSmall } from "../TextSmall";
@@ -16,7 +20,7 @@ import {
   snackErrorConnectingKeplr,
   getKeplrAddressByChain,
   truncateAddress,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 
 const ToWithdraw = ({
   token,

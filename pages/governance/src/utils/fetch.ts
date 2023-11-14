@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { EVMOS_BACKEND } from "evmos-wallet";
+import { EVMOS_BACKEND } from "@evmosapps/evmos-wallet";
 import { V1Proposals, VoteResponse } from "./types";
 
 export const getProposals = async () => {
@@ -22,7 +22,7 @@ export const getVoteRecord = async (id: string, address: string) => {
   }
 
   const res = await fetch(
-    `${EVMOS_BACKEND}/VoteRecord/EVMOS/${Number(id)}/${address}`,
+    `${EVMOS_BACKEND}/VoteRecord/EVMOS/${Number(id)}/${address}`
   );
   return res.json() as Promise<VoteResponse>;
 };

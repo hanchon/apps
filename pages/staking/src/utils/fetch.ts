@@ -6,7 +6,7 @@ import {
   EVMOS_MINIMAL_COIN_DENOM,
   EVMOS_SYMBOL,
   txStatusError,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import {
   BalanceResponse,
   StakingInfoResponse,

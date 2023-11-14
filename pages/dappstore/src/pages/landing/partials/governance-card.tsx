@@ -8,7 +8,7 @@ import { CardTitle } from "./card-title";
 import { useTranslation } from "@evmosapps/i18n/client";
 
 import { CLICK_ON_PARTICIPATE_IN_GOVERNANCE } from "tracker";
-import { ButtonWithLink, TrackerEvent } from "ui-helpers";
+import { ButtonWithLink, TrackerEvent } from "@evmosapps/ui-helpers";
 
 export const GovernanceCard = () => {
   const { t } = useTranslation("dappStore");
