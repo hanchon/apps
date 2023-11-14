@@ -51,7 +51,7 @@ export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
       <div className="font-brand relative">
         <div
           className={cn(
-            "relative h-[300px] w-screen ml-[50%] -translate-x-1/2",
+            "relative h-[300px] w-screen ml-[51%] -translate-x-[51%]",
             // gradient overlay
             " after:bg-gradient-to-t after:from-black/70 after:to-transparent after:absolute after:w-full after:h-full after:bottom-0"
           )}
@@ -145,7 +145,7 @@ export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
             )} */}
           </DescriptionItem>
 
-          <DescriptionItem title="Contact Details">
+          <DescriptionItem title="Technical Information">
             {dapp.github && (
               <Link
                 href={dapp.github}
