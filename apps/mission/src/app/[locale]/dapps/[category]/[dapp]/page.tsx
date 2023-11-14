@@ -6,7 +6,7 @@ export const generateStaticParams = async () => {
   const { dApps } = await fetchExplorerData();
 
   return dApps
-    .filter(({ instantDapp }) => instantDapp)
+    .filter(({ isInstantDapp }) => isInstantDapp)
     .map((dapp) => ({
       dapp: dapp.slug,
       category: dapp.categorySlug,

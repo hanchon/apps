@@ -23,6 +23,7 @@ const dappPropertiesSchema = createNotionPropertiesSchema(
     subItem: relationSchema,
     x: urlSchema,
     app: urlSchema,
+    website: urlSchema,
     github: urlSchema,
     discord: urlSchema,
     updatedAt: updatedAtSchema,
