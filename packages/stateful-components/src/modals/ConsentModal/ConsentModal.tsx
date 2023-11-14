@@ -3,8 +3,7 @@
 import { Modal } from "@evmosapps/ui-helpers";
 
 import { modalLink, useModal } from "helpers";
-import { useTranslation } from "@evmosapps/i18n/client";
-import { COOKIE_POLICY_URL, PRIVACY_POLICY_URL } from "constants-helper";
+import { Link, useTranslation } from "@evmosapps/i18n/client";
 import GrayButton from "@evmosapps/ui-helpers/src/GrayButton";
 import { DISABLE_TRACKER_LOCALSTORAGE } from "tracker";
 import { Trans } from "react-i18next";
@@ -29,19 +28,15 @@ export const ConsentModal = () => {
                 i18nKey="consent.description"
                 components={{
                   privacy: (
-                    <a
+                    <Link
                       className="cursor-pointer underline"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      href={PRIVACY_POLICY_URL}
+                      href={"/privacy-policy"}
                     />
                   ),
                   cookies: (
-                    <a
+                    <Link
                       className="cursor-pointer underline"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      href={COOKIE_POLICY_URL}
+                      href={"/cookie-policy"}
                     />
                   ),
                 }}

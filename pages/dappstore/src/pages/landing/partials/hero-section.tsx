@@ -1,8 +1,7 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { ADD_DAPP_FORM_URL, DOCS_EVMOS } from "constants-helper";
+import { ADD_DAPP_FORM_URL } from "constants-helper";
 import Image from "next/image";
 import { Frameline, PrimaryButton } from "@evmosapps/ui-helpers";
 export const HeroSection = () => {
@@ -27,18 +26,20 @@ export const HeroSection = () => {
         <div className="flex items-center space-x-2 xl:w-[80%] 2xl:w-[61%]">
           <PrimaryButton
             className="flex-1 font-normal rounded"
-            onClick={() => {
-              window.open(ADD_DAPP_FORM_URL, "_blank");
-            }}
+            as={"a"}
+            href={ADD_DAPP_FORM_URL}
+            target="_blank"
+            referrerPolicy="no-referrer"
           >
             Add your dApp
           </PrimaryButton>
           <PrimaryButton
+            as={"a"}
             className="flex-1 font-normal rounded"
             variant="secondary"
-            onClick={() => {
-              window.open(DOCS_EVMOS, "_blank");
-            }}
+            href="/docs"
+            target="_blank"
+            referrerPolicy="no-referrer"
           >
             Learn to build on Evmos
           </PrimaryButton>
@@ -56,7 +57,7 @@ export const HeroSection = () => {
             alt="hero-img"
             width={250}
             height={150}
-            className="object-contain "
+            className="object-contain"
           />
         </div>
       </Frameline>

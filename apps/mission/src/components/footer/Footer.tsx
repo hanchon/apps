@@ -1,9 +1,5 @@
 import pkg from "../../../package.json";
-import {
-  COMMONWEALTH_URL,
-  DOCS_SMART_CONTRACTS_URL,
-  PRIVACY_POLICY_URL,
-} from "constants-helper";
+import { COMMONWEALTH_URL, DOCS_SMART_CONTRACTS_URL } from "constants-helper";
 import {
   CodeIcon,
   CommonWealthIcon,
@@ -17,6 +13,7 @@ import { translation } from "@evmosapps/i18n/server";
 import { ConsentModalButton } from "stateful-components/src/modals/ConsentModal/ConsentModal";
 import { Container } from "@evmosapps/ui-helpers";
 import { Link } from "@evmosapps/i18n/client";
+import { Suspense } from "react";
 
 export const Footer = async () => {
   const { t } = await translation();
@@ -105,19 +102,15 @@ export const Footer = async () => {
               </Link>
             </p>
             <p>
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={PRIVACY_POLICY_URL}
-                aria-label="privacy policy"
-              >
+              <Link href={"/privacy-policy"} aria-label="privacy policy">
                 {t("footer.privacyPolicy")}
-              </a>
+              </Link>
             </p>
-
-            <ConsentModalButton>
-              <p>{t("footer.cookiesSettings")}</p>
-            </ConsentModalButton>
+            <Suspense>
+              <ConsentModalButton>
+                <p>{t("footer.cookiesSettings")}</p>
+              </ConsentModalButton>
+            </Suspense>
           </div>
         </div>
       </footer>

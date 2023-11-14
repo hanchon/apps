@@ -1,6 +1,6 @@
 import "../../globals.css";
 import { dir } from "i18next";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, Suspense } from "react";
 import { languages } from "@evmosapps/i18n";
 import { withLocale } from "@evmosapps/i18n/server";
 import { cn } from "helpers";
@@ -85,13 +85,14 @@ function RootLayout({
             <Container>{children}</Container>
             <Footer />
           </main>
-
-          <ConsentModal />
-          <ConnectModal />
-          <ProfileModal />
-          <Copilot />
-          <TopupModal />
-          <TermsOfServiceModal />
+          <Suspense>
+            <ConsentModal />
+            <ConnectModal />
+            <ProfileModal />
+            <Copilot />
+            <TopupModal />
+            <TermsOfServiceModal />
+          </Suspense>
 
           <GoogleAnalytics />
           <Script src="https://public.cypherd.io/sdk/cypher-sdk.js" />

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { StoreType } from "@evmosapps/evmos-wallet";
 import { ERC20BalanceResponse } from "./types";
@@ -107,7 +107,9 @@ const AssetsTable = () => {
 
   return (
     <>
-      <TopBar topProps={topProps} />
+      <Suspense>
+        <TopBar topProps={topProps} />
+      </Suspense>
       <div className="flex flex-col justify-center lg:flex-row lg:justify-between my-2">
         <Guide />
         <Switch

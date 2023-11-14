@@ -1,6 +1,6 @@
 "use client";
 import { Modal } from "@evmosapps/ui-helpers";
-import { cn, useModal } from "helpers";
+import { cn, modalLink, useModal } from "helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { EVMOS_TOS_VERSION } from "constants-helper";
 import { DISABLE_TRACKER_LOCALSTORAGE } from "tracker";
@@ -10,6 +10,7 @@ import { useConsentModal } from "../ConsentModal/ConsentModal";
 import { Trans } from "react-i18next";
 
 export const useTOSModal = () => useModal("tos");
+export const TOSModalButton = modalLink("tos");
 
 export const TermsOfServicesModalController = ({
   children,
@@ -31,7 +32,7 @@ export const TermsOfServicesModalController = ({
 
   useEffect(() => {
     if (window.localStorage.getItem(EVMOS_TOS_VERSION) !== null) return;
-    console.log("setIsOpen(true)");
+
     setIsOpen(true);
   }, [setIsOpen]);
 

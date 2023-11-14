@@ -48,5 +48,8 @@ export const fetchCoingeckoTokenPrices = cache(async (reference = "usd") => {
       ])
   );
 });
-export const fetchTokenPrice = (coingeckoId: string) =>
-  fetchCoingeckoTokenPrices().then((tokens) => tokens[coingeckoId]);
+
+export const fetchTokenPrice = cache(async (coingeckoId: string) => {
+  const tokens = await fetchCoingeckoTokenPrices();
+  return tokens[coingeckoId];
+});

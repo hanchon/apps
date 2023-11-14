@@ -140,20 +140,29 @@ type ModalLinkProps<T extends z.AnyZodObject> = {
   redirectBack?: boolean;
   children: React.ReactNode;
 };
-export const modalLink = <T extends z.AnyZodObject>(id: string) =>
+export const modalLink = <T extends z.AnyZodObject>(
+  id: string,
+  schema: T = z.object({}) as T
+) =>
   function ModalLink(props: ModalLinkProps<T> & ComponentProps<"button">) {
-    const { setIsOpen } = useModal<T>(id);
+    const { push } = useRouter();
 
     return (
       <button
         onClick={async (e) => {
           e.preventDefault();
-          if (props.initialState instanceof Function) {
-            const state = await props.initialState();
-            setIsOpen(true, state, props.redirectBack);
-            return;
-          }
-          setIsOpen(true, props.initialState, props.redirectBack);
+          const state =
+            props.initialState instanceof Function
+              ? await props.initialState()
+              : props.initialState;
+          schema.parse(state);
+          const url = new URL(window.location.href);
+          url.search = qs.stringify({
+            action: id,
+            ...sanitize(state ?? {}),
+          });
+
+          push(url.toString());
         }}
       >
         {props.children}

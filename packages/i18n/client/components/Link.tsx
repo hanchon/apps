@@ -1,19 +1,25 @@
 "use client";
 import NextLink from "next/link";
 import { forwardRef } from "react";
-import { languages } from "../../settings";
+import { defaultLocale, languages } from "../../settings";
 import { useTranslation } from "../instrumentation";
 import { getLocaleFromPath } from "../..";
 
-export const Link: typeof NextLink = forwardRef(({ href, ...props }, ref) => {
-  let locale = getLocaleFromPath(href.toString());
+export const Link: typeof NextLink = forwardRef(function Link(
+  { href, ...props },
+  ref
+) {
+  let url = String(href);
+  let locale = getLocaleFromPath(url);
   const { i18n } = useTranslation();
-  if (
-    (!locale || !languages.includes(locale)) &&
-    !href.toString().startsWith("http")
-  ) {
+  if ((!locale || !languages.includes(locale)) && !url.startsWith("http")) {
     locale = i18n.language;
-    href = `/${locale}${href}`;
+    url = `/${locale}${url}`;
   }
+
+  if (url.startsWith(`/${defaultLocale}`)) {
+    url = url.replace(new RegExp(`^/${defaultLocale}`), "");
+  }
+
   return <NextLink href={href} {...props} ref={ref} />;
 });

@@ -1,13 +1,6 @@
 "use client";
-import { ConnectToEvmos } from "@evmosapps/evmos-wallet/src/copilot/ConnectToEvmos";
-import { ConnectToEvmosWallets } from "@evmosapps/evmos-wallet/src/copilot/ConnectToEvmosWallets";
-import { cn, useModal } from "helpers";
-import {
-  AddressDisplay,
-  ModalContainer,
-  Modal,
-  Tooltip,
-} from "@evmosapps/ui-helpers";
+import { cn, modalLink, useModal } from "helpers";
+import { AddressDisplay, Modal, Tooltip } from "@evmosapps/ui-helpers";
 import { ProvidersIcons } from "../../providerIcons";
 import { useAccount, useDisconnect } from "wagmi";
 import { normalizeToEvmos } from "@evmosapps/evmos-wallet";
@@ -17,6 +10,7 @@ import { useEffect, useState } from "react";
 import { CLICK_DISCONNECT_WALLET_BUTTON, useTracker } from "tracker";
 
 export const useProfileModal = () => useModal("profile");
+export const ProfileModalButton = modalLink("profile");
 
 const CopyButton = ({ text }: { text: string }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -99,7 +93,7 @@ export const ProfileModal = () => {
             className={cn(
               "border-darkPearl hover:bg-grayOpacity mt-3 w-full rounded border p-3 font-bold uppercase"
             )}
-            onClick={async () => {
+            onClick={() => {
               disconnect();
               sendEvent(CLICK_DISCONNECT_WALLET_BUTTON, {
                 wallet: address,
