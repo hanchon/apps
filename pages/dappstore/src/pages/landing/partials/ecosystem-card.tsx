@@ -13,7 +13,7 @@ import { UpRightArrowIcon } from "icons";
 import { DApp } from "../../../lib/fetch-explorer-data";
 
 export const EcosystemCard = ({ data }: { data: DApp }) => {
-  const imgId = data.cover?.id ?? data.icon?.id;
+  const img = data.cover ?? data.icon;
 
   return (
     <TrackerEvent
@@ -22,19 +22,19 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
     >
       <Link
         href={
-          data.instantDapp
+          data.isInstantDapp
             ? `/dapps/${data.categorySlug}/${data.slug}`
             : data.app ?? ""
         }
-        target={data.instantDapp ? "" : "_blank"}
+        target={data.isInstantDapp ? "" : "_blank"}
         key={data.name}
         className="relative mb-16 space-y-2 rounded-lg bg-[#262017] pb-8 transition-all duration-150 ease-out hover:scale-105"
       >
         <div className="aspect-[3/2] w-full rounded-t-2xl object-cover bg-white/5 relative overflow-hidden">
-          {imgId && (
+          {img && (
             <Image
               className="object-cover"
-              src={`/external-image/${imgId}`}
+              src={img}
               alt={data.name}
               fill={true}
             />
@@ -42,7 +42,7 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
         </div>
         <div className="flex space-x-3 items-center px-5 pt-5">
           <h3 className="text-sm font-bold text-pearl">{data.name}</h3>
-          {data.instantDapp ? (
+          {data.isInstantDapp ? (
             <Badge className="text-sm space-x-2 ">
               {/* TODO: check if we need to create a component for this */}
               {/* TODO: add color to tailwind file */}

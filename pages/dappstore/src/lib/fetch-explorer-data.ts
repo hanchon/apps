@@ -3,7 +3,8 @@ import slugify from "slugify";
 
 import { cache } from "react";
 
-import { fetchCategories, fetchDapps } from "./fetch-categories";
+import { fetchDapps } from "./fetch-dapps";
+import { fetchCategories } from "./fetch-categories";
 
 export const fetchExplorerData = cache(async () => {
   const categoriesMap = await fetchCategories();
@@ -11,14 +12,9 @@ export const fetchExplorerData = cache(async () => {
 
   const categories = [];
   const dApps = [];
-  for (const {
-    displayName,
-    name,
-    projects,
-    ...rest
-  } of categoriesMap.values()) {
+  for (const { name, projects, ...rest } of categoriesMap.values()) {
     const categorySlug = slugify(name, { lower: true, strict: true });
-    const categoryName = displayName || name;
+    const categoryName = name;
 
     const categoryDapps: string[] = [];
     for (const projectId of projects) {
