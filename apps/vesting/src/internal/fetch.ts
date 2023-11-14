@@ -1,8 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-// import { EVMOS_BACKEND } from "evmos-wallet";
-
 import {
   isEthereumAddressValid,
   isEvmosAddressValid,
@@ -15,10 +13,10 @@ export const getVesting = async (account?: string) => {
   let address: string = "";
 
   if (acc === undefined) {
-    return "There is no vesting account linked to this address.";
+    return { error: "There is no vesting account linked to this address." };
   }
   if (typeof acc !== "string") {
-    return "There is no vesting account linked to this address.";
+    return { error: "There is no vesting account linked to this address." };
   }
   if (isEthereumAddressValid(acc)) {
     address = acc;
@@ -27,13 +25,13 @@ export const getVesting = async (account?: string) => {
     address = acc;
   }
   if (address === "") {
-    return "There is no vesting account linked to this address.";
+    return { error: "There is no vesting account linked to this address." };
   }
 
   try {
     const res = await fetch(`${EVMOS_BACKEND}/v2/vesting/${address}`);
-    return res.json() as Promise<VestingResponse>;
+    return res.json() as Promise<VestingResponse | { error: string }>;
   } catch (error) {
-    return "Error while getting vesting account info";
+    return { error: "Error while getting vesting account info" };
   }
 };

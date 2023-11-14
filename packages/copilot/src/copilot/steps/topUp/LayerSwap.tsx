@@ -1,12 +1,11 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { StoreType } from "evmos-wallet";
-import { useSelector } from "react-redux";
+import { useAccount } from "wagmi";
 
 export default function LayerSwap() {
   // address has to be 0x format
-  const address = useSelector((state: StoreType) => state.wallet.value);
+  const { address } = useAccount();
   return (
     <div
       data-testid="layerswap-widget"
@@ -14,7 +13,7 @@ export default function LayerSwap() {
     >
       <iframe
         style={{ height: "100%", width: "100%", border: "none" }}
-        src={`https://layerswap.io/app/?to=EVMOS_MAINNET&destAddress=${address?.evmosAddressEthFormat}&addressSource=evmos`}
+        src={`https://layerswap.io/app/?to=EVMOS_MAINNET&destAddress=${address}&addressSource=evmos`}
       ></iframe>
     </div>
   );

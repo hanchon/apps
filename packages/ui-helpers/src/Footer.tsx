@@ -11,8 +11,10 @@ import {
   DiscordIcon,
   CommonWealthIcon,
   CodeIcon,
+  MediumIcon,
 } from "icons";
 import { PRIVACY_POLICY_URL } from "constants-helper";
+import { MEDIUM_URL } from "constants-helper/src/constants";
 
 export const Footer = ({
   handleCookies,
@@ -30,7 +32,7 @@ export const Footer = ({
   }
 
   return (
-    <footer className="text-gray-700 mb-10 mt-10 space-y-2 lg:space-y-0 font-[IBM] flex lg:justify-between flex-col lg:flex-row items-center">
+    <footer className="text-gray-700 mb-10 mt-10 space-y-2 lg:space-y-0 font-display flex lg:justify-between flex-col lg:flex-row items-center">
       <div className="flex flex-col items-center space-y-3 lg:flex-row lg:space-x-10 lg:space-y-0">
         <p>
           <Link
@@ -78,7 +80,7 @@ export const Footer = ({
             href="https://twitter.com/evmosorg"
             aria-label="twitter evmos"
           >
-            <TwitterIcon />
+            <TwitterIcon width={20} height={20} />
           </Link>
           <Link
             target="_blank"
@@ -95,6 +97,14 @@ export const Footer = ({
             aria-label="discord telegram"
           >
             <TelegramIcon />
+          </Link>
+          <Link
+            target="_blank"
+            rel="noreferrer"
+            href={MEDIUM_URL}
+            aria-label="medium evmos"
+          >
+            <MediumIcon width={24} height={24} />
           </Link>
           <Link
             target="_blank"

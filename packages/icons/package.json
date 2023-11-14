@@ -1,6 +1,6 @@
 {
   "name": "icons",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
   "type": "module",
@@ -9,10 +9,6 @@
   "scripts": {
     "check-types": "tsc --noEmit",
     "lint": "eslint ."
-  },
-  "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18"
   },
   "devDependencies": {
     "@types/node": "18.11.14",

@@ -7,12 +7,12 @@ import { CLICK_MISSION_CONTROL_ECOSYSTEM_BUTTON, useTracker } from "tracker";
 
 const Header = () => {
   const { handlePreClickAction } = useTracker(
-    CLICK_MISSION_CONTROL_ECOSYSTEM_BUTTON,
+    CLICK_MISSION_CONTROL_ECOSYSTEM_BUTTON
   );
 
   return (
     <div className="mb-6 flex w-full justify-between">
-      <span className="font-[GreyCliff] text-xl font-bold text-pearl">
+      <span className="font-body text-xl font-bold text-pearl">
         APPS ON EVMOS
       </span>
       <div className="flex gap-2">
@@ -24,7 +24,7 @@ const Header = () => {
         >
           {/* TODO: use button component */}
           <div
-            className="flex justify-center rounded border border-pearl p-2 font-[GreyCliff] text-xs font-bold uppercase text-pearl hover:bg-whiteOpacity"
+            className="flex justify-center rounded border border-pearl p-2 font-body text-xs font-bold uppercase text-pearl hover:bg-whiteOpacity"
             onClick={() => {
               handlePreClickAction();
             }}

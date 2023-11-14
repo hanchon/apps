@@ -12,6 +12,7 @@ import {
 } from "evmos-wallet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TermOfServices, Container, MavaWidget } from "ui-helpers";
+import { greyCliff, ibm, nb } from "ui-helpers/src/fonts";
 import { StatefulHeader } from "stateful-components";
 import { HeadComponent } from "../src/components/governance/HeadComponent";
 import { GoogleAnalytics } from "../src/components/GoogleAnalytics";
@@ -19,6 +20,7 @@ import { StatefulFooter } from "stateful-components";
 const Content = dynamic(() => import("../src/components/governance/Content"));
 import { MixpanelProvider } from "tracker";
 import { GiveFeedback } from "../src/components/GiveFeedback";
+import { cn } from "helpers";
 
 function SnackbarsInternal() {
   const valueRedux = useSelector((state: StoreType) => getAllSnackbars(state));
@@ -38,7 +40,9 @@ export default function Home() {
             <>
               <HeadComponent />
               <GoogleAnalytics />
-              <main>
+              <main
+                className={cn(greyCliff.variable, ibm.variable, nb.variable)}
+              >
                 <TermOfServices />
                 <GiveFeedback />
                 <Container>

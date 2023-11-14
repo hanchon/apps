@@ -14,9 +14,11 @@ import {
   responseBalance,
 } from "./constants";
 
-const { expect, beforeEach, describe, test } = mmFixture;
+import { cleanupTabs, connectSwitchAndSignPubkey } from "./cleanupTabs";
 
-beforeEach(async ({ page }) => {
+const { expect, beforeEach, describe, test } = mmFixture;
+beforeEach(async ({ page, context }) => {
+  await cleanupTabs(context);
   await page.goto("/");
 
   await page
@@ -260,26 +262,18 @@ describe("Mission Page - Copilot", () => {
     await page.waitForTimeout(3000);
 
     await page.getByRole("button", { name: /Connect/i }).click();
-    const approveAllPopup = pageListener(page.context());
+    await connectSwitchAndSignPubkey(page.context(), () =>
+      page.getByRole("button", { name: /MetaMask/i }).click()
+    );
 
-    await page.getByRole("button", { name: /MetaMask/i }).click();
-    await approveAllPopup.load;
-
-    await approveAllPopup.page.getByRole("button", { name: /Next/i }).click();
-    await approveAllPopup.page
-      .getByRole("button", { name: /Connect/i })
-      .click();
-    await approveAllPopup.page.getByRole("button", { name: /Sign/i }).click();
-    const switchNetworkPopup = pageListener(page.context());
+    const claimPopup = pageListener(page.context());
     await page
       .getByRole("button", {
         name: /Claim Rewards/i,
       })
       .click();
-    await switchNetworkPopup.load;
+    await claimPopup.load;
 
-    await switchNetworkPopup.page
-      .getByRole("button", { name: /Reject/i })
-      .click();
+    await claimPopup.page.getByRole("button", { name: /Reject/i }).click();
   });
 });

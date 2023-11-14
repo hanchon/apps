@@ -35,7 +35,8 @@
     "ANALYZE_NEXT_BUNDLE",
     "PORT",
     "NODE_ENV",
-    "GITHUB_TOKEN"
+    "GITHUB_TOKEN",
+    "TEST_WORKER_INDEX"
   ],
   "pipeline": {
     "build": {

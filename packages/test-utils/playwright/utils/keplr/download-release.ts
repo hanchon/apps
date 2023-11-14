@@ -6,8 +6,10 @@ import { tmpdir } from "os";
 export const downloadRelease = async (
   tag: `v${number}.${number}.${number}`
 ) => {
+  const workerIndex = process.env.TEST_WORKER_INDEX || "0";
+
   const zipUrl = `https://github.com/chainapsis/keplr-wallet/releases/download/${tag}/keplr-extension-manifest-v3-${tag}.zip`;
-  const zipPath = path.join(tmpdir(), `./.temp/keplrs-${tag}`);
+  const zipPath = path.join(tmpdir(), workerIndex, `./.temp/keplrs-${tag}`);
   try {
     await stat(zipPath);
   } catch (e) {

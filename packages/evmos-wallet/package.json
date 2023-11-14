@@ -1,6 +1,6 @@
 {
   "name": "evmos-wallet",
-  "version": "1.0.22",
+  "version": "1.0.24",
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
   "type": "module",
@@ -14,9 +14,7 @@
     "lint": "eslint ."
   },
   "peerDependencies": {
-    "@tanstack/react-query": "^4.32.6",
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "@tanstack/react-query": "^4.32.6"
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
@@ -25,6 +23,7 @@
     "@types/react-dom": "18.0.9",
     "@walletconnect/modal": "^2.6.1",
     "autoprefixer": "^10.4.13",
+    "constants-helper": "workspace:*",
     "helpers": "workspace:*",
     "icons": "workspace:*",
     "lokijs": "^1.5.12",
@@ -32,8 +31,7 @@
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "ui-helpers": "workspace:*",
-    "zod": "^3.22.1",
-    "constants-helper": "workspace:*"
+    "zod": "^3.22.1"
   },
   "dependencies": {
     "@buf/cosmos_cosmos-sdk.bufbuild_es": "1.3.0-20230822104619-a12828247088.1",
@@ -64,13 +62,16 @@
     "lodash-es": "^4.17.21",
     "long": "^5.2.3",
     "mixpanel-browser": "^2.47.0",
+    "next": "^14.0.1",
     "pino": "^8.15.0",
     "pino-pretty": "^10.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-redux": "^8.1.2",
     "redux": "^4.2.1",
     "schummar-translate": "^1.19.0",
     "ui-helpers": "workspace:*",
-    "vitest": "^0.34.1"
+    "vitest": "^0.34.6"
   },
   "browserslist": [
     "last 3 chrome version",

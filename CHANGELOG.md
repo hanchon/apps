@@ -36,11 +36,27 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.3.9 - 2023-11-14
+
+- (chore) fse-815 | apps/assets 1.0.41 packages/evmos-wallet 1.0.24 packages/registry 1.0.4 | Enable Kujira network
+- (chore) fse-864 | packages/evmos-wallet 1.0.24 | remove prepareTransaction for unwrapping wevmos
+- (chore) fse-846 | apps/assets 1.0.40 apps/mission 1.0.27 packages/constants-helper 1.0.10 packages/tracker 1.0.9 packages/ui-helpers 1.0.20 | Get rid of broken links and create a reusable link component
+- (chore) fse-819 | packages/constants-helper 1.0.9 packages/icons 1.0.11 packages/ui-helpers 1.0.19 | Add medium to footer
+- (fix) fse-802 | packages/ui-helpers 1.0.18 | Center text in staking app
+- (chore) fse-799 | packages/copilot 1.0.10 | Use wagmi value instead of redux value
+- (fix) fse-816 | packages/ui-helpers 1.0.17 packages/icons 1.0.10 | Replace Twitter logo to X logo in the footer
+- (fix) fse-831 | apps/assets 1.0.39 | Fix usdc.grv image
+- (fix) fse-837 | apps/vesting 1.1.4 | Fix error in account details page for vesting
+- (fix) fse-836 | apps/vesting 1.1.3 | Fix error on creating vesting account
+- (fix) fse-834 | apps/assets 1.0.38 | Fix error generating txns appear twice in pay modal
+- (fix) fse-800 | apps/assets 1.0.37 apps/governance 1.0.28 apps/staking 1.1.2 apps/vesting 1.1.2 packages/evmos-wallet 1.0.23 | Suggest changing network to evmos (MetaMask)
+
 ## 1.3.8 - 2023-11-02
 
 - (fix) fse-832 | packages/registry 1.0.3 apps/assets 1.0.36 | Fix Noble USDC not showing up in send modal
 - (fix) | packages/evmos-wallet 1.0.22 | hardcode estimation for ics transfers while core team fixes the issue with precompile gas estimation
 - (chore) fse-794 | apps/mission 1.0.26 apps/assets 1.0.35 packages/stateful-components 1.0.3 | Update redirects: replace assets with portfolio
+- (fix) fse-801 | packages/copilot 1.0.9 | Change LayerSwap to Layerswap
 
 ## 1.3.7 - 2023-10-31
 

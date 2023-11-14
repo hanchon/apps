@@ -90,7 +90,7 @@ describe("TopUp component", () => {
     expect(defaultCryptoOption).toBeDefined();
 
     await userEvent.click(dropdownProvider);
-    const layerSwapOption = getByText(/layerSwap/i);
+    const layerSwapOption = getByText(/layerswap/i);
     await userEvent.click(layerSwapOption);
     expect(mixpanel.track).toHaveBeenCalledWith(
       "Click on different cryptocurrency top-up options inside Copilot",

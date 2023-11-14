@@ -14,6 +14,6 @@ const app: ReturnType<typeof appWithTranslation> = appWithTranslation(
         <Component {...pageProps} />
       </>
     );
-  },
+  }
 );
 export default app;

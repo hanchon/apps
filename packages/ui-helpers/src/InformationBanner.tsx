@@ -23,14 +23,14 @@ export const InformationBanner = ({
     function saveDismissInLocalStorage() {
       localStorage.setItem(localStorageId ?? "", "true");
     },
-    [localStorageId],
+    [localStorageId]
   );
 
   const getDismissFromLocalStorage = useCallback(
     function getDismissFromLocalStorage() {
       return localStorage.getItem(localStorageId ?? "") === "true";
     },
-    [localStorageId],
+    [localStorageId]
   );
 
   function handleOnClick() {
@@ -45,7 +45,7 @@ export const InformationBanner = ({
 
   return isDismissed ? null : (
     <div
-      className={`bg-pearl flex items-center justify-between space-x-2 rounded-md p-3 px-5 font-[GreyCliff] text-sm font-medium text-black ${
+      className={`bg-pearl flex items-center justify-between space-x-2 rounded-md p-3 px-5 font-body text-sm font-medium text-black ${
         className !== undefined ? className : ""
       }`}
     >
