@@ -10,7 +10,7 @@ import { CopilotCard } from "@evmosapps/copilot";
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { HeroSection } from "./partials/hero-section";
-import { ButtonWithLink, Frameline } from "ui-helpers";
+import { ButtonWithLink, Frameline } from "@evmosapps/ui-helpers";
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 
 export const LandingPage = async () => {
