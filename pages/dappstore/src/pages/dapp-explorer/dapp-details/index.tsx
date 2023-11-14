@@ -18,6 +18,13 @@ export const DappDetailsPage = async ({
 
   const dapp = dApps.find((dApp) => dApp.slug === params.dapp);
 
+  const relatedApps = dApps
+    .filter(
+      (dApp) =>
+        dApp.categoryName === dapp?.categoryName && dApp.slug !== dapp?.slug
+    )
+    .slice(0, 4);
+
   if (!dapp) {
     notFound();
   }
@@ -25,5 +32,5 @@ export const DappDetailsPage = async ({
     redirect(`/${params.locale}/dapps/${dapp.categorySlug}/${params.dapp}`);
   }
 
-  return <DescriptiondApp dapp={dapp} />;
+  return <DescriptiondApp dapp={dapp} relatedApps={relatedApps} />;
 };

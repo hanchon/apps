@@ -17,6 +17,7 @@ import { DescriptionItem } from "./description-item";
 import { DApp } from "../../../lib/fetch-explorer-data";
 import { cn } from "helpers";
 import dynamic from "next/dynamic";
+import { EcosystemCard } from "../../landing/partials/ecosystem-card";
 
 const WIDGETS: {
   [key: string]: React.ComponentType<{}>;
@@ -38,7 +39,13 @@ const WIDGETS: {
   ),
 };
 
-export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
+export const DescriptiondApp = ({
+  dapp,
+  relatedApps,
+}: {
+  dapp: DApp;
+  relatedApps: DApp[];
+}) => {
   const img = dapp.cover ?? dapp.icon;
 
   const drawWidget = () => {
@@ -181,6 +188,7 @@ export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
       </div>
       <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
         <Title>Related dApps</Title>
+
         <ButtonWithLink href="/dapps" className="self-center">
           <div className="flex items-center space-x-2">
             <p>See More</p>
@@ -188,7 +196,11 @@ export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
           </div>
         </ButtonWithLink>
       </div>
-      {/* display related apps */}
+      <div className="grid gap-x-8 md:grid-cols-4">
+        {relatedApps?.map((dApp) => (
+          <EcosystemCard data={dApp} key={dApp.name} />
+        ))}
+      </div>
 
       <HeroSection />
     </div>
