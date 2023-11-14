@@ -11,11 +11,11 @@ import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { HeroSection } from "./partials/hero-section";
 import { ButtonWithLink, Frameline } from "@evmosapps/ui-helpers";
+import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+export const LandingPage = async () => {
+  const { dApps } = await fetchExplorerData();
 
-export const LandingPage = () => {
   return (
     <div className="space-y-8 text-display">
       <div className="grid items-center gap-x-8 gap-y-11 md:grid-cols-2">
@@ -39,7 +39,7 @@ export const LandingPage = () => {
       <EcosystemSection />
       <Frameline>
         <ButtonWithLink className="w-full " href="/dapps">
-          See all amount dApps
+          See all {dApps.length} dApps
         </ButtonWithLink>
       </Frameline>
     </div>

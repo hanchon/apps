@@ -43,6 +43,16 @@ export const HeaderCategories = ({
   }, [categories, params.category]);
 
   const displayedCategory = hoveredCategory || selectedCategory;
+
+  const totalAmountdApps = useMemo(() => {
+    return categories.reduce((acc, category) => {
+      if (category.slug === "instant-dapps") {
+        return acc;
+      }
+      return acc + category.categoryDapps.length;
+    }, 0);
+  }, [categories]);
+
   return (
     <>
       <div className="flex space-y-2 flex-col">
@@ -50,12 +60,14 @@ export const HeaderCategories = ({
           Explore the{" "}
           <span className="font-bold ">
             {/* TODO: add correct styling for params.category  */}
-            {displayedCategory?.categoryDapps.length} {displayedCategory?.name}
-          </span>
+            {displayedCategory?.categoryDapps.length ?? totalAmountdApps}{" "}
+            {displayedCategory?.name ?? "dApps"}
+          </span>{" "}
           on Evmos
         </Title>
         <Subtitle className="min-h-[1lh]">
-          {displayedCategory?.description}{" "}
+          {displayedCategory?.description ??
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit"}{" "}
         </Subtitle>
       </div>
       <div className="flex gap-5 flex-wrap" onMouseLeave={handleCategoryLeave}>
