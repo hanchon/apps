@@ -19,7 +19,7 @@ export const Frameline = ({
         after:content-[''] after:w-[5px] after:h-[5px] after:bg-[#A4A189] after:absolute after:top-0 after:right-0"
           ></div>
         )}
-        <div className="">{children}</div>
+        <div className="h-full">{children}</div>
         {variant === "secondary" && (
           <div
             className="absolute flex justify-between h-[5px] left-0 right-0 first:top-0 last:bottom-0 

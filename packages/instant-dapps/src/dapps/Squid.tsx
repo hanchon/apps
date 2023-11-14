@@ -52,19 +52,21 @@ const config = {
 const configJSON = JSON.stringify(config); // Convert the config object to a JSON string
 const encodedConfig = encodeURIComponent(configJSON); // Encode the JSON string
 
-export const Squid = () => {
+const Squid = () => {
   return (
     <div
-      className="relative mx-auto mt-[25px] h-[700px] w-[300px] overflow-hidden rounded-[15px] md:h-[690px] md:w-[400px]"
+      className="relative mx-5 w-full h-full"
+      //   className="relative mx-auto mt-[25px] h-[700px] w-[300px] overflow-hidden rounded-[15px] md:h-[690px] md:w-[400px]"
       data-testid="squid-widget"
     >
       <iframe
         title="squid-widget"
         width="100%"
         height="100%"
-        className=""
         src={`https://widget.squidrouter.com/iframe?config=${encodedConfig}`}
       />
     </div>
   );
 };
+
+export default Squid;

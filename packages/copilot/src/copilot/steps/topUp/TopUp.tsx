@@ -4,11 +4,8 @@
 
 import { useState } from "react";
 import { Intro } from "./Intro";
-import Transak from "./Transak";
 import Onboard from "./Onboard";
-import C14 from "./C14";
-import CypherD from "./CypherD";
-import LayerSwap from "./LayerSwap";
+
 import {
   CLICK_ON_DIFFERENT_ON_RAMP,
   useTracker,
@@ -16,8 +13,12 @@ import {
 } from "tracker";
 import ProviderDropwdown from "./ProviderDropdown";
 import { providerOptions, DropdownOption } from "./utils";
-import { Squid } from "./Squid";
 import { raise } from "helpers";
+import Transak from "@evmosapps/instant-dapps/src/dapps/Transak";
+import C14 from "@evmosapps/instant-dapps/src/dapps/C14";
+import LayerSwap from "@evmosapps/instant-dapps/src/dapps/Layerswap";
+import Squid from "@evmosapps/instant-dapps/src/dapps/Squid";
+import CypherD from "@evmosapps/instant-dapps/src/dapps/CypherD";
 
 export const TopUp = () => {
   const [topUpType, setTopUpType] = useState("intro");

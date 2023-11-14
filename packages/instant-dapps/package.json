@@ -1,0 +1,38 @@
+{
+  "name": "@evmosapps/instant-dapps",
+  "version": "1.0.0",
+  "main": "./src/index.tsx",
+  "types": "./src/index.tsx",
+  "type": "module",
+  "license": "SEE LICENSE IN LICENSE",
+  "sideEffects": false,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@evmosapps/config": "workspace:*",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.20",
+    "prettier": "^3.0.1"
+  },
+  "dependencies": {
+    "@types/node": "18.11.14",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.0.9",
+    "eslint": "^8.47.0",
+    "next": "^14.0.1",
+    "react": "18.2.0",
+    "react-dom": "^18.2.0",
+    "tracker": "workspace:*",
+    "typescript": "^5.2.2"
+  },
+  "browserslist": [
+    "last 3 chrome version",
+    "last 3 firefox version",
+    "last 3 safari version"
+  ]
+}

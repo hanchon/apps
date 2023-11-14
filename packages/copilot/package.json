@@ -51,7 +51,8 @@
     "react-dom": "^18.2.0",
     "tracker": "workspace:*",
     "typescript": "^5.2.2",
-    "ui-helpers": "workspace:*"
+    "ui-helpers": "workspace:*",
+    "@evmosapps/instant-dapps": "workspace:*"
   },
   "browserslist": [
     "last 3 chrome version",

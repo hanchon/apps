@@ -31,16 +31,16 @@ const TRANSAK_EVENTS = {
 };
 export const useTransakEvents = () => {
   const { handlePreClickAction: createdOrder } = useTracker(
-    CREATED_ORDER_ON_TRANSAK,
+    CREATED_ORDER_ON_TRANSAK
   );
   const { handlePreClickAction: orderSuccessful } = useTracker(
-    SUCCESSFUL_ORDER_ON_TRANSAK,
+    SUCCESSFUL_ORDER_ON_TRANSAK
   );
   const { handlePreClickAction: orderUnsuccessful } = useTracker(
-    FAILED_ORDER_ON_TRANSAK,
+    FAILED_ORDER_ON_TRANSAK
   );
   const { handlePreClickAction: orderCancelled } = useTracker(
-    CANCELLED_ORDER_ON_TRANSAK,
+    CANCELLED_ORDER_ON_TRANSAK
   );
   useEffect(() => {
     const handleMessage = ({ data }: { data: transakParams }) => {
