@@ -16,12 +16,41 @@ import {
 import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
 import { DApp } from "../../../lib/fetch-explorer-data";
-// import { CypherD } from "@evmosapps/instant-dapps/src/dapps/CypherD";
-// import Transak from "@evmosapps/instant-dapps/src/dapps/Transak";
-// import C14 from "@evmosapps/instant-dapps/src/dapps/C14";
-import LayerSwap from "@evmosapps/instant-dapps/src/dapps/Layerswap";
+import dynamic from "next/dynamic";
+
+const WIDGETS: {
+  [key: string]: React.ComponentType<{}>;
+} = {
+  layerswap: dynamic(
+    () => import("@evmosapps/instant-dapps/src/dapps/Layerswap"),
+    {
+      loading: () => <p>Loading...</p>,
+    }
+  ),
+  squid: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Squid"), {
+    loading: () => <p>Loading...</p>,
+  }),
+  transak: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Transak"), {
+    loading: () => <p>Loading...</p>,
+  }),
+  c14: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/C14"), {
+    loading: () => <p>Loading...</p>,
+  }),
+  "cypher-wallet": dynamic(
+    () => import("@evmosapps/instant-dapps/src/dapps/CypherD"),
+    {
+      loading: () => <p>Loading...</p>,
+    }
+  ),
+};
+
 export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
   const imgId = dapp.cover?.id ?? dapp.icon?.id;
+
+  const drawWidget = () => {
+    const Widget = WIDGETS[dapp.slug];
+    if (Widget) return <Widget />;
+  };
 
   return (
     <div className="space-y-24 pb-24">
@@ -131,7 +160,8 @@ export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
         <Frameline variant="secondary">
           <div className="flex items-center justify-center h-full">
             {/* TODO: add iframes */}
-            <LayerSwap />
+            {drawWidget()}
+            {/* <Squid /> */}
           </div>
         </Frameline>
       </div>

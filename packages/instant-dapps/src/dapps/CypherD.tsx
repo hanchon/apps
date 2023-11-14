@@ -12,7 +12,7 @@ declare global {
     Cypher?: any;
   }
 }
-export const CypherD = () => {
+const CypherD = () => {
   const { address } = useAccount();
 
   const ref = useRef(false);
@@ -38,3 +38,5 @@ export const CypherD = () => {
     ></div>
   );
 };
+
+export default CypherD;

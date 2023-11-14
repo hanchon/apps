@@ -13,12 +13,12 @@ import {
 } from "tracker";
 import ProviderDropwdown from "./ProviderDropdown";
 import { providerOptions, DropdownOption } from "./utils";
-import { Squid } from "./Squid";
 import { raise } from "helpers";
 import Transak from "@evmosapps/instant-dapps/src/dapps/Transak";
-import { CypherD } from "@evmosapps/instant-dapps";
 import C14 from "@evmosapps/instant-dapps/src/dapps/C14";
 import LayerSwap from "@evmosapps/instant-dapps/src/dapps/Layerswap";
+import Squid from "@evmosapps/instant-dapps/src/dapps/Squid";
+import CypherD from "@evmosapps/instant-dapps/src/dapps/CypherD";
 
 export const TopUp = () => {
   const [topUpType, setTopUpType] = useState("intro");
