@@ -1,6 +1,9 @@
-import { Prefix, TokenRef } from "evmos-wallet/src/registry-actions/types";
+import {
+  Prefix,
+  TokenRef,
+} from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { sortedChains } from "./sortedChains";
-import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 
 export const getTokenValidDestinations = (
   tokenRef: TokenRef,

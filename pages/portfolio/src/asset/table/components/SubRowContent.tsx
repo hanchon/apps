@@ -5,8 +5,12 @@ import { BigNumber } from "@ethersproject/bignumber";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { amountToDollars, convertAndFormat } from "helpers";
-import { snackWarningLedger, EVMOS_SYMBOL, StoreType } from "evmos-wallet";
-import { Button, Tooltip } from "ui-helpers";
+import {
+  snackWarningLedger,
+  EVMOS_SYMBOL,
+  StoreType,
+} from "@evmosapps/evmos-wallet";
+import { Button, Tooltip } from "@evmosapps/ui-helpers";
 import { QuestionMarkIcon } from "icons";
 import Convert from "../../modals/transactions/Convert";
 import { ConvertSTR } from "../../modals/transactions/ConvertSTR";

@@ -1,18 +1,26 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 import React, { Dispatch, SetStateAction } from "react";
-import { PrimaryButton, Subtitle, TextInput, Title } from "ui-helpers";
+import {
+  PrimaryButton,
+  Subtitle,
+  TextInput,
+  Title,
+} from "@evmosapps/ui-helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { BackArrowIcon, RequestIcon } from "icons";
-import { TokenAmount, TokenRef } from "evmos-wallet/src/registry-actions/types";
+import {
+  TokenAmount,
+  TokenRef,
+} from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { RequestModalProps } from "./RequestModal";
 import { CLICK_ON_GENERATE_PAYMENT_REQUEST, useTracker } from "tracker";
 import { RequestAssetSelector } from "./RequestAssetSelector";
 import { useDispatch, useSelector } from "react-redux";
 import { useAccount } from "wagmi";
-import { StoreType, WalletConnection } from "evmos-wallet";
-import { CopilotButton } from "copilot";
+import { StoreType, WalletConnection } from "@evmosapps/evmos-wallet";
+import { CopilotButton } from "@evmosapps/copilot";
 
 const MAX_MESSAGE_LENGTH = 140;
 

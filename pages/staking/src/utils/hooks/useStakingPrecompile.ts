@@ -1,6 +1,6 @@
 import { writeContract } from "wagmi/actions";
 import { useSelector } from "react-redux";
-import { StoreType, getAbi } from "evmos-wallet";
+import { StoreType, getAbi } from "@evmosapps/evmos-wallet";
 import { BigNumber } from "@ethersproject/bignumber";
 import { Hex } from "viem";
 

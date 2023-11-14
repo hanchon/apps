@@ -5,7 +5,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import Link from "next/link";
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { SmallButton, ConfirmButton } from "ui-helpers";
+import { SmallButton, ConfirmButton } from "@evmosapps/ui-helpers";
 import { Delegate } from "./transactions/Delegate";
 import { Redelegate } from "./transactions/Redelegate";
 import { Undelegate } from "./transactions/Undelegate";
@@ -16,7 +16,7 @@ import {
   CLICK_BUTTON_MANAGE_REDELEGATE,
   useTracker,
 } from "tracker";
-import { EVMOS_DECIMALS } from "evmos-wallet";
+import { EVMOS_DECIMALS } from "@evmosapps/evmos-wallet";
 import { ModalDelegate } from "../../../utils/types";
 
 const Staking = ({

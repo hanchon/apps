@@ -1,5 +1,5 @@
 {
-  "name": "copilot",
+  "name": "@evmosapps/copilot",
   "version": "1.0.10",
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
@@ -41,7 +41,7 @@
     "constants-helper": "workspace:*",
     "eslint": "^8.47.0",
     "ethers": "^6.7.1",
-    "evmos-wallet": "workspace:*",
+    "@evmosapps/evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
     "icons": "workspace:*",
     "mixpanel-browser": "^2.47.0",
@@ -51,7 +51,7 @@
     "react-dom": "^18.2.0",
     "tracker": "workspace:*",
     "typescript": "^5.2.2",
-    "ui-helpers": "workspace:*",
+    "@evmosapps/ui-helpers": "workspace:*",
     "@evmosapps/instant-dapps": "workspace:*"
   },
   "browserslist": [

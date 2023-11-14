@@ -1,5 +1,5 @@
 {
-  "name": "evmos-wallet",
+  "name": "@evmosapps/evmos-wallet",
   "version": "1.0.23",
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
@@ -30,7 +30,7 @@
     "tracker": "workspace:*",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
-    "ui-helpers": "workspace:*",
+    "@evmosapps/ui-helpers": "workspace:*",
     "zod": "^3.22.1"
   },
   "dependencies": {
@@ -70,7 +70,7 @@
     "react-redux": "^8.1.2",
     "redux": "^4.2.1",
     "schummar-translate": "^1.19.0",
-    "ui-helpers": "workspace:*",
+    "@evmosapps/ui-helpers": "workspace:*",
     "vitest": "^0.34.6"
   },
   "browserslist": [

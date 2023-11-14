@@ -10,9 +10,9 @@ import {
   TopBarContainer,
   ConfirmButton,
   Tooltip,
-} from "ui-helpers";
-import { useEvmosBalance, useRewards } from "evmos-wallet";
-import { StoreType } from "evmos-wallet";
+} from "@evmosapps/ui-helpers";
+import { useEvmosBalance, useRewards } from "@evmosapps/evmos-wallet";
+import { StoreType } from "@evmosapps/evmos-wallet";
 import { convertFromAtto, displayTopBarTooltip } from "helpers";
 import { FULL_DAY_MINUS_ONE_SECOND } from "constants-helper";
 import { BigNumber } from "@ethersproject/bignumber";

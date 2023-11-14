@@ -23,7 +23,7 @@ import {
   WALLET_NOTIFICATIONS,
   notifyError,
 } from "../internal/wallet/functionality/errors";
-import { Badge, Divider } from "ui-helpers";
+import { Badge, Divider } from "@evmosapps/ui-helpers";
 import { useConnect } from "wagmi";
 
 const providers = [

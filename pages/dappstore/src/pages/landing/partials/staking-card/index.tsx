@@ -16,10 +16,10 @@ import {
   getBalanceInDollars,
   getNumberBalance,
   getNumberBalanceInDollars,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { CLICK_ON_STAKE_AND_MANAGE_DELEGATION } from "tracker";
-import { ButtonWithLink, TrackerEvent } from "ui-helpers";
+import { ButtonWithLink, TrackerEvent } from "@evmosapps/ui-helpers";
 import { Card } from "../card";
 
 export const StakingCard = () => {

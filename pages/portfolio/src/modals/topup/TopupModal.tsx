@@ -1,7 +1,13 @@
-const Copilot = dynamic(() => import("copilot").then((mod) => mod.Copilot));
+const Copilot = dynamic(() =>
+  import("@evmosapps/copilot").then((mod) => mod.Copilot)
+);
 import { useEffectEvent, useModal } from "helpers";
 import dynamic from "next/dynamic";
-import { StepsContext, StepsContextProvider, topUpStep } from "copilot";
+import {
+  StepsContext,
+  StepsContextProvider,
+  topUpStep,
+} from "@evmosapps/copilot";
 import { useContext, useEffect } from "react";
 
 export const useTopupModal = () => useModal("topup");

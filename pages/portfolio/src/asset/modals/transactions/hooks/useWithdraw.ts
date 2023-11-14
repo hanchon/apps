@@ -15,7 +15,7 @@ import {
   snackRequestRejected,
   EVMOS_SYMBOL,
   StoreType,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import {
   CLICK_WITHDRAW_CONFIRM_BUTTON,
   useTracker,

@@ -37,9 +37,9 @@
     "@types/react-dom": "18.0.9",
     "autoprefixer": "^10.4.13",
     "constants-helper": "workspace:*",
-    "copilot": "workspace:*",
+    "@evmosapps/copilot": "workspace:*",
     "ethers": "^6.7.1",
-    "evmos-wallet": "workspace:*",
+    "@evmosapps/evmos-wallet": "workspace:*",
     "helpers": "workspace:*",
     "i18next": "^23.6.0",
     "icons": "workspace:*",
@@ -56,7 +56,7 @@
     "tailwindcss": "^3.3.5",
     "tracker": "workspace:*",
     "typescript": "^5.2.2",
-    "ui-helpers": "workspace:*"
+    "@evmosapps/ui-helpers": "workspace:*"
   },
   "browserslist": [
     "last 3 chrome version",

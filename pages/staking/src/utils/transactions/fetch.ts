@@ -5,13 +5,13 @@ import {
   GENERATING_TX_NOTIFICATIONS,
   IBCTransferResponse,
   EVMOS_BACKEND,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 
 export async function delegateBackendCall(
   pubkey: string,
   address: string,
   valAddress: string,
-  amount: string,
+  amount: string
 ): Promise<{
   error: boolean;
   message: string;
@@ -57,7 +57,7 @@ export async function undelegateBackendCall(
   pubkey: string,
   address: string,
   valAddress: string,
-  amount: string,
+  amount: string
 ): Promise<{
   error: boolean;
   message: string;
@@ -104,7 +104,7 @@ export async function redelegateBackendCall(
   address: string,
   valAddress: string,
   amount: string,
-  valDestAddress: string,
+  valDestAddress: string
 ): Promise<{
   error: boolean;
   message: string;
@@ -149,7 +149,7 @@ export async function redelegateBackendCall(
 
 export async function rewardsBackendCall(
   pubkey: string,
-  address: string,
+  address: string
 ): Promise<{
   error: boolean;
   message: string;
@@ -192,7 +192,7 @@ export async function cancelUndelegationsBackendCall(
   address: string,
   amount: string,
   valAddress: string,
-  creationHeight: string,
+  creationHeight: string
 ): Promise<{
   error: boolean;
   message: string;

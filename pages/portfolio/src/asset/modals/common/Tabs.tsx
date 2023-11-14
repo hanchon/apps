@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import { convertAndFormat } from "helpers";
 import { QuestionMarkIcon } from "icons";
-import { Tooltip } from "ui-helpers";
+import { Tooltip } from "@evmosapps/ui-helpers";
 
 const Tabs = ({
   cosmosBalance,

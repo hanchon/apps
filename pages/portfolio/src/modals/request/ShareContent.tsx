@@ -12,14 +12,14 @@ import {
   PrimaryButton,
   TextInput,
   Title,
-} from "ui-helpers";
+} from "@evmosapps/ui-helpers";
 import { Trans } from "next-i18next";
 import { BackArrowIcon, RequestIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { tokenToUSD } from "../common/utils";
 import { useTokenPrice } from "../hooks/useTokenPrice";
 import { AmountBox } from "../common/AmountBox";
-import { TokenRef } from "evmos-wallet/src/registry-actions/types";
+import { TokenRef } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { RequestModalProps } from "./RequestModal";
 import {
   CLICK_ON_COPY_ICON_REQUEST_FLOW,
@@ -27,12 +27,12 @@ import {
   CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW,
   useTracker,
 } from "tracker";
-import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import QRCode from "react-qr-code";
 import { useDispatch, useSelector } from "react-redux";
 import { useAccount } from "wagmi";
-import { StoreType, WalletConnection } from "evmos-wallet";
-import { CopilotButton } from "copilot";
+import { StoreType, WalletConnection } from "@evmosapps/evmos-wallet";
+import { CopilotButton } from "@evmosapps/copilot";
 import { useTranslation } from "@evmosapps/i18n/client";
 
 export const ShareContent = ({

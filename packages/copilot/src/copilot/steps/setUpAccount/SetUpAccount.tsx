@@ -4,7 +4,7 @@
 import { GroupStateI, SetUpAccountI } from "./types";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
-import { Progress } from "ui-helpers";
+import { Progress } from "@evmosapps/ui-helpers";
 export const SetUpAccount = ({
   stepsSetAccount,
   groupState,

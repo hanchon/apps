@@ -6,7 +6,7 @@ import { SuccessTopUp } from "./SuccessTopUp";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { Dispatch, SetStateAction } from "react";
-import { Tabs } from "ui-helpers";
+import { Tabs } from "@evmosapps/ui-helpers";
 import {
   CLICK_ON_TOP_UP_WITH_CARD_COPILOT,
   CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT,

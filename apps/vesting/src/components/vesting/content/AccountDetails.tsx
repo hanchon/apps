@@ -1,10 +1,10 @@
-import { BannerMessages, Modal } from "ui-helpers";
+import { BannerMessages, Modal } from "@evmosapps/ui-helpers";
 import { useCallback, useState } from "react";
 import { ClawbackModal } from "./modal/ClawbackModal";
 import { getVestingAccountNameLocalstorage } from "../helpers";
 import { useVestingAccounts } from "../../../internal/hooks/useVesting";
 import { AccountContent } from "./modal/AccountContent";
-import { normalizeToEvmos } from "evmos-wallet";
+import { normalizeToEvmos } from "@evmosapps/evmos-wallet";
 
 export const AccountDetails = ({ account = "" }: { account?: string }) => {
   const [showModal, setIsOpenModal] = useState(false);

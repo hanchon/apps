@@ -1,13 +1,13 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { Modal } from "ui-helpers";
+import { Modal } from "@evmosapps/ui-helpers";
 import { Content } from "./Content";
 import { z } from "zod";
 import {
   AddressSchema,
   TokenRefSchema,
-} from "evmos-wallet/src/registry-actions/utils";
+} from "@evmosapps/evmos-wallet/src/registry-actions/utils";
 import { ModalProps, useModal } from "helpers";
 
 const MAX_MESSAGE_LENGTH = 140;

@@ -1,4 +1,4 @@
-import { ErrorMessage, Label, ModalTitle } from "ui-helpers";
+import { ErrorMessage, Label, ModalTitle } from "@evmosapps/ui-helpers";
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,7 +14,7 @@ import {
   SNACKBAR_TYPES,
   GENERATING_TX_NOTIFICATIONS,
   BROADCASTED_NOTIFICATIONS,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { useSelector, useDispatch } from "react-redux";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { useTranslation } from "next-i18next";
@@ -22,7 +22,7 @@ import { Log } from "helpers";
 import { EXPLORER_URL } from "constants-helper";
 import { getNetwork, switchNetwork } from "wagmi/actions";
 import { E } from "helpers";
-import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
+import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 
 const evmos = getEvmosChainInfo();
 export const EnableVestingModal = () => {

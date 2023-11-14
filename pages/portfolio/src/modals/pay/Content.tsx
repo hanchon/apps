@@ -9,30 +9,30 @@ import {
   Spinner,
   Subtitle,
   Title,
-} from "ui-helpers";
+} from "@evmosapps/ui-helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
-import { FormattedBalance } from "evmos-wallet/src/registry-actions/types";
+import { FormattedBalance } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
 import {
   getActiveProviderKey,
   getChain,
   normalizeToCosmosAddress,
   useTokenBalance,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { formatUnits } from "viem";
 import { tokenToUSD } from "../common/utils";
 import { useTokenPrice } from "../hooks/useTokenPrice";
 
-import { truncateAddress } from "evmos-wallet/src/internal/wallet/style/format";
+import { truncateAddress } from "@evmosapps/evmos-wallet/src/internal/wallet/style/format";
 import { AmountBox } from "../common/AmountBox";
-import { StoreType, WalletConnection } from "evmos-wallet";
+import { StoreType, WalletConnection } from "@evmosapps/evmos-wallet";
 import { Dispatch, SetStateAction } from "react";
-import { CopilotButton } from "copilot";
+import { CopilotButton } from "@evmosapps/copilot";
 import { useDispatch, useSelector } from "react-redux";
 import { PayModalProps } from "./Modal";
-import { getChainByAddress } from "evmos-wallet/src/registry-actions/get-chain-by-account";
+import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";
 import { PayIcon } from "icons";
 import Image from "next/image";
 import {
@@ -43,10 +43,10 @@ import {
   UNSUCESSFUL_PAY_TX,
 } from "tracker/src/constants";
 import { useTracker } from "tracker";
-import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { useSend } from "../hooks/useSend";
 import { useReceiptModal } from "../receipt/ReceiptModal";
-import { normalizeToPrefix } from "evmos-wallet/src/registry-actions/utils/normalize-to-prefix";
+import { normalizeToPrefix } from "@evmosapps/evmos-wallet/src/registry-actions/utils/normalize-to-prefix";
 import { createPortal } from "react-dom";
 import { TransactionInspector } from "../shared/TransactionInspector";
 import { useWatch } from "helpers";

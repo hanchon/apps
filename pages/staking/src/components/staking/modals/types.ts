@@ -4,7 +4,7 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { Dispatch, SetStateAction } from "react";
 
-import { WalletExtension } from "evmos-wallet/src/internal/wallet/functionality/wallet";
+import { WalletExtension } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/wallet";
 import { ModalCancelUndelegations, ModalDelegate } from "../../../utils/types";
 
 export type DelegateProps = {

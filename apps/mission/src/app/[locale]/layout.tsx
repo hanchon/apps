@@ -4,7 +4,7 @@ import { PropsWithChildren } from "react";
 import { languages } from "@evmosapps/i18n";
 import { withLocale } from "@evmosapps/i18n/server";
 import { cn } from "helpers";
-import { greyCliff, ibm, nb, evmos } from "ui-helpers/src/fonts";
+import { greyCliff, ibm, nb, evmos } from "@evmosapps/ui-helpers/src/fonts";
 import { RootProviders } from "./RootProviders";
 import { GoogleAnalytics } from "../../components/GoogleAnalytics";
 import { ConsentModal } from "stateful-components/src/modals/ConsentModal/ConsentModal";
@@ -15,7 +15,7 @@ import { ProfileModal } from "stateful-components/src/modals/ProfileModal/Profil
 import { TopupModal } from "stateful-components/src/modals/TopupModal/TopupModal";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
-import { Container } from "ui-helpers";
+import { Container } from "@evmosapps/ui-helpers";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 

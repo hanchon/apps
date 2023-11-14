@@ -9,7 +9,7 @@ import { TableDataElement } from "../../../utils/table/normalizeData";
 import { executeWithdraw } from "../../../utils/transactions/withdraw";
 
 import { getReservedForFeeText } from "helpers";
-import { ConfirmButton, ErrorMessage, Modal } from "ui-helpers";
+import { ConfirmButton, ErrorMessage, Modal } from "@evmosapps/ui-helpers";
 import { KeplrIcon } from "icons";
 import Arrow from "../common/Arrow";
 import FromContainer from "../common/FromContainer";
@@ -32,7 +32,7 @@ import {
   Token,
   SNACKBAR_CONTENT_TYPES,
   SNACKBAR_TYPES,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import {
   snackbarWaitingBroadcast,
   snackbarIncludedInBlock,

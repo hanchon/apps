@@ -5,11 +5,14 @@ import {
   CryptoSelectorBalanceText,
   CryptoSelectorBox,
   CryptoSelectorDropdownBox,
-} from "ui-helpers";
-import { Prefix, TokenAmount } from "evmos-wallet/src/registry-actions/types";
-import { CryptoSelector } from "ui-helpers";
-import { Address, getChain, useTokenBalance } from "evmos-wallet";
-import { CryptoSelectorTitle } from "ui-helpers";
+} from "@evmosapps/ui-helpers";
+import {
+  Prefix,
+  TokenAmount,
+} from "@evmosapps/evmos-wallet/src/registry-actions/types";
+import { CryptoSelector } from "@evmosapps/ui-helpers";
+import { Address, getChain, useTokenBalance } from "@evmosapps/evmos-wallet";
+import { CryptoSelectorTitle } from "@evmosapps/ui-helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
@@ -19,7 +22,7 @@ import {
   SELECT_TOKEN_SEND_FLOW,
 } from "tracker/src/constants";
 import { useAccount } from "wagmi";
-import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { useEffectEvent } from "helpers";
 import { sortedTokens } from "../shared/sortedChains";
 

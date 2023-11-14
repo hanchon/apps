@@ -3,7 +3,7 @@ import { Branding } from "./Branding";
 import { LaunchPad } from "./LaunchPad";
 
 import { ConnectModalButton } from "./ConnectModalButton";
-import { Container } from "ui-helpers";
+import { Container } from "@evmosapps/ui-helpers";
 
 export const Header = () => {
   return (

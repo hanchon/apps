@@ -175,9 +175,15 @@ importers:
       '@evmosapps/config':
         specifier: workspace:*
         version: link:../../packages/config
+      '@evmosapps/copilot':
+        specifier: workspace:*
+        version: link:../../packages/copilot
       '@evmosapps/dappstore-page':
         specifier: workspace:*
         version: link:../../pages/dappstore
+      '@evmosapps/evmos-wallet':
+        specifier: workspace:*
+        version: link:../../packages/evmos-wallet
       '@evmosapps/governance-page':
         specifier: workspace:*
         version: link:../../pages/governance
@@ -190,6 +196,9 @@ importers:
       '@evmosapps/test-utils':
         specifier: workspace:*
         version: link:../../packages/test-utils
+      '@evmosapps/ui-helpers':
+        specifier: workspace:*
+        version: link:../../packages/ui-helpers
       '@hanchon/signature-to-pubkey':
         specifier: ^1.0.1
         version: 1.0.1
@@ -220,15 +229,9 @@ importers:
       constants-helper:
         specifier: workspace:*
         version: link:../../packages/constants-helper
-      copilot:
-        specifier: workspace:*
-        version: link:../../packages/copilot
       ethers:
         specifier: ^6.7.1
         version: 6.7.1
-      evmos-wallet:
-        specifier: workspace:*
-        version: link:../../packages/evmos-wallet
       helpers:
         specifier: workspace:*
         version: link:../../packages/helpers
@@ -277,12 +280,18 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
-      ui-helpers:
-        specifier: workspace:*
-        version: link:../../packages/ui-helpers
 
   apps/vesting:
     dependencies:
+      '@evmosapps/copilot':
+        specifier: workspace:*
+        version: link:../../packages/copilot
+      '@evmosapps/evmos-wallet':
+        specifier: workspace:*
+        version: link:../../packages/evmos-wallet
+      '@evmosapps/ui-helpers':
+        specifier: workspace:*
+        version: link:../../packages/ui-helpers
       '@hookform/resolvers':
         specifier: ^3.1.1
         version: 3.1.1(react-hook-form@7.45.2)
@@ -292,18 +301,12 @@ importers:
       constants-helper:
         specifier: workspace:*
         version: link:../../packages/constants-helper
-      copilot:
-        specifier: workspace:*
-        version: link:../../packages/copilot
       dayjs:
         specifier: ^1.11.8
         version: 1.11.8
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
-      evmos-wallet:
-        specifier: workspace:*
-        version: link:../../packages/evmos-wallet
       helpers:
         specifier: workspace:*
         version: link:../../packages/helpers
@@ -325,9 +328,6 @@ importers:
       tracker:
         specifier: workspace:*
         version: link:../../packages/tracker
-      ui-helpers:
-        specifier: workspace:*
-        version: link:../../packages/ui-helpers
       vitest:
         specifier: ^0.34.6
         version: 0.34.6(jsdom@22.1.0)(playwright@1.39.0)
@@ -531,9 +531,15 @@ importers:
       '@ethersproject/bignumber':
         specifier: ^5.7.0
         version: 5.7.0
+      '@evmosapps/evmos-wallet':
+        specifier: workspace:*
+        version: link:../evmos-wallet
       '@evmosapps/instant-dapps':
         specifier: workspace:*
         version: link:../instant-dapps
+      '@evmosapps/ui-helpers':
+        specifier: workspace:*
+        version: link:../ui-helpers
       '@fireworks-js/react':
         specifier: ^2.10.7
         version: 2.10.7(@types/react@18.2.21)(react@18.2.0)
@@ -576,9 +582,6 @@ importers:
       ethers:
         specifier: ^6.7.1
         version: 6.7.1
-      evmos-wallet:
-        specifier: workspace:*
-        version: link:../evmos-wallet
       helpers:
         specifier: workspace:*
         version: link:../helpers
@@ -612,9 +615,6 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
-      ui-helpers:
-        specifier: workspace:*
-        version: link:../ui-helpers
     devDependencies:
       '@evmosapps/config':
         specifier: workspace:*
@@ -679,6 +679,9 @@ importers:
       '@evmosapps/registry':
         specifier: workspace:*
         version: link:../registry
+      '@evmosapps/ui-helpers':
+        specifier: workspace:*
+        version: link:../ui-helpers
       '@hanchon/signature-to-pubkey':
         specifier: ^1.0.1
         version: 1.0.1
@@ -748,9 +751,6 @@ importers:
       schummar-translate:
         specifier: ^1.19.0
         version: 1.19.0(@types/react@18.2.21)(react@18.2.0)
-      ui-helpers:
-        specifier: workspace:*
-        version: link:../ui-helpers
       vitest:
         specifier: ^0.34.6
         version: 0.34.6(jsdom@22.1.0)(playwright@1.39.0)
@@ -1039,6 +1039,15 @@ importers:
 
   packages/stateful-components:
     dependencies:
+      '@evmosapps/copilot':
+        specifier: workspace:*
+        version: link:../copilot
+      '@evmosapps/evmos-wallet':
+        specifier: workspace:*
+        version: link:../evmos-wallet
+      '@evmosapps/ui-helpers':
+        specifier: workspace:*
+        version: link:../ui-helpers
       '@reduxjs/toolkit':
         specifier: ^1.9.5
         version: 1.9.5(react-redux@8.1.2)(react@18.2.0)
@@ -1054,12 +1063,6 @@ importers:
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
-      copilot:
-        specifier: workspace:*
-        version: link:../copilot
-      evmos-wallet:
-        specifier: workspace:*
-        version: link:../evmos-wallet
       icons:
         specifier: workspace:*
         version: link:../icons
@@ -1069,9 +1072,6 @@ importers:
       tracker:
         specifier: workspace:*
         version: link:../tracker
-      ui-helpers:
-        specifier: workspace:*
-        version: link:../ui-helpers
       vitest:
         specifier: ^0.34.6
         version: 0.34.6(jsdom@22.1.0)(playwright@1.39.0)
@@ -1385,21 +1385,24 @@ importers:
 
   pages/dappstore:
     dependencies:
+      '@evmosapps/copilot':
+        specifier: workspace:*
+        version: link:../../packages/copilot
+      '@evmosapps/evmos-wallet':
+        specifier: workspace:*
+        version: link:../../packages/evmos-wallet
       '@evmosapps/instant-dapps':
         specifier: workspace:*
         version: link:../../packages/instant-dapps
       '@evmosapps/registry':
         specifier: workspace:*
         version: link:../../packages/registry
+      '@evmosapps/ui-helpers':
+        specifier: workspace:*
+        version: link:../../packages/ui-helpers
       constants-helper:
         specifier: workspace:*
         version: link:../../packages/constants-helper
-      copilot:
-        specifier: workspace:*
-        version: link:../../packages/copilot
-      evmos-wallet:
-        specifier: workspace:*
-        version: link:../../packages/evmos-wallet
       helpers:
         specifier: workspace:*
         version: link:../../packages/helpers
@@ -1427,24 +1430,24 @@ importers:
       tracker:
         specifier: workspace:*
         version: link:../../packages/tracker
-      ui-helpers:
-        specifier: workspace:*
-        version: link:../../packages/ui-helpers
 
   pages/governance:
     dependencies:
+      '@evmosapps/copilot':
+        specifier: workspace:*
+        version: link:../../packages/copilot
+      '@evmosapps/evmos-wallet':
+        specifier: workspace:*
+        version: link:../../packages/evmos-wallet
       '@evmosapps/registry':
         specifier: workspace:*
         version: link:../../packages/registry
+      '@evmosapps/ui-helpers':
+        specifier: workspace:*
+        version: link:../../packages/ui-helpers
       constants-helper:
         specifier: workspace:*
         version: link:../../packages/constants-helper
-      copilot:
-        specifier: workspace:*
-        version: link:../../packages/copilot
-      evmos-wallet:
-        specifier: workspace:*
-        version: link:../../packages/evmos-wallet
       helpers:
         specifier: workspace:*
         version: link:../../packages/helpers
@@ -1469,24 +1472,24 @@ importers:
       tracker:
         specifier: workspace:*
         version: link:../../packages/tracker
-      ui-helpers:
-        specifier: workspace:*
-        version: link:../../packages/ui-helpers
 
   pages/portfolio:
     dependencies:
+      '@evmosapps/copilot':
+        specifier: workspace:*
+        version: link:../../packages/copilot
+      '@evmosapps/evmos-wallet':
+        specifier: workspace:*
+        version: link:../../packages/evmos-wallet
       '@evmosapps/registry':
         specifier: workspace:*
         version: link:../../packages/registry
+      '@evmosapps/ui-helpers':
+        specifier: workspace:*
+        version: link:../../packages/ui-helpers
       constants-helper:
         specifier: workspace:*
         version: link:../../packages/constants-helper
-      copilot:
-        specifier: workspace:*
-        version: link:../../packages/copilot
-      evmos-wallet:
-        specifier: workspace:*
-        version: link:../../packages/evmos-wallet
       helpers:
         specifier: workspace:*
         version: link:../../packages/helpers
@@ -1508,24 +1511,24 @@ importers:
       tracker:
         specifier: workspace:*
         version: link:../../packages/tracker
-      ui-helpers:
-        specifier: workspace:*
-        version: link:../../packages/ui-helpers
 
   pages/staking:
     dependencies:
+      '@evmosapps/copilot':
+        specifier: workspace:*
+        version: link:../../packages/copilot
+      '@evmosapps/evmos-wallet':
+        specifier: workspace:*
+        version: link:../../packages/evmos-wallet
       '@evmosapps/registry':
         specifier: workspace:*
         version: link:../../packages/registry
+      '@evmosapps/ui-helpers':
+        specifier: workspace:*
+        version: link:../../packages/ui-helpers
       constants-helper:
         specifier: workspace:*
         version: link:../../packages/constants-helper
-      copilot:
-        specifier: workspace:*
-        version: link:../../packages/copilot
-      evmos-wallet:
-        specifier: workspace:*
-        version: link:../../packages/evmos-wallet
       helpers:
         specifier: workspace:*
         version: link:../../packages/helpers
@@ -1550,9 +1553,6 @@ importers:
       tracker:
         specifier: workspace:*
         version: link:../../packages/tracker
-      ui-helpers:
-        specifier: workspace:*
-        version: link:../../packages/ui-helpers
 
 packages:
 

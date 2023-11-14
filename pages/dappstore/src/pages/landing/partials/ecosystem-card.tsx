@@ -4,7 +4,7 @@
 
 import Image from "next/image";
 
-import { Badge, TrackerEvent } from "ui-helpers";
+import { Badge, TrackerEvent } from "@evmosapps/ui-helpers";
 
 import { CLICK_ON_FEATURED_DAPP } from "tracker";
 

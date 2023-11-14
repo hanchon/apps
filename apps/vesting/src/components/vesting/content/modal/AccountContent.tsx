@@ -1,7 +1,7 @@
-import { KEPLR_KEY, StoreType, normalizeToEth } from "evmos-wallet";
+import { KEPLR_KEY, StoreType, normalizeToEth } from "@evmosapps/evmos-wallet";
 import { useTranslation } from "next-i18next";
 import { useSelector } from "react-redux";
-import { ConfirmButton } from "ui-helpers";
+import { ConfirmButton } from "@evmosapps/ui-helpers";
 import { VestingAccountDetail } from "../../../../internal/types";
 import { AmountItem } from "./AmountItem";
 import { AddresItem } from "./AddressItem";

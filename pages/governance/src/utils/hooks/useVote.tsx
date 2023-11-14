@@ -4,7 +4,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { StoreType } from "evmos-wallet";
+import { StoreType } from "@evmosapps/evmos-wallet";
 import { getVoteRecord } from "../fetch";
 
 export const useVote = (id: string) => {

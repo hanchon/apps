@@ -6,7 +6,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { useCallback, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { StoreType, EVMOS_DECIMALS } from "evmos-wallet";
+import { StoreType, EVMOS_DECIMALS } from "@evmosapps/evmos-wallet";
 import { Table } from "../../common/table/Table";
 import {
   tableStyle,
@@ -25,8 +25,8 @@ import {
   formatPercentage,
 } from "helpers";
 
-import { Button, MessageTable, Modal } from "ui-helpers";
-import { DelegationsResponse } from "evmos-wallet/src/api/types";
+import { Button, MessageTable, Modal } from "@evmosapps/ui-helpers";
+import { DelegationsResponse } from "@evmosapps/evmos-wallet/src/api/types";
 import { useStakingInfo } from "../../../utils/hooks/useStakingInfo";
 import { useSearchContext, SearchContext } from "../../context/SearchContext";
 

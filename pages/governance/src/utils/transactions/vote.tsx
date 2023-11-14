@@ -6,14 +6,14 @@ import {
   apiVote,
   executeApiTransaction,
   mapExecuteResponse,
-} from "evmos-wallet";
-import { WalletExtension } from "evmos-wallet/src/internal/wallet/functionality/wallet";
+} from "@evmosapps/evmos-wallet";
+import { WalletExtension } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/wallet";
 import { raise } from "helpers";
 
 export const executeVote = async (
   wallet: WalletExtension,
   id: string,
-  option: number,
+  option: number
 ) => {
   const { apiResponse, error, hash } = await executeApiTransaction(() =>
     apiVote({
@@ -21,7 +21,7 @@ export const executeVote = async (
       pubkey: wallet.evmosPubkey ?? raise("ACCOUNT_NOT_FOUND"),
       id,
       option,
-    }),
+    })
   );
   if (error) {
     return mapExecuteResponse({

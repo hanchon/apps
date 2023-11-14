@@ -4,7 +4,7 @@
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { getEvmosBalance } from "../fetch";
-import { StoreType, txStatusError } from "evmos-wallet";
+import { StoreType, txStatusError } from "@evmosapps/evmos-wallet";
 import { BalanceResponse } from "../types";
 import { BigNumber } from "@ethersproject/bignumber";
 

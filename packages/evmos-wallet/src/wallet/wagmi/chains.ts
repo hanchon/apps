@@ -3,7 +3,7 @@ import { evmos as wagmiEvmos } from "wagmi/chains";
 import { Chain } from "viem";
 
 import { evmos, evmoslocal, evmostestnet } from "@evmosapps/registry";
-import { getSelectedNetworkMode } from "ui-helpers/src/getSelectedNetworkMode";
+import { getSelectedNetworkMode } from "@evmosapps/ui-helpers/src/getSelectedNetworkMode";
 import { raise } from "helpers";
 let registry: typeof evmos | typeof evmoslocal | typeof evmostestnet = evmos;
 if (getSelectedNetworkMode() === "localtestnet") {

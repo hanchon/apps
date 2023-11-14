@@ -1,4 +1,4 @@
-import { Prefix } from "evmos-wallet/src/registry-actions/types";
+import { Prefix } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
 import {
   CosmosAddress,
@@ -6,12 +6,12 @@ import {
   getChain,
   getKeplrProvider,
   normalizeToCosmosAddress,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { E } from "helpers";
 import { useId } from "react";
 import { getAccount } from "wagmi/actions";
-import { getSelectedNetworkMode } from "ui-helpers/src/getSelectedNetworkMode";
+import { getSelectedNetworkMode } from "@evmosapps/ui-helpers/src/getSelectedNetworkMode";
 
 const suggestChain = async (prefix: Prefix) => {
   const keplr = await getKeplrProvider();

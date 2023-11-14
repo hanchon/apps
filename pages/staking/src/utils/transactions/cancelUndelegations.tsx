@@ -6,9 +6,9 @@ import {
   apiStakingCancelUndelegation,
   executeApiTransaction,
   mapExecuteResponse,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 
-import { WalletExtension } from "evmos-wallet/src/internal/wallet/functionality/wallet";
+import { WalletExtension } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/wallet";
 import { BigNumber } from "@ethersproject/bignumber";
 import { raise } from "helpers";
 
@@ -16,7 +16,7 @@ export const executeCancelUndelegations = async (
   wallet: WalletExtension,
   valAddress: string,
   amount: BigNumber,
-  creationHeight: string,
+  creationHeight: string
 ) => {
   const { apiResponse, error, hash } = await executeApiTransaction(() =>
     apiStakingCancelUndelegation({
@@ -25,7 +25,7 @@ export const executeCancelUndelegations = async (
       creationHeight,
       address: wallet.evmosAddressCosmosFormat,
       pubkey: wallet.evmosPubkey ?? raise("ACCOUNT_NOT_FOUND"),
-    }),
+    })
   );
   if (error) {
     return mapExecuteResponse({

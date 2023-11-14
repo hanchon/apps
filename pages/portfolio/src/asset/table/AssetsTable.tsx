@@ -5,10 +5,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { StoreType } from "evmos-wallet";
+import { StoreType } from "@evmosapps/evmos-wallet";
 import { ERC20BalanceResponse } from "./types";
 
-import { Modal, Switch } from "ui-helpers";
+import { Modal, Switch } from "@evmosapps/ui-helpers";
 
 import { cn, getTotalAssets } from "helpers";
 import HeadAssets from "./components/HeadAssets";

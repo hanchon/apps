@@ -6,7 +6,11 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { KeplrIcon, MetamaskIcon } from "icons";
 import { ContainerModal } from "../ContainerModal";
-import { ErrorMessage, ContainerInput, SmallButton } from "ui-helpers";
+import {
+  ErrorMessage,
+  ContainerInput,
+  SmallButton,
+} from "@evmosapps/ui-helpers";
 import { TextSmall } from "../TextSmall";
 import AddTokenMetamask from "../../transactions/AddTokenMetamask";
 import { TableDataElement } from "../../../../utils/table/normalizeData";
@@ -20,7 +24,7 @@ import {
   snackErrorConnectingMetaMask,
   MODAL_NOTIFICATIONS,
   StoreType,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 const DepositReceiver = ({
   receiver,
   setReceiver,

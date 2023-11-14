@@ -1,11 +1,11 @@
 "use client";
 
-import { Modal } from "ui-helpers";
+import { Modal } from "@evmosapps/ui-helpers";
 
 import { modalLink, useModal } from "helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { COOKIE_POLICY_URL, PRIVACY_POLICY_URL } from "constants-helper";
-import GrayButton from "ui-helpers/src/GrayButton";
+import GrayButton from "@evmosapps/ui-helpers/src/GrayButton";
 import { DISABLE_TRACKER_LOCALSTORAGE } from "tracker";
 import { Trans } from "react-i18next";
 

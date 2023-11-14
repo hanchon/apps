@@ -5,8 +5,8 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Dispatch, SetStateAction, useMemo } from "react";
 
 import { addAssets, addDollarAssets, formatNumber } from "helpers";
-import { EVMOS_SYMBOL } from "evmos-wallet";
-import { Accordion } from "ui-helpers";
+import { EVMOS_SYMBOL } from "@evmosapps/evmos-wallet";
+import { Accordion } from "@evmosapps/ui-helpers";
 import { RowContent } from "./components/RowContent";
 import { SubRowContent } from "./components/SubRowContent";
 import { ContentTableProps } from "./types";

@@ -9,7 +9,7 @@ import {
   TransactionStatus,
   txStatusErrorResponse,
   txStatusResponse,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { Log } from "helpers";
 
 export async function checkIBCState(txHash: string, network: string) {

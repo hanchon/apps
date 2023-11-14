@@ -6,11 +6,11 @@ import { AssetsCard } from "./partials/assets-card";
 import { GovernanceCard } from "./partials/governance-card";
 import { EcosystemSection } from "./partials/ecosystem-section";
 import { AccountBalance } from "./partials/account-balance";
-import { CopilotCard } from "copilot";
-import { Title } from "ui-helpers/src/titles/Title";
-import { Subtitle } from "ui-helpers/src/titles/Subtitle";
+import { CopilotCard } from "@evmosapps/copilot";
+import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
+import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { HeroSection } from "./partials/hero-section";
-import { ButtonWithLink, Frameline } from "ui-helpers";
+import { ButtonWithLink, Frameline } from "@evmosapps/ui-helpers";
 
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)

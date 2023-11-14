@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { categorySchema } from "./schemas/entities/categorySchema";
 import { notion } from "./notion-client";
-import { CATEGORIES_PAGE_NOTION_ID } from "evmos-wallet/src/internal/wallet/functionality/networkConfig";
+import { CATEGORIES_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 import { Log } from "helpers";
 
 export const fetchCategories = async () => {

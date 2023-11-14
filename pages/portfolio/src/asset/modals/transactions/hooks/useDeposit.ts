@@ -24,7 +24,7 @@ import {
   StoreType,
   getKeplrAccountPubKey,
   normalizeToEvmos,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import {
   CLICK_DEPOSIT_CONFIRM_BUTTON,
   useTracker,

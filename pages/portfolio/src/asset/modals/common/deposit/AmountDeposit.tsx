@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { MODAL_NOTIFICATIONS } from "evmos-wallet";
+import { MODAL_NOTIFICATIONS } from "@evmosapps/evmos-wallet";
 
 import {
   convertFromAtto,
@@ -13,7 +13,11 @@ import {
 } from "helpers";
 
 import DropdownTokensDeposit from "../../../dropdown/DropdownTokensDeposit";
-import { SmallButton, ContainerInput, ErrorMessage } from "ui-helpers";
+import {
+  SmallButton,
+  ContainerInput,
+  ErrorMessage,
+} from "@evmosapps/ui-helpers";
 import { ContainerModal } from "../ContainerModal";
 import Note from "../Note";
 import { TextSmall } from "../TextSmall";

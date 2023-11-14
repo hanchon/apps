@@ -3,7 +3,7 @@
 
 import DropdownChains from "../../../dropdown/DropdownChains";
 import { DropdownChainsProps } from "../../../dropdown/types";
-import { ContainerInput } from "ui-helpers";
+import { ContainerInput } from "@evmosapps/ui-helpers";
 import { TextSmall } from "../TextSmall";
 
 const ChainContainer = ({

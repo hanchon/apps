@@ -2,8 +2,8 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import Image from "next/image";
-import { Badge, ButtonWithLink, Frameline } from "ui-helpers";
-import { Title } from "ui-helpers/src/titles/Title";
+import { Badge, ButtonWithLink, Frameline } from "@evmosapps/ui-helpers";
+import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import Link from "next/link";
 import {
   DiscordIcon,

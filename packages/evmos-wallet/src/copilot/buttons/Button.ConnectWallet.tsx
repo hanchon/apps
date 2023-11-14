@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 import { Dispatch, SetStateAction } from "react";
 import { CLICK_CONNECT_WALLET_BUTTON, useTracker } from "tracker";
-import { PrimaryButton } from "ui-helpers";
+import { PrimaryButton } from "@evmosapps/ui-helpers";
 
 export const ButtonConnectWallet = ({
   setIsOpen,

@@ -12,9 +12,9 @@ import {
 } from "icons";
 import { ComponentProps, Fragment, PropsWithChildren } from "react";
 import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
-import { Badge, NetworkModeSelector } from "ui-helpers";
-import { PingIndicator } from "ui-helpers/src/PingIndicator";
-import { usePingIndicator } from "ui-helpers/src/launchPad/usePingIndicator";
+import { Badge, NetworkModeSelector } from "@evmosapps/ui-helpers";
+import { PingIndicator } from "@evmosapps/ui-helpers/src/PingIndicator";
+import { usePingIndicator } from "@evmosapps/ui-helpers/src/launchPad/usePingIndicator";
 
 export function LaunchPad({}: { showPing?: boolean }) {
   const { t } = useTranslation();

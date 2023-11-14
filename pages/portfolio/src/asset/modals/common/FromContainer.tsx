@@ -11,9 +11,9 @@ import {
   safeSubstraction,
   truncateNumber,
 } from "helpers";
-import { ErrorMessage } from "ui-helpers";
+import { ErrorMessage } from "@evmosapps/ui-helpers";
 import { FromProps } from "./types";
-import { truncateAddress, MODAL_NOTIFICATIONS } from "evmos-wallet";
+import { truncateAddress, MODAL_NOTIFICATIONS } from "@evmosapps/evmos-wallet";
 
 const FromContainer = ({ fee, balance, input, style }: FromProps) => {
   const feeDeposit = "5000";
@@ -52,13 +52,13 @@ const FromContainer = ({ fee, balance, input, style }: FromProps) => {
           onClick={() => {
             if (style.tokenTo?.toUpperCase() !== fee.feeDenom.toUpperCase()) {
               input.setInputValue(
-                numericOnly(convertFromAtto(balance.amount, balance.decimals)),
+                numericOnly(convertFromAtto(balance.amount, balance.decimals))
               );
             } else {
               setMaxClicked(true);
               const val = safeSubstraction(balance.amount, fee.fee);
               input.setInputValue(
-                numericOnly(convertFromAtto(val, balance.decimals)),
+                numericOnly(convertFromAtto(val, balance.decimals))
               );
             }
           }}
@@ -80,13 +80,13 @@ const FromContainer = ({ fee, balance, input, style }: FromProps) => {
 
       {truncateNumber(input.value) >
         truncateNumber(
-          numericOnly(convertFromAtto(balance.amount, balance.decimals)),
+          numericOnly(convertFromAtto(balance.amount, balance.decimals))
         ) && <ErrorMessage>{MODAL_NOTIFICATIONS.ErrorsAmountGt}</ErrorMessage>}
       <div>
         <span className="font-bold">Balance: </span>
         {convertAndFormat(balance.amount, balance.decimals, 6).replace(
           /\.?0+$/,
-          "",
+          ""
         )}{" "}
         {style.tokenTo}
       </div>

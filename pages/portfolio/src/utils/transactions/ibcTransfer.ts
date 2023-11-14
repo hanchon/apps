@@ -6,13 +6,13 @@ import {
   GENERATING_TX_NOTIFICATIONS,
   IBCChainParams,
   IBCTransferResponse,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 
 export async function ibcTransferBackendCall(
   pubkey: string,
   address: string,
   params: IBCChainParams,
-  useERC20Denom = true,
+  useERC20Denom = true
 ): Promise<{
   error: boolean;
   message: string;

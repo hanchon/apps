@@ -2,9 +2,12 @@
 import { useSearchParams } from "next/navigation";
 
 import { CLICK_CONNECT_WALLET_BUTTON, useTracker } from "tracker";
-import { AddressDisplay, PrimaryButton } from "ui-helpers";
+import { AddressDisplay, PrimaryButton } from "@evmosapps/ui-helpers";
 import { cn } from "helpers";
-import { getActiveProviderKey, normalizeToEvmos } from "evmos-wallet";
+import {
+  getActiveProviderKey,
+  normalizeToEvmos,
+} from "@evmosapps/evmos-wallet";
 import { useAccount } from "wagmi";
 import { useConnectModal } from "stateful-components/src/modals/ConnectModal/ConnectModal";
 import { useProfileModal } from "stateful-components/src/modals/ProfileModal/ProfileModal";

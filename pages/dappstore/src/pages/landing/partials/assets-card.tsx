@@ -8,7 +8,7 @@ import { CardTitle } from "./card-title";
 import { useTranslation } from "@evmosapps/i18n/client";
 
 import { CLICK_ON_SEE_PORTFOLIO } from "tracker";
-import { ButtonWithLink, TrackerEvent } from "ui-helpers";
+import { ButtonWithLink, TrackerEvent } from "@evmosapps/ui-helpers";
 
 export const AssetsCard = () => {
   const { t } = useTranslation("dappStore");

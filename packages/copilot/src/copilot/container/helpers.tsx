@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { STEP_STATUS } from "constants-helper";
-import { IconContainer } from "ui-helpers";
+import { IconContainer } from "@evmosapps/ui-helpers";
 import { ICONS_TYPES } from "constants-helper";
 
 export const TEXT_STYLES = {

@@ -7,7 +7,7 @@ import {
   connectWith,
   getActiveProviderKey,
   getGlobalKeplrProvider,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { E } from "helpers";
 
 const MODAL_STATE = "modalTransferState";

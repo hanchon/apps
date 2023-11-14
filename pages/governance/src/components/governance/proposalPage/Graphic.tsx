@@ -8,7 +8,7 @@ import {
   ProposalDetailProps,
   PROPOSAL_DISPLAY_MAPPING,
 } from "../../../utils/types";
-import { EVMOS_SYMBOL } from "evmos-wallet";
+import { EVMOS_SYMBOL } from "@evmosapps/evmos-wallet";
 import Arc from "../../common/arc/Arc";
 import { CloseIcon, CheckIcon } from "icons";
 import { BAR_COLORS } from "../bar/styles";

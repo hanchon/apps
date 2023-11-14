@@ -19,13 +19,13 @@ import {
 
 import { E, cn } from "helpers";
 
-import { Badge, Divider } from "ui-helpers";
+import { Badge, Divider } from "@evmosapps/ui-helpers";
 import { useAccount, useConnect } from "wagmi";
-import { connectWith } from "evmos-wallet";
+import { connectWith } from "@evmosapps/evmos-wallet";
 import {
   WALLET_NOTIFICATIONS,
   notifyError,
-} from "evmos-wallet/src/internal/wallet/functionality/errors";
+} from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/errors";
 import { useSetupCopilotModal } from "../CopilotModal/CopilotModal";
 
 const providers = [

@@ -8,7 +8,7 @@ import {
   TransactionStatus,
   SNACKBAR_CONTENT_TYPES,
   SNACKBAR_TYPES,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import {
   checkIBCExecutionStatus,
   checkTxInclusionInABlock,

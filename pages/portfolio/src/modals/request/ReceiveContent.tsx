@@ -15,10 +15,10 @@ import {
   Tabs,
   TextInput,
   Title,
-} from "ui-helpers";
+} from "@evmosapps/ui-helpers";
 import { Trans } from "next-i18next";
 
-import { CryptoSelector } from "ui-helpers";
+import { CryptoSelector } from "@evmosapps/ui-helpers";
 import QRCode from "react-qr-code";
 
 import {
@@ -26,12 +26,12 @@ import {
   WalletConnection,
   getActiveProviderKey,
   getChain,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { ReceiveIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
-import { CryptoSelectorDropdownBox } from "ui-helpers";
-import { CryptoSelectorTitle } from "ui-helpers";
-import { Prefix } from "evmos-wallet/src/registry-actions/types";
+import { CryptoSelectorDropdownBox } from "@evmosapps/ui-helpers";
+import { CryptoSelectorTitle } from "@evmosapps/ui-helpers";
+import { Prefix } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RequestModalProps } from "./RequestModal";
 import {
@@ -42,7 +42,7 @@ import {
   SELECT_NETWORK_RECEIVE_FLOW,
   useTracker,
 } from "tracker";
-import { CopilotButton } from "copilot";
+import { CopilotButton } from "@evmosapps/copilot";
 import { useAccount } from "wagmi";
 import { sortedChains } from "../shared/sortedChains";
 import { useTranslation } from "@evmosapps/i18n/client";

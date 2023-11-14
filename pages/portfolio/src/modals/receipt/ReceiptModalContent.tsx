@@ -10,7 +10,7 @@ import {
   ContainerItem,
   ConfirmationText,
   AddressDisplay,
-} from "ui-helpers";
+} from "@evmosapps/ui-helpers";
 
 import { FetchTransactionResult, fetchTransaction } from "wagmi/actions";
 import { Hex, decodeFunctionData, formatUnits } from "viem";
@@ -24,15 +24,18 @@ import {
   getChain,
   getTokens,
   normalizeToCosmosAddress,
-} from "evmos-wallet";
+} from "@evmosapps/evmos-wallet";
 import { FailTxIcon, ProcessingTxIcon, SuccessTxIcon } from "icons";
-import { Prefix, Token } from "evmos-wallet/src/registry-actions/types";
-import { findToken } from "evmos-wallet/src/registry-actions/utils";
+import {
+  Prefix,
+  Token,
+} from "@evmosapps/evmos-wallet/src/registry-actions/types";
+import { findToken } from "@evmosapps/evmos-wallet/src/registry-actions/utils";
 import { useQuery } from "@tanstack/react-query";
 import { SkeletonLoading } from "../shared/SkeletonLoading";
 import { E, raise } from "helpers";
 import { ReceiptModalProps } from "./ReceiptModal";
-import { getTokenByRef } from "evmos-wallet/src/registry-actions/get-token-by-ref";
+import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { useEffect, useState } from "react";
 import { getFormattedDate } from "helpers";
 const generateReceipt = ({

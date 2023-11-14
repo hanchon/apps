@@ -15,7 +15,7 @@ import {
 
 import { translation } from "@evmosapps/i18n/server";
 import { ConsentModalButton } from "stateful-components/src/modals/ConsentModal/ConsentModal";
-import { Container } from "ui-helpers";
+import { Container } from "@evmosapps/ui-helpers";
 import { Link } from "@evmosapps/i18n/client";
 
 export const Footer = async () => {
