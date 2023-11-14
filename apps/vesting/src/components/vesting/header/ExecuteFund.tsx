@@ -43,7 +43,7 @@ export default function ExecuteFund({
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const { t } = useTranslation();
 
-  const handleOnClick = async (d: FieldValues) => {
+  const handleOnClick = async () => {
     const connectedNetwork = getNetwork();
     if (connectedNetwork.chain?.id !== evmos.id) {
       const [err] = await E.try(() =>

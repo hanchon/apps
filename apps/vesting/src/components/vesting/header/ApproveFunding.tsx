@@ -17,18 +17,15 @@ export default function ApproveFunding({
   onNext: () => void;
 }) {
   const { t } = useTranslation();
-  const [executionerAddress, setExecutionerAddress] = useState<string>("");
   const { approveFunding } = useVestingPrecompile();
   const dispatch = useDispatch();
-
-  const disabled = !executionerAddress || executionerAddress === "";
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function handleApprove() {
     setIsLoading(true);
     try {
-      const res = await approveFunding(executionerAddress);
+      const res = await approveFunding();
       dispatch(
         addSnackbar({
           id: 0,
@@ -64,17 +61,12 @@ export default function ApproveFunding({
       <label htmlFor="address" className="text-xs font-bold">
         {t("vesting.executioner.address.title")}
       </label>
-      <input
-        id="address"
-        onChange={(e) => setExecutionerAddress(e.target.value)}
-        className="textBoxStyle"
-      />
       <button
         onClick={handleApprove}
-        disabled={disabled || isLoading}
+        disabled={isLoading}
         style={{ backgroundColor: "#ed4e33" }}
         className={`w-full cursor-pointer rounded p-2 font-body text-lg text-pearl ${
-          disabled || isLoading ? "opacity-40" : ""
+          isLoading ? "opacity-40" : ""
         }`}
       >
         {isLoading ? "Loading..." : t("vesting.approve.button")}
