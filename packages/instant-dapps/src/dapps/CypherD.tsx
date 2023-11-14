@@ -22,7 +22,7 @@ const CypherD = () => {
       ref.current = true;
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       window.Cypher({
-        address: "0x",
+        address,
         theme: "light",
         targetChainIdHex: "0x2329", // Evmos ChainID
         appId: CYPHERD_API_KEY,
