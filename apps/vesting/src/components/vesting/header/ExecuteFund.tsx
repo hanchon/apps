@@ -90,6 +90,7 @@ export default function ExecuteFund({
       setloading(false);
       onClose();
     } catch (e) {
+      console.log(e)
       setloading(false);
       dispatch(
         addSnackbar({
