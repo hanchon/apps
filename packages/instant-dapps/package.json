@@ -1,6 +1,6 @@
 {
-  "name": "copilot",
-  "version": "1.0.10",
+  "name": "@evmosapps/instant-dapps",
+  "version": "1.0.0",
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
   "type": "module",
@@ -23,7 +23,6 @@
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.20",
     "prettier": "^3.0.1",
-    "schummar-translate": "^1.18.0",
     "tsup": "^7.2.0"
   },
   "dependencies": {
@@ -51,8 +50,7 @@
     "react-dom": "^18.2.0",
     "tracker": "workspace:*",
     "typescript": "^5.2.2",
-    "ui-helpers": "workspace:*",
-    "@evmosapps/instant-dapps": "workspace:*"
+    "ui-helpers": "workspace:*"
   },
   "browserslist": [
     "last 3 chrome version",

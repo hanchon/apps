@@ -7,7 +7,7 @@ import { Intro } from "./Intro";
 import Transak from "./Transak";
 import Onboard from "./Onboard";
 import C14 from "./C14";
-import CypherD from "./CypherD";
+
 import LayerSwap from "./LayerSwap";
 import {
   CLICK_ON_DIFFERENT_ON_RAMP,
@@ -18,6 +18,7 @@ import ProviderDropwdown from "./ProviderDropdown";
 import { providerOptions, DropdownOption } from "./utils";
 import { Squid } from "./Squid";
 import { raise } from "helpers";
+import CypherDLocal from "./CypherD";
 
 export const TopUp = () => {
   const [topUpType, setTopUpType] = useState("intro");
@@ -66,7 +67,7 @@ export const TopUp = () => {
               dropdownOptions={providerOptions.crypto}
             />
             {cryptoProvider.value === "Cypher Wallet" ? (
-              <CypherD />
+              <CypherDLocal />
             ) : cryptoProvider.value === "Layerswap" ? (
               <LayerSwap />
             ) : (

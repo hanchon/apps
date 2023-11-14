@@ -16,6 +16,7 @@ import {
 } from "icons";
 import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
+import { CypherD } from "@evmosapps/instant-dapps";
 export const DescriptiondApp = ({ dapp }) => {
   const imgId = dapp.cover?.id ?? dapp.icon?.id;
 
@@ -127,6 +128,7 @@ export const DescriptiondApp = ({ dapp }) => {
         <Frameline variant="secondary">
           <div className="flex items-center justify-center h-full">
             {/* TODO: add iframes */}
+            <CypherD />
           </div>
         </Frameline>
       </div>
