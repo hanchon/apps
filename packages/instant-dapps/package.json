@@ -13,44 +13,22 @@
     "test:coverage": "vitest run --coverage",
     "lint": "eslint ."
   },
-  "peerDependencies": {
-    "@reduxjs/toolkit": "~1.9.5",
-    "react-redux": "^8.1.2",
-    "redux": ">=4"
-  },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.20",
-    "prettier": "^3.0.1",
-    "tsup": "^7.2.0"
+    "prettier": "^3.0.1"
   },
   "dependencies": {
-    "@ethersproject/bignumber": "^5.7.0",
-    "@fireworks-js/react": "^2.10.7",
-    "@headlessui/react": "^1.7.15",
-    "@tanstack/react-query": "^4.32.6",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
-    "@types/mixpanel": "2.14.1",
-    "@types/mixpanel-browser": "2.47.1",
     "@types/node": "18.11.14",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.0.9",
-    "constants-helper": "workspace:*",
     "eslint": "^8.47.0",
-    "ethers": "^6.7.1",
-    "evmos-wallet": "workspace:*",
-    "helpers": "workspace:*",
-    "icons": "workspace:*",
-    "mixpanel-browser": "^2.47.0",
     "next": "^14.0.1",
     "react": "18.2.0",
-    "react-confetti-explosion": "^2.1.2",
     "react-dom": "^18.2.0",
     "tracker": "workspace:*",
-    "typescript": "^5.2.2",
-    "ui-helpers": "workspace:*"
+    "typescript": "^5.2.2"
   },
   "browserslist": [
     "last 3 chrome version",
