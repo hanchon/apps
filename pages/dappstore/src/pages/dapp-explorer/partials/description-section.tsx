@@ -17,8 +17,9 @@ import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
 import { DApp } from "../../../lib/fetch-explorer-data";
 // import { CypherD } from "@evmosapps/instant-dapps/src/dapps/CypherD";
-import Transak from "@evmosapps/instant-dapps/src/dapps/Transak";
-import C14 from "@evmosapps/instant-dapps/src/dapps/C14";
+// import Transak from "@evmosapps/instant-dapps/src/dapps/Transak";
+// import C14 from "@evmosapps/instant-dapps/src/dapps/C14";
+import LayerSwap from "@evmosapps/instant-dapps/src/dapps/Layerswap";
 export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
   const imgId = dapp.cover?.id ?? dapp.icon?.id;
 
@@ -130,7 +131,7 @@ export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
         <Frameline variant="secondary">
           <div className="flex items-center justify-center h-full">
             {/* TODO: add iframes */}
-            <C14 />
+            <LayerSwap />
           </div>
         </Frameline>
       </div>

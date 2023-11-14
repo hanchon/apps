@@ -6,7 +6,6 @@ import { useState } from "react";
 import { Intro } from "./Intro";
 import Onboard from "./Onboard";
 
-import LayerSwap from "./LayerSwap";
 import {
   CLICK_ON_DIFFERENT_ON_RAMP,
   useTracker,
@@ -19,6 +18,7 @@ import { raise } from "helpers";
 import Transak from "@evmosapps/instant-dapps/src/dapps/Transak";
 import { CypherD } from "@evmosapps/instant-dapps";
 import C14 from "@evmosapps/instant-dapps/src/dapps/C14";
+import LayerSwap from "@evmosapps/instant-dapps/src/dapps/Layerswap";
 
 export const TopUp = () => {
   const [topUpType, setTopUpType] = useState("intro");
