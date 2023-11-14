@@ -16,9 +16,9 @@ import {
 import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
 import { DApp } from "../../../lib/fetch-explorer-data";
-export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
-  const imgId = dapp.cover?.id ?? dapp.icon?.id;
 
+export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
+  const img = dapp.cover ?? dapp.icon;
   return (
     <div className="space-y-24 pb-24">
       <div className="font-brand relative">
@@ -32,13 +32,15 @@ export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
         />
 
         <div className="flex flex-col absolute left-20 -bottom-14">
-          <Image
-            src={`/external-image/${imgId}`}
-            alt={dapp.name}
-            width={500}
-            height={250}
-            className="w-48 z-10 self-center flex"
-          />
+          {img && (
+            <Image
+              src={img}
+              alt={dapp.name}
+              width={500}
+              height={250}
+              className="w-48 z-10 self-center flex"
+            />
+          )}
         </div>
         <div className="absolute left-72 bottom-3">
           <p className="text-[#E8DFD3] text-7xl flex ">{dapp.name}</p>

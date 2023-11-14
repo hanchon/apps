@@ -3,15 +3,15 @@ import { richTextSchema } from "../partials/richTextSchema";
 import { relationSchema } from "../partials/relationSchema";
 import { titleSchema } from "../partials/titleSchema";
 
-import { checkboxSchema } from "./checkboxSchema";
-import { urlSchema } from "./urlSchema";
-import { emojiSchema } from "./emojiSchema";
-import { fileSchema } from "./fileSchema";
-import { externalSchema } from "./externalSchema";
+import { checkboxSchema } from "../partials/checkboxSchema";
+import { urlSchema } from "../partials/urlSchema";
+import { emojiSchema } from "../partials/emojiSchema";
+import { fileSchema } from "../partials/fileSchema";
+import { externalSchema } from "../partials/externalSchema";
 import { createNotionPropertiesSchema } from "./createNotionPropertiesSchema";
-import { createdAtSchema } from "./createdAtSchema";
-import { updatedAtSchema } from "./updatedAtSchema";
-import { selectSchema } from "./selectSchema";
+import { createdAtSchema } from "../partials/createdAtSchema";
+import { updatedAtSchema } from "../partials/updatedAtSchema";
+import { selectSchema } from "../partials/selectSchema";
 import slugify from "slugify";
 
 const dappPropertiesSchema = createNotionPropertiesSchema(
@@ -38,38 +38,24 @@ export const dappSchema = z
     icon: z
       .union([emojiSchema, fileSchema, externalSchema, z.null()])
       .transform((icon) => {
-        if (icon && "url" in icon && icon.url) {
-          return icon.url;
-        }
+        if (icon?.type === "file") return icon.url;
         return null;
       }),
 
     cover: z
       .union([fileSchema, externalSchema, z.null()])
       .transform((cover) => {
-        if (!cover || !cover.url) return null;
-        return cover.url;
+        if (cover?.type === "file") return cover.url;
+        return null;
       }),
   })
-  .transform(({ icon, cover, id, properties }) => {
+  .transform(({ id, properties, ...rest }) => {
     const slug = slugify(properties.name, {
       lower: true,
       trim: true,
     });
     return {
       notionId: id,
-      icon: icon
-        ? {
-            id: `${slug}-icon`,
-            url: icon,
-          }
-        : null,
-      cover: cover
-        ? {
-            id: `${slug}-cover`,
-            url: cover,
-          }
-        : null,
       slug,
       localized: {} as Record<
         string,
@@ -79,5 +65,6 @@ export const dappSchema = z
         }
       >,
       ...properties,
+      ...rest,
     };
   });

@@ -13,7 +13,7 @@ import { UpRightArrowIcon } from "icons";
 import { DApp } from "../../../lib/fetch-explorer-data";
 
 export const EcosystemCard = ({ data }: { data: DApp }) => {
-  const imgId = data.cover?.id ?? data.icon?.id;
+  const img = data.cover ?? data.icon;
 
   return (
     <TrackerEvent
@@ -31,10 +31,10 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
         className="relative mb-16 space-y-2 rounded-lg bg-[#262017] pb-8 transition-all duration-150 ease-out hover:scale-105"
       >
         <div className="aspect-[3/2] w-full rounded-t-2xl object-cover bg-white/5 relative overflow-hidden">
-          {imgId && (
+          {img && (
             <Image
               className="object-cover"
-              src={`/external-image/${imgId}`}
+              src={img}
               alt={data.name}
               fill={true}
             />
