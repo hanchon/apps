@@ -8,7 +8,7 @@ const usdFormat = new Intl.NumberFormat("en-US", {
   currency: "USD",
 });
 export const EvmosPrice = () => {
-  const { data, isLoading, error } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ["tokenPrices"],
     queryFn: () => fetchCoingeckoTokenPrices(),
   });
@@ -21,7 +21,7 @@ export const EvmosPrice = () => {
       <EvmosRedIcon width={"1.4em"} height={"1.4em"} />
       <div
         className={cn("flex gap-3", {
-          "w-[12ch] h-[1lh] bg-gray2/20 rounded-md animate-pulse ": isLoading,
+          "w-[13ch] h-[1lh] bg-gray2/20 rounded-md animate-pulse ": !token,
         })}
       >
         {token && (

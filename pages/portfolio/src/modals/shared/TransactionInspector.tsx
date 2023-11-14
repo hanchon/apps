@@ -71,7 +71,7 @@ export const TransactionInspector = ({
               <pre
                 className={cn([" p-2 border-2"], {
                   "border-red": query.error,
-                  "animate-pulse": query.isLoading,
+                  "animate-pulse": query.isPending,
                   "border-green": query.isSuccess,
                 })}
               >

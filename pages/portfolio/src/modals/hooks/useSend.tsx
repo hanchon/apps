@@ -45,7 +45,7 @@ export const useSend = ({
     receiverChainPrefix: receiverPrefix,
     tokenRef: token?.ref,
   });
-  const { fee, isLoading: isFeeLoading } = feeQuery;
+  const { fee, isPending: isFeeLoading } = feeQuery;
   /**
    * Transfer
    */
@@ -58,7 +58,8 @@ export const useSend = ({
   const {
     error: transferError,
     transfer,
-    isLoading: isTransferring,
+
+    isPending: isTransferring,
     data: transferResponse,
   } = transferQuery;
   /**

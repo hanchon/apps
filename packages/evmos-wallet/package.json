@@ -13,11 +13,9 @@
     "test:coverage": "vitest run --coverage",
     "lint": "eslint ."
   },
-  "peerDependencies": {
-    "@tanstack/react-query": "^4.32.6"
-  },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
+    "@evmosapps/ui-helpers": "workspace:*",
     "@types/node": "18.11.14",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.0.9",
@@ -30,7 +28,6 @@
     "tracker": "workspace:*",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
-    "@evmosapps/ui-helpers": "workspace:*",
     "zod": "^3.22.1"
   },
   "dependencies": {
@@ -48,6 +45,7 @@
     "@evmos/provider": "^0.2.8",
     "@evmos/transactions": "^0.2.12",
     "@evmosapps/registry": "workspace:*",
+    "@evmosapps/ui-helpers": "workspace:*",
     "@hanchon/signature-to-pubkey": "^1.0.1",
     "@keplr-wallet/types": "^0.12.20",
     "@metamask/providers": "^11.1.0",
@@ -70,7 +68,6 @@
     "react-redux": "^8.1.2",
     "redux": "^4.2.1",
     "schummar-translate": "^1.19.0",
-    "@evmosapps/ui-helpers": "workspace:*",
     "vitest": "^0.34.6"
   },
   "browserslist": [

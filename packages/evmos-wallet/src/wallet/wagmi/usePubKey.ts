@@ -52,14 +52,14 @@ const queryFn = async () => {
 
 export const prefetchPubkey = async (queryClient: QueryClient) => {
   const { address } = getAccount();
-  return queryClient.fetchQuery([baseKey, address], queryFn);
+  return queryClient.fetchQuery({ queryKey: [baseKey, address], queryFn });
 };
 export const usePubKey = () => {
   const { address, isConnected } = useAccount();
 
   const { data, ...rest } = useQuery({
     queryKey: [baseKey, address],
-    cacheTime: Infinity,
+    gcTime: Infinity,
     staleTime: Infinity,
     retry: false,
     refetchOnWindowFocus: false,

@@ -12,6 +12,7 @@ import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { HeroSection } from "./partials/hero-section";
 import { ButtonWithLink, Frameline } from "@evmosapps/ui-helpers";
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
+import { Suspense } from "react";
 
 export const LandingPage = async () => {
   const { dApps } = await fetchExplorerData();
@@ -19,7 +20,9 @@ export const LandingPage = async () => {
   return (
     <div className="space-y-8 text-display">
       <div className="grid items-center gap-x-8 gap-y-11 md:grid-cols-2">
-        <AccountBalance />
+        <Suspense>
+          <AccountBalance />
+        </Suspense>
         <CopilotCard />
       </div>
       {/* TODO: add localization */}
