@@ -4,10 +4,8 @@
 
 import { useState } from "react";
 import { Intro } from "./Intro";
-import Transak from "./Transak";
 import Onboard from "./Onboard";
 import C14 from "./C14";
-
 import LayerSwap from "./LayerSwap";
 import {
   CLICK_ON_DIFFERENT_ON_RAMP,
@@ -18,7 +16,8 @@ import ProviderDropwdown from "./ProviderDropdown";
 import { providerOptions, DropdownOption } from "./utils";
 import { Squid } from "./Squid";
 import { raise } from "helpers";
-import CypherDLocal from "./CypherD";
+import Transak from "@evmosapps/instant-dapps/src/dapps/Transak";
+import { CypherD } from "@evmosapps/instant-dapps";
 
 export const TopUp = () => {
   const [topUpType, setTopUpType] = useState("intro");
@@ -67,7 +66,7 @@ export const TopUp = () => {
               dropdownOptions={providerOptions.crypto}
             />
             {cryptoProvider.value === "Cypher Wallet" ? (
-              <CypherDLocal />
+              <CypherD />
             ) : cryptoProvider.value === "Layerswap" ? (
               <LayerSwap />
             ) : (

@@ -1,7 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useTransakEvents } from "./useTransakEvents";
 import { useEffect, useRef } from "react";
 import { useAccount } from "wagmi";
 
@@ -14,10 +13,8 @@ declare global {
   }
 }
 export const CypherD = () => {
-  // const wallet = useSelector((state: StoreType) => state.wallet.value);
   const { address } = useAccount();
 
-  useTransakEvents();
   const ref = useRef(false);
 
   useEffect(() => {
@@ -25,7 +22,7 @@ export const CypherD = () => {
       ref.current = true;
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       window.Cypher({
-        address,
+        address: "0x",
         theme: "light",
         targetChainIdHex: "0x2329", // Evmos ChainID
         appId: CYPHERD_API_KEY,

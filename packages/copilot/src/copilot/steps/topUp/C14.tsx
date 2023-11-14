@@ -3,13 +3,11 @@
 
 import { StoreType } from "evmos-wallet";
 import { useSelector } from "react-redux";
-import { useTransakEvents } from "./useTransakEvents";
 
 export const C14_API_KEY = process.env.NEXT_PUBLIC_C14_API_KEY ?? "";
 
 export default function C14() {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
-  useTransakEvents();
 
   return (
     <div

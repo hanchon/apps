@@ -15,8 +15,9 @@ import {
 } from "icons";
 import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
-import { CypherD } from "@evmosapps/instant-dapps";
 import { DApp } from "../../../lib/fetch-explorer-data";
+// import { CypherD } from "@evmosapps/instant-dapps/src/dapps/CypherD";
+import Transak from "@evmosapps/instant-dapps/src/dapps/Transak";
 export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
   const imgId = dapp.cover?.id ?? dapp.icon?.id;
 
@@ -128,7 +129,7 @@ export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
         <Frameline variant="secondary">
           <div className="flex items-center justify-center h-full">
             {/* TODO: add iframes */}
-            <CypherD />
+            <Transak />
           </div>
         </Frameline>
       </div>

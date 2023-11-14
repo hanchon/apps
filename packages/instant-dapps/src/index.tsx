@@ -1,1 +1,2 @@
-export { CypherD } from "./dapps/cypherD/CypherD";
+export { CypherD } from "./dapps/CypherD";
+export * from "./dapps/Transak";
