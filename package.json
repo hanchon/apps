@@ -11,6 +11,7 @@
     "nibble": "eslint-nibble . -c eslint.config.js",
     "dev": "dotenv -- turbo run dev --concurrency 20",
     "dev:testnet": "dotenv -- turbo run dev:testnet --concurrency 20",
+    "start": "dotenv -- turbo run start",
     "testnet": "dotenv -- tsx node_modules/@evmosapps/testnet/src/cli/index.ts",
     "lint": "turbo run lint",
     "clean": "turbo run clean",

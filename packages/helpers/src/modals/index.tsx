@@ -82,7 +82,7 @@ export const useModal = <T extends z.AnyZodObject>(
       redirectBack = false
     ) => {
       const nextOpenState = typeof open === "function" ? open(isOpen) : open;
-
+      if (nextOpenState === isOpen) return;
       if (nextOpenState) {
         const next = safeParse(initialState);
 

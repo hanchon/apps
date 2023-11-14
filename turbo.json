@@ -59,6 +59,11 @@
       "cache": false,
       "persistent": true
     },
+    "start": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
     "dev:testnet": {
       "cache": false,
       "persistent": true

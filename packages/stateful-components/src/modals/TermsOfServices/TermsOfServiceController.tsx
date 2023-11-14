@@ -31,6 +31,7 @@ export const TermsOfServicesModalController = ({
 
   useEffect(() => {
     if (window.localStorage.getItem(EVMOS_TOS_VERSION) !== null) return;
+    console.log("setIsOpen(true)");
     setIsOpen(true);
   }, [setIsOpen]);
 
