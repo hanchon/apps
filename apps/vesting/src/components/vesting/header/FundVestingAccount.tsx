@@ -29,7 +29,6 @@ export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
           onNext={() => {
             setStep("fund");
           }}
-          amount={vestingDetails.amount as string}
         />
       );
     }

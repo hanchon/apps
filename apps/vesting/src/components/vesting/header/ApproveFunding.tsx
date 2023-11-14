@@ -1,7 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
-import { parseEther } from "viem";
 import { useDispatch } from "react-redux";
 import {
   addSnackbar,
@@ -13,10 +12,8 @@ import {
 import { EXPLORER_URL } from "constants-helper";
 
 export default function ApproveFunding({
-  amount,
   onNext,
 }: {
-  amount: string;
   onNext: () => void;
 }) {
   const { t } = useTranslation();
@@ -29,10 +26,9 @@ export default function ApproveFunding({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function handleApprove() {
-    const _amount = parseEther(amount?.toString());
     setIsLoading(true);
     try {
-      const res = await approveFunding(executionerAddress, _amount.toString());
+      const res = await approveFunding(executionerAddress);
       dispatch(
         addSnackbar({
           id: 0,
