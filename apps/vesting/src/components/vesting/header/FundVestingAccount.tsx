@@ -35,6 +35,7 @@ export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
     if (step === "fund") {
       return (
         <ExecuteFund
+          vestingData={vestingDetails}
           vestingAccount={vestingDetails.address as string}
           onClose={onClose}
         />

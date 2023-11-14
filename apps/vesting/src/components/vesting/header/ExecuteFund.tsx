@@ -31,9 +31,11 @@ const evmos = getEvmosChainInfo();
 export default function ExecuteFund({
   onClose,
   vestingAccount,
+  vestingData
 }: {
   onClose: () => void;
   vestingAccount: string;
+  vestingData: FieldValues
 }) {
   const dispatch = useDispatch();
   const { fundVestingAccount } = useVestingPrecompile();
@@ -56,20 +58,20 @@ export default function ExecuteFund({
 
       const { lockupPeriods, vestingPeriods, startTime } =
         generateVestingSchedule(
-          d.startDate as Dayjs,
-          BigNumber.from(d.amount),
+          vestingData.startDate as Dayjs,
+          BigNumber.from(vestingData.amount),
           "aevmos",
           {
-            fullVestingPeriod: d.vestingDuration as TimeWindow,
-            vestingInterval: d.vestingSchedule as Intervals,
-            vestingCliff: d.vestingCliff as VestingSchedule["vestingCliff"],
-            lockingPeriod: d.lockupDuration as TimeWindow,
+            fullVestingPeriod: vestingData.vestingDuration as TimeWindow,
+            vestingInterval: vestingData.vestingSchedule as Intervals,
+            vestingCliff: vestingData.vestingCliff as VestingSchedule["vestingCliff"],
+            lockingPeriod: vestingData.lockupDuration as TimeWindow,
           },
         );
 
       const res = await fundVestingAccount(
         wallet.evmosAddressEthFormat,
-        d.address as string,
+        vestingData.address as string,
         startTime,
         lockupPeriods,
         vestingPeriods,
@@ -104,10 +106,10 @@ export default function ExecuteFund({
       );
     }
 
-    if (d.accountName !== "") {
+    if (vestingData.accountName !== "") {
       setVestingAccountNameLocalstorage(
-        d.address as string,
-        d.accountName as string,
+        vestingData.address as string,
+        vestingData.accountName as string,
       );
     }
   };
