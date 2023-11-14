@@ -11,7 +11,13 @@ export const Header = () => {
   const handleConfirmClick = () => {
     // TODO: open modal for creating vesting account
     setShowModal(true);
-    setModalContent(<FundVestingAccount />);
+    setModalContent(
+      <FundVestingAccount
+        onClose={() => {
+          setShowModal(false);
+        }}
+      />,
+    );
   };
 
   const value = useSelector((state: StoreType) => state.wallet.value);
@@ -48,7 +54,11 @@ export const Header = () => {
           setShowEnableModal(false);
         }}
       >
-        <EnableVestingModal />
+        <EnableVestingModal
+          onClose={() => {
+            setShowEnableModal(false);
+          }}
+        />
       </Modal>
 
       <Modal
