@@ -8,13 +8,14 @@ export default function LayerSwap() {
   // address has to be 0x format
   const { address } = useAccount();
   return (
-    <div
-      data-testid="layerswap-widget"
-      className="relative mx-5 w-full h-full"
-      //   className="relative mx-auto mt-[25px] h-[700px] w-[300px] overflow-hidden rounded-[15px] md:h-[545px] md:w-[400px]"
-    >
+    <div data-testid="layerswap-widget" className="relative w-full h-[660px]">
       <iframe
-        style={{ height: "100%", width: "100%", border: "none" }}
+        style={{
+          height: "100%",
+          width: "100%",
+          border: "none",
+          borderRadius: "15px",
+        }}
         src={`https://layerswap.io/app/?to=EVMOS_MAINNET&destAddress=${address}&addressSource=evmos`}
       ></iframe>
     </div>
