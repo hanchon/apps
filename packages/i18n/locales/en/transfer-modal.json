@@ -52,6 +52,9 @@
   "topup": {
     "button": "Top-Up Evmos"
   },
+  "connect": {
+    "button": "Connect"
+  },
   "bridge": {
     "button": {
       "text": "Go to Satellite"

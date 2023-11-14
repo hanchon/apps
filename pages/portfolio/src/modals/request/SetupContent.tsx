@@ -2,6 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 import React, { Dispatch, SetStateAction } from "react";
 import {
+  Modal,
   PrimaryButton,
   Subtitle,
   TextInput,
@@ -55,14 +56,15 @@ export const SetUpContent = ({
   const disabled = amount == 0n || message?.length === 0;
 
   return (
-    <section className="space-y-8">
-      <Title
-        variant="modal-black"
-        icon={<RequestIcon className="text-pink-300" />}
-      >
-        {t("section.request.title")}
-      </Title>
-
+    <section className="space-y-8 text-pearl">
+      <Modal.Header className="text-pearl1">
+        <Title
+          variant="modal-black"
+          icon={<RequestIcon className="text-pink-300" />}
+        >
+          {t("section.request.title")}
+        </Title>
+      </Modal.Header>
       <form
         onSubmit={(e) => {
           e.preventDefault();

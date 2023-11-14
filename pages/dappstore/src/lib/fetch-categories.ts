@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { categorySchema } from "./schemas/entities/categorySchema";
-import { notion } from "./notion-client";
+
 import { CATEGORIES_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 import { Log } from "helpers";
-
+import { notion } from "helpers/src/notion-client";
 export const fetchCategories = async () => {
   const categories = await notion.databases.query({
     database_id: CATEGORIES_PAGE_NOTION_ID,

@@ -25,23 +25,8 @@ export const RootProviders = ({ children }: PropsWithChildren) => {
             token={process.env.NEXT_PUBLIC_MIXPANEL_TOKEN ?? ""}
           >
             {children}
-            {/* <> */}
-            {/* <HeadComponent /> */}
 
-            {/* <main */}
-
-            {/* <TermOfServices /> */}
-            {/* <GiveFeedback /> */}
-            {/* <Container> */}
-            {/* <> */}
-
-            {/* <MainContainer /> */}
-            {/* </> */}
-            {/* </Container> */}
-            {/* </main> */}
-            {/* </> */}
             <SnackbarsInternal />
-
             <MavaWidget />
             <GiveFeedback />
           </MixpanelProvider>

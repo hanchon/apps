@@ -1,13 +1,7 @@
 "use client";
-import { useTranslation } from "@evmosapps/i18n/client";
 import { StepsContextProvider } from "@evmosapps/copilot";
 import { Content } from "@evmosapps/copilot/src/copilot/Content";
-import { CopilotModal } from "@evmosapps/copilot/src/copilot/CopilotModal";
-import {
-  setupSteps,
-  topUpStep,
-} from "@evmosapps/copilot/src/copilot/container/data";
-import { stepsSetAccount } from "@evmosapps/copilot/src/copilot/steps/setUpAccount/utils";
+import { topUpStep } from "@evmosapps/copilot/src/copilot/container/data";
 
 import { useModal } from "helpers";
 

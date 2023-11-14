@@ -13,7 +13,6 @@ import {
 } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CloseIcon } from "icons";
-import useEventListener from "./useEventListener";
 import { cn } from "helpers";
 
 const ModalContext = createContext<{
@@ -84,29 +83,43 @@ export function Modal({
 }
 const ModalBody = forwardRef<
   HTMLDivElement,
-  ComponentPropsWithoutRef<typeof Dialog.Panel>
->(({ children, className, ...rest }, ref) => (
-  <Dialog.Panel
-    ref={ref}
-    className={cn(
-      "flex bg-pearl1 m-auto rounded-lg flex-col p-6 max-w-md w-full",
-      className
-    )}
-    {...rest}
-  >
-    {children}
-  </Dialog.Panel>
-));
+  {
+    className?: string;
+  } & ComponentPropsWithoutRef<typeof Dialog.Panel>
+>(function ModalBody({ children, className, ...rest }, ref) {
+  return (
+    <Dialog.Panel
+      ref={ref}
+      className={cn(
+        "flex bg-pearl1 m-auto rounded-lg flex-col p-6 max-w-md w-full",
+        className as string
+      )}
+      {...rest}
+    >
+      {children}
+    </Dialog.Panel>
+  );
+});
 
 Modal.Body = ModalBody;
 
-const ModalHeader = ({ children }: PropsWithChildren) => {
+const ModalHeader = ({
+  children,
+  className,
+  ...rest
+}: ComponentProps<"div">) => {
   const { setIsOpen } = useModal();
   return (
-    <div className="flex justify-between items-center">
+    <div
+      className={cn("flex justify-between items-center", className)}
+      {...rest}
+    >
       <div className="flex items-center">{children}</div>
       <button className="cursor-pointer" onClick={() => setIsOpen(false)}>
-        <CloseIcon className={cn("h-6 w-auto")} aria-hidden="true" />
+        <CloseIcon
+          className={cn("h-6 w-auto text-current")}
+          aria-hidden="true"
+        />
       </button>
     </div>
   );

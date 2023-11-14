@@ -1,3 +1,4 @@
+"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 import React, { useEffect, useState } from "react";
@@ -5,6 +6,7 @@ import {
   CryptoSelector,
   CryptoSelectorDropdownBox,
   ErrorMessage,
+  Modal,
   PrimaryButton,
   Spinner,
   Subtitle,
@@ -171,10 +173,15 @@ export const Content = ({
       : "SWAP";
 
   return (
-    <section className="space-y-8">
-      <Title variant="modal-black" icon={<PayIcon className="text-pink-300" />}>
-        {t("pay.title")}
-      </Title>
+    <section className="space-y-8 text-pearl">
+      <Modal.Header className="text-pearl1">
+        <Title
+          variant="modal-black"
+          icon={<PayIcon className="text-pink-300" />}
+        >
+          {t("pay.title")}
+        </Title>
+      </Modal.Header>
 
       <Subtitle variant="modal-black">{t("pay.subtitle")}</Subtitle>
 

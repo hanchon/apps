@@ -38,6 +38,7 @@
     "@types/lodash-es": "^4.17.8",
     "clsx": "^2.0.0",
     "deep-equal": "^2.2.2",
+    "fs": "0.0.1-security",
     "lodash-es": "^4.17.21",
     "querystring": "^0.2.1",
     "tailwind-merge": "^1.14.0",

@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { dappSchema } from "./schemas/entities/dappSchema";
-import { notion } from "./notion-client";
+
 import { ECOSYSTEM_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 import { Log } from "helpers";
+import { notion } from "helpers/src/notion-client";
 
 export const fetchDapps = async () => {
   const dapps = await notion.databases.query({

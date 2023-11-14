@@ -8,11 +8,12 @@ import { greyCliff, ibm, nb, evmos } from "@evmosapps/ui-helpers/src/fonts";
 import { RootProviders } from "./RootProviders";
 import { GoogleAnalytics } from "../../components/GoogleAnalytics";
 import { ConsentModal } from "stateful-components/src/modals/ConsentModal/ConsentModal";
-import { TermsOfServicesModal } from "stateful-components/src/modals/TermsOfServices/TermsOfServices";
+
 import { ConnectModal } from "stateful-components/src/modals/ConnectModal/ConnectModal";
 import { Copilot } from "stateful-components/src/modals/CopilotModal/CopilotModal";
 import { ProfileModal } from "stateful-components/src/modals/ProfileModal/ProfileModal";
 import { TopupModal } from "stateful-components/src/modals/TopupModal/TopupModal";
+import { TermsOfServiceModal } from "stateful-components/src/modals/TermsOfServices/TermsOfServiceModal";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import { Container } from "@evmosapps/ui-helpers";
@@ -90,7 +91,7 @@ function RootLayout({
           <ProfileModal />
           <Copilot />
           <TopupModal />
-          <TermsOfServicesModal />
+          <TermsOfServiceModal />
 
           <GoogleAnalytics />
           <Script src="https://public.cypherd.io/sdk/cypher-sdk.js" />

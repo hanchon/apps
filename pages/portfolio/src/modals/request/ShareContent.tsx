@@ -9,6 +9,7 @@ import React, {
 import {
   ErrorMessage,
   Label,
+  Modal,
   PrimaryButton,
   TextInput,
   Title,
@@ -75,13 +76,15 @@ export const ShareContent = ({
   const { isDisconnected } = useAccount();
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   return (
-    <section className="space-y-8">
-      <Title
-        variant="modal-black"
-        icon={<RequestIcon className="text-pink-300" />}
-      >
-        {t("request.title")}
-      </Title>
+    <section className="space-y-8 text-pearl">
+      <Modal.Header className="text-pearl1">
+        <Title
+          variant="modal-black"
+          icon={<RequestIcon className="text-pink-300" />}
+        >
+          {t("request.title")}
+        </Title>
+      </Modal.Header>
 
       <form
         onSubmit={(e) => {

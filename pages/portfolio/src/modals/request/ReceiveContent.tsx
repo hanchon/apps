@@ -10,6 +10,7 @@ import React, {
 import {
   ErrorMessage,
   Label,
+  Modal,
   PrimaryButton,
   Subtitle,
   Tabs,
@@ -115,13 +116,15 @@ export const ReceiveContent = ({
   const { isDisconnected } = useAccount();
 
   return (
-    <section className="space-y-16">
-      <Title
-        variant="modal-black"
-        icon={<ReceiveIcon className="text-pink-300" />}
-      >
-        {t("receive.title")}
-      </Title>
+    <section className="space-y-16 text-pearl">
+      <Modal.Header className="text-pearl1">
+        <Title
+          variant="modal-black"
+          icon={<ReceiveIcon className="text-pink-300" />}
+        >
+          {t("receive.title")}
+        </Title>
+      </Modal.Header>
 
       <form
         onSubmit={(e) => {

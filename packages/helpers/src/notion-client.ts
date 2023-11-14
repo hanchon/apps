@@ -1,3 +1,4 @@
+import "server-only";
 import { Client } from "@notionhq/client";
 import path from "path";
 import { sha256 } from "@noble/hashes/sha256";

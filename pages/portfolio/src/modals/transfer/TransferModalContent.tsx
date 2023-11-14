@@ -2,7 +2,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import React, { Dispatch, SetStateAction, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
   ErrorMessage,
   IconContainer,
@@ -12,6 +12,7 @@ import {
   Title,
   InfoPanel,
   Spinner,
+  Modal,
 } from "@evmosapps/ui-helpers";
 import { Trans } from "next-i18next";
 import {
@@ -21,8 +22,6 @@ import {
 import { AssetSelector } from "../shared/AssetSelector";
 import { useAccount } from "wagmi";
 import {
-  StoreType,
-  WalletConnection,
   connectWith,
   getActiveProviderKey,
   getChain,
@@ -37,9 +36,7 @@ import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";
 
 import { ICONS_TYPES } from "constants-helper";
-import { CopilotButton } from "@evmosapps/copilot";
 import { connectKeplr, installKeplr, reloadPage } from "./utils";
-import { useDispatch, useSelector } from "react-redux";
 
 import {
   CLICK_ON_AXL_REDIRECT,
@@ -55,8 +52,9 @@ import {
 
 import { TransferModalProps } from "./TransferModal";
 import { useReceiptModal } from "../receipt/ReceiptModal";
-import { useTopupModal } from "../topup/TopupModal";
 
+import { useTopupModal } from "stateful-components/src/modals/TopupModal/TopupModal";
+import { useConnectModal } from "stateful-components/src/modals/ConnectModal/ConnectModal";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { createPortal } from "react-dom";
 import { useSend } from "../hooks/useSend";
@@ -74,11 +72,10 @@ export const TransferModalContent = ({
   const { t } = useTranslation("transfer-modal");
   const { sendEvent } = useTracker();
   const { isDisconnected } = useAccount();
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
-  const dispatch = useDispatch();
 
   const receiptModal = useReceiptModal();
   const topupModal = useTopupModal();
+  const connectModal = useConnectModal();
 
   const tokenAmount: TokenAmount = {
     ref: tokenRef,
@@ -224,12 +221,14 @@ export const TransferModalContent = ({
     (action === "TOPUP" || action === "TRANSFER");
   return (
     <section className="space-y-8 w-full">
-      <Title
-        variant="modal-black"
-        icon={<SendIcon className="text-pink-300" />}
-      >
-        {t("title")}
-      </Title>
+      <Modal.Header className="text-pearl1">
+        <Title
+          variant="modal-black"
+          icon={<SendIcon className="text-pink-300" />}
+        >
+          {t("title")}
+        </Title>
+      </Modal.Header>
 
       <form
         onSubmit={(e) => {
@@ -250,6 +249,7 @@ export const TransferModalContent = ({
           }
 
           if (action === "CONNECT") {
+            connectModal.setIsOpen(true, {}, true);
             return;
           }
 
@@ -411,16 +411,13 @@ export const TransferModalContent = ({
                     }}
                   />
                 </ErrorMessage>
-                <WalletConnection
-                  copilotModal={({
-                    beforeStartHook,
-                  }: {
-                    beforeStartHook: Dispatch<SetStateAction<boolean>>;
-                  }) => <CopilotButton beforeStartHook={beforeStartHook} />}
-                  dispatch={dispatch}
-                  walletExtension={wallet}
-                  variant="primary-lg"
-                />
+                <PrimaryButton
+                  type="submit"
+                  variant={"primary-lg"}
+                  className="mt-8"
+                >
+                  {t("connect.button")}
+                </PrimaryButton>
               </>
             )}
             {showFeeErrorMessage && (
@@ -434,9 +431,9 @@ export const TransferModalContent = ({
               <PrimaryButton
                 type="submit"
                 variant={"outline-primary"}
-                className="mt-8"
+                className="mt-8 text-pearl"
               >
-                {t("top.up.button.text")}
+                {t("topup.button")}
               </PrimaryButton>
             )}
             {action === "BRIDGE" && (

@@ -1,20 +1,19 @@
 "use client";
-
 import { Modal } from "@evmosapps/ui-helpers";
-
 import { cn, useModal } from "helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { EVMOS_TOS_VERSION } from "constants-helper";
 import { DISABLE_TRACKER_LOCALSTORAGE } from "tracker";
-import TOSContent from "@evmosapps/ui-helpers/src/termsOfServices/Content";
-import { useEffect, useState } from "react";
 
+import { PropsWithChildren, useEffect, useState } from "react";
 import { useConsentModal } from "../ConsentModal/ConsentModal";
 import { Trans } from "react-i18next";
 
 export const useTOSModal = () => useModal("tos");
 
-export const TermsOfServicesModal = () => {
+export const TermsOfServicesModalController = ({
+  children,
+}: PropsWithChildren) => {
   const { t } = useTranslation();
   const { isOpen, setIsOpen, modalProps } = useTOSModal();
 
@@ -54,7 +53,8 @@ export const TermsOfServicesModal = () => {
               <h2 className="font-bold">{t("tos.title")}</h2>
             </Modal.Header>
             <div className="border-darkGray5 h-80 w-full space-y-3 overflow-y-auto border font-display p-4">
-              <TOSContent />
+              {/* <TOSContent /> */}
+              {children}
             </div>
             <div className={`flex items-center space-x-2`}>
               <input

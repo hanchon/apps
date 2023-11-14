@@ -26,9 +26,9 @@ export const PrimaryButton = ({
         "w-fit text-sm px-4 py-3 rounded-lg transition-all duration-300 hover:shadow-md flex items-center justify-center space-x-3 tracking-wider",
 
         {
-          "bg-red text-pearl hover:bg-red1 active:bg-red2":
+          "bg-red text-pearl1 hover:bg-red1 active:bg-red2":
             variant === "primary",
-          "border-2 border-pink-300 gradient w-full text-base md:text-lg rounded-md font-medium":
+          "border-2 text-pearl border-pink-300 gradient w-full text-base md:text-lg rounded-md font-medium":
             variant === "outline-primary",
           "bg-red text-pearl hover:bg-red1 active:bg-red2 w-full text-base md:text-lg capitalize font-medium":
             variant === "primary-lg",
