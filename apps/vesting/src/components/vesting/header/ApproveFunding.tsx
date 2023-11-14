@@ -10,22 +10,22 @@ import {
   GENERATING_TX_NOTIFICATIONS,
 } from "evmos-wallet";
 import { EXPLORER_URL } from "constants-helper";
+import { ModalTitle } from "ui-helpers";
 
-export default function ApproveFunding({
-  onNext,
-}: {
-  onNext: () => void;
-}) {
+export default function ApproveFunding({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation();
+  const [safeAddress, setSafeAddress] = useState<string>("");
   const { approveFunding } = useVestingPrecompile();
   const dispatch = useDispatch();
+
+  const disabled = !safeAddress || safeAddress === "";
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function handleApprove() {
     setIsLoading(true);
     try {
-      const res = await approveFunding();
+      const res = await approveFunding(safeAddress);
       dispatch(
         addSnackbar({
           id: 0,
@@ -39,7 +39,7 @@ export default function ApproveFunding({
         }),
       );
       setIsLoading(false);
-      onNext();
+      onClose();
     } catch {
       setIsLoading(false);
       dispatch(
@@ -56,21 +56,30 @@ export default function ApproveFunding({
   }
 
   return (
-    <div className="flex flex-col space-y-3">
-      <span>{t("vesting.executioner.address.body")}</span>
-      <label htmlFor="address" className="text-xs font-bold">
-        {t("vesting.executioner.address.title")}
-      </label>
-      <button
-        onClick={handleApprove}
-        disabled={isLoading}
-        style={{ backgroundColor: "#ed4e33" }}
-        className={`w-full cursor-pointer rounded p-2 font-body text-lg text-pearl ${
-          isLoading ? "opacity-40" : ""
-        }`}
-      >
-        {isLoading ? "Loading..." : t("vesting.approve.button")}
-      </button>
+    <div className="space-y-5">
+      <ModalTitle title={t("vesting.fund.title")} />
+      <div className="flex flex-col space-y-3">
+        <span>{t("vesting.executioner.address.body")}</span>
+        <label htmlFor="address" className="text-xs font-bold">
+          {t("vesting.safe.address.title")}
+        </label>
+        <input
+          id="address"
+          onChange={(e) => setSafeAddress(e.target.value)}
+          className="textBoxStyle"
+          placeholder="Enter safe address"
+        />
+        <button
+          onClick={handleApprove}
+          disabled={disabled || isLoading}
+          style={{ backgroundColor: "#ed4e33" }}
+          className={`w-full cursor-pointer rounded p-2 font-body text-lg text-pearl ${
+            disabled || isLoading ? "opacity-40" : ""
+          }`}
+        >
+          {isLoading ? "Loading..." : t("vesting.approve.button")}
+        </button>
+      </div>
     </div>
   );
 }

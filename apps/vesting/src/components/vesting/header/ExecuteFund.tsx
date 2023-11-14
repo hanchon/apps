@@ -31,11 +31,11 @@ const evmos = getEvmosChainInfo();
 export default function ExecuteFund({
   onClose,
   vestingAccount,
-  vestingData
+  vestingData,
 }: {
   onClose: () => void;
   vestingAccount: string;
-  vestingData: FieldValues
+  vestingData: FieldValues;
 }) {
   const dispatch = useDispatch();
   const { fundVestingAccount } = useVestingPrecompile();
@@ -64,7 +64,8 @@ export default function ExecuteFund({
           {
             fullVestingPeriod: vestingData.vestingDuration as TimeWindow,
             vestingInterval: vestingData.vestingSchedule as Intervals,
-            vestingCliff: vestingData.vestingCliff as VestingSchedule["vestingCliff"],
+            vestingCliff:
+              vestingData.vestingCliff as VestingSchedule["vestingCliff"],
             lockingPeriod: vestingData.lockupDuration as TimeWindow,
           },
         );
@@ -92,7 +93,7 @@ export default function ExecuteFund({
       setloading(false);
       onClose();
     } catch (e) {
-      console.log(e)
+      console.log(e);
       setloading(false);
       dispatch(
         addSnackbar({

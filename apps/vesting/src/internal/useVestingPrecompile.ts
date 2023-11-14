@@ -53,7 +53,7 @@ export function useVestingPrecompile() {
     });
   }
 
-  async function approveFunding() {
+  async function approveFunding(safeAddress: string) {
     return await writeContract({
       mode: "prepared",
       request: {
@@ -62,7 +62,7 @@ export function useVestingPrecompile() {
         functionName: "approve",
         value: 0n,
         account: address.evmosAddressEthFormat as `0x${string}`,
-        args: [address.evmosAddressEthFormat as `0x${string}`, "/evmos.vesting.v2.MsgFundVestingAccount"],
+        args: [safeAddress, "/evmos.vesting.v2.MsgFundVestingAccount"],
       },
     });
   }

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { FundVestingAccount } from "./FundVestingAccount";
 import { EnableVestingModal } from "./EnableVestingModal";
 import { useTranslation } from "next-i18next";
+import ApproveFunding from "./ApproveFunding";
 
 export const Header = () => {
   const handleConfirmClick = () => {
@@ -23,6 +24,7 @@ export const Header = () => {
   const value = useSelector((state: StoreType) => state.wallet.value);
   const [showModal, setShowModal] = useState(false);
   const [showEnableModal, setShowEnableModal] = useState(false);
+  const [showApproveModal, setShowApproveModal] = useState(false);
 
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
   const { t } = useTranslation();
@@ -35,6 +37,14 @@ export const Header = () => {
             text={t("enable.header.button.title")}
             onClick={() => {
               setShowEnableModal(true);
+            }}
+            disabled={!value.active}
+          />
+          <ConfirmButton
+            className="w-fit normal-case"
+            text={t("approve.header.button.title")}
+            onClick={() => {
+              setShowApproveModal(true);
             }}
             disabled={!value.active}
           />
@@ -57,6 +67,19 @@ export const Header = () => {
         <EnableVestingModal
           onClose={() => {
             setShowEnableModal(false);
+          }}
+        />
+      </Modal>
+
+      <Modal
+        show={showApproveModal}
+        onClose={() => {
+          setShowApproveModal(false);
+        }}
+      >
+        <ApproveFunding
+          onClose={() => {
+            setShowApproveModal(false);
           }}
         />
       </Modal>
