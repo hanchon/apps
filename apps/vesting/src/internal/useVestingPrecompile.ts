@@ -53,6 +53,20 @@ export function useVestingPrecompile() {
     });
   }
 
+  async function approveFunding(granteeAddress: string) {
+    return await writeContract({
+      mode: "prepared",
+      request: {
+        address: VESTING_CONTRACT_ADDRESS,
+        abi: VestingABI,
+        functionName: "approve",
+        value: 0n,
+        account: address.evmosAddressEthFormat as `0x${string}`,
+        args: [granteeAddress, "/evmos.vesting.v2.MsgFundVestingAccount"],
+      },
+    });
+  }
+
   async function clawback(
     founderAddress: string,
     accountAddress: string,
@@ -73,5 +87,6 @@ export function useVestingPrecompile() {
     fundVestingAccount,
     clawback,
     createClawbackVestingAccount,
+    approveFunding,
   } as const;
 }
