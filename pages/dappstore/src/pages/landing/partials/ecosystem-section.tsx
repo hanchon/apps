@@ -11,7 +11,7 @@ import { fetchExplorerData } from "../../../lib/fetch-explorer-data";
 
 export const EcosystemSection = async () => {
   const { dApps } = await fetchExplorerData();
-  const instantDapps = dApps.filter((dApp) => dApp.instantDapp);
+  const instantDapps = dApps.filter((dApp) => dApp.isInstantDapp);
   return (
     <section className="space-y-6 pt-11">
       <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">

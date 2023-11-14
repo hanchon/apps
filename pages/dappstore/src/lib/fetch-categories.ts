@@ -1,50 +1,12 @@
 import { z } from "zod";
 import { categorySchema } from "./schemas/entities/categorySchema";
-import { dappSchema } from "./schemas/entities/dappSchema";
-
 import { notion } from "./notion-client";
+import { CATEGORIES_PAGE_NOTION_ID } from "evmos-wallet/src/internal/wallet/functionality/networkConfig";
+import { Log } from "helpers";
 
-const categoriesDbId = "1bb5db7703bf4ba9bf11fc845433bdc4";
-const dappsDbId = "f6c8a6f4b169463fa338c18917bf3af9";
-
-export const fetchDapps = async () => {
-  const dapps = await notion.databases.query({
-    database_id: dappsDbId,
-  });
-  const dappsMap = new Map<string, z.output<typeof dappSchema>>();
-
-  const parsedDapps = await Promise.all(
-    dapps.results.map((value) => dappSchema.safeParseAsync(value))
-  );
-  for (const result of parsedDapps) {
-    if (!result.success) {
-      continue;
-    }
-
-    const parsed = result.data;
-    parsed.localized = Object.fromEntries(
-      parsed.subItem.map((notionId) => {
-        const subItem = dappsMap.get(notionId);
-        dappsMap.delete(notionId);
-        if (!subItem) {
-          throw new Error("Sub-item not found");
-        }
-        return [
-          subItem?.name,
-          {
-            name: subItem?.name,
-            description: subItem?.description,
-          },
-        ];
-      })
-    );
-    dappsMap.set(parsed.notionId, parsed);
-  }
-  return dappsMap;
-};
 export const fetchCategories = async () => {
   const categories = await notion.databases.query({
-    database_id: categoriesDbId,
+    database_id: CATEGORIES_PAGE_NOTION_ID,
   });
 
   return categories.results.reduce<
@@ -52,18 +14,21 @@ export const fetchCategories = async () => {
   >((acc, category) => {
     const parsed = categorySchema.safeParse(category);
 
-    if (!parsed.success) return acc;
+    if (!parsed.success) {
+      Log("notion").error(parsed.error.issues);
+      return acc;
+    }
     parsed.data.localized = Object.fromEntries(
       parsed.data.subItem.map((notionId) => {
         const subItem = acc.get(notionId);
         acc.delete(notionId);
-        if (!subItem) {
+        if (!subItem || !subItem?.language) {
           throw new Error("Sub-item not found");
         }
         return [
-          subItem?.name,
+          subItem.language,
           {
-            name: subItem?.displayName,
+            name: subItem.name,
             description: subItem?.description,
           },
         ];

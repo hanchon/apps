@@ -3,15 +3,16 @@ import { z } from "zod";
 import { relationSchema } from "../partials/relationSchema";
 import { richTextSchema } from "../partials/richTextSchema";
 import { titleSchema } from "../partials/titleSchema";
-import { createNotionPropertiesSchema } from "./createNotionPropertiesSchema";
+import { createNotionPropertiesSchema } from "../utils/createNotionPropertiesSchema";
+import { selectSchema } from "../partials/selectSchema";
 
 const categoryPropertiesSchema = createNotionPropertiesSchema(
   z.object({
-    displayName: richTextSchema,
     projects: relationSchema,
     name: titleSchema,
     description: richTextSchema,
     subItem: relationSchema,
+    language: selectSchema,
   })
 );
 
@@ -22,10 +23,9 @@ export const categorySchema = z
     last_edited_time: z.string(),
     properties: categoryPropertiesSchema,
   })
-  .transform(({ id, created_time, last_edited_time, properties }) => ({
+  .transform(({ id, properties }) => ({
     notionId: id,
-    createdAt: created_time,
-    updatedAt: last_edited_time,
+
     localized: {} as Record<
       string,
       {

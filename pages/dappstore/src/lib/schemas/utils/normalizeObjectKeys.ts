@@ -9,8 +9,7 @@ type KeysToCamelCase<T> = {
     ? KeysToCamelCase<T[K]>
     : T[K];
 };
-type test = CamelCase<"instant dApps">;
-//    ^?
+
 const { entries, fromEntries } = Object;
 const normalizeKey = <T extends string>(key: T) =>
   camelCase(key.toLowerCase()) as CamelCase<T>;

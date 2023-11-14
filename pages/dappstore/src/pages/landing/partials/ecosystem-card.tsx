@@ -22,11 +22,11 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
     >
       <Link
         href={
-          data.instantDapp
+          data.isInstantDapp
             ? `/dapps/${data.categorySlug}/${data.slug}`
             : data.app ?? ""
         }
-        target={data.instantDapp ? "" : "_blank"}
+        target={data.isInstantDapp ? "" : "_blank"}
         key={data.name}
         className="relative mb-16 space-y-2 rounded-lg bg-[#262017] pb-8 transition-all duration-150 ease-out hover:scale-105"
       >
@@ -42,7 +42,7 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
         </div>
         <div className="flex space-x-3 items-center px-5 pt-5">
           <h3 className="text-sm font-bold text-pearl">{data.name}</h3>
-          {data.instantDapp ? (
+          {data.isInstantDapp ? (
             <Badge className="text-sm space-x-2 ">
               {/* TODO: check if we need to create a component for this */}
               {/* TODO: add color to tailwind file */}

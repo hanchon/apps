@@ -1,4 +1,3 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
@@ -16,54 +15,75 @@ import {
 import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
 import { DApp } from "../../../lib/fetch-explorer-data";
+import { cn } from "helpers";
 
 export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
   const img = dapp.cover ?? dapp.icon;
   return (
     <div className="space-y-24 pb-24">
       <div className="font-brand relative">
-        <Image
-          // TODO: use dapp image
-          src={"/ecosystem/galaxy.png"}
-          alt={dapp.name}
-          width={1000}
-          height={250}
-          className="w-full h-[250px]"
-        />
-
-        <div className="flex flex-col absolute left-20 -bottom-14">
-          {img && (
-            <Image
-              src={img}
-              alt={dapp.name}
-              width={500}
-              height={250}
-              className="w-48 z-10 self-center flex"
-            />
+        <div
+          className={cn(
+            "relative h-[300px] w-screen ml-[50%] -translate-x-1/2",
+            // gradient overlay
+            " after:bg-gradient-to-t after:from-black/70 after:to-transparent after:absolute after:w-full after:h-full after:bottom-0"
           )}
+        >
+          <Image
+            // TODO: use dapp image
+            src={dapp.cover ?? "/ecosystem/galaxy.png"}
+            alt={dapp.name}
+            fill={true}
+            className="object-cover"
+          />
         </div>
-        <div className="absolute left-72 bottom-3">
-          <p className="text-[#E8DFD3] text-7xl flex ">{dapp.name}</p>
-        </div>
-
-        <div className="absolute left-72 -bottom-10">
-          <p className="text-[#D3CBC7] text-xl font-light">
-            {dapp.shortDescription}
-          </p>
-        </div>
-
-        {dapp.instantDapp && (
-          <div className="flex flex-col  absolute right-20 bottom-6">
-            {/* TODO: check if we need to create a component for this */}
-            {/* TODO: add color to tailwind file */}
-            <Badge className="text-sm space-x-2 border border-[#FFF4E173] text-xl px-5 py-2">
+        <header
+          className={cn(
+            "flex flex-col items-center -mt-24 gap-4",
+            "md:flex-row md:items-stretch lg:gap-x-8"
+          )}
+        >
+          <div
+            className={cn(
+              "relative shrink-0 w-32 aspect-square bg-[#423D37] rounded-md overflow-hidden",
+              "md:w-48"
+            )}
+          >
+            {img && (
+              <Image
+                src={img}
+                alt={dapp.name}
+                fill={true}
+                className="object-cover"
+              />
+            )}
+          </div>
+          <div
+            className={cn(
+              "relative text-center gap-4 flex flex-col max-w-xl",
+              "md:text-left"
+            )}
+          >
+            <h1 className="text-[#E8DFD3] text-3xl md:text-5xl lg:text-7xl">
+              {dapp.name}
+            </h1>
+            <p className="text-[#D3CBC7] font-light lg:text-xl">
+              {dapp.description}
+            </p>
+          </div>
+          {dapp.isInstantDapp && (
+            <div className="relative md:ml-auto shrink">
               {/* TODO: check if we need to create a component for this */}
               {/* TODO: add color to tailwind file */}
-              <span className="w-[13px] h-[13px] bg-[#AE00FF] rounded-full" />
-              <p>Instant dApp</p>
-            </Badge>
-          </div>
-        )}
+              <Badge className="text-sm space-x-2 border border-[#FFF4E173]  whitespace-nowrap md:text-xl md:px-5 md:py-2">
+                {/* TODO: check if we need to create a component for this */}
+                {/* TODO: add color to tailwind file */}
+                <span className="w-[13px] h-[13px] bg-[#AE00FF] rounded-full" />
+                <p>Instant dApp</p>
+              </Badge>
+            </div>
+          )}
+        </header>
       </div>
       <div className="grid grid-cols-3">
         <div className="space-y-24 col-span-2">
@@ -71,9 +91,9 @@ export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
             <p>{dapp.description}</p>
           </DescriptionItem>
           <DescriptionItem title="Social">
-            {dapp.twitter && (
+            {dapp.x && (
               <Link
-                href={dapp.twitter}
+                href={dapp.x}
                 className="flex flex-row space-x-2 items-center "
               >
                 <TwitterIcon width={20} height={20} /> <p>{dapp.name}</p>

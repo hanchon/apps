@@ -8,7 +8,15 @@ export default withEvmosConfig({
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "prod-files-secure.*.amazonaws.com",
+        hostname: "**.amazonaws.com",
+
+        pathname: "/secure.notion-static.com/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**.amazonaws.com",
+
+        pathname: "/db649a25-e00d-4b76-ae35-010494162457/**",
       },
     ],
   },
