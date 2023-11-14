@@ -70,6 +70,7 @@ export const RequestAssetSelector = ({
   useEffect(() => {
     if (tokenOptions.includes(selectedToken)) return;
     const [firstAvailableToken] = tokenOptions;
+    if (!firstAvailableToken) return;
     onChangeEvent((next) => ({
       ...next,
       ref: firstAvailableToken.ref,

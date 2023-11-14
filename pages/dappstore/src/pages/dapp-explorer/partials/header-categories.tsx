@@ -11,14 +11,15 @@ import { Subtitle } from "ui-helpers/src/titles/Subtitle";
 import { Category, DApp } from "../../../lib/fetch-explorer-data";
 
 export const HeaderCategories = ({
-  dApps,
-  amountAppsSelected,
   categories,
   params,
 }: {
   dApps: DApp[];
   amountAppsSelected: number;
-  categories: Category[];
+  categories: Pick<
+    Category,
+    "categoryDapps" | "name" | "slug" | "description"
+  >[];
   params: { category?: string };
 }) => {
   const [hoveredCategorySlug, setHoveredCategory] = useState<null | string>(
@@ -39,7 +40,7 @@ export const HeaderCategories = ({
 
   const selectedCategory = useMemo(() => {
     return categories.find((category) => category.slug === params.category);
-  }, [params.category]);
+  }, [categories, params.category]);
 
   const displayedCategory = hoveredCategory || selectedCategory;
   return (
@@ -59,7 +60,14 @@ export const HeaderCategories = ({
       </div>
       <div className="flex gap-5 flex-wrap" onMouseLeave={handleCategoryLeave}>
         {categories.map((category) => (
-          <Link href={`/dapps/${category.slug}`} key={category.slug}>
+          <Link
+            href={
+              category.slug === params.category
+                ? "/dapps"
+                : `/dapps/${category.slug}`
+            }
+            key={category.slug}
+          >
             <Badge
               className={cn({
                 // TODO:  create reusable component for circle

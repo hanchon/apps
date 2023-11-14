@@ -10,14 +10,14 @@ import {
   DiscordIcon,
   GithubIcon,
   RightArrow,
-  TelegramIcon,
   TwitterIcon,
   WebsiteIcon,
 } from "icons";
 import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
 import { CypherD } from "@evmosapps/instant-dapps";
-export const DescriptiondApp = ({ dapp }) => {
+import { DApp } from "../../../lib/fetch-explorer-data";
+export const DescriptiondApp = ({ dapp }: { dapp: DApp }) => {
   const imgId = dapp.cover?.id ?? dapp.icon?.id;
 
   return (
@@ -34,7 +34,7 @@ export const DescriptiondApp = ({ dapp }) => {
 
         <div className="flex flex-col absolute left-20 -bottom-14">
           <Image
-            src={`/api/external-image/${imgId}`}
+            src={`/external-image/${imgId}`}
             alt={dapp.name}
             width={500}
             height={250}

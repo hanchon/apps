@@ -18,7 +18,7 @@ const Tabs = ({
   tabsContent: tabContent[];
   placeholder?: string;
 }) => {
-  const [activeTab, setActiveTab] = useState(tabsContent[0].id);
+  const [activeTab, setActiveTab] = useState(tabsContent?.[0]?.id ?? "");
 
   const tabItems = useMemo(() => {
     return tabsContent?.map((item) => {

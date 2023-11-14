@@ -8,11 +8,8 @@ import { useSelector } from "react-redux";
 import { StoreType } from "evmos-wallet";
 import { ERC20BalanceResponse } from "./types";
 
-import dynamic from "next/dynamic";
+import { Modal, Switch } from "ui-helpers";
 
-import { MessageTable, Modal, Switch } from "ui-helpers";
-
-import HeadTable from "./HeadTable";
 import { cn, getTotalAssets } from "helpers";
 import HeadAssets from "./components/HeadAssets";
 import Guide from "./Guide";
@@ -94,11 +91,11 @@ const AssetsTable = () => {
   }, [normalizedAssetsData, hideZeroBalance]);
 
   const topProps = {
-    evmosPrice: normalizedAssetsData?.table[0]?.coingeckoPrice,
+    evmosPrice: normalizedAssetsData?.table[0]?.coingeckoPrice ?? 0,
     totalAssets: getTotalAssets(normalizedAssetsData, {
       total: stakedData ? stakedData?.value : "0",
-      decimals: normalizedAssetsData?.table[0]?.decimals,
-      coingeckoPrice: normalizedAssetsData.table[0]?.coingeckoPrice,
+      decimals: normalizedAssetsData?.table[0]?.decimals ?? 0,
+      coingeckoPrice: normalizedAssetsData.table[0]?.coingeckoPrice ?? 0,
     }),
     setIsOpen: setIsOpen,
     setModalContent: setModalContent,

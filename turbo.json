@@ -37,7 +37,8 @@
     "NODE_ENV",
     "GITHUB_TOKEN",
     "TEST_WORKER_INDEX",
-    "NOTION_API_KEY"
+    "NOTION_API_KEY",
+    "ENABLED_LOGS"
   ],
   "pipeline": {
     "build": {

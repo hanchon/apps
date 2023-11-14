@@ -138,7 +138,7 @@ export const useDeposit = (useDepositProps: DepositProps) => {
     }
     // hardcoding neok support for now, new modal will not have this, I promise
     if (useDepositProps.token.symbol === "NEOK") {
-      params.token = NEOK_IBC_DENOM_MAP[prefix];
+      params.token = NEOK_IBC_DENOM_MAP[prefix] ?? params.token;
     }
     // create, sign and broadcast tx
     const res = await executeDeposit(

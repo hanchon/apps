@@ -134,7 +134,7 @@ const Delegations = () => {
           <td className={`${tdBodyStyle} firstRow md:pl-8`}>
             <TdContent
               tdProps={{
-                title: dataHead[0],
+                title: dataHead?.[0] ?? "",
                 value: item.delegation.validator.rank,
               }}
             />
@@ -142,7 +142,7 @@ const Delegations = () => {
           <td className={`${tdBodyStyle} hidden md:table-cell`}>
             <TdContent
               tdProps={{
-                title: dataHead[2],
+                title: dataHead?.[2] ?? "",
                 value: item.delegation.validator.description.moniker,
               }}
             />
@@ -150,7 +150,7 @@ const Delegations = () => {
           <td className={`${tdBodyStyle}`}>
             <TdContent
               tdProps={{
-                title: dataHead[2],
+                title: dataHead?.[2] ?? "",
                 value: formatNumber(
                   convertStringFromAtto(
                     item.delegation.validator.tokens
@@ -162,7 +162,7 @@ const Delegations = () => {
           <td className={`${tdBodyStyle}`}>
             <TdContent
               tdProps={{
-                title: dataHead[3],
+                title: dataHead?.[3] ?? "",
                 value: convertAndFormat(
                   BigNumber.from(item.balance.amount),
                   EVMOS_DECIMALS,
@@ -174,7 +174,7 @@ const Delegations = () => {
           <td className={`${tdBodyStyle}`}>
             <TdContent
               tdProps={{
-                title: dataHead[4],
+                title: dataHead?.[4] ?? "",
                 value: formatPercentage(
                   item.delegation.validator.commission?.commission_rates?.rate
                 ),

@@ -19,8 +19,9 @@ import { Container } from "ui-helpers";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 
-export async function generateStaticParams() {
-  return languages.map((locale) => ({ lng: locale }));
+export const dynamic = "error";
+export function generateStaticParams() {
+  return languages.map((locale) => ({ locale }));
 }
 export const viewport: Viewport = {
   themeColor: "black",

@@ -18,13 +18,18 @@ type Vote = {
 };
 
 const UserVote = ({ voteRecord }: { voteRecord: Vote | undefined }) => {
-  return voteRecord !== undefined &&
-    voteRecord?.vote?.options &&
-    voteRecord?.vote?.options.length > 0 ? (
-    <p className="rounded-3xl bg-pearl px-5 py-2 text-center text-black ">{`You Voted: ${
-      VOTING_LOOKUP[voteRecord?.vote?.options[0].option]
-    }`}</p>
-  ) : null;
+  const optionNumber = voteRecord?.vote?.options?.[0]?.option;
+  if (optionNumber === undefined) {
+    return null;
+  }
+  const option = VOTING_LOOKUP[optionNumber];
+  if (option === undefined) {
+    return null;
+  }
+
+  return (
+    <p className="rounded-3xl bg-pearl px-5 py-2 text-center text-black ">{`You Voted: ${option}`}</p>
+  );
 };
 
 export default UserVote;

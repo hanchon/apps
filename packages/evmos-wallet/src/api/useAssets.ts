@@ -81,7 +81,7 @@ export const useAssets = () => {
       return "--";
     }
 
-    return assets.data.balance[0].coingeckoPrice;
+    return assets.data.balance[0]?.coingeckoPrice ?? "--";
   }, [assets.data]);
 
   const getEvmosPriceChange = useMemo(() => {
@@ -89,7 +89,7 @@ export const useAssets = () => {
       return "0";
     }
 
-    return assets.data.balance[0].price24HChange;
+    return assets.data.balance[0]?.price24HChange ?? "0";
   }, [assets.data]);
 
   const getTotalEvmos = useMemo(() => {
@@ -104,8 +104,8 @@ export const useAssets = () => {
       (i) => i.symbol.toLowerCase() === "evmos"
     );
 
-    total = BigNumber.from(evmosData[0].cosmosBalance).add(
-      BigNumber.from(evmosData[0].erc20Balance)
+    total = BigNumber.from(evmosData[0]?.cosmosBalance).add(
+      BigNumber.from(evmosData[0]?.erc20Balance)
     );
 
     return total;
@@ -116,7 +116,7 @@ export const useAssets = () => {
       return "-";
     }
 
-    return `$${Number(assets.data.balance[0].coingeckoPrice).toFixed(2)}`;
+    return `$${Number(assets.data.balance[0]?.coingeckoPrice).toFixed(2)}`;
   }, [assets.data]);
   return {
     sourceData: assets.data,

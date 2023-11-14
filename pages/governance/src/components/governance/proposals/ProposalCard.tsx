@@ -1,11 +1,11 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { ProposalProps } from "../../../internal/governance/functionality/types";
 import { BarContainer } from "ui-helpers";
 import ProposalStatus from "./ProposalStatus";
 import IdContainer from "../common/IdContainer";
 import TitleContainer from "../common/TitleContainer";
+import { ProposalProps } from "../../../utils/types";
 
 const ProposalCard = ({ proposalProps }: { proposalProps: ProposalProps }) => {
   return (

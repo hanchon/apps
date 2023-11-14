@@ -1,10 +1,9 @@
 import { raise } from "helpers";
 import slugify from "slugify";
-import { omit } from "lodash";
+
 import { cache } from "react";
-import path from "path";
+
 import { fetchCategories, fetchDapps } from "./fetch-categories";
-import fs from "fs/promises";
 
 export const fetchExplorerData = cache(async () => {
   const categoriesMap = await fetchCategories();
@@ -26,16 +25,15 @@ export const fetchExplorerData = cache(async () => {
       const { name, ...rest } =
         dappsMap.get(projectId) ?? raise("Project not found");
 
-      const dappSlug = slugify(name, { lower: true, strict: true });
       dApps.push({
         name: name,
-        slug: dappSlug,
+
         categorySlug,
         categoryName,
         ...rest,
       });
 
-      categoryDapps.push(dappSlug);
+      categoryDapps.push(rest.slug);
     }
     const category = {
       name: categoryName,

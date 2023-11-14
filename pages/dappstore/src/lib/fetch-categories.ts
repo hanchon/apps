@@ -1,8 +1,7 @@
-import { inspect } from "util";
 import { z } from "zod";
 import { categorySchema } from "./schemas/entities/categorySchema";
 import { dappSchema } from "./schemas/entities/dappSchema";
-import { Log } from "helpers";
+
 import { notion } from "./notion-client";
 
 const categoriesDbId = "1bb5db7703bf4ba9bf11fc845433bdc4";

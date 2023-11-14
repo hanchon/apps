@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { BigNumber } from "@ethersproject/bignumber";
-import { ERC20BalanceResponse } from "../../../../components/asset/table/types";
+import { ERC20BalanceResponse } from "../../asset/table/types";
 
 export type TableDataElement = {
   name: string;
@@ -63,7 +63,7 @@ export function normalizeAssetsData(data: ERC20BalanceResponse | undefined) {
         tokenName: item.tokenName,
         chainId: item.chainId,
         chainIdentifier: item.chainIdentifier,
-        handledByExternalUI: external,
+        handledByExternalUI: external ?? null,
         coingeckoPrice: Number(item.coingeckoPrice),
         prefix: item.prefix,
         pngSrc: item.pngSrc,

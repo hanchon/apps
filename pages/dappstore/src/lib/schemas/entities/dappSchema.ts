@@ -9,10 +9,10 @@ import { emojiSchema } from "./emojiSchema";
 import { fileSchema } from "./fileSchema";
 import { externalSchema } from "./externalSchema";
 import { createNotionPropertiesSchema } from "./createNotionPropertiesSchema";
-import { sha256 } from "@noble/hashes/sha256";
 import { createdAtSchema } from "./createdAtSchema";
 import { updatedAtSchema } from "./updatedAtSchema";
 import { selectSchema } from "./selectSchema";
+import slugify from "slugify";
 
 const dappPropertiesSchema = createNotionPropertiesSchema(
   z.object({
@@ -31,9 +31,6 @@ const dappPropertiesSchema = createNotionPropertiesSchema(
   })
 );
 
-const hashUrl = (url: string) => {
-  return Buffer.from(sha256(url)).toString("hex");
-};
 export const dappSchema = z
   .object({
     id: z.string(),
@@ -41,11 +38,8 @@ export const dappSchema = z
     icon: z
       .union([emojiSchema, fileSchema, externalSchema, z.null()])
       .transform((icon) => {
-        if (icon && "url" in icon) {
-          return {
-            id: hashUrl(icon.url),
-            url: icon.url,
-          };
+        if (icon && "url" in icon && icon.url) {
+          return icon.url;
         }
         return null;
       }),
@@ -53,23 +47,37 @@ export const dappSchema = z
     cover: z
       .union([fileSchema, externalSchema, z.null()])
       .transform((cover) => {
-        if (!cover) return null;
-        return {
-          id: hashUrl(cover.url),
-          url: cover.url,
-        };
+        if (!cover || !cover.url) return null;
+        return cover.url;
       }),
   })
-  .transform(({ icon, cover, id, properties }) => ({
-    notionId: id,
-    icon,
-    cover,
-    localized: {} as Record<
-      string,
-      {
-        name: string;
-        description: string;
-      }
-    >,
-    ...properties,
-  }));
+  .transform(({ icon, cover, id, properties }) => {
+    const slug = slugify(properties.name, {
+      lower: true,
+      trim: true,
+    });
+    return {
+      notionId: id,
+      icon: icon
+        ? {
+            id: `${slug}-icon`,
+            url: icon,
+          }
+        : null,
+      cover: cover
+        ? {
+            id: `${slug}-cover`,
+            url: cover,
+          }
+        : null,
+      slug,
+      localized: {} as Record<
+        string,
+        {
+          name: string;
+          description: string;
+        }
+      >,
+      ...properties,
+    };
+  });

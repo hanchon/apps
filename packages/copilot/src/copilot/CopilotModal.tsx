@@ -9,8 +9,7 @@ import { getCopilotModalState } from "./utils";
 
 import { Content } from "./Content";
 export const CopilotModal = () => {
-  const { showModal, setIsOpenModal, setIsOpenCloseModal } =
-    useContext(StepsContext);
+  const { showModal, setIsOpenModal } = useContext(StepsContext);
 
   useEffect(() => {
     const reload = getCopilotModalState().reloadMetaMask;

@@ -55,7 +55,7 @@ const DepositReceiver = ({
 
   const handleOnClickMetaMask = async () => {
     const address = await getWallet();
-    if (address === null) {
+    if (!address) {
       dispatch(snackErrorConnectingMetaMask());
       setIsOpen(false);
       return;

@@ -76,6 +76,7 @@ export const AssetSelector = ({
    */
   const selectFirstNetworkOption = useEffectEvent(() => {
     const [firstAvailableToken] = tokenOptions;
+    if (!firstAvailableToken) return;
     onChange({
       ...value,
       ref: firstAvailableToken.ref,

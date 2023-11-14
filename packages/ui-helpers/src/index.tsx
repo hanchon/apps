@@ -26,7 +26,7 @@ export { Footer } from "./Footer";
 export { ViewExplorer } from "./ViewExplorer";
 export { BarContainer } from "./votingBar/BarContainer";
 export { InformationBanner } from "./InformationBanner";
-export { ConsentModal } from "./termsOfServices/ConsentModal";
+
 export { SystemErrorBanner } from "./SystemErrorBanner";
 export { Search } from "./Search";
 export { Divider } from "./divider/Divider";

@@ -4,7 +4,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { TableDataElement } from "../../../utils/table/normalizeData";
-import { ConfirmButton, ModalTitle } from "ui-helpers";
+import { ConfirmButton, Modal } from "ui-helpers";
 import { getBalance, getEvmosBalanceForDeposit } from "../../../utils/fetch";
 import DepositReceiver from "../common/deposit/DepositReceiver";
 import AmountDeposit from "../common/deposit/AmountDeposit";
@@ -96,8 +96,8 @@ const DepositSTR = ({
       }
       if (chain !== undefined) {
         const wallet = await getKeplrAddressByChain(
-          chain.elements[0].chainId,
-          chain.elements[0].chainIdentifier
+          chain.elements?.[0]?.chainId ?? "",
+          chain.elements?.[0]?.chainIdentifier
         );
         if (wallet === null) {
           dispatch(snackErrorConnectingKeplr());
@@ -132,7 +132,7 @@ const DepositSTR = ({
         } else {
           let tokenDenom = token.symbol;
           if (token.symbol === "NEOK") {
-            const prefix = walletToUse.split("1")[0];
+            const prefix = walletToUse.split("1")[0] ?? "";
             tokenDenom = encodeURIComponent(NEOK_IBC_DENOM_MAP[prefix] ?? "");
           }
           balance = await getBalance(
@@ -196,10 +196,13 @@ const DepositSTR = ({
 
   const depositDiv = () => {
     // If chain is from axelar, return redirect component
-    if (chain !== undefined && chain.elements[0].handledByExternalUI !== null) {
+    if (
+      chain !== undefined &&
+      chain.elements?.[0]?.handledByExternalUI !== null
+    ) {
       return (
         <RedirectLink
-          href={chain.elements[0].handledByExternalUI.url}
+          href={chain.elements?.[0]?.handledByExternalUI.url ?? ""}
           text="Deposit from Axelar"
         />
       );
@@ -219,7 +222,7 @@ const DepositSTR = ({
 
   return (
     <>
-      <ModalTitle title="Deposit Tokens" />
+      <Modal.Header>Deposit Token</Modal.Header>
       <div className="space-y-3 text-darkGray3">
         <DepositSender
           address={walletToUse}

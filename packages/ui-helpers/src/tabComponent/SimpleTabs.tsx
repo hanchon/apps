@@ -13,7 +13,7 @@ type tabContent = {
 };
 
 export const SimpleTabs = ({ tabsContent }: { tabsContent: tabContent[] }) => {
-  const [activeTab, setActiveTab] = useState(tabsContent[0].id);
+  const [activeTab, setActiveTab] = useState(tabsContent[0]?.id ?? "");
 
   const tabItems = useMemo(() => {
     return tabsContent?.map((item) => {
