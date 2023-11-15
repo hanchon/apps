@@ -43,6 +43,12 @@ const WIDGETS: {
   transak: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Transak"), {
     loading: () => <p>Loading...</p>,
   }),
+  wormhole: dynamic(
+    () => import("@evmosapps/instant-dapps/src/dapps/Wormhole"),
+    {
+      loading: () => <p>Loading...</p>,
+    }
+  ),
 };
 
 export const DescriptiondApp = ({
@@ -192,6 +198,7 @@ export const DescriptiondApp = ({
           </div>
         </Frameline>
       </div>
+
       <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
         <Title>Related dApps</Title>
 
