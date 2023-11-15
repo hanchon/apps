@@ -40,6 +40,9 @@ const WIDGETS: {
   C14: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/C14"), {
     loading: () => <p>Loading...</p>,
   }),
+  transak: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Transak"), {
+    loading: () => <p>Loading...</p>,
+  }),
 };
 
 export const DescriptiondApp = ({
