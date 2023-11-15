@@ -32,7 +32,7 @@ const WIDGETS: {
     loading: () => <p>Loading...</p>,
   }),
   "cypher-wallet": dynamic(
-    () => import("@evmosapps/instant-dapps/src/dapps/Transak"),
+    () => import("@evmosapps/instant-dapps/src/dapps/CypherD"),
     {
       loading: () => <p>Loading...</p>,
     }
