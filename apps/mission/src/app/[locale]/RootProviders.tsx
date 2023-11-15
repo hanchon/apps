@@ -4,7 +4,6 @@ import { StoreType, store } from "@evmosapps/evmos-wallet/src/redux/Store";
 import { WalletProvider } from "@evmosapps/evmos-wallet/src/wallet/components/WalletProvider";
 import { PropsWithChildren, useState } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
-import { MixpanelProvider } from "tracker";
 import { MavaWidget } from "@evmosapps/ui-helpers";
 import { Snackbars, getAllSnackbars } from "@evmosapps/evmos-wallet";
 import { GiveFeedback } from "../../components/GiveFeedback";
@@ -41,16 +40,11 @@ export const RootProviders = ({ children }: PropsWithChildren) => {
       >
         <ReactQueryStreamedHydration>
           <WalletProvider>
-            <MixpanelProvider
-              config={{ ip: false }}
-              token={process.env.NEXT_PUBLIC_MIXPANEL_TOKEN ?? ""}
-            >
-              {children}
+            {children}
 
-              <SnackbarsInternal />
-              <MavaWidget />
-              <GiveFeedback />
-            </MixpanelProvider>
+            <SnackbarsInternal />
+            <MavaWidget />
+            <GiveFeedback />
           </WalletProvider>
           <ReactQueryDevtools
             initialIsOpen={false}

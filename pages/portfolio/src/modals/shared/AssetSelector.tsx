@@ -19,10 +19,7 @@ import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
 import { max, useEffectEvent } from "helpers";
 import { useTracker } from "tracker";
-import {
-  SELECT_FROM_NETWORK_SEND_FLOW,
-  SELECT_TOKEN_SEND_FLOW,
-} from "tracker/src/constants";
+import { SELECT_FROM_NETWORK_SEND_FLOW, SELECT_TOKEN_SEND_FLOW } from "tracker";
 import { useAccount } from "wagmi";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { sortedChains, sortedTokens } from "./sortedChains";

@@ -43,12 +43,10 @@ import {
   CLICK_ON_TOP_UP_EVMOS,
   INSUFFICIENT_FEE_AMOUNT,
   useTracker,
-} from "tracker";
-import {
   CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW,
   SUCCESSFUL_SEND_TX,
   UNSUCCESSFUL_SEND_TX,
-} from "tracker/src/constants";
+} from "tracker";
 
 import { TransferModalProps } from "./TransferModal";
 import { useReceiptModal } from "../receipt/ReceiptModal";

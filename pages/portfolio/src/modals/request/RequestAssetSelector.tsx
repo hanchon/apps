@@ -17,10 +17,7 @@ import { useTranslation } from "@evmosapps/i18n/client";
 import { formatUnits } from "viem";
 import { useTokenPrice } from "../hooks/useTokenPrice";
 import { useTracker } from "tracker";
-import {
-  SELECT_FROM_NETWORK_SEND_FLOW,
-  SELECT_TOKEN_SEND_FLOW,
-} from "tracker/src/constants";
+import { SELECT_FROM_NETWORK_SEND_FLOW, SELECT_TOKEN_SEND_FLOW } from "tracker";
 import { useAccount } from "wagmi";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { useEffectEvent } from "helpers";

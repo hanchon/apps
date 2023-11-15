@@ -26,8 +26,9 @@ import {
   updateCopilotModalState,
 } from "../../utils";
 import { E } from "helpers";
-import { SetUpAccountI } from "./types";
+
 import { QueryClient } from "@tanstack/react-query";
+import { SetUpAccountI } from "@evmosapps/ui-helpers/src/progress/types";
 
 const getWalletLocal = async () => {
   // get wallet returns null or string but

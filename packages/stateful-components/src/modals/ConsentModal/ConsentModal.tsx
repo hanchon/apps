@@ -5,7 +5,11 @@ import { Modal } from "@evmosapps/ui-helpers";
 import { modalLink, useModal } from "helpers";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import GrayButton from "@evmosapps/ui-helpers/src/GrayButton";
-import { DISABLE_TRACKER_LOCALSTORAGE } from "tracker";
+import {
+  DISABLE_TRACKER_LOCALSTORAGE,
+  disableMixpanel,
+  enableMixpanel,
+} from "tracker";
 import { Trans } from "react-i18next";
 
 export const useConsentModal = () => useModal("consent");
@@ -45,7 +49,7 @@ export const ConsentModal = () => {
             <div className="flex items-center justify-center space-x-5">
               <GrayButton
                 onClick={() => {
-                  localStorage.removeItem(DISABLE_TRACKER_LOCALSTORAGE);
+                  enableMixpanel();
 
                   setIsOpen(false);
                 }}
@@ -54,8 +58,7 @@ export const ConsentModal = () => {
               </GrayButton>
               <GrayButton
                 onClick={() => {
-                  localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "false");
-
+                  disableMixpanel();
                   setIsOpen(false);
                 }}
               >

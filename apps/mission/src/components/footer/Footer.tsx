@@ -106,11 +106,10 @@ export const Footer = async () => {
                 {t("footer.privacyPolicy")}
               </Link>
             </p>
-            <Suspense>
-              <ConsentModalButton>
-                <p>{t("footer.cookiesSettings")}</p>
-              </ConsentModalButton>
-            </Suspense>
+
+            <ConsentModalButton>
+              <p>{t("footer.cookiesSettings")}</p>
+            </ConsentModalButton>
           </div>
         </div>
       </footer>

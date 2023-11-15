@@ -1,7 +1,7 @@
 "use client";
 import { Dict } from "mixpanel-browser";
 import React from "react";
-import { sendEvent } from "tracker";
+import { TrackerEvents, sendEvent } from "tracker";
 
 export const TrackerEvent = ({
   event,
@@ -9,7 +9,7 @@ export const TrackerEvent = ({
   children,
 }: {
   children: React.ReactElement; // forcing a single child
-  event: string;
+  event: TrackerEvents;
   properties?: Dict | (() => Dict) | (() => Promise<Dict>);
 }) => {
   return React.cloneElement(children, {

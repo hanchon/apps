@@ -1,10 +1,13 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { GroupStateI, SetUpAccountI } from "./types";
 import { TranslationContextProvider } from "schummar-translate/react";
 import { t } from "../../../locales/translate";
 import { Progress } from "@evmosapps/ui-helpers";
+import {
+  SetUpAccountI,
+  GroupStateI,
+} from "@evmosapps/ui-helpers/src/progress/types";
 export const SetUpAccount = ({
   stepsSetAccount,
   groupState,

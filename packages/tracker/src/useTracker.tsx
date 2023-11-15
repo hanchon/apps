@@ -1,44 +1,55 @@
 import mixpanel, { Dict } from "mixpanel-browser";
-
+import * as events from "./events";
+export type TrackerEvents = (typeof events)[keyof typeof events];
 import { DISABLE_TRACKER_LOCALSTORAGE } from "./constants";
-import { Log } from "helpers";
+import { Log, useEffectEvent } from "helpers";
+import { useMemo } from "react";
 
 mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN ?? "", {
   ip: false,
 });
 
-export const sendEvent = (trackingID: string, extraProperties?: Dict) => {
-  const mixpanelIsActive =
-    Object.prototype.hasOwnProperty.call(mixpanel, "config") &&
-    (localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === null ||
-      localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === "false");
+const isTrackerEnabled = () => {
+  return !JSON.parse(
+    localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) || "true"
+  );
+};
+export const sendEvent = (
+  trackingID: TrackerEvents,
+  extraProperties?: Dict
+) => {
+  const mixpanelIsActive = "config" in mixpanel && isTrackerEnabled();
+  console.log(isTrackerEnabled());
 
   Log().table({
     ["Tracking ID"]: trackingID,
-    ["Extra Properties"]: extraProperties,
+    ["Extra Properties"]: JSON.stringify(extraProperties, null, 2),
     ["Mixpanel is active"]: mixpanelIsActive,
   });
 
   if (mixpanelIsActive) mixpanel.track(trackingID, { ...extraProperties });
 };
-export const useTracker = (event?: string, properties?: Dict) => {
-  const disableMixpanel = () => {
-    localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "true");
-  };
+export const disableMixpanel = () => {
+  localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "true");
+};
 
-  const enableMixpanel = () => {
-    localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "false");
-  };
+export const enableMixpanel = () => {
+  localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "false");
+};
 
-  const handlePreClickAction = (extraProperties?: Dict) => {
+export const useTracker = (event?: TrackerEvents, properties?: Dict) => {
+  const handlePreClickAction = useEffectEvent((extraProperties?: Dict) => {
     if (event === undefined) return;
     sendEvent(event, { ...properties, ...extraProperties });
-  };
+  });
 
-  return {
-    handlePreClickAction,
-    disableMixpanel,
-    enableMixpanel,
-    sendEvent,
-  };
+  return useMemo(
+    () => ({
+      handlePreClickAction,
+      disableMixpanel,
+      enableMixpanel,
+      sendEvent,
+    }),
+    []
+  );
 };

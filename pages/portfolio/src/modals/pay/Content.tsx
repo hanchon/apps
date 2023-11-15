@@ -43,7 +43,7 @@ import {
   SELECT_NETWORK_PAY_FLOW,
   SUCCESSFUL_PAY_TX,
   UNSUCESSFUL_PAY_TX,
-} from "tracker/src/constants";
+} from "tracker";
 import { useTracker } from "tracker";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { useSend } from "../hooks/useSend";

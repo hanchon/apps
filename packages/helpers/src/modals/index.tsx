@@ -72,7 +72,7 @@ export const useModal = <T extends z.AnyZodObject>(
       ...sanitize(nextState),
     });
 
-    routeTo(url.toString());
+    routeTo(url.toString(), { scroll: false });
   });
 
   const setIsOpen = useEffectEvent(
@@ -96,7 +96,7 @@ export const useModal = <T extends z.AnyZodObject>(
             const redirect = window.location.href;
             url.searchParams.set("redirect", redirect);
           }
-          push(url.toString());
+          push(url.toString(), { scroll: false });
         }
         return;
       }
@@ -104,10 +104,10 @@ export const useModal = <T extends z.AnyZodObject>(
       const url = new URL(window.location.href);
       url.search = "";
       if (typeof query.redirect === "string") {
-        push(query.redirect);
+        push(query.redirect, { scroll: false });
         return;
       }
-      push(url.toString());
+      push(url.toString(), { scroll: false });
     }
   );
 
@@ -152,17 +152,19 @@ export const modalLink = <T extends z.AnyZodObject>(
         onClick={async (e) => {
           e.preventDefault();
           const state =
-            props.initialState instanceof Function
+            (props.initialState instanceof Function
               ? await props.initialState()
-              : props.initialState;
+              : props.initialState) ?? {};
           schema.parse(state);
           const url = new URL(window.location.href);
           url.search = qs.stringify({
             action: id,
-            ...sanitize(state ?? {}),
+            ...sanitize(state),
           });
 
-          push(url.toString());
+          push(url.toString(), {
+            scroll: false,
+          });
         }}
       >
         {props.children}
