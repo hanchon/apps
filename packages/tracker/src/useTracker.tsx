@@ -19,8 +19,6 @@ export const sendEvent = (
   extraProperties?: Dict
 ) => {
   const mixpanelIsActive = "config" in mixpanel && isTrackerEnabled();
-  console.log(isTrackerEnabled());
-
   Log().table({
     ["Tracking ID"]: trackingID,
     ["Extra Properties"]: JSON.stringify(extraProperties, null, 2),
