@@ -8,7 +8,7 @@ export default function LayerSwap() {
   // address has to be 0x format
   const { address } = useAccount();
   return (
-    <div data-testid="layerswap-widget" className="relative w-full h-[660px]">
+    <div data-testid="layerswap-widget" className="w-full h-[660px]">
       <iframe
         style={{
           height: "100%",

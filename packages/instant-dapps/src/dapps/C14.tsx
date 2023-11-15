@@ -10,7 +10,7 @@ export default function C14() {
   const { address } = useAccount();
 
   return (
-    <div data-testid="c14-widget" className="relative w-full h-[600px]">
+    <div data-testid="c14-widget" className="w-full h-[600px]">
       <iframe
         // eslint-disable-next-line no-secrets/no-secrets
         src={`https://pay.c14.money?clientId=${C14_API_KEY}&targetAssetId=e2e0546e-b51b-4d56-9426-3aff3a2418ba&targetAssetIdLock=true&targetAddress=${address}`}
