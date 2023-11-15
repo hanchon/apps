@@ -31,7 +31,7 @@ const Content = () => {
         />
       )}
 
-      <div className="mt-5  w-full font-display text-pearl">
+      <div className="mt-5 w-full text-pearl">
         {!id && (
           <ContainerProposals
             proposals={proposals}

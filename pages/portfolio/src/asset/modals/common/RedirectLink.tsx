@@ -8,7 +8,7 @@ const RedirectLink = ({ href, text }: { href: string; text: string }) => {
   return (
     <>
       <Link rel="noopener noreferrer" target="_blank" href={href}>
-        <div className="mt-11 flex w-full items-center justify-center space-x-3 rounded bg-red px-8 py-2 font-body text-lg font-bold uppercase text-pearl hover:bg-red1">
+        <div className="mt-11 flex w-full items-center justify-center space-x-3 rounded bg-red px-8 py-2 text-lg font-bold uppercase text-pearl hover:bg-red1">
           <span>{text}</span> <ExternalLinkIcon />
         </div>
       </Link>

@@ -30,7 +30,7 @@ export const Footer = ({
   }
 
   return (
-    <footer className="text-gray-700 mb-10 mt-10 space-y-2 lg:space-y-0 font-display flex lg:justify-between flex-col lg:flex-row items-center">
+    <footer className="text-gray-700 mb-10 mt-10 space-y-2 lg:space-y-0 flex lg:justify-between flex-col lg:flex-row items-center">
       <div className="flex flex-col items-center space-y-3 lg:flex-row lg:space-x-10 lg:space-y-0">
         <p>
           <a

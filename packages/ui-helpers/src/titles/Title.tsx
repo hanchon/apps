@@ -12,7 +12,7 @@ export const Title = ({
 }>) => {
   return (
     <h1
-      className={cx("font-brand text-[#E8DFD3] tracking-wide", {
+      className={cx("text-[#E8DFD3] tracking-wide", {
         // {/* TODO: add color to tailwind file */}
         "text-5xl tracking-wide": variant === "h1",
         "text-3xl": variant === "small",

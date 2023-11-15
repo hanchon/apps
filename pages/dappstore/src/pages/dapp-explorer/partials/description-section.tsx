@@ -67,7 +67,7 @@ export const DescriptiondApp = ({
 
   return (
     <div className="space-y-24 pb-24">
-      <div className="font-brand relative">
+      <div className="relative">
         <div
           className={cn(
             "relative h-[300px] w-screen ml-[51%] -translate-x-[51%]",

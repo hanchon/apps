@@ -107,7 +107,7 @@ export const SetUpContent = ({
                 <Subtitle variant="modal-black">
                   {t("section.request.message")}
                 </Subtitle>
-                <span className="text-xs md:text-sm text-pink-300 font-body tracking-wider">
+                <span className="text-xs md:text-sm text-pink-300 tracking-wider">
                   {message.length} / {MAX_MESSAGE_LENGTH}
                 </span>
               </div>

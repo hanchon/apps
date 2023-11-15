@@ -54,7 +54,7 @@ export const TermsOfServicesModalController = ({
             <Modal.Header>
               <h2 className="font-bold">{t("tos.title")}</h2>
             </Modal.Header>
-            <div className="border-darkGray5 h-80 w-full space-y-3 overflow-y-auto border font-display p-4">
+            <div className="border-darkGray5 h-80 w-full space-y-3 overflow-y-auto border p-4">
               {/* <TOSContent /> */}
               {children}
             </div>
@@ -100,7 +100,7 @@ export const TermsOfServicesModalController = ({
             </div>
             <button
               className={cn(
-                "bg-red text-pearl hover:bg-red1 rounded px-8 py-2 font-body text-lg font-bold uppercase w-full",
+                "bg-red text-pearl hover:bg-red1 rounded px-8 py-2 text-lg font-bold uppercase w-full",
                 {
                   disabled: !acknowledgeTOS,
                 }

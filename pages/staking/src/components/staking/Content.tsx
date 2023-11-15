@@ -15,7 +15,7 @@ const Content = () => {
       <ValidatorStateWrapper>
         <div className="">
           <TopBarStaking />
-          <div className=" xl:scrollbar-hide mt-5 w-full px-2 font-display text-pearl">
+          <div className=" xl:scrollbar-hide mt-5 w-full px-2 text-pearl">
             <Tabs
               tabsContent={tabsContent}
               placeholder="Search Validators..."
