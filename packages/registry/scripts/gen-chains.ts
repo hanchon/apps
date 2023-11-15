@@ -80,38 +80,35 @@ Object.entries(testnetTokensByIdentifiers).forEach(([identifier, tokens]) => {
 await mkdir("src/chains", { recursive: true });
 
 for (const chainRegistry of chains) {
-  if (chainRegistry.prefix === "kujira") {
-    // TODO: We need to add Kujira fee token to our registry
-    continue;
-  }
   const configuration = chainRegistry.configuration;
 
   const identifier = normalizeIdentifier(configuration);
 
-  const tokens = tokenByIdentifier[identifier]?.map((token) => {
-    return {
-      name: token.name,
-      ref: `${chainRegistry.prefix}:${token.coinDenom}`,
-      description: token.description,
-      symbol: token.coinDenom,
-      denom: token.coinDenom,
-      sourcePrefix: chainRegistry.prefix,
-      sourceDenom:
-        chainRegistry.prefix === "evmos"
-          ? token.cosmosDenom
-          : token.ibc.sourceDenom,
-      // TODO: minCoinDenom for evmos is wrong in our registry, we should fix that there
-      minCoinDenom:
-        token.minCoinDenom === "EVMOS" ? "aevmos" : token.minCoinDenom,
-      category: token.category === "none" ? null : token.category,
-      tokenRepresentation: token.tokenRepresentation as string | null,
-      type: token.type === "IBC" ? "IBC" : "ERC20",
-      decimals: Number(token.exponent),
-      erc20Address: token.erc20Address as string | null,
-      handledByExternalUI: token.handledByExternalUI ?? null,
-      listed: true,
-    };
-  });
+  const tokens =
+    tokenByIdentifier[identifier]?.map((token) => {
+      return {
+        name: token.name,
+        ref: `${chainRegistry.prefix}:${token.coinDenom}`,
+        description: token.description,
+        symbol: token.coinDenom,
+        denom: token.coinDenom,
+        sourcePrefix: chainRegistry.prefix,
+        sourceDenom:
+          chainRegistry.prefix === "evmos"
+            ? token.cosmosDenom
+            : token.ibc.sourceDenom,
+        // TODO: minCoinDenom for evmos is wrong in our registry, we should fix that there
+        minCoinDenom:
+          token.minCoinDenom === "EVMOS" ? "aevmos" : token.minCoinDenom,
+        category: token.category === "none" ? null : token.category,
+        tokenRepresentation: token.tokenRepresentation as string | null,
+        type: token.type === "IBC" ? "IBC" : "ERC20",
+        decimals: Number(token.exponent),
+        erc20Address: token.erc20Address as string | null,
+        handledByExternalUI: token.handledByExternalUI ?? null,
+        listed: true,
+      };
+    }) ?? [];
 
   const isTestnet = configuration.configurationType === "testnet";
   const feeTokenFromChainConfig = configuration.currencies[0];
@@ -196,7 +193,6 @@ for (const chainRegistry of chains) {
 await writeFile("src/chains/index.ts", [
   fileHeader,
   chains
-    .filter(({ prefix }) => prefix !== "kujira")
     .map(
       ({ configuration }) =>
         `export { default as ${normalizeIdentifier(
