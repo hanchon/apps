@@ -12,7 +12,7 @@ export const Subtitle = ({
 }) => {
   return (
     <h5
-      className={cx("font-brand", {
+      className={cx("", {
         // {/* TODO: add color to tailwind file */}
         "text-xl tracking-wide text-white/70 font-light": variant === "default",
       })}

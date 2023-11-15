@@ -20,7 +20,7 @@ export const HeroSection = () => {
         >
           Earn revenue by deploying your dApp
         </h1>
-        <p className="border-b border-t border-[#FFF4E1] border-opacity-40 py-2 text-sm  text-[#FFF4E1] font-brand w-fit">
+        <p className="border-b border-t border-[#FFF4E1] border-opacity-40 py-2 text-sm  text-[#FFF4E1] w-fit">
           Interested in adding your dApp to our dApp Store and earning revenue?
         </p>
         <div className="flex items-center space-x-2 xl:w-[80%] 2xl:w-[61%]">

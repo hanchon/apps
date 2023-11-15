@@ -7,10 +7,7 @@ export const Breadcrumb = ({
 }) => {
   return (
     <nav className="flex" aria-label="breadcrumb">
-      <ol
-        role="list"
-        className="flex items-center space-x-1 font-brand tracking-wide"
-      >
+      <ol role="list" className="flex items-center space-x-1 tracking-wide">
         {pages.map((page, index) => (
           <li key={page.name}>
             <div className="flex items-center">

@@ -8,6 +8,9 @@
 @tailwind utilities;
 
 @layer componentsMission {
+  body {
+    @apply font-brand;
+  }
   .disabled {
     @apply pointer-events-none select-none opacity-50 cursor-not-allowed;
   }

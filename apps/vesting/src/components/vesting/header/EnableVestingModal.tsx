@@ -117,7 +117,7 @@ export const EnableVestingModal = () => {
           type="submit"
           disabled={disabled}
           style={{ backgroundColor: "#ed4e33" }}
-          className="w-full cursor-pointer rounded p-2 font-body text-lg text-pearl"
+          className="w-full cursor-pointer rounded p-2 text-lg text-pearl"
           value={t("enable.button.action.title")}
         />
       </form>

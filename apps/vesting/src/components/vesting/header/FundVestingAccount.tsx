@@ -401,7 +401,7 @@ export const FundVestingAccount = () => {
           type="submit"
           disabled={disabled || vestingAddressError}
           style={{ backgroundColor: "#ed4e33" }}
-          className={`w-full cursor-pointer rounded p-2 font-body text-lg text-pearl ${
+          className={`w-full cursor-pointer rounded p-2 text-lg text-pearl ${
             disabled ? "opacity-40" : ""
           }`}
           value={t("vesting.fund.button.action.title")}
