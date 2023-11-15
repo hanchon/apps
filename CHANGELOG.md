@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) fse-867 | apps/vesting 1.1.5 | approve step for funding vesting account
+
 ## 1.3.9 - 2023-11-14
 
 - (chore) fse-815 | apps/assets 1.0.41 packages/evmos-wallet 1.0.24 packages/registry 1.0.4 | Enable Kujira network
