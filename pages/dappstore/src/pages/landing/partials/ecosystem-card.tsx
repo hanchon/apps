@@ -37,6 +37,7 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
               src={img}
               alt={data.name}
               fill={true}
+              sizes="400w"
             />
           )}
         </div>

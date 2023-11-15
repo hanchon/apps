@@ -4,6 +4,7 @@
 
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 import { EcosystemCard } from "../landing/partials/ecosystem-card";
+import { ExplorerBreadcrumbs } from "./partials/explorer-breadcrumbs";
 import { HeaderCategories } from "./partials/header-categories";
 
 export const DappExplorerPage = async ({
@@ -37,6 +38,7 @@ export const DappExplorerPage = async ({
 
   return (
     <>
+      <ExplorerBreadcrumbs params={params} />
       <HeaderCategories
         dApps={dApps}
         amountAppsSelected={sortedApps?.length ?? 0}

@@ -3,7 +3,7 @@ import { RightArrow } from "icons";
 export const Breadcrumb = ({
   pages,
 }: {
-  pages: { name: string; href: string; current: boolean }[];
+  pages: { name: string; href: string }[];
 }) => {
   return (
     <nav className="flex" aria-label="breadcrumb">
@@ -23,11 +23,11 @@ export const Breadcrumb = ({
               <a
                 href={page.href}
                 className={`pl-1 transition-all duration-200 ${
-                  page.current
+                  index === pages.length - 1
                     ? "text-[#FFF4E1] hover:text-white/90 font-bold"
                     : "text-white/70 hover:text-[#FFF4E1] font-light"
                 }`}
-                aria-current={page.current ? "page" : undefined}
+                aria-current={index === pages.length - 1 ? "page" : undefined}
               >
                 {page.name}
               </a>

@@ -4,6 +4,7 @@
 import { notFound, redirect } from "next/navigation";
 import { fetchExplorerData } from "../../../lib/fetch-explorer-data";
 import { DescriptiondApp } from "../partials/description-section";
+import { ExplorerBreadcrumbs } from "../partials/explorer-breadcrumbs";
 
 export const DappDetailsPage = async ({
   params,
@@ -32,5 +33,10 @@ export const DappDetailsPage = async ({
     redirect(`/${params.locale}/dapps/${dapp.categorySlug}/${params.dapp}`);
   }
 
-  return <DescriptiondApp dapp={dapp} relatedApps={relatedApps} />;
+  return (
+    <>
+      <ExplorerBreadcrumbs params={params} />
+      <DescriptiondApp dapp={dapp} relatedApps={relatedApps} />;
+    </>
+  );
 };
