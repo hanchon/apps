@@ -13,7 +13,6 @@ export default function Wormhole() {
       fromNetwork: "ethereum",
       toNetwork: "evmos",
       token: "USDCeth",
-      requiredNetwork: "evmos",
     },
   };
 

@@ -140,7 +140,8 @@ export const DescriptiondApp = ({
             {dapp.x && (
               <Link
                 href={dapp.x}
-                className="flex flex-row space-x-2 items-center "
+                className="flex flex-row space-x-2 items-center"
+                target="_blank"
               >
                 <TwitterIcon width={20} height={20} /> <p>{dapp.name}</p>
               </Link>
@@ -148,7 +149,8 @@ export const DescriptiondApp = ({
             {dapp.discord && (
               <Link
                 href={dapp.discord}
-                className="flex flex-row space-x-2 items-center "
+                className="flex flex-row space-x-2 items-center"
+                target="_blank"
               >
                 <DiscordIcon width={20} height={20} /> <p>{dapp.name}</p>
               </Link>
@@ -157,7 +159,8 @@ export const DescriptiondApp = ({
             {/* {dapp.links.telegram !== undefined && (
               <Link
                 href={dapp.links.telegram}
-                className="flex flex-row space-x-2 items-center "
+                className="flex flex-row space-x-2 items-center"
+                target="_blank"
               >
                 <TelegramIcon width={20} height={20} /> <p>{dapp.name}</p>
               </Link>
@@ -168,7 +171,8 @@ export const DescriptiondApp = ({
             {dapp.github && (
               <Link
                 href={dapp.github}
-                className="flex flex-row space-x-2 items-center "
+                className="flex flex-row space-x-2 items-center"
+                target="_blank"
               >
                 <GithubIcon width={20} height={20} /> <p>Github</p>
               </Link>
@@ -177,7 +181,8 @@ export const DescriptiondApp = ({
             {/* {dapp.documentation && (
               <Link
                 href={dapp.documentation}
-                className="flex flex-row space-x-2 items-center "
+                className="flex flex-row space-x-2 items-center"
+                target="_blank"
               >
                 <DocumentationIcon width={20} height={20} /> <p>Documentation</p>
               </Link>
@@ -186,7 +191,11 @@ export const DescriptiondApp = ({
 
           <DescriptionItem title="Website">
             {/* {dapp.links.website && ( */}
-            <Link href="/" className="flex flex-row space-x-2 items-center ">
+            <Link
+              href="/"
+              className="flex flex-row space-x-2 items-center"
+              target="_blank"
+            >
               <WebsiteIcon width={20} height={20} /> <p>url</p>
             </Link>
             {/* )} */}
