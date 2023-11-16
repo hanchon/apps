@@ -16,14 +16,15 @@ import slugify from "slugify";
 
 const dappPropertiesSchema = createNotionPropertiesSchema(
   z.object({
-    isInstantDapp: checkboxSchema,
+    instantDapp: checkboxSchema,
     name: titleSchema,
     description: richTextSchema,
-    shortDescription: richTextSchema,
+    oneLiner: richTextSchema,
+    howTo: richTextSchema,
     subItem: relationSchema,
     x: urlSchema,
-    app: urlSchema,
-    website: urlSchema,
+    dapp: urlSchema,
+    project: urlSchema,
     github: urlSchema,
     discord: urlSchema,
     updatedAt: updatedAtSchema,

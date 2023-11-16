@@ -117,7 +117,7 @@ export const DescriptiondApp = ({
               {dapp.description}
             </p>
           </div>
-          {dapp.isInstantDapp && (
+          {dapp.instantDapp && (
             <div className="relative md:ml-auto shrink">
               {/* TODO: check if we need to create a component for this */}
               {/* TODO: add color to tailwind file */}

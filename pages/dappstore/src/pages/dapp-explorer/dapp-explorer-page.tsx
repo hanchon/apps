@@ -17,7 +17,7 @@ export const DappExplorerPage = async ({
 
   const filteredDapps = dApps.filter((dapp) => {
     if (params.category === "instant-dapps") {
-      return dapp.isInstantDapp;
+      return dapp.instantDapp;
     }
     return dapp.categorySlug === params.category;
   });
@@ -26,7 +26,7 @@ export const DappExplorerPage = async ({
     ? filteredDapps.sort((a, b) =>
         a.categorySlug !== b.categorySlug
           ? // show instant dapps first
-            a.isInstantDapp
+            a.instantDapp
             ? -1
             : 1
           : // sort by name
@@ -45,7 +45,7 @@ export const DappExplorerPage = async ({
         categories={[
           {
             categoryDapps: sortedApps
-              .filter(({ isInstantDapp }) => isInstantDapp)
+              .filter(({ instantDapp: isInstantDapp }) => isInstantDapp)
               .map(({ slug }) => slug),
 
             description:
