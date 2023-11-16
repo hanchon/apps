@@ -8,7 +8,7 @@ export const HeroSection = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 space-x-8">
       <div
-        className="w-full bg-cover bg-no-repeat flex flex-col space-y-8 p-5 pr-0 "
+        className="w-full bg-cover bg-no-repeat flex flex-col space-y-8 p-5 "
         style={{
           backgroundImage: `url(/ecosystem/galaxy.png)`,
         }}
@@ -18,7 +18,8 @@ export const HeroSection = () => {
           className="font-evmos font-bold text-5xl tracking-wide text-[#FFF4E1]"
           style={{ fontFeatureSettings: "'ss02' on, 'ss01' on" }}
         >
-          Earn revenue by deploying your dApp
+          Add your dApp <br />
+          to the dApp Store
         </h1>
         <p className="border-b border-t border-[#FFF4E1] border-opacity-40 py-2 text-sm  text-[#FFF4E1] w-fit">
           Interested in adding your dApp to our dApp Store and earning revenue?
