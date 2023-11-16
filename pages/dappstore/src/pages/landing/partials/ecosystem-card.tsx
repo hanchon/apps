@@ -48,7 +48,7 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
               {/* TODO: check if we need to create a component for this */}
               {/* TODO: add color to tailwind file */}
               <span className="w-[8px] h-[8px] bg-[#AE00FF] rounded-full" />
-              <p>{data.categoryName}</p>
+              <p>Instant dApp </p>
             </Badge>
           ) : (
             <div className="rounded-full h-6 w-6 flex justify-center items-center border border-[#FFF4E173]">

@@ -14,7 +14,6 @@ export const BalanceDisplay = ({
   return (
     <div {...rest}>
       <h3 className="font-semibold text-pearl">{title}</h3>
-      sds
       <h4 className="text-xl text-white md:text-3xl">
         {amount} <span className="opacity-50">EVMOS</span>
       </h4>
