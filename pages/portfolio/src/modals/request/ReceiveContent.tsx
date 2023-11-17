@@ -1,12 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ErrorMessage,
   Label,
@@ -23,17 +17,16 @@ import { CryptoSelector } from "@evmosapps/ui-helpers";
 import QRCode from "react-qr-code";
 
 import {
-  StoreType,
-  WalletConnection,
   getActiveProviderKey,
   getChain,
+  normalizeToEvmos,
 } from "@evmosapps/evmos-wallet";
 import { ReceiveIcon, ShareIcon } from "icons";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { CryptoSelectorDropdownBox } from "@evmosapps/ui-helpers";
 import { CryptoSelectorTitle } from "@evmosapps/ui-helpers";
 import { Prefix } from "@evmosapps/evmos-wallet/src/registry-actions/types";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { RequestModalProps } from "./RequestModal";
 import {
   CLICK_ON_COPY_ICON_RECEIVE_FLOW,
@@ -43,10 +36,12 @@ import {
   SELECT_NETWORK_RECEIVE_FLOW,
   useTracker,
 } from "tracker";
-import { CopilotButton } from "@evmosapps/copilot";
+
 import { useAccount } from "wagmi";
 import { sortedChains } from "../shared/sortedChains";
 import { useTranslation } from "@evmosapps/i18n/client";
+import { useConnectModal } from "stateful-components/src/modals/ConnectModal/ConnectModal";
+import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
 
 export const ReceiveContent = ({
   setState,
@@ -56,15 +51,14 @@ export const ReceiveContent = ({
   const { t } = useTranslation("portfolio");
   const { sendEvent } = useTracker();
   const [walletFormat, setWalletFormat] = useState("0x");
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
 
+  const { address } = useAccount();
   const [selectedNetworkPrefix, setSelectedNetworkPrefix] =
     useState<Prefix>("evmos");
   const selectedChain = getChain(selectedNetworkPrefix);
   const { data } = useWalletAccountByPrefix(selectedNetworkPrefix);
 
-  const sender =
-    walletFormat === "0x" ? wallet.evmosAddressEthFormat : data?.bech32Address;
+  const sender = address ? normalizeToEvmos(address) : null;
 
   const shareEnabled = navigator.share !== undefined;
 
@@ -114,6 +108,7 @@ export const ReceiveContent = ({
   const [showCopied, setIsOpenCopied] = useState(false);
   const dispatch = useDispatch();
   const { isDisconnected } = useAccount();
+  const connectModal = useConnectModal();
 
   return (
     <section className="space-y-16 text-pearl">
@@ -210,7 +205,7 @@ export const ReceiveContent = ({
                 {t("receive.address.label")}
               </Subtitle>
               <TextInput
-                value={sender}
+                value={sender ?? ""}
                 disabled={true}
                 showCopyIcon={true}
                 onClickCopy={async () => {
@@ -235,19 +230,8 @@ export const ReceiveContent = ({
                 </ErrorMessage>
               )}
             </div>
+            {isDisconnected && <ConnectToWalletWarning />}
 
-            {isDisconnected && (
-              <WalletConnection
-                copilotModal={({
-                  beforeStartHook,
-                }: {
-                  beforeStartHook: Dispatch<SetStateAction<boolean>>;
-                }) => <CopilotButton beforeStartHook={beforeStartHook} />}
-                dispatch={dispatch}
-                walletExtension={wallet}
-                variant="primary-lg"
-              />
-            )}
             {!isDisconnected && (
               <PrimaryButton
                 onClick={() => {

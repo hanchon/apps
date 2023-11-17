@@ -26,7 +26,7 @@ import {
   WALLET_NOTIFICATIONS,
   notifyError,
 } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/errors";
-import { useSetupCopilotModal } from "../CopilotModal/CopilotModal";
+import { useSetupCopilotModal } from "../SetupAccountModal/SetupAccountModal";
 
 const providers = [
   {

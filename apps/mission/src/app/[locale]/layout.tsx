@@ -9,18 +9,17 @@ import { RootProviders } from "./RootProviders";
 import { GoogleAnalytics } from "../../components/GoogleAnalytics";
 import { ConsentModal } from "stateful-components/src/modals/ConsentModal/ConsentModal";
 
-import { ConnectModal } from "stateful-components/src/modals/ConnectModal/ConnectModal";
-import { Copilot } from "stateful-components/src/modals/CopilotModal/CopilotModal";
-import { ProfileModal } from "stateful-components/src/modals/ProfileModal/ProfileModal";
-import { TopupModal } from "stateful-components/src/modals/TopupModal/TopupModal";
-import { TermsOfServiceModal } from "stateful-components/src/modals/TermsOfServices/TermsOfServiceModal";
+// import { ConnectModal } from "stateful-components/src/modals/ConnectModal/ConnectModal";
+// import { SetupAccountModal } from "stateful-components/src/modals/SetupAccountModal/SetupAccountModal";
+// import { ProfileModal } from "stateful-components/src/modals/ProfileModal/ProfileModal";
+// import { TopupModal } from "stateful-components/src/modals/TopupModal/TopupModal";
+// import { TermsOfServiceModal } from "stateful-components/src/modals/TermsOfServices/TermsOfServiceModal";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import { Container } from "@evmosapps/ui-helpers";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-
-export const dynamic = "error";
+import { Modals } from "./modals";
 export function generateStaticParams() {
   return languages.map((locale) => ({ locale }));
 }
@@ -77,14 +76,8 @@ function RootLayout({
             <Container>{children}</Container>
             <Footer />
           </main>
-          <Suspense>
-            <ConsentModal />
-            <ConnectModal />
-            <ProfileModal />
-            <Copilot />
-            <TopupModal />
-            <TermsOfServiceModal />
-          </Suspense>
+
+          <Modals />
 
           <GoogleAnalytics />
           <Script src="https://public.cypherd.io/sdk/cypher-sdk.js" />

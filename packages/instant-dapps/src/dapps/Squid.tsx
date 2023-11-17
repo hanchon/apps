@@ -1,4 +1,8 @@
 "use client";
+
+import { cn } from "helpers";
+import { ComponentProps } from "react";
+
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 const config = {
@@ -55,9 +59,13 @@ const config = {
 const configJSON = JSON.stringify(config); // Convert the config object to a JSON string
 const encodedConfig = encodeURIComponent(configJSON); // Encode the JSON string
 
-const Squid = () => {
+const Squid = ({ className, ...rest }: ComponentProps<"div">) => {
   return (
-    <div className="w-full h-[690px]" data-testid="squid-widget">
+    <div
+      className={cn("w-full h-[690px]", className)}
+      data-testid="squid-widget"
+      {...rest}
+    >
       <iframe
         title="squid-widget"
         width="100%"

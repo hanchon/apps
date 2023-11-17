@@ -59,6 +59,7 @@ import { useSend } from "../hooks/useSend";
 import { getTokenValidDestinations } from "../shared/getTokenValidDestinations";
 import { TransactionInspector } from "../shared/TransactionInspector";
 import { useTranslation } from "@evmosapps/i18n/client";
+import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
 
 export const TransferModalContent = ({
   receiver,
@@ -394,30 +395,7 @@ export const TransferModalContent = ({
             {/*
              * Call to action Buttons
              */}
-            {action === "CONNECT" && (
-              <>
-                <ErrorMessage
-                  className="justify-center pl-0 mb-4"
-                  variant="info"
-                >
-                  <p className="pb-1"> {t("error.failedToGetBalance")}</p>
-                  <Trans
-                    t={t}
-                    i18nKey="error.checkWalletConnection"
-                    components={{
-                      strong: <span className="text-pink-300" />,
-                    }}
-                  />
-                </ErrorMessage>
-                <PrimaryButton
-                  type="submit"
-                  variant={"primary-lg"}
-                  className="mt-8"
-                >
-                  {t("connect.button")}
-                </PrimaryButton>
-              </>
-            )}
+            {action === "CONNECT" && <ConnectToWalletWarning />}
             {showFeeErrorMessage && (
               <ErrorMessage className="justify-center pl-0">
                 {t("error.insufficientFee")}

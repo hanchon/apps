@@ -6,13 +6,14 @@ import { AssetsCard } from "./partials/assets-card";
 import { GovernanceCard } from "./partials/governance-card";
 import { EcosystemSection } from "./partials/ecosystem-section";
 import { AccountBalance } from "./partials/account-balance";
-import { CopilotCard } from "@evmosapps/copilot";
+
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { HeroSection } from "./partials/hero-section";
 import { ButtonWithLink, Frameline } from "@evmosapps/ui-helpers";
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 import { Suspense } from "react";
+import { CopilotCard } from "./partials/copilot-card/copilot-card";
 
 export const LandingPage = async () => {
   const { dApps } = await fetchExplorerData();
