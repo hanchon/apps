@@ -8,7 +8,7 @@
 
 export default {
   "prefix": "kujira",
-  "name": "kujira",
+  "name": "Kujira",
   "cosmosId": "kaiyo-1",
   "identifier": "kujira",
   "gasPriceStep": {
@@ -50,24 +50,6 @@ export default {
   ],
   "tokens": [
     {
-      "name": "USK Stablecoin of Kujira",
-      "ref": "kujira:USK",
-      "description": "An over-collateralized soft-pegged token to the USD on the Kujira chain",
-      "symbol": "USK",
-      "denom": "USK",
-      "sourcePrefix": "kujira",
-      "sourceDenom": "factory/kujira1qk00h5atutpsv900x202pxx42npjr9thg58dnqpa72f2p7m2luase444a7/uusk",
-      "minCoinDenom": "uusk",
-      "category": "stablecoin",
-      "tokenRepresentation": "USK",
-      "type": "IBC",
-      "decimals": 6,
-      "erc20Address": "0x13974cf36984216C90D1F4FC815C156092feA396",
-      "handledByExternalUI": null,
-      "listed": true,
-      "coingeckoId": "usk"
-    },
-    {
       "category": "cosmos",
       "decimals": 6,
       "denom": "KUJI",
@@ -86,6 +68,6 @@ export default {
       "type": "IBC"
     }
   ],
-  "explorerUrl": "https://www.mintscan.io/kujira/txs",
+  "explorerUrl": "https://finder.kujira.network/kaiyo-1/tx",
   "env": "mainnet"
 } as const;

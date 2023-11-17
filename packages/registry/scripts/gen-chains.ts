@@ -84,31 +84,32 @@ for (const chainRegistry of chains) {
 
   const identifier = normalizeIdentifier(configuration);
 
-  const tokens = tokenByIdentifier[identifier]?.map((token) => {
-    return {
-      name: token.name,
-      ref: `${chainRegistry.prefix}:${token.coinDenom}`,
-      description: token.description,
-      symbol: token.coinDenom,
-      denom: token.coinDenom,
-      sourcePrefix: chainRegistry.prefix,
-      sourceDenom:
-        chainRegistry.prefix === "evmos"
-          ? token.cosmosDenom
-          : token.ibc.sourceDenom,
-      // TODO: minCoinDenom for evmos is wrong in our registry, we should fix that there
-      minCoinDenom:
-        token.minCoinDenom === "EVMOS" ? "aevmos" : token.minCoinDenom,
-      category: token.category === "none" ? null : token.category,
-      tokenRepresentation: token.tokenRepresentation as string | null,
-      type: token.type === "IBC" ? "IBC" : "ERC20",
-      decimals: Number(token.exponent),
-      erc20Address: token.erc20Address as string | null,
-      handledByExternalUI: token.handledByExternalUI ?? null,
-      listed: true,
-      coingeckoId: (token.coingeckoId ?? null) as string | null,
-    };
-  });
+  const tokens =
+    tokenByIdentifier[identifier]?.map((token) => {
+      return {
+        name: token.name,
+        ref: `${chainRegistry.prefix}:${token.coinDenom}`,
+        description: token.description,
+        symbol: token.coinDenom,
+        denom: token.coinDenom,
+        sourcePrefix: chainRegistry.prefix,
+        sourceDenom:
+          chainRegistry.prefix === "evmos"
+            ? token.cosmosDenom
+            : token.ibc.sourceDenom,
+        // TODO: minCoinDenom for evmos is wrong in our registry, we should fix that there
+        minCoinDenom:
+          token.minCoinDenom === "EVMOS" ? "aevmos" : token.minCoinDenom,
+        category: token.category === "none" ? null : token.category,
+        tokenRepresentation: token.tokenRepresentation as string | null,
+        type: token.type === "IBC" ? "IBC" : "ERC20",
+        decimals: Number(token.exponent),
+        erc20Address: token.erc20Address as string | null,
+        handledByExternalUI: token.handledByExternalUI ?? null,
+        listed: true,
+        coingeckoId: (token.coingeckoId ?? null) as string | null,
+      };
+    }) ?? [];
 
   const isTestnet = configuration.configurationType === "testnet";
   const feeTokenFromChainConfig = configuration.currencies[0];
@@ -194,7 +195,6 @@ for (const chainRegistry of chains) {
 await writeFile("src/chains/index.ts", [
   fileHeader,
   chains
-
     .map(
       ({ configuration }) =>
         `export { default as ${normalizeIdentifier(
