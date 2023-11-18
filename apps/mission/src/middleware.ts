@@ -8,11 +8,12 @@ acceptLanguage.languages(languages);
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|external-image|_next/image|assets|favicon.ico|manifest.json|sw.js|.*png|.*svg|.*jpg).*)",
+    "/((?!api|_next/static|_next/image|assets|favicon.ico|manifest.json|sw.js|.*png|.*svg|.*jpg).*)",
   ],
 };
 
 export function middleware(request: NextRequest) {
+  console.log("request", request);
   const routeLocale = getLocaleFromPath(request.nextUrl);
 
   /**

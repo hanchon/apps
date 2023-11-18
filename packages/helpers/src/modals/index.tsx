@@ -74,6 +74,10 @@ export const useModal = <T extends z.AnyZodObject>(
       ...sanitize(nextState),
     });
 
+    if (searchParams === url.searchParams.toString()) {
+      return;
+    }
+
     routeTo(url.toString(), { scroll: false });
   });
 
@@ -83,7 +87,6 @@ export const useModal = <T extends z.AnyZodObject>(
       initialState: z.output<T> = {},
       redirectBack = false
     ) => {
-      debugger;
       const nextOpenState = typeof open === "function" ? open(isOpen) : open;
       if (nextOpenState === isOpen) return;
       if (nextOpenState) {
@@ -153,7 +156,6 @@ export const modalLink = <T extends z.AnyZodObject>(
     return (
       <button
         onClick={async (e) => {
-          debugger;
           e.preventDefault();
           const state =
             (props.initialState instanceof Function

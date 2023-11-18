@@ -59,6 +59,7 @@ export function Copilot({
 
   useEffect(() => {
     if (activeStep === "not-initialized") return;
+
     onStepChange?.(activeStep);
   }, [activeStep]);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -201,7 +202,6 @@ const CopilotStepHeader = ({
 }: ComponentProps<"div"> & {
   skipPrompt?: boolean;
 }) => {
-  // const { close } = useCopilot();
   const { setIsOpen } = useModal();
   return (
     <div
