@@ -172,9 +172,8 @@ export const modalLink = <T extends z.AnyZodObject>(
             scroll: false,
           });
         }}
-      >
-        {props.children}
-      </button>
+        {...props}
+      />
     );
   };
 
