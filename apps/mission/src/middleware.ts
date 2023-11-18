@@ -13,7 +13,6 @@ export const config = {
 };
 
 export function middleware(request: NextRequest) {
-  console.log("request", request);
   const routeLocale = getLocaleFromPath(request.nextUrl);
 
   /**
