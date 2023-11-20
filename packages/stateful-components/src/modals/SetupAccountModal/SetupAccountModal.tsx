@@ -12,7 +12,7 @@ const setupAccountModalSchema = z.object({
 export const useSetupCopilotModal = () =>
   useModal("setup-copilot", setupAccountModalSchema);
 
-export const SetupAccountModalButton = modalLink(
+export const SetupAccountModalTrigger = modalLink(
   "setup-copilot",
   setupAccountModalSchema
 );

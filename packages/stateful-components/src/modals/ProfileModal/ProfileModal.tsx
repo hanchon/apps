@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { CLICK_DISCONNECT_WALLET_BUTTON, useTracker } from "tracker";
 
 export const useProfileModal = () => useModal("profile");
-export const ProfileModalButton = modalLink("profile");
+export const ProfileModalTrigger = modalLink("profile");
 
 const CopyButton = ({ text }: { text: string }) => {
   const [isCopied, setIsCopied] = useState(false);

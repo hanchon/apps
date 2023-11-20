@@ -6,7 +6,7 @@ import { normalizeToEvmos } from "@evmosapps/evmos-wallet";
 import { cn } from "helpers";
 import { ComponentProps } from "react";
 
-import { SetupAccountModalButton } from "stateful-components/src/modals/SetupAccountModal/SetupAccountModal";
+import { SetupAccountModalTrigger } from "stateful-components/src/modals/SetupAccountModal/SetupAccountModal";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 export const CopilotCard = () => {
   const { address, isConnected } = useAccount();
@@ -74,18 +74,18 @@ export const CopilotCard = () => {
       <div className="flex gap-x-4">
         {/* w-fit rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out text-red bg-pearl hover:bg-[#e3d6c3] active:bg-[#ccc0af] } */}
         {setupAccountActive && (
-          <SetupAccountModalButton>
+          <SetupAccountModalTrigger>
             <button className={linkCn}>{t("copilotCard.letsGo")}</button>
-          </SetupAccountModalButton>
+          </SetupAccountModalTrigger>
         )}
         {topupAccountActive && (
-          <SetupAccountModalButton
+          <SetupAccountModalTrigger
             initialState={{
               step: "intro-topup",
             }}
           >
             <button className={linkCn}>{t("copilotCard.topUp")}</button>
-          </SetupAccountModalButton>
+          </SetupAccountModalTrigger>
         )}
         {nextStepsActive && (
           <>

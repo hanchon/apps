@@ -10,7 +10,7 @@ import {
 } from "icons";
 
 import { translation } from "@evmosapps/i18n/server";
-import { ConsentModalButton } from "stateful-components/src/modals/ConsentModal/ConsentModal";
+import { ConsentModalTrigger } from "stateful-components/src/modals/ConsentModal/ConsentModal";
 import { Container } from "@evmosapps/ui-helpers";
 import { Link } from "@evmosapps/i18n/client";
 import { Suspense } from "react";
@@ -107,9 +107,9 @@ export const Footer = async () => {
               </Link>
             </p>
 
-            <ConsentModalButton>
+            <ConsentModalTrigger>
               <p>{t("footer.cookiesSettings")}</p>
-            </ConsentModalButton>
+            </ConsentModalTrigger>
           </div>
         </div>
       </footer>

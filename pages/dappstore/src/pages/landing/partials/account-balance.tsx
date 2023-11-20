@@ -9,12 +9,11 @@ import { useAssets, useStake } from "@evmosapps/evmos-wallet";
 import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, useTracker } from "tracker";
 
 import { useAccount } from "wagmi";
-import { useTopupModal } from "stateful-components/src/modals/TopupModal/TopupModal";
-import { ButtonWithoutLink } from "@evmosapps/ui-helpers";
+import { TopupModalTrigger } from "stateful-components/src/modals/TopupModal/TopupModal";
+import { ButtonWithoutLink, TrackerEvent } from "@evmosapps/ui-helpers";
 
 export const AccountBalance = () => {
   const { isConnected } = useAccount();
-  const topupmodal = useTopupModal();
   const { totalDelegations, totalRewards } = useStake();
   const { evmosPrice, totalEvmosAsset } = useAssets();
 
@@ -46,13 +45,6 @@ export const AccountBalance = () => {
 
   const { t } = useTranslation("dappStore");
 
-  const { handlePreClickAction } = useTracker(CLICK_ON_TOP_UP_ACCOUNT_DAPP);
-
-  const handleClick = () => {
-    handlePreClickAction({ location: "On the main page" });
-    topupmodal.setIsOpen(true);
-  };
-
   return (
     <section className="mb-7 text-left md:mx-0">
       <p className="mb-2 text-xl text-pearl md:text-2xl">
@@ -72,9 +64,18 @@ export const AccountBalance = () => {
         </div>
         {isConnected && (
           <div className="md:relative md:left-[16px] md:top-[11px] ">
-            <ButtonWithoutLink onClick={handleClick}>
-              {t("account.balance.topUp")}
-            </ButtonWithoutLink>
+            <TrackerEvent
+              event={CLICK_ON_TOP_UP_ACCOUNT_DAPP}
+              properties={{
+                location: "On the main page",
+              }}
+            >
+              <TopupModalTrigger>
+                <ButtonWithoutLink>
+                  {t("account.balance.topUp")}
+                </ButtonWithoutLink>
+              </TopupModalTrigger>
+            </TrackerEvent>
           </div>
         )}
       </div>

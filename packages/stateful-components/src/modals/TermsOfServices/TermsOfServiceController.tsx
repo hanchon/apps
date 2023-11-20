@@ -3,19 +3,14 @@ import { Modal } from "@evmosapps/ui-helpers";
 import { cn, modalLink, useModal } from "helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { EVMOS_TOS_VERSION } from "constants-helper";
-import {
-  DISABLE_TRACKER_LOCALSTORAGE,
-  disableMixpanel,
-  enableMixpanel,
-  isTrackerEnabled,
-} from "tracker";
+import { disableMixpanel, enableMixpanel, isTrackerEnabled } from "tracker";
 
 import { PropsWithChildren, useEffect, useState } from "react";
 import { useConsentModal } from "../ConsentModal/ConsentModal";
 import { Trans } from "react-i18next";
 
 export const useTOSModal = () => useModal("tos");
-export const TOSModalButton = modalLink("tos");
+export const TOSModalTrigger = modalLink("tos");
 
 export const TermsOfServicesModalController = ({
   children,

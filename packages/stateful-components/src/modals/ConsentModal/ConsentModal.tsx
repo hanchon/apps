@@ -13,7 +13,7 @@ import {
 import { Trans } from "react-i18next";
 
 export const useConsentModal = () => useModal("consent");
-export const ConsentModalButton = modalLink("consent");
+export const ConsentModalTrigger = modalLink("consent");
 export const ConsentModal = () => {
   const { t } = useTranslation();
   const { isOpen, setIsOpen, modalProps } = useConsentModal();

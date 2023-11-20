@@ -10,7 +10,7 @@ import {
 } from "@evmosapps/evmos-wallet";
 import { useAccount } from "wagmi";
 import { ConnectModalTrigger } from "stateful-components/src/modals/ConnectModal/ConnectModal";
-import { ProfileModalButton } from "stateful-components/src/modals/ProfileModal/ProfileModal";
+import { ProfileModalTrigger } from "stateful-components/src/modals/ProfileModal/ProfileModal";
 import { ProvidersIcons } from "stateful-components/src/providerIcons";
 
 export const WalletButton = () => {
@@ -21,7 +21,7 @@ export const WalletButton = () => {
   if (connector && isConnected && address) {
     const Icon = ProvidersIcons[connector.id];
     return (
-      <ProfileModalButton>
+      <ProfileModalTrigger>
         <button
           className="font-sm text-pearl bg-darGray800 flex items-center justify-center space-x-3 rounded-full px-4 md:px-8 py-2 font-bold"
           data-testid={`wallet-profile-button wallet-profile-button-${getActiveProviderKey()}`}
@@ -32,7 +32,7 @@ export const WalletButton = () => {
             <AddressDisplay address={normalizeToEvmos(address)} />
           </span>
         </button>
-      </ProfileModalButton>
+      </ProfileModalTrigger>
     );
   }
   return (
