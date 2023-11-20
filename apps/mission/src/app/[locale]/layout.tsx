@@ -7,13 +7,6 @@ import { cn } from "helpers";
 import { nb, evmos } from "@evmosapps/ui-helpers/src/fonts";
 import { RootProviders } from "./RootProviders";
 import { GoogleAnalytics } from "../../components/GoogleAnalytics";
-import { ConsentModal } from "stateful-components/src/modals/ConsentModal/ConsentModal";
-
-// import { ConnectModal } from "stateful-components/src/modals/ConnectModal/ConnectModal";
-// import { SetupAccountModal } from "stateful-components/src/modals/SetupAccountModal/SetupAccountModal";
-// import { ProfileModal } from "stateful-components/src/modals/ProfileModal/ProfileModal";
-// import { TopupModal } from "stateful-components/src/modals/TopupModal/TopupModal";
-// import { TermsOfServiceModal } from "stateful-components/src/modals/TermsOfServices/TermsOfServiceModal";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import { Container } from "@evmosapps/ui-helpers";

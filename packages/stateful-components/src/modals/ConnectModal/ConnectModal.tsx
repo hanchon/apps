@@ -5,7 +5,7 @@ import { ModalContainer, Modal } from "@evmosapps/ui-helpers";
 import { ConnectModalContent } from "./ConnectModalContent";
 
 export const useConnectModal = () => useModal("connect");
-export const ConnectModalButton = modalLink("connect");
+export const ConnectModalTrigger = modalLink("connect");
 
 export const ConnectModal = () => {
   const { isOpen, setIsOpen } = useConnectModal();

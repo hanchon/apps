@@ -10,6 +10,7 @@ import {
 } from "react";
 import { z } from "zod";
 import { useEffectEvent } from "../hooks/use-effect-event";
+import React from "react";
 
 const serialize = <T extends z.output<z.AnyZodObject>>(obj: T) => {
   return JSON.stringify(obj, (_, value) => {
@@ -64,7 +65,6 @@ export const useModal = <T extends z.AnyZodObject>(
   const isOpen = !!(query.action === id && state);
 
   const setState = useEffectEvent((next: SetStateAction<z.output<T>>) => {
-    debugger;
     if (!isOpen) throw new Error("You can't set state on a closed modal");
 
     const nextState = typeof next === "function" ? next(state) : next;
@@ -144,37 +144,36 @@ type ModalLinkProps<T extends z.AnyZodObject> = {
     | (() => z.output<T>)
     | (() => Promise<z.output<T>>);
   redirectBack?: boolean;
-  children: React.ReactNode;
+  children: React.ReactElement; // forcing a single child
 };
 export const modalLink = <T extends z.AnyZodObject>(
   id: string,
   schema: T = z.object({}) as T
 ) =>
-  function ModalLink(props: ModalLinkProps<T> & ComponentProps<"button">) {
+  function ModalLink({ initialState, children }: ModalLinkProps<T>) {
     const { push } = useRouter();
+    const onClick = async () => {
+      const state =
+        (initialState instanceof Function
+          ? await initialState()
+          : initialState) ?? {};
+      schema.parse(state);
+      const url = new URL(window.location.href);
+      url.search = qs.stringify({
+        action: id,
+        ...sanitize(state),
+      });
 
-    return (
-      <button
-        onClick={async (e) => {
-          e.preventDefault();
-          const state =
-            (props.initialState instanceof Function
-              ? await props.initialState()
-              : props.initialState) ?? {};
-          schema.parse(state);
-          const url = new URL(window.location.href);
-          url.search = qs.stringify({
-            action: id,
-            ...sanitize(state),
-          });
-
-          push(url.toString(), {
-            scroll: false,
-          });
-        }}
-        {...props}
-      />
-    );
+      push(url.toString(), {
+        scroll: false,
+      });
+    };
+    return React.cloneElement(children, {
+      onClick: async (e: React.MouseEvent) => {
+        if (children.props.onClick) children.props.onClick(e);
+        void onClick();
+      },
+    });
   };
 
 export type ModalProps<T extends z.AnyZodObject> = NonNullable<

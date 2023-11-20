@@ -6,13 +6,14 @@ import { NotionBlocksRenderer } from "./NotionBlocksRenderer";
 export const NotionBlocks = async ({ id }: { id: string }) => {
   const results: ListBlockChildrenResponse["results"] = [];
   let cursor: string | undefined = undefined;
+
   while (true) {
     const data = await retrieveBlockList(id, cursor);
 
-    results.push(...data.results);
-    cursor = data.next_cursor || undefined;
+    results.push(...data?.results);
+    cursor = data?.next_cursor || undefined;
 
-    if (!data.has_more) {
+    if (!cursor) {
       break;
     }
   }

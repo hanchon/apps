@@ -37,9 +37,7 @@ const tokenToUSD = (amount: bigint, price: number, decimals: number) => {
       style: "currency",
       currency: "USD",
     });
-  } catch (e) {
-    debugger;
-  }
+  } catch (e) {}
 };
 
 export const AssetSelector = ({

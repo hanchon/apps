@@ -74,18 +74,17 @@ export const CopilotCard = () => {
       <div className="flex gap-x-4">
         {/* w-fit rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out text-red bg-pearl hover:bg-[#e3d6c3] active:bg-[#ccc0af] } */}
         {setupAccountActive && (
-          <SetupAccountModalButton className={linkCn}>
-            {t("copilotCard.letsGo")}
+          <SetupAccountModalButton>
+            <button className={linkCn}>{t("copilotCard.letsGo")}</button>
           </SetupAccountModalButton>
         )}
         {topupAccountActive && (
           <SetupAccountModalButton
-            className={linkCn}
             initialState={{
               step: "intro-topup",
             }}
           >
-            {t("copilotCard.topUp")}
+            <button className={linkCn}>{t("copilotCard.topUp")}</button>
           </SetupAccountModalButton>
         )}
         {nextStepsActive && (
