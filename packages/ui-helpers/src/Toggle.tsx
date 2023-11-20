@@ -1,3 +1,4 @@
+"use client"
 import { Switch } from "@headlessui/react";
 import { Dispatch, SetStateAction } from "react";
 function classNames(...classes: string[]): string {

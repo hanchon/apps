@@ -1,16 +1,17 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import qs, { ParsedUrlQueryInput } from "querystring";
 import {
   useMemo,
   SetStateAction,
   useEffect,
-  ComponentProps,
   useRef,
+  useLayoutEffect,
 } from "react";
 import { z } from "zod";
 import { useEffectEvent } from "../hooks/use-effect-event";
 import React from "react";
+import { _useRouter } from "./_useRouter";
 
 const serialize = <T extends z.output<z.AnyZodObject>>(obj: T) => {
   return JSON.stringify(obj, (_, value) => {
@@ -47,8 +48,9 @@ export const useModal = <T extends z.AnyZodObject>(
   schema: T = z.object({}) as T
 ) => {
   const safeParse: T["safeParse"] = useEffectEvent(schema.safeParse);
-  const { push, replace } = useRouter();
-  const searchParams = useSearchParams().toString();
+  const { push, replace, searchParams } = _useRouter();
+  // const searchParams = useSearchParams().toString();
+
   const query = useMemo(() => {
     return qs.decode(searchParams);
   }, [searchParams]);
@@ -151,7 +153,7 @@ export const modalLink = <T extends z.AnyZodObject>(
   schema: T = z.object({}) as T
 ) =>
   function ModalLink({ initialState, children }: ModalLinkProps<T>) {
-    const { push } = useRouter();
+    const { push } = _useRouter();
     const onClick = async () => {
       const state =
         (initialState instanceof Function

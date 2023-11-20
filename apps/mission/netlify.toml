@@ -1,9 +1,28 @@
 [build]
   command = "pnpm run build --filter=mission-page"
-  functions = "netlify/functions"
-  publish = "apps/mission/.next"
+  functions = "/apps/mission/netlify/functions"
+  publish = "/apps/mission/.next"
+  framework = "#custom"
+[context.production]
+  command = "pnpm run start --filter=mission-page"
+  port = 8888
+  publish = "/apps/mission/.next"
+  targetPort = 3004
+  framework = "#custom"
+
 [dev]
   command = "pnpm run dev --filter=mission-page"
+  functions = "/apps/mission/netlify/functions"
   port = 8888
-  publish = "apps/mission/.next"
+  publish = "/apps/mission/.next"
   targetPort = 3004
+
+[[redirects]]
+from = "/_next/image*"
+to = "/_ipx/w_:width,q_:quality/:url"
+status = 301
+
+  [redirects.query]
+  url = ":url"
+  w = ":width"
+  q = ":quality"
