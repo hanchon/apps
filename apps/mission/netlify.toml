@@ -3,7 +3,7 @@
   functions = "/apps/mission/netlify/functions"
   publish = "/apps/mission/.next"
   framework = "#custom"
-[context.production]
+[context.deploy-preview]
   command = "pnpm run start --filter=mission-page"
   port = 8888
   publish = "/apps/mission/.next"
