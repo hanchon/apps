@@ -17,7 +17,7 @@ export default function Wormhole() {
   };
 
   return (
-    <div className="-mt-8 w-full">
+    <div className="-mt-2">
       <WormholeBridge config={config} />
     </div>
   );
