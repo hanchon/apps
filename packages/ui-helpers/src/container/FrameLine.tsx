@@ -19,7 +19,11 @@ export const Frameline = ({
         after:content-[''] after:w-[5px] after:h-[5px] after:bg-[#A4A189] after:absolute after:top-0 after:right-0"
           ></div>
         )}
-        <div className={`h-full ${variant === "secondary" && "p-4"} `}>
+        <div
+          className={`h-full ${
+            variant === "secondary" && " py-4 px-0 md:p-4"
+          } `}
+        >
           {children}
         </div>
         {variant === "secondary" && (

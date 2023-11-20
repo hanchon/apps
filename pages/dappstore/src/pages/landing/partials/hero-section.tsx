@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Frameline, PrimaryButton } from "@evmosapps/ui-helpers";
 export const HeroSection = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 space-x-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 space-x-0 md:space-x-8">
       <div
         className="w-full bg-cover bg-no-repeat flex flex-col space-y-8 p-5 "
         style={{
@@ -24,9 +24,9 @@ export const HeroSection = () => {
         <p className="border-b border-t border-[#FFF4E1] border-opacity-40 py-2 text-sm  text-[#FFF4E1] w-fit">
           Interested in adding your dApp to our dApp Store and earning revenue?
         </p>
-        <div className="flex items-center space-x-2 xl:w-[80%] 2xl:w-[61%]">
+        <div className="flex flex-col md:flex-row items-center space-x-0 space-y-4 md:space-y-0 md:space-x-2 w-full xl:w-[80%] 2xl:w-[61%]">
           <PrimaryButton
-            className="flex-1 font-normal rounded"
+            className="flex-1 font-normal rounded w-full self-stretch"
             as={"a"}
             href={ADD_DAPP_FORM_URL}
             target="_blank"
@@ -36,7 +36,7 @@ export const HeroSection = () => {
           </PrimaryButton>
           <PrimaryButton
             as={"a"}
-            className="flex-1 font-normal rounded"
+            className="flex-1 font-normal rounded w-full"
             variant="secondary"
             href="/docs"
             target="_blank"

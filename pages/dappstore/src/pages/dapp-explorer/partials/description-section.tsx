@@ -131,8 +131,8 @@ export const DescriptiondApp = ({
           )}
         </header>
       </div>
-      <div className="grid grid-cols-3">
-        <div className="space-y-24 col-span-2">
+      <div className="grid grid-row-2 md:grid-cols-3 ">
+        <div className="space-y-24 md:col-span-2 mb-24 md:mb-0">
           <DescriptionItem title={`How to use ${dapp.name} Instant dApp`}>
             <p>{dapp.description}</p>
           </DescriptionItem>
@@ -211,7 +211,7 @@ export const DescriptiondApp = ({
       <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
         <Title>Related dApps</Title>
 
-        <ButtonWithLink href="/dapps" className="self-center">
+        <ButtonWithLink href="/dapps" className="md:self-center">
           <div className="flex items-center space-x-2">
             <p>See More</p>
             <RightArrow width={11} height={11} />
