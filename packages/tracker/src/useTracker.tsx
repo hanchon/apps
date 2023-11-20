@@ -9,7 +9,7 @@ mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN ?? "", {
   ip: false,
 });
 
-const isTrackerEnabled = () => {
+export const isTrackerEnabled = () => {
   return !JSON.parse(
     localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) || "true"
   );

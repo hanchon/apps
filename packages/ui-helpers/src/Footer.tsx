@@ -1,7 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import Link from "next/link";
 import { DOCS_SMART_CONTRACTS_URL, COMMONWEALTH_URL } from "constants-helper";
 
 import {
@@ -11,8 +10,10 @@ import {
   DiscordIcon,
   CommonWealthIcon,
   CodeIcon,
+  MediumIcon,
 } from "icons";
 import { PRIVACY_POLICY_URL } from "constants-helper";
+import { MEDIUM_URL } from "constants-helper/src/constants";
 
 export const Footer = ({
   handleCookies,
@@ -95,6 +96,14 @@ export const Footer = ({
             aria-label="discord telegram"
           >
             <TelegramIcon />
+          </a>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={MEDIUM_URL}
+            aria-label="medium evmos"
+          >
+            <MediumIcon width={24} height={24} />
           </a>
           <a
             target="_blank"

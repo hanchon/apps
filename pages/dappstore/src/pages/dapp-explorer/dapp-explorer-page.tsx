@@ -45,7 +45,7 @@ export const DappExplorerPage = async ({
         categories={[
           {
             categoryDapps: sortedApps
-              .filter(({ instantDapp: isInstantDapp }) => isInstantDapp)
+              .filter(({ instantDapp }) => instantDapp)
               .map(({ slug }) => slug),
 
             description:

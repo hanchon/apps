@@ -1,4 +1,4 @@
-const { log, error, trace, table } = console;
+const { log, error, trace, table, warn } = console;
 
 type LogCategory = "notion" | "tracking";
 /**
@@ -27,6 +27,10 @@ export const Log = (category: LogCategory | LogCategory[] = []) => {
     trace: (message: unknown, ...messages: unknown[]) => {
       if (!isEnabled) return;
       trace(message, ...messages);
+    },
+    warn: (message: unknown, ...messages: unknown[]) => {
+      if (!isEnabled) return;
+      warn(message, ...messages);
     },
     table(...data: unknown[]) {
       if (!isEnabled) return;

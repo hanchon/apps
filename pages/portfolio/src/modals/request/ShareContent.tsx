@@ -1,11 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import React, {
-  Dispatch,
-  SetStateAction,
-  useLayoutEffect,
-  useState,
-} from "react";
+import React, { useLayoutEffect, useState } from "react";
 import {
   ErrorMessage,
   Label,
@@ -30,11 +25,9 @@ import {
 } from "tracker";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import QRCode from "react-qr-code";
-import { useDispatch, useSelector } from "react-redux";
 import { useAccount } from "wagmi";
-import { StoreType, WalletConnection } from "@evmosapps/evmos-wallet";
-import { CopilotButton } from "@evmosapps/copilot";
 import { useTranslation } from "@evmosapps/i18n/client";
+import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
 
 export const ShareContent = ({
   message,
@@ -72,9 +65,9 @@ export const ShareContent = ({
   )}&requester=${sender}`;
 
   const [showCopied, setIsOpenCopied] = useState(false);
-  const dispatch = useDispatch();
+
   const { isDisconnected } = useAccount();
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
+
   return (
     <section className="space-y-8 text-pearl">
       <Modal.Header className="text-pearl1">
@@ -169,18 +162,7 @@ export const ShareContent = ({
                 amountInUsd={amountInUsd}
               />
             </div>
-            {isDisconnected && (
-              <WalletConnection
-                copilotModal={({
-                  beforeStartHook,
-                }: {
-                  beforeStartHook: Dispatch<SetStateAction<boolean>>;
-                }) => <CopilotButton beforeStartHook={beforeStartHook} />}
-                dispatch={dispatch}
-                walletExtension={wallet}
-                variant="primary-lg"
-              />
-            )}
+            {isDisconnected && <ConnectToWalletWarning />}
             {!isDisconnected && (
               <PrimaryButton
                 onClick={async () => {

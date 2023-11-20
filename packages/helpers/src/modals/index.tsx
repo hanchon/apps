@@ -47,9 +47,9 @@ export const useModal = <T extends z.AnyZodObject>(
 ) => {
   const safeParse: T["safeParse"] = useEffectEvent(schema.safeParse);
   const { push, replace } = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams().toString();
   const query = useMemo(() => {
-    return qs.decode(searchParams.toString());
+    return qs.decode(searchParams);
   }, [searchParams]);
 
   const prevAction = usePrevious(query?.action);
@@ -62,7 +62,9 @@ export const useModal = <T extends z.AnyZodObject>(
     return null;
   }, [query, safeParse]);
   const isOpen = !!(query.action === id && state);
+
   const setState = useEffectEvent((next: SetStateAction<z.output<T>>) => {
+    debugger;
     if (!isOpen) throw new Error("You can't set state on a closed modal");
 
     const nextState = typeof next === "function" ? next(state) : next;
@@ -71,6 +73,10 @@ export const useModal = <T extends z.AnyZodObject>(
       action: id,
       ...sanitize(nextState),
     });
+
+    if (searchParams === url.searchParams.toString()) {
+      return;
+    }
 
     routeTo(url.toString(), { scroll: false });
   });
@@ -166,9 +172,8 @@ export const modalLink = <T extends z.AnyZodObject>(
             scroll: false,
           });
         }}
-      >
-        {props.children}
-      </button>
+        {...props}
+      />
     );
   };
 

@@ -21,7 +21,7 @@ import { RequestAssetSelector } from "./RequestAssetSelector";
 import { useDispatch, useSelector } from "react-redux";
 import { useAccount } from "wagmi";
 import { StoreType, WalletConnection } from "@evmosapps/evmos-wallet";
-import { CopilotButton } from "@evmosapps/copilot";
+import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
 
 const MAX_MESSAGE_LENGTH = 140;
 
@@ -40,9 +40,8 @@ export const SetUpContent = ({
 }) => {
   const { t } = useTranslation("transfer-modal");
   const { sendEvent } = useTracker();
-  const dispatch = useDispatch();
+
   const { isDisconnected } = useAccount();
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
 
   const tokenAmount: TokenAmount = {
     ref: token,
@@ -123,18 +122,7 @@ export const SetUpContent = ({
                 placeholder={t("section.request.messageInputPlaceholder")}
               />
             </div>
-            {isDisconnected && (
-              <WalletConnection
-                copilotModal={({
-                  beforeStartHook,
-                }: {
-                  beforeStartHook: Dispatch<SetStateAction<boolean>>;
-                }) => <CopilotButton beforeStartHook={beforeStartHook} />}
-                dispatch={dispatch}
-                walletExtension={wallet}
-                variant="primary-lg"
-              />
-            )}
+            {isDisconnected && <ConnectToWalletWarning />}
             {!isDisconnected && (
               <PrimaryButton
                 disabled={disabled}

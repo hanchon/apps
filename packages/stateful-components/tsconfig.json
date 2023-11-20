@@ -3,7 +3,8 @@
   "include": [
     ".",
     "../config/**/*",
-    "../../apps/mission/src/components/footer/ConsentModalButton.tsx"
+    "../../apps/mission/src/components/footer/ConsentModalButton.tsx",
+    "../ui-helpers/src/Copilot.tsx"
   ],
   "exclude": ["dist", "build", "node_modules", "../config/node_modules"]
 }

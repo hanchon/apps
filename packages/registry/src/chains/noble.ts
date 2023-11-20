@@ -8,7 +8,7 @@
 
 export default {
   "prefix": "noble",
-  "name": "noble",
+  "name": "Noble",
   "cosmosId": "noble-1",
   "identifier": "noble",
   "gasPriceStep": {

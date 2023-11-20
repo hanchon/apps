@@ -3,7 +3,12 @@ import { Modal } from "@evmosapps/ui-helpers";
 import { cn, modalLink, useModal } from "helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { EVMOS_TOS_VERSION } from "constants-helper";
-import { DISABLE_TRACKER_LOCALSTORAGE } from "tracker";
+import {
+  DISABLE_TRACKER_LOCALSTORAGE,
+  disableMixpanel,
+  enableMixpanel,
+  isTrackerEnabled,
+} from "tracker";
 
 import { PropsWithChildren, useEffect, useState } from "react";
 import { useConsentModal } from "../ConsentModal/ConsentModal";
@@ -25,9 +30,7 @@ export const TermsOfServicesModalController = ({
 
   useEffect(() => {
     setAcknowledgeTOS(window.localStorage.getItem(EVMOS_TOS_VERSION) !== null);
-    setConsent(
-      window.localStorage.getItem(DISABLE_TRACKER_LOCALSTORAGE) === null
-    );
+    setConsent(isTrackerEnabled());
   }, [isOpen]);
 
   useEffect(() => {
@@ -54,7 +57,7 @@ export const TermsOfServicesModalController = ({
             <Modal.Header>
               <h2 className="font-bold">{t("tos.title")}</h2>
             </Modal.Header>
-            <div className="border-darkGray5 h-80 w-full space-y-3 overflow-y-auto border p-4">
+            <div className="border-darkGray5 h-80 w-full space-y-3 overflow-y-auto border p-4 font-display">
               {/* <TOSContent /> */}
               {children}
             </div>
@@ -108,9 +111,9 @@ export const TermsOfServicesModalController = ({
               onClick={() => {
                 localStorage.setItem(EVMOS_TOS_VERSION, "true");
                 if (consent) {
-                  localStorage.removeItem(DISABLE_TRACKER_LOCALSTORAGE);
+                  enableMixpanel();
                 } else {
-                  localStorage.setItem(DISABLE_TRACKER_LOCALSTORAGE, "true");
+                  disableMixpanel();
                 }
                 setIsOpen(false);
               }}

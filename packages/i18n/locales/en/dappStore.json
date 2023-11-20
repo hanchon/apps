@@ -39,5 +39,15 @@
       "staked": "Staked Balance",
       "rewards": "Claimable Rewards"
     }
+  },
+  "copilotCard": {
+    "title": "Onboard to Evmos in 5 minutes",
+    "setupYourAccount": "Set up your account",
+    "topUpYourAccount": "Top up your account",
+    "nextSteps": "Next steps",
+    "letsGo": "Let's go",
+    "topUp": "Top up",
+    "staking": "Staking",
+    "useADapp": "Use a dApp"
   }
 }

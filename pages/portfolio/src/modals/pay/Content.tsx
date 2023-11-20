@@ -31,7 +31,7 @@ import { truncateAddress } from "@evmosapps/evmos-wallet/src/internal/wallet/sty
 import { AmountBox } from "../common/AmountBox";
 import { StoreType, WalletConnection } from "@evmosapps/evmos-wallet";
 import { Dispatch, SetStateAction } from "react";
-import { CopilotButton } from "@evmosapps/copilot";
+
 import { useDispatch, useSelector } from "react-redux";
 import { PayModalProps } from "./Modal";
 import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";
@@ -52,6 +52,7 @@ import { normalizeToPrefix } from "@evmosapps/evmos-wallet/src/registry-actions/
 import { createPortal } from "react-dom";
 import { TransactionInspector } from "../shared/TransactionInspector";
 import { useWatch } from "helpers";
+import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
 
 export const Content = ({
   requester,
@@ -212,18 +213,7 @@ export const Content = ({
               amountInUsd={amountInUsd}
             />
 
-            {isDisconnected && (
-              <WalletConnection
-                copilotModal={({
-                  beforeStartHook,
-                }: {
-                  beforeStartHook: Dispatch<SetStateAction<boolean>>;
-                }) => <CopilotButton beforeStartHook={beforeStartHook} />}
-                dispatch={dispatch}
-                walletExtension={wallet}
-                variant="primary-lg"
-              />
-            )}
+            {isDisconnected && <ConnectToWalletWarning />}
 
             {!isDisconnected && (
               <>

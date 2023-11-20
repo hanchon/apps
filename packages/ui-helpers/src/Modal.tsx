@@ -27,18 +27,20 @@ export const useModal = () => {
   return useContext(ModalContext);
 };
 
+export type ModalProps = {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 export function Modal({
   isOpen,
   setIsOpen,
   children,
 
   ...rest
-}: PropsWithChildren<{
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}>) {
+}: PropsWithChildren<ModalProps>) {
   return (
-    <ModalContext.Provider value={{ isOpen: isOpen, setIsOpen }}>
+    <ModalContext.Provider value={{ isOpen, setIsOpen }}>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -81,6 +83,7 @@ export function Modal({
     </ModalContext.Provider>
   );
 }
+
 const ModalBody = forwardRef<
   HTMLDivElement,
   {
