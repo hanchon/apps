@@ -10,10 +10,10 @@ import { GoogleAnalytics } from "../../components/GoogleAnalytics";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import { Container } from "@evmosapps/ui-helpers";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Modals } from "./modals";
-import { Viewport } from "next/dist/lib/metadata/types/extra-types";
+
 export const dynamic = "error";
 
 export function generateStaticParams() {
@@ -21,7 +21,6 @@ export function generateStaticParams() {
 }
 
 export const viewport: Viewport = {
-
   width: "device-width",
   initialScale: 1,
 };
