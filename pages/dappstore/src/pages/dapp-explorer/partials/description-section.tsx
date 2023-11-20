@@ -37,17 +37,14 @@ const WIDGETS: {
       loading: () => <p>Loading...</p>,
     }
   ),
-  C14: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/C14"), {
+  c14: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/C14"), {
     loading: () => <p>Loading...</p>,
   }),
   transak: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Transak"), {
     loading: () => <p>Loading...</p>,
   }),
   wormhole: dynamic(
-    () => import("@evmosapps/instant-dapps/src/dapps/Wormhole"),
-    {
-      loading: () => <p>Loading...</p>,
-    }
+    () => import("@evmosapps/instant-dapps/src/dapps/Wormhole")
   ),
 };
 
@@ -70,7 +67,7 @@ export const DescriptiondApp = ({
       <div className="relative">
         <div
           className={cn(
-            "relative h-[300px] w-screen ml-[51%] -translate-x-[51%]",
+            "relative h-[300px] w-screen ml-[49%] -translate-x-1/2",
             // gradient overlay
             " after:bg-gradient-to-t after:from-black/70 after:to-transparent after:absolute after:w-full after:h-full after:bottom-0"
           )}
@@ -106,7 +103,7 @@ export const DescriptiondApp = ({
           </div>
           <div
             className={cn(
-              "relative text-center gap-4 flex flex-col max-w-xl",
+              "relative text-center gap-8 flex flex-col max-w-xl",
               "md:text-left"
             )}
           >
@@ -121,7 +118,7 @@ export const DescriptiondApp = ({
             <div className="relative md:ml-auto shrink">
               {/* TODO: check if we need to create a component for this */}
               {/* TODO: add color to tailwind file */}
-              <Badge className="text-sm space-x-2 border border-[#FFF4E173]  whitespace-nowrap md:text-xl md:px-5 md:py-2">
+              <Badge className="text-sm space-x-2 border border-[#FFF4E173] whitespace-nowrap md:text-xl md:px-5 md:py-2">
                 {/* TODO: check if we need to create a component for this */}
                 {/* TODO: add color to tailwind file */}
                 <span className="w-[13px] h-[13px] bg-[#AE00FF] rounded-full" />
