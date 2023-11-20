@@ -30,7 +30,9 @@
     "react-dom": "^18.2.0",
     "tracker": "workspace:*",
     "typescript": "^5.2.2",
-    "icons": "workspace:*"
+    "icons": "workspace:*",
+    "@evmosapps/ui-helpers": "workspace:*",
+    "stateful-components": "workspace:*"
   },
   "browserslist": [
     "last 3 chrome version",

@@ -6,16 +6,21 @@ import cx from "clsx";
 
 export const Subtitle = ({
   variant = "default",
+  className,
   ...rest
 }: ComponentProps<"h2"> & {
   variant?: "default";
 }) => {
   return (
     <h5
-      className={cx("", {
-        // {/* TODO: add color to tailwind file */}
-        "text-xl tracking-wide text-white/70 font-light": variant === "default",
-      })}
+      className={cx(
+        "tracking-wide font-light",
+        {
+          // {/* TODO: add color to tailwind file */}
+          "text-xl text-white/70 ": variant === "default",
+        },
+        className
+      )}
       {...rest}
     />
   );

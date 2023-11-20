@@ -5,7 +5,8 @@
 import { useEffect, useRef } from "react";
 import { useAccount } from "wagmi";
 import { EvmosCopilotIcon } from "icons";
-
+import { ConnectModalTrigger } from "stateful-components/src/modals/ConnectModal/ConnectModal";
+import { PrimaryButton } from "@evmosapps/ui-helpers";
 export const CYPHERD_API_KEY = process.env.NEXT_PUBLIC_CYPHERD_KEY ?? "";
 
 declare global {
@@ -42,6 +43,14 @@ const CypherD = () => {
           Please connect your account in order to interact with the Cypher
           Wallet Instant dApp
         </p>
+        <ConnectModalTrigger>
+          <PrimaryButton
+            variant={"primary"}
+            // className={cn("rounded-full px-10 py-2 font-bold")}
+          >
+            Connect
+          </PrimaryButton>
+        </ConnectModalTrigger>
       </div>
     );
     // TODO: add button to connect account

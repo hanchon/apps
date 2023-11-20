@@ -916,6 +916,9 @@ importers:
 
   packages/instant-dapps:
     dependencies:
+      '@evmosapps/ui-helpers':
+        specifier: workspace:*
+        version: link:../ui-helpers
       '@types/node':
         specifier: 18.11.14
         version: 18.11.14
@@ -943,6 +946,9 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      stateful-components:
+        specifier: workspace:*
+        version: link:../stateful-components
       tracker:
         specifier: workspace:*
         version: link:../tracker
