@@ -10,7 +10,6 @@ export const fetchDapps = async () => {
     database_id: ECOSYSTEM_PAGE_NOTION_ID,
   });
 
-  console.log(dapps);
   const dappsMap = new Map<string, z.output<typeof dappSchema>>();
 
   const parsedDapps = await Promise.all(

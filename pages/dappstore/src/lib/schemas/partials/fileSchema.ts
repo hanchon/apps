@@ -9,7 +9,7 @@ export const fileSchema = z
   })
   .transform(({ type, file }) => ({
     type,
-    url: file.url,
+    url: file.url ?? null,
   }));
 
 export const filesSchema = z
@@ -17,4 +17,4 @@ export const filesSchema = z
     type: z.literal("files"),
     files: z.array(fileSchema),
   })
-  .transform(({ files }) => files[0]?.url);
+  .transform(({ files }) => files[0]?.url ?? null);

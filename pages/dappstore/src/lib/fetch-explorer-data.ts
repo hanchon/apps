@@ -5,6 +5,7 @@ import { cache } from "react";
 
 import { fetchDapps } from "./fetch-dapps";
 import { fetchCategories } from "./fetch-categories";
+
 const _fetchExplorerData = cache(async () => {
   const categoriesMap = await fetchCategories();
   const dappsMap = await fetchDapps();
@@ -44,15 +45,20 @@ const _fetchExplorerData = cache(async () => {
     dApps,
   };
 });
+
+// Uncomment to update mock data
+
+// const path = await import("path");
+// const fs = await import("fs/promises");
+// const fileURLToPath = await import("url").then((m) => m.fileURLToPath);
+
+// const filePath = path.join(
+//   path.dirname(fileURLToPath(import.meta.url)),
+//   "mock-explorer-data.json"
+// );
+// await fs.writeFile(filePath, JSON.stringify(await _fetchExplorerData()));
+
 export const fetchExplorerData = async () => {
-  // Uncomment to update mock data
-  //
-  // await (
-  //   await import("fs/promises")
-  // ).writeFile(
-  //   "./mock-explorer-data.json",
-  //   JSON.stringify(await _fetchExplorerData())
-  // );
   if (process.env.NODE_ENV === "development" && !process.env.NOTION_API_KEY) {
     Log().warn([
       "process.env.NOTION_API_KEY is not set, serving mock data in dev mode instead",
