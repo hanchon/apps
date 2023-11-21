@@ -1,12 +1,16 @@
+import { cn } from "helpers";
+import { ComponentProps } from "react";
+
 export const Frameline = ({
   children,
   variant = "primary",
-}: {
+  className,
+}: ComponentProps<"div"> & {
   children: JSX.Element;
   variant?: "primary" | "secondary";
 }) => {
   return (
-    <div className="relative flex p-4">
+    <div className={cn("relative flex p-4", className)}>
       <p
         className="absolute top-0 left-0 border border-[#A4A189] w-full h-full rounded-xl pointer-events-none"
         style={{ clipPath: "inset(0% 0% calc(100% - 25%) 0%" }}

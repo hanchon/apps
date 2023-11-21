@@ -65,7 +65,7 @@ export const DescriptiondApp = async ({
   };
 
   return (
-    <div className="space-y-24 pb-24">
+    <div className="space-y-12 lg:space-y-24 mb-12 lg:mb-24">
       <div className="relative">
         <div
           className={cn(
@@ -131,8 +131,8 @@ export const DescriptiondApp = async ({
           )}
         </header>
       </div>
-      <div className="grid grid-row-2 md:grid-cols-3 ">
-        <div className="space-y-24 md:col-span-2 mb-24 md:mb-0">
+      <div className="flex flex-col lg:flex-row gap-y-12 lg:gap-y-24 gap-x-6 items-start">
+        <div className="gap-y-12 lg:gap-y-24 w-full flex flex-col">
           {dapp.description && (
             <DescriptionItem
               title={t("instantdApp.description.title", {
@@ -216,7 +216,7 @@ export const DescriptiondApp = async ({
             </Link>
           </DescriptionItem>
         </div>
-        <Frameline variant="secondary">
+        <Frameline className="w-full max-w-lg mx-auto grow" variant="secondary">
           <div className="flex items-center justify-center h-full">
             {drawWidget()}
           </div>
@@ -224,7 +224,7 @@ export const DescriptiondApp = async ({
       </div>
 
       <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
-        <Title>{t("instantdApp.relatedApps.title")}</Title>
+        <Title tag="h3">{t("instantdApp.relatedApps.title")}</Title>
 
         <ButtonWithLink href="/dapps" className="md:self-center">
           <div className="flex items-center space-x-2">
