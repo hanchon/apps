@@ -15,7 +15,7 @@ const RadioElement = ({
   return (
     <div className="mb-1 flex items-center space-x-2 bg-white px-3 text-sm ">
       <input
-        className="relative h-5 w-5 cursor-pointer rounded-full border-2 checked:border-red checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:content-['']"
+        className="relative h-5 w-5 cursor-pointer rounded-full border-2 checked:border-red-300 checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:content-['']"
         type="radio"
         value={text}
         name={name}

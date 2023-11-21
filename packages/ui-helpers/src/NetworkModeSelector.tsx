@@ -18,7 +18,7 @@ export const NetworkModeSelector = () => {
 
   if (!mode) return null;
   return (
-    <div className="border-2 border-red rounded-md m-4 flex">
+    <div className="border-2 border-red-300 rounded-md m-4 flex">
       {modes.map((net) => (
         <button
           data-testid={`network-mode-selector-${net}`}
@@ -31,7 +31,7 @@ export const NetworkModeSelector = () => {
           className={cn(
             "text-white py-2 px-3 uppercase text-xxs font-bold grow ",
             {
-              "bg-red": net === mode,
+              "bg-red-300": net === mode,
             }
           )}
         >

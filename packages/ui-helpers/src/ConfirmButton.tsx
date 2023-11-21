@@ -19,7 +19,7 @@ export const ConfirmButton = ({
       onClick={onClick}
       className={`${
         className !== undefined ? className : "w-full"
-      } bg-red text-pearl hover:bg-red1 rounded px-8 py-2 text-lg font-bold uppercase ${
+      } bg-red-300 text-pearl hover:bg-red1 rounded px-8 py-2 text-lg font-bold uppercase ${
         disabled ? "disabled" : ""
       }`}
     >

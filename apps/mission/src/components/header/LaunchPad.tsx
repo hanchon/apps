@@ -135,7 +135,7 @@ export const LaunchPadItem = ({
       className="text-pearl flex flex-col items-center text-center"
       {...rest}
     >
-      <div className="bg-red hover:bg-red1 active:bg-red2 flex w-fit items-center justify-center rounded-lg p-2 transition-all duration-150 ease-in hover:scale-105">
+      <div className="bg-red-300 hover:bg-red1 active:bg-red2 flex w-fit items-center justify-center rounded-lg p-2 transition-all duration-150 ease-in hover:scale-105">
         {icon}
       </div>
       <p>{children}</p>

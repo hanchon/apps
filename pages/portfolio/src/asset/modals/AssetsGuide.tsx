@@ -19,7 +19,7 @@ const AssetsGuide = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <span className="text-red">here</span>
+          <span className="text-red-300">here</span>
         </a>
         .
       </p>
@@ -29,7 +29,7 @@ const AssetsGuide = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <span className="text-red">here</span>
+        <span className="text-red-300">here</span>
       </a>
       .
     </div>
@@ -41,7 +41,7 @@ const AssetsGuide = () => {
           setIsOpen(true);
           handlePreClickAction();
         }}
-        className="cursor-pointer text-red"
+        className="cursor-pointer text-red-300"
       >
         view the assets guide
       </span>

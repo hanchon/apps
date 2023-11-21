@@ -40,7 +40,7 @@ export const ClawbackModal = ({
       const [err] = await E.try(() =>
         switchNetwork({
           chainId: evmos.id,
-        }),
+        })
       );
       if (err) return;
     }
@@ -50,7 +50,7 @@ export const ClawbackModal = ({
       const res = await clawback(
         normalizeToEth(vestingDetails?.funderAddress) ?? "",
         normalizeToEth(vestingDetails?.accountAddress) ?? "",
-        normalizeToEth(vestingDetails?.funderAddress) ?? "",
+        normalizeToEth(vestingDetails?.funderAddress) ?? ""
       );
       dispatch(
         addSnackbar({
@@ -62,7 +62,7 @@ export const ClawbackModal = ({
             explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        }),
+        })
       );
       setDisabled(false);
     } catch (e) {
@@ -75,7 +75,7 @@ export const ClawbackModal = ({
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        }),
+        })
       );
     }
   };
@@ -87,7 +87,7 @@ export const ClawbackModal = ({
   const availableClawback = () => {
     return formatNumber(
       convertFromAtto(vestingDetails.originalVestingAmount, 18),
-      6,
+      6
     );
   };
 
@@ -112,7 +112,7 @@ export const ClawbackModal = ({
       />
       <div>
         <div className="flex items-center space-x-1 ">
-          <ExclamationIcon className="text-red" />
+          <ExclamationIcon className="text-red-300" />
           <span className="text-lg font-bold">{t("clawback.alert.title")}</span>
         </div>
         {t("clawback.alert.description")}

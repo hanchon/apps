@@ -98,7 +98,7 @@ export const TermsOfServicesModalController = ({
             </div>
             <button
               className={cn(
-                "bg-red text-pearl hover:bg-red1 rounded px-8 py-2 text-lg font-bold uppercase w-full",
+                "bg-red-300 text-pearl hover:bg-red1 rounded px-8 py-2 text-lg font-bold uppercase w-full",
                 {
                   disabled: !acknowledgeTOS,
                 }

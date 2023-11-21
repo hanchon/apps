@@ -28,16 +28,16 @@ const LINE_STYLES = {
 };
 
 const CIRCLE_STYLES = {
-  [STEP_STATUS.CURRENT]: "border border-red bg-white",
+  [STEP_STATUS.CURRENT]: "border border-red-300 bg-white",
   [STEP_STATUS.DONE]: "bg-green1",
   [STEP_STATUS.PROCESSING]: "border border-strokeGrey bg-white",
 };
 
 const BUTTON_STYLES = {
-  [STEP_STATUS.CURRENT]: "bg-red hover:bg-red1 ",
+  [STEP_STATUS.CURRENT]: "bg-red-300 hover:bg-red1 ",
   [STEP_STATUS.DONE]: "pointer-events-none bg-green1",
   [STEP_STATUS.PROCESSING]:
-    "bg-red hover:bg-red1 pointer-events-none opacity-70",
+    "bg-red-300 hover:bg-red1 pointer-events-none opacity-70",
 };
 
 export const Button = ({ props }: { props: ButtonProps }) => {
@@ -46,7 +46,7 @@ export const Button = ({ props }: { props: ButtonProps }) => {
       key={props.id}
       className={classNames(
         props.index !== props.stepsLength - 1 ? "pb-8" : "",
-        "relative list-none",
+        "relative list-none"
       )}
     >
       <>

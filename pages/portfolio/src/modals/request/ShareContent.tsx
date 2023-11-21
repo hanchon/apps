@@ -70,7 +70,7 @@ export const ShareContent = ({
 
   return (
     <section className="space-y-8 text-pearl">
-      <Modal.Header className="text-pearl1">
+      <Modal.Header>
         <Title
           variant="modal-black"
           icon={<RequestIcon className="text-pink-300" />}
