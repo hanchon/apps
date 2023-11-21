@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, PropsWithChildren, useLayoutEffect } from "react";
+import { useEffect, PropsWithChildren, useLayoutEffect, useRef } from "react";
 import { WagmiConfig, useAccount, useConnect, useDisconnect } from "wagmi";
 import { usePubKey, wagmiConfig } from "../wagmi";
 import {
@@ -19,9 +19,14 @@ import { useWatch } from "helpers";
 type WalletProviderProps = PropsWithChildren<{}>;
 
 function Provider({ children }: WalletProviderProps) {
+  const isReconnecting = useRef(false);
   const { address, connector, isConnected } = useAccount({
-    onConnect: ({ isReconnected, connector, address }) => {
-      if (isReconnected) return;
+    onConnect: ({ connector, address }) => {
+      if (isReconnecting.current) {
+        isReconnecting.current = false;
+        return;
+      }
+
       notifySuccess(
         WALLET_NOTIFICATIONS.SuccessTitle,
         "Connected with wallet {address}",
@@ -42,6 +47,7 @@ function Provider({ children }: WalletProviderProps) {
   const { disconnect } = useDisconnect();
   const { pubkey, error: pubkeyError, isFetching } = usePubKey();
   useLayoutEffect(() => {
+    isReconnecting.current = true;
     void wagmiConfig.autoConnect();
   }, []);
 
