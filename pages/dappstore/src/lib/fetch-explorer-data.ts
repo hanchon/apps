@@ -7,6 +7,7 @@ import { fetchDapps } from "./fetch-dapps";
 import { fetchCategories } from "./fetch-categories";
 
 const _fetchExplorerData = cache(async () => {
+  Log().info("Fetching explorer data");
   const categoriesMap = await fetchCategories();
   const dappsMap = await fetchDapps();
 

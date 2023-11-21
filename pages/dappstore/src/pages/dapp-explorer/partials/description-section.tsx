@@ -75,7 +75,9 @@ export const DescriptiondApp = async ({
           )}
         >
           <Image
-            src={dapp.cover ?? "/ecosystem/galaxy.png"}
+            src={dapp.cover?.src ?? "/ecosystem/galaxy.png"}
+            blurDataURL={dapp.cover?.blurDataURL}
+            placeholder="blur"
             alt={dapp.name}
             fill={true}
             className="object-cover"
@@ -96,10 +98,11 @@ export const DescriptiondApp = async ({
           >
             {dapp.icon && (
               <Image
-                src={dapp.icon}
+                {...dapp.icon}
                 alt={dapp.name}
                 fill={true}
                 className="object-cover"
+                placeholder="blur"
                 sizes={"400w"}
               />
             )}

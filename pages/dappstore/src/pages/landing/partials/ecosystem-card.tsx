@@ -33,9 +33,10 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
         <div className="relative aspect-[3/2] w-full bg-white/5 overflow-hidden">
           {img && (
             <Image
+              {...img}
               className="object-cover"
-              src={img}
               alt={data.name}
+              placeholder="blur"
               fill={true}
               sizes="400w"
             />
