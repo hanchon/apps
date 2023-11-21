@@ -72,7 +72,7 @@ export const LaunchContainer = ({
           <div className="grid grid-cols-3 gap-10 px-8 pb-8">{drawItems()}</div>
           <Link
             onClick={handleEcosystemButton}
-            href={ECOSYSTEM_URL}
+            href="/dapps"
             target="_blank"
             rel="noopener noreferrer"
             className="border-t-darkGray700 text-pearl bg-darkGray2Opacity active:bg-darkGray700 flex justify-center border-t py-5 transition-all duration-200 ease-in-out hover:bg-[#FFFFFF0F]"

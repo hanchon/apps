@@ -109,7 +109,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
                 OtherActions: "View all dApps",
               });
             }}
-            href={ECOSYSTEM_URL}
+            href="/dapps"
             target="_blank"
             rel="noopener noreferrer"
             className="border-t-darkGray700 text-pearl bg-darkGray2Opacity active:bg-darkGray700 flex justify-center border-t py-5 transition-all duration-200 ease-in-out hover:bg-[#FFFFFF0F]"
@@ -135,7 +135,7 @@ export const LaunchPadItem = ({
       className="text-pearl flex flex-col items-center text-center"
       {...rest}
     >
-      <div className="bg-red hover:bg-red1 active:bg-red2 flex w-fit items-center justify-center rounded-lg p-2 transition-all duration-150 ease-in hover:scale-105">
+      <div className="bg-red-300 hover:bg-red1 active:bg-red2 flex w-fit items-center justify-center rounded-lg p-2 transition-all duration-150 ease-in hover:scale-105">
         {icon}
       </div>
       <p>{children}</p>

@@ -4,8 +4,9 @@
 
 import { useEffect, useRef } from "react";
 import { useAccount } from "wagmi";
-import { EvmosCopilotIcon } from "icons";
+import { EvmosCopilotRedIcon } from "icons";
 
+import { PrimaryButton } from "@evmosapps/ui-helpers";
 export const CYPHERD_API_KEY = process.env.NEXT_PUBLIC_CYPHERD_KEY ?? "";
 
 declare global {
@@ -33,15 +34,18 @@ const CypherD = () => {
     }
   }, [address]);
 
-  if (address === undefined) {
+  if (address === undefined && ref.current === false) {
     return (
       <div className="flex flex-col items-center text-center space-y-2">
-        <EvmosCopilotIcon height={30} />
-        <p className="text-[#FFF4E1]">Connection required</p>
+        <EvmosCopilotRedIcon height={30} />
+        <p className="text-pearl">Connection required</p>
         <p>
           Please connect your account in order to interact with the Cypher
           Wallet Instant dApp
         </p>
+        <PrimaryButton as="a" variant={"primary"} href="?action=connect">
+          Connect
+        </PrimaryButton>
       </div>
     );
     // TODO: add button to connect account

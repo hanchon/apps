@@ -15,13 +15,13 @@ export const HeroSection = () => {
       >
         {/* TODO: add localization */}
         <h1
-          className="font-evmos font-bold text-5xl tracking-wide text-[#FFF4E1]"
+          className="font-evmos font-bold text-5xl tracking-wide text-pearl"
           style={{ fontFeatureSettings: "'ss02' on, 'ss01' on" }}
         >
           Add your dApp <br />
           to the dApp Store
         </h1>
-        <p className="border-b border-t border-[#FFF4E1] border-opacity-40 py-2 text-sm  text-[#FFF4E1] w-fit">
+        <p className="border-b border-t border-pearl border-opacity-40 py-2 text-sm  text-pearl w-fit">
           Interested in adding your dApp to our dApp Store and earning revenue?
         </p>
         <div className="flex flex-col md:flex-row items-center space-x-0 space-y-4 md:space-y-0 md:space-x-2 w-full xl:w-[80%] 2xl:w-[61%]">

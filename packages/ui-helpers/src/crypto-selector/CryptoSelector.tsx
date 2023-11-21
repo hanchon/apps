@@ -1,4 +1,4 @@
-"use client"
+"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
@@ -55,7 +55,7 @@ const Button = ({
       )}
       <span className="text-xs md:text-sm text-white">{children}</span>
       <DropdownArrow
-        className="h-5 w-5 pointer-events-none text-red"
+        className="h-5 w-5 pointer-events-none text-red-300"
         aria-hidden="true"
       />
     </Listbox.Button>
@@ -83,7 +83,7 @@ const Options = ({
       <div
         className={cn(
           // add the following className to the CryptoSelector.Options component: left:0 or right:0
-          "absolute z-10 bg-gradient-to-br from-red to-[#FFDDD880] p-[1px] rounded-2xl text-sm",
+          "absolute z-10 bg-gradient-to-br from-red-300 to-[#FFDDD880] p-[1px] rounded-2xl text-sm",
           className
         )}
       >

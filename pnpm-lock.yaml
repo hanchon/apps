@@ -922,6 +922,9 @@ importers:
 
   packages/instant-dapps:
     dependencies:
+      '@evmosapps/ui-helpers':
+        specifier: workspace:*
+        version: link:../ui-helpers
       '@types/node':
         specifier: 18.11.14
         version: 18.11.14

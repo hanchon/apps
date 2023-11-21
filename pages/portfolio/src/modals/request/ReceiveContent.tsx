@@ -112,7 +112,7 @@ export const ReceiveContent = ({
 
   return (
     <section className="space-y-16 text-pearl">
-      <Modal.Header className="text-pearl1">
+      <Modal.Header>
         <Title
           variant="modal-black"
           icon={<ReceiveIcon className="text-pink-300" />}

@@ -31,7 +31,7 @@ const config = {
         "custom-pink": "4px 4px 8px 2px #CE250040 inset",
       },
       colors: {
-        pearl: "#faf1e4",
+        pearl: "#FFF4E1",
         pearl1: "#FAF8F8",
         pearl2: "#FEF2F2",
         darkPearl: "#dad2c7",

@@ -36,7 +36,7 @@ const SetupSteps = () => {
             className={cn(
               "text-lightGrey flex items-center gap-x-2 text-sm font-medium",
               {
-                "text-red ": active,
+                "text-red-300 ": active,
               }
             )}
             key={label}
@@ -46,7 +46,7 @@ const SetupSteps = () => {
               {!completed && (
                 <span
                   className={cn("bg-strokeGrey h-2 w-2 rounded-full block", {
-                    "bg-red ring-4 ring-red/20": active,
+                    "bg-red-300 ring-4 ring-red/20": active,
                   })}
                 />
               )}

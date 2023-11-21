@@ -13,7 +13,7 @@ const BIG_ICONS_STYLE =
 
 const ICONS_STYLES = {
   [ICONS_TYPES.CHECK]: {
-    style: "bg-red text-pearl flex h-4 w-4",
+    style: "bg-red-300 text-pearl flex h-4 w-4",
     icon: <CheckIcon width={"14px"} height={"14px"} color="#fff" />,
   },
   [ICONS_TYPES.CANCEL]: {
