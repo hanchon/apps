@@ -71,3 +71,4 @@ export { UpRightArrowIcon } from "./UpRightArrowIcon";
 export { WebsiteIcon } from "./WebsiteIcon";
 export { DocumentationIcon } from "./DocumentationIcon";
 export { MediumIcon } from "./MediumIcon";
+export { EvmosCopilotRedIcon } from "./EvmosCopilotRed";

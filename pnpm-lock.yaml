@@ -946,9 +946,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
-      stateful-components:
-        specifier: workspace:*
-        version: link:../stateful-components
       tracker:
         specifier: workspace:*
         version: link:../tracker

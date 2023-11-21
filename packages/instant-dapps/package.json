@@ -31,8 +31,7 @@
     "tracker": "workspace:*",
     "typescript": "^5.2.2",
     "icons": "workspace:*",
-    "@evmosapps/ui-helpers": "workspace:*",
-    "stateful-components": "workspace:*"
+    "@evmosapps/ui-helpers": "workspace:*"
   },
   "browserslist": [
     "last 3 chrome version",
