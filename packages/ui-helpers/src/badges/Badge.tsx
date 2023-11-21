@@ -17,10 +17,10 @@ export const Badge = ({
         {
           "text-green2 ring-lightGreen bg-lightYellow2": variant === "success",
           "ring-lightYellow bg-lightYellow1 text-brown": variant === "warning",
-          "bg-red text-pearl ring-red": variant === "danger",
+          "bg-red-300 text-pearl ring-red-300": variant === "danger",
           // {/* TODO: add color to tailwind file */}
-          "ring-darkGray300 text-[#FFF4E1]": variant === "info",
-          "ring-[#FFF4E173] text-[#FFF4E1] text-lg tracking-wide px-5 py-2 font-bold cursor-pointer transition-color  duration-100 ease-in-out hover:bg-[#534d46] active:bg-[#666059]":
+          "ring-darkGray300 text-pearl": variant === "info",
+          "ring-[#FFF4E173] text-pearl text-lg tracking-wide px-5 py-2 font-bold cursor-pointer transition-color  duration-100 ease-in-out hover:bg-[#534d46] active:bg-[#666059]":
             variant === "dark",
         },
         className

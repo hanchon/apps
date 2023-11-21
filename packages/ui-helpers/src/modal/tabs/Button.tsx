@@ -23,7 +23,7 @@ export const Button = ({
       className={cx(
         "flex items-center justify-center gap-1 rounded-md py-1 px-3",
         {
-          "border-red border-2":
+          "border-red-300 border-2":
             variant === "default" && tab.option === tab.type,
           "border-strokeGrey border":
             variant === "default" && tab.option !== tab.type,

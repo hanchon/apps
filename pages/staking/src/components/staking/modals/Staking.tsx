@@ -64,7 +64,7 @@ const Staking = ({
       )}
       {showDelegate && (
         <div className="rounded-md border border-darkGray1 p-3 text-sm">
-          <p className="font-bold text-red">
+          <p className="font-bold text-red-300">
             Staking will lock up your funds for 14 days
           </p>
           <p>
@@ -98,7 +98,7 @@ const Staking = ({
                 rel="noopener noreferrer"
                 target="_blank"
                 href={item.website}
-                className="text-sm font-bold text-red"
+                className="text-sm font-bold text-red-300"
               >
                 {item.website}
               </Link>

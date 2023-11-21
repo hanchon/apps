@@ -148,7 +148,7 @@ const Undelegations = () => {
           </td>
           <td className={`${tdBodyStyle}`}>
             <CloseIcon
-              className="h-5 w-5 cursor-pointer rounded-full bg-red text-black"
+              className="h-5 w-5 cursor-pointer rounded-full bg-red-300 text-black"
               onClick={() => {
                 handleOnClick(item);
               }}

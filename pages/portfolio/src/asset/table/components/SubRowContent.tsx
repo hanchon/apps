@@ -124,7 +124,7 @@ export const SubRowContent = ({
             <>
               Since{" "}
               <Link
-                className="text-red"
+                className="text-red-300"
                 href={v10Link}
                 rel="noopener noreferrer"
                 target="_blank"

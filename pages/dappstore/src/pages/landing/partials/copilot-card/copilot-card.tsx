@@ -51,9 +51,9 @@ export const CopilotCard = () => {
 
   const nextStepsActive = isConnected && balance > 0n && sequence === 0n;
   const linkCn =
-    "rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out text-red bg-pearl hover:brightness-90";
+    "rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out text-red-300 bg-pearl hover:brightness-90";
   return (
-    <div className="bg-red flex flex-col justify-start space-y-3 rounded-lg bg-[url(/evmos_bg.png)] bg-contain bg-center bg-no-repeat p-8">
+    <div className="bg-red-300 flex flex-col justify-start space-y-3 rounded-lg bg-[url(/evmos_bg.png)] bg-contain bg-center bg-no-repeat p-8">
       <div className="flex  items-start justify-between">
         <h1 className="text-pearl text-2xl font-bold">
           {t("copilotCard.title")}
@@ -72,7 +72,7 @@ export const CopilotCard = () => {
         </Step>
       </ol>
       <div className="flex gap-x-4">
-        {/* w-fit rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out text-red bg-pearl hover:bg-[#e3d6c3] active:bg-[#ccc0af] } */}
+        {/* w-fit rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out text-red-300 bg-pearl hover:bg-[#e3d6c3] active:bg-[#ccc0af] } */}
         {setupAccountActive && (
           <SetupAccountModalTrigger>
             <button className={linkCn}>{t("copilotCard.letsGo")}</button>

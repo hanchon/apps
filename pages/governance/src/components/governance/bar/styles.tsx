@@ -3,7 +3,7 @@
 
 export const BAR_COLORS = {
   yes: "bg-green",
-  no: "bg-red",
+  no: "bg-red-300",
   abstain: "bg-darkGray5",
   noWithVeto: "bg-yellow",
 };

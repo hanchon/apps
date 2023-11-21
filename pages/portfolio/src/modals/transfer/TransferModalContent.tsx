@@ -220,7 +220,7 @@ export const TransferModalContent = ({
     (action === "TOPUP" || action === "TRANSFER");
   return (
     <section className="space-y-8 w-full">
-      <Modal.Header className="text-pearl1">
+      <Modal.Header>
         <Title
           variant="modal-black"
           icon={<SendIcon className="text-pink-300" />}

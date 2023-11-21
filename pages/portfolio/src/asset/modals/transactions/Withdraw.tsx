@@ -104,7 +104,7 @@ const Withdraw = ({
         <p className="max-w-[500px] pb-3 text-sm italic">
           Since Evmos{" "}
           <Link
-            className="text-red"
+            className="text-red-300"
             href={v10Link}
             rel="noopener noreferrer"
             target="_blank"

@@ -38,7 +38,7 @@ const CypherD = () => {
     return (
       <div className="flex flex-col items-center text-center space-y-2">
         <EvmosCopilotRedIcon height={30} />
-        <p className="text-[#FFF4E1]">Connection required</p>
+        <p className="text-pearl">Connection required</p>
         <p>
           Please connect your account in order to interact with the Cypher
           Wallet Instant dApp
