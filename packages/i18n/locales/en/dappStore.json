@@ -5,15 +5,9 @@
       "topUp": "Top Up Account"
     }
   },
-  "ecosystem": {
-    "title": "Featured Ecosystem dApps",
-    "description": "Interested in being a part of our ecosystem overview?",
-    "description2": "Click here!",
-    "button": {
-      "text": "View all dApps"
-    }
-  },
   "card": {
+    "title": "Evmos dApps",
+    "description": "The core dApps created by the Evmos Team",
     "assets": {
       "title": "Portfolio",
       "description": "Manage your assets on Evmos",
@@ -49,5 +43,54 @@
     "topUp": "Top up",
     "staking": "Staking",
     "useADapp": "Use a dApp"
+  },
+  "ecosystem": {
+    "title": "Add your dApp",
+    "title2": "to the dapp Store",
+    "description": "Interested in adding your dApp to our dApp Store and earning revenue?",
+    "addAppButton": "Add your dApp",
+    "learnButton": "Learn to build on Evmos",
+    "button": {
+      "text": "See all",
+      "text2": "dApps"
+    },
+    "instantdApps": {
+      "title": "Instant dApps",
+      "description": "Earn yields & manage your assets in a few clicks using our instant apps",
+      "button": {
+        "text": "See More"
+      }
+    }
+  },
+  "categories": {
+    "title": "Explore the",
+    "title2": "on Evmos",
+    "instantdApps": {
+      "name": "Instant dApps",
+      "description": "Instant dApps are dApps that are already deployed on Evmos and can be used instantly."
+    }
+  },
+  "instantdApp": {
+    "badge": "Instant dApp",
+    "description": {
+      "title": "How to use",
+      "title2": "Instant dApp"
+    },
+    "social": "Social",
+    "information": {
+      "title": "Technical Information",
+      "options": {
+        "github": "Github"
+      }
+    },
+    "website": {
+      "title": "Website"
+    },
+    "relatedApps": {
+      "title": "Related dApps",
+      "button": {
+        "text": "See More"
+      }
+    }
   }
 }

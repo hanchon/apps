@@ -9,7 +9,7 @@ import { Badge } from "@evmosapps/ui-helpers";
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { Category, DApp } from "../../../lib/fetch-explorer-data";
-
+import { useTranslation } from "next-i18next";
 export const HeaderCategories = ({
   categories,
   params,
@@ -22,6 +22,7 @@ export const HeaderCategories = ({
   >[];
   params: { category?: string };
 }) => {
+  const { t } = useTranslation("dappStore");
   const [hoveredCategorySlug, setHoveredCategory] = useState<null | string>(
     null
   );
@@ -57,17 +58,16 @@ export const HeaderCategories = ({
     <>
       <div className="flex space-y-2 flex-col">
         <Title>
-          Explore the{" "}
+          {t("categories.title")}{" "}
           <span className="font-bold ">
             {/* TODO: add correct styling for params.category  */}
             {displayedCategory?.categoryDapps.length ?? totalAmountdApps}{" "}
             {displayedCategory?.name ?? "dApps"}
           </span>{" "}
-          on Evmos
+          {t("categories.title2")}
         </Title>
         <Subtitle className="min-h-[1lh] text-[#E8DFD3]">
-          {displayedCategory?.description ??
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit"}{" "}
+          {displayedCategory?.description ?? ""}{" "}
         </Subtitle>
       </div>
       <div className="flex gap-5 flex-wrap" onMouseLeave={handleCategoryLeave}>

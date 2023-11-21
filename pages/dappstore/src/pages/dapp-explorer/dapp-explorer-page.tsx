@@ -6,12 +6,14 @@ import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 import { EcosystemCard } from "../landing/partials/ecosystem-card";
 import { ExplorerBreadcrumbs } from "./partials/explorer-breadcrumbs";
 import { HeaderCategories } from "./partials/header-categories";
+import { translation } from "@evmosapps/i18n/server";
 
 export const DappExplorerPage = async ({
   params,
 }: {
   params: { category?: string };
 }) => {
+  const { t } = await translation("dappStore");
   const { dApps, categories } = await fetchExplorerData();
 
   const filteredApps = params.category
@@ -46,9 +48,8 @@ export const DappExplorerPage = async ({
               .filter(({ instantDapp }) => instantDapp)
               .map(({ slug }) => slug),
 
-            description:
-              "Instant dApps are dApps that are already deployed on Evmos and can be used instantly.",
-            name: "Instant dApps",
+            description: t("categories.instantdApps.description"),
+            name: t("categories.instantdApps.name"),
             slug: "instant-dapps",
           },
           ...categories,

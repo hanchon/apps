@@ -18,7 +18,7 @@ import { DApp } from "../../../lib/fetch-explorer-data";
 import { cn } from "helpers";
 import dynamic from "next/dynamic";
 import { EcosystemCard } from "../../landing/partials/ecosystem-card";
-
+import { translation } from "@evmosapps/i18n/server";
 const WIDGETS: {
   [key: string]: React.ComponentType<{}>;
 } = {
@@ -48,13 +48,14 @@ const WIDGETS: {
   ),
 };
 
-export const DescriptiondApp = ({
+export const DescriptiondApp = async ({
   dapp,
   relatedApps,
 }: {
   dapp: DApp;
   relatedApps: DApp[];
 }) => {
+  const { t } = await translation("dappStore");
   const img = dapp.cover ?? dapp.icon;
 
   const drawWidget = () => {
@@ -73,7 +74,6 @@ export const DescriptiondApp = ({
           )}
         >
           <Image
-            // TODO: use dapp image
             src={dapp.cover ?? "/ecosystem/galaxy.png"}
             alt={dapp.name}
             fill={true}
@@ -111,7 +111,7 @@ export const DescriptiondApp = ({
               {dapp.name}
             </h1>
             <p className="text-[#D3CBC7] font-light lg:text-xl">
-              {dapp.description}
+              {dapp.oneLiner}
             </p>
           </div>
           {dapp.instantDapp && (
@@ -122,7 +122,7 @@ export const DescriptiondApp = ({
                 {/* TODO: check if we need to create a component for this */}
                 {/* TODO: add color to tailwind file */}
                 <span className="w-[13px] h-[13px] bg-[#AE00FF] rounded-full" />
-                <p>Instant dApp</p>
+                <p>{t("instantdApp.badge")}</p>
               </Badge>
             </div>
           )}
@@ -130,10 +130,14 @@ export const DescriptiondApp = ({
       </div>
       <div className="grid grid-row-2 md:grid-cols-3 ">
         <div className="space-y-24 md:col-span-2 mb-24 md:mb-0">
-          <DescriptionItem title={`How to use ${dapp.name} Instant dApp`}>
+          <DescriptionItem
+            title={`${t("instantdApp.description.title")} ${dapp.name} ${t(
+              "instantdApp.description.title2"
+            )}`}
+          >
             <p>{dapp.description}</p>
           </DescriptionItem>
-          <DescriptionItem title="Social">
+          <DescriptionItem title={t("instantdApp.social")}>
             {dapp.x && (
               <Link
                 href={dapp.x}
@@ -164,14 +168,15 @@ export const DescriptiondApp = ({
             )} */}
           </DescriptionItem>
 
-          <DescriptionItem title="Technical Information">
+          <DescriptionItem title={t("instantdApp.information.title")}>
             {dapp.github && (
               <Link
                 href={dapp.github}
                 className="flex flex-row space-x-2 items-center"
                 target="_blank"
               >
-                <GithubIcon width={20} height={20} /> <p>Github</p>
+                <GithubIcon width={20} height={20} />{" "}
+                <p>{t("instantdApp.information.options.github")}</p>
               </Link>
             )}
             {/* TODO: add documentation */}
@@ -186,8 +191,7 @@ export const DescriptiondApp = ({
             )} */}
           </DescriptionItem>
 
-          <DescriptionItem title="Website">
-            {/* {dapp.links.website && ( */}
+          <DescriptionItem title={t("instantdApp.website.title")}>
             <Link
               href="/"
               className="flex flex-row space-x-2 items-center"
@@ -195,7 +199,6 @@ export const DescriptiondApp = ({
             >
               <WebsiteIcon width={20} height={20} /> <p>url</p>
             </Link>
-            {/* )} */}
           </DescriptionItem>
         </div>
         <Frameline variant="secondary">
@@ -206,11 +209,11 @@ export const DescriptiondApp = ({
       </div>
 
       <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
-        <Title>Related dApps</Title>
+        <Title>{t("instantdApp.relatedApps.title")}</Title>
 
         <ButtonWithLink href="/dapps" className="md:self-center">
           <div className="flex items-center space-x-2">
-            <p>See More</p>
+            <p>{t("instantdApp.relatedApps.button.text")}</p>
             <RightArrow width={11} height={11} />
           </div>
         </ButtonWithLink>
