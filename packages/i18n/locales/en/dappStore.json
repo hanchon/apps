@@ -63,8 +63,8 @@
     }
   },
   "categories": {
-    "title": "Explore the",
-    "title2": "on Evmos",
+    "title": "Explore the <b>{{count}} {{name}}</b> on Evmos",
+
     "instantdApps": {
       "name": "Instant dApps",
       "description": "Instant dApps are dApps that are already deployed on Evmos and can be used instantly."

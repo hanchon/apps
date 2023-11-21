@@ -56,7 +56,6 @@ export const ReceiveContent = ({
   const [selectedNetworkPrefix, setSelectedNetworkPrefix] =
     useState<Prefix>("evmos");
   const selectedChain = getChain(selectedNetworkPrefix);
-  const { data } = useWalletAccountByPrefix(selectedNetworkPrefix);
 
   const sender = address ? normalizeToEvmos(address) : null;
 
@@ -106,9 +105,8 @@ export const ReceiveContent = ({
   ];
 
   const [showCopied, setIsOpenCopied] = useState(false);
-  const dispatch = useDispatch();
+
   const { isDisconnected } = useAccount();
-  const connectModal = useConnectModal();
 
   return (
     <section className="space-y-16 text-pearl">

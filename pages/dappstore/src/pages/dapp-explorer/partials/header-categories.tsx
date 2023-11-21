@@ -2,14 +2,14 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useMemo, useState } from "react";
-import { Link } from "@evmosapps/i18n/client";
+import { ComponentProps, ComponentRef, useMemo, useRef, useState } from "react";
+import { Link, useTranslation } from "@evmosapps/i18n/client";
 import { cn } from "helpers";
 import { Badge } from "@evmosapps/ui-helpers";
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { Category, DApp } from "../../../lib/fetch-explorer-data";
-import { useTranslation } from "next-i18next";
+import { Trans } from "react-i18next";
 export const HeaderCategories = ({
   categories,
   params,
@@ -54,21 +54,23 @@ export const HeaderCategories = ({
     }, 0);
   }, [categories]);
 
+  const categoryName = displayedCategory?.name ?? "dApps";
+  const ref = useRef<ComponentRef<"div">>(null);
+  const computedStyles = ref.current ? getComputedStyle(ref.current) : null;
+  const subtitleLineClamp = ref.current
+    ? Math.round(
+        parseFloat(computedStyles?.height ?? "1") /
+          parseFloat(computedStyles?.lineHeight ?? "1")
+      )
+    : undefined;
+
   return (
     <>
-      <div className="flex space-y-2 flex-col">
-        <Title>
-          {t("categories.title")}{" "}
-          <span className="font-bold ">
-            {/* TODO: add correct styling for params.category  */}
-            {displayedCategory?.categoryDapps.length ?? totalAmountdApps}{" "}
-            {displayedCategory?.name ?? "dApps"}
-          </span>{" "}
-          {t("categories.title2")}
-        </Title>
-        <Subtitle className="min-h-[1lh] text-[#E8DFD3]">
-          {displayedCategory?.description ?? ""}{" "}
-        </Subtitle>
+      <div className="flex flex-col relative">
+        <CategoryHeader
+          category={displayedCategory ?? selectedCategory}
+          totalCategoryCount={totalAmountdApps}
+        />
       </div>
       <div className="flex gap-5 flex-wrap" onMouseLeave={handleCategoryLeave}>
         {categories.map((category) => (
@@ -95,5 +97,44 @@ export const HeaderCategories = ({
         ))}
       </div>
     </>
+  );
+};
+
+const CategoryHeader = ({
+  category,
+  totalCategoryCount,
+  ...rest
+}: {
+  category?: Pick<Category, "categoryDapps" | "name" | "slug" | "description">;
+  totalCategoryCount: number;
+} & ComponentProps<"div">) => {
+  const { t } = useTranslation("dappStore");
+  const categoryName = category?.name ?? "dApps";
+
+  return (
+    <div {...rest}>
+      <Title>
+        <Trans
+          shouldUnescape={true}
+          t={t}
+          i18nKey="categories.title"
+          components={{
+            b: <strong className="font-bold" />,
+          }}
+          values={{
+            name: categoryName.endsWith("dApps")
+              ? categoryName
+              : `${categoryName} dApps`,
+
+            count: category?.categoryDapps.length ?? totalCategoryCount,
+          }}
+        />
+      </Title>
+      {category?.description && (
+        <div className="relative text-xl text-[#E8DFD3]">
+          <Subtitle>{category?.description}</Subtitle>
+        </div>
+      )}
+    </div>
   );
 };

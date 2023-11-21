@@ -8,7 +8,7 @@ import { EcosystemCardGrid } from "../landing/partials/ecosystem-card-grid";
 import { ExplorerBreadcrumbs } from "./partials/explorer-breadcrumbs";
 import { HeaderCategories } from "./partials/header-categories";
 import { translation } from "@evmosapps/i18n/server";
-
+import { pick, keys } from "lodash-es";
 export const DappExplorerPage = async ({
   params,
 }: {
@@ -36,6 +36,15 @@ export const DappExplorerPage = async ({
     // Otherwise, instant-dapp apps come first
     return a.instantDapp ? -1 : 1;
   });
+  const instantDappCategory = {
+    categoryDapps: sortedApps
+      .filter(({ instantDapp }) => instantDapp)
+      .map(({ slug }) => slug),
+
+    description: t("categories.instantdApps.description"),
+    name: t("categories.instantdApps.name"),
+    slug: "instant-dapps",
+  };
 
   return (
     <>
@@ -53,7 +62,12 @@ export const DappExplorerPage = async ({
             name: t("categories.instantdApps.name"),
             slug: "instant-dapps",
           },
-          ...categories,
+          ...categories.map((category) =>
+            pick(
+              category,
+              keys(instantDappCategory) as (keyof typeof instantDappCategory)[]
+            )
+          ),
         ]}
         params={params}
       />
