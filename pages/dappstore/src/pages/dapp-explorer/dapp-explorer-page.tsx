@@ -13,28 +13,26 @@ export const DappExplorerPage = async ({
   params: { category?: string };
 }) => {
   const { dApps, categories } = await fetchExplorerData();
-  // TODO: create a function and test it
 
-  const filteredDapps = dApps.filter((dapp) => {
-    if (params.category === "instant-dapps") {
-      return dapp.instantDapp;
-    }
-    return dapp.categorySlug === params.category;
-  });
-
-  const sortedApps = params.category
-    ? filteredDapps.sort((a, b) =>
-        a.categorySlug !== b.categorySlug
-          ? // show instant dapps first
-            a.instantDapp
-            ? -1
-            : 1
-          : // sort by name
-          a.name > b.name
-          ? 1
-          : -1
-      )
+  const filteredApps = params.category
+    ? dApps.filter((dapp) => {
+        if (params.category === "instant-dapps") {
+          return dapp.instantDapp;
+        }
+        return dapp.categorySlug === params.category;
+      })
     : dApps;
+
+  const sortedApps = filteredApps.sort((a, b) => {
+    const alphabeticalOrder = a.name.localeCompare(b.name);
+
+    // If both apps have the same instant-dapp property, return alphabetical order
+    if (a.instantDapp === b.instantDapp) {
+      return alphabeticalOrder;
+    }
+    // Otherwise, instant-dapp apps come first
+    return a.instantDapp ? -1 : 1;
+  });
 
   return (
     <>
