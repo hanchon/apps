@@ -65,7 +65,7 @@ export const HeaderCategories = ({
           </span>{" "}
           on Evmos
         </Title>
-        <Subtitle className="min-h-[1lh]">
+        <Subtitle className="min-h-[1lh] text-[#E8DFD3]">
           {displayedCategory?.description ??
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit"}{" "}
         </Subtitle>
