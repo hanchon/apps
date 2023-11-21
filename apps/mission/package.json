@@ -33,6 +33,7 @@
     "@hanchon/signature-to-pubkey": "^1.0.1",
     "@keplr-wallet/types": "^0.12.20",
     "@metamask/providers": "^10.2.1",
+    "@netlify/plugin-nextjs": "^4.41.2",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/node": "20.4.1",
     "@types/react": "18.2.21",
@@ -63,7 +64,7 @@
     "last 3 safari version"
   ],
   "dependencies": {
-    "@netlify/plugin-nextjs": "4.41.2",
+    "@netlify/functions": "^2.4.0",
     "@notionhq/client": "^2.2.13",
     "@playwright/test": "^1.39.0",
     "@tanstack/query-sync-storage-persister": "^5.8.3",
@@ -78,7 +79,7 @@
     "i18next-resources-to-backend": "^1.1.4",
     "lodash-es": "^4.17.21",
     "mixpanel-browser": "^2.47.0",
-    "next": "^14.0.3",
+    "next": "14.0.3",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-notion": "^0.10.0",

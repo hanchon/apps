@@ -1,6 +1,6 @@
 import "../../globals.css";
 import { dir } from "i18next";
-import { PropsWithChildren, Suspense } from "react";
+import { PropsWithChildren } from "react";
 import { languages } from "@evmosapps/i18n";
 import { withLocale } from "@evmosapps/i18n/server";
 import { cn } from "helpers";
@@ -13,11 +13,14 @@ import { Container } from "@evmosapps/ui-helpers";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Modals } from "./modals";
+
+export const dynamic = "error";
+
 export function generateStaticParams() {
   return languages.map((locale) => ({ locale }));
 }
+
 export const viewport: Viewport = {
-  themeColor: "black",
   width: "device-width",
   initialScale: 1,
 };

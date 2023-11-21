@@ -10,7 +10,7 @@ export const ExplorerBreadcrumbs = async ({
   const pages = [
     {
       name: "dApp Store",
-      href: "/",
+      href: "/dapps",
     },
   ];
   const { categories, dApps } = await fetchExplorerData();

@@ -13,7 +13,6 @@ import { translation } from "@evmosapps/i18n/server";
 import { ConsentModalTrigger } from "stateful-components/src/modals/ConsentModal/ConsentModal";
 import { Container } from "@evmosapps/ui-helpers";
 import { Link } from "@evmosapps/i18n/client";
-import { Suspense } from "react";
 
 export const Footer = async () => {
   const { t } = await translation();
