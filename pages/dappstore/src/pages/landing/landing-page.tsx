@@ -14,20 +14,20 @@ import { ButtonWithLink, Frameline } from "@evmosapps/ui-helpers";
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 
 import { CopilotCard } from "./partials/copilot-card/copilot-card";
+import { translation } from "@evmosapps/i18n/server";
 
 export const LandingPage = async () => {
   const { dApps } = await fetchExplorerData();
-
+  const { t } = await translation("dappStore");
   return (
     <div className="space-y-8 text-display">
       <div className="grid items-center gap-x-8 gap-y-11 md:grid-cols-2">
         <AccountBalance />
         <CopilotCard />
       </div>
-      {/* TODO: add localization */}
       <div className="flex space-y-2 flex-col">
-        <Title>Evmos dApps</Title>
-        <Subtitle>The core dApps created by the Evmos Team</Subtitle>
+        <Title>{t("card.title")}</Title>
+        <Subtitle>{t("card.description")}</Subtitle>
       </div>
       <div className="grid gap-8 md:grid-cols-2">
         <StakingCard />
@@ -41,7 +41,8 @@ export const LandingPage = async () => {
       <EcosystemSection />
       <Frameline>
         <ButtonWithLink className="w-full " href="/dapps">
-          See all {dApps.length} dApps
+          {t("ecosystem.button.text")} {dApps.length}{" "}
+          {t("ecosystem.button.text2")}
         </ButtonWithLink>
       </Frameline>
     </div>

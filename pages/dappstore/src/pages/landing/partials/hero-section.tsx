@@ -4,7 +4,10 @@
 import { ADD_DAPP_FORM_URL } from "constants-helper";
 import Image from "next/image";
 import { Frameline, PrimaryButton } from "@evmosapps/ui-helpers";
-export const HeroSection = () => {
+import { translation } from "@evmosapps/i18n/server";
+
+export const HeroSection = async () => {
+  const { t } = await translation("dappStore");
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 space-x-0 md:space-x-8">
       <div
@@ -18,11 +21,10 @@ export const HeroSection = () => {
           className="font-evmos font-bold text-5xl tracking-wide text-pearl"
           style={{ fontFeatureSettings: "'ss02' on, 'ss01' on" }}
         >
-          Add your dApp <br />
-          to the dApp Store
+          {t("ecosystem.title")} <br /> {t("ecosystem.title2")}
         </h1>
         <p className="border-b border-t border-pearl border-opacity-40 py-2 text-sm  text-pearl w-fit">
-          Interested in adding your dApp to our dApp Store and earning revenue?
+          {t("ecosystem.description")}
         </p>
         <div className="flex flex-col md:flex-row items-center space-x-0 space-y-4 md:space-y-0 md:space-x-2 w-full xl:w-[80%] 2xl:w-[61%]">
           <PrimaryButton
@@ -32,7 +34,7 @@ export const HeroSection = () => {
             target="_blank"
             referrerPolicy="no-referrer"
           >
-            Add your dApp
+            {t("ecosystem.addAppButton")}
           </PrimaryButton>
           <PrimaryButton
             as={"a"}
@@ -42,7 +44,7 @@ export const HeroSection = () => {
             target="_blank"
             referrerPolicy="no-referrer"
           >
-            Learn to build on Evmos
+            {t("ecosystem.learnButton")}
           </PrimaryButton>
         </div>
       </div>
