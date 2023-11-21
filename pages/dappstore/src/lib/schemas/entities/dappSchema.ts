@@ -6,7 +6,7 @@ import { titleSchema } from "../partials/titleSchema";
 import { checkboxSchema } from "../partials/checkboxSchema";
 import { urlSchema } from "../partials/urlSchema";
 import { emojiSchema } from "../partials/emojiSchema";
-import { fileSchema } from "../partials/fileSchema";
+import { fileSchema, filesSchema } from "../partials/fileSchema";
 import { externalSchema } from "../partials/externalSchema";
 import { createNotionPropertiesSchema } from "../utils/createNotionPropertiesSchema";
 import { createdAtSchema } from "../partials/createdAtSchema";
@@ -16,6 +16,9 @@ import slugify from "slugify";
 
 const dappPropertiesSchema = createNotionPropertiesSchema(
   z.object({
+    icon: filesSchema,
+    cover: filesSchema,
+    thumbnail: filesSchema,
     instantDapp: checkboxSchema,
     name: titleSchema,
     description: richTextSchema,
@@ -27,6 +30,7 @@ const dappPropertiesSchema = createNotionPropertiesSchema(
     project: urlSchema,
     github: urlSchema,
     discord: urlSchema,
+    telegram: urlSchema,
     updatedAt: updatedAtSchema,
     createdAt: createdAtSchema,
     language: selectSchema,
@@ -37,19 +41,6 @@ export const dappSchema = z
   .object({
     id: z.string(),
     properties: dappPropertiesSchema,
-    icon: z
-      .union([emojiSchema, fileSchema, externalSchema, z.null()])
-      .transform((icon) => {
-        if (icon?.type === "file") return icon.url;
-        return null;
-      }),
-
-    cover: z
-      .union([fileSchema, externalSchema, z.null()])
-      .transform((cover) => {
-        if (cover?.type === "file") return cover.url;
-        return null;
-      }),
   })
   .transform(({ id, properties, ...rest }) => {
     const slug = slugify(properties.name, {

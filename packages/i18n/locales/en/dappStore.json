@@ -72,9 +72,11 @@
   },
   "instantdApp": {
     "badge": "Instant dApp",
+    "howTo": {
+      "title": "How to use {{name}} Instant dApp"
+    },
     "description": {
-      "title": "How to use",
-      "title2": "Instant dApp"
+      "title": "Description"
     },
     "social": "Social",
     "information": {

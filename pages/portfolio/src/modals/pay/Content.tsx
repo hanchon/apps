@@ -29,8 +29,7 @@ import { useTokenPrice } from "../hooks/useTokenPrice";
 
 import { truncateAddress } from "@evmosapps/evmos-wallet/src/internal/wallet/style/format";
 import { AmountBox } from "../common/AmountBox";
-import { StoreType, WalletConnection } from "@evmosapps/evmos-wallet";
-import { Dispatch, SetStateAction } from "react";
+import { StoreType } from "@evmosapps/evmos-wallet";
 
 import { useDispatch, useSelector } from "react-redux";
 import { PayModalProps } from "./Modal";

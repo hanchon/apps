@@ -11,3 +11,10 @@ export const fileSchema = z
     type,
     url: file.url,
   }));
+
+export const filesSchema = z
+  .object({
+    type: z.literal("files"),
+    files: z.array(fileSchema),
+  })
+  .transform(({ files }) => files[0]?.url);

@@ -9,6 +9,8 @@ export const fetchDapps = async () => {
   const dapps = await notion.databases.query({
     database_id: ECOSYSTEM_PAGE_NOTION_ID,
   });
+
+  console.log(dapps);
   const dappsMap = new Map<string, z.output<typeof dappSchema>>();
 
   const parsedDapps = await Promise.all(

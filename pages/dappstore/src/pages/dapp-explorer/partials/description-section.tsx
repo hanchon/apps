@@ -9,6 +9,7 @@ import {
   DiscordIcon,
   GithubIcon,
   RightArrow,
+  TelegramIcon,
   TwitterIcon,
   WebsiteIcon,
 } from "icons";
@@ -19,6 +20,7 @@ import { cn } from "helpers";
 import dynamic from "next/dynamic";
 import { EcosystemCard } from "../../landing/partials/ecosystem-card";
 import { translation } from "@evmosapps/i18n/server";
+import { EcosystemCardGrid } from "../../landing/partials/ecosystem-card-grid";
 const WIDGETS: {
   [key: string]: React.ComponentType<{}>;
 } = {
@@ -56,7 +58,6 @@ export const DescriptiondApp = async ({
   relatedApps: DApp[];
 }) => {
   const { t } = await translation("dappStore");
-  const img = dapp.cover ?? dapp.icon;
 
   const drawWidget = () => {
     const Widget = WIDGETS[dapp.slug];
@@ -78,6 +79,7 @@ export const DescriptiondApp = async ({
             alt={dapp.name}
             fill={true}
             className="object-cover"
+            sizes="100vw"
           />
         </div>
         <header
@@ -92,12 +94,13 @@ export const DescriptiondApp = async ({
               "md:w-48"
             )}
           >
-            {img && (
+            {dapp.icon && (
               <Image
-                src={img}
+                src={dapp.icon}
                 alt={dapp.name}
                 fill={true}
                 className="object-cover"
+                sizes={"400w"}
               />
             )}
           </div>
@@ -130,13 +133,25 @@ export const DescriptiondApp = async ({
       </div>
       <div className="grid grid-row-2 md:grid-cols-3 ">
         <div className="space-y-24 md:col-span-2 mb-24 md:mb-0">
-          <DescriptionItem
-            title={`${t("instantdApp.description.title")} ${dapp.name} ${t(
-              "instantdApp.description.title2"
-            )}`}
-          >
-            <p>{dapp.description}</p>
-          </DescriptionItem>
+          {dapp.description && (
+            <DescriptionItem
+              title={t("instantdApp.description.title", {
+                name: dapp.name,
+              })}
+            >
+              <p>{dapp.description}</p>
+            </DescriptionItem>
+          )}
+          {dapp.howTo && (
+            <DescriptionItem
+              title={t("instantdApp.howTo.title", {
+                name: dapp.name,
+              })}
+            >
+              <p>{dapp.howTo}</p>
+            </DescriptionItem>
+          )}
+
           <DescriptionItem title={t("instantdApp.social")}>
             {dapp.x && (
               <Link
@@ -156,16 +171,16 @@ export const DescriptiondApp = async ({
                 <DiscordIcon width={20} height={20} /> <p>{dapp.name}</p>
               </Link>
             )}
-            {/* TODO: add telegram */}
-            {/* {dapp.links.telegram !== undefined && (
+
+            {dapp.telegram && (
               <Link
-                href={dapp.links.telegram}
+                href={dapp.telegram}
                 className="flex flex-row space-x-2 items-center"
                 target="_blank"
               >
                 <TelegramIcon width={20} height={20} /> <p>{dapp.name}</p>
               </Link>
-            )} */}
+            )}
           </DescriptionItem>
 
           <DescriptionItem title={t("instantdApp.information.title")}>
@@ -218,11 +233,11 @@ export const DescriptiondApp = async ({
           </div>
         </ButtonWithLink>
       </div>
-      <div className="grid gap-x-8 md:grid-cols-4">
+      <EcosystemCardGrid>
         {relatedApps?.map((dApp) => (
           <EcosystemCard data={dApp} key={dApp.name} />
         ))}
-      </div>
+      </EcosystemCardGrid>
 
       <HeroSection />
     </div>

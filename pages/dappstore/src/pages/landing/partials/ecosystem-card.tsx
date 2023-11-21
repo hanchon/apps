@@ -13,7 +13,7 @@ import { UpRightArrowIcon } from "icons";
 import { DApp } from "../../../lib/fetch-explorer-data";
 
 export const EcosystemCard = ({ data }: { data: DApp }) => {
-  const img = data.cover ?? data.icon;
+  const img = data.thumbnail;
 
   return (
     <TrackerEvent

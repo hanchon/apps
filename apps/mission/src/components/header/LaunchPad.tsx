@@ -1,7 +1,6 @@
 "use client";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import { Menu, Transition } from "@headlessui/react";
-import { ECOSYSTEM_URL } from "constants-helper";
 import { cn } from "helpers";
 import {
   CalculatorIcon,
@@ -10,7 +9,7 @@ import {
   LaunchIcon,
   NutIcon,
 } from "icons";
-import { ComponentProps, Fragment, PropsWithChildren } from "react";
+import { ComponentProps, Fragment } from "react";
 import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
 import { Badge, NetworkModeSelector } from "@evmosapps/ui-helpers";
 import { PingIndicator } from "@evmosapps/ui-helpers/src/PingIndicator";

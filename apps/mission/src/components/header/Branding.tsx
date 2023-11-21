@@ -7,7 +7,7 @@ import { getLocaleFromPath } from "@evmosapps/i18n";
 
 export const Branding = () => {
   const { t, i18n } = useTranslation();
-  const pathname = usePathname();
+  const pathname = usePathname() || "";
   const locale = getLocaleFromPath(pathname);
 
   const pageRoute = usePathname()?.split("/")[locale ? 2 : 1] || "dappstore";

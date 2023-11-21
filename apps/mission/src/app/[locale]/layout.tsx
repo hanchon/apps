@@ -10,7 +10,7 @@ import { GoogleAnalytics } from "../../components/GoogleAnalytics";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import { Container } from "@evmosapps/ui-helpers";
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import Script from "next/script";
 import { Modals } from "./modals";
 
@@ -19,11 +19,6 @@ export const dynamic = "error";
 export function generateStaticParams() {
   return languages.map((locale) => ({ locale }));
 }
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-};
 
 export const metadata: Metadata = {
   title: "Evmos Apps",

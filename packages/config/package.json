@@ -39,7 +39,7 @@
     "eslint-plugin-sonarjs": "^0.20.0",
     "eslint-plugin-vitest": "^0.2.8",
     "jsdom": "^22.1.0",
-    "typescript": "^5.2.2",
+    "typescript": "^5.3.2",
     "vitest": "^0.34.6"
   }
 }

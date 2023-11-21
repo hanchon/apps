@@ -45,6 +45,14 @@ const _fetchExplorerData = cache(async () => {
   };
 });
 export const fetchExplorerData = async () => {
+  // Uncomment to update mock data
+  //
+  // await (
+  //   await import("fs/promises")
+  // ).writeFile(
+  //   "./mock-explorer-data.json",
+  //   JSON.stringify(await _fetchExplorerData())
+  // );
   if (process.env.NODE_ENV === "development" && !process.env.NOTION_API_KEY) {
     Log().warn([
       "process.env.NOTION_API_KEY is not set, serving mock data in dev mode instead",

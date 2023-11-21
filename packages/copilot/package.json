@@ -51,7 +51,7 @@
     "react-confetti-explosion": "^2.1.2",
     "react-dom": "^18.2.0",
     "tracker": "workspace:*",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2"
   },
   "browserslist": [
     "last 3 chrome version",

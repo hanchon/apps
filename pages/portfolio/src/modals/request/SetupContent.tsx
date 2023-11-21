@@ -1,6 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import {
   Modal,
   PrimaryButton,
@@ -18,9 +18,7 @@ import {
 import { RequestModalProps } from "./RequestModal";
 import { CLICK_ON_GENERATE_PAYMENT_REQUEST, useTracker } from "tracker";
 import { RequestAssetSelector } from "./RequestAssetSelector";
-import { useDispatch, useSelector } from "react-redux";
 import { useAccount } from "wagmi";
-import { StoreType, WalletConnection } from "@evmosapps/evmos-wallet";
 import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
 
 const MAX_MESSAGE_LENGTH = 140;

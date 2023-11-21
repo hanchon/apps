@@ -15,7 +15,7 @@ const ContentProposal = dynamic(() => import("./proposalPage/ContentProposal"));
 
 const Content = () => {
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const id = searchParams?.get("id");
 
   const { proposals, loading, error, proposalDetail } = useProposals(
     id ?? undefined

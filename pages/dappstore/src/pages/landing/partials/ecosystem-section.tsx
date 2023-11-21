@@ -8,6 +8,7 @@ import { RightArrow } from "icons";
 import { translation } from "@evmosapps/i18n/server";
 import { ButtonWithLink } from "@evmosapps/ui-helpers";
 import { fetchExplorerData } from "../../../lib/fetch-explorer-data";
+import { EcosystemCardGrid } from "./ecosystem-card-grid";
 
 export const EcosystemSection = async () => {
   const { t } = await translation("dappStore");
@@ -28,11 +29,11 @@ export const EcosystemSection = async () => {
           </div>
         </ButtonWithLink>
       </div>
-      <div className="grid gap-x-8 md:grid-cols-4">
+      <EcosystemCardGrid>
         {instantDapps.map((dApp) => (
           <EcosystemCard data={dApp} key={dApp.name} />
         ))}
-      </div>
+      </EcosystemCardGrid>
     </section>
   );
 };

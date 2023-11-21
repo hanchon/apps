@@ -7,6 +7,6 @@
     "tailwindcss": "^3.3.5"
   },
   "dependencies": {
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2"
   }
 }

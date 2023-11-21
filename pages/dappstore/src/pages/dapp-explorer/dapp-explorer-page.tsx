@@ -4,6 +4,7 @@
 
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 import { EcosystemCard } from "../landing/partials/ecosystem-card";
+import { EcosystemCardGrid } from "../landing/partials/ecosystem-card-grid";
 import { ExplorerBreadcrumbs } from "./partials/explorer-breadcrumbs";
 import { HeaderCategories } from "./partials/header-categories";
 import { translation } from "@evmosapps/i18n/server";
@@ -56,11 +57,12 @@ export const DappExplorerPage = async ({
         ]}
         params={params}
       />
-      <div className="grid gap-x-8 md:grid-cols-4 pt-20">
+
+      <EcosystemCardGrid className="mt-20">
         {sortedApps?.map((dApp) => (
           <EcosystemCard data={dApp} key={dApp.name} />
         ))}
-      </div>
+      </EcosystemCardGrid>
     </>
   );
 };

@@ -40,7 +40,7 @@ export function useTranslation<
     | undefined = undefined,
   KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined,
 >(namespace?: Ns, options?: UseTranslationOptions<KPrefix>) {
-  const locale = getLocaleFromPath(usePathname()) || "en";
+  const locale = getLocaleFromPath(usePathname() ?? "") || "en";
 
   const ret = useTranslationOrg<Ns, KPrefix>(namespace, options);
 

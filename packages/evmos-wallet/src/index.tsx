@@ -41,7 +41,7 @@ export type { AppDispatch } from "./redux/Store";
 export { getAllSnackbars } from "./notification/redux/notificationSlice";
 export * from "./internal/wallet/functionality/wallet";
 // components
-export { WalletConnection } from "./copilot/WalletConnection";
+
 export { ButtonWallet } from "./wallet/ButtonWallet";
 // configs
 export { EVMOS_SYMBOL } from "./internal/wallet/functionality/networkConfig";
