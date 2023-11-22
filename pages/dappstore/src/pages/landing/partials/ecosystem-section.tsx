@@ -15,19 +15,18 @@ export const EcosystemSection = async () => {
   const { dApps } = await fetchExplorerData();
   const instantDapps = dApps.filter((dApp) => dApp.instantDapp);
   return (
-    <section className="space-y-6 pt-11">
-      <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
-        <div className="space-y-1">
+    <section className="space-y-8">
+      <div className="space-y-2">
+        <div className="flex flex-row justify-between w-full">
           <Title>{t("ecosystem.instantdApps.title")}</Title>
-          <Subtitle>{t("ecosystem.instantdApps.description")}</Subtitle>
+          <ButtonWithLink href="/dapps" className="self-center">
+            <div className="flex items-center space-x-2">
+              <p>{t("ecosystem.instantdApps.button.text")}</p>
+              <RightArrow width={11} height={11} />
+            </div>
+          </ButtonWithLink>
         </div>
-
-        <ButtonWithLink href="/dapps">
-          <div className="flex items-center space-x-2">
-            <p>{t("ecosystem.instantdApps.button.text")}</p>
-            <RightArrow width={11} height={11} />
-          </div>
-        </ButtonWithLink>
+        <Subtitle>{t("ecosystem.instantdApps.description")}</Subtitle>
       </div>
       <EcosystemCardGrid>
         {instantDapps.map((dApp) => (

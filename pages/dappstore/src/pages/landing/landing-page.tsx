@@ -20,7 +20,7 @@ export const LandingPage = async () => {
   const { dApps } = await fetchExplorerData();
   const { t } = await translation("dappStore");
   return (
-    <div className="space-y-8 text-display">
+    <div className="space-y-16 text-display">
       <div className="grid items-center gap-x-8 gap-y-11 md:grid-cols-2">
         <AccountBalance />
         <CopilotCard />
@@ -28,12 +28,12 @@ export const LandingPage = async () => {
       <div className="flex space-y-2 flex-col">
         <Title>{t("card.title")}</Title>
         <Subtitle>{t("card.description")}</Subtitle>
-      </div>
-      <div className="grid gap-8 md:grid-cols-2">
-        <StakingCard />
-        <div className="grid grid-rows-2 gap-y-8">
-          <AssetsCard />
-          <GovernanceCard />
+        <div className="grid gap-8 md:grid-cols-2 pt-5">
+          <StakingCard />
+          <div className="grid grid-rows-2 gap-y-8">
+            <AssetsCard />
+            <GovernanceCard />
+          </div>
         </div>
       </div>
 
