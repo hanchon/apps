@@ -2,7 +2,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { ComponentProps, ComponentRef, useMemo, useRef, useState } from "react";
+import { ComponentProps, ComponentRef, useMemo, useRef } from "react";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import { cn } from "helpers";
 import { Badge } from "@evmosapps/ui-helpers";
@@ -22,28 +22,9 @@ export const HeaderCategories = ({
   >[];
   params: { category?: string };
 }) => {
-  const { t } = useTranslation("dappStore");
-  const [hoveredCategorySlug, setHoveredCategory] = useState<null | string>(
-    null
-  );
-
-  const handleCategoryHover = (category: string | null) => {
-    setHoveredCategory(category);
-  };
-
-  const handleCategoryLeave = () => {
-    setHoveredCategory(null);
-  };
-
-  const hoveredCategory = useMemo(() => {
-    return categories.find((category) => category.slug === hoveredCategorySlug);
-  }, [hoveredCategorySlug, categories]);
-
   const selectedCategory = useMemo(() => {
     return categories.find((category) => category.slug === params.category);
   }, [categories, params.category]);
-
-  const displayedCategory = hoveredCategory || selectedCategory;
 
   const totalAmountdApps = useMemo(() => {
     return categories.reduce((acc, category) => {
@@ -54,7 +35,7 @@ export const HeaderCategories = ({
     }, 0);
   }, [categories]);
 
-  const categoryName = displayedCategory?.name ?? "dApps";
+  const categoryName = selectedCategory?.name ?? "dApps";
   const ref = useRef<ComponentRef<"div">>(null);
   const computedStyles = ref.current ? getComputedStyle(ref.current) : null;
   const subtitleLineClamp = ref.current
@@ -68,11 +49,11 @@ export const HeaderCategories = ({
     <>
       <div className="flex flex-col relative">
         <CategoryHeader
-          category={displayedCategory ?? selectedCategory}
+          category={selectedCategory}
           totalCategoryCount={totalAmountdApps}
         />
       </div>
-      <div className="flex gap-5 flex-wrap" onMouseLeave={handleCategoryLeave}>
+      <div className="flex gap-3 md:gap-4 flex-wrap">
         {categories.map((category) => (
           <Link
             href={
@@ -85,11 +66,10 @@ export const HeaderCategories = ({
             <Badge
               className={cn({
                 // TODO:  create reusable component for circle
-                "bg-[#FFF4E14D] pl-9 relative before:content-[''] before:absolute before:top-[50%] before:left-3 before:-translate-y-1/2 before:w-[15px] before:h-[15px] before:bg-red-300 before:rounded-full":
+                " pl-9 lg:pl-10 relative before:content-[''] before:absolute before:top-[50%] before:left-3 lg:before:left-[0.9rem] before:-translate-y-1/2 before:w-[15px] before:h-[15px] before:bg-red-300 before:rounded-full":
                   params.category === category.slug,
               })}
               variant="dark"
-              onMouseEnter={() => handleCategoryHover(category.slug)}
             >
               {category.name}
             </Badge>

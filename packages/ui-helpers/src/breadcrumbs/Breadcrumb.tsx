@@ -6,7 +6,7 @@ export const Breadcrumb = ({
   pages: { name: string; href: string }[];
 }) => {
   return (
-    <nav className="flex" aria-label="breadcrumb">
+    <nav className="flex -mb-5" aria-label="breadcrumb">
       <ol role="list" className="flex items-center space-x-1 tracking-wide">
         {pages.map((page, index) => (
           <li key={page.name}>

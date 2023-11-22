@@ -54,7 +54,7 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
               </span>
             </Badge>
           ) : (
-            <div className="rounded-full h-6 w-6 flex justify-center items-center border border-[#FFF4E173]">
+            <div className="rounded-full h-6 w-6 flex justify-center items-center bg-[#2d271d] border-[#5b5448] border text-pearl">
               <UpRightArrowIcon className="h-2 w-2" />
             </div>
           )}
