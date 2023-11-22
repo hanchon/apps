@@ -72,7 +72,7 @@ export const DappExplorerPage = async ({
         params={params}
       />
 
-      <EcosystemCardGrid className="mt-20">
+      <EcosystemCardGrid className="pt-8">
         {sortedApps?.map((dApp) => (
           <EcosystemCard data={dApp} key={dApp.name} />
         ))}

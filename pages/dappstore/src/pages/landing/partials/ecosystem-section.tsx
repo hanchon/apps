@@ -10,10 +10,30 @@ import { ButtonWithLink } from "@evmosapps/ui-helpers";
 import { fetchExplorerData } from "../../../lib/fetch-explorer-data";
 import { EcosystemCardGrid } from "./ecosystem-card-grid";
 
+const landingdAppsOrder = [
+  "stride",
+  "forge",
+  "squid",
+  "wormhole",
+  "layerswap",
+  "cypher-wallet",
+  "transak",
+  "c14",
+];
 export const EcosystemSection = async () => {
   const { t } = await translation("dappStore");
   const { dApps } = await fetchExplorerData();
-  const instantDapps = dApps.filter((dApp) => dApp.instantDapp);
+
+  const instantDapps = dApps
+    // get the instant dapps
+    .filter((dApp) => dApp.instantDapp)
+    // sort them by the order in the array
+    .sort((a, b) => {
+      return (
+        landingdAppsOrder.indexOf(a.slug) - landingdAppsOrder.indexOf(b.slug)
+      );
+    });
+
   return (
     <section className="space-y-8">
       <div className="space-y-2">
