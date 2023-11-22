@@ -25,7 +25,7 @@ export const Frameline = ({
         )}
         <div
           className={`h-full ${
-            variant === "secondary" && " py-4 px-0 md:p-4"
+            variant === "secondary" && " py-4 px-0 md:p-3"
           } `}
         >
           {children}
