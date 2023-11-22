@@ -1,15 +1,14 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { ComponentProps, ComponentRef, useMemo, useRef } from "react";
-import { Link, useTranslation } from "@evmosapps/i18n/client";
+import { ComponentProps, useMemo } from "react";
+import { Link, Trans } from "@evmosapps/i18n/client";
 import { cn } from "helpers";
 import { Badge } from "@evmosapps/ui-helpers";
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { Category, DApp } from "../../../lib/fetch-explorer-data";
-import { Trans } from "react-i18next";
+
 export const HeaderCategories = ({
   categories,
   params,
@@ -34,16 +33,6 @@ export const HeaderCategories = ({
       return acc + category.categoryDapps.length;
     }, 0);
   }, [categories]);
-
-  const categoryName = selectedCategory?.name ?? "dApps";
-  const ref = useRef<ComponentRef<"div">>(null);
-  const computedStyles = ref.current ? getComputedStyle(ref.current) : null;
-  const subtitleLineClamp = ref.current
-    ? Math.round(
-        parseFloat(computedStyles?.height ?? "1") /
-          parseFloat(computedStyles?.lineHeight ?? "1")
-      )
-    : undefined;
 
   return (
     <>
@@ -80,7 +69,7 @@ export const HeaderCategories = ({
   );
 };
 
-const CategoryHeader = ({
+const CategoryHeader = async ({
   category,
   totalCategoryCount,
   ...rest
@@ -88,15 +77,14 @@ const CategoryHeader = ({
   category?: Pick<Category, "categoryDapps" | "name" | "slug" | "description">;
   totalCategoryCount: number;
 } & ComponentProps<"div">) => {
-  const { t } = useTranslation("dappStore");
   const categoryName = category?.name ?? "dApps";
 
   return (
     <div className="space-y-3" {...rest}>
       <Title>
         <Trans
+          ns="dappStore"
           shouldUnescape={true}
-          t={t}
           i18nKey="categories.title"
           components={{
             b: <strong className="font-bold" />,

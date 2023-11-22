@@ -49,9 +49,7 @@ export const TermsOfServicesModalController = ({
       <Modal.Body className="bg-pearl">
         {modalProps && (
           <div className="bg-pearl relative rounded-lg w-full space-y-4 max-w-2xl">
-            <Modal.Header>
-              <h2 className="font-bold">{t("tos.title")}</h2>
-            </Modal.Header>
+            <h2 className="font-bold">{t("tos.title")}</h2>
             <div className="border-darkGray5 h-80 w-full space-y-3 overflow-y-auto border p-4 font-display">
               {/* <TOSContent /> */}
               {children}
