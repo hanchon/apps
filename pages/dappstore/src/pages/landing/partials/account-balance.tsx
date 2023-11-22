@@ -46,7 +46,7 @@ export const AccountBalance = () => {
   const { t } = useTranslation("dappStore");
 
   return (
-    <section className="mb-7 text-left md:mx-0">
+    <section className="text-left md:mx-0">
       <p className="mb-2 text-xl text-pearl md:text-2xl">
         {t("account.balance.title")}
       </p>

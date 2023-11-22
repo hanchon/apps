@@ -28,7 +28,7 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
         }
         target={data.instantDapp ? "" : "_blank"}
         key={data.name}
-        className="relative mb-16 space-y-2 rounded-lg bg-[#262017] pb-8 transition-all duration-150 ease-out hover:scale-105 overflow-hidden"
+        className="relative space-y-2 rounded-lg bg-[#262017] pb-8 transition-all duration-150 ease-out hover:scale-105 overflow-hidden"
       >
         <div className="relative aspect-[3/2] w-full bg-white/5 overflow-hidden">
           {img && (
@@ -54,7 +54,7 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
               </span>
             </Badge>
           ) : (
-            <div className="rounded-full h-6 w-6 flex justify-center items-center border border-[#FFF4E173]">
+            <div className="rounded-full h-6 w-6 flex justify-center items-center bg-[#2d271d] border-[#5b5448] border text-pearl">
               <UpRightArrowIcon className="h-2 w-2" />
             </div>
           )}

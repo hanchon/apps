@@ -48,22 +48,23 @@ export const HeroSection = async () => {
           </PrimaryButton>
         </div>
       </div>
-
-      <Frameline variant="secondary">
-        <div
-          className="flex items-center justify-center relative 
+      <div className="hidden md:grid">
+        <Frameline variant="secondary">
+          <div
+            className="h-full flex items-center justify-center relative 
         before:content-[''] before:absolute before:top-[50%] before:left-0 
         before:-translate-y-1/2 before:w-[20px] before:h-[20px] before:animate-pulse before:bg-[#9F05FE] before:rounded-full"
-        >
-          <Image
-            src="/ecosystem/hero-img.svg"
-            alt="hero-img"
-            width={250}
-            height={150}
-            className="object-contain"
-          />
-        </div>
-      </Frameline>
+          >
+            <Image
+              src="/ecosystem/hero-img.svg"
+              alt="hero-img"
+              width={250}
+              height={150}
+              className="object-contain"
+            />
+          </div>
+        </Frameline>
+      </div>
     </div>
   );
 };

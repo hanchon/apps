@@ -4,7 +4,6 @@
 import Image from "next/image";
 import { Badge, ButtonWithLink, Frameline } from "@evmosapps/ui-helpers";
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
-import Link from "next/link";
 import {
   DiscordIcon,
   GithubIcon,
@@ -21,6 +20,7 @@ import dynamic from "next/dynamic";
 import { EcosystemCard } from "../../landing/partials/ecosystem-card";
 import { translation } from "@evmosapps/i18n/server";
 import { EcosystemCardGrid } from "../../landing/partials/ecosystem-card-grid";
+import { DescriptionLink } from "./description-link";
 const WIDGETS: {
   [key: string]: React.ComponentType<{}>;
 } = {
@@ -65,7 +65,7 @@ export const DescriptiondApp = async ({
   };
 
   return (
-    <div className="space-y-12 lg:space-y-24 mb-12 lg:mb-24">
+    <div className="space-y-12 lg:space-y-16 mb-12 lg:mb-24">
       <div className="relative">
         <div
           className={cn(
@@ -92,8 +92,8 @@ export const DescriptiondApp = async ({
         >
           <div
             className={cn(
-              "relative shrink-0 w-32 aspect-square bg-[#423D37] rounded-md overflow-hidden",
-              "md:w-48"
+              "relative shrink-0 w-32 h-32 aspect-square bg-[#423D37] rounded-md overflow-hidden",
+              "md:w-48 md:h-48"
             )}
           >
             {dapp.icon && (
@@ -109,33 +109,35 @@ export const DescriptiondApp = async ({
           </div>
           <div
             className={cn(
-              "relative text-center gap-8 flex flex-col max-w-xl",
+              "relative text-center gap-8 flex flex-col w-full justify-between",
               "md:text-left"
             )}
           >
-            <h1 className="text-[#E8DFD3] text-3xl md:text-5xl lg:text-7xl">
-              {dapp.name}
-            </h1>
+            <div className="flex items-end">
+              <h1 className="text-[#E8DFD3] text-3xl md:text-5xl lg:text-7xl font-bold">
+                {dapp.name}
+              </h1>
+              {dapp.instantDapp && (
+                <div className="relative md:ml-auto shrink">
+                  {/* TODO: check if we need to create a component for this */}
+                  {/* TODO: add color to tailwind file */}
+                  <Badge className="text-sm space-x-3 bg-[#FFE1F40F] border border-[#FFE1F472] whitespace-nowrap md:text-xl md:px-5 md:py-2">
+                    {/* TODO: check if we need to create a component for this */}
+                    {/* TODO: add color to tailwind file */}
+                    <span className="w-[13px] h-[13px] bg-[#AE00FF] rounded-full" />
+                    <p>{t("instantdApp.badge")}</p>
+                  </Badge>
+                </div>
+              )}
+            </div>
             <p className="text-[#D3CBC7] font-light lg:text-xl">
               {dapp.oneLiner}
             </p>
           </div>
-          {dapp.instantDapp && (
-            <div className="relative md:ml-auto shrink">
-              {/* TODO: check if we need to create a component for this */}
-              {/* TODO: add color to tailwind file */}
-              <Badge className="text-sm space-x-2 border border-[#FFF4E173] whitespace-nowrap md:text-xl md:px-5 md:py-2">
-                {/* TODO: check if we need to create a component for this */}
-                {/* TODO: add color to tailwind file */}
-                <span className="w-[13px] h-[13px] bg-[#AE00FF] rounded-full" />
-                <p>{t("instantdApp.badge")}</p>
-              </Badge>
-            </div>
-          )}
         </header>
       </div>
-      <div className="flex flex-col lg:flex-row gap-y-12 lg:gap-y-24 gap-x-6 items-start">
-        <div className="gap-y-12 lg:gap-y-24 w-full flex flex-col">
+      <div className="flex flex-col lg:flex-row gap-y-12 lg:gap-y-24 gap-x-12 items-start">
+        <div className=" w-full grid grid-rows-8 gap-y-8">
           {dapp.description && (
             <DescriptionItem
               title={t("instantdApp.description.title", {
@@ -155,75 +157,65 @@ export const DescriptiondApp = async ({
             </DescriptionItem>
           )}
 
-          <DescriptionItem title={t("instantdApp.social")}>
-            {dapp.x && (
-              <Link
-                href={dapp.x}
-                className="flex flex-row space-x-2 items-center"
-                target="_blank"
-              >
-                <TwitterIcon width={20} height={20} /> <p>{dapp.name}</p>
-              </Link>
-            )}
-            {dapp.discord && (
-              <Link
-                href={dapp.discord}
-                className="flex flex-row space-x-2 items-center"
-                target="_blank"
-              >
-                <DiscordIcon width={20} height={20} /> <p>{dapp.name}</p>
-              </Link>
-            )}
+          {(dapp.x || dapp.discord || dapp.telegram) && (
+            <DescriptionItem title={t("instantdApp.social")}>
+              {dapp.x && (
+                <DescriptionLink href={dapp.x}>
+                  <TwitterIcon width={20} height={20} /> <p>{dapp.name}</p>
+                </DescriptionLink>
+              )}
+              {dapp.discord && (
+                <DescriptionLink href={dapp.discord}>
+                  <DiscordIcon width={20} height={20} /> <p>{dapp.name}</p>
+                </DescriptionLink>
+              )}
 
-            {dapp.telegram && (
-              <Link
-                href={dapp.telegram}
-                className="flex flex-row space-x-2 items-center"
-                target="_blank"
-              >
-                <TelegramIcon width={20} height={20} /> <p>{dapp.name}</p>
-              </Link>
-            )}
-          </DescriptionItem>
+              {dapp.telegram && (
+                <DescriptionLink href={dapp.telegram}>
+                  <TelegramIcon width={20} height={20} /> <p>{dapp.name}</p>
+                </DescriptionLink>
+              )}
+            </DescriptionItem>
+          )}
 
-          <DescriptionItem title={t("instantdApp.information.title")}>
-            {dapp.github && (
-              <Link
-                href={dapp.github}
-                className="flex flex-row space-x-2 items-center"
-                target="_blank"
-              >
-                <GithubIcon width={20} height={20} />{" "}
-                <p>{t("instantdApp.information.options.github")}</p>
-              </Link>
-            )}
-            {/* TODO: add documentation */}
-            {/* {dapp.documentation && (
+          {dapp.github && (
+            <DescriptionItem title={t("instantdApp.information.title")}>
+              {dapp.github && (
+                <DescriptionLink href={dapp.github}>
+                  <GithubIcon width={20} height={20} />{" "}
+                  <p>{t("instantdApp.information.options.github")}</p>
+                </DescriptionLink>
+              )}
+              {/* TODO: add documentation */}
+              {/* {dapp.documentation && (
               <Link
                 href={dapp.documentation}
-                className="flex flex-row space-x-2 items-center"
+              
                 target="_blank"
               >
                 <DocumentationIcon width={20} height={20} /> <p>Documentation</p>
               </Link>
             )} */}
-          </DescriptionItem>
-
-          <DescriptionItem title={t("instantdApp.website.title")}>
-            <Link
-              href="/"
-              className="flex flex-row space-x-2 items-center"
-              target="_blank"
-            >
-              <WebsiteIcon width={20} height={20} /> <p>url</p>
-            </Link>
-          </DescriptionItem>
+            </DescriptionItem>
+          )}
+          {dapp.dapp && (
+            <DescriptionItem title={t("instantdApp.website.title")}>
+              <DescriptionLink href="/">
+                <WebsiteIcon width={20} height={20} /> <p>{dapp.dapp}</p>
+              </DescriptionLink>
+            </DescriptionItem>
+          )}
         </div>
-        <Frameline className="w-full max-w-lg mx-auto grow" variant="secondary">
-          <div className="flex items-center justify-center h-full">
-            {drawWidget()}
-          </div>
-        </Frameline>
+        {drawWidget() && (
+          <Frameline
+            className="w-full max-w-lg mx-auto grow"
+            variant="secondary"
+          >
+            <div className="flex items-center justify-center h-full">
+              {drawWidget()}
+            </div>
+          </Frameline>
+        )}
       </div>
 
       <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
