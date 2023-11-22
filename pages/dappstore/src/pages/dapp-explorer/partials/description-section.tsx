@@ -21,6 +21,7 @@ import { EcosystemCard } from "../../landing/partials/ecosystem-card";
 import { translation } from "@evmosapps/i18n/server";
 import { EcosystemCardGrid } from "../../landing/partials/ecosystem-card-grid";
 import { DescriptionLink } from "./description-link";
+
 const WIDGETS: {
   [key: string]: React.ComponentType<{}>;
 } = {

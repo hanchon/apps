@@ -22,11 +22,9 @@ import {
   normalizeToEvmos,
 } from "@evmosapps/evmos-wallet";
 import { ReceiveIcon, ShareIcon } from "icons";
-import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { CryptoSelectorDropdownBox } from "@evmosapps/ui-helpers";
 import { CryptoSelectorTitle } from "@evmosapps/ui-helpers";
 import { Prefix } from "@evmosapps/evmos-wallet/src/registry-actions/types";
-import { useDispatch } from "react-redux";
 import { RequestModalProps } from "./RequestModal";
 import {
   CLICK_ON_COPY_ICON_RECEIVE_FLOW,
@@ -40,7 +38,6 @@ import {
 import { useAccount } from "wagmi";
 import { sortedChains } from "../shared/sortedChains";
 import { useTranslation } from "@evmosapps/i18n/client";
-import { useConnectModal } from "stateful-components/src/modals/ConnectModal/ConnectModal";
 import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
 
 export const ReceiveContent = ({

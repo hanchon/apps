@@ -1,10 +1,8 @@
 "use client";
 import { EvmosRedIcon, PriceDown, PriceUp } from "icons";
-// import { fetchCoingeckoTokenPrices } from "./fetchTokenPrice";
-import { useQuery } from "@tanstack/react-query";
+
 import { cn } from "helpers";
 import { useAssets } from "@evmosapps/evmos-wallet";
-import { useMemo } from "react";
 
 export const EvmosPrice = () => {
   const { evmosPriceFixed, evmosPriceChange, error } = useAssets();
