@@ -43,14 +43,14 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
           )}
         </div>
         <div className="flex space-x-3 items-center px-5 pt-5">
-          <h3 className="text-sm font-bold text-pearl">{data.name}</h3>
+          <h3 className="font-bold text-pearl">{data.name}</h3>
           {data.instantDapp ? (
             <Badge className="text-sm gap-x-2 whitespace-nowrap overflow-hidden">
               {/* TODO: check if we need to create a component for this */}
               {/* TODO: add color to tailwind file */}
               <span className="w-[8px] h-[8px] aspect-square bg-[#AE00FF] rounded-full" />
               <span className="overflow-ellipsis overflow-hidden">
-                Instant dApp{" "}
+                Instant dApp
               </span>
             </Badge>
           ) : (

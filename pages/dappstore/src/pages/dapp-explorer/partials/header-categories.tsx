@@ -92,7 +92,7 @@ const CategoryHeader = ({
   const categoryName = category?.name ?? "dApps";
 
   return (
-    <div {...rest}>
+    <div className="space-y-3" {...rest}>
       <Title>
         <Trans
           shouldUnescape={true}

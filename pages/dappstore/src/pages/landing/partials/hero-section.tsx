@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { ADD_DAPP_FORM_URL } from "constants-helper";
+import { ADD_DAPP_FORM_URL, DOCS_EVMOS_REVENUE } from "constants-helper";
 import Image from "next/image";
 import { Frameline, PrimaryButton } from "@evmosapps/ui-helpers";
 import { translation } from "@evmosapps/i18n/server";
@@ -40,11 +40,11 @@ export const HeroSection = async () => {
             as={"a"}
             className="flex-1 font-normal rounded w-full"
             variant="secondary"
-            href="/docs"
+            href={DOCS_EVMOS_REVENUE}
             target="_blank"
             referrerPolicy="no-referrer"
           >
-            {t("ecosystem.learnButton")}
+            {t("ecosystem.revenueButton")}
           </PrimaryButton>
         </div>
       </div>
