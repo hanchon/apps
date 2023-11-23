@@ -25,7 +25,7 @@ import { E } from "helpers";
 import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
 
 const evmos = getEvmosChainInfo();
-export const EnableVestingModal = () => {
+export const EnableVestingModal = ({ onClose }: { onClose: () => void }) => {
   const [disabled, setDisabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export const EnableVestingModal = () => {
       const [err] = await E.try(() =>
         switchNetwork({
           chainId: evmos.id,
-        })
+        }),
       );
       if (err) return;
     }
@@ -47,7 +47,7 @@ export const EnableVestingModal = () => {
       const res = await createClawbackVestingAccount(
         d.address as string,
         wallet.evmosAddressEthFormat,
-        false
+        false,
       );
 
       dispatch(
@@ -60,9 +60,10 @@ export const EnableVestingModal = () => {
             explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        })
+        }),
       );
       setDisabled(false);
+      onClose();
     } catch (e) {
       Log.error(e);
       setDisabled(false);
@@ -75,14 +76,14 @@ export const EnableVestingModal = () => {
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        })
+        }),
       );
     }
 
     if (d.accountName !== "") {
       setVestingAccountNameLocalstorage(
         d.address as string,
-        d.accountName as string
+        d.accountName as string,
       );
     }
   };

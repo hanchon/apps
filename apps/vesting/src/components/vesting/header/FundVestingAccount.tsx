@@ -51,7 +51,7 @@ import { E } from "helpers";
 import { getEvmosChainInfo } from "evmos-wallet/src/wallet/wagmi/chains";
 
 const evmos = getEvmosChainInfo();
-export const FundVestingAccount = () => {
+export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
   const [disabled, setDisabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
@@ -71,8 +71,8 @@ export const FundVestingAccount = () => {
         } else {
           setFunderBalance(
             BigNumber.from(
-              response?.balance.amount ? response.balance.amount : 0
-            )
+              response?.balance.amount ? response.balance.amount : 0,
+            ),
           );
         }
       })
@@ -132,7 +132,7 @@ export const FundVestingAccount = () => {
       const [err] = await E.try(() =>
         switchNetwork({
           chainId: evmos.id,
-        })
+        }),
       );
       if (err) return;
     }
@@ -149,7 +149,7 @@ export const FundVestingAccount = () => {
             vestingInterval: d.vestingSchedule as Intervals,
             vestingCliff: d.vestingCliff as VestingSchedule["vestingCliff"],
             lockingPeriod: d.lockupDuration as TimeWindow,
-          }
+          },
         );
 
       const res = await fundVestingAccount(
@@ -157,7 +157,7 @@ export const FundVestingAccount = () => {
         d.address as string,
         startTime,
         lockupPeriods,
-        vestingPeriods
+        vestingPeriods,
       );
 
       dispatch(
@@ -170,9 +170,10 @@ export const FundVestingAccount = () => {
             explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        })
+        }),
       );
       setDisabled(false);
+      onClose();
     } catch (e) {
       setDisabled(false);
       dispatch(
@@ -183,14 +184,14 @@ export const FundVestingAccount = () => {
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        })
+        }),
       );
     }
 
     if (d.accountName !== "") {
       setVestingAccountNameLocalstorage(
         d.address as string,
-        d.accountName as string
+        d.accountName as string,
       );
     }
   };
@@ -237,16 +238,16 @@ export const FundVestingAccount = () => {
             setValue("planType", planType);
             setValue(
               "vestingDuration",
-              vestingSettingsConfig[planType].duration[0]
+              vestingSettingsConfig[planType].duration[0],
             );
             setValue("vestingCliff", vestingSettingsConfig[planType].cliff[0]);
             setValue(
               "vestingSchedule",
-              vestingSettingsConfig[planType].schedule[0]
+              vestingSettingsConfig[planType].schedule[0],
             );
             setValue(
               "lockupDuration",
-              vestingSettingsConfig[planType].lockup[0]
+              vestingSettingsConfig[planType].lockup[0],
             );
           }}
         />
