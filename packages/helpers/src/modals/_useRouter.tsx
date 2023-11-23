@@ -22,14 +22,14 @@ class History {
       this.listeners.delete(cb);
     };
   };
-  push = (url: string, _: { scroll: boolean }) => {
+  push = (url: string, _?: { scroll: boolean }) => {
     if (isServer) {
       return;
     }
     window.history.pushState({}, "", url);
     this.emit();
   };
-  replace = (url: string, _: { scroll: boolean }) => {
+  replace = (url: string, _?: { scroll: boolean }) => {
     if (isServer) {
       return;
     }
@@ -50,10 +50,10 @@ export const _useRouter = () => {
 
   return {
     searchParams,
-    push: (url: string, options: { scroll: boolean }) => {
+    push: (url: string, options?: { scroll: boolean }) => {
       customHistory.push(url, options);
     },
-    replace: (url: string, options: { scroll: boolean }) => {
+    replace: (url: string, options?: { scroll: boolean }) => {
       customHistory.replace(url, options);
     },
   };

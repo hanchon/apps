@@ -1,3 +1,4 @@
+"use client";
 import { ConfirmButton } from "@evmosapps/ui-helpers";
 import { SearchVesting } from "./SearchVesting";
 import { useSelector } from "react-redux";

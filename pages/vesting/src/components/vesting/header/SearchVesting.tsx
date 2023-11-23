@@ -1,15 +1,19 @@
+"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { ChangeEvent, KeyboardEvent, useState } from "react";
-import { useRouter } from "next/router";
+
 import { Search } from "@evmosapps/ui-helpers";
 import { useTranslation } from "next-i18next";
+import { _useRouter } from "helpers/src/modals/_useRouter";
 export const SearchVesting = () => {
-  const router = useRouter();
+  const router = _useRouter();
 
   const handleRouting = () => {
-    void router.push({ pathname: "/", query: { account: value } });
+    const url = new URL(window.location.href);
+    url.searchParams.set("account", value);
+    void router.push(url.toString());
   };
   const handleOnClick = () => {
     handleRouting();

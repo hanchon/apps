@@ -24,7 +24,7 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
         href={
           data.instantDapp
             ? `/dapps/${data.categorySlug}/${data.slug}`
-            : data.dapp ?? ""
+            : data.dapp.url ?? ""
         }
         target={data.instantDapp ? "" : "_blank"}
         key={data.name}
