@@ -11,7 +11,7 @@ import { Footer } from "../../components/footer/Footer";
 import { Container } from "@evmosapps/ui-helpers";
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Modals } from "./modals";
+import { Modals } from "../../components/modals";
 
 export const dynamic = "error";
 
