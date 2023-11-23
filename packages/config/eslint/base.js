@@ -9,6 +9,7 @@ import prettier from "eslint-config-prettier";
 import sonarjs from "eslint-plugin-sonarjs";
 
 import tsPlugin from "@typescript-eslint/eslint-plugin";
+// @ts-ignore
 import tsParser from "@typescript-eslint/parser";
 
 export const tsLintConfig = {
@@ -50,6 +51,7 @@ export const tsLintConfig = {
         "./tsconfig.json",
         "./packages/*/tsconfig.json",
         "./apps/*/tsconfig.json",
+        "./pages/*/tsconfig.json",
       ],
     },
   },

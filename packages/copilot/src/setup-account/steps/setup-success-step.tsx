@@ -23,7 +23,7 @@ export const SetupAccountSuccesStep = () => {
           nextStep();
         }}
       >
-        {t("connectSuccessStep.action") as string}
+        {t("connectSuccessStep.action") }
       </PrimaryButton>
 
       <ConfettiExplosion

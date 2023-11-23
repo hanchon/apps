@@ -3,7 +3,7 @@ import { Title, Description } from "@evmosapps/ui-helpers";
 import { useModal } from "@evmosapps/ui-helpers/src/Modal";
 import { cn, raise, useEffectEvent } from "helpers";
 import { CloseIcon, EvmosRedIcon } from "icons";
-import { omit } from "lodash-es";
+import { get, omit } from "lodash-es";
 import {
   ComponentProps,
   PropsWithChildren,
@@ -55,13 +55,13 @@ export function Copilot({
   useLayoutEffect(() => {
     if (activeStep !== "not-initialized") return;
     setActiveStep(stepIds[0]);
-  }, [stepIds]);
+  }, [activeStep, stepIds]);
 
   useEffect(() => {
     if (activeStep === "not-initialized") return;
 
     onStepChange?.(activeStep);
-  }, [activeStep]);
+  }, [activeStep, onStepChange]);
   const [isCompleted, setIsCompleted] = useState(false);
 
   const activeStepIndex = stepIds.indexOf(activeStep);
@@ -137,7 +137,7 @@ const CopilotSteps = ({
     useContext(CopilotContext) ?? raise("CopilotContext not found");
   const init = useEffectEvent(() => {
     const stepIds = children.map((child) => {
-      const id = child.props.id;
+      const id: unknown = get(child, "props.id");
       if (!id || typeof id !== "string")
         throw new Error("Copilot step must have an id");
       return id;
@@ -150,12 +150,12 @@ const CopilotSteps = ({
   });
   useLayoutEffect(() => {
     init();
-  }, []);
+  }, [init]);
   return (
     <section className="bg-white px-4 pb-4 pt-5 sm:p-6 md:col-span-2 md:px-8">
       {header}
       {children.map((child) => {
-        if (child.props.id === activeStep) return child;
+        if (get(child, "props.id") === activeStep) return child;
         return null;
       })}
     </section>
@@ -197,11 +197,9 @@ Copilot.Header = CopilotHeader;
 const CopilotStepHeader = ({
   children,
   className,
-  skipPrompt,
+
   ...rest
-}: ComponentProps<"div"> & {
-  skipPrompt?: boolean;
-}) => {
+}: ComponentProps<"div">) => {
   const { setIsOpen } = useModal();
   return (
     <div
@@ -209,7 +207,10 @@ const CopilotStepHeader = ({
       {...rest}
     >
       <div className="flex items-center">{children}</div>
-      <button className="cursor-pointer" onClick={() => setIsOpen(false)}>
+      <button
+        className="cursor-pointer ml-auto"
+        onClick={() => setIsOpen(false)}
+      >
         <CloseIcon
           className={cn("h-6 w-auto text-current")}
           aria-hidden="true"

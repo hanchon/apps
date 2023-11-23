@@ -1,6 +1,4 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-
 import { CLICK_CONNECT_WALLET_BUTTON, useTracker } from "tracker";
 import { AddressDisplay, PrimaryButton } from "@evmosapps/ui-helpers";
 import { cn } from "helpers";

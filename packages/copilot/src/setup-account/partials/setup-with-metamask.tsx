@@ -86,7 +86,7 @@ export const SetupWithMetamaskSteps = () => {
     }
 
     return connectError?.message;
-  }, [connectError, switchError]);
+  }, [connectError, switchError, t]);
 
   useEffect(() => {
     if (!mappedConnectError) return;
