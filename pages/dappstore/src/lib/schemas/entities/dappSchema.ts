@@ -2,7 +2,6 @@ import { z } from "zod";
 import { richTextSchema } from "../partials/richTextSchema";
 import { relationSchema } from "../partials/relationSchema";
 import { titleSchema } from "../partials/titleSchema";
-
 import { checkboxSchema } from "../partials/checkboxSchema";
 import { urlSchema } from "../partials/urlSchema";
 import { filesSchema } from "../partials/fileSchema";
@@ -12,6 +11,7 @@ import { updatedAtSchema } from "../partials/updatedAtSchema";
 import { selectSchema } from "../partials/selectSchema";
 import slugify from "slugify";
 import { predownloadImages } from "./predownloadImages";
+import { parseUrl } from "helpers/src/parse/urls";
 
 const dappPropertiesSchema = createNotionPropertiesSchema(
   z.object({
@@ -24,12 +24,24 @@ const dappPropertiesSchema = createNotionPropertiesSchema(
     oneLiner: richTextSchema,
     howTo: richTextSchema,
     subItem: relationSchema,
-    x: urlSchema,
-    dapp: urlSchema,
+    x: urlSchema.transform((url) => ({
+      url,
+      label: url && parseUrl(url),
+    })),
+    dapp: urlSchema.transform((url) => ({
+      url,
+      label: url && parseUrl(url),
+    })),
     project: urlSchema,
     github: urlSchema,
-    discord: urlSchema,
-    telegram: urlSchema,
+    discord: urlSchema.transform((url) => ({
+      url,
+      label: url && parseUrl(url),
+    })),
+    telegram: urlSchema.transform((url) => ({
+      url,
+      label: url && parseUrl(url),
+    })),
     updatedAt: updatedAtSchema,
     createdAt: createdAtSchema,
     language: selectSchema,
