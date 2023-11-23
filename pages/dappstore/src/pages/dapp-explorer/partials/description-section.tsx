@@ -160,20 +160,22 @@ export const DescriptiondApp = async ({
 
           {(dapp.x || dapp.discord || dapp.telegram) && (
             <DescriptionItem title={t("instantdApp.social")}>
-              {dapp.x && (
-                <DescriptionLink href={dapp.x}>
-                  <TwitterIcon width={20} height={20} /> <p>{dapp.name}</p>
+              {dapp.x.url && (
+                <DescriptionLink href={dapp.x.url}>
+                  <TwitterIcon width={20} height={20} /> <p>{dapp.x.label}</p>
                 </DescriptionLink>
               )}
-              {dapp.discord && (
-                <DescriptionLink href={dapp.discord}>
-                  <DiscordIcon width={20} height={20} /> <p>{dapp.name}</p>
+              {dapp.discord.url && (
+                <DescriptionLink href={dapp.discord.url}>
+                  <DiscordIcon width={20} height={20} />{" "}
+                  <p>{dapp.discord.label}</p>
                 </DescriptionLink>
               )}
 
-              {dapp.telegram && (
-                <DescriptionLink href={dapp.telegram}>
-                  <TelegramIcon width={20} height={20} /> <p>{dapp.name}</p>
+              {dapp.telegram.url && (
+                <DescriptionLink href={dapp.telegram.url}>
+                  <TelegramIcon width={20} height={20} />{" "}
+                  <p>{dapp.telegram.label}</p>
                 </DescriptionLink>
               )}
             </DescriptionItem>
@@ -199,10 +201,10 @@ export const DescriptiondApp = async ({
             )} */}
             </DescriptionItem>
           )}
-          {dapp.dapp && (
+          {dapp.dapp.url && (
             <DescriptionItem title={t("instantdApp.website.title")}>
-              <DescriptionLink href="/">
-                <WebsiteIcon width={20} height={20} /> <p>{dapp.dapp}</p>
+              <DescriptionLink href={dapp.dapp.url}>
+                <WebsiteIcon width={20} height={20} /> <p>{dapp.dapp.label}</p>
               </DescriptionLink>
             </DescriptionItem>
           )}
