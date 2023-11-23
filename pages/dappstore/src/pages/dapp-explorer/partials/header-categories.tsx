@@ -69,7 +69,7 @@ export const HeaderCategories = ({
   );
 };
 
-const CategoryHeader = async ({
+const CategoryHeader = ({
   category,
   totalCategoryCount,
   ...rest

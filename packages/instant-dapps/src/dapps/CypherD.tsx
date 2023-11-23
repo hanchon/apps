@@ -2,7 +2,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { cache, use, useEffect, useRef } from "react";
+import { cache, useEffect } from "react";
 import { useAccount } from "wagmi";
 import { EvmosCopilotRedIcon } from "icons";
 

@@ -7,7 +7,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Item } from "./Item";
 import Link from "next/link";
-import { ECOSYSTEM_URL } from "constants-helper";
+
 import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
 import { PingIndicator } from "../PingIndicator";
 import { Badge } from "../badges/Badge";

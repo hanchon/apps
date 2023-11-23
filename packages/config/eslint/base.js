@@ -41,6 +41,7 @@ export const tsLintConfig = {
     ],
     "@typescript-eslint/unbound-method": "off",
     "@typescript-eslint/no-explicit-any": ["error", { ignoreRestArgs: true }],
+    "no-html-link-for-pages": "off",
   },
   languageOptions: {
     parser: tsParser,
@@ -72,6 +73,7 @@ const lintConfig = [
       "sonarjs/prefer-single-boolean-return": "off",
       "sonarjs/prefer-immediate-return": "off",
       "prefer-const": ["error", { destructuring: "all" }],
+      "no-html-link-for-pages": "off",
     },
   },
   ...configCompat({
@@ -94,6 +96,7 @@ const lintConfig = [
       "**/.next/**/*",
       "**/next-env.d.ts",
       "**/.netlify/**/*",
+      "**/autogen-cosmos-client.d.ts",
     ],
   },
   ...configCompat({

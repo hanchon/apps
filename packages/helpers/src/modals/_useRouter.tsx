@@ -22,6 +22,8 @@ class History {
       this.listeners.delete(cb);
     };
   };
+  // keep the options params to match the next/router api
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   push = (url: string, _?: { scroll: boolean }) => {
     if (isServer) {
       return;
@@ -29,6 +31,8 @@ class History {
     window.history.pushState({}, "", url);
     this.emit();
   };
+  // keep the options params to match the next/router api
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   replace = (url: string, _?: { scroll: boolean }) => {
     if (isServer) {
       return;

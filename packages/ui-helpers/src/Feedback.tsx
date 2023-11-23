@@ -1,5 +1,4 @@
 import { FeedbackIcon } from "icons";
-import Link from "next/link";
 import { FEEDBACK_URL } from "constants-helper";
 
 export const Feedback = ({

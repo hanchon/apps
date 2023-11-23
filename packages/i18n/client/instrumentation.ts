@@ -15,7 +15,7 @@ import { getLocaleFromPath } from "..";
 
 const isServer = typeof window === "undefined";
 
-i18next
+void i18next
   .use(initReactI18next)
   .use(
     resourcesToBackend((language: string, namespace: string) => {
@@ -47,26 +47,26 @@ export function useTranslation<
   const { i18n } = ret;
 
   if (isServer && locale && i18n.resolvedLanguage !== locale) {
-    i18n.changeLanguage(locale);
-  } else {
-    const [activeLocale, setActiveLng] = useState(i18n.resolvedLanguage);
-
-    const syncActiveLanguageState = useEffectEvent(() => {
-      if (activeLocale === i18n.resolvedLanguage) return;
-      setActiveLng(i18n.resolvedLanguage);
-    });
-
-    useEffect(() => {
-      syncActiveLanguageState();
-    }, [activeLocale, i18n.resolvedLanguage]);
-
-    const synci18nActiveLanguage = useEffectEvent(() => {
-      if (!locale || i18n.resolvedLanguage === locale) return;
-      i18n.changeLanguage(locale);
-    });
-    useEffect(() => {
-      synci18nActiveLanguage();
-    }, [locale, i18n]);
+    void i18n.changeLanguage(locale);
   }
+  const [activeLocale, setActiveLng] = useState(i18n.resolvedLanguage);
+
+  const syncActiveLanguageState = useEffectEvent(() => {
+    if (activeLocale === i18n.resolvedLanguage) return;
+    setActiveLng(i18n.resolvedLanguage);
+  });
+
+  useEffect(() => {
+    syncActiveLanguageState();
+  }, [activeLocale, i18n.resolvedLanguage, syncActiveLanguageState]);
+
+  const synci18nActiveLanguage = useEffectEvent(() => {
+    if (!locale || i18n.resolvedLanguage === locale) return;
+    void i18n.changeLanguage(locale);
+  });
+  useEffect(() => {
+    synci18nActiveLanguage();
+  }, [locale, i18n, synci18nActiveLanguage]);
+
   return ret;
 }

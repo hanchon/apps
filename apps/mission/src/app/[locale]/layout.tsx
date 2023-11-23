@@ -2,7 +2,6 @@ import "../../globals.css";
 import { dir } from "i18next";
 import { PropsWithChildren } from "react";
 import { languages } from "@evmosapps/i18n";
-import { withLocale } from "@evmosapps/i18n/server";
 import { cn } from "helpers";
 import { nb, evmos } from "@evmosapps/ui-helpers/src/fonts";
 import { RootProviders } from "./RootProviders";
@@ -78,4 +77,4 @@ function RootLayout({
   );
 }
 
-export default withLocale(RootLayout);
+export default RootLayout;

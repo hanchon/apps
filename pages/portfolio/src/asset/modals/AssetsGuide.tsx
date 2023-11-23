@@ -1,7 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import { CLICK_CTA_LINKS_ASSETS_GUIDE, useTracker } from "tracker";
 import { Modal } from "@evmosapps/ui-helpers";
