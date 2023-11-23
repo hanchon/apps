@@ -214,6 +214,9 @@ importers:
       '@evmosapps/ui-helpers':
         specifier: workspace:*
         version: link:../../packages/ui-helpers
+      '@evmosapps/vesting-page':
+        specifier: workspace:*
+        version: link:../../pages/vesting
       '@hanchon/signature-to-pubkey':
         specifier: ^1.0.1
         version: 1.0.1
@@ -1584,6 +1587,55 @@ importers:
       tracker:
         specifier: workspace:*
         version: link:../../packages/tracker
+
+  pages/vesting:
+    dependencies:
+      '@evmosapps/copilot':
+        specifier: workspace:*
+        version: link:../../packages/copilot
+      '@evmosapps/evmos-wallet':
+        specifier: workspace:*
+        version: link:../../packages/evmos-wallet
+      '@evmosapps/registry':
+        specifier: workspace:*
+        version: link:../../packages/registry
+      '@evmosapps/ui-helpers':
+        specifier: workspace:*
+        version: link:../../packages/ui-helpers
+      constants-helper:
+        specifier: workspace:*
+        version: link:../../packages/constants-helper
+      helpers:
+        specifier: workspace:*
+        version: link:../../packages/helpers
+      icons:
+        specifier: workspace:*
+        version: link:../../packages/icons
+      next:
+        specifier: 14.0.3
+        version: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      services:
+        specifier: workspace:*
+        version: link:../../packages/services
+      stateful-components:
+        specifier: workspace:*
+        version: link:../../packages/stateful-components
+      tracker:
+        specifier: workspace:*
+        version: link:../../packages/tracker
+    devDependencies:
+      chainapsis-suggest-chain:
+        specifier: github:chainapsis/keplr-chain-registry
+        version: github.com/chainapsis/keplr-chain-registry/c57c046d3b2e0a945f8ac01ddcf82394ed965a46(@babel/core@7.23.3)(react-is@18.2.0)
+      react-qr-code:
+        specifier: ^2.0.12
+        version: 2.0.12(react@18.2.0)
 
 packages:
 

@@ -24,6 +24,7 @@
     "@evmosapps/config": "workspace:*",
     "@evmosapps/copilot": "workspace:*",
     "@evmosapps/dappstore-page": "workspace:*",
+    "@evmosapps/vesting-page": "workspace:*",
     "@evmosapps/evmos-wallet": "workspace:*",
     "@evmosapps/governance-page": "workspace:*",
     "@evmosapps/i18n": "workspace:*",
