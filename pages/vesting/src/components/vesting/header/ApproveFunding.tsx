@@ -10,7 +10,7 @@ import {
   GENERATING_TX_NOTIFICATIONS,
 } from "@evmosapps/evmos-wallet";
 import { EXPLORER_URL } from "constants-helper";
-import { ModalTitle } from "@evmosapps/ui-helpers";
+import { ModalTitle } from "../../ModalTitle";
 
 export default function ApproveFunding({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation();
