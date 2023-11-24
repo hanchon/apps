@@ -1,17 +1,11 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import qs, { ParsedUrlQueryInput } from "querystring";
-import {
-  useMemo,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useLayoutEffect,
-} from "react";
+import { useMemo, SetStateAction, useEffect, useRef } from "react";
 import { z } from "zod";
 import { useEffectEvent } from "../hooks/use-effect-event";
 import React from "react";
 import { _useRouter } from "./_useRouter";
+import { get } from "lodash-es";
 
 const serialize = <T extends z.output<z.AnyZodObject>>(obj: T) => {
   return JSON.stringify(obj, (_, value) => {
@@ -171,8 +165,12 @@ export const modalLink = <T extends z.AnyZodObject>(
       });
     };
     return React.cloneElement(children, {
-      onClick: async (e: React.MouseEvent) => {
-        if (children.props.onClick) children.props.onClick(e);
+      onClick: (e: React.MouseEvent) => {
+        const childOnClick: unknown = get(children, "props.onClick");
+        if (typeof childOnClick === "function") {
+          childOnClick(e);
+        }
+
         void onClick();
       },
     });

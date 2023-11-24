@@ -6,7 +6,7 @@ import { convertFromAtto } from "helpers";
 
 import { useTranslation } from "@evmosapps/i18n/client";
 import { useAssets, useStake } from "@evmosapps/evmos-wallet";
-import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, useTracker } from "tracker";
+import { CLICK_ON_TOP_UP_ACCOUNT_DAPP } from "tracker";
 
 import { useAccount } from "wagmi";
 import { TopupModalTrigger } from "stateful-components/src/modals/TopupModal/TopupModal";

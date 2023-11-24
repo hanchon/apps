@@ -2,7 +2,8 @@
 import { Dict } from "mixpanel-browser";
 import React from "react";
 import { TrackerEvents, sendEvent } from "tracker";
-
+import { get } from "lodash-es";
+import { isCallable } from "helpers";
 export const TrackerEvent = ({
   event,
   properties,
@@ -14,9 +15,11 @@ export const TrackerEvent = ({
 }) => {
   return React.cloneElement(children, {
     onClick: async (e: React.MouseEvent) => {
-      if (children.props.onClick) children.props.onClick(e);
-      if (typeof properties === "function") {
-        sendEvent(event, await properties());
+      const childOnClick: unknown = get(children, "props.onClick");
+      if (childOnClick instanceof Function) childOnClick(e);
+      if (isCallable(properties)) {
+        const _properties = (await properties()) as Dict;
+        sendEvent(event, _properties);
         return;
       }
       sendEvent(event, properties);

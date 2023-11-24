@@ -1,7 +1,7 @@
 import { useTranslation } from "@evmosapps/i18n/client";
 import { IconContainer, Modal } from "@evmosapps/ui-helpers";
 import { useFireworks } from "../../partials/use-fireworks";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { ICONS_TYPES } from "constants-helper";
 import { ButtonsNextSteps } from "../partials/button-next-steps";
 import Fireworks from "@fireworks-js/react";
@@ -21,7 +21,7 @@ export const SetupAccountNextStep = () => {
       });
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [fireworksRef]);
   return (
     <div className="flex flex-col items-center justify-center space-y-2 text-center">
       <Modal.Header />

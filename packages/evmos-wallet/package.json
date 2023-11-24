@@ -12,7 +12,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint .",
-    "gen-cosmos-types": "openapi-typescript https://api.evmos.dev/openapi.json -o ./src/api/cosmos-clients/cosmos-client.d.ts --exclude-deprecated"
+    "gen-cosmos-types": "openapi-typescript https://api.evmos.dev/openapi.json -o ./src/api/cosmos-clients/autogen-cosmos-client.d.ts --exclude-deprecated",
+    "postinstall": "pnpm gen-cosmos-types"
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
@@ -57,7 +58,7 @@
     "bech32": "^2.0.0",
     "clsx": "^2.0.0",
     "cosmjs-types": "^0.8.0",
-    "eslint": "^8.47.0",
+    "eslint": "^8.54.0",
     "lodash-es": "^4.17.21",
     "long": "^5.2.3",
     "mixpanel-browser": "^2.47.0",

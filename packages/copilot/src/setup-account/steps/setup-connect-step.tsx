@@ -25,7 +25,7 @@ export const SetupConnectStep = () => {
   useEffect(() => {
     if (!completedConnection) return;
     nextStep();
-  }, [completedConnection]);
+  }, [completedConnection, nextStep]);
 
   return (
     <section className="flex flex-col gap-y-4">

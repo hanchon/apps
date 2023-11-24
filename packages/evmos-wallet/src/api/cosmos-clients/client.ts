@@ -3,7 +3,7 @@ import createClient, {
   createFinalURL,
   defaultQuerySerializer,
 } from "openapi-fetch";
-import { paths } from "./cosmos-client";
+import { paths } from "./autogen-cosmos-client";
 import { getChain } from "../../registry-actions";
 import { Prefixish } from "../../registry-actions/utils/normalize-to-prefix";
 
@@ -13,6 +13,7 @@ import {
   useQuery,
   useSuspenseQuery,
 } from "@tanstack/react-query";
+import { omit } from "lodash-es";
 
 export const cosmosClient = (prefix: Prefixish) =>
   createClient<paths>({
@@ -115,14 +116,13 @@ export const useCosmosSuspenseQuery = <
   prefix: Prefixish,
   options: QueryOptions<T, TData, true>
 ) => {
-  const { route, enabled, queryOptions, select, ...rest } = options;
+  const { route, queryOptions, select, ...rest } = options;
 
   const url = createFinalURL(route, {
     baseUrl: getChain(prefix).cosmosRest[0],
-    params: rest,
+    params: omit(rest, ["enabled"]),
     querySerializer: defaultQuerySerializer,
   });
-  console.log(url);
 
   return useSuspenseQuery({
     queryKey: [prefix, url],

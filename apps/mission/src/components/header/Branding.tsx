@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { getLocaleFromPath } from "@evmosapps/i18n";
 
 export const Branding = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const pathname = usePathname() || "";
   const locale = getLocaleFromPath(pathname);
 

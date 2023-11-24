@@ -5,11 +5,7 @@ import { Modal } from "@evmosapps/ui-helpers";
 import { modalLink, useModal } from "helpers";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import GrayButton from "@evmosapps/ui-helpers/src/GrayButton";
-import {
-  DISABLE_TRACKER_LOCALSTORAGE,
-  disableMixpanel,
-  enableMixpanel,
-} from "tracker";
+import { disableMixpanel, enableMixpanel } from "tracker";
 import { Trans } from "react-i18next";
 
 export const useConsentModal = () => useModal("consent");

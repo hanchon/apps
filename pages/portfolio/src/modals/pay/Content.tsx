@@ -29,9 +29,6 @@ import { useTokenPrice } from "../hooks/useTokenPrice";
 
 import { truncateAddress } from "@evmosapps/evmos-wallet/src/internal/wallet/style/format";
 import { AmountBox } from "../common/AmountBox";
-import { StoreType } from "@evmosapps/evmos-wallet";
-
-import { useDispatch, useSelector } from "react-redux";
 import { PayModalProps } from "./Modal";
 import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";
 import { PayIcon } from "icons";
@@ -59,9 +56,6 @@ export const Content = ({
   amount,
   message,
 }: PayModalProps) => {
-  const dispatch = useDispatch();
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
-
   const { t } = useTranslation("portfolio");
   const { sendEvent } = useTracker();
 

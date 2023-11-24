@@ -33,7 +33,7 @@ export const TopupSuccessMessage = () => {
                 }}
                 className="ml-0 mt-3"
               >
-                {t("successTopupStep.actions.goToDashboard") as string}
+                {t("successTopupStep.actions.goToDashboard") }
               </PrimaryButton>
             </TrackerEvent>
           )}
@@ -45,7 +45,7 @@ export const TopupSuccessMessage = () => {
                 }}
                 className="ml-0 mt-3"
               >
-                {t("successTopupStep.actions.nextSteps") as string}
+                {t("successTopupStep.actions.nextSteps") }
               </PrimaryButton>
             </TrackerEvent>
           )}
