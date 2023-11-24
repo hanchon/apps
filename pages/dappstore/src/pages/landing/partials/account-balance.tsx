@@ -47,18 +47,18 @@ export const AccountBalance = () => {
 
   return (
     <section className="text-left md:mx-0">
-      <p className="mb-2 text-xl text-pearl md:text-2xl">
+      <p className="mb-2 text-base text-pearl md:text-xl">
         {t("account.balance.title")}
       </p>
       <div className="flex flex-col space-y-3 md:flex-row md:space-x-3 md:space-y-0 ">
         <div>
-          <h6 className="text-4xl font-bold text-white md:text-6xl">
+          <h6 className="text-3xl font-bold text-white md:text-5xl">
             {isConnected ? drawTotalBalance() : "- "}
-            <span className="ml-2 text-4xl font-bold uppercase text-white opacity-50 md:text-6xl">
+            <span className="ml-2 text-3xl font-bold uppercase text-white opacity-50 md:text-5xl">
               EVMOS
             </span>
           </h6>
-          <p className="mt-4 text-xl text-white opacity-50">
+          <p className="mt-4 text-lg text-white opacity-50">
             ${isConnected ? drawTotalBalanceInDollars() : "-"}
           </p>
         </div>

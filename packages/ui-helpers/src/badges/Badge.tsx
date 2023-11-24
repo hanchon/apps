@@ -13,7 +13,7 @@ export const Badge = ({
   return (
     <span
       className={cx(
-        "inline-flex items-center rounded-full px-3 py-1 text-[10px] transition-all duration-300 ease-in-out",
+        "inline-flex items-center rounded-full px-2 py-1 text-[10px] transition-all duration-300 ease-in-out",
         {
           "text-green2 border border-lightGreen bg-lightYellow2":
             variant === "success",
@@ -22,7 +22,7 @@ export const Badge = ({
           "bg-red-300 text-pearl border border-red-300": variant === "danger",
           // {/* TODO: add color to tailwind file */}
           "bg-[#2d271d] border-[#5b5448] border text-pearl": variant === "info",
-          "border border-[#44413c] bg-[#2d271d] text-pearl text-sm md:text-lg tracking-wide px-2 md:px-5 py-2 font-bold cursor-pointer transition-color  duration-100 ease-in-out hover:bg-[#656159] active:bg-[#656159]":
+          "border border-[#44413c] bg-[#2d271d] text-pearl text-xs md:text-sm tracking-wide px-2 md:px-4 py-1.5 font-bold cursor-pointer transition-color  duration-100 ease-in-out hover:bg-[#656159] active:bg-[#656159]":
             variant === "dark",
         },
         className

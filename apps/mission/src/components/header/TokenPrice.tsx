@@ -10,8 +10,8 @@ export const EvmosPrice = () => {
   if (error) return null;
   const ready = evmosPriceFixed && evmosPriceChange;
   return (
-    <div className="text-pearl bg-darGray800 cursor-default items-center justify-center gap-3 rounded-full px-4 py-2 font-bold flex lg:mr-8">
-      <EvmosRedIcon width={"1.4em"} height={"1.4em"} />
+    <div className="text-pearl text-sm bg-darGray800 cursor-default items-center justify-center gap-3 rounded-full px-4 py-2 font-bold flex lg:mr-8">
+      <EvmosRedIcon width={"1em"} height={"1em"} />
       <div
         className={cn("flex gap-3 items-center", {
           "w-[13ch] h-[1lh] bg-gray2/20 rounded-md animate-pulse ": !ready,

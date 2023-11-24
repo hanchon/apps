@@ -55,7 +55,7 @@ export const WalletButton = () => {
           });
         }}
         data-testid="open-connect-modal"
-        className={cn("rounded-full px-10 py-2 font-bold")}
+        className={cn("rounded-full px-8 py-1.5 font-bold")}
       >
         Connect
       </PrimaryButton>

@@ -51,14 +51,14 @@ export const CopilotCard = () => {
 
   const nextStepsActive = isConnected && balance > 0n && sequence === 0n;
   const linkCn =
-    "rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out text-red-300 bg-pearl hover:brightness-90";
+    "rounded px-5 py-2 text-xs font-bold transition-all duration-200 ease-in-out text-red-300 bg-pearl hover:brightness-90";
   return (
-    <div className="bg-red-300 flex flex-col justify-start space-y-3 rounded-lg bg-[url(/evmos_bg.png)] bg-contain bg-center bg-no-repeat p-8">
-      <div className="flex  items-start justify-between">
-        <h1 className="text-pearl text-2xl font-bold">
+    <div className="bg-red-300 flex flex-col justify-start space-y-3 rounded-lg bg-[url(/evmos_bg.png)] bg-contain bg-center bg-no-repeat p-6">
+      <div className="flex items-start justify-between">
+        <h1 className="text-pearl text-xl font-bold">
           {t("copilotCard.title")}
         </h1>
-        <EvmosCopilotWhiteIcon width={"50"} height={"50"} />
+        <EvmosCopilotWhiteIcon width={"40"} height={"40"} />
       </div>
       <ol className="mt-4 space-y-4 md:mt-0">
         <Step active={setupAccountActive} completed={isConnected}>
@@ -112,8 +112,8 @@ const Step = ({
 }: ComponentProps<"li"> & { active?: boolean; completed?: boolean }) => (
   <li
     className={cn(
-      "flex gap-x-3 items-center font-medium",
-      "before:w-2 before:h-2 before:block before:bg-white before:rounded-full",
+      "flex gap-x-3 items-center font-medium text-sm",
+      "before:w-1.5 before:h-1.5 before:block before:bg-white before:rounded-full",
       {
         "before:ring-4 before:ring-white/40": active,
         "opacity-90": !completed && !active,

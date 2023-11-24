@@ -8,11 +8,11 @@ export const DescriptionItem = ({
 }: { title: string } & ComponentProps<"div">) => {
   return (
     <div className="space-y-2">
-      <h2 className="text-[#E8DFD3] tracking-wide text-2xl lg:text-3xl ">
+      <h2 className="text-[#E8DFD3] tracking-wide text-xl lg:text-2xl ">
         {title}
       </h2>
       <div
-        className="text-base lg:text-lg text-white/70 flex flex-row space-x-10"
+        className="text-xs lg:text-sm text-white/70 flex flex-row space-x-10"
         {...rest}
       />
     </div>

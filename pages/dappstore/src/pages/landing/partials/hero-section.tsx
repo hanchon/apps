@@ -18,7 +18,7 @@ export const HeroSection = async () => {
       >
         {/* TODO: add localization */}
         <h1
-          className="font-evmos font-bold text-5xl tracking-wide text-pearl"
+          className="font-evmos font-bold text-[2.5em] tracking-wide text-pearl leading-none"
           style={{ fontFeatureSettings: "'ss02' on, 'ss01' on" }}
         >
           {t("ecosystem.title")} <br /> {t("ecosystem.title2")}
@@ -26,7 +26,7 @@ export const HeroSection = async () => {
         <p className="border-b border-t border-pearl border-opacity-40 py-2 text-sm  text-pearl w-fit">
           {t("ecosystem.description")}
         </p>
-        <div className="flex flex-col md:flex-row items-center space-x-0 space-y-4 md:space-y-0 md:space-x-2 w-full xl:w-[80%] 2xl:w-[61%]">
+        <div className="flex flex-col md:flex-row items-center space-x-0 space-y-4 md:space-y-0 md:space-x-2 w-full xl:w-[77%] 2xl:w-[61%]">
           <PrimaryButton
             className="flex-1 font-normal rounded w-full self-stretch"
             as={"a"}

@@ -23,7 +23,7 @@ export const PrimaryButton = <
   as?: T;
 }) => {
   className = cn(
-    "w-fit text-sm px-4 py-3 rounded-lg transition-all duration-300 hover:shadow-md flex items-center justify-center space-x-3 tracking-wider",
+    "w-fit text-xs px-4 py-3 rounded-lg transition-all duration-300 hover:shadow-md flex items-center justify-center space-x-3 tracking-wider",
     {
       "bg-red-300 text-pearl hover:bg-red1 active:bg-red2":
         variant === "primary",

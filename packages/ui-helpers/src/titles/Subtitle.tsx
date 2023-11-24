@@ -15,7 +15,7 @@ export const Subtitle = ({
   return (
     <h5
       className={cn(
-        "tracking-wide font-light",
+        "tracking-wide font-light text-sm",
         {
           // {/* TODO: add color to tailwind file */}
           " text-white/70 ": variant === "default",

@@ -48,14 +48,14 @@ export function LaunchPad({}: { showPing?: boolean }) {
   ];
 
   return (
-    <Menu as="div" className="sm:relative">
+    <Menu as="div" className="sm:relative flex">
       <PingIndicator showPing={showPing}>
         <Menu.Button
           aria-label="launchpad"
           className="transtion-all bg-darkGray700 rounded-full duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]"
           onClick={handlePingIndicator}
         >
-          <LaunchIcon width={40} height={40} />
+          <LaunchIcon width={30} height={30} />
         </Menu.Button>
       </PingIndicator>
 
@@ -70,7 +70,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
       >
         <Menu.Items
           className={cn(
-            "fixed md:absolute w-full left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
+            "fixed md:absolute w-full top-6 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
           )}
         >
           {showPing && (
@@ -110,7 +110,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
             }}
             href="/dapps"
             rel="noopener noreferrer"
-            className="border-t-darkGray700 text-pearl bg-darkGray2Opacity active:bg-darkGray700 flex justify-center border-t py-5 transition-all duration-200 ease-in-out hover:bg-[#FFFFFF0F]"
+            className="border-t-darkGray700 text-sm text-pearl bg-darkGray2Opacity active:bg-darkGray700 flex justify-center border-t py-5 transition-all duration-200 ease-in-out hover:bg-[#FFFFFF0F]"
           >
             {t("launchPad.button")}
           </a>
@@ -130,7 +130,7 @@ export const LaunchPadItem = ({
   return (
     <Link
       rel="noopener noreferrer"
-      className="text-pearl flex flex-col items-center text-center space-y-2"
+      className="text-pearl text-sm flex flex-col items-center text-center space-y-2"
       {...rest}
     >
       <div className="bg-red-300 hover:bg-red1 active:bg-red2 flex w-fit items-center justify-center rounded-lg p-2 transition-all duration-150 ease-in hover:scale-105">
