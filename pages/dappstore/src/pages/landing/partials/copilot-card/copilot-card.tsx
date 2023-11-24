@@ -72,7 +72,6 @@ export const CopilotCard = () => {
         </Step>
       </ol>
       <div className="flex gap-x-4">
-        {/* w-fit rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out text-red-300 bg-pearl hover:bg-[#e3d6c3] active:bg-[#ccc0af] } */}
         {setupAccountActive && (
           <SetupAccountModalTrigger>
             <button className={linkCn}>{t("copilotCard.letsGo")}</button>

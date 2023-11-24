@@ -66,7 +66,7 @@ export const DescriptiondApp = async ({
   };
 
   return (
-    <div className="space-y-12 lg:space-y-16 mb-12 lg:mb-24">
+    <div className="space-y-12 mb-12 lg:mb-24">
       <div className="relative">
         <div
           className={cn(
@@ -221,10 +221,13 @@ export const DescriptiondApp = async ({
         )}
       </div>
 
-      <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
+      <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0 -mt-8">
         <Title tag="h3">{t("instantdApp.relatedApps.title")}</Title>
 
-        <ButtonWithLink href="/dapps" className="md:self-center">
+        <ButtonWithLink
+          href={`/dapps/${dapp.categorySlug}`}
+          className="md:self-center"
+        >
           <div className="flex items-center space-x-2">
             <p>{t("instantdApp.relatedApps.button.text")}</p>
             <RightArrow width={11} height={11} />

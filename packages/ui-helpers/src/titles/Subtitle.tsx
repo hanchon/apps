@@ -18,7 +18,7 @@ export const Subtitle = ({
         "tracking-wide font-light",
         {
           // {/* TODO: add color to tailwind file */}
-          "text-xl text-white/70 ": variant === "default",
+          " text-white/70 ": variant === "default",
         },
         className
       )}

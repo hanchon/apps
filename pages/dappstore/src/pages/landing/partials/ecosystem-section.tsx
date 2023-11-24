@@ -39,7 +39,7 @@ export const EcosystemSection = async () => {
       <div className="space-y-2">
         <div className="flex flex-row justify-between w-full">
           <Title>{t("ecosystem.instantdApps.title")}</Title>
-          <ButtonWithLink href="/dapps" className="self-center">
+          <ButtonWithLink href="/dapps/instant-dapps" className="self-center">
             <div className="flex items-center space-x-2">
               <p>{t("ecosystem.instantdApps.button.text")}</p>
               <RightArrow width={11} height={11} />

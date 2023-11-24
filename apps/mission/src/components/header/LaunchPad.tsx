@@ -52,10 +52,10 @@ export function LaunchPad({}: { showPing?: boolean }) {
       <PingIndicator showPing={showPing}>
         <Menu.Button
           aria-label="launchpad"
-          className="transtion-all bg-darkGray700 p-2 rounded-full duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]"
+          className="transtion-all bg-darkGray700 rounded-full duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]"
           onClick={handlePingIndicator}
         >
-          <LaunchIcon width={"1.4em"} height={"1.4em"} />
+          <LaunchIcon width={40} height={40} />
         </Menu.Button>
       </PingIndicator>
 
@@ -130,7 +130,7 @@ export const LaunchPadItem = ({
   return (
     <Link
       rel="noopener noreferrer"
-      className="text-pearl flex flex-col items-center text-center"
+      className="text-pearl flex flex-col items-center text-center space-y-2"
       {...rest}
     >
       <div className="bg-red-300 hover:bg-red1 active:bg-red2 flex w-fit items-center justify-center rounded-lg p-2 transition-all duration-150 ease-in hover:scale-105">

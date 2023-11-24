@@ -69,7 +69,7 @@ export const HeaderCategories = ({
   );
 };
 
-const CategoryHeader = async ({
+const CategoryHeader = ({
   category,
   totalCategoryCount,
   ...rest
@@ -81,7 +81,7 @@ const CategoryHeader = async ({
 
   return (
     <div className="space-y-3" {...rest}>
-      <Title>
+      <Title className="text-3xl lg:text-5xl">
         <Trans
           ns="dappStore"
           shouldUnescape={true}
@@ -94,12 +94,17 @@ const CategoryHeader = async ({
               ? categoryName
               : `${categoryName} dApps`,
 
-            count: category?.categoryDapps.length ?? totalCategoryCount,
+            count:
+              category === undefined
+                ? totalCategoryCount
+                : category.categoryDapps.length > 3
+                  ? category.categoryDapps.length
+                  : undefined,
           }}
         />
       </Title>
       {category?.description && (
-        <div className="relative text-xl text-[#E8DFD3]">
+        <div className="relative text-lg text-[#E8DFD3]">
           <Subtitle>{category?.description}</Subtitle>
         </div>
       )}

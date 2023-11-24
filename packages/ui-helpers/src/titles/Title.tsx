@@ -22,9 +22,8 @@ export const Title = ({
       className: cn(
         "text-[#E8DFD3] tracking-wide",
         {
-          // {/* TODO: add color to tailwind file */}
-          "text-3xl lg:text-5xl tracking-wide": variant === "lg",
-          "text-xl lg:text-3xl": variant === "small",
+          "text-xl lg:text-2xl tracking-wide": variant === "lg",
+          "text-lg lg:text-xl": variant === "small",
           ...rest,
         },
         className
