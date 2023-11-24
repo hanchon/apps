@@ -5,9 +5,9 @@ export const tableStyle =
   "w-full text-left table-fixed break-words border-separate border-spacing-y-[2px]";
 
 export const tHeadStyle =
-  "hidden md:table-row-group text-pearl uppercase font-bold cursor-pointer";
+  "hidden md:table-row-group text-sm text-pearl uppercase font-bold cursor-pointer";
 
-export const tBodyStyle = " text-pearl text-lg ";
+export const tBodyStyle = " text-pearl text-base";
 export const tdBodyStyle =
   "px-5 md:px-0 first:pt-6 last:pb-6 md:last:pr-8 md:py-4 flex flex-col md:table-cell bg-darkGray2 pb-1.5";
 

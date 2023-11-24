@@ -20,16 +20,16 @@ const ProposalCard = ({ proposalProps }: { proposalProps: ProposalProps }) => {
       />
       <div className="flex text-pearl">
         <div className="space-y-1 pr-5 uppercase">
-          <p className="text-sm font-bold opacity-80">
+          <p className="text-xs font-bold opacity-80">
             {proposalProps.votingStartTime}
           </p>
-          <p className="text-xs">VOTING START</p>
+          <p className="text-xxs">VOTING START</p>
         </div>
         <div className="space-y-1 border-l border-darkGray5 px-5 uppercase">
-          <p className="text-sm font-bold opacity-80">
+          <p className="text-xs font-bold opacity-80">
             {proposalProps.votingEndTime}
           </p>
-          <p className="text-xs">VOTING END</p>
+          <p className="text-xxs">VOTING END</p>
         </div>
       </div>
       <BarContainer percents={proposalProps.tallyResults} />

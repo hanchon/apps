@@ -26,7 +26,7 @@ const TabNavItem = ({
   return (
     <li
       onClick={handleClick}
-      className={`cursor-pointer p-4 text-center text-sm font-bold uppercase tracking-wider transition-all duration-200 first:border-r last:border-l ${
+      className={`cursor-pointer p-3 text-center text-xs font-bold uppercase tracking-wider transition-all duration-200 first:border-r last:border-l ${
         activeTab === id ? "bg-pearl text-darGray800" : "text-pearl"
       } 
        

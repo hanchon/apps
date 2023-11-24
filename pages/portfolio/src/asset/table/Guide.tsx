@@ -9,8 +9,8 @@ import { PrimaryLink } from "@evmosapps/ui-helpers";
 const Guide = () => {
   const { handlePreClickAction } = useTracker(CLICK_CTA_LINKS_REGISTER_TOKEN);
   return (
-    <div className="flex items-center space-x-3 text-pearl text-base">
-      <QuestionMarkIcon width={20} height={20} />
+    <div className="flex items-center space-x-2 text-pearl text-xs">
+      <QuestionMarkIcon width={15} height={15} />
       <div>
         Don&apos;t see your token?{" "}
         <PrimaryLink
