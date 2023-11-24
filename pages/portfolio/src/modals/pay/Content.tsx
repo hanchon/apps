@@ -190,10 +190,10 @@ export const Content = ({
         <section>
           <div className="flex gap-8 flex-col">
             <div className="flex gap-2 flex-col">
-              <div className="flex h-28 rounded-md bg-gray-500 py-2 px-4 items-center justify-between text-xs md:text-sm">
+              <div className="flex h-28 rounded-md bg-gray-500 py-2 px-4 items-center justify-between text-xxs md:text-xs">
                 {message}
               </div>
-              <div className="tracking-wide flex text-xs md:text-sm justify-end gap-1">
+              <div className="tracking-wide flex text-xxs md:text-xs justify-end gap-1">
                 <span className="text-gray-400">{t("pay.from")}</span>
                 <span className="text-pink-300 font-semibold">
                   {truncateAddress(requester)}

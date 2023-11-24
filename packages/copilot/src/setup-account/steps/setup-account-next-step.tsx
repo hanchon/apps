@@ -38,8 +38,8 @@ export const SetupAccountNextStep = () => {
         portalContainer
       )}
       <IconContainer type={ICONS_TYPES.BIG_HANDS} />
-      <h1 className="font-bold">{t("nextsteps.title")}</h1>
-      <p className="text-sm">{t("nextsteps.body")}</p>
+      <h1 className="font-bold text-sm">{t("nextsteps.title")}</h1>
+      <p className="text-xs">{t("nextsteps.body")}</p>
 
       <ButtonsNextSteps />
     </div>

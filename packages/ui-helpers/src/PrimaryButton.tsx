@@ -27,11 +27,11 @@ export const PrimaryButton = <
     {
       "bg-red-300 text-pearl hover:bg-red1 active:bg-red2":
         variant === "primary",
-      "border-2 text-pearl border-pink-300 gradient w-full text-base md:text-lg rounded-md font-medium":
+      "border-2 text-pearl border-pink-300 gradient w-full text-sm md:text-base rounded-md font-medium":
         variant === "outline-primary",
-      "bg-red-300 text-pearl hover:bg-red1 active:bg-red2 w-full text-base md:text-lg capitalize font-medium":
+      "bg-red-300 text-pearl hover:bg-red1 active:bg-red2 w-full text-xs md:text-sm capitalize font-medium":
         variant === "primary-lg",
-      "w-fit rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out text-red-300 bg-pearl hover:bg-[#e3d6c3] active:bg-[#ccc0af]":
+      "w-fit rounded px-6 py-3 text-xs font-bold transition-all duration-200 ease-in-out text-red-300 bg-pearl hover:bg-[#e3d6c3] active:bg-[#ccc0af]":
         variant === "secondary",
     },
     className,

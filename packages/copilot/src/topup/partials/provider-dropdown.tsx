@@ -51,7 +51,7 @@ export default function ProviderDropwdown<
                   <div>
                     <div>{option.image}</div>
                   </div>
-                  <span className="text-sm">{option.name}</span>
+                  <span className="text-xs">{option.name}</span>
                 </div>
               </button>
             );
@@ -61,7 +61,7 @@ export default function ProviderDropwdown<
       <div className="border-gray300 -mr-2 flex w-36 items-center justify-between space-x-3 rounded-md border p-1.5 font-bold md:w-60">
         <div className="flex items-center gap-1">
           {selectedValue?.image}
-          <span className="text-sm"> {selectedValue?.name}</span>
+          <span className="text-xs"> {selectedValue?.name}</span>
         </div>
         <DropdownArrow />
       </div>

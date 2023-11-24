@@ -11,14 +11,11 @@ import {
 } from "icons";
 import { ComponentProps, Fragment } from "react";
 import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
-import { Badge, NetworkModeSelector } from "@evmosapps/ui-helpers";
-import { PingIndicator } from "@evmosapps/ui-helpers/src/PingIndicator";
-import { usePingIndicator } from "@evmosapps/ui-helpers/src/launchPad/usePingIndicator";
+import { NetworkModeSelector } from "@evmosapps/ui-helpers";
 
 export function LaunchPad({}: { showPing?: boolean }) {
   const { t } = useTranslation();
   const { sendEvent } = useTracker();
-  const { showPing, handlePingIndicator } = usePingIndicator();
 
   const launchPadItems = [
     {
@@ -49,15 +46,12 @@ export function LaunchPad({}: { showPing?: boolean }) {
 
   return (
     <Menu as="div" className="sm:relative flex">
-      <PingIndicator showPing={showPing}>
-        <Menu.Button
-          aria-label="launchpad"
-          className="transtion-all bg-darkGray700 rounded-full duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]"
-          onClick={handlePingIndicator}
-        >
-          <LaunchIcon width={30} height={30} />
-        </Menu.Button>
-      </PingIndicator>
+      <Menu.Button
+        aria-label="launchpad"
+        className="transtion-all bg-darkGray700 rounded-full duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]"
+      >
+        <LaunchIcon width={30} height={30} />
+      </Menu.Button>
 
       <Transition
         as={Fragment}
@@ -73,19 +67,6 @@ export function LaunchPad({}: { showPing?: boolean }) {
             "fixed md:absolute w-full top-6 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
           )}
         >
-          {showPing && (
-            <div className="bg-darkGray700 mx-8 mb-8 cursor-default space-y-1 rounded-lg p-5">
-              <div className="flex items-center justify-between">
-                <h1 className="text-xs font-bold">{t("launchPad.title")}</h1>
-                <Badge variant="danger" className="uppercase">
-                  {t("launchPad.badge.text")}
-                </Badge>
-              </div>
-              <p className="text-xs text-[#BDBCB9]">
-                {t("launchPad.description")}
-              </p>
-            </div>
-          )}
           <div className="grid grid-cols-3 gap-y-10 px-8 pb-8">
             {launchPadItems.map(({ href, mixpanelId, ...rest }) => (
               <LaunchPadItem

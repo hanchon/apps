@@ -53,7 +53,7 @@ const Button = ({
           height={24}
         />
       )}
-      <span className="text-xs md:text-sm text-white">{children}</span>
+      <span className="text-xxs md:text-xs text-white">{children}</span>
       <DropdownArrow
         className="h-5 w-5 pointer-events-none text-red-300"
         aria-hidden="true"
@@ -83,18 +83,18 @@ const Options = ({
       <div
         className={cn(
           // add the following className to the CryptoSelector.Options component: left:0 or right:0
-          "absolute z-10 bg-gradient-to-br from-red-300 to-[#FFDDD880] p-[1px] rounded-2xl text-sm",
+          "absolute z-10 bg-gradient-to-br from-red-300 to-[#FFDDD880] p-[1px] rounded-2xl text-xs",
           className
         )}
       >
         <div className="pr-3 py-5 bg-black rounded-2xl">
-          <Listbox.Label className="px-3 text-xxs md:text-xs text-[#9A7873CC]">
+          <Listbox.Label className="px-3 text-xxxs md:text-xxs text-[#9A7873CC]">
             {label}
           </Listbox.Label>
           <Listbox.Options
             {...props}
             className={cx(
-              "px-3 bg-black h-full text-black mt-1 scrollbar overflow-auto max-h-44 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer",
+              "px-3 bg-black text-white h-full mt-1 scrollbar overflow-auto max-h-44 ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer",
               {
                 "w-44 md:w-52": variant === "default",
                 "w-56 md:w-64": variant === "wide",
@@ -126,7 +126,7 @@ const Option = <T,>({
       disabled={disabled}
       className={({ active, selected }) =>
         cn(
-          "flex items-center space-x-2 p-2 w-full  bg-black rounded-md mb-1 text-white text-xs md:text-sm",
+          "flex items-center space-x-2 p-2 w-full  bg-black rounded-md mb-1 text-white text-xxs md:text-xs",
           {
             "bg-pink-600 text-black font-medium": active || selected,
             disabled: disabled,

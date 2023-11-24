@@ -223,7 +223,7 @@ export const TransferModalContent = ({
       <Modal.Header>
         <Title
           variant="modal-black"
-          icon={<SendIcon className="text-pink-300" />}
+          icon={<SendIcon className="text-pink-300" width={20} height={20} />}
         >
           {t("title")}
         </Title>
@@ -426,7 +426,7 @@ export const TransferModalContent = ({
                 <PrimaryButton
                   type="submit"
                   variant={"outline-primary"}
-                  className="w-full text-base md:text-lg rounded-md capitalize mt-8"
+                  className="w-full text-sm md:text-base rounded-md capitalize mt-8"
                 >
                   {t("bridge.button.text")}
                 </PrimaryButton>
@@ -442,7 +442,7 @@ export const TransferModalContent = ({
                 <PrimaryButton
                   type="submit"
                   data-testid="transfer-send-button"
-                  className="w-full text-base md:text-lg rounded-md capitalize mt-8"
+                  className="w-full text-sm md:text-base rounded-md capitalize mt-8"
                   disabled={
                     !isReadyToTransfer || isTransferring || hasTransferred
                   }

@@ -15,7 +15,7 @@ export const Badge = ({
       className={cx(
         "inline-flex items-center rounded-full px-2 py-1 text-[10px] transition-all duration-300 ease-in-out",
         {
-          "text-green2 border border-lightGreen bg-lightYellow2":
+          "text-green2 border border-lightGreen bg-lightYellow2 px-3":
             variant === "success",
           "border border-lightYellow bg-lightYellow1 text-brown":
             variant === "warning",
