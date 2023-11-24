@@ -24,7 +24,7 @@ const OptionButton = ({
   return (
     <button
       className={cn(
-        " flex items-center shadow justify-center gap-2 rounded-lg  transition-all duration-300 hover:shadow-md px-2 py-4",
+        " flex items-center shadow justify-center gap-2 rounded-lg transition-all duration-300 hover:shadow-md px-2 py-4",
         {
           "py-1": variant === "small",
           "ring-2 ring-red": selected,
@@ -47,7 +47,7 @@ export const OnboardOptionsMenu = ({
   const { t } = useTranslation("copilot-topup");
   const { setActiveStep, activeStep } = useCopilot();
   return (
-    <div className="grid grid-cols-1 gap-6 font-medium md:grid-cols-2 md:text-sm">
+    <div className="grid grid-cols-1 gap-6 font-medium md:grid-cols-2 md:text-xs">
       <TrackerEvent event={CLICK_ON_TOP_UP_WITH_CARD_COPILOT}>
         <OptionButton
           variant={variant}

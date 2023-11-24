@@ -66,11 +66,11 @@ export const DescriptiondApp = async ({
   };
 
   return (
-    <div className="space-y-12 lg:space-y-16 mb-12 lg:mb-24">
+    <div className="space-y-12 mb-12 lg:mb-24">
       <div className="relative">
         <div
           className={cn(
-            "relative h-[300px] w-screen ml-[49%] -translate-x-1/2",
+            "relative h-[250px] w-screen ml-[49%] -translate-x-1/2",
             // gradient overlay
             " after:bg-gradient-to-t after:from-black/70 after:to-transparent after:absolute after:w-full after:h-full after:bottom-0"
           )}
@@ -94,7 +94,7 @@ export const DescriptiondApp = async ({
           <div
             className={cn(
               "relative shrink-0 w-32 h-32 aspect-square bg-[#423D37] rounded-md overflow-hidden",
-              "md:w-48 md:h-48"
+              "md:w-36 md:h-36"
             )}
           >
             {dapp.icon && (
@@ -115,23 +115,23 @@ export const DescriptiondApp = async ({
             )}
           >
             <div className="flex items-end">
-              <h1 className="text-[#E8DFD3] text-3xl md:text-5xl lg:text-7xl font-bold">
+              <h1 className="text-[#E8DFD3] text-2xl md:text-4xl lg:text-6xl font-bold">
                 {dapp.name}
               </h1>
               {dapp.instantDapp && (
                 <div className="relative md:ml-auto shrink">
                   {/* TODO: check if we need to create a component for this */}
                   {/* TODO: add color to tailwind file */}
-                  <Badge className="text-sm space-x-3 bg-[#FFE1F40F] border border-[#FFE1F472] whitespace-nowrap md:text-xl md:px-5 md:py-2">
+                  <Badge className="text-sm space-x-3 bg-[#FFE1F40F] border border-[#FFE1F472] whitespace-nowrap md:text-base md:px-4 md:py-1.5">
                     {/* TODO: check if we need to create a component for this */}
                     {/* TODO: add color to tailwind file */}
-                    <span className="w-[13px] h-[13px] bg-[#AE00FF] rounded-full" />
+                    <span className="w-[10px] h-[10px] bg-[#AE00FF] rounded-full" />
                     <p>{t("instantdApp.badge")}</p>
                   </Badge>
                 </div>
               )}
             </div>
-            <p className="text-[#D3CBC7] font-light lg:text-xl">
+            <p className="text-[#D3CBC7] font-light lg:text-base">
               {dapp.oneLiner}
             </p>
           </div>
@@ -221,10 +221,13 @@ export const DescriptiondApp = async ({
         )}
       </div>
 
-      <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
+      <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0 -mt-8">
         <Title tag="h3">{t("instantdApp.relatedApps.title")}</Title>
 
-        <ButtonWithLink href="/dapps" className="md:self-center">
+        <ButtonWithLink
+          href={`/dapps/${dapp.categorySlug}`}
+          className="md:self-center"
+        >
           <div className="flex items-center space-x-2">
             <p>{t("instantdApp.relatedApps.button.text")}</p>
             <RightArrow width={11} height={11} />

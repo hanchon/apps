@@ -7,7 +7,7 @@ export const Breadcrumb = ({
 }) => {
   return (
     <nav
-      className="flex -mb-5 justify-center md:justify-start"
+      className="flex -mb-5 justify-center md:justify-start text-sm"
       aria-label="breadcrumb"
     >
       <ol role="list" className="flex items-center space-x-1 tracking-wide">

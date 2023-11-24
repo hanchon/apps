@@ -32,17 +32,17 @@ const providers = [
   {
     label: "Keplr",
     id: "keplr",
-    icon: <KeplrIcon className="h-8 w-auto" />,
+    icon: <KeplrIcon className="h-7 w-auto" />,
   },
   {
     label: "MetaMask",
     id: "metaMask",
-    icon: <MetamaskIcon className="h-8 w-auto" />,
+    icon: <MetamaskIcon className="h-7 w-auto" />,
   },
   {
     label: "WalletConnect",
     id: "walletConnect",
-    icon: <WalletConnectIcon className="h-8 w-auto" />,
+    icon: <WalletConnectIcon className="h-7 w-auto" />,
   },
   {
     label: "Evmos Safe",
@@ -62,7 +62,7 @@ export const ButtonWallet = ({
         "flex w-full px-4 py-3",
         "hover:bg-grayOpacity hover:shadow-md",
         "border-darkPearl shadow rounded border",
-        "capitalize items-center space-x-3 text-sm font-bold",
+        "capitalize items-center space-x-3 text-xs font-bold",
         "transition-all duration-300",
         {
           disabled: disabled,
@@ -98,8 +98,8 @@ export const ConnectModalContent = ({
               copilot.setIsOpen(true);
             }}
           >
-            <EvmosCopilotIcon />
-            <div className="flex flex-col text-sm grow">
+            <EvmosCopilotIcon className="h-8 w-auto" />
+            <div className="flex flex-col text-xs grow">
               <p className="">Evmos Copilot</p>
               <p className="font-normal">Recommended for first time users</p>
             </div>

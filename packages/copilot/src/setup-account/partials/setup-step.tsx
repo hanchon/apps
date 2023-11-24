@@ -52,7 +52,7 @@ export const SetupStep = ({
           {...rest}
         />
         {error && (
-          <p className="text-red-300 ml-4 flex items-center space-x-2 text-xs absolute -bottom-6 w-full gap-x-2">
+          <p className="text-red-300 ml-4 flex items-center space-x-2 text-xxs absolute -bottom-6 w-full gap-x-2">
             <ErrorIcon />
             {error}
           </p>

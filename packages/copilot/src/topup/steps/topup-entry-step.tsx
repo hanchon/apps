@@ -9,9 +9,9 @@ export const TopupEntryStep = () => {
   return (
     <section className="flex flex-col gap-y-4">
       <Modal.Header>
-        <h1 className="font-bold">{t("introStep.title")}</h1>
+        <h1 className="font-bold text-sm">{t("introStep.title")}</h1>
       </Modal.Header>
-      <p className="text-gray1 text-sm mb-10">{t("introStep.body")}</p>
+      <p className="text-gray1 text-xs mb-10">{t("introStep.body")}</p>
 
       <OnboardOptionsMenu />
     </section>

@@ -17,19 +17,19 @@ import { Link } from "@evmosapps/i18n/client";
 export const Footer = async () => {
   const { t } = await translation();
   return (
-    <Container full className="mt-auto">
-      <footer className="text-gray-700 mb-10 mt-10 space-y-2 lg:space-y-0 flex lg:justify-between flex-col lg:flex-row items-center">
+    <Container full className="mt-auto pt-10">
+      <footer className="text-gray-700 text-xs mb-10 mt-10 space-y-2 lg:space-y-0 flex lg:justify-between flex-col lg:flex-row items-center">
         <div className="flex flex-col items-center space-y-3 lg:flex-row lg:space-x-10 lg:space-y-0">
           <p>
             <a
               href={DOCS_SMART_CONTRACTS_URL}
-              className="flex items-center space-x-3 text-sm"
+              className="flex items-center space-x-3 "
               target="_blank"
               rel="noreferrer"
             >
               <CodeIcon
-                width={30}
-                height={30}
+                width={18}
+                height={18}
                 className="text-gray-700 hover:text-gray-700"
               />
               <span>{t("footer.buildWithUs")}</span>
@@ -43,7 +43,6 @@ export const Footer = async () => {
                 rel="noreferrer"
                 href="https://www.coingecko.com"
                 aria-label="coingecko"
-                className="text-sm"
               >
                 {t("footer.coingeckoAttribution")}
               </a>
@@ -58,7 +57,7 @@ export const Footer = async () => {
               href="https://github.com/tharsis/evmos"
               aria-label="github evmos"
             >
-              <GithubIcon />
+              <GithubIcon width={18} height={18} />
             </a>
             <a
               target="_blank"
@@ -66,7 +65,7 @@ export const Footer = async () => {
               href="https://twitter.com/evmosorg"
               aria-label="twitter evmos"
             >
-              <TwitterIcon width={20} height={20} />
+              <TwitterIcon width={15} height={15} />
             </a>
             <a
               target="_blank"
@@ -74,7 +73,7 @@ export const Footer = async () => {
               href="https://discord.com/invite/evmos"
               aria-label="discord evmos"
             >
-              <DiscordIcon />
+              <DiscordIcon width={18} height={18} />
             </a>
             <a
               target="_blank"
@@ -82,7 +81,7 @@ export const Footer = async () => {
               href="https://t.me/EvmosOrg"
               aria-label="discord telegram"
             >
-              <TelegramIcon />
+              <TelegramIcon width={18} height={18} />
             </a>
             <a
               target="_blank"
@@ -90,7 +89,7 @@ export const Footer = async () => {
               href={COMMONWEALTH_URL}
               aria-label="commonwealth evmos"
             >
-              <CommonWealthIcon />
+              <CommonWealthIcon width={18} height={18} />
             </a>
           </div>
 

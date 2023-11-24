@@ -9,7 +9,7 @@ const TitleContainer = ({
 }: { title: string } & ComponentProps<"div">) => {
   return (
     <div
-      className="text-lg font-bold text-pearl"
+      className="text-base font-bold text-pearl"
       data-testid="proposal-title"
       {...rest}
     >

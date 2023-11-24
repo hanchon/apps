@@ -94,7 +94,7 @@ const ModalBody = forwardRef<
     <Dialog.Panel
       ref={ref}
       className={cn(
-        "flex bg-pearl1 m-auto rounded-lg flex-col p-6 max-w-md w-full",
+        "text-sm flex bg-pearl1 m-auto rounded-lg flex-col p-6 max-w-md w-full",
         className as string
       )}
       {...rest}

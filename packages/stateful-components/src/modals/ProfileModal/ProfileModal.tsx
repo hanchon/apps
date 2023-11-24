@@ -66,7 +66,7 @@ export const ProfileModal = () => {
           </Modal.Header>
           <div className="flex items-center gap-x-4 ">
             <div>{Icon && <Icon height={40} width={40} />}</div>
-            <div className="flex flex-col font-mono text-sm font-bold gap-y-2">
+            <div className="flex flex-col text-sm font-bold gap-y-2">
               <p className="gap-x-2 flex">
                 <AddressDisplay address={evmosAddress} maxLength={24} />
 

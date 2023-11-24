@@ -72,7 +72,7 @@ export const StakingCard = () => {
           />
           <button
             onClick={handleConfirmButton}
-            className={`w-auto space-x-2 rounded bg-red-300 px-4 py-2 text-sm font-bold normal-case text-pearl shadow transition-all duration-300 hover:bg-red1 hover:shadow-md active:bg-red2 
+            className={`w-auto space-x-2 rounded bg-red-300 px-4 py-2 text-xs font-bold normal-case text-pearl shadow transition-all duration-300 hover:bg-red1 hover:shadow-md active:bg-red2 
           ${
             !wallet.active || !totalRewards || totalRewards < 0.005
               ? "disabled"

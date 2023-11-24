@@ -15,8 +15,8 @@ export const Accordion = ({
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div className="accordion w-full">
-      <div className="accordion-item py-5">
+    <div className="accordion w-full text-sm">
+      <div className="accordion-item py-3">
         <div
           className={`flex items-center ${
             content !== null ? "cursor-pointer" : "cursor-default"
@@ -26,9 +26,9 @@ export const Accordion = ({
           <div className="mx-4 flex w-[5%] justify-center lg:mx-0">
             {content !== null ? (
               isActive ? (
-                <UpArrowIcon />
+                <UpArrowIcon width={15} height={15} />
               ) : (
-                <DownArrowIcon />
+                <DownArrowIcon width={15} height={15} />
               )
             ) : (
               ""

@@ -55,7 +55,7 @@ export const HeaderCategories = ({
             <Badge
               className={cn({
                 // TODO:  create reusable component for circle
-                " pl-9 lg:pl-10 relative before:content-[''] before:absolute before:top-[50%] before:left-3 lg:before:left-[0.9rem] before:-translate-y-1/2 before:w-[15px] before:h-[15px] before:bg-red-300 before:rounded-full":
+                " pl-9 lg:pl-10 relative before:content-[''] before:absolute before:top-[50%] before:left-3 lg:before:left-[0.9rem] before:-translate-y-1/2 before:w-[12px] before:h-[12px] before:bg-red-300 before:rounded-full":
                   params.category === category.slug,
               })}
               variant="dark"
@@ -80,8 +80,8 @@ const CategoryHeader = ({
   const categoryName = category?.name ?? "dApps";
 
   return (
-    <div className="space-y-3" {...rest}>
-      <Title>
+    <div className="space-y-2" {...rest}>
+      <Title className="text-2xl lg:text-[2.3rem]">
         <Trans
           ns="dappStore"
           shouldUnescape={true}
@@ -94,12 +94,17 @@ const CategoryHeader = ({
               ? categoryName
               : `${categoryName} dApps`,
 
-            count: category?.categoryDapps.length ?? totalCategoryCount,
+            count:
+              category === undefined
+                ? totalCategoryCount
+                : category.categoryDapps.length > 3
+                  ? category.categoryDapps.length
+                  : undefined,
           }}
         />
       </Title>
       {category?.description && (
-        <div className="relative text-xl text-[#E8DFD3]">
+        <div className="relative text-base text-[#E8DFD3]">
           <Subtitle>{category?.description}</Subtitle>
         </div>
       )}

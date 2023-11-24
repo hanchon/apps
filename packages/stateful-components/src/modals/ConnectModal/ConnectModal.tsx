@@ -23,8 +23,8 @@ export const ConnectModal = () => {
               title="Connect your account"
               description={
                 <>
-                  <p className="text-gray1 text-sm">Get started with Evmos!</p>
-                  <p className="text-gray1 text-sm">
+                  <p className="text-gray1 text-xs">Get started with Evmos!</p>
+                  <p className="text-gray1 text-xs">
                     We recommend for first-time users to use
                     <b> Evmos Copilot</b>.
                   </p>

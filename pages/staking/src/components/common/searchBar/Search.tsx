@@ -10,17 +10,17 @@ const Search = ({ placeholder }: { placeholder: string }) => {
   const { value, handleSetValue } = useSearchContext() as SearchContext;
   const { handlePreClickAction } = useTracker(CLICK_SEARCH_VALIDATORS_INPUT);
   return (
-    <div className="flex items-center justify-between rounded-lg border border-darkGray3 px-4 font-medium">
+    <div className=" flex items-center justify-between rounded-lg border border-darkGray3 px-4 font-medium">
       <input
         onChange={handleSetValue}
         value={value}
-        className="w-full bg-transparent text-pearl placeholder:text-darkGray3 focus-visible:outline-none"
+        className="w-full text-sm bg-transparent text-pearl placeholder:text-darkGray3 focus-visible:outline-none"
         placeholder={placeholder}
         onClick={() => {
           handlePreClickAction();
         }}
       />
-      <SearchIcon className="h-10 w-10 text-darkGray3" />
+      <SearchIcon className="h-8 w-8 text-darkGray3" />
     </div>
   );
 };
