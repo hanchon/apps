@@ -18,7 +18,7 @@ export const HeroSection = async () => {
       >
         {/* TODO: add localization */}
         <h1
-          className="font-evmos font-bold text-[2.5em] tracking-wide text-pearl leading-none"
+          className="font-evmos font-bold text-2xl md:text-[2.5em] tracking-wide text-pearl leading-none"
           style={{ fontFeatureSettings: "'ss02' on, 'ss01' on" }}
         >
           {t("ecosystem.title")} <br /> {t("ecosystem.title2")}
@@ -38,7 +38,7 @@ export const HeroSection = async () => {
           </PrimaryButton>
           <PrimaryButton
             as={"a"}
-            className="flex-1 font-normal rounded w-full"
+            className="flex-1 font-normal rounded w-full text-center"
             variant="secondary"
             href={DOCS_EVMOS_REVENUE}
             target="_blank"

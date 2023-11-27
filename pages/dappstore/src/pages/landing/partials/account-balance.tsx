@@ -63,7 +63,7 @@ export const AccountBalance = () => {
           </p>
         </div>
         {isConnected && (
-          <div className="md:relative md:left-[16px] md:top-[11px] ">
+          <div className="md:relative md:left-[16px] md:top-[1px] ">
             <TrackerEvent
               event={CLICK_ON_TOP_UP_ACCOUNT_DAPP}
               properties={{

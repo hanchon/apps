@@ -66,7 +66,7 @@ export const DescriptiondApp = async ({
   };
 
   return (
-    <div className="space-y-12 mb-12 lg:mb-24">
+    <div className="space-y-8 md:space-y-12 mb-12 lg:mb-24">
       <div className="relative">
         <div
           className={cn(
@@ -114,7 +114,7 @@ export const DescriptiondApp = async ({
               "md:text-left"
             )}
           >
-            <div className="flex items-end">
+            <div className="flex flex-col md:flex-row items-center md:items-end space-y-2 md:space-y-0">
               <h1 className="text-[#E8DFD3] text-2xl md:text-4xl lg:text-6xl font-bold">
                 {dapp.name}
               </h1>
