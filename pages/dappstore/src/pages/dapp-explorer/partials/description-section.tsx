@@ -49,6 +49,7 @@ const WIDGETS: {
   wormhole: dynamic(
     () => import("@evmosapps/instant-dapps/src/dapps/Wormhole")
   ),
+  forge: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Forge"))
 };
 
 export const DescriptiondApp = async ({
