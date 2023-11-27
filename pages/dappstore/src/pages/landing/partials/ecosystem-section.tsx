@@ -36,8 +36,8 @@ export const EcosystemSection = async () => {
 
   return (
     <section className="space-y-8">
-      <div className="">
-        <div className="flex flex-row justify-between w-full">
+      <div className="space-y-3 md:space-y-0">
+        <div className="flex flex-row justify-between w-full ">
           <Title>{t("ecosystem.instantdApps.title")}</Title>
           <ButtonWithLink href="/dapps/instant-dapps" className="self-center">
             <div className="flex items-center space-x-2">

@@ -219,7 +219,7 @@ export const TransferModalContent = ({
     !validation.hasSufficientBalanceForFee &&
     (action === "TOPUP" || action === "TRANSFER");
   return (
-    <section className="space-y-8 w-full">
+    <section className="space-y-8 w-full text-pearl">
       <Modal.Header>
         <Title
           variant="modal-black"
