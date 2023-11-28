@@ -21,7 +21,7 @@ export const IntroductionModal = ({
       {icon ? icon : <EvmosRedIcon height={70} />}
       <Title>{title}</Title>
       <Description>{description}</Description>
-      <div className="flex flex-col space-y-2 text-[10px] h-full justify-end">
+      <div className="flex flex-col space-y-2 text-xxs h-full justify-end">
         {content}
       </div>
     </section>

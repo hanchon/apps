@@ -23,7 +23,7 @@ export const useClosePrompt = () => {
 export const withClosePrompt = <T extends ModalProps>(
   Component: (props: T) => React.ReactElement
 ) => {
-  return (props: T) => {
+  return function ClosePrompt(props: T) {
     const { t } = useTranslation("copilot");
     const { setIsOpen } = props;
     const [isClosePromptOpen, setClosePromptOpen] = useState(false);

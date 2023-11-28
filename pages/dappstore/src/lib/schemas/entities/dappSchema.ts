@@ -2,31 +2,46 @@ import { z } from "zod";
 import { richTextSchema } from "../partials/richTextSchema";
 import { relationSchema } from "../partials/relationSchema";
 import { titleSchema } from "../partials/titleSchema";
-
 import { checkboxSchema } from "../partials/checkboxSchema";
 import { urlSchema } from "../partials/urlSchema";
-import { emojiSchema } from "../partials/emojiSchema";
-import { fileSchema } from "../partials/fileSchema";
-import { externalSchema } from "../partials/externalSchema";
+import { filesSchema } from "../partials/fileSchema";
 import { createNotionPropertiesSchema } from "../utils/createNotionPropertiesSchema";
 import { createdAtSchema } from "../partials/createdAtSchema";
 import { updatedAtSchema } from "../partials/updatedAtSchema";
 import { selectSchema } from "../partials/selectSchema";
 import slugify from "slugify";
+import { predownloadImages } from "./predownloadImages";
+import { parseUrl } from "helpers/src/parse/urls";
 
 const dappPropertiesSchema = createNotionPropertiesSchema(
   z.object({
+    icon: filesSchema,
+    cover: filesSchema,
+    thumbnail: filesSchema,
     instantDapp: checkboxSchema,
     name: titleSchema,
     description: richTextSchema,
     oneLiner: richTextSchema,
     howTo: richTextSchema,
     subItem: relationSchema,
-    x: urlSchema,
-    dapp: urlSchema,
+    x: urlSchema.transform((url) => ({
+      url,
+      label: url && parseUrl(url),
+    })),
+    dapp: urlSchema.transform((url) => ({
+      url,
+      label: url && parseUrl(url),
+    })),
     project: urlSchema,
     github: urlSchema,
-    discord: urlSchema,
+    discord: urlSchema.transform((url) => ({
+      url,
+      label: url && parseUrl(url),
+    })),
+    telegram: urlSchema.transform((url) => ({
+      url,
+      label: url && parseUrl(url),
+    })),
     updatedAt: updatedAtSchema,
     createdAt: createdAtSchema,
     language: selectSchema,
@@ -37,25 +52,19 @@ export const dappSchema = z
   .object({
     id: z.string(),
     properties: dappPropertiesSchema,
-    icon: z
-      .union([emojiSchema, fileSchema, externalSchema, z.null()])
-      .transform((icon) => {
-        if (icon?.type === "file") return icon.url;
-        return null;
-      }),
-
-    cover: z
-      .union([fileSchema, externalSchema, z.null()])
-      .transform((cover) => {
-        if (cover?.type === "file") return cover.url;
-        return null;
-      }),
   })
-  .transform(({ id, properties, ...rest }) => {
+  .transform(async ({ id, properties, ...rest }) => {
     const slug = slugify(properties.name, {
       lower: true,
       trim: true,
     });
+    const { cover, thumbnail, icon, ...propetyRest } = properties;
+    const images = await predownloadImages(slug, {
+      cover,
+      thumbnail,
+      icon,
+    });
+    // console.log(images);
     return {
       notionId: id,
       slug,
@@ -66,7 +75,8 @@ export const dappSchema = z
           description: string;
         }
       >,
-      ...properties,
+      ...propetyRest,
+      ...images,
       ...rest,
     };
   });

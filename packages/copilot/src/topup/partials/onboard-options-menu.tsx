@@ -24,7 +24,7 @@ const OptionButton = ({
   return (
     <button
       className={cn(
-        " flex items-center shadow justify-center gap-2 rounded-lg  transition-all duration-300 hover:shadow-md px-2 py-4",
+        " flex items-center shadow justify-center gap-2 rounded-lg transition-all duration-300 hover:shadow-md px-2 py-4",
         {
           "py-1": variant === "small",
           "ring-2 ring-red": selected,

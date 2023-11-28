@@ -31,7 +31,7 @@ export const ButtonsNextSteps = () => {
         </TrackerEvent>
         <TrackerEvent event={CLICK_ON_STAKE_YOUR_EVMOS_COPILOT}>
           <Button href="/staking">
-            <TitleButton text={t("nextsteps.stakeEvmos.title") as string} />
+            <TitleButton text={t("nextsteps.stakeEvmos.title")} />
             <Badge variant="warning">{t("nextsteps.stakeEvmos.badge")}</Badge>
           </Button>
         </TrackerEvent>
@@ -45,7 +45,7 @@ export const ButtonsNextSteps = () => {
             setIsOpen(false);
           }}
         >
-          <TitleButton text={t("nextsteps.learnMore.title") as string} />
+          <TitleButton text={t("nextsteps.learnMore.title")} />
         </a>
       </TrackerEvent>
     </>
@@ -56,7 +56,8 @@ export const Button = ({ className, ...rest }: ComponentProps<typeof Link>) => {
   return (
     <Link
       className={cn(
-        "border-gray300 flex cursor-pointer flex-col items-center space-y-2 rounded-lg border px-4 py-5 shadow transition-all duration-300 hover:shadow-md"
+        "border-gray300 flex cursor-pointer flex-col items-center space-y-2 rounded-lg border px-4 py-5 shadow transition-all duration-300 hover:shadow-md",
+        className
       )}
       {...rest}
     />

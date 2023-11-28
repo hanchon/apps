@@ -22,11 +22,9 @@ import {
   normalizeToEvmos,
 } from "@evmosapps/evmos-wallet";
 import { ReceiveIcon, ShareIcon } from "icons";
-import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { CryptoSelectorDropdownBox } from "@evmosapps/ui-helpers";
 import { CryptoSelectorTitle } from "@evmosapps/ui-helpers";
 import { Prefix } from "@evmosapps/evmos-wallet/src/registry-actions/types";
-import { useDispatch } from "react-redux";
 import { RequestModalProps } from "./RequestModal";
 import {
   CLICK_ON_COPY_ICON_RECEIVE_FLOW,
@@ -40,7 +38,6 @@ import {
 import { useAccount } from "wagmi";
 import { sortedChains } from "../shared/sortedChains";
 import { useTranslation } from "@evmosapps/i18n/client";
-import { useConnectModal } from "stateful-components/src/modals/ConnectModal/ConnectModal";
 import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
 
 export const ReceiveContent = ({
@@ -56,7 +53,6 @@ export const ReceiveContent = ({
   const [selectedNetworkPrefix, setSelectedNetworkPrefix] =
     useState<Prefix>("evmos");
   const selectedChain = getChain(selectedNetworkPrefix);
-  const { data } = useWalletAccountByPrefix(selectedNetworkPrefix);
 
   const sender = address ? normalizeToEvmos(address) : null;
 
@@ -106,9 +102,8 @@ export const ReceiveContent = ({
   ];
 
   const [showCopied, setIsOpenCopied] = useState(false);
-  const dispatch = useDispatch();
+
   const { isDisconnected } = useAccount();
-  const connectModal = useConnectModal();
 
   return (
     <section className="space-y-16 text-pearl">
@@ -129,7 +124,7 @@ export const ReceiveContent = ({
         <section className="space-y-8">
           <div className="flex flex-col gap-6">
             <div className="flex gap-2 mb-6 flex-col">
-              <div className="bg-white p-2 w-[250px] h-[250px] rounded-xl self-center">
+              <div className="bg-white p-2 w-[200px] h-[200px] rounded-xl self-center">
                 <QRCode
                   style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                   value={sender ?? ""}
@@ -146,7 +141,7 @@ export const ReceiveContent = ({
                   }}
                   className="flex items-center space-x-2 self-center"
                 >
-                  <span className="text-pink-300 text-xs md:text-sm">
+                  <span className="text-pink-300 text-xxs md:text-xs">
                     {t("receive.share.qr")}
                   </span>
                   <ShareIcon className="w-3 h-4 md:w-5 md:h-4 relative -top-[1px]" />

@@ -2,7 +2,6 @@ import "../../globals.css";
 import { dir } from "i18next";
 import { PropsWithChildren } from "react";
 import { languages } from "@evmosapps/i18n";
-import { withLocale } from "@evmosapps/i18n/server";
 import { cn } from "helpers";
 import { nb, evmos } from "@evmosapps/ui-helpers/src/fonts";
 import { RootProviders } from "./RootProviders";
@@ -10,20 +9,15 @@ import { GoogleAnalytics } from "../../components/GoogleAnalytics";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import { Container } from "@evmosapps/ui-helpers";
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import Script from "next/script";
-import { Modals } from "./modals";
+import { Modals } from "../../components/modals";
 
 export const dynamic = "error";
 
 export function generateStaticParams() {
   return languages.map((locale) => ({ locale }));
 }
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-};
 
 export const metadata: Metadata = {
   title: "Evmos Apps",
@@ -83,4 +77,4 @@ function RootLayout({
   );
 }
 
-export default withLocale(RootLayout);
+export default RootLayout;

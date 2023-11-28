@@ -3,7 +3,7 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { ConfirmButton, Modal } from "@evmosapps/ui-helpers";
+import { ConfirmButton } from "@evmosapps/ui-helpers";
 import { ContainerModal } from "../common/ContainerModal";
 import FromConvert from "../common/convert/FromConvert";
 import ToConvert from "../common/convert/ToConvert";

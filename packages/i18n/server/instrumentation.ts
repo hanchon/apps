@@ -4,6 +4,7 @@ import resourcesToBackend from "i18next-resources-to-backend";
 import { initReactI18next } from "react-i18next/initReactI18next";
 import { getOptions } from "../settings";
 import { getLocale } from "./locale";
+import { Log } from "helpers";
 
 const initI18next = async (locale: string, namespace: string) => {
   const i18nInstance = createInstance();
@@ -14,9 +15,7 @@ const initI18next = async (locale: string, namespace: string) => {
         try {
           return import(`../locales/${language}/${namespace}.json`);
         } catch (error) {
-          console.warn(
-            `Missing translation file: ${language}/${namespace}.json`
-          );
+          Log().warn(`Missing translation file: ${language}/${namespace}.json`);
           return {};
         }
       })

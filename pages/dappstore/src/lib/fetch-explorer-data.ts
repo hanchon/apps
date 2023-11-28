@@ -1,11 +1,12 @@
-import { Log, raise } from "helpers";
+import { raise } from "helpers";
 import slugify from "slugify";
 
 import { cache } from "react";
 
 import { fetchDapps } from "./fetch-dapps";
 import { fetchCategories } from "./fetch-categories";
-const _fetchExplorerData = cache(async () => {
+
+export const fetchExplorerData = cache(async () => {
   const categoriesMap = await fetchCategories();
   const dappsMap = await fetchDapps();
 
@@ -44,20 +45,10 @@ const _fetchExplorerData = cache(async () => {
     dApps,
   };
 });
-export const fetchExplorerData = async () => {
-  if (process.env.NODE_ENV === "development" && !process.env.NOTION_API_KEY) {
-    Log().warn([
-      "process.env.NOTION_API_KEY is not set, serving mock data in dev mode instead",
-    ]);
 
-    const data = await import("./mock-explorer-data.json");
-    return data satisfies Awaited<ReturnType<typeof _fetchExplorerData>>;
-  }
-  return _fetchExplorerData();
-};
 export type Category = Awaited<
-  ReturnType<typeof _fetchExplorerData>
+  ReturnType<typeof fetchExplorerData>
 >["categories"][number];
 export type DApp = Awaited<
-  ReturnType<typeof _fetchExplorerData>
+  ReturnType<typeof fetchExplorerData>
 >["dApps"][number];

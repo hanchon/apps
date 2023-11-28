@@ -26,7 +26,7 @@ export const Description = ({
         className="rounded-full"
       />
       <div className="flex flex-col items-start">
-        <span className="font-bold">{symbol}</span>
+        <span className="font-bold text-base">{symbol}</span>
         <span className="text-xs text-darkGray5">{description}</span>
       </div>
     </div>

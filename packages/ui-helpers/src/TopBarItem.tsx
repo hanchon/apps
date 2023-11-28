@@ -17,9 +17,9 @@ export const TopBarItem = ({
   const drawDiv = () => (
     <div>
       <div className="flex items-center justify-center space-x-2">
-        <h5 className="text-sm font-normal opacity-80 ">{text}</h5>
+        <h5 className="text-xs font-normal opacity-80 ">{text}</h5>
       </div>
-      <h2 className="font-body text-2xl font-bold flex justify-center">
+      <h2 className="font-body text-xl font-bold flex justify-center">
         {value}
       </h2>
     </div>

@@ -2,7 +2,8 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { ComponentProps } from "react";
-import cx from "clsx";
+
+import { cn } from "helpers";
 
 export const Subtitle = ({
   variant = "default",
@@ -13,11 +14,11 @@ export const Subtitle = ({
 }) => {
   return (
     <h5
-      className={cx(
-        "tracking-wide font-light",
+      className={cn(
+        "tracking-wide font-light text-sm md:text-base",
         {
           // {/* TODO: add color to tailwind file */}
-          "text-xl text-white/70 ": variant === "default",
+          " text-white/70 ": variant === "default",
         },
         className
       )}

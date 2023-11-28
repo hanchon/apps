@@ -44,7 +44,7 @@ export const AmountInput = ({
   return (
     <div
       className={cx(
-        "flex w-full tracking-wider font-bold py-2 pl-4 pr-2 text-sm md:text-base leading-5 text-gray-900 focus:ring-1 border-2 border-pink-300 rounded bg-pink-200 text-black focus-visible:outline-none",
+        "flex w-full tracking-wider font-bold py-2 pl-4 pr-2 text-xs md:text-sm leading-5 text-gray-900 focus:ring-1 border-2 border-pink-300 rounded bg-pink-200 text-black focus-visible:outline-none",
         {
           "bg-pink-700": variant === "error",
           "bg-purple-200": variant === "info",
@@ -96,7 +96,7 @@ export const AmountInput = ({
       {max !== undefined && (
         <button
           className={cn(
-            "py-2 px-2.5 leading-none rounded-md bg-pink-400 text-black-900 text-xs md:text-sm tracking-wider font-light",
+            "py-2 px-2.5 leading-none rounded-md bg-pink-400 text-black-900 text-xxs md:text-xs tracking-wider font-light",
             maxButtonClassName
           )}
           onClick={(e) => {

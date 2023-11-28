@@ -1,9 +1,8 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useMemo, useState } from "react";
-import { Link } from "@evmosapps/i18n/client";
+import { ComponentProps, useMemo } from "react";
+import { Link, Trans } from "@evmosapps/i18n/client";
 import { cn } from "helpers";
 import { Badge } from "@evmosapps/ui-helpers";
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
@@ -22,27 +21,9 @@ export const HeaderCategories = ({
   >[];
   params: { category?: string };
 }) => {
-  const [hoveredCategorySlug, setHoveredCategory] = useState<null | string>(
-    null
-  );
-
-  const handleCategoryHover = (category: string | null) => {
-    setHoveredCategory(category);
-  };
-
-  const handleCategoryLeave = () => {
-    setHoveredCategory(null);
-  };
-
-  const hoveredCategory = useMemo(() => {
-    return categories.find((category) => category.slug === hoveredCategorySlug);
-  }, [hoveredCategorySlug, categories]);
-
   const selectedCategory = useMemo(() => {
     return categories.find((category) => category.slug === params.category);
   }, [categories, params.category]);
-
-  const displayedCategory = hoveredCategory || selectedCategory;
 
   const totalAmountdApps = useMemo(() => {
     return categories.reduce((acc, category) => {
@@ -55,22 +36,13 @@ export const HeaderCategories = ({
 
   return (
     <>
-      <div className="flex space-y-2 flex-col">
-        <Title>
-          Explore the{" "}
-          <span className="font-bold ">
-            {/* TODO: add correct styling for params.category  */}
-            {displayedCategory?.categoryDapps.length ?? totalAmountdApps}{" "}
-            {displayedCategory?.name ?? "dApps"}
-          </span>{" "}
-          on Evmos
-        </Title>
-        <Subtitle className="min-h-[1lh] text-[#E8DFD3]">
-          {displayedCategory?.description ??
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit"}{" "}
-        </Subtitle>
+      <div className="flex flex-col relative">
+        <CategoryHeader
+          category={selectedCategory}
+          totalCategoryCount={totalAmountdApps}
+        />
       </div>
-      <div className="flex gap-5 flex-wrap" onMouseLeave={handleCategoryLeave}>
+      <div className="flex gap-3 md:gap-4 flex-wrap">
         {categories.map((category) => (
           <Link
             href={
@@ -83,11 +55,10 @@ export const HeaderCategories = ({
             <Badge
               className={cn({
                 // TODO:  create reusable component for circle
-                "bg-[#FFF4E14D] pl-9 relative before:content-[''] before:absolute before:top-[50%] before:left-3 before:-translate-y-1/2 before:w-[15px] before:h-[15px] before:bg-red-300 before:rounded-full":
+                "pl-9 md:pl-9 lg:pl-10 relative before:content-[''] before:absolute before:top-[50%] before:left-3 lg:before:left-[0.9rem] before:-translate-y-1/2 before:w-[12px] before:h-[12px] before:bg-red-300 before:rounded-full":
                   params.category === category.slug,
               })}
               variant="dark"
-              onMouseEnter={() => handleCategoryHover(category.slug)}
             >
               {category.name}
             </Badge>
@@ -95,5 +66,48 @@ export const HeaderCategories = ({
         ))}
       </div>
     </>
+  );
+};
+
+const CategoryHeader = ({
+  category,
+  totalCategoryCount,
+  ...rest
+}: {
+  category?: Pick<Category, "categoryDapps" | "name" | "slug" | "description">;
+  totalCategoryCount: number;
+} & ComponentProps<"div">) => {
+  const categoryName = category?.name ?? "dApps";
+
+  return (
+    <div className="space-y-2" {...rest}>
+      <Title className="text-2xl lg:text-[2.3rem]">
+        <Trans
+          ns="dappStore"
+          shouldUnescape={true}
+          i18nKey="categories.title"
+          components={{
+            b: <strong className="font-bold" />,
+          }}
+          values={{
+            name: categoryName.endsWith("dApps")
+              ? categoryName
+              : `${categoryName} dApps`,
+
+            count:
+              category === undefined
+                ? totalCategoryCount
+                : category.categoryDapps.length > 3
+                  ? category.categoryDapps.length
+                  : undefined,
+          }}
+        />
+      </Title>
+      {category?.description && (
+        <div className="relative text-base text-[#E8DFD3]">
+          <Subtitle>{category?.description}</Subtitle>
+        </div>
+      )}
+    </div>
   );
 };

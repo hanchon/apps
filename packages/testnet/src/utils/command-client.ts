@@ -68,7 +68,7 @@ type CommandOptions = {
   stdin?: string;
 };
 export const runCommand = (
-  [command, ...args]: string[],
+  [command, ...args]: [string, ...string[]],
   options: CommandOptions = {}
 ) => {
   const { cwd, stdin } = options;

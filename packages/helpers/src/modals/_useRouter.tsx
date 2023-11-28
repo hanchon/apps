@@ -22,14 +22,18 @@ class History {
       this.listeners.delete(cb);
     };
   };
-  push = (url: string, _: { scroll: boolean }) => {
+  // keep the options params to match the next/router api
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  push = (url: string, _?: { scroll: boolean }) => {
     if (isServer) {
       return;
     }
     window.history.pushState({}, "", url);
     this.emit();
   };
-  replace = (url: string, _: { scroll: boolean }) => {
+  // keep the options params to match the next/router api
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  replace = (url: string, _?: { scroll: boolean }) => {
     if (isServer) {
       return;
     }
@@ -50,10 +54,10 @@ export const _useRouter = () => {
 
   return {
     searchParams,
-    push: (url: string, options: { scroll: boolean }) => {
+    push: (url: string, options?: { scroll: boolean }) => {
       customHistory.push(url, options);
     },
-    replace: (url: string, options: { scroll: boolean }) => {
+    replace: (url: string, options?: { scroll: boolean }) => {
       customHistory.replace(url, options);
     },
   };

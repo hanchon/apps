@@ -15,15 +15,14 @@ const ContentProposal = dynamic(() => import("./proposalPage/ContentProposal"));
 
 const Content = () => {
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const id = searchParams?.get("id");
 
   const { proposals, loading, error, proposalDetail } = useProposals(
     id ?? undefined
   );
-
   return (
     <div>
-      {id === undefined && (
+      {(id === null || id === undefined) && (
         <BannerBlack
           text="Have you ever wondered where proposals come from? Join us in our open
           and lively discussions over at Commonwealth"

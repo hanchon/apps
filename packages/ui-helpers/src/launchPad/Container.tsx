@@ -7,7 +7,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Item } from "./Item";
 import Link from "next/link";
-import { ECOSYSTEM_URL } from "constants-helper";
+
 import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
 import { PingIndicator } from "../PingIndicator";
 import { Badge } from "../badges/Badge";
@@ -73,7 +73,6 @@ export const LaunchContainer = ({
           <Link
             onClick={handleEcosystemButton}
             href="/dapps"
-            target="_blank"
             rel="noopener noreferrer"
             className="border-t-darkGray700 text-pearl bg-darkGray2Opacity active:bg-darkGray700 flex justify-center border-t py-5 transition-all duration-200 ease-in-out hover:bg-[#FFFFFF0F]"
           >

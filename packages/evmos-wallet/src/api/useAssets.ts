@@ -9,6 +9,12 @@ import { addAssets, addDollarAssets, amountToDollars } from "helpers";
 import { BigNumber } from "@ethersproject/bignumber";
 import { useAccount } from "wagmi";
 import { normalizeToEvmos } from "../wallet";
+import { isNaN } from "lodash-es";
+
+const usdFormat = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
 export const useAssets = () => {
   const { address = "" } = useAccount();
 
@@ -20,7 +26,10 @@ export const useAssets = () => {
         address
       ),
   });
-  const balance = assets.data?.balance ?? [];
+  const balance = useMemo(
+    () => assets.data?.balance ?? [],
+    [assets.data?.balance]
+  );
 
   const getAssetsForMissionControl = useMemo(() => {
     if (assets.data === undefined) {
@@ -46,7 +55,7 @@ export const useAssets = () => {
         };
       }) ?? []
     );
-  }, [assets.data]);
+  }, [assets.data, balance]);
 
   const getTotalAssetsForMissionControl = useMemo(() => {
     let total = 0;
@@ -77,23 +86,26 @@ export const useAssets = () => {
     });
 
     return total;
-  }, [assets.data]);
+  }, [assets.data, balance]);
 
   const getEvmosPrice = useMemo(() => {
     if (assets.data === undefined || balance.length === 0) {
       return "--";
     }
-
     return balance[0]?.coingeckoPrice ?? "--";
-  }, [assets.data]);
+  }, [assets.data, balance]);
 
   const getEvmosPriceChange = useMemo(() => {
-    if (assets.data === undefined || balance.length === 0) {
-      return "0";
+    const priceChangeStr = balance[0]?.price24HChange;
+    if (!priceChangeStr) {
+      return null;
     }
-
-    return balance[0]?.price24HChange ?? "0";
-  }, [assets.data]);
+    const priceChange = parseFloat(priceChangeStr);
+    if (isNaN(priceChange)) {
+      return null;
+    }
+    return priceChange;
+  }, [balance]);
 
   const getTotalEvmos = useMemo(() => {
     // returns the amount of evmos and wrap evmos
@@ -110,15 +122,20 @@ export const useAssets = () => {
     );
 
     return total;
-  }, [assets.data]);
+  }, [assets.data, balance]);
 
   const evmosPriceFixed = useMemo(() => {
-    if (assets.data === undefined || balance.length === 0) {
-      return "-";
+    const priceStr = balance[0]?.coingeckoPrice;
+    if (!priceStr) {
+      return null;
+    }
+    const price = parseFloat(priceStr);
+    if (isNaN(price)) {
+      return null;
     }
 
-    return `$${Number(balance[0]?.coingeckoPrice).toFixed(2)}`;
-  }, [assets.data]);
+    return usdFormat.format(price);
+  }, [balance]);
   return {
     sourceData: assets.data,
     assets: getAssetsForMissionControl,

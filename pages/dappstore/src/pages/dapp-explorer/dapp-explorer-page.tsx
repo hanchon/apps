@@ -4,14 +4,17 @@
 
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 import { EcosystemCard } from "../landing/partials/ecosystem-card";
+import { EcosystemCardGrid } from "../landing/partials/ecosystem-card-grid";
 import { ExplorerBreadcrumbs } from "./partials/explorer-breadcrumbs";
 import { HeaderCategories } from "./partials/header-categories";
-
+import { translation } from "@evmosapps/i18n/server";
+import { pick, keys } from "lodash-es";
 export const DappExplorerPage = async ({
   params,
 }: {
   params: { category?: string };
 }) => {
+  const { t } = await translation("dappStore");
   const { dApps, categories } = await fetchExplorerData();
 
   const filteredApps = params.category
@@ -33,6 +36,15 @@ export const DappExplorerPage = async ({
     // Otherwise, instant-dapp apps come first
     return a.instantDapp ? -1 : 1;
   });
+  const instantDappCategory = {
+    categoryDapps: sortedApps
+      .filter(({ instantDapp }) => instantDapp)
+      .map(({ slug }) => slug),
+
+    description: t("categories.instantdApps.description"),
+    name: t("categories.instantdApps.name"),
+    slug: "instant-dapps",
+  };
 
   return (
     <>
@@ -46,20 +58,25 @@ export const DappExplorerPage = async ({
               .filter(({ instantDapp }) => instantDapp)
               .map(({ slug }) => slug),
 
-            description:
-              "Instant dApps are dApps that are already deployed on Evmos and can be used instantly.",
-            name: "Instant dApps",
+            description: t("categories.instantdApps.description"),
+            name: t("categories.instantdApps.name"),
             slug: "instant-dapps",
           },
-          ...categories,
+          ...categories.map((category) =>
+            pick(
+              category,
+              keys(instantDappCategory) as (keyof typeof instantDappCategory)[]
+            )
+          ),
         ]}
         params={params}
       />
-      <div className="grid gap-x-8 md:grid-cols-4 pt-20">
+
+      <EcosystemCardGrid className="pt-8">
         {sortedApps?.map((dApp) => (
           <EcosystemCard data={dApp} key={dApp.name} />
         ))}
-      </div>
+      </EcosystemCardGrid>
     </>
   );
 };

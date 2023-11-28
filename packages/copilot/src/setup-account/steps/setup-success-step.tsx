@@ -14,7 +14,7 @@ export const SetupAccountSuccesStep = () => {
       <div className="flex items-center justify-center ">
         <IconContainer type="BIG_CONFETTI" />
       </div>
-      <h6 className="font-bold">{t("connectSuccessStep.title")}</h6>
+      <h6 className="font-bold text-base">{t("connectSuccessStep.title")}</h6>
       <p className="pb-5 text-sm">{t("connectSuccessStep.body")}</p>
 
       <PrimaryButton
@@ -23,7 +23,7 @@ export const SetupAccountSuccesStep = () => {
           nextStep();
         }}
       >
-        {t("connectSuccessStep.action") as string}
+        {t("connectSuccessStep.action")}
       </PrimaryButton>
 
       <ConfettiExplosion
