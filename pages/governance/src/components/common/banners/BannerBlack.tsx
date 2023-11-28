@@ -17,9 +17,9 @@ const BannerBlack = ({ text, href }: { text: string; href: string }) => {
         handlePreClickAction();
       }}
     >
-      <div className="text-sm mx-4 my-4 flex items-center justify-between rounded-2xl border-4 border-darkGray2 bg-black p-5 font-bold text-pearl md:mx-0">
+      <div className="text-base mx-4 my-4 flex items-center justify-between rounded-2xl border-4 border-darkGray2 bg-black p-5 font-bold text-pearl md:mx-0">
         <span>{text}</span>
-        <ExternalLinkIcon width={15} height={15} />
+        <ExternalLinkIcon className="shrink-0" width={20} height={20} />
       </div>
     </Link>
   );

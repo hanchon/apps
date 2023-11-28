@@ -64,7 +64,7 @@ const CypherD = () => {
 
   if (address === undefined) {
     return (
-      <div className="flex flex-col items-center text-center space-y-2">
+      <div className="flex flex-col items-center text-center space-y-2 min-h-[400px] justify-center">
         <EvmosCopilotRedIcon height={30} />
         <p className="text-pearl">Connection required</p>
         <p>
@@ -76,13 +76,12 @@ const CypherD = () => {
         </PrimaryButton>
       </div>
     );
-    // TODO: add button to connect account
   }
   return (
     <div // div inside which the widget will be present
       data-testid="cypher-onboading-sdk"
       id="cypher-onboading-sdk" // Id that will be passed to the window.Cypher() call
-      className="flex h-full flex-col items-center justify-center min-h-[300px]"
+      className="flex h-full flex-col items-center justify-center min-h-[300px] z-[1]"
     />
   );
 };

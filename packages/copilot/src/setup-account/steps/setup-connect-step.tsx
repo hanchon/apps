@@ -30,9 +30,9 @@ export const SetupConnectStep = () => {
   return (
     <section className="flex flex-col gap-y-4">
       <Modal.Header>
-        <h1 className="font-bold text-sm">{t("connectStep.title")}</h1>
+        <h1 className="font-bold text-base">{t("connectStep.title")}</h1>
       </Modal.Header>
-      <p className="text-gray1 text-xs mb-10 [&>br]:leading-9 [&>br]:mt-4 [&>br]:block [&>br]:content-['_']">
+      <p className="text-gray1 text-sm mb-10 [&>br]:leading-9 [&>br]:mt-4 [&>br]:block [&>br]:content-['_']">
         <Trans t={t} i18nKey="connectStep.body" />
       </p>
       <SetupWithMetamaskSteps />

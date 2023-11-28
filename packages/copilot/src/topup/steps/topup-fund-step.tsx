@@ -86,14 +86,14 @@ export const TopupFundStep = () => {
   return (
     <section className="flex flex-col gap-y-4">
       <Modal.Header>
-        <h1 className="font-bold text-sm">{t("fiatTopupStep.title")}</h1>
+        <h1 className="font-bold text-base">{t("fiatTopupStep.title")}</h1>
       </Modal.Header>
       <OnboardOptionsMenu variant="small" />
 
       {funded && <TopupSuccessMessage />}
 
       <div className="flex items-center">
-        <span className="text-xs text-[#374151] mr-auto">
+        <span className="text-sm text-[#374151] mr-auto">
           {t("fiatTopupStep.providedBy")}
         </span>
 

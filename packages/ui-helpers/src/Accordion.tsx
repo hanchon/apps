@@ -15,7 +15,7 @@ export const Accordion = ({
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div className="accordion w-full text-sm">
+    <div className="accordion w-full text-base">
       <div className="accordion-item py-3">
         <div
           className={`flex items-center ${

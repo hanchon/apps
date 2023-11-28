@@ -14,8 +14,8 @@ export const SetupAccountSuccesStep = () => {
       <div className="flex items-center justify-center ">
         <IconContainer type="BIG_CONFETTI" />
       </div>
-      <h6 className="font-bold text-sm">{t("connectSuccessStep.title")}</h6>
-      <p className="pb-5 text-xs">{t("connectSuccessStep.body")}</p>
+      <h6 className="font-bold text-base">{t("connectSuccessStep.title")}</h6>
+      <p className="pb-5 text-sm">{t("connectSuccessStep.body")}</p>
 
       <PrimaryButton
         onClick={() => {

@@ -34,7 +34,7 @@ const SetupSteps = () => {
         return (
           <li
             className={cn(
-              "text-lightGrey flex items-center gap-x-2 text-xs font-medium",
+              "text-lightGrey flex items-center gap-x-2 text-sm font-medium",
               {
                 "text-red-300 ": active,
               }

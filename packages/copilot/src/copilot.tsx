@@ -179,12 +179,12 @@ export const CopilotHeader = ({
   return (
     <header className="flex flex-col space-y-3 text-gray1 h-full justify-between px-4 pb-4 pt-5 sm:p-6">
       <div className="justify-start space-y-1">
-        {icon ? icon : <EvmosRedIcon height={50} />}
+        {icon ? icon : <EvmosRedIcon height={60} />}
         <Title>{title}</Title>
         <Description>{description}</Description>
       </div>
       {children && (
-        <div className="flex flex-col space-y-2 text-xxxs h-full justify-end">
+        <div className="flex flex-col space-y-2 text-xxs h-full justify-end">
           {children}
         </div>
       )}

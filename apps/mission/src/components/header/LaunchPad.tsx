@@ -50,7 +50,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
         aria-label="launchpad"
         className="transtion-all bg-darkGray700 rounded-full duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]"
       >
-        <LaunchIcon width={30} height={30} />
+        <LaunchIcon width={40} height={40} />
       </Menu.Button>
 
       <Transition
@@ -64,7 +64,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
       >
         <Menu.Items
           className={cn(
-            "fixed md:absolute w-full top-6 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
+            "fixed md:absolute w-full top-9 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
           )}
         >
           <div className="grid grid-cols-3 gap-y-10 px-8 pb-8">
