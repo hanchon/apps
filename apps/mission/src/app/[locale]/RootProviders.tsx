@@ -12,6 +12,13 @@ import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persist
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 
+import {
+  ThemeProvider,
+} from '@interchain-ui/react';
+import '@interchain-ui/react/globalStyles';
+import '@interchain-ui/react/styles';
+
+
 function SnackbarsInternal() {
   const valueRedux = useSelector((state: StoreType) => getAllSnackbars(state));
   const dispatch = useDispatch();
@@ -34,6 +41,7 @@ export const RootProviders = ({ children }: PropsWithChildren) => {
   }));
   return (
     <Provider store={store}>
+              <ThemeProvider>
       <PersistQueryClientProvider
         client={queryClient}
         persistOptions={{ persister }}
@@ -52,6 +60,7 @@ export const RootProviders = ({ children }: PropsWithChildren) => {
           />
         </ReactQueryStreamedHydration>
       </PersistQueryClientProvider>
+      </ThemeProvider>
     </Provider>
   );
 };
