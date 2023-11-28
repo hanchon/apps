@@ -18,10 +18,10 @@ export const IntroductionModal = ({
 }) => {
   return (
     <section className="flex flex-col space-y-3 text-gray1 h-full">
-      {icon ? icon : <EvmosRedIcon height={50} />}
+      {icon ? icon : <EvmosRedIcon height={70} />}
       <Title>{title}</Title>
       <Description>{description}</Description>
-      <div className="flex flex-col space-y-2 text-xxxs h-full justify-end">
+      <div className="flex flex-col space-y-2 text-xxs h-full justify-end">
         {content}
       </div>
     </section>

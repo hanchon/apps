@@ -49,7 +49,7 @@ const WIDGETS: {
   wormhole: dynamic(
     () => import("@evmosapps/instant-dapps/src/dapps/Wormhole")
   ),
-  forge: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Forge"))
+  forge: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Forge")),
 };
 
 export const DescriptiondApp = async ({
@@ -94,7 +94,7 @@ export const DescriptiondApp = async ({
         >
           <div
             className={cn(
-              "relative shrink-0 w-32 h-32 aspect-square bg-[#423D37] rounded-md overflow-hidden",
+              "relative shrink-0 w-32 h-32 aspect-square bg-[#423D37] rounded-xl overflow-hidden",
               "md:w-36 md:h-36"
             )}
           >
@@ -116,11 +116,11 @@ export const DescriptiondApp = async ({
             )}
           >
             <div className="flex flex-col md:flex-row items-center md:items-end space-y-2 md:space-y-0">
-              <h1 className="text-[#E8DFD3] text-2xl md:text-4xl lg:text-6xl font-bold">
+              <h1 className="text-[#E8DFD3] text-2xl md:text-5xl lg:text-8xl font-bold">
                 {dapp.name}
               </h1>
               {dapp.instantDapp && (
-                <div className="relative md:ml-auto shrink">
+                <div className="relative md:ml-auto shrink lg:-top-[19px]">
                   {/* TODO: check if we need to create a component for this */}
                   {/* TODO: add color to tailwind file */}
                   <Badge className="text-sm space-x-3 bg-[#FFE1F40F] border border-[#FFE1F472] whitespace-nowrap md:text-base md:px-4 md:py-1.5">
@@ -138,7 +138,7 @@ export const DescriptiondApp = async ({
           </div>
         </header>
       </div>
-      <div className="flex flex-col lg:flex-row gap-y-12 lg:gap-y-24 gap-x-12 items-start">
+      <div className="flex flex-col lg:flex-row gap-y-12 lg:gap-y-24 gap-x-24 items-start">
         <div className=" w-full grid grid-rows-8 gap-y-8">
           {dapp.description && (
             <DescriptionItem
@@ -222,7 +222,10 @@ export const DescriptiondApp = async ({
         )}
       </div>
 
-      <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0 -mt-8">
+      <div
+        className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0"
+        style={{ marginBottom: "-1rem" }}
+      >
         <Title tag="h3">{t("instantdApp.relatedApps.title")}</Title>
 
         <ButtonWithLink

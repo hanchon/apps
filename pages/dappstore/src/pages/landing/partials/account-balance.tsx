@@ -47,7 +47,7 @@ export const AccountBalance = () => {
 
   return (
     <section className="text-left md:mx-0">
-      <p className="mb-2 text-base text-pearl md:text-xl">
+      <p className="mb-2 text-lg text-pearl md:text-2xl">
         {t("account.balance.title")}
       </p>
       <div className="flex flex-col space-y-3 md:flex-row md:space-x-3 md:space-y-0 ">

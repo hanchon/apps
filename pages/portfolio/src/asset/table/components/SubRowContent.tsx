@@ -110,7 +110,7 @@ export const SubRowContent = ({
   const createV10Tooltip = () => {
     return (
       <div
-        className={`text-xxs capitalize ${
+        className={`text-xs capitalize ${
           item.cosmosBalance.eq(BigNumber.from("0")) ||
           item.symbol === EVMOS_SYMBOL
             ? "hidden"
@@ -145,7 +145,7 @@ export const SubRowContent = ({
   const createCoingeckoAlert = useCallback(() => {
     return (
       <Tooltip
-        className="w-24 text-xxs normal-case"
+        className="w-24 text-xs normal-case"
         element={<QuestionMarkIcon width={16} height={16} />}
         text="This value is calculated based on the price of Evmos"
       />
@@ -170,13 +170,13 @@ export const SubRowContent = ({
       <div className="mt-2 flex w-full pl-4 text-right uppercase lg:mt-0 lg:w-[50%] lg:items-center lg:pl-0 lg:text-left">
         <div className=" mx-2.5 lg:mx-0"></div>
         {/* md:w-[5%] */}
-        <p className="w-full text-left text-xs capitalize text-darkGray5 lg:hidden ">
+        <p className="w-full text-left text-sm capitalize text-darkGray5 lg:hidden ">
           Total Balance
         </p>
 
         <div className="mr-8 flex w-full flex-col lg:mr-0">
           {/* displays erc20 balance */}
-          <span className="break-all text-xs font-bold">
+          <span className="break-all text-base font-bold">
             {convertAndFormat(balance, item.decimals, 6)}
           </span>
           {/* displays ibc balance */}
@@ -192,7 +192,7 @@ export const SubRowContent = ({
             <Tooltip
               className="capitalize"
               element={
-                <p className="break-all text-xs opacity-80">
+                <p className="break-all text-sm opacity-80">
                   {convertAndFormat(item.cosmosBalance, item.decimals)}{" "}
                 </p>
               }
@@ -211,7 +211,7 @@ export const SubRowContent = ({
               </div>
             )}
 
-            <span className="text-xxs text-darkGray5">
+            <span className="text-xs text-darkGray5">
               ${amountToDollars(balance, item.decimals, item.coingeckoPrice)}
             </span>
 

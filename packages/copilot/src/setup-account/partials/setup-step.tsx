@@ -42,7 +42,7 @@ export const SetupStep = ({
         <button
           type="button"
           className={cn(
-            "text-pearl ml-4 w-full space-x-2 rounded-lg px-8 py-2 font-normal  normal-case shadow transition-all duration-150",
+            "text-pearl ml-4 w-full space-x-2 rounded-lg px-8 py-2 text-base font-normal  normal-case shadow transition-all duration-150",
             "enabled:hover:shadow-md enabled:hover:brightness-90 ",
             {
               "bg-red-300 disabled:brightness-90": !completed,
@@ -52,7 +52,7 @@ export const SetupStep = ({
           {...rest}
         />
         {error && (
-          <p className="text-red-300 ml-4 flex items-center space-x-2 text-xxs absolute -bottom-6 w-full gap-x-2">
+          <p className="text-red-300 ml-4 flex items-center space-x-2 text-xs absolute -bottom-6 w-full gap-x-2">
             <ErrorIcon />
             {error}
           </p>

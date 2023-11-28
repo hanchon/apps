@@ -62,7 +62,7 @@ export const ButtonWallet = ({
         "flex w-full px-4 py-3",
         "hover:bg-grayOpacity hover:shadow-md",
         "border-darkPearl shadow rounded border",
-        "capitalize items-center space-x-3 text-xs font-bold",
+        "capitalize items-center space-x-3 text-sm font-bold",
         "transition-all duration-300",
         {
           disabled: disabled,
@@ -98,8 +98,8 @@ export const ConnectModalContent = ({
               copilot.setIsOpen(true);
             }}
           >
-            <EvmosCopilotIcon className="h-8 w-auto" />
-            <div className="flex flex-col text-xs grow">
+            <EvmosCopilotIcon className="h-9 w-auto" />
+            <div className="flex flex-col text-sm grow">
               <p className="">Evmos Copilot</p>
               <p className="font-normal">Recommended for first time users</p>
             </div>

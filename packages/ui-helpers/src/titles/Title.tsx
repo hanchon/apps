@@ -22,7 +22,7 @@ export const Title = ({
       className: cn(
         "text-[#E8DFD3] tracking-wide",
         {
-          "text-lg lg:text-xl tracking-wide": variant === "lg",
+          "text-xl lg:text-2xl tracking-wide": variant === "lg",
           "text-base lg:text-lg": variant === "small",
           ...rest,
         },

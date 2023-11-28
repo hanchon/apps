@@ -20,7 +20,7 @@ export const ModalTOS = ({
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="bg-pearl relative w-[600px] min-w-[300px] overflow-scroll rounded-lg px-5 py-8 text-black sm:max-h-full sm:overflow-auto sm:px-10"
+        className="bg-pearl1 relative w-[600px] min-w-[300px] overflow-scroll rounded-lg px-5 py-8 text-black sm:max-h-full sm:overflow-auto sm:px-10"
       >
         <div className="text-h5 text-darkGray3 mb-4 w-[calc(100%-32px)] font-bold">
           {title}

@@ -16,7 +16,7 @@ export const ConsentModal = () => {
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Modal.Body className="bg-pearl">
+      <Modal.Body>
         {modalProps && (
           <div className="space-y-5">
             <Modal.Header>

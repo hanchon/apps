@@ -27,9 +27,9 @@ export const Divider = ({
       <div className="relative flex justify-center text-gray2 -top-[1px]">
         <span
           className={cx("px-2", {
-            "bg-white text-gray-400 text-xs": variant === "default",
+            "bg-white text-gray-400 text-sm": variant === "default",
 
-            "bg-black-900 text-pink-300 text-xxs flex items-center space-x-2":
+            "bg-black-900 text-pink-300 text-xs flex items-center space-x-2":
               variant === "info",
           })}
           {...rest}

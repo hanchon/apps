@@ -60,13 +60,13 @@ export const ProfileModal = () => {
       <Modal.Body>
         <div className="space-y-4">
           <Modal.Header>
-            <h3 className="text-base font-semibold leading-6 text-gray-900">
+            <h3 className="text-lg font-semibold leading-6 text-gray-900">
               Wallet
             </h3>
           </Modal.Header>
           <div className="flex items-center gap-x-4 ">
             <div>{Icon && <Icon height={40} width={40} />}</div>
-            <div className="flex flex-col text-sm font-bold gap-y-2">
+            <div className="flex flex-col text-base font-bold gap-y-2">
               <p className="gap-x-2 flex">
                 <AddressDisplay address={evmosAddress} maxLength={24} />
 
@@ -82,7 +82,7 @@ export const ProfileModal = () => {
                 target="_blank"
                 rel="noreferrer"
                 href={`${EXPLORER_URL}/address/${evmosAddress}`}
-                className="flex w-fit items-center space-x-2 text-xs border rounded p-3 border-darkPearl  hover:bg-grayOpacity"
+                className="flex w-fit items-center space-x-2 text-sm border rounded p-3 border-darkPearl  hover:bg-grayOpacity"
               >
                 <ExternalLinkIcon width={20} height={20} />
               </a>
@@ -91,7 +91,7 @@ export const ProfileModal = () => {
 
           <button
             className={cn(
-              "border-darkPearl hover:bg-grayOpacity mt-3 w-full rounded border p-3 font-bold uppercase"
+              "border-darkPearl text-base hover:bg-grayOpacity mt-3 w-full rounded border p-3 font-bold uppercase"
             )}
             onClick={() => {
               disconnect();

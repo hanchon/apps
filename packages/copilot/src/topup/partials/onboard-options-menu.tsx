@@ -47,7 +47,7 @@ export const OnboardOptionsMenu = ({
   const { t } = useTranslation("copilot-topup");
   const { setActiveStep, activeStep } = useCopilot();
   return (
-    <div className="grid grid-cols-1 gap-6 font-medium md:grid-cols-2 md:text-xs">
+    <div className="grid grid-cols-1 gap-6 font-medium md:grid-cols-2 md:text-sm">
       <TrackerEvent event={CLICK_ON_TOP_UP_WITH_CARD_COPILOT}>
         <OptionButton
           variant={variant}

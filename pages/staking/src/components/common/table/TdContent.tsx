@@ -11,10 +11,10 @@ export const TdContent = ({
 }) => {
   return (
     <div className="mr-4 flex justify-between">
-      <span className="text-xs text-darkGray400 md:hidden">
+      <span className="text-sm text-darkGray400 md:hidden">
         {tdProps.title}
       </span>
-      <span className="break-all text-xs font-bold text-pearl">
+      <span className="break-all text-sm font-bold text-pearl">
         {tdProps.value}
       </span>
     </div>
