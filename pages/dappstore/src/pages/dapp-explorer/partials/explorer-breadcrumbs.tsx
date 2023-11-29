@@ -41,7 +41,7 @@ export const ExplorerBreadcrumbs = async ({
       if (dapp) {
         return {
           name: dapp.name,
-          href: `${categoryStep.href}/${dapp.slug}`,
+          href: `/dapps/${categoryStep.href}/${dapp.slug}`,
         };
       }
     }
