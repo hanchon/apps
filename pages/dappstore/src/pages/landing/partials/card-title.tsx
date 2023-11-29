@@ -10,13 +10,7 @@ export const CardTitle = ({
 }) => {
   return (
     <h1 className="mb-1 text-3xl font-bold text-pearl first-letter:uppercase">
-      {firstWord}{" "}
-      <span
-        className="text-red-300 font-evmos"
-        style={{ fontFeatureSettings: "'ss02' on, 'ss01' on" }}
-      >
-        {secondWord}
-      </span>
+      {firstWord} <span className="text-red-300 font-evmos">{secondWord}</span>
     </h1>
   );
 };

@@ -8,7 +8,7 @@ export const Card = ({ className, ...rest }: ComponentProps<"section">) => {
     <section
       className={`${
         className ?? ""
-      } space-y-8 flex flex-col justify-between rounded-lg  bg-[url(/alaniso.png)] bg-center bg-cover bg-no-repeat px-5 py-7`}
+      } space-y-8 flex flex-col justify-between rounded-lg bg-[#262017] border border-darkGray700 px-5 py-7`}
       {...rest}
     />
   );

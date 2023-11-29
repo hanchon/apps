@@ -57,7 +57,7 @@
     },
     "instantdApps": {
       "title": "Instant dApps",
-      "description": "Earn yields & manage your assets in a few clicks using our instant apps",
+      "description": "Discover the power of cross-chain apps - instantly, in one place",
       "button": {
         "text": "See More"
       }
@@ -65,10 +65,10 @@
   },
   "categories": {
     "title": "Explore the <b>{{count}} {{name}}</b> on Evmos",
-
+    "description": "Explore the Evmos Ecosystem - dApps, tools, exchanges, infrastructure, and more.",
     "instantdApps": {
       "name": "Instant dApps",
-      "description": "Instant dApps are dApps that are already deployed on Evmos and can be used instantly."
+      "description": "Discover the power of cross-chain apps - instantly, in one place."
     }
   },
   "instantdApp": {
