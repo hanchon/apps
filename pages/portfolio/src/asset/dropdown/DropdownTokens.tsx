@@ -57,7 +57,6 @@ const DropdownTokens = ({
     setToken(option);
     setAddress("");
     setValue("");
-    // TODO: is it right to set as undefined?
     setChain(undefined);
     handlePreClickAction({ tokenSelected: option?.symbol });
   };

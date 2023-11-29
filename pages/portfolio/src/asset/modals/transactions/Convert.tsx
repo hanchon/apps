@@ -318,7 +318,6 @@ const Convert = ({
                     })
                   );
                 } catch (e) {
-                  // TODO: Add Sentry here!
                   dispatch(
                     addSnackbar({
                       id: 0,
@@ -367,7 +366,6 @@ const Convert = ({
                     })
                   );
                 } catch (e) {
-                  // TODO: Add Sentry here!
                   dispatch(
                     addSnackbar({
                       id: 0,

@@ -129,7 +129,6 @@ export const schema = z.object({
   amount: z
     .number({ invalid_type_error: "Required" })
     .min(0)
-    // TODO: use the correct value
     .max(Number(dummyProps.available)),
   planType: z.enum(plans),
   vestingDuration: z.enum(duration),
@@ -192,7 +191,6 @@ export const isEthereumAddressValid = (address: string): boolean => {
 };
 
 export const isEvmosAddressValid = (address: string): boolean => {
-  // TODO: are evmos wallet always 44 characters ?
   const evmosAddressRegex = /^evmos[0-9a-zA-Z]{39}$/;
   return evmosAddressRegex.test(address);
 };
