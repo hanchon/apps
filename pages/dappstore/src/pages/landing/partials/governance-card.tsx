@@ -13,16 +13,17 @@ import { ButtonWithLink, TrackerEvent } from "@evmosapps/ui-helpers";
 export const GovernanceCard = () => {
   const { t } = useTranslation("dappStore");
   return (
-    <Card>
+    <Card className="bg-[url(/alaniso-3.png)]">
       <div>
         <CardTitle
           firstWord={"Evmos"}
           secondWord={t("card.governance.title")}
         />
         <CardDescription text={t("card.governance.description")} />
+        <hr className="text-pearl/30" />
       </div>
       <TrackerEvent event={CLICK_ON_PARTICIPATE_IN_GOVERNANCE}>
-        <ButtonWithLink href="/governance">
+        <ButtonWithLink href="/governance" className="w-full">
           {t("card.governance.button.text")}
         </ButtonWithLink>
       </TrackerEvent>

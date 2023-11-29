@@ -20,7 +20,7 @@ export const LandingPage = async () => {
   const { dApps } = await fetchExplorerData();
   const { t } = await translation("dappStore");
   return (
-    <div className="space-y-8 md:space-y-16 text-display">
+    <div className="space-y-8 md:space-y-16 text-display ">
       <div className="grid items-center gap-x-8 gap-y-3 md:gap-y-11 md:grid-cols-2">
         <AccountBalance />
         <CopilotCard />

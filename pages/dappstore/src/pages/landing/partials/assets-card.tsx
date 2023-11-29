@@ -14,13 +14,14 @@ export const AssetsCard = () => {
   const { t } = useTranslation("dappStore");
 
   return (
-    <Card>
+    <Card className="bg-[url(/alaniso-2.png)]">
       <div>
         <CardTitle firstWord={"Evmos"} secondWord={t("card.assets.title")} />
         <CardDescription text={t("card.assets.description")} />
+        <hr className="text-pearl/30" />
       </div>
       <TrackerEvent event={CLICK_ON_SEE_PORTFOLIO}>
-        <ButtonWithLink href="/portfolio">
+        <ButtonWithLink href="/portfolio" className="w-full">
           {t("card.assets.button.text")}
         </ButtonWithLink>
       </TrackerEvent>
