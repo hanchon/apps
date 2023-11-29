@@ -94,7 +94,7 @@ export const DescriptiondApp = async ({
         >
           <div
             className={cn(
-              "relative shrink-0 w-32 h-32 aspect-square bg-[#423D37] rounded-xl overflow-hidden",
+              "relative shrink-0 w-32 h-32 aspect-square bg-[#423D37] rounded-[2rem] overflow-hidden",
               "md:w-36 md:h-36"
             )}
           >
