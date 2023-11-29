@@ -1,75 +1,47 @@
-// import { mmFixture } from "@evmosapps/test-utils";
+import { mmFixture, pageListener } from "@evmosapps/test-utils";
+const { test, beforeEach, describe, expect } = mmFixture;
 
-// const { test, expect, describe } = mmFixture;
-import { expect, test } from "@playwright/test";
+describe("Dapp store", () => {
+  beforeEach(async ({ page }) => {
+    await page.goto("http://localhost:3000");
 
-test("a", async ({ page }) => {
-  await page.goto("http://localhost:3004");
+    await page
+      .locator("div")
+      .filter({ hasText: /^I acknowledge to the Terms of Service\.$/ })
+      .getByRole("checkbox")
+      .check();
 
-  //   await expect(
-  //     page.getByRole("heading", { name: /Add your dApp to the dApp Store/i })
-  //   ).toBeVisible();
+    await page.getByLabel(/I want to share usage data./i).check();
 
-  //   await expect(
-  //     page.getByRole("link", { name: /Add your dApp/i })
-  //   ).toBeVisible();
+    await page.getByRole("button", { name: /accept and proceed/i }).click();
+  });
+  test("should display cypher wallet widget", async ({ page, context }) => {
+    await page.getByRole("button", { name: /Connect/i }).click();
+    await page.getByRole("button", { name: /MetaMask/i }).click();
 
-  //   const page1Promise = page.waitForEvent("popup");
-  //   await page.getByRole("link", { name: "Add your dApp" }).click();
-  //   const page1 = await page1Promise;
+    const approveAllPopup = pageListener(context);
 
-  //   //   on tally
-  //   await expect(
-  //     page1.getByRole("heading", {
-  //       name: /Here you can add your dApp to our Evmos dApp Store./i,
-  //     })
-  //   ).toBeVisible();
+    await approveAllPopup.load;
+    const popupPage = approveAllPopup.page;
 
-  //   await page1.close();
+    await popupPage.getByRole("button", { name: /Next/i }).click();
+    await popupPage.getByRole("button", { name: /Connect/i }).click();
+    await popupPage.getByRole("button", { name: /Sign/i }).click();
 
-  //   await expect(
-  //     page.getByRole("link", { name: /Learn to build on Evmos/i })
-  //   ).toBeVisible();
+    await page
+      .getByRole("link", {
+        name: /Cypher Wallet Cypher Wallet/i,
+      })
+      .click();
+    await expect(page).toHaveURL(
+      "http://localhost:3000/dapps/bridge-and-swap/cypher-wallet"
+    );
 
-  //   const page2Promise = page.waitForEvent("popup");
-  //   await page.getByRole("link", { name: "Learn to build on Evmos" }).click();
-  //   const page2 = await page2Promise;
+    const cypherWidget = page.getByTestId("cypher-onboading-sdk");
+    await cypherWidget.waitFor();
 
-  //   //   on tally
-  //   await expect(
-  //     page2.getByRole("heading", {
-  //       name: /Getting Started/i,
-  //     })
-  //   ).toBeVisible();
+    expect(await cypherWidget.count()).toBe(1);
 
-  //   await page2.close();
-
-  await expect(
-    page.getByRole("heading", { name: /Instant dApps/i })
-  ).toBeVisible();
-
-  await page.getByRole("link", { name: "See More" }).click();
-  await expect(page).toHaveURL("http://localhost:3004/dapps");
-  await page.getByLabel("home").click();
-  await expect(page).toHaveURL("http://localhost:3004");
-
-  await page.getByRole("link", { name: /See all/i }).click();
-  await expect(page).toHaveURL("http://localhost:3004/dapps");
-  await page.getByLabel("home").click();
-  await expect(page).toHaveURL("http://localhost:3004");
-
-  await page.pause();
-  await page
-    .getByRole("link", {
-      name: /c14/i,
-    })
-    .click();
-  await expect(
-    page.getByRole("heading", { name: /How to use c14 Instant dApp/i })
-  ).toBeVisible();
-
-  const c14Widget = page.getByTestId("c14-widget");
-  await c14Widget.waitFor();
-
-  expect(await c14Widget.count()).toBe(1);
+    await expect(page.getByText(/Connection required/i)).not.toBeVisible();
+  });
 });
