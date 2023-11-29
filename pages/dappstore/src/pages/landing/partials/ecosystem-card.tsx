@@ -45,7 +45,10 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
         <div className="flex space-x-3 items-center px-5 pt-5">
           <h3 className="font-bold text-sm text-pearl">{data.name}</h3>
           {data.instantDapp ? (
-            <Badge className="text-xs gap-x-2 whitespace-nowrap overflow-hidden">
+            <Badge
+              className="text-xs gap-x-2 whitespace-nowrap overflow-hidden"
+              data-testid="badge-instant-dapp"
+            >
               {/* TODO: check if we need to create a component for this */}
               {/* TODO: add color to tailwind file */}
               <span className="w-[6px] h-[6px] aspect-square bg-[#AE00FF] rounded-full" />
@@ -54,7 +57,10 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
               </span>
             </Badge>
           ) : (
-            <div className="rounded-full h-6 w-6 flex justify-center items-center bg-[#2d271d] border-[#5b5448] border text-pearl">
+            <div
+              className="rounded-full h-6 w-6 flex justify-center items-center bg-[#2d271d] border-[#5b5448] border text-pearl"
+              data-testid="badge-external-link"
+            >
               <UpRightArrowIcon className="h-2 w-2" />
             </div>
           )}
