@@ -207,3 +207,6 @@ export const CLICK_ON_CONTINUE_TO_THE_DASHBOARD =
   "Click on 'Continue to the dashboard' after topping up from main page";
 export const CLICK_ON_GIVE_FEEDBACK_MAIN_PAGE =
   "Click on 'Give Feedback' from main page";
+
+export const CLICK_EARN_REVENUE_BUTTON =
+  "ClickedCTAButton - Earn Revenue on Evmos";

@@ -3,8 +3,9 @@
 
 import { ADD_DAPP_FORM_URL, DOCS_EVMOS_REVENUE } from "constants-helper";
 import Image from "next/image";
-import { Frameline, PrimaryButton } from "@evmosapps/ui-helpers";
+import { Frameline, PrimaryButton, TrackerEvent } from "@evmosapps/ui-helpers";
 import { translation } from "@evmosapps/i18n/server";
+import { CLICK_EARN_REVENUE_BUTTON } from "tracker";
 
 export const HeroSection = async () => {
   const { t } = await translation("dappStore");
@@ -35,16 +36,18 @@ export const HeroSection = async () => {
           >
             {t("ecosystem.addAppButton")}
           </PrimaryButton>
-          <PrimaryButton
-            as={"a"}
-            className="flex-1 font-normal rounded w-full text-center text-sm"
-            variant="secondary"
-            href={DOCS_EVMOS_REVENUE}
-            target="_blank"
-            referrerPolicy="no-referrer"
-          >
-            {t("ecosystem.revenueButton")}
-          </PrimaryButton>
+          <TrackerEvent event={CLICK_EARN_REVENUE_BUTTON}>
+            <PrimaryButton
+              as={"a"}
+              className="flex-1 font-normal rounded w-full text-center text-sm"
+              variant="secondary"
+              href={DOCS_EVMOS_REVENUE}
+              target="_blank"
+              referrerPolicy="no-referrer"
+            >
+              {t("ecosystem.revenueButton")}
+            </PrimaryButton>
+          </TrackerEvent>
         </div>
       </div>
       <div className="hidden md:grid">
