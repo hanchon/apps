@@ -20,9 +20,8 @@ export const Badge = ({
           "border border-lightYellow bg-lightYellow1 text-brown":
             variant === "warning",
           "bg-red-300 text-pearl border border-red-300": variant === "danger",
-          // {/* TODO: add color to tailwind file */}
-          "bg-[#2d271d] border-[#5b5448] border text-pearl": variant === "info",
-          "border border-[#44413c] bg-[#2d271d] text-pearl text-xs md:text-sm tracking-wide px-2 md:px-4 py-1.5 font-bold cursor-pointer transition-color  duration-100 ease-in-out hover:bg-[#656159] active:bg-[#656159]":
+          "bg-black-500 border-black-200 border text-pearl": variant === "info",
+          "border border-black-300 bg-black-500 text-pearl text-xs md:text-sm tracking-wide px-2 md:px-4 py-1.5 font-bold cursor-pointer transition-color duration-100 ease-in-out hover:bg-black-100 active:bg-black-100":
             variant === "dark",
         },
         className

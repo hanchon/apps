@@ -16,7 +16,6 @@ export const HeroSection = async () => {
           backgroundImage: `url(/ecosystem/galaxy.png)`,
         }}
       >
-        {/* TODO: add localization */}
         <h1
           className="font-evmos font-bold text-2xl md:text-[2.5em] tracking-wide text-pearl leading-none"
           style={{ fontFeatureSettings: "'ss02' on, 'ss01' on" }}

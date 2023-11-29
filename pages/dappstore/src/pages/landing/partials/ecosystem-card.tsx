@@ -49,16 +49,14 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
               className="text-xs gap-x-2 whitespace-nowrap overflow-hidden"
               data-testid="badge-instant-dapp"
             >
-              {/* TODO: check if we need to create a component for this */}
-              {/* TODO: add color to tailwind file */}
-              <span className="w-[6px] h-[6px] aspect-square bg-[#AE00FF] rounded-full" />
+              <span className="w-[6px] h-[6px] aspect-square bg-purple-400 rounded-full" />
               <span className="overflow-ellipsis overflow-hidden">
                 Instant dApp
               </span>
             </Badge>
           ) : (
             <div
-              className="rounded-full h-6 w-6 flex justify-center items-center bg-[#2d271d] border-[#5b5448] border text-pearl"
+              className="rounded-full h-6 w-6 flex justify-center items-center bg-black-500 border-black-200 border text-pearl"
               data-testid="badge-external-link"
             >
               <UpRightArrowIcon className="h-2 w-2" />

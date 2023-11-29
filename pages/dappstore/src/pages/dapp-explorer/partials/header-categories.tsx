@@ -54,7 +54,6 @@ export const HeaderCategories = ({
           >
             <Badge
               className={cn({
-                // TODO:  create reusable component for circle
                 "pl-9 md:pl-9 lg:pl-10 relative before:content-[''] before:absolute before:top-[50%] before:left-3 lg:before:left-[0.9rem] before:-translate-y-1/2 before:w-[12px] before:h-[12px] before:bg-red-300 before:rounded-full":
                   params.category === category.slug,
               })}

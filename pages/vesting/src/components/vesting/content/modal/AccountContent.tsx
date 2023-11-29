@@ -28,7 +28,6 @@ export const AccountContent = ({
     <section className="break-words">
       <h1 className="text-2xl">{t("vesting.account.details.title")}</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-8">
-        {/* TODO: create reusable component for generic card used in all dapps */}
         <div className="my-5 mr-1 space-y-5 rounded-2xl bg-darkGray2 p-5 text-sm text-pearl xl:mx-0 ">
           <div className="flex items-center justify-between">
             <h2 className="text-lg uppercase">

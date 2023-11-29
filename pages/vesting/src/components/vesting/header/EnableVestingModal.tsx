@@ -68,7 +68,6 @@ export const EnableVestingModal = ({ onClose }: { onClose: () => void }) => {
     } catch (e) {
       Log().error(e);
       setDisabled(false);
-      // TODO: Add Sentry here!
       dispatch(
         addSnackbar({
           id: 0,

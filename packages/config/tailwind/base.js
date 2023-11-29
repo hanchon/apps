@@ -83,6 +83,10 @@ const config = {
         brown: "#854D0E",
         lightBlue: "#EFF6FF",
         blue: "#1E429F",
+        "black-100": "#656159",
+        "black-200": "#5b5448",
+        "black-300": "#44413c",
+        "black-500": "#2d271d",
         "black-900": "#121212",
         "pink-200": "#FFE6E2",
         "pink-300": "#FF745D",
@@ -92,6 +96,7 @@ const config = {
         "pink-700": "#FFC1C1",
         "purple-200": "#F8E3FF",
         "purple-300": "#BD89FF",
+        "purple-400": "#AE00FF",
       },
       fontSize: {
         h5: "1.36rem",

@@ -99,7 +99,6 @@ export const useConvert = (useConvertProps: ConvertProps) => {
         });
       } catch (e) {
         Log().error(e);
-        // TODO: Add Sentry here!
         dispatch(snackErrorGeneratingTx());
         unsuccessfulTx({
           errorMessage: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
@@ -125,7 +124,6 @@ export const useConvert = (useConvertProps: ConvertProps) => {
         });
       } catch (e) {
         Log().error(e);
-        // TODO: Add Sentry here!
         dispatch(snackErrorGeneratingTx());
         unsuccessfulTx({
           errorMessage: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,

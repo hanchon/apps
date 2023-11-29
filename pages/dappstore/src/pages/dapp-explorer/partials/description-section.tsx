@@ -121,12 +121,8 @@ export const DescriptiondApp = async ({
               </h1>
               {dapp.instantDapp && (
                 <div className="relative md:ml-auto shrink lg:-top-[19px]">
-                  {/* TODO: check if we need to create a component for this */}
-                  {/* TODO: add color to tailwind file */}
                   <Badge className="text-sm space-x-3 bg-[#FFE1F40F] border border-[#FFE1F472] whitespace-nowrap md:text-base md:px-4 md:py-1.5">
-                    {/* TODO: check if we need to create a component for this */}
-                    {/* TODO: add color to tailwind file */}
-                    <span className="w-[10px] h-[10px] bg-[#AE00FF] rounded-full" />
+                    <span className="w-[10px] h-[10px] bg-purple-400 rounded-full" />
                     <p>{t("instantdApp.badge")}</p>
                   </Badge>
                 </div>

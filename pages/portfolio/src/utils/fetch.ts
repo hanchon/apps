@@ -51,7 +51,6 @@ export const getBalance = async (
     );
     const data = (await res.json()) as BalanceResponse;
     if ("error" in data) {
-      // TODO: add sentry call here!
       return {
         error: true,
         message: BALANCE_NOTIFICATIONS.ErrorGetBalance,
@@ -60,7 +59,6 @@ export const getBalance = async (
     }
     return { error: false, message: "", data: data };
   } catch (e) {
-    // TODO: add sentry call here!
     return {
       error: true,
       message: BALANCE_NOTIFICATIONS.ErrorGetBalance,
