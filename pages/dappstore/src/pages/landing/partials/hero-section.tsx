@@ -37,7 +37,7 @@ export const HeroSection = async () => {
           </PrimaryButton>
           <PrimaryButton
             as={"a"}
-            className="flex-1 font-normal rounded w-full text-center"
+            className="flex-1 font-normal rounded w-full text-center text-sm"
             variant="secondary"
             href={DOCS_EVMOS_REVENUE}
             target="_blank"
