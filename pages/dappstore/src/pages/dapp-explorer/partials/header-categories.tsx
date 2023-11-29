@@ -9,6 +9,7 @@ import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { Category, DApp } from "../../../lib/fetch-explorer-data";
 
+import { translation } from "@evmosapps/i18n/server";
 export const HeaderCategories = ({
   categories,
   params,
@@ -68,7 +69,7 @@ export const HeaderCategories = ({
   );
 };
 
-const CategoryHeader = ({
+const CategoryHeader = async ({
   category,
   totalCategoryCount,
   ...rest
@@ -77,7 +78,7 @@ const CategoryHeader = ({
   totalCategoryCount: number;
 } & ComponentProps<"div">) => {
   const categoryName = category?.name ?? "dApps";
-
+  const { t } = await translation("dappStore");
   return (
     <div className="space-y-2" {...rest}>
       <Title className="text-2xl lg:text-[2.3rem]">
@@ -102,11 +103,12 @@ const CategoryHeader = ({
           }}
         />
       </Title>
-      {category?.description && (
-        <div className="relative text-base text-[#E8DFD3]">
-          <Subtitle>{category?.description}</Subtitle>
-        </div>
-      )}
+
+      <div className="relative text-base text-[#E8DFD3]">
+        <Subtitle>
+          {category?.description ?? t("categories.description")}
+        </Subtitle>
+      </div>
     </div>
   );
 };

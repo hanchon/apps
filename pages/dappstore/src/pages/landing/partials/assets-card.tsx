@@ -14,7 +14,7 @@ export const AssetsCard = () => {
   const { t } = useTranslation("dappStore");
 
   return (
-    <Card className="bg-[url(/alaniso-2.png)]">
+    <Card>
       <div>
         <CardTitle firstWord={"Evmos"} secondWord={t("card.assets.title")} />
         <CardDescription text={t("card.assets.description")} />

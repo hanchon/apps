@@ -13,7 +13,7 @@ import { ButtonWithLink, TrackerEvent } from "@evmosapps/ui-helpers";
 export const GovernanceCard = () => {
   const { t } = useTranslation("dappStore");
   return (
-    <Card className="bg-[url(/alaniso-3.png)]">
+    <Card>
       <div>
         <CardTitle
           firstWord={"Evmos"}

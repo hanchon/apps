@@ -1,5 +1,4 @@
 "use client";
-import { EvmosCopilotWhiteIcon } from "icons";
 import { useCosmosQuery } from "@evmosapps/evmos-wallet/src/api/cosmos-clients/client";
 import { useAccount } from "wagmi";
 import { normalizeToEvmos } from "@evmosapps/evmos-wallet";
@@ -52,14 +51,11 @@ export const CopilotCard = () => {
 
   const nextStepsActive = isConnected && balance > 0n && sequence === 0n;
   const linkCn =
-    "rounded w-full px-5 py-1 text-xl font-bold transition-all duration-200 ease-in-out text-pearl bg-pearl/20 hover:brightness-90";
+    "rounded w-full px-5 py-1 text-base font-bold transition-all duration-200 ease-in-out text-pearl bg-[#504f43] hover:brightness-90";
   return (
     <div className="bg-red-300 text-pearl flex flex-col justify-start space-y-3 rounded-lg bg-[url(/galaxy-1.png)] bg-cover bg-center bg-no-repeat p-6">
       <hr className="text-pearl/30" />
-      <h1
-        className=" text-5xl font-bold font-evmos"
-        style={{ fontFeatureSettings: "'ss02' on, 'ss01' on" }}
-      >
+      <h1 className=" text-5xl font-bold font-evmos tracking-wider">
         {t("copilotCard.title")}
       </h1>
       <h2 className="font-bold text-xl">{t("copilotCard.subtitle")}</h2>
