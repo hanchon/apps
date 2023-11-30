@@ -6,6 +6,7 @@
  * You can find the source code for this script on /scripts/typegen.ts
  */
 
+export { default as wormhole } from "./wormhole";
 export { default as teritori } from "./teritori";
 export { default as stride } from "./stride";
 export { default as stargaze } from "./stargaze";
