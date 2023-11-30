@@ -13,7 +13,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 
 import { ThemeProvider } from "@interchain-ui/react";
-import "@interchain-ui/react/globalStyles";
 import "@interchain-ui/react/styles";
 
 function SnackbarsInternal() {
