@@ -50,6 +50,7 @@ const WIDGETS: {
     () => import("@evmosapps/instant-dapps/src/dapps/Wormhole")
   ),
   forge: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Forge")),
+  stride: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Stride/Stride")),
 };
 
 export const DescriptiondApp = async ({

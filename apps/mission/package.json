@@ -24,7 +24,6 @@
     "@evmosapps/config": "workspace:*",
     "@evmosapps/copilot": "workspace:*",
     "@evmosapps/dappstore-page": "workspace:*",
-    "@evmosapps/vesting-page": "workspace:*",
     "@evmosapps/evmos-wallet": "workspace:*",
     "@evmosapps/governance-page": "workspace:*",
     "@evmosapps/i18n": "workspace:*",
@@ -32,6 +31,7 @@
     "@evmosapps/staking-page": "workspace:*",
     "@evmosapps/test-utils": "workspace:*",
     "@evmosapps/ui-helpers": "workspace:*",
+    "@evmosapps/vesting-page": "workspace:*",
     "@hanchon/signature-to-pubkey": "^1.0.1",
     "@keplr-wallet/types": "^0.12.20",
     "@metamask/providers": "^10.2.1",
@@ -66,6 +66,7 @@
     "last 3 safari version"
   ],
   "dependencies": {
+    "@interchain-ui/react": "1.14.2",
     "@netlify/plugin-nextjs": "^4.41.2",
     "@notionhq/client": "^2.2.13",
     "@playwright/test": "^1.39.0",
