@@ -11,7 +11,7 @@ export type StrideStakeStatsResponse = {
 
 export type StrideHostZoneResponse = {
   host_zone: {
-    redemption_rate: number;
+    redemption_rate: string;
   };
 };
 
@@ -40,7 +40,7 @@ export default function useStrideData() {
       const data = (await res.json()) as StrideHostZoneResponse;
       const { host_zone } = data;
       const redemption_rate = host_zone.redemption_rate;
-      setRedemptionRate(redemption_rate);
+      setRedemptionRate(parseFloat(redemption_rate));
     })
     .catch(() => {});
   }, []);

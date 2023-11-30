@@ -93,7 +93,7 @@ const Stride = () => {
           },
           {
             title: "Value of 1 stEVMOS",
-            subtitle: `${redemptionRate?.toFixed(2)} stEVMOS`,
+            subtitle: `${redemptionRate ? redemptionRate?.toFixed(2) : 0} stEVMOS`,
             desc: "The value of 1 stEVMOS if redeemed through the Stride protocol redemption rate grows predictably as staking rewards accrue.",
           },
         ]}
