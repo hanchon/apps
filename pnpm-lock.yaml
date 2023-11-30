@@ -109,8 +109,8 @@ importers:
   apps/mission:
     dependencies:
       '@interchain-ui/react':
-        specifier: ^1.14.1
-        version: 1.14.1(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 1.14.2
+        version: 1.14.2(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
       '@netlify/plugin-nextjs':
         specifier: ^4.41.2
         version: 4.41.2
@@ -4636,8 +4636,8 @@ packages:
       lodash: 4.17.21
     dev: false
 
-  /@interchain-ui/react@1.14.1(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-MqAo32NZhnhAqCAK44C4xjPbL0yoDWee+EFnw6wPPi33ZXJx4SGWrDxoPewC/l2yP/tpsqT9fwdxhBd8P9L/nw==}
+  /@interchain-ui/react@1.14.2(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-YA3Dkq4FOUOcKHoH8iTqozowo5VisaT4iPffkGnxkkShlMY/NwC5V4q5WbdkNaefKmlIoUJDKle/Pyx9UL4iyw==}
     peerDependencies:
       react: ^18.x
       react-dom: ^18.x

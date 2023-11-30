@@ -66,7 +66,7 @@
     "last 3 safari version"
   ],
   "dependencies": {
-    "@interchain-ui/react": "^1.14.1",
+    "@interchain-ui/react": "1.14.2",
     "@netlify/plugin-nextjs": "^4.41.2",
     "@notionhq/client": "^2.2.13",
     "@playwright/test": "^1.39.0",
