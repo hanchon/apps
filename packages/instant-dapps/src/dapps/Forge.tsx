@@ -10,6 +10,7 @@ const Forge = () => {
         <SwapWidget
             width={"100%"}
             defaultChainId={9001}
+            routerUrl={"https://forge-router.evmosdao.xyz/"}
         />
     </div>
 }

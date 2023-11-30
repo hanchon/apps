@@ -56,7 +56,7 @@ const Stride = () => {
     name: "Staked Evmos",
     priceDisplayAmount: 0,
     rewardAmount: 0,
-    symbol: "stEvmos",
+    symbol: "stEVMOS",
   });
 
   const [stakedAmount, setStakedAmount] = useState<number>(0);
@@ -93,8 +93,8 @@ const Stride = () => {
           },
           {
             title: "Value of 1 stEVMOS",
-            subtitle: `${redemptionRate} stEVMOS`,
-            desc: "The value of 1 stEVNOS if redeemed through the Stride protocol redemption rate grows predictably as staking rewards accrue.",
+            subtitle: `${redemptionRate?.toFixed(2)} stEVMOS`,
+            desc: "The value of 1 stEVMOS if redeemed through the Stride protocol redemption rate grows predictably as staking rewards accrue.",
           },
         ]}
         onChange={({
