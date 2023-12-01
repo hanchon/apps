@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.3.11 - 2023-12-01
+
 - (chore) fse-882 | packages/registry 1.0.6 apps/assets 1.0.42 | add Wormhole tokens
 
 ## 1.3.10 - 2023-11-23
