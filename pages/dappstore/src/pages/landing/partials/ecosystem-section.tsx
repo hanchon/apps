@@ -12,13 +12,13 @@ import { EcosystemCardGrid } from "./ecosystem-card-grid";
 
 const landingdAppsOrder = [
   "stride",
+  "osmosis",
   "forge",
   "squid",
-  "wormhole",
   "layerswap",
   "cypher-wallet",
+  "wormhole",
   "transak",
-  "c14",
 ];
 export const EcosystemSection = async () => {
   const { t } = await translation("dappStore");
@@ -26,7 +26,7 @@ export const EcosystemSection = async () => {
 
   const instantDapps = dApps
     // get the instant dapps
-    .filter((dApp) => dApp.instantDapp)
+    .filter((dApp) => dApp.instantDapp && dApp.name !== "c14")
     // sort them by the order in the array
     .sort((a, b) => {
       return (

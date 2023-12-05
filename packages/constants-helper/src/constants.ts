@@ -27,6 +27,7 @@ export const DOCS_SMART_CONTRACTS_URL =
   "https://docs.evmos.org/develop/smart-contracts";
 export const DOCS_EVMOS_REVENUE =
   "https://docs.evmos.org/protocol/modules/revenue#abstract";
+export const DOCS_EVMOS_URL = "https://docs.evmos.org/";
 export const ADD_DAPP_FORM_URL = "https://tally.so/r/wbWjlL";
 export const STRIDE_URL = "https://app.stride.zone/?chain=EVMOS";
 export const FORGE_URL = "https://forge.trade/";
@@ -69,3 +70,9 @@ export const EMOJIS = {
 export const REGISTER_TOKEN_URL =
   "https://github.com/evmos/chain-token-registry";
 export const MEDIUM_URL = "https://medium.com/evmos";
+export const GITHUB_EVMOS_URL = "github.com/evmos/apps";
+export const COINGECKO_URL = "https://www.coingecko.com";
+export const TWITTER_EVMOS_URL = "https://twitter.com/evmosorg";
+export const DISCORD_EVMOS_URL = "https://discord.com/invite/evmos";
+export const TELEGRAM_EVMOS_URL = "https://t.me/EvmosOrg";
+export const TOS_EVMOS_URL = "https://evmos.org/terms-of-service";

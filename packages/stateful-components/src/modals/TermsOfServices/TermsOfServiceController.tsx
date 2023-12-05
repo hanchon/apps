@@ -51,7 +51,6 @@ export const TermsOfServicesModalController = ({
           <div className="relative rounded-lg w-full space-y-4 max-w-2xl">
             <h2 className="font-bold">{t("tos.title")}</h2>
             <div className="border-darkGray5 h-80 w-full space-y-3 overflow-y-auto border p-4 font-display">
-              {/* <TOSContent /> */}
               {children}
             </div>
             <div className={`flex items-center space-x-2`}>

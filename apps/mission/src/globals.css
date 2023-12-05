@@ -140,3 +140,7 @@
   border-bottom: 4px solid transparent;
   animation: rotation 0.5s linear infinite reverse;
 }
+
+#cyd-popup-background {
+  max-height: 900px !important;
+}

@@ -52,7 +52,15 @@ const CypherD = () => {
   });
 
   useEffect(() => {
+    if (address === undefined) {
+      const cypherElement = document?.getElementById("cyd-popup-background");
+      if (cypherElement) {
+        cypherElement.parentNode?.removeChild(cypherElement);
+      }
+    }
+
     if (!address || !cypher) return;
+
     void cypher({
       address,
       theme: "light",
@@ -64,16 +72,21 @@ const CypherD = () => {
 
   if (address === undefined) {
     return (
-      <div className="flex flex-col items-center text-center space-y-2 min-h-[400px] justify-center">
-        <EvmosCopilotRedIcon height={30} />
-        <p className="text-pearl">Connection required</p>
-        <p>
-          Please connect your account in order to interact with the Cypher
-          Wallet Instant dApp
-        </p>
-        <PrimaryButton as="a" variant={"primary"} href="?action=connect">
-          Connect
-        </PrimaryButton>
+      <div
+        className="relative after:absolute after:top-0 after:left-0 after:right-0 after:bottom-0 after:z-10 after:bg-[rgba(0,0,0,.3)] 
+        z-[10] h-[450px] bg-center bg-no-repeat bg-cover bg-[url(/ecosystem/cypher-blur.png)] flex flex-col justify-center"
+      >
+        <div className="z-20 text-center flex flex-col items-center space-y-2">
+          <EvmosCopilotRedIcon height={30} />
+          <p className="text-pearl ">Connection required</p>
+          <p>
+            Please connect your account in order to interact with the Cypher
+            Wallet Instant dApp
+          </p>
+          <PrimaryButton as="a" variant={"primary"} href="?action=connect">
+            Connect
+          </PrimaryButton>
+        </div>
       </div>
     );
   }
@@ -81,7 +94,7 @@ const CypherD = () => {
     <div // div inside which the widget will be present
       data-testid="cypher-onboading-sdk"
       id="cypher-onboading-sdk" // Id that will be passed to the window.Cypher() call
-      className="flex h-full flex-col items-center justify-center min-h-[300px] z-[1]"
+      className="flex h-full flex-col items-center justify-center z-[1]"
     />
   );
 };

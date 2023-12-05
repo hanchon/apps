@@ -61,9 +61,9 @@ function RootLayout({
       <head />
       <body className={cn(nb.variable, evmos.variable, "h-full")}>
         <RootProviders>
-          <main className="flex flex-col dark:text-white min-h-full relative">
+          <main className="flex flex-col dark:text-white min-h-screen relative">
             <Header />
-            <Container>{children}</Container>
+            <Container className="grow">{children}</Container>
             <Footer />
           </main>
 

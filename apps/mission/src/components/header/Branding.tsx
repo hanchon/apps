@@ -1,9 +1,9 @@
 "use client";
-import { Logo } from "icons";
 
 import { useTranslation, Link } from "@evmosapps/i18n/client";
 import { usePathname } from "next/navigation";
 import { getLocaleFromPath } from "@evmosapps/i18n";
+import Image from "next/image";
 
 export const Branding = () => {
   const { t } = useTranslation();
@@ -22,7 +22,13 @@ export const Branding = () => {
       className="flex justify-center items-center h-7 md:h-8 lg:h-7"
       aria-label="home"
     >
-      <Logo className="h-6 lg:h-7 w-auto mr-2 lg:mr-3" />
+      <Image
+        src="/evmos_logo.png"
+        alt="evmos logo"
+        width={50}
+        height={50}
+        className="mr-2 lg:mr-3"
+      />
       <p className="text-red-300 relative top-[3px] lg:top-[5px] text-[24px] lg:text-[1.8rem] font-evmos">
         <span className="text-pearl mr-4 md:mr-5 lg:mr-6 font-brand">
           Evmos

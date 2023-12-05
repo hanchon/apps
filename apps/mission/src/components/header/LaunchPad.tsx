@@ -2,16 +2,11 @@
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import { Menu, Transition } from "@headlessui/react";
 import { cn } from "helpers";
-import {
-  CalculatorIcon,
-  CoinIcon,
-  GovernanceIcon,
-  LaunchIcon,
-  NutIcon,
-} from "icons";
+import { LaunchIcon } from "icons";
 import { ComponentProps, Fragment } from "react";
 import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
 import { NetworkModeSelector } from "@evmosapps/ui-helpers";
+import Image from "next/image";
 
 export function LaunchPad({}: { showPing?: boolean }) {
   const { t } = useTranslation();
@@ -19,25 +14,25 @@ export function LaunchPad({}: { showPing?: boolean }) {
 
   const launchPadItems = [
     {
-      icon: <NutIcon width="40" height="40" />,
+      icon: "/ecosystem/home.png",
       children: t("launchPad.dApp.title"),
       href: "/",
       mixpanelId: "dAppStore",
     },
     {
-      icon: <CoinIcon width="40" height="40" />,
+      icon: "/ecosystem/portfolio.png",
       children: t("launchPad.assets.title"),
       href: "/portfolio",
       mixpanelId: "Assets",
     },
     {
-      icon: <CalculatorIcon width="40" height="40" />,
+      icon: "/ecosystem/staking.png",
       children: t("launchPad.staking.title"),
       href: "/staking",
       mixpanelId: "Staking",
     },
     {
-      icon: <GovernanceIcon width="40" height="40" />,
+      icon: "/ecosystem/governance.png",
       children: t("launchPad.governance.title"),
       href: "/governance",
       mixpanelId: "Governance",
@@ -64,10 +59,10 @@ export function LaunchPad({}: { showPing?: boolean }) {
       >
         <Menu.Items
           className={cn(
-            "fixed md:absolute w-full top-9 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
+            "fixed md:absolute w-full top-32 md:top-9 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
           )}
         >
-          <div className="grid grid-cols-3 gap-y-10 px-8 pb-8">
+          <div className="grid grid-cols-3 gap-y-16 px-8 pb-16">
             {launchPadItems.map(({ href, mixpanelId, ...rest }) => (
               <LaunchPadItem
                 key={href}
@@ -106,17 +101,22 @@ export const LaunchPadItem = ({
   children,
   ...rest
 }: ComponentProps<typeof Link> & {
-  icon: JSX.Element;
+  icon: string;
 }) => {
   return (
     <Link
       rel="noopener noreferrer"
-      className="text-pearl text-sm flex flex-col items-center text-center space-y-2"
+      className="text-pearl text-sm flex flex-col items-center text-center space-y-2 h-[70px]"
       {...rest}
     >
-      <div className="bg-red-300 hover:bg-red1 active:bg-red2 flex w-fit items-center justify-center rounded-lg p-2 transition-all duration-150 ease-in hover:scale-105">
-        {icon}
-      </div>
+      <Image
+        src={icon}
+        width={70}
+        height={70}
+        alt={icon}
+        className="transition-all duration-150 ease-in hover:scale-105"
+      />
+
       <p>{children}</p>
     </Link>
   );
