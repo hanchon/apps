@@ -35,8 +35,8 @@
     }
   },
   "copilotCard": {
-    "title": "Onboarding",
-    "subtitle": "to Evmos in 5 minutes",
+    "title": "Get started",
+    "subtitle": "with Evmos in 5 minutes",
     "setupYourAccount": "Set up your account",
     "topUpYourAccount": "Top up your account",
     "nextSteps": "Next steps",
@@ -46,15 +46,16 @@
     "useADapp": "Use a dApp"
   },
   "ecosystem": {
-    "title": "Add your dApp",
-    "title2": "to the dapp Store",
+    "title": "Add your dApp to",
+    "title2": "the Store",
     "description": "Interested in adding your dApp to our dApp Store and earning revenue?",
     "addAppButton": "Add your dApp",
-    "revenueButton": "Earn revenue on Evmos",
+    "buildButton": "Build on Evmos",
     "button": {
-      "text": "See all",
+      "text": "See all ",
       "text2": "dApps"
     },
+    "explore": "Explore all <div>{{count}} dApps</div>",
     "instantdApps": {
       "title": "Instant dApps",
       "description": "Discover the power of cross-chain apps - instantly, in one place",

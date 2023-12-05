@@ -1,7 +1,18 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { DOCS_SMART_CONTRACTS_URL, COMMONWEALTH_URL } from "constants-helper";
+import {
+  DOCS_SMART_CONTRACTS_URL,
+  COMMONWEALTH_URL,
+  GITHUB_EVMOS_URL,
+  MEDIUM_URL,
+  PRIVACY_POLICY_URL,
+  COINGECKO_URL,
+  TWITTER_EVMOS_URL,
+  DISCORD_EVMOS_URL,
+  TELEGRAM_EVMOS_URL,
+  TOS_EVMOS_URL,
+} from "constants-helper";
 
 import {
   TwitterIcon,
@@ -12,8 +23,6 @@ import {
   CodeIcon,
   MediumIcon,
 } from "icons";
-import { PRIVACY_POLICY_URL } from "constants-helper";
-import { MEDIUM_URL } from "constants-helper/src/constants";
 
 export const Footer = ({
   handleCookies,
@@ -54,7 +63,7 @@ export const Footer = ({
             <a
               target="_blank"
               rel="noreferrer"
-              href="https://www.coingecko.com"
+              href={COINGECKO_URL}
               aria-label="coingecko"
               className="text-sm"
             >
@@ -68,7 +77,7 @@ export const Footer = ({
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://github.com/tharsis/evmos"
+            href={GITHUB_EVMOS_URL}
             aria-label="github evmos"
           >
             <GithubIcon />
@@ -76,7 +85,7 @@ export const Footer = ({
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://twitter.com/evmosorg"
+            href={TWITTER_EVMOS_URL}
             aria-label="twitter evmos"
           >
             <TwitterIcon width={20} height={20} />
@@ -84,7 +93,7 @@ export const Footer = ({
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://discord.com/invite/evmos"
+            href={DISCORD_EVMOS_URL}
             aria-label="discord evmos"
           >
             <DiscordIcon />
@@ -92,7 +101,7 @@ export const Footer = ({
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://t.me/EvmosOrg"
+            href={TELEGRAM_EVMOS_URL}
             aria-label="discord telegram"
           >
             <TelegramIcon />
@@ -120,7 +129,7 @@ export const Footer = ({
             <a
               target="_blank"
               rel="noreferrer"
-              href="https://evmos.org/terms-of-service"
+              href={TOS_EVMOS_URL}
               aria-label="terms of services"
             >
               Terms of Service

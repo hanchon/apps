@@ -44,6 +44,7 @@ export const ConsentModal = () => {
             </div>
             <div className="flex items-center justify-center space-x-5">
               <GrayButton
+                className="bg-red-300 hover:bg-red1 text-white"
                 onClick={() => {
                   enableMixpanel();
 

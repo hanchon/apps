@@ -50,15 +50,19 @@ const WIDGETS: {
     () => import("@evmosapps/instant-dapps/src/dapps/Wormhole")
   ),
   forge: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Forge")),
-  stride: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Stride/Stride")),
+  stride: dynamic(
+    () => import("@evmosapps/instant-dapps/src/dapps/Stride/Stride")
+  ),
 };
 
 export const DescriptiondApp = async ({
   dapp,
   relatedApps,
+  totalApps,
 }: {
   dapp: DApp;
   relatedApps: DApp[];
+  totalApps: number;
 }) => {
   const { t } = await translation("dappStore");
 
@@ -95,7 +99,7 @@ export const DescriptiondApp = async ({
         >
           <div
             className={cn(
-              "relative shrink-0 w-32 h-32 aspect-square bg-[#423D37] rounded-[2rem] overflow-hidden",
+              "relative shrink-0 w-32 h-32 aspect-square rounded-[2rem] overflow-hidden",
               "md:w-36 md:h-36"
             )}
           >
@@ -122,7 +126,7 @@ export const DescriptiondApp = async ({
               </h1>
               {dapp.instantDapp && (
                 <div className="relative md:ml-auto shrink lg:-top-[19px]">
-                  <Badge className="text-sm space-x-3 bg-[#FFE1F40F] border border-[#FFE1F472] whitespace-nowrap md:text-base md:px-4 md:py-1.5">
+                  <Badge className="text-sm space-x-3 bg-[#FFF4E10F] border border-[#FFF4E173] whitespace-nowrap md:text-base md:px-4 md:py-1.5">
                     <span className="w-[10px] h-[10px] bg-purple-400 rounded-full" />
                     <p>{t("instantdApp.badge")}</p>
                   </Badge>
@@ -241,7 +245,7 @@ export const DescriptiondApp = async ({
         ))}
       </EcosystemCardGrid>
 
-      <HeroSection />
+      <HeroSection totalApps={totalApps} />
     </div>
   );
 };
