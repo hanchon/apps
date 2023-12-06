@@ -62,7 +62,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
             "fixed md:absolute w-full top-32 md:top-9 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
           )}
         >
-          <div className="grid grid-cols-3 gap-y-16 px-8 pb-16">
+          <div className="grid grid-cols-3 gap-y-6 px-8 py-6">
             {launchPadItems.map(({ href, mixpanelId, ...rest }) => (
               <LaunchPadItem
                 key={href}
@@ -98,7 +98,6 @@ export function LaunchPad({}: { showPing?: boolean }) {
 
 export const LaunchPadItem = ({
   icon,
-  children,
   ...rest
 }: ComponentProps<typeof Link> & {
   icon: string;
@@ -106,18 +105,16 @@ export const LaunchPadItem = ({
   return (
     <Link
       rel="noopener noreferrer"
-      className="text-pearl text-sm flex flex-col items-center text-center space-y-2 h-[70px]"
+      className="text-pearl text-sm flex flex-col items-center text-center space-y-2 h-[100px]"
       {...rest}
     >
       <Image
         src={icon}
-        width={70}
-        height={70}
+        width={100}
+        height={100}
         alt={icon}
         className="transition-all duration-150 ease-in hover:scale-105"
       />
-
-      <p>{children}</p>
     </Link>
   );
 };
