@@ -126,7 +126,7 @@ export const DescriptiondApp = async ({
               </h1>
               {dapp.instantDapp && (
                 <div className="relative md:ml-auto shrink lg:-top-[19px]">
-                  <Badge className="text-sm space-x-3 bg-[#FFF4E10F] border border-[#FFF4E173] whitespace-nowrap md:text-base md:px-4 md:py-1.5">
+                  <Badge className="text-sm space-x-3 bg-transparent border border-[#FFF4E173] whitespace-nowrap md:text-base md:px-4 md:py-1.5">
                     <span className="w-[10px] h-[10px] bg-purple-400 rounded-full" />
                     <p>{t("instantdApp.badge")}</p>
                   </Badge>

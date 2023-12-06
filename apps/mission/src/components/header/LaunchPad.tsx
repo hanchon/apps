@@ -5,7 +5,7 @@ import { cn } from "helpers";
 import { LaunchIcon } from "icons";
 import { ComponentProps, Fragment } from "react";
 import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
-import { NetworkModeSelector } from "@evmosapps/ui-helpers";
+import { ButtonWithLink, NetworkModeSelector } from "@evmosapps/ui-helpers";
 import Image from "next/image";
 
 export function LaunchPad({}: { showPing?: boolean }) {
@@ -59,11 +59,27 @@ export function LaunchPad({}: { showPing?: boolean }) {
       >
         <Menu.Items
           className={cn(
-            "fixed md:absolute w-full top-32 md:top-9 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] pt-8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
+            " fixed shadow-custom md:absolute w-full px-8 top-32 md:top-9 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] py-8 drop-shadow-md drop-shadow-red1 border border-darkGray700 "
           )}
         >
-          <div className="grid grid-cols-3 gap-y-16 px-8 pb-16">
-            {launchPadItems.map(({ href, mixpanelId, ...rest }) => (
+          <div className="w-fit">
+            {launchPadItems[0] && (
+              <LaunchPadItem
+                key={launchPadItems[0].href}
+                href={launchPadItems[0].href}
+                onClick={() => {
+                  sendEvent(CLICK_ON_DAPP_INSIDE_LAUNCHER, {
+                    dApp: launchPadItems[0]?.mixpanelId,
+                  });
+                }}
+                icon={launchPadItems[0].icon}
+              >
+                {launchPadItems[0].children}
+              </LaunchPadItem>
+            )}
+          </div>
+          <div className="grid grid-cols-3 gap-y-6  py-6">
+            {launchPadItems.slice(1).map(({ href, mixpanelId, ...rest }) => (
               <LaunchPadItem
                 key={href}
                 href={href}
@@ -77,19 +93,17 @@ export function LaunchPad({}: { showPing?: boolean }) {
             ))}
           </div>
           {!!process.env.NEXT_PUBLIC_ENABLE_TESTNET && <NetworkModeSelector />}
-
-          <a
+          <ButtonWithLink
+            href="/dapps"
+            className="w-full mt-2"
             onClick={() => {
               sendEvent(CLICK_ON_DAPP_INSIDE_LAUNCHER, {
                 OtherActions: "View all dApps",
               });
             }}
-            href="/dapps"
-            rel="noopener noreferrer"
-            className="border-t-darkGray700 text-sm text-pearl bg-darkGray2Opacity active:bg-darkGray700 flex justify-center border-t py-5 transition-all duration-200 ease-in-out hover:bg-[#FFFFFF0F]"
           >
             {t("launchPad.button")}
-          </a>
+          </ButtonWithLink>
         </Menu.Items>
       </Transition>
     </Menu>
@@ -106,18 +120,17 @@ export const LaunchPadItem = ({
   return (
     <Link
       rel="noopener noreferrer"
-      className="text-pearl text-sm flex flex-col items-center text-center space-y-2 h-[70px]"
+      className="text-pearl text-sm  flex flex-col space-y-2 h-[100px]"
       {...rest}
     >
       <Image
         src={icon}
-        width={70}
-        height={70}
+        width={100}
+        height={100}
         alt={icon}
         className="transition-all duration-150 ease-in hover:scale-105"
       />
-
-      <p>{children}</p>
+      <p className="text-center">{children}</p>
     </Link>
   );
 };
