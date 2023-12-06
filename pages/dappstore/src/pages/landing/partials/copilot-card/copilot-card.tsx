@@ -53,7 +53,7 @@ export const CopilotCard = () => {
   const linkCn =
     "rounded w-full px-5 py-1 text-base font-bold transition-all duration-200 ease-in-out text-pearl bg-[#504f43] hover:brightness-90";
   return (
-    <div className="bg-red-300 text-pearl flex flex-col justify-start space-y-3 rounded-lg bg-[url(/galaxy-1.png)] bg-cover bg-center bg-no-repeat p-6">
+    <div className="text-pearl flex flex-col justify-start space-y-3 rounded-lg bg-[url(/galaxy-1.png)] bg-cover bg-center bg-no-repeat p-6">
       <hr className="text-pearl/30" />
       <h1
         className="text-4xl md:text-5xl font-bold font-evmos tracking-wider"

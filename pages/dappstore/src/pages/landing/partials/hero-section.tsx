@@ -18,37 +18,47 @@ export const HeroSection = async ({ totalApps }: { totalApps: number }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 space-x-0 md:space-x-8">
       <Frameline>
-        <div className="w-full flex flex-col space-y-8 py-5 px-0 md:px-16">
-          <div className="flex flex-col font-evmos font-bold text-2xl md:text-[2.5em] tracking-wide text-pearl leading-none space-y-2">
-            <h1 className="w-full">{t("ecosystem.title")}</h1>
+        <div className="w-full flex flex-col space-y-8 py-5 px-0 md:px-[6.2rem] ">
+          <div className="flex flex-col font-evmos font-light text-2xl md:text-[2.5em] tracking-wide text-pearl leading-none space-y-2 ">
+            <h1
+              className="text-justify after:content-[''] -mb-5 md:-mb-10 after:inline-block after:w-full"
+              style={{ wordSpacing: "-11px" }}
+            >
+              {t("ecosystem.title")}
+            </h1>
             <div
-              className="w-full relative before:content-[''] before:absolute before:top-[50%] before:left-0 
+              className="flex items-center justify-between relative before:content-[''] before:absolute before:top-[50%] before:left-0 
         before:-translate-y-1/2 before:w-[20px] before:h-[20px] before:animate-pulse before:bg-[#9F05FE] before:rounded-full"
             >
-              <div className="flex items-center pl-10 space-x-5 ">
+              <div className="pl-10 flex items-center space-x-6">
                 <UpRightArrowIcon
                   width={20}
                   height={20}
-                  strokeWidth={3}
+                  strokeWidth={4}
                   className="text-[#A4A189]"
                 />
                 <UpRightArrowIcon
                   width={20}
                   height={20}
-                  strokeWidth={3}
+                  strokeWidth={4}
                   className="text-[#A4A189]"
                 />
                 <UpRightArrowIcon
                   width={20}
                   height={20}
-                  strokeWidth={3}
+                  strokeWidth={4}
                   className="text-[#A4A189]"
-                />{" "}
-                <span className=""> {t("ecosystem.title2")}</span>
+                />
               </div>
+              <span
+                style={{ wordSpacing: "-11px" }}
+                className=" md:text-justify md:after:content-[''] md:-mb-10 md:after:inline-block md:after:w-full"
+              >
+                {t("ecosystem.title2")}
+              </span>
             </div>
           </div>
-          <p className="border-b border-t border-pearl border-opacity-40 py-2 text-sm  text-pearl w-full">
+          <p className="border-b border-t border-pearl border-opacity-40 py-2 text-xs text-pearl w-full">
             {t("ecosystem.description")}
           </p>
           <div className="flex flex-col md:flex-row items-center space-x-0 space-y-4 md:space-y-0 md:space-x-2 w-full">

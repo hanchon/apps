@@ -26,7 +26,7 @@ const config = {
         evmos: ["var(--font-evmos)"],
       },
       boxShadow: {
-        custom: "0px 4px 30px 0px #62575599",
+        custom: "0px 1px 8px 0px #9C848199",
         "custom-sm": "0px 4px 15px 0px #9C848199",
         "custom-pink": "4px 4px 8px 2px #CE250040 inset",
       },
