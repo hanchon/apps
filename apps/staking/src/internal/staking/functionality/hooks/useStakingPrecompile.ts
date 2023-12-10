@@ -14,13 +14,14 @@ export function useStakingPrecompile() {
     validatorAddress: string,
     amount: BigNumber,
   ) {
+    console.log("delegate", 0n)
     return await writeContract({
       mode: "prepared",
       request: {
         address: STAKING_CONTRACT_ADDRESS,
         abi: StakingABI,
         functionName: "delegate",
-
+        value: 0n,
         account: address.evmosAddressEthFormat as `0x${string}`,
         args: [delegatorAddress, validatorAddress, amount],
       },
