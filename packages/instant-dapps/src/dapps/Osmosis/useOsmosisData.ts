@@ -30,7 +30,7 @@ export function useOsmosisData() {
     queryFn: () =>
       getAssetsForAddress(
         value.evmosAddressCosmosFormat,
-        value.evmosAddressEthFormat,
+        value.evmosAddressEthFormat
       ),
   });
 
@@ -39,7 +39,7 @@ export function useOsmosisData() {
 
   const osmosis: SwapOption = {
     erc20Address: osmoBalance?.erc20Address ?? "",
-    name: osmoBalance?.name ?? "Osmosis",
+    name: osmoBalance?.name ?? "Osmo",
     symbol: osmoBalance?.symbol ?? "OSMO",
     tokenIdentifier: osmoBalance?.tokenIdentifier ?? "",
     chain: "Osmosis",
