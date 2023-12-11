@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { dappSchema } from "./schemas/entities/dappSchema";
-
+import { inspect } from "util";
 import { ECOSYSTEM_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 import { Log } from "helpers";
 import { notion } from "helpers/src/notion-client";
@@ -13,12 +13,20 @@ export const fetchDapps = async () => {
   const dappsMap = new Map<string, z.output<typeof dappSchema>>();
 
   const parsedDapps = await Promise.all(
-    dapps.results.map((value) => dappSchema.safeParseAsync(value))
+    dapps.results.map(async (value) => {
+      const result = await dappSchema.safeParseAsync(value);
+      if (!result.success) {
+        Log("notion").error(
+          result.error.issues,
+          inspect(value, true, 10, true)
+        );
+      }
+      return result;
+    })
   );
 
   for (const result of parsedDapps) {
     if (!result.success) {
-      Log("notion").error(result.error.issues);
       continue;
     }
     if (result.data.listed === false) {
