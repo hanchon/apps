@@ -14,7 +14,7 @@
     "test:coverage": "vitest run --coverage --passWithNoTests",
     "test:e2e": "playwright test --headed --pass-with-no-tests",
     "test:e2e:debug": "playwright test --debug",
-    "kill": "kill-port 3004"
+    "kill": "kill-port 3000"
   },
   "devDependencies": {
     "@ethersproject/bignumber": "^5.7.0",
@@ -67,13 +67,13 @@
   ],
   "dependencies": {
     "@interchain-ui/react": "1.14.2",
-    "@netlify/plugin-nextjs": "^4.41.2",
+    "@netlify/plugin-nextjs": "^4.41.3",
     "@notionhq/client": "^2.2.13",
     "@playwright/test": "^1.39.0",
-    "@tanstack/query-sync-storage-persister": "^5.8.3",
-    "@tanstack/react-query-devtools": "^5.8.3",
-    "@tanstack/react-query-next-experimental": "^5.8.3",
-    "@tanstack/react-query-persist-client": "^5.8.3",
+    "@tanstack/query-sync-storage-persister": "^5.13.4",
+    "@tanstack/react-query-devtools": "^5.13.5",
+    "@tanstack/react-query-next-experimental": "^5.13.4",
+    "@tanstack/react-query-persist-client": "^5.13.4",
     "@testing-library/react": "^14.0.0",
     "@types/lodash-es": "^4.17.8",
     "@types/mixpanel-browser": "2.47.1",

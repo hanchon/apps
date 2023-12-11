@@ -5,7 +5,7 @@ import {
   keplrFixture,
 } from "@evmosapps/test-utils";
 import { Page } from "@playwright/test";
-import { Log } from "helpers";
+import { Log } from "helpers/src/logger";
 
 const { step, describe, beforeEach, beforeAll, expect, test } = keplrFixture;
 

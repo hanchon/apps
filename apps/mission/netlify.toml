@@ -1,11 +1,7 @@
 [build]
   command = "pnpm run build --filter=mission-page"
-  functions = "apps/mission/netlify/functions"
   publish = "apps/mission/.next"
+  functions = "apps/mission/netlify/functions"
   framework = "next"
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-[dev]
-  command = "pnpm run dev --filter=mission-page"
-  functions = "apps/mission/netlify/functions"
-  publish = "apps/mission/.next"
+
+

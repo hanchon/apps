@@ -1,23 +1,9 @@
-import { mmFixture } from "@evmosapps/test-utils";
+import { acceptTOS, mmFixture } from "@evmosapps/test-utils";
 
 const { test, describe, expect, beforeEach } = mmFixture;
 beforeEach(async ({ page }) => {
   await page.goto("/governance");
-
-  await page
-    .locator("div")
-    .filter({ hasText: /^I acknowledge to the Terms of Service\.$/ })
-    .getByRole("checkbox")
-    .check();
-  await page
-    .locator("div")
-    .filter({
-      hasText: /^I want to share usage data\. More information\.$/,
-    })
-    .getByRole("checkbox")
-    .check();
-  await page.getByRole("button", { name: "Accept", exact: true }).click();
-  await page.getByRole("button", { name: /accept and proceed/i }).click();
+  await acceptTOS(page);
 });
 
 describe("Governance page", () => {

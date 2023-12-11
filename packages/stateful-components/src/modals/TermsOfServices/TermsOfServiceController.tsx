@@ -57,6 +57,7 @@ export const TermsOfServicesModalController = ({
               <input
                 type="checkbox"
                 id="acknowledgeTOS"
+                data-testid="accept-tos-checkbox"
                 checked={acknowledgeTOS}
                 onChange={(e) => {
                   setAcknowledgeTOS(e.target.checked);
@@ -70,6 +71,7 @@ export const TermsOfServicesModalController = ({
               <input
                 type="checkbox"
                 id="consent"
+                data-testid="consent-checkbox"
                 checked={consent}
                 onChange={(e) => {
                   setConsent(e.target.checked);
@@ -100,6 +102,7 @@ export const TermsOfServicesModalController = ({
                   disabled: !acknowledgeTOS,
                 }
               )}
+              data-testid="accept-tos-button"
               onClick={() => {
                 localStorage.setItem(EVMOS_TOS_VERSION, "true");
                 if (consent) {

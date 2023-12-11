@@ -21,8 +21,12 @@
       "connect": {
         "request": "Connect with MetaMask",
         "waitingApproval": "Approve on MetaMask",
+        "signPubkey": "Press Sign",
+
         "connected": "MetaMask Connected 👏",
+        "tryAgain": "Try again",
         "error": {
+          "signRejected": "Sign rejected, please try again",
           "pendingRequest": "There is a pending connection request, please, check if you're logged in MetaMask and try again",
           "rejected": "Approval Rejected, please try again",
           "switchRejected": "You need to switch the network to Evmos, please try again"

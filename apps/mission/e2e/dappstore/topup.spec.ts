@@ -1,5 +1,5 @@
 import { waitLocator, mmFixture } from "@evmosapps/test-utils";
-import { BALANCE_ENDPOINT } from "./constants";
+import { BALANCE_ENDPOINT } from "../constants";
 
 const STAKING_INFO_ENDPOINT =
   // eslint-disable-next-line no-secrets/no-secrets
