@@ -14,7 +14,6 @@ export function useStakingPrecompile() {
     validatorAddress: string,
     amount: BigNumber,
   ) {
-    console.log("delegate", 0n)
     return await writeContract({
       mode: "prepared",
       request: {

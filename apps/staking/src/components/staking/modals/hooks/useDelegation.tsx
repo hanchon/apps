@@ -87,7 +87,6 @@ export const useDelegation = (useDelegateProps: DelegateProps) => {
         transaction: "successful",
       });
     } catch (e) {
-      console.log("error", e)
       dispatch(snackErrorGeneratingTx());
       unsuccessfulTx({
         errorMessage: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
