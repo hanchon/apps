@@ -4,4 +4,5 @@
   functions = "apps/mission/netlify/functions"
   framework = "next"
 
-
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

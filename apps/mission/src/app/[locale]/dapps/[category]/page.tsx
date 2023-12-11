@@ -20,12 +20,13 @@ export async function generateMetadata({
 }: {
   params: { category: string };
 }) {
-  const { categories } = await fetchExplorerData();
   if (params.category === "instant-dapps") {
     return {
       title: `Instant dApps | Evmos dApp Store`,
     };
   }
+  const { categories } = await fetchExplorerData();
+
   const category =
     categories.find((c) => c.slug === params.category) ??
     raise(`category not found: ${params.category}`);

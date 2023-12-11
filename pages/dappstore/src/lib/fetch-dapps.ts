@@ -15,9 +15,13 @@ export const fetchDapps = async () => {
   const parsedDapps = await Promise.all(
     dapps.results.map((value) => dappSchema.safeParseAsync(value))
   );
+
   for (const result of parsedDapps) {
     if (!result.success) {
       Log("notion").error(result.error.issues);
+      continue;
+    }
+    if (result.data.listed === false) {
       continue;
     }
 

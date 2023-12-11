@@ -21,5 +21,5 @@ export const Link: typeof NextLink = forwardRef(function Link(
     url = url.replace(new RegExp(`^/${defaultLocale}`), "");
   }
 
-  return <a href={url.toString()} ref={ref} {...props} />;
+  return <NextLink href={url.toString()} ref={ref} {...props} />;
 });
