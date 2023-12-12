@@ -24,6 +24,8 @@ const config = {
         display: ["var(--font-display)"],
         brand: ["var(--font-brand)"],
         evmos: ["var(--font-evmos)"],
+        poppins: ["var(--font-poppins)"],
+        inter: ["var(--font-inter)"],
       },
       boxShadow: {
         custom: "0px 1px 8px 0px #9C848199",

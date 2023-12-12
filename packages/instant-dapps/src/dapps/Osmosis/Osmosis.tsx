@@ -76,7 +76,7 @@ export default function Osmosis() {
   const debouncedFetchData = debounce(getQoute, 500); // Adjust the delay as needed
   const [isHoveringSwitchButton, setHoveringSwitchButton] = useState(false);
   return (
-    <div className="relative flex flex-col gap-6 overflow-hidden rounded-3xl bg-osmoverse-850 px-6 py-9 md:gap-6 md:px-3 w-full md:pt-4 md:pb-4">
+    <div className="font-poppins relative flex flex-col gap-6 overflow-hidden rounded-3xl bg-osmoverse-850 px-6 py-9 md:gap-6 md:px-3 w-full md:pt-4 md:pb-4">
       <SlippagePopover
         currentSlippage={currentSlippage}
         setCurrentSlippage={setCurrentSlippage}
@@ -85,7 +85,7 @@ export default function Osmosis() {
       <div className="flex flex-col gap-3">
         <div className="rounded-xl bg-osmoverse-900 px-4 py-[22px] transition-all md:rounded-xl md:px-3 md:py-2.5">
           <div className="flex place-content-between items-center transition-opacity">
-            <div className="flex">
+            <div className="flex font-inter">
               <span className="caption text-xs text-white-full">Available</span>
               <span className="caption ml-1.5 text-xs text-wosmongton-300">
                 {inputNumberBalance} {inputTokenData.symbol}
@@ -138,7 +138,7 @@ export default function Osmosis() {
           <div className="mt-3 flex place-content-between items-center">
             <div className="flex items-center justify-center md:justify-start">
               <div className="flex items-center gap-2 text-left transition-opacity cursor-pointer">
-                <div className="mr-1 h-[50px] w-[50px] shrink-0 rounded-full md:h-7 md:w-7">
+                <div className="mr-1 h-[50px] w-[50px] shrink-0 rounded-full md:h-13 md:w-13">
                   <Image
                     src={`/tokenIdentifier/${inputTokenData.tokenIdentifier}.png`}
                     width={50}
@@ -148,8 +148,10 @@ export default function Osmosis() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <h5>{inputTokenData.name}</h5>
-                  <div className="md:caption w-32 text-xs truncate text-osmoverse-400">
+                  <h5 className="text-2xl font-semibold">
+                    {inputTokenData.symbol}
+                  </h5>
+                  <div className="md:caption w-32 text-sm truncate text-osmoverse-400">
                     {inputTokenData.chain}
                   </div>
                 </div>
@@ -171,9 +173,9 @@ export default function Osmosis() {
                 }}
                 placeholder="0"
                 type="number"
-                className="w-full bg-transparent text-right text-white-full placeholder:text-white-disabled focus:outline-none md:text-subtitle1 text-h5 font-h5 md:font-subtitle1"
+                className="w-full bg-transparent text-2xl font-semibold text-right text-white-full placeholder:text-white-disabled focus:outline-none"
               />
-              <span className="opacity-50 text-xs md:caption whitespace-nowrap text-osmoverse-300 transition-opacity">
+              <span className="opacity-50 text-base font-semibold md:caption whitespace-nowrap text-osmoverse-300 transition-opacity">
                 ≈ ${formatNumber(swapAmount * inputTokenData.price, 5)}
               </span>
             </div>
@@ -187,7 +189,7 @@ export default function Osmosis() {
             await debouncedFetchData(inputTokenData, outputTokenData, "0");
           }}
           className={cn(
-            "absolute left-[45%] top-[220px] z-30 flex items-center transition-all duration-500 ease-bounce md:top-[174px]",
+            "absolute left-[45%] top-[220px] z-30 flex items-center transition-all duration-500 ease-bounce md:top-[195px]",
             {
               "h-10 w-10 md:h-8 md:w-8": !isHoveringSwitchButton,
               "h-11 w-11 -translate-x-[2px] md:h-9 md:w-9":
@@ -236,7 +238,7 @@ export default function Osmosis() {
           <div className="flex place-content-between items-center transition-transform">
             <div className="flex items-center justify-center md:justify-start">
               <div className="flex items-center gap-2 text-left transition-opacity cursor-pointer">
-                <div className="mr-1 h-[50px] w-[50px] shrink-0 rounded-full md:h-7 md:w-7">
+                <div className="mr-1 h-[50px] w-[50px] shrink-0 rounded-full md:h-13 md:w-13">
                   <Image
                     src={`/tokenIdentifier/${outputTokenData.tokenIdentifier}.png`}
                     width={50}
@@ -246,19 +248,21 @@ export default function Osmosis() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <h5>{outputTokenData.symbol}</h5>
-                  <div className="md:caption text-xs w-32 truncate text-osmoverse-400">
+                  <h5 className="text-2xl font-semibold">
+                    {outputTokenData.symbol}
+                  </h5>
+                  <div className="md:caption text-sm w-32 truncate text-osmoverse-400">
                     {outputTokenData.chain}
                   </div>
                 </div>
               </div>
             </div>
             <div className="flex w-full flex-col items-end">
-              <h5 className="md:subtitle1 whitespace-nowrap text-right transition-opacity text-white-full">
+              <h5 className="text-2xl font-semibold whitespace-nowrap text-right transition-opacity text-white-full">
                 ≈ {formatNumber(number_min_received, 5)}{" "}
-                {outputTokenData.symbol}
+                {/* {outputTokenData.symbol} */}
               </h5>
-              <span className="md:caption text-xs text-osmoverse-300 opacity-100 transition-opacity">
+              <span className="md:caption text-base font-semibold text-osmoverse-300 opacity-100 transition-opacity">
                 ≈ $
                 {formatNumber(number_min_received * outputTokenData.price, 5)}
               </span>
@@ -266,8 +270,8 @@ export default function Osmosis() {
           </div>
         </div>
         <div
-          style={{ height: detailsOpen ? "251px" : "44px" }}
-          className="relative overflow-hidden rounded-lg bg-osmoverse-900 px-4 transition-all duration-300 ease-inOutBack md:px-3 (py-6 if opened) py-[10px]"
+          style={{ height: detailsOpen ? "220px" : "44px" }}
+          className=" font-inter relative overflow-hidden rounded-lg bg-osmoverse-900 px-4 transition-all duration-300 ease-inOutBack md:px-3 (py-6 if opened) py-[10px]"
         >
           <button
             onClick={() => {
@@ -280,7 +284,7 @@ export default function Osmosis() {
             )}
             {swapAmount !== 0 && number_min_received !== 0 && !loading && (
               <>
-                <span className="flex gap-1 transition-opacity (if amount inputed remove text color) text-osmoverse-600">
+                <span className="flex gap-1">
                   1<span>{inputTokenData.symbol}</span>≈{" "}
                   {formatNumber(number_min_received / swapAmount, 5)}{" "}
                   {outputTokenData.symbol}
@@ -299,6 +303,7 @@ export default function Osmosis() {
               </>
             )}
           </button>
+
           <div className="absolute text-xs flex flex-col gap-4 pt-5 transition-opacity w-[358px] md:w-[94%]">
             <div className="flex justify-between gap-1">
               <span>Price Impact</span>
@@ -316,7 +321,7 @@ export default function Osmosis() {
                 )}
               </span>
             </div>
-            <hr className="text-white-faint" />
+            <hr className="text-white/20" />
             <div className="flex justify-between gap-1">
               <span className="max-w-[140px]">Expected Output</span>
               <span className="whitespace-nowrap text-osmoverse-200">
@@ -326,7 +331,7 @@ export default function Osmosis() {
             </div>
             <div className="flex justify-between gap-1">
               <span className="max-w-[140px]">
-                Minimun received after slippage
+                Minimun received after slippage ({currentSlippage}%)
               </span>
               <div className="flex flex-col gap-0.5 text-right text-osmoverse-200">
                 <span className="whitespace-nowrap">
@@ -343,7 +348,7 @@ export default function Osmosis() {
             </div>
           </div>
         </div>
-        <button className="flex w-full place-content-center items-center py-2 text-center transition-colors disabled:cursor-default border-2 border-wosmongton-700 bg-wosmongton-700 hover:border-wosmongton-400 hover:bg-wosmongton-400 rounded-xl disabled:border-2 disabled:border-osmoverse-500 disabled:bg-osmoverse-500 disabled:text-osmoverse-100 h-[56px] px-6 subtitle1 tracking-wide">
+        <button className="font-semibold flex w-full place-content-center items-center py-2 text-center transition-colors disabled:cursor-default border-2 border-wosmongton-700 bg-wosmongton-700 hover:border-wosmongton-400 hover:bg-wosmongton-400 rounded-xl disabled:border-2 disabled:border-osmoverse-500 disabled:bg-osmoverse-500 disabled:text-osmoverse-100 h-[56px] px-6 subtitle1 tracking-wide">
           Swap
         </button>
       </div>

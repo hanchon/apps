@@ -27,7 +27,7 @@ export const SlippagePopover = ({
         <>
           <Popover.Overlay className="absolute inset-0 z-40 !rounded-3xl bg-osmoverse-1000/80" />
           <div className="relative flex w-full items-center justify-end">
-            <h6 className="w-full text-center">Swap</h6>
+            <h6 className="w-full text-center font-bold text-xl">Swap</h6>
             <Popover.Button as={Fragment}>
               <button
                 className="absolute top-0 right-3 z-40 w-fit py-0"
@@ -49,7 +49,7 @@ export const SlippagePopover = ({
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between">
-                <h6>Transaction settings</h6>
+                <h6 className="text-xl font-semibold">Transaction settings</h6>
                 <CloseIconOsmosis
                   aria-label="close"
                   className="text-osmoverse-400 cursor-pointer"
@@ -57,7 +57,7 @@ export const SlippagePopover = ({
                 />
               </div>
               <div className="mt-2.5 flex items-center">
-                <div className="subtitle1 mr-2 text-osmoverse-200">
+                <div className="font-inter mr-2 text-osmoverse-200">
                   Slippage tolerance
                 </div>
                 <InfoTooltip content="Your transaction will revert if the price changes unfavorably by more than this percentage." />

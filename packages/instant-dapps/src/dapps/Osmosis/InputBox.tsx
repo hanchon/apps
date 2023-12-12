@@ -82,6 +82,7 @@ export const InputBox: FunctionComponent<Props> = ({
           onBlur={onBlur}
           onFocus={(e: React.ChangeEvent<HTMLInputElement>) => {
             setInputFocused(true);
+            setCurrentValue(Number(e.target.value));
             onFocus && onFocus(e);
           }}
           autoFocus={autoFocus}

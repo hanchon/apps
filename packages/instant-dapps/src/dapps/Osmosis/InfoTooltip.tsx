@@ -11,7 +11,7 @@ export const InfoTooltip: FunctionComponent<TooltipProps> = ({
   trigger,
 }) => (
   <Tippy
-    className="rounded-lg border border-osmoverse-600 bg-osmoverse-900 text-white text-sm p-2 md:p-1"
+    className="font-inter rounded-lg border border-osmoverse-600 bg-osmoverse-900 text-white text-sm p-2 md:p-1"
     content={content}
     trigger={trigger ?? "click"}
   >
