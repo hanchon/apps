@@ -13,7 +13,7 @@ export const Frameline = ({
     <div className={cn("relative flex p-4", className)}>
       <p
         className="absolute top-0 left-0 border border-[#A4A189] w-full h-full rounded-xl pointer-events-none"
-        style={{ clipPath: "inset(0% 0% calc(100% - 25%) 0%" }}
+        style={{ clipPath: "inset(0% 0% calc(100% - 10%) 0%" }}
       />
       <div className="relative flex flex-col justify-center w-full h-full ">
         {variant === "secondary" && (
@@ -41,7 +41,7 @@ export const Frameline = ({
 
       <p
         className="absolute top-0 left-0 border border-[#A4A189] w-full h-full rounded-xl pointer-events-none"
-        style={{ clipPath: "inset(calc(100% - 25%) 0% 0% 0%)" }}
+        style={{ clipPath: "inset(calc(100% - 10%) 0% 0% 0%)" }}
       />
     </div>
   );

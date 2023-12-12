@@ -18,6 +18,7 @@ export const fetchCategories = async () => {
       Log("notion").error(parsed.error.issues);
       return acc;
     }
+
     parsed.data.localized = Object.fromEntries(
       parsed.data.subItem.map((notionId) => {
         const subItem = acc.get(notionId);

@@ -37,7 +37,7 @@ export const LandingPage = async () => {
         </div>
       </div>
 
-      <HeroSection />
+      <HeroSection totalApps={dApps.length} />
       <EcosystemSection />
       <Frameline>
         <ButtonWithLink className="w-full " href="/dapps">

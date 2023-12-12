@@ -1,5 +1,5 @@
 import { pageListener } from "@evmosapps/test-utils";
-import { E } from "helpers";
+import { E } from "helpers/src/error-handling";
 import { BrowserContext } from "playwright";
 
 export const cleanupTabs = async (context: BrowserContext) => {

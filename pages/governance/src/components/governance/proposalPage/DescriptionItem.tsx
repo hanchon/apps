@@ -9,7 +9,7 @@ const DescriptionItem = ({
   description: string;
 }) => {
   return (
-    <div className="flex flex-col space-y-1 text-xs text-pearl md:flex-row md:space-y-0">
+    <div className="flex flex-col space-y-1 text-sm text-pearl md:flex-row md:space-y-0">
       <p className="min-w-[180px] uppercase">{title}</p>
       <p className="font-bold opacity-80">{description}</p>
     </div>

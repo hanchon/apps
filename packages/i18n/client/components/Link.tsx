@@ -1,5 +1,5 @@
 "use client";
-import NextLink from "next/link";
+import type NextLink from "next/link";
 import { forwardRef } from "react";
 import { defaultLocale, languages } from "../../settings";
 import { useTranslation } from "../instrumentation";

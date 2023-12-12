@@ -1,41 +1,26 @@
-import { noNetworkMMFixture, waitLocator } from "@evmosapps/test-utils";
-import { BALANCE_ENDPOINT } from "./constants";
-import { pageListener } from "@evmosapps/test-utils";
 import {
-  cleanupTabs,
-  connectSwitchAndSignPubkey,
-  getMMPopup,
-} from "./cleanupTabs";
+  acceptTOS,
+  noNetworkMMFixture,
+  waitLocator,
+} from "@evmosapps/test-utils";
+import { BALANCE_ENDPOINT } from "../constants";
+import { pageListener } from "@evmosapps/test-utils";
+import { cleanupTabs } from "../cleanupTabs";
 
 const { test, beforeEach, describe, expect, step } = noNetworkMMFixture;
 
 describe("Mission Page - Copilot", () => {
   beforeEach(async ({ page, context }) => {
-    await cleanupTabs(context);
     await page.goto("/");
-
-    await page
-      .locator("div")
-      .filter({ hasText: /^I acknowledge to the Terms of Service\.$/ })
-      .getByRole("checkbox")
-      .check();
-    await page
-      .locator("div")
-      .filter({
-        hasText: /^I want to share usage data\. More information\.$/,
-      })
-      .getByRole("checkbox")
-      .check();
-
-    await page.getByRole("button", { name: "Accept", exact: true }).click();
-    await page.getByRole("button", { name: /accept and proceed/i }).click();
+    await acceptTOS(page);
+    await cleanupTabs(context);
   });
 
   test("should let the user connect with MetaMask, set the network, the accounts, top up the account and redirect to the ecosystem page", async ({
     page,
     context,
   }) => {
-    await step("Reject Connect", async () => {
+    await step("Connect", async () => {
       await page.getByRole("button", { name: /Connect/i }).click();
 
       await page
@@ -50,21 +35,16 @@ describe("Mission Page - Copilot", () => {
         })
         .click();
 
+      await page.getByText(/Approve on MetaMask/i).waitFor();
       await switchNetworkPopup.load;
-
-      await expect(page.getByText(/Approve on MetaMask/i)).toBeVisible();
 
       await switchNetworkPopup.page
         .getByRole("button", { name: /Cancel/i })
         .click();
 
-      await expect(
-        page.getByText(/Approval Rejected, please try again/i)
-      ).toBeVisible();
-    });
+      await page.getByText(/Approval Rejected, please try again/i).waitFor();
 
-    await step("Reject switch network", async () => {
-      const switchNetworkPopupRetry = pageListener(context);
+      let switchNetworkPopupRetry = pageListener(context);
       await page
         .getByRole("button", {
           name: /Try again/i,
@@ -72,6 +52,19 @@ describe("Mission Page - Copilot", () => {
         .click();
       await switchNetworkPopupRetry.load;
 
+      await switchNetworkPopupRetry.page
+        .getByRole("button", { name: /Next/i })
+        .click();
+
+      await switchNetworkPopupRetry.page
+        .getByRole("button", { name: /Connect/i })
+        .click();
+
+      await switchNetworkPopupRetry.page
+        .getByRole("heading", {
+          name: "Allow this site to add a network?",
+        })
+        .waitFor();
       await switchNetworkPopupRetry.page
         .getByRole("button", { name: /Approve/i })
         .click();
@@ -81,49 +74,28 @@ describe("Mission Page - Copilot", () => {
           name: "Allow this site to switch the network?",
         })
         .waitFor();
+
       await switchNetworkPopupRetry.page
         .getByRole("button", { name: /Cancel/i })
         .click();
 
-      await expect(
-        page.getByText(
-          /You need to switch the network to Evmos, please try again/i
-        )
-      ).toBeVisible();
-    });
+      await page.getByText(/Approval Rejected, please try again/i).waitFor();
 
-    await step("Reject get accounts", async () => {
-      const switchNetworkPopupRetryAfterApprove = pageListener(context);
-      await page
-        .getByRole("button", {
-          name: /Try again/i,
-        })
-        .click();
-      await switchNetworkPopupRetryAfterApprove.load;
-      const popup = switchNetworkPopupRetryAfterApprove.page.isClosed()
-        ? await getMMPopup(context)
-        : switchNetworkPopupRetryAfterApprove.page;
-      await popup.getByRole("button", { name: /Switch Network/i }).click();
+      switchNetworkPopupRetry = pageListener(context);
 
-      const getAccountsPopup = pageListener(context);
+      await page.getByRole("button", { name: /Try again/i }).click();
 
-      await expect(page.getByText(/Press Next and Connect/i)).toBeVisible();
+      await switchNetworkPopupRetry.load;
 
-      await getAccountsPopup.load;
-
-      await getAccountsPopup.page
-        .getByRole("button", { name: /Cancel/i })
+      await switchNetworkPopupRetry.page
+        .getByRole("button", { name: /Switch Network/i })
         .click();
 
-      await expect(
-        page.getByText(/Get accounts rejected, please try again/i)
-      ).toBeVisible();
-    });
+      const signPubkeyPopup = pageListener(context);
 
-    await step("Approve Pubkey", async () => {
-      await connectSwitchAndSignPubkey(page.context(), () =>
-        page.getByRole("button", { name: /Try again/i }).click()
-      );
+      await signPubkeyPopup.load;
+
+      await signPubkeyPopup.page.getByRole("button", { name: /Sign/i }).click();
     });
 
     await step("Top up account", async () => {
@@ -173,9 +145,6 @@ describe("Mission Page - Copilot", () => {
     await page.waitForTimeout(3000);
 
     await page.getByRole("button", { name: /Next steps/i }).click();
-
-    await page
-      .getByRole("button", { name: /Interact with a dApp Recommended/i })
-      .click();
+    await page.getByRole("link", { name: "Interact with a dApp" }).click();
   });
 });

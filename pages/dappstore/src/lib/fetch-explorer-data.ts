@@ -1,4 +1,3 @@
-import { raise } from "helpers";
 import slugify from "slugify";
 
 import { cache } from "react";
@@ -9,7 +8,6 @@ import { fetchCategories } from "./fetch-categories";
 export const fetchExplorerData = cache(async () => {
   const categoriesMap = await fetchCategories();
   const dappsMap = await fetchDapps();
-
   const categories = [];
   const dApps = [];
   for (const { name, projects, ...rest } of categoriesMap.values()) {
@@ -18,8 +16,9 @@ export const fetchExplorerData = cache(async () => {
 
     const categoryDapps: string[] = [];
     for (const projectId of projects) {
-      const { name, ...rest } =
-        dappsMap.get(projectId) ?? raise("Project not found");
+      const projectEntry = dappsMap.get(projectId);
+      if (!projectEntry) continue;
+      const { name, ...rest } = projectEntry;
 
       dApps.push({
         name: name,
@@ -31,6 +30,7 @@ export const fetchExplorerData = cache(async () => {
 
       categoryDapps.push(rest.slug);
     }
+    if (categoryDapps.length === 0) continue;
     const category = {
       name: categoryName,
       slug: categorySlug,
@@ -39,6 +39,8 @@ export const fetchExplorerData = cache(async () => {
     };
     categories.push(category);
   }
+
+  categories.sort((a, b) => a.name.localeCompare(b.name));
 
   return {
     categories,

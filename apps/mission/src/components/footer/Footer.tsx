@@ -1,5 +1,13 @@
 import pkg from "../../../package.json";
-import { COMMONWEALTH_URL, DOCS_SMART_CONTRACTS_URL } from "constants-helper";
+import {
+  COINGECKO_URL,
+  COMMONWEALTH_URL,
+  DISCORD_EVMOS_URL,
+  DOCS_SMART_CONTRACTS_URL,
+  GITHUB_EVMOS_URL,
+  TELEGRAM_EVMOS_URL,
+  TWITTER_EVMOS_URL,
+} from "constants-helper";
 import {
   CodeIcon,
   CommonWealthIcon,
@@ -41,7 +49,7 @@ export const Footer = async () => {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://www.coingecko.com"
+                href={COINGECKO_URL}
                 aria-label="coingecko"
               >
                 {t("footer.coingeckoAttribution")}
@@ -54,7 +62,7 @@ export const Footer = async () => {
             <a
               target="_blank"
               rel="noreferrer"
-              href="https://github.com/tharsis/evmos"
+              href={GITHUB_EVMOS_URL}
               aria-label="github evmos"
             >
               <GithubIcon width={18} height={18} />
@@ -62,7 +70,7 @@ export const Footer = async () => {
             <a
               target="_blank"
               rel="noreferrer"
-              href="https://twitter.com/evmosorg"
+              href={TWITTER_EVMOS_URL}
               aria-label="twitter evmos"
             >
               <TwitterIcon width={15} height={15} />
@@ -70,7 +78,7 @@ export const Footer = async () => {
             <a
               target="_blank"
               rel="noreferrer"
-              href="https://discord.com/invite/evmos"
+              href={DISCORD_EVMOS_URL}
               aria-label="discord evmos"
             >
               <DiscordIcon width={18} height={18} />
@@ -78,7 +86,7 @@ export const Footer = async () => {
             <a
               target="_blank"
               rel="noreferrer"
-              href="https://t.me/EvmosOrg"
+              href={TELEGRAM_EVMOS_URL}
               aria-label="discord telegram"
             >
               <TelegramIcon width={18} height={18} />

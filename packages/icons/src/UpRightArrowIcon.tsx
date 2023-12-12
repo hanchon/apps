@@ -9,6 +9,7 @@ export const UpRightArrowIcon: React.FC<UpRightArrowProps> = ({
   width = "23",
   height = "23",
   color = "currentColor",
+  strokeWidth = "2",
   ...restProps
 }) => {
   return (
@@ -22,8 +23,8 @@ export const UpRightArrowIcon: React.FC<UpRightArrowProps> = ({
     >
       <path
         d="M1.05451 22.0011L22.0012 1.0544M22.0012 1.0544L22.0012 21.1632M22.0012 1.0544L1.89238 1.0544"
-        stroke="white"
-        strokeWidth="2"
+        stroke="currentColor"
+        strokeWidth={strokeWidth}
         strokeLinecap="round"
         strokeLinejoin="round"
       />
