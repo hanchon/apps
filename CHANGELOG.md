@@ -36,6 +36,10 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.3.12 - 2023-12-12
+
+- (chore) fse-896 | apps/staking 1.1.4 | add zero values to staking precompiles call
+
 ## 1.3.11 - 2023-12-01
 
 - (chore) fse-882 | packages/registry 1.0.6 apps/assets 1.0.42 | add Wormhole tokens
