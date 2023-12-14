@@ -9,8 +9,8 @@ export const CardTitle = ({
   secondWord: string;
 }) => {
   return (
-    <h1 className="mb-1 text-4xl font-bold text-[#FAF1E4] first-letter:uppercase">
-      {firstWord} <span className="text-red-300">{secondWord}</span>
+    <h1 className="mb-1 text-3xl font-bold text-pearl first-letter:uppercase">
+      {firstWord} <span className="text-red-300 font-evmos">{secondWord}</span>
     </h1>
   );
 };

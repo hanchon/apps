@@ -37,10 +37,10 @@ export const useVestingAccounts = (account?: string) => {
         vestingResponse?.data?.account?.base_vesting_account?.base_account
           .address,
       funderAddress: vestingResponse?.data?.account?.funder_address,
-      unvestedAmount: vestingResponse?.data?.unvested[0]?.amount!,
+      unvestedAmount: vestingResponse?.data?.unvested[0]?.amount ?? "",
       originalVestingAmount:
         vestingResponse?.data.account?.base_vesting_account?.original_vesting[0]
-          ?.amount!,
+          ?.amount ?? "",
     };
   }, [vestingResponse]);
 

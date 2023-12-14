@@ -1,9 +1,9 @@
 import { useTranslation } from "@evmosapps/i18n/client";
 
-import { metamaskConnector } from "@evmosapps/evmos-wallet";
+import { metamaskConnector, usePubKey } from "@evmosapps/evmos-wallet";
 import { METAMASK_DOWNLOAD_URL } from "constants-helper";
 import { useEffect, useMemo, useState } from "react";
-import { E } from "helpers";
+import { E, useEffectEvent } from "helpers";
 import { useAccount, useConnect, useNetwork, useSwitchNetwork } from "wagmi";
 import { SetupStep } from "./setup-step";
 import {
@@ -48,7 +48,11 @@ const useInstallMetamask = () => {
   return [status, setStatus] as const;
 };
 
-export const SetupWithMetamaskSteps = () => {
+export const SetupWithMetamaskSteps = ({
+  onComplete,
+}: {
+  onComplete?: () => void;
+}) => {
   const { t } = useTranslation("copilot-setup-account");
 
   const [metamaskStatus, setMetamaskStatus] = useInstallMetamask();
@@ -67,9 +71,12 @@ export const SetupWithMetamaskSteps = () => {
     chainId: evmosInfo.id,
   });
 
+  const { pubkey, error: pubkeyError, refetch } = usePubKey();
   const mappedConnectError = useMemo(() => {
-    if (!connectError && !switchError) return;
-
+    if (!connectError && !switchError && !pubkeyError) return;
+    if (pubkeyError) {
+      return t("connectStep.actions.connect.error.signRejected");
+    }
     if (
       E.match.byPattern(connectError, /Already processing eth_requestAccounts/)
     ) {
@@ -86,15 +93,39 @@ export const SetupWithMetamaskSteps = () => {
     }
 
     return connectError?.message;
-  }, [connectError, switchError]);
+  }, [connectError, switchError, pubkeyError, t]);
 
   useEffect(() => {
     if (!mappedConnectError) return;
     sendEvent(UNSUCCESSFUL_WALLET_CONNECTION_COPILOT);
   }, [mappedConnectError]);
 
-  const completedConnection = isConnected && chain?.id === evmosInfo.id;
+  const completedConnection =
+    isConnected && chain?.id === evmosInfo.id && pubkey !== undefined;
 
+  const _onComplete = useEffectEvent(onComplete || (() => {}));
+
+  useEffect(() => {
+    if (!completedConnection) return;
+    _onComplete();
+  }, [completedConnection, _onComplete]);
+  const getConnectButtonLabel = () => {
+    if (completedConnection) {
+      return t("connectStep.actions.connect.connected");
+    }
+    if (status === "loading") {
+      return t("connectStep.actions.connect.waitingApproval");
+    }
+    if (mappedConnectError) {
+      return t("connectStep.actions.connect.tryAgain");
+    }
+    if (isConnected && pubkey === undefined) {
+      return t("connectStep.actions.connect.signPubkey");
+    }
+    if (!isConnecting && !completedConnection) {
+      return t("connectStep.actions.connect.request");
+    }
+  };
   return (
     <ul className="gap-y-6 flex flex-col w-full py-2">
       <SetupStep
@@ -116,6 +147,10 @@ export const SetupWithMetamaskSteps = () => {
 
       <SetupStep
         onClick={() => {
+          if (isConnected && pubkey !== undefined) {
+            void refetch();
+            return;
+          }
           sendEvent(CLICK_ON_CONNECT_ACCOUNT_COPILOT);
 
           connect({ connector: metamaskConnector, chainId: evmosInfo.id });
@@ -125,13 +160,7 @@ export const SetupWithMetamaskSteps = () => {
         disabled={metamaskStatus !== "installed" || completedConnection}
         error={mappedConnectError}
       >
-        {status === "loading" &&
-          t("connectStep.actions.connect.waitingApproval")}
-        {status !== "loading" &&
-          !isConnecting &&
-          !completedConnection &&
-          t("connectStep.actions.connect.request")}
-        {completedConnection && t("connectStep.actions.connect.connected")}
+        {getConnectButtonLabel()}
       </SetupStep>
     </ul>
   );

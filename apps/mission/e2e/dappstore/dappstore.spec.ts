@@ -1,4 +1,4 @@
-import { mmFixture, pageListener } from "@evmosapps/test-utils";
+import { acceptTOS, mmFixture, pageListener } from "@evmosapps/test-utils";
 import {
   STAKING_INFO_ENDPOINT,
   responseEmptyInfoStaking,
@@ -12,29 +12,16 @@ import {
   responseERC20ModuleBalance,
   responseAccount,
   responseBalance,
-} from "./constants";
+} from "../constants";
 
-import { cleanupTabs, connectSwitchAndSignPubkey } from "./cleanupTabs";
+import { cleanupTabs, connectSwitchAndSignPubkey } from "../cleanupTabs";
 
 const { expect, beforeEach, describe, test } = mmFixture;
 beforeEach(async ({ page, context }) => {
   await cleanupTabs(context);
   await page.goto("/");
 
-  await page
-    .locator("div")
-    .filter({ hasText: /^I acknowledge to the Terms of Service\.$/ })
-    .getByRole("checkbox")
-    .check();
-  await page
-    .locator("div")
-    .filter({
-      hasText: /^I want to share usage data\. More information\.$/,
-    })
-    .getByRole("checkbox")
-    .check();
-  await page.getByRole("button", { name: "Accept", exact: true }).click();
-  await page.getByRole("button", { name: /accept and proceed/i }).click();
+  await acceptTOS(page);
 });
 
 describe("Mission Page - Copilot", () => {
@@ -51,9 +38,8 @@ describe("Mission Page - Copilot", () => {
 
     // total balance
     await expect(
-      page.getByRole("heading", { name: "- Evmos", exact: true })
-    ).toBeVisible();
-    await expect(page.locator("p").filter({ hasText: "$-" })).toBeVisible();
+      page.getByRole("heading", { name: /\- Evmos/i, exact: true })
+    ).toHaveCount(4);
 
     // staking - available balance
     await expect(
@@ -102,8 +88,6 @@ describe("Mission Page - Copilot", () => {
       const json = responseEmptyBalance;
       await route.fulfill({ json });
     });
-
-    await page.waitForTimeout(3000);
 
     // connect with metamask
     await page.getByRole("button", { name: /Connect/i }).click();
@@ -161,8 +145,6 @@ describe("Mission Page - Copilot", () => {
       await route.fulfill({ json });
     });
 
-    await page.waitForTimeout(3000);
-
     await expect(page.getByRole("heading", { name: "0.01Evmos" })).toBeVisible({
       timeout: 15000,
     });
@@ -201,15 +183,13 @@ describe("Mission Page - Copilot", () => {
       .isEnabled();
 
     await expect(
-      page.getByRole("button", { name: "Stake", exact: true })
+      page.getByRole("link", { name: "Stake", exact: true })
     ).toBeVisible();
 
-    await expect(
-      page.getByRole("button", { name: /use a dApp/i })
-    ).toBeVisible();
+    await expect(page.getByRole("link", { name: /use a dApp/i })).toBeVisible();
 
     await page
-      .getByRole("button", {
+      .getByRole("link", {
         name: "Top Up Account",
         exact: true,
       })
@@ -219,14 +199,14 @@ describe("Mission Page - Copilot", () => {
       page.getByRole("heading", { name: "Evmos Copilot" })
     ).toBeVisible();
 
-    await page.getByRole("button", { name: "Close" }).click();
-    await page.getByRole("button", { name: "Exit" }).click();
+    await page.getByRole("link", { name: "Close" }).click();
+    await page.getByRole("link", { name: "Exit" }).click();
   });
 
   test("should redirect to portfolio page after clicking on see portfolio", async ({
     page,
   }) => {
-    await page.getByRole("button", { name: /See portfolio/i }).click();
+    await page.getByRole("link", { name: /See portfolio/i }).click();
     await page.waitForTimeout(1000);
     await page.goto("http://localhost:3004/portfolio");
   });
@@ -235,7 +215,7 @@ describe("Mission Page - Copilot", () => {
     page,
   }) => {
     await page
-      .getByRole("button", { name: /participate in governance/i })
+      .getByRole("link", { name: /participate in governance/i })
       .click();
     await page.waitForTimeout(1000);
     await page.goto("http://localhost:3004/governance");
@@ -245,7 +225,7 @@ describe("Mission Page - Copilot", () => {
     page,
   }) => {
     await page
-      .getByRole("button", { name: /Stake & manage delegations/i })
+      .getByRole("link", { name: /Stake & manage delegations/i })
       .click();
     await page.waitForTimeout(1000);
     await page.goto("http://localhost:3004/staking");

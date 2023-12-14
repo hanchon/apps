@@ -2,7 +2,6 @@ import "../../globals.css";
 import { dir } from "i18next";
 import { PropsWithChildren } from "react";
 import { languages } from "@evmosapps/i18n";
-import { withLocale } from "@evmosapps/i18n/server";
 import { cn } from "helpers";
 import { nb, evmos } from "@evmosapps/ui-helpers/src/fonts";
 import { RootProviders } from "./RootProviders";
@@ -12,7 +11,7 @@ import { Footer } from "../../components/footer/Footer";
 import { Container } from "@evmosapps/ui-helpers";
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Modals } from "./modals";
+import { Modals } from "../../components/modals";
 
 export const dynamic = "error";
 
@@ -62,9 +61,9 @@ function RootLayout({
       <head />
       <body className={cn(nb.variable, evmos.variable, "h-full")}>
         <RootProviders>
-          <main className="flex flex-col dark:text-white min-h-full relative">
+          <main className="flex flex-col dark:text-white min-h-screen relative">
             <Header />
-            <Container>{children}</Container>
+            <Container className="grow">{children}</Container>
             <Footer />
           </main>
 
@@ -78,4 +77,4 @@ function RootLayout({
   );
 }
 
-export default withLocale(RootLayout);
+export default RootLayout;

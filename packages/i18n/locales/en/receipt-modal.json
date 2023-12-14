@@ -1,0 +1,30 @@
+{
+  "transfer": {
+    "confirmation": {
+      "message": {
+        "successful": "Successfully Sent",
+        "successfulDescription": "Your transaction has been processed on the blockchain.",
+        "successfulDescription2": "Check details below.",
+        "unsuccessful": "Transaction failed",
+        "processing": {
+          "title": "Hang in there",
+          "description": "Writing tx into a block, this might take a few minutes.",
+          "description2": "Meanwhile, you can track the transaction as below."
+        },
+        "takingLonger": {
+          "title": "Taking longer",
+          "description": "It might take longer to retrieve the transaction,",
+          "description2": "you could track it on the explorer or check your balance."
+        }
+      },
+      "totalAmountSent": "Total amount sent",
+      "recipientAddress": "Recipient Address",
+      "transactionDate": "Transaction Date (UTC+0)",
+      "buttons": {
+        "gotIt": "Got it",
+        "trackOnExplorer": "Track on Explorer",
+        "processing": "Processing..."
+      }
+    }
+  }
+}

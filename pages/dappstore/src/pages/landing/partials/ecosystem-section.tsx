@@ -12,13 +12,13 @@ import { EcosystemCardGrid } from "./ecosystem-card-grid";
 
 const landingdAppsOrder = [
   "stride",
+  "osmosis",
   "forge",
   "squid",
-  "wormhole",
   "layerswap",
   "cypher-wallet",
+  "wormhole",
   "transak",
-  "c14",
 ];
 export const EcosystemSection = async () => {
   const { t } = await translation("dappStore");
@@ -26,7 +26,7 @@ export const EcosystemSection = async () => {
 
   const instantDapps = dApps
     // get the instant dapps
-    .filter((dApp) => dApp.instantDapp)
+    .filter((dApp) => dApp.instantDapp && dApp.name !== "c14")
     // sort them by the order in the array
     .sort((a, b) => {
       return (
@@ -36,10 +36,10 @@ export const EcosystemSection = async () => {
 
   return (
     <section className="space-y-8">
-      <div className="space-y-2">
-        <div className="flex flex-row justify-between w-full">
+      <div className="space-y-3 md:space-y-0">
+        <div className="flex flex-row justify-between w-full ">
           <Title>{t("ecosystem.instantdApps.title")}</Title>
-          <ButtonWithLink href="/dapps" className="self-center">
+          <ButtonWithLink href="/dapps/instant-dapps" className="self-center">
             <div className="flex items-center space-x-2">
               <p>{t("ecosystem.instantdApps.button.text")}</p>
               <RightArrow width={11} height={11} />

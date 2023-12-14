@@ -75,7 +75,7 @@ const ProposalDescription = ({
         </div>
       </section>
       {proposalDetail.description && (
-        <section className="markdown mx-5 mb-5 space-y-5 break-words rounded-2xl bg-darkGray2 p-5 px-5 text-sm text-pearl xl:mx-0">
+        <section className="markdown mx-5 mb-5 space-y-5 break-words rounded-2xl bg-darkGray2 p-5 px-5 text-pearl xl:mx-0">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {proposalDetail.description}
           </ReactMarkdown>

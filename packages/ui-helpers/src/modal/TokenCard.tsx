@@ -2,9 +2,6 @@ import { DownArrowIcon, EvmosRedIcon } from "icons";
 import { TextBox } from "./TextBox";
 
 export const TokenCard = () => {
-  // TODO: add the right information
-  // TODO: not sure how are going to handle this part. Refactor if it is needed
-
   return (
     <section className="bg-pearl1 p-3 border border-gray300 rounded-lg">
       <TextBox>

@@ -14,10 +14,10 @@ export const Tabs = ({
 }) => (
   <div
     className={cn("font-medium shrink-0", {
-      "grid grid-cols-1 md:grid-cols-2 gap-3 text-sm ": variant === "default",
-      "grid grid-cols-2 gap-2 w-fit md:w-auto tracking-wider text-xs md:text-sm items-end":
+      "grid grid-cols-1 md:grid-cols-2 gap-3 text-xs ": variant === "default",
+      "grid grid-cols-2 gap-2 w-fit md:w-auto tracking-wider text-xxs md:text-xs items-end":
         variant === "pink",
-      "grid grid-cols-2 gap-2 w-fit tracking-wider text-xs md:text-sm":
+      "grid grid-cols-2 gap-2 w-fit tracking-wider text-xxs md:text-xs":
         variant === "pink-small",
     })}
   >

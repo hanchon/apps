@@ -128,7 +128,7 @@ const Staking = ({
         />
       )}
       {!showDelegate && !showRedelegate && !showUndelegate && (
-        <div className="flex justify-end space-x-3">
+        <div className="flex flex-wrap md:flex-nowrap gap-2 md:gap-0 md:justify-end md:space-x-3">
           <SmallButton
             text="UNDELEGATE"
             onClick={() => {

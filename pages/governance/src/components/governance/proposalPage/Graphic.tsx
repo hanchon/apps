@@ -52,7 +52,7 @@ const Graphic = ({
     if (largestWinningBlock === 1 || largestWinningBlock === 3) {
       return (
         <div
-          className={`absolute inset-0 m-auto flex h-1/2 w-1/2 max-w-[50%] flex-col items-center justify-center rounded-[50%] px-2 py-1 text-center font-bold text-pearl
+          className={`text-sm absolute inset-0 m-auto flex h-1/2 w-1/2 max-w-[50%] flex-col items-center justify-center rounded-[50%] px-2 py-1 text-center font-bold text-pearl
     ${BAR_COLORS.no}
     `}
         >
@@ -63,7 +63,7 @@ const Graphic = ({
     } else {
       return (
         <div
-          className={`absolute inset-0 m-auto flex h-1/2 w-1/2 max-w-[50%] flex-col items-center justify-center rounded-[50%] px-2 py-1 text-center font-bold text-pearl
+          className={`text-sm absolute inset-0 m-auto flex h-1/2 w-1/2 max-w-[50%] flex-col items-center justify-center rounded-[50%] px-2 py-1 text-center font-bold text-pearl
       ${BAR_COLORS.yes}
       `}
         >
@@ -81,9 +81,9 @@ const Graphic = ({
     data.total,
   ]);
   return (
-    <section className="mx-5 mb-5 h-fit space-y-5 rounded-2xl bg-darkGray2 p-5 lg:mx-0">
+    <section className="text-sm mx-5 mb-5 h-fit space-y-5 rounded-2xl bg-darkGray2 p-5 lg:mx-0">
       {isNotInDepositPeriod && (
-        <div className="fonst-bold flex justify-between text-pearl">
+        <div className="font-bold flex justify-between text-pearl">
           <p>Total</p>
           <p>
             {formatAttoNumber(data.total)} {EVMOS_SYMBOL}

@@ -134,7 +134,7 @@ const TopBarStaking = () => {
         />
         <div className=" ">
           <ConfirmButton
-            className="w-fit px-4 text-sm"
+            className="w-fit px-4 text-xs"
             text={
               <div>
                 Claim Rewards: <p>{totalRewards.toFixed(2)} EVMOS</p>

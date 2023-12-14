@@ -43,23 +43,27 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
           )}
         </div>
         <div className="flex space-x-3 items-center px-5 pt-5">
-          <h3 className="font-bold text-pearl">{data.name}</h3>
+          <h3 className="font-bold text-sm text-pearl">{data.name}</h3>
           {data.instantDapp ? (
-            <Badge className="text-sm gap-x-2 whitespace-nowrap overflow-hidden">
-              {/* TODO: check if we need to create a component for this */}
-              {/* TODO: add color to tailwind file */}
-              <span className="w-[8px] h-[8px] aspect-square bg-[#AE00FF] rounded-full" />
+            <Badge
+              className="text-xs gap-x-2 whitespace-nowrap overflow-hidden"
+              data-testid="badge-instant-dapp"
+            >
+              <span className="w-[6px] h-[6px] aspect-square bg-purple-400 rounded-full" />
               <span className="overflow-ellipsis overflow-hidden">
                 Instant dApp
               </span>
             </Badge>
           ) : (
-            <div className="rounded-full h-6 w-6 flex justify-center items-center bg-[#2d271d] border-[#5b5448] border text-pearl">
+            <div
+              className="rounded-full h-6 w-6 flex justify-center items-center bg-black-500 border-black-200 border text-pearl"
+              data-testid="badge-external-link"
+            >
               <UpRightArrowIcon className="h-2 w-2" />
             </div>
           )}
         </div>
-        <p className="px-5 text-sm text-white opacity-70 overflow-hidden line-clamp-3">
+        <p className="px-5 text-xs md:text-sm text-white opacity-70 overflow-hidden line-clamp-3">
           {data.oneLiner || data.description}
         </p>
       </Link>

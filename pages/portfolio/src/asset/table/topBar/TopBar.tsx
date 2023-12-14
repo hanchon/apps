@@ -36,9 +36,9 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
       />
       <div className="flex items-center justify-center space-x-2 md:justify-end">
         <PrimaryButton
-          className="py-2"
+          className="py-2 text-sm font-light"
           disabled={isDisconnected}
-          icon={<SendIcon />}
+          icon={<SendIcon width={20} height={20} />}
           data-testid="open-send-modal-button"
           onClick={() => {
             transferModal.setIsOpen(true);
@@ -48,9 +48,9 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
           <p>{t("transfer.button")}</p>
         </PrimaryButton>
         <PrimaryButton
-          className="py-2"
+          className="py-2 text-sm font-light"
           disabled={isDisconnected}
-          icon={<ReceiveIcon />}
+          icon={<ReceiveIcon width={20} height={20} />}
           data-testid="open-request-modal-button"
           onClick={() => {
             requestModal.setIsOpen(true);

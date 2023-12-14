@@ -7,7 +7,7 @@ import { IBCTransferResponse } from "../../notification/transactionsTypes";
 
 export async function rewardsBackendCall(
   pubkey: string,
-  address: string,
+  address: string
 ): Promise<{
   error: boolean;
   message: string;
@@ -27,7 +27,6 @@ export async function rewardsBackendCall(
     });
     const data = (await post.json()) as IBCTransferResponse;
     if ("error" in data) {
-      // TODO: add sentry call here!
       return {
         error: true,
         message: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
@@ -36,7 +35,6 @@ export async function rewardsBackendCall(
     }
     return { error: false, message: "", data: data };
   } catch (e) {
-    // TODO: add sentry call here!
     return {
       error: true,
       message: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,

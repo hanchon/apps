@@ -1,5 +1,4 @@
 "use client";
-import { EvmosCopilotWhiteIcon } from "icons";
 import { useCosmosQuery } from "@evmosapps/evmos-wallet/src/api/cosmos-clients/client";
 import { useAccount } from "wagmi";
 import { normalizeToEvmos } from "@evmosapps/evmos-wallet";
@@ -8,6 +7,7 @@ import { ComponentProps } from "react";
 
 import { SetupAccountModalTrigger } from "stateful-components/src/modals/SetupAccountModal/SetupAccountModal";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
+import { Frameline } from "@evmosapps/ui-helpers";
 export const CopilotCard = () => {
   const { address, isConnected } = useAccount();
   const { t } = useTranslation("dappStore");
@@ -51,16 +51,18 @@ export const CopilotCard = () => {
 
   const nextStepsActive = isConnected && balance > 0n && sequence === 0n;
   const linkCn =
-    "rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out text-red-300 bg-pearl hover:brightness-90";
+    "rounded w-full px-5 py-1 text-base font-bold transition-all duration-200 ease-in-out text-pearl bg-[#504f43] hover:brightness-90";
   return (
-    <div className="bg-red-300 flex flex-col justify-start space-y-3 rounded-lg bg-[url(/evmos_bg.png)] bg-contain bg-center bg-no-repeat p-8">
-      <div className="flex  items-start justify-between">
-        <h1 className="text-pearl text-2xl font-bold">
-          {t("copilotCard.title")}
-        </h1>
-        <EvmosCopilotWhiteIcon width={"50"} height={"50"} />
-      </div>
-      <ol className="mt-4 space-y-4 md:mt-0">
+    <div className="text-pearl flex flex-col justify-start space-y-3 rounded-lg bg-[url(/galaxy-1.png)] bg-cover bg-center bg-no-repeat p-6">
+      <hr className="text-pearl/30" />
+      <h1
+        className="text-4xl md:text-5xl font-bold font-evmos tracking-wider"
+        style={{ wordSpacing: "-14px" }}
+      >
+        {t("copilotCard.title")}
+      </h1>
+      <h2 className="font-bold text-xl">{t("copilotCard.subtitle")}</h2>
+      <ol className="pt-1 pb-3 space-y-1 md:mt-0">
         <Step active={setupAccountActive} completed={isConnected}>
           {t("copilotCard.setupYourAccount")}
         </Step>
@@ -72,33 +74,45 @@ export const CopilotCard = () => {
         </Step>
       </ol>
       <div className="flex gap-x-4">
-        {/* w-fit rounded px-6 py-3 text-sm font-bold transition-all duration-200 ease-in-out text-red-300 bg-pearl hover:bg-[#e3d6c3] active:bg-[#ccc0af] } */}
         {setupAccountActive && (
-          <SetupAccountModalTrigger>
-            <button className={linkCn}>{t("copilotCard.letsGo")}</button>
-          </SetupAccountModalTrigger>
+          <Frameline className="w-full p-2">
+            <SetupAccountModalTrigger>
+              <button className={`${linkCn} bg-red-300`}>
+                {t("copilotCard.letsGo")}
+              </button>
+            </SetupAccountModalTrigger>
+          </Frameline>
         )}
         {topupAccountActive && (
-          <SetupAccountModalTrigger
-            initialState={{
-              step: "intro-topup",
-            }}
-          >
-            <button className={linkCn}>{t("copilotCard.topUp")}</button>
-          </SetupAccountModalTrigger>
+          <Frameline className="w-full p-2">
+            <SetupAccountModalTrigger
+              initialState={{
+                step: "intro-topup",
+              }}
+            >
+              <button className={linkCn}>{t("copilotCard.topUp")}</button>
+            </SetupAccountModalTrigger>
+          </Frameline>
         )}
         {nextStepsActive && (
-          <>
-            <Link className={linkCn} href={"/staking"}>
+          <div className="space-x-4">
+            <Link
+              className={cn(linkCn, "text-sm py-3 rounded-lg bg-pearl/20")}
+              href={"/staking"}
+            >
               {t("copilotCard.staking")}
             </Link>
+
             <Link
-              className={cn(linkCn, "bg-white/10 text-pearl")}
-              href={"/dapps"}
+              className={cn(
+                linkCn,
+                "text-sm py-3 rounded-lg bg-pearl/10 text-pearl"
+              )}
+              href={"/dapps/instant-dapps"}
             >
               {t("copilotCard.useADapp")}
             </Link>
-          </>
+          </div>
         )}
       </div>
     </div>
@@ -113,11 +127,13 @@ const Step = ({
 }: ComponentProps<"li"> & { active?: boolean; completed?: boolean }) => (
   <li
     className={cn(
-      "flex gap-x-3 items-center font-medium",
-      "before:w-2 before:h-2 before:block before:bg-white before:rounded-full",
+      "flex gap-x-3 items-center font-light text-sm tracking-widest",
+      "before:w-2 before:h-2 before:block before:bg-red-300 before:rounded-full",
       {
-        "before:ring-4 before:ring-white/40": active,
-        "opacity-90": !completed && !active,
+        "before:outline before:outline-red-300 before:outline-1 before:outline-offset-2 text-red-300":
+          active,
+        "before:bg-transparent before:border before:border-[#A4A189] before:outline before:outline-[#A4A189] before:outline-1 before:outline-offset-1  text-[#A4A189]":
+          !completed && !active,
       },
       className
     )}

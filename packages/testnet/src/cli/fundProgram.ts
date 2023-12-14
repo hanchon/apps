@@ -36,7 +36,7 @@ const fundEvmosAccount = async (
     "--yes",
   ]).exited;
 
-  console.log(response);
+  Log().info(response);
 };
 export const fundProgram = createCommand("fund").description(
   "Fund an account with tokens"

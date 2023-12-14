@@ -36,7 +36,11 @@ export const DappDetailsPage = async ({
   return (
     <>
       <ExplorerBreadcrumbs params={params} />
-      <DescriptiondApp dapp={dapp} relatedApps={relatedApps} />
+      <DescriptiondApp
+        dapp={dapp}
+        relatedApps={relatedApps}
+        totalApps={dApps.length}
+      />
     </>
   );
 };

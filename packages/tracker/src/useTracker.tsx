@@ -48,6 +48,6 @@ export const useTracker = (event?: TrackerEvents, properties?: Dict) => {
       enableMixpanel,
       sendEvent,
     }),
-    []
+    [handlePreClickAction]
   );
 };

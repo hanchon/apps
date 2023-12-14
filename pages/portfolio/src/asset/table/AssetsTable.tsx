@@ -159,7 +159,7 @@ const AssetsTable = () => {
       </div>
 
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Modal.Body className="bg-pearl">{modalContent}</Modal.Body>
+        <Modal.Body>{modalContent}</Modal.Body>
       </Modal>
     </>
   );

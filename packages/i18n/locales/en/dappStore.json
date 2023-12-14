@@ -7,7 +7,7 @@
   },
   "card": {
     "title": "Evmos dApps",
-    "description": "The core dApps created by the Evmos Team",
+    "description": "The core dApps built by the Evmos team",
     "assets": {
       "title": "Portfolio",
       "description": "Manage your assets on Evmos",
@@ -35,7 +35,8 @@
     }
   },
   "copilotCard": {
-    "title": "Onboard to Evmos in 5 minutes",
+    "title": "Get started",
+    "subtitle": "with Evmos in 5 minutes",
     "setupYourAccount": "Set up your account",
     "topUpYourAccount": "Top up your account",
     "nextSteps": "Next steps",
@@ -45,18 +46,19 @@
     "useADapp": "Use a dApp"
   },
   "ecosystem": {
-    "title": "Add your dApp",
-    "title2": "to the dapp Store",
+    "title": "Add your dApp to",
+    "title2": "the Store",
     "description": "Interested in adding your dApp to our dApp Store and earning revenue?",
     "addAppButton": "Add your dApp",
-    "revenueButton": "Earn revenue on Evmos",
+    "buildButton": "Build on Evmos",
     "button": {
-      "text": "See all",
+      "text": "See all ",
       "text2": "dApps"
     },
+    "explore": "Explore all <div>{{count}} dApps</div>",
     "instantdApps": {
       "title": "Instant dApps",
-      "description": "Earn yields & manage your assets in a few clicks using our instant apps",
+      "description": "Discover the power of cross-chain apps - instantly, in one place",
       "button": {
         "text": "See More"
       }
@@ -64,10 +66,10 @@
   },
   "categories": {
     "title": "Explore the <b>{{count}} {{name}}</b> on Evmos",
-
+    "description": "Explore the Evmos Ecosystem - dApps, tools, exchanges, infrastructure, and more.",
     "instantdApps": {
       "name": "Instant dApps",
-      "description": "Instant dApps are dApps that are already deployed on Evmos and can be used instantly."
+      "description": "Discover the power of cross-chain apps - instantly, in one place."
     }
   },
   "instantdApp": {

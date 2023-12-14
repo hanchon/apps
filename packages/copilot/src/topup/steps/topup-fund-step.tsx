@@ -14,7 +14,7 @@ import C14 from "@evmosapps/instant-dapps/src/dapps/C14";
 import { useAccount } from "wagmi";
 import { getCosmosBalances, normalizeToEvmos } from "@evmosapps/evmos-wallet";
 import { useQuery } from "@tanstack/react-query";
-import { isBigInt } from "helpers";
+import { isBigInt, useEffectEvent } from "helpers";
 import { TopupSuccessMessage } from "../partials/topup-success-message";
 import CypherD from "@evmosapps/instant-dapps/src/dapps/CypherD";
 import Squid from "@evmosapps/instant-dapps/src/dapps/Squid";
@@ -44,15 +44,15 @@ const useWatchEvmosBalance = ({
       return balances.find(({ denom }) => denom === "EVMOS")?.value ?? 0n;
     },
   });
-
+  const _onBalanceChange = useEffectEvent(onBalanceChange);
   useEffect(() => {
     if (!isBigInt(data)) return;
     if (balance.current === -1n) balance.current = data ?? 0n;
     if (data !== balance.current) {
-      onBalanceChange(balance.current, data);
+      _onBalanceChange(balance.current, data);
       balance.current = data ?? 0n;
     }
-  }, [data]);
+  }, [_onBalanceChange, data]);
 };
 export const TopupFundStep = () => {
   const { t } = useTranslation("copilot-topup");
@@ -81,12 +81,12 @@ export const TopupFundStep = () => {
     if (!funded) return;
     if (flowId !== "topup") return;
     setClosePromptEnabled(false);
-  }, [funded]);
+  }, [flowId, funded, setClosePromptEnabled]);
 
   return (
     <section className="flex flex-col gap-y-4">
       <Modal.Header>
-        <h1 className="font-bold">{t("fiatTopupStep.title")}</h1>
+        <h1 className="font-bold text-base">{t("fiatTopupStep.title")}</h1>
       </Modal.Header>
       <OnboardOptionsMenu variant="small" />
 

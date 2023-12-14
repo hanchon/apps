@@ -211,7 +211,7 @@ const Undelegations = () => {
     <>
       <Table tableProps={tableProps} />
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Modal.Body className="bg-pearl">
+        <Modal.Body>
           <Modal.Header />
           {modalContent}
         </Modal.Body>

@@ -5,11 +5,7 @@ import { Modal } from "@evmosapps/ui-helpers";
 import { modalLink, useModal } from "helpers";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import GrayButton from "@evmosapps/ui-helpers/src/GrayButton";
-import {
-  DISABLE_TRACKER_LOCALSTORAGE,
-  disableMixpanel,
-  enableMixpanel,
-} from "tracker";
+import { disableMixpanel, enableMixpanel } from "tracker";
 import { Trans } from "react-i18next";
 
 export const useConsentModal = () => useModal("consent");
@@ -20,7 +16,7 @@ export const ConsentModal = () => {
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Modal.Body className="bg-pearl">
+      <Modal.Body>
         {modalProps && (
           <div className="space-y-5">
             <Modal.Header>
@@ -48,6 +44,7 @@ export const ConsentModal = () => {
             </div>
             <div className="flex items-center justify-center space-x-5">
               <GrayButton
+                className="bg-red-300 hover:bg-red1 text-white"
                 onClick={() => {
                   enableMixpanel();
 

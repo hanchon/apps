@@ -1,6 +1,4 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-
 import { CLICK_CONNECT_WALLET_BUTTON, useTracker } from "tracker";
 import { AddressDisplay, PrimaryButton } from "@evmosapps/ui-helpers";
 import { cn } from "helpers";
@@ -23,7 +21,7 @@ export const WalletButton = () => {
     return (
       <ProfileModalTrigger>
         <button
-          className="font-sm text-pearl bg-darGray800 flex items-center justify-center space-x-3 rounded-full px-4 md:px-8 py-2 font-bold"
+          className="text-pearl bg-darGray800 flex items-center justify-center space-x-3 rounded-full px-4 md:px-8 py-2 font-bold"
           data-testid={`wallet-profile-button wallet-profile-button-${getActiveProviderKey()}`}
         >
           {Icon && <Icon width="1.4em" height="1.4em" />}
@@ -57,7 +55,7 @@ export const WalletButton = () => {
           });
         }}
         data-testid="open-connect-modal"
-        className={cn("rounded-full px-10 py-2 font-bold")}
+        className={cn("rounded-full px-8 py-2 text-sm font-bold")}
       >
         Connect
       </PrimaryButton>

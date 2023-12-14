@@ -124,7 +124,7 @@ export const ReceiveContent = ({
         <section className="space-y-8">
           <div className="flex flex-col gap-6">
             <div className="flex gap-2 mb-6 flex-col">
-              <div className="bg-white p-2 w-[250px] h-[250px] rounded-xl self-center">
+              <div className="bg-white p-2 w-[200px] h-[200px] rounded-xl self-center">
                 <QRCode
                   style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                   value={sender ?? ""}
@@ -141,7 +141,7 @@ export const ReceiveContent = ({
                   }}
                   className="flex items-center space-x-2 self-center"
                 >
-                  <span className="text-pink-300 text-xs md:text-sm">
+                  <span className="text-pink-300 text-xxs md:text-xs">
                     {t("receive.share.qr")}
                   </span>
                   <ShareIcon className="w-3 h-4 md:w-5 md:h-4 relative -top-[1px]" />

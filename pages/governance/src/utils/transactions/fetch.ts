@@ -36,7 +36,6 @@ export async function voteBackendCall(
     });
     const data = (await post.json()) as IBCTransferResponse;
     if ("error" in data) {
-      // TODO: add sentry call here!
       return {
         error: true,
         message: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
@@ -45,7 +44,6 @@ export async function voteBackendCall(
     }
     return { error: false, message: "", data: data };
   } catch (e) {
-    // TODO: add sentry call here!
     return {
       error: true,
       message: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,

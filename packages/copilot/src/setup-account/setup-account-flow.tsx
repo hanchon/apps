@@ -75,7 +75,7 @@ export const SetupAccountFlow = ({
     >
       <Copilot.Header
         title={t("header.title")}
-        icon={<EvmosCopilotIcon height={70} />}
+        icon={<EvmosCopilotIcon height={50} />}
         description={t("header.description")}
       >
         <SetupSteps />

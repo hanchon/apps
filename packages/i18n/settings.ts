@@ -1,5 +1,5 @@
 export const defaultLocale = "en";
-export const languages = [defaultLocale, "pt"];
+export const languages = [defaultLocale];
 
 export const defaultNS = "common";
 export const cookieName = "i18next";

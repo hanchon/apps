@@ -1,6 +1,6 @@
-import { mmFixture } from "@evmosapps/test-utils";
-import { BALANCE_ENDPOINT } from "./constants";
-import { cleanupTabs, connectSwitchAndSignPubkey } from "./cleanupTabs";
+import { acceptTOS, mmFixture } from "@evmosapps/test-utils";
+import { BALANCE_ENDPOINT } from "../constants";
+import { cleanupTabs, connectSwitchAndSignPubkey } from "../cleanupTabs";
 
 const { test, beforeEach, describe, expect } = mmFixture;
 
@@ -8,21 +8,7 @@ describe("Mission Page - Copilot", () => {
   beforeEach(async ({ page, context }) => {
     await cleanupTabs(context);
     await page.goto("/");
-
-    await page
-      .locator("div")
-      .filter({ hasText: /^I acknowledge to the Terms of Service\.$/ })
-      .getByRole("checkbox")
-      .check();
-    await page
-      .locator("div")
-      .filter({
-        hasText: /^I want to share usage data\. More information\.$/,
-      })
-      .getByRole("checkbox")
-      .check();
-    await page.getByRole("button", { name: "Accept", exact: true }).click();
-    await page.getByRole("button", { name: /accept and proceed/i }).click();
+    await acceptTOS(page);
   });
 
   test("should let the user connect with MetaMask, set the accounts, top up the account and redirect to the ecosystem page. Network is already set up", async ({
@@ -118,9 +104,6 @@ describe("Mission Page - Copilot", () => {
     await page.waitForTimeout(3000);
 
     await page.getByRole("button", { name: /Next steps/i }).click();
-
-    await page
-      .getByRole("button", { name: "Interact with a dApp Recommended" })
-      .click();
+    await page.getByRole("link", { name: "Interact with a dApp" }).click();
   });
 });

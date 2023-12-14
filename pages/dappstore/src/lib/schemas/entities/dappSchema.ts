@@ -24,6 +24,7 @@ const dappPropertiesSchema = createNotionPropertiesSchema(
     oneLiner: richTextSchema,
     howTo: richTextSchema,
     subItem: relationSchema,
+    listed: checkboxSchema,
     x: urlSchema.transform((url) => ({
       url,
       label: url && parseUrl(url),

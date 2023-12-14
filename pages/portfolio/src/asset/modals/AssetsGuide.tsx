@@ -1,7 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import { CLICK_CTA_LINKS_ASSETS_GUIDE, useTracker } from "tracker";
 import { Modal } from "@evmosapps/ui-helpers";
@@ -46,7 +45,7 @@ const AssetsGuide = () => {
         view the assets guide
       </span>
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Modal.Body className="bg-pearl">{modalContent}</Modal.Body>
+        <Modal.Body>{modalContent}</Modal.Body>
       </Modal>
     </>
   );

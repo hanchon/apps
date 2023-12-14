@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { externalSchema } from "./externalSchema";
 
 export const fileSchema = z
   .object({
@@ -15,6 +16,6 @@ export const fileSchema = z
 export const filesSchema = z
   .object({
     type: z.literal("files"),
-    files: z.array(fileSchema),
+    files: z.array(z.union([fileSchema, externalSchema])),
   })
   .transform(({ files }) => files[0]?.url ?? null);

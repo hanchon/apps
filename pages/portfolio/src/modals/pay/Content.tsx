@@ -29,9 +29,6 @@ import { useTokenPrice } from "../hooks/useTokenPrice";
 
 import { truncateAddress } from "@evmosapps/evmos-wallet/src/internal/wallet/style/format";
 import { AmountBox } from "../common/AmountBox";
-import { StoreType } from "@evmosapps/evmos-wallet";
-
-import { useDispatch, useSelector } from "react-redux";
 import { PayModalProps } from "./Modal";
 import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";
 import { PayIcon } from "icons";
@@ -59,9 +56,6 @@ export const Content = ({
   amount,
   message,
 }: PayModalProps) => {
-  const dispatch = useDispatch();
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
-
   const { t } = useTranslation("portfolio");
   const { sendEvent } = useTracker();
 
@@ -196,10 +190,10 @@ export const Content = ({
         <section>
           <div className="flex gap-8 flex-col">
             <div className="flex gap-2 flex-col">
-              <div className="flex h-28 rounded-md bg-gray-500 py-2 px-4 items-center justify-between text-xs md:text-sm">
+              <div className="flex h-28 rounded-md bg-gray-500 py-2 px-4 items-center justify-between text-xxs md:text-xs">
                 {message}
               </div>
-              <div className="tracking-wide flex text-xs md:text-sm justify-end gap-1">
+              <div className="tracking-wide flex text-xxs md:text-xs justify-end gap-1">
                 <span className="text-gray-400">{t("pay.from")}</span>
                 <span className="text-pink-300 font-semibold">
                   {truncateAddress(requester)}

@@ -26,7 +26,7 @@ const config = {
         evmos: ["var(--font-evmos)"],
       },
       boxShadow: {
-        custom: "0px 4px 30px 0px #62575599",
+        custom: "0px 1px 8px 0px #9C848199",
         "custom-sm": "0px 4px 15px 0px #9C848199",
         "custom-pink": "4px 4px 8px 2px #CE250040 inset",
       },
@@ -83,6 +83,10 @@ const config = {
         brown: "#854D0E",
         lightBlue: "#EFF6FF",
         blue: "#1E429F",
+        "black-100": "#656159",
+        "black-200": "#5b5448",
+        "black-300": "#44413c",
+        "black-500": "#2d271d",
         "black-900": "#121212",
         "pink-200": "#FFE6E2",
         "pink-300": "#FF745D",
@@ -92,6 +96,7 @@ const config = {
         "pink-700": "#FFC1C1",
         "purple-200": "#F8E3FF",
         "purple-300": "#BD89FF",
+        "purple-400": "#AE00FF",
       },
       fontSize: {
         h5: "1.36rem",

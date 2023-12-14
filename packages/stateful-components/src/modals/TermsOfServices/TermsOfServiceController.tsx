@@ -46,18 +46,18 @@ export const TermsOfServicesModalController = ({
 
   return (
     <Modal isOpen={isOpen} setIsOpen={guardedSetIsOpen}>
-      <Modal.Body className="bg-pearl">
+      <Modal.Body>
         {modalProps && (
-          <div className="bg-pearl relative rounded-lg w-full space-y-4 max-w-2xl">
+          <div className="relative rounded-lg w-full space-y-4 max-w-2xl">
             <h2 className="font-bold">{t("tos.title")}</h2>
             <div className="border-darkGray5 h-80 w-full space-y-3 overflow-y-auto border p-4 font-display">
-              {/* <TOSContent /> */}
               {children}
             </div>
             <div className={`flex items-center space-x-2`}>
               <input
                 type="checkbox"
                 id="acknowledgeTOS"
+                data-testid="accept-tos-checkbox"
                 checked={acknowledgeTOS}
                 onChange={(e) => {
                   setAcknowledgeTOS(e.target.checked);
@@ -71,6 +71,7 @@ export const TermsOfServicesModalController = ({
               <input
                 type="checkbox"
                 id="consent"
+                data-testid="consent-checkbox"
                 checked={consent}
                 onChange={(e) => {
                   setConsent(e.target.checked);
@@ -101,6 +102,7 @@ export const TermsOfServicesModalController = ({
                   disabled: !acknowledgeTOS,
                 }
               )}
+              data-testid="accept-tos-button"
               onClick={() => {
                 localStorage.setItem(EVMOS_TOS_VERSION, "true");
                 if (consent) {

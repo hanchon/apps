@@ -9,6 +9,7 @@ import prettier from "eslint-config-prettier";
 import sonarjs from "eslint-plugin-sonarjs";
 
 import tsPlugin from "@typescript-eslint/eslint-plugin";
+// @ts-ignore
 import tsParser from "@typescript-eslint/parser";
 
 export const tsLintConfig = {
@@ -40,6 +41,7 @@ export const tsLintConfig = {
     ],
     "@typescript-eslint/unbound-method": "off",
     "@typescript-eslint/no-explicit-any": ["error", { ignoreRestArgs: true }],
+    "no-html-link-for-pages": "off",
   },
   languageOptions: {
     parser: tsParser,
@@ -50,6 +52,7 @@ export const tsLintConfig = {
         "./tsconfig.json",
         "./packages/*/tsconfig.json",
         "./apps/*/tsconfig.json",
+        "./pages/*/tsconfig.json",
       ],
     },
   },
@@ -70,6 +73,7 @@ const lintConfig = [
       "sonarjs/prefer-single-boolean-return": "off",
       "sonarjs/prefer-immediate-return": "off",
       "prefer-const": ["error", { destructuring: "all" }],
+      "no-html-link-for-pages": "off",
     },
   },
   ...configCompat({
@@ -92,6 +96,10 @@ const lintConfig = [
       "**/.next/**/*",
       "**/next-env.d.ts",
       "**/.netlify/**/*",
+      "**/.testnet/**/*",
+      "**/.turbo/**/*",
+      "**/test-results/**/*",
+      "**/autogen-cosmos-client.d.ts",
     ],
   },
   ...configCompat({

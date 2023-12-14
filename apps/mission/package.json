@@ -14,7 +14,7 @@
     "test:coverage": "vitest run --coverage --passWithNoTests",
     "test:e2e": "playwright test --headed --pass-with-no-tests",
     "test:e2e:debug": "playwright test --debug",
-    "kill": "kill-port 3004"
+    "kill": "kill-port 3000"
   },
   "devDependencies": {
     "@ethersproject/bignumber": "^5.7.0",
@@ -24,7 +24,6 @@
     "@evmosapps/config": "workspace:*",
     "@evmosapps/copilot": "workspace:*",
     "@evmosapps/dappstore-page": "workspace:*",
-    "@evmosapps/vesting-page": "workspace:*",
     "@evmosapps/evmos-wallet": "workspace:*",
     "@evmosapps/governance-page": "workspace:*",
     "@evmosapps/i18n": "workspace:*",
@@ -32,6 +31,7 @@
     "@evmosapps/staking-page": "workspace:*",
     "@evmosapps/test-utils": "workspace:*",
     "@evmosapps/ui-helpers": "workspace:*",
+    "@evmosapps/vesting-page": "workspace:*",
     "@hanchon/signature-to-pubkey": "^1.0.1",
     "@keplr-wallet/types": "^0.12.20",
     "@metamask/providers": "^10.2.1",
@@ -66,13 +66,14 @@
     "last 3 safari version"
   ],
   "dependencies": {
-    "@netlify/plugin-nextjs": "^4.41.2",
+    "@interchain-ui/react": "1.14.2",
+    "@netlify/plugin-nextjs": "^4.41.3",
     "@notionhq/client": "^2.2.13",
     "@playwright/test": "^1.39.0",
-    "@tanstack/query-sync-storage-persister": "^5.8.3",
-    "@tanstack/react-query-devtools": "^5.8.3",
-    "@tanstack/react-query-next-experimental": "^5.8.3",
-    "@tanstack/react-query-persist-client": "^5.8.3",
+    "@tanstack/query-sync-storage-persister": "^5.13.4",
+    "@tanstack/react-query-devtools": "^5.13.5",
+    "@tanstack/react-query-next-experimental": "^5.13.4",
+    "@tanstack/react-query-persist-client": "^5.13.4",
     "@testing-library/react": "^14.0.0",
     "@types/lodash-es": "^4.17.8",
     "@types/mixpanel-browser": "2.47.1",
@@ -81,7 +82,7 @@
     "i18next-resources-to-backend": "^1.1.4",
     "lodash-es": "^4.17.21",
     "mixpanel-browser": "^2.47.0",
-    "next": "14.0.3",
+    "next": "14.0.4",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-notion": "^0.10.0",

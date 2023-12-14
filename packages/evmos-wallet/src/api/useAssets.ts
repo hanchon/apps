@@ -26,7 +26,10 @@ export const useAssets = () => {
         address
       ),
   });
-  const balance = assets.data?.balance ?? [];
+  const balance = useMemo(
+    () => assets.data?.balance ?? [],
+    [assets.data?.balance]
+  );
 
   const getAssetsForMissionControl = useMemo(() => {
     if (assets.data === undefined) {
@@ -52,7 +55,7 @@ export const useAssets = () => {
         };
       }) ?? []
     );
-  }, [assets.data]);
+  }, [assets.data, balance]);
 
   const getTotalAssetsForMissionControl = useMemo(() => {
     let total = 0;
@@ -83,14 +86,14 @@ export const useAssets = () => {
     });
 
     return total;
-  }, [assets.data]);
+  }, [assets.data, balance]);
 
   const getEvmosPrice = useMemo(() => {
     if (assets.data === undefined || balance.length === 0) {
       return "--";
     }
     return balance[0]?.coingeckoPrice ?? "--";
-  }, [assets.data]);
+  }, [assets.data, balance]);
 
   const getEvmosPriceChange = useMemo(() => {
     const priceChangeStr = balance[0]?.price24HChange;
@@ -102,7 +105,7 @@ export const useAssets = () => {
       return null;
     }
     return priceChange;
-  }, [assets.data]);
+  }, [balance]);
 
   const getTotalEvmos = useMemo(() => {
     // returns the amount of evmos and wrap evmos
@@ -119,7 +122,7 @@ export const useAssets = () => {
     );
 
     return total;
-  }, [assets.data]);
+  }, [assets.data, balance]);
 
   const evmosPriceFixed = useMemo(() => {
     const priceStr = balance[0]?.coingeckoPrice;
@@ -132,7 +135,7 @@ export const useAssets = () => {
     }
 
     return usdFormat.format(price);
-  }, [assets.data]);
+  }, [balance]);
   return {
     sourceData: assets.data,
     assets: getAssetsForMissionControl,

@@ -6,7 +6,7 @@ import { VotingDetail } from "./types";
 
 const VotingDetail = ({ votingProps }: { votingProps: VotingDetail }) => {
   return (
-    <div className="flex items-center space-x-2 text-sm">
+    <div className="flex items-center space-x-2 text-xs">
       <div
         className={`${votingProps.bgColor} h-4 w-4 flex-shrink-0 rounded-[50%]`}
       ></div>

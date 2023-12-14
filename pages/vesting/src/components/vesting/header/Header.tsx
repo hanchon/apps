@@ -12,7 +12,6 @@ import { Modal } from "../../Modal";
 
 export const Header = () => {
   const handleConfirmClick = () => {
-    // TODO: open modal for creating vesting account
     setShowModal(true);
     setModalContent(
       <FundVestingAccount

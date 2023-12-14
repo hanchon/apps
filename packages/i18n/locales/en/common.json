@@ -29,11 +29,6 @@
     "governance": {
       "title": "Governance"
     },
-    "badge": {
-      "text": "New"
-    },
-    "description": "Navigate across all Evmos dApps using our new app launcher!",
-    "title": "Discover our new navigation",
     "button": "View all dApps"
   },
   "tos": {
@@ -48,7 +43,7 @@
   "consent": {
     "title": "We value your privacy!",
     "description": "We use cookies to enhance your browsing experience and analyze our traffic. By clicking 'Accept All', you agree to our <privacy>privacy policy</privacy> and <cookies>cookie policy</cookies>.",
-    "acceptButton": "Accept",
+    "acceptButton": "Accept All",
     "rejectButton": "Reject"
   }
 }

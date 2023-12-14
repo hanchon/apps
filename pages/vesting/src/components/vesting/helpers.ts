@@ -77,11 +77,6 @@ export const lockup = [
   TimeWindow["1-month"],
 ] as const;
 
-// TODO: use the correct value
-export const dummyProps = {
-  available: "2000450.52",
-};
-
 export const enableAccountSchema = z.object({
   address: z
     .string()
@@ -126,11 +121,7 @@ export const schema = z.object({
         )
     ),
   accountName: z.string(),
-  amount: z
-    .number({ invalid_type_error: "Required" })
-    .min(0)
-    // TODO: use the correct value
-    .max(Number(dummyProps.available)),
+  amount: z.number({ invalid_type_error: "Required" }).min(0),
   planType: z.enum(plans),
   vestingDuration: z.enum(duration),
   vestingCliff: z.enum(cliff),
@@ -192,7 +183,6 @@ export const isEthereumAddressValid = (address: string): boolean => {
 };
 
 export const isEvmosAddressValid = (address: string): boolean => {
-  // TODO: are evmos wallet always 44 characters ?
   const evmosAddressRegex = /^evmos[0-9a-zA-Z]{39}$/;
   return evmosAddressRegex.test(address);
 };

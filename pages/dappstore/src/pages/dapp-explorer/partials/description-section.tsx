@@ -49,14 +49,20 @@ const WIDGETS: {
   wormhole: dynamic(
     () => import("@evmosapps/instant-dapps/src/dapps/Wormhole")
   ),
+  forge: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Forge")),
+  stride: dynamic(
+    () => import("@evmosapps/instant-dapps/src/dapps/Stride/Stride")
+  ),
 };
 
 export const DescriptiondApp = async ({
   dapp,
   relatedApps,
+  totalApps,
 }: {
   dapp: DApp;
   relatedApps: DApp[];
+  totalApps: number;
 }) => {
   const { t } = await translation("dappStore");
 
@@ -66,11 +72,11 @@ export const DescriptiondApp = async ({
   };
 
   return (
-    <div className="space-y-12 lg:space-y-16 mb-12 lg:mb-24">
+    <div className="space-y-8 md:space-y-12 mb-12 lg:mb-24">
       <div className="relative">
         <div
           className={cn(
-            "relative h-[300px] w-screen ml-[49%] -translate-x-1/2",
+            "relative h-[250px] w-screen ml-[49%] -translate-x-1/2",
             // gradient overlay
             " after:bg-gradient-to-t after:from-black/70 after:to-transparent after:absolute after:w-full after:h-full after:bottom-0"
           )}
@@ -93,8 +99,8 @@ export const DescriptiondApp = async ({
         >
           <div
             className={cn(
-              "relative shrink-0 w-32 h-32 aspect-square bg-[#423D37] rounded-md overflow-hidden",
-              "md:w-48 md:h-48"
+              "relative shrink-0 w-32 h-32 aspect-square rounded-[2rem] overflow-hidden",
+              "md:w-36 md:h-36"
             )}
           >
             {dapp.icon && (
@@ -114,30 +120,26 @@ export const DescriptiondApp = async ({
               "md:text-left"
             )}
           >
-            <div className="flex items-end">
-              <h1 className="text-[#E8DFD3] text-3xl md:text-5xl lg:text-7xl font-bold">
+            <div className="flex flex-col md:flex-row items-center md:items-end space-y-2 md:space-y-0">
+              <h1 className="text-[#E8DFD3] text-2xl md:text-5xl lg:text-8xl font-bold">
                 {dapp.name}
               </h1>
               {dapp.instantDapp && (
-                <div className="relative md:ml-auto shrink">
-                  {/* TODO: check if we need to create a component for this */}
-                  {/* TODO: add color to tailwind file */}
-                  <Badge className="text-sm space-x-3 bg-[#FFE1F40F] border border-[#FFE1F472] whitespace-nowrap md:text-xl md:px-5 md:py-2">
-                    {/* TODO: check if we need to create a component for this */}
-                    {/* TODO: add color to tailwind file */}
-                    <span className="w-[13px] h-[13px] bg-[#AE00FF] rounded-full" />
+                <div className="relative md:ml-auto shrink lg:-top-[19px]">
+                  <Badge className="text-sm space-x-3 bg-transparent border border-[#FFF4E173] whitespace-nowrap md:text-base md:px-4 md:py-1.5">
+                    <span className="w-[10px] h-[10px] bg-purple-400 rounded-full" />
                     <p>{t("instantdApp.badge")}</p>
                   </Badge>
                 </div>
               )}
             </div>
-            <p className="text-[#D3CBC7] font-light lg:text-xl">
+            <p className="text-[#D3CBC7] font-light lg:text-base">
               {dapp.oneLiner}
             </p>
           </div>
         </header>
       </div>
-      <div className="flex flex-col lg:flex-row gap-y-12 lg:gap-y-24 gap-x-12 items-start">
+      <div className="flex flex-col lg:flex-row gap-y-12 lg:gap-y-24 gap-x-24 items-start">
         <div className=" w-full grid grid-rows-8 gap-y-8">
           {dapp.description && (
             <DescriptionItem
@@ -221,10 +223,16 @@ export const DescriptiondApp = async ({
         )}
       </div>
 
-      <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
+      <div
+        className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0"
+        style={{ marginBottom: "-1rem" }}
+      >
         <Title tag="h3">{t("instantdApp.relatedApps.title")}</Title>
 
-        <ButtonWithLink href="/dapps" className="md:self-center">
+        <ButtonWithLink
+          href={`/dapps/${dapp.categorySlug}`}
+          className="md:self-center"
+        >
           <div className="flex items-center space-x-2">
             <p>{t("instantdApp.relatedApps.button.text")}</p>
             <RightArrow width={11} height={11} />
@@ -237,7 +245,7 @@ export const DescriptiondApp = async ({
         ))}
       </EcosystemCardGrid>
 
-      <HeroSection />
+      <HeroSection totalApps={totalApps} />
     </div>
   );
 };

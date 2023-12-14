@@ -62,7 +62,7 @@ const encodedConfig = encodeURIComponent(configJSON); // Encode the JSON string
 const Squid = ({ className, ...rest }: ComponentProps<"div">) => {
   return (
     <div
-      className={cn("w-full h-[690px]", className)}
+      className={cn("w-full max-w-[440px] h-[690px]", className)}
       data-testid="squid-widget"
       {...rest}
     >

@@ -217,7 +217,7 @@ export const ReceiptModalContent = ({
     error,
   } = useReceipt(hash, chainPrefix);
 
-  const { t } = useTranslation("portfolio");
+  const { t } = useTranslation("receipt-modal");
 
   const { data: block, isLoading: isFetchingBlock } = useBlock(
     chainPrefix,
@@ -242,15 +242,15 @@ export const ReceiptModalContent = ({
 
   const drawTextButton = () => {
     if (receipt || (!!error && !txHasNotFoundError)) {
-      return t("transfer.confirmation.button.text");
+      return t("transfer.confirmation.buttons.gotIt");
     }
     if (txHasNotFoundError || (isReceiptStillLoading && !error)) {
-      return t("transfer.confirmation.button.explorer.text");
+      return t("transfer.confirmation.buttons.trackOnExplorer");
     }
     return (
       <>
         <div className="animate-pulse bg-black/20 rounded-full h-5 w-5 mr-1" />
-        {t("transfer.confirmation.button.text.loading")}
+        {t("transfer.confirmation.buttons.processing")}
       </>
     );
   };
@@ -269,8 +269,8 @@ export const ReceiptModalContent = ({
               receipt
                 ? "success"
                 : error && !txHasNotFoundError
-                ? "error"
-                : "loading"
+                  ? "error"
+                  : "loading"
             }
           >
             <SkeletonLoading loading={isReceiptLoading}>
@@ -283,7 +283,7 @@ export const ReceiptModalContent = ({
                 t("transfer.confirmation.message.processing.title")}
               {((isReceiptLoading && isReceiptStillLoading) ||
                 (isReceiptStillLoading && txHasNotFoundError)) &&
-                t("transfer.confirmation.message.taking.longer.title")}
+                t("transfer.confirmation.message.takingLonger.title")}
             </SkeletonLoading>
           </ConfirmationTitle>
 
@@ -291,9 +291,9 @@ export const ReceiptModalContent = ({
             <SkeletonLoading loading={isReceiptLoading}>
               {receipt && (
                 <span data-testid="tx-receipt-success-message">
-                  {t("transfer.confirmation.message.successful.description")}
+                  {t("transfer.confirmation.message.successfulDescription")}
                   <br />
-                  {t("transfer.confirmation.message.successful.description2")}
+                  {t("transfer.confirmation.message.successfulDescription2")}
                 </span>
               )}
               {!!error && !txHasNotFoundError && (
@@ -311,11 +311,9 @@ export const ReceiptModalContent = ({
               {((isReceiptLoading && isReceiptStillLoading) ||
                 (!!error && txHasNotFoundError)) && (
                 <>
-                  {t("transfer.confirmation.message.taking.longer.description")}
+                  {t("transfer.confirmation.message.takingLonger.description")}
                   <br />
-                  {t(
-                    "transfer.confirmation.message.taking.longer.description2"
-                  )}
+                  {t("transfer.confirmation.message.takingLonger.description2")}
                 </>
               )}
             </SkeletonLoading>
@@ -332,7 +330,7 @@ export const ReceiptModalContent = ({
           <div className="w-full space-y-2">
             <ContainerItem>
               <ConfirmationText>
-                {t("transfer.confirmation.total.amount.sent")}
+                {t("transfer.confirmation.totalAmountSent")}
               </ConfirmationText>
 
               <p>
@@ -343,7 +341,7 @@ export const ReceiptModalContent = ({
             </ContainerItem>
             <ContainerItem>
               <ConfirmationText>
-                {t("transfer.confirmation.recipient.address")}
+                {t("transfer.confirmation.recipientAddress")}
               </ConfirmationText>
 
               <p>
@@ -354,7 +352,7 @@ export const ReceiptModalContent = ({
             </ContainerItem>
             <ContainerItem>
               <ConfirmationText>
-                {t("transfer.confirmation.date")}
+                {t("transfer.confirmation.transactionDate")}
               </ConfirmationText>
 
               <p>
