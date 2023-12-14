@@ -7,7 +7,7 @@
 //   useTokenBalance,
 // } from "@evmosapps/evmos-wallet";
 import { useState } from "react";
-// import { useAccount } from "wagmi";
+import { useAccount } from "wagmi";
 // import { Dispatch, SetStateAction } from "react";
 // import { useSelector } from "react-redux";
 // import {
@@ -32,6 +32,7 @@ import {
 } from "icons";
 import { SlippagePopover } from "./SlippagePopover";
 import Image from "next/image";
+import { ConnectionRequired } from "@evmosapps/ui-helpers";
 
 // type SwapOption = {
 //   erc20Address: string;
@@ -40,7 +41,7 @@ import Image from "next/image";
 // };
 
 export default function Osmosis() {
-  // const { isConnected, connector, address } = useAccount();
+  const { isConnected, connector, address, isDisconnected } = useAccount();
 
   const { osmosis, evmos } = useOsmosisData();
 
@@ -75,6 +76,15 @@ export default function Osmosis() {
 
   const debouncedFetchData = debounce(getQoute, 500); // Adjust the delay as needed
   const [isHoveringSwitchButton, setHoveringSwitchButton] = useState(false);
+
+  if (isDisconnected) {
+    return (
+      <ConnectionRequired
+        bgUrl="bg-[url(/ecosystem/blur/osmosis-blur.png)]"
+        dappName="Osmosis "
+      />
+    );
+  }
   return (
     <div className="font-poppins relative flex flex-col gap-6 overflow-hidden rounded-3xl bg-osmoverse-850 px-6 py-9 md:gap-6 md:px-3 w-full md:pt-4 md:pb-4">
       <SlippagePopover
