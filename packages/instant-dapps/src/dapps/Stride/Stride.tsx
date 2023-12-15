@@ -18,6 +18,8 @@ import { useEffect, useState } from "react";
 import useStrideData from "./useStrideData";
 import { useAssets } from "@evmosapps/evmos-wallet";
 import { convertFromAtto } from "helpers";
+import { ConnectionRequired } from "@evmosapps/ui-helpers";
+import { useAccount } from "wagmi";
 
 const Stride = () => {
   const { themeClass, setTheme } = useTheme();
@@ -61,11 +63,20 @@ const Stride = () => {
 
   const [stakedAmount, setStakedAmount] = useState<number>(0);
 
+  const { isDisconnected } = useAccount();
+  if (isDisconnected) {
+    return (
+      <ConnectionRequired
+        bgUrl="bg-[url(/ecosystem/blur/stride-blur.png)]"
+        dappName="Stride "
+      />
+    );
+  }
+
   return (
-    <div id="" className={`${themeClass} max-w-sm`}>
+    <div id="" className={`${themeClass}`}>
       <LiquidStaking
         stakeAmount={stakedAmount}
-        options={[evmosOption]}
         precision={2}
         reward={reward}
         stakeToken={evmosOption}
@@ -93,15 +104,24 @@ const Stride = () => {
           },
           {
             title: "Value of 1 stEVMOS",
-            subtitle: `${redemptionRate ? redemptionRate?.toFixed(2) : 0} stEVMOS`,
+            subtitle: `${
+              redemptionRate ? redemptionRate?.toFixed(2) : 0
+            } stEVMOS`,
             desc: "The value of 1 stEVMOS if redeemed through the Stride protocol redemption rate grows predictably as staking rewards accrue.",
           },
         ]}
-        onChange={({
-          stakeToken: payloadToken,
-          stakeAmount: payloadStakedAmount,
-        }) => {
-          if (payloadToken) {
+        onChange={(payloadStakedAmount) => {
+            if(isNaN(payloadStakedAmount)) {
+              setStakedAmount(0);
+              setReward((prevReward) => {
+                return {
+                  ...prevReward,
+                  rewardAmount: 0,
+                  priceDisplayAmount: 0,
+                };
+              });
+              return
+            }
             setStakedAmount(payloadStakedAmount);
             setReward((prevReward) => {
               // This is just mock reward calculation
@@ -114,7 +134,7 @@ const Stride = () => {
                 priceDisplayAmount: pda,
               };
             });
-          }
+          
         }}
         footerLabel={
           <Stack
@@ -139,7 +159,13 @@ const Stride = () => {
             />
           </Stack>
         }
-        renderAccordionButton={({ onClick, expanded }:{onClick: () => void, expanded: boolean}) => (
+        renderAccordionButton={({
+          onClick,
+          expanded,
+        }: {
+          onClick: () => void;
+          expanded: boolean;
+        }) => (
           <Button
             size="sm"
             intent={expanded ? "tertiary" : "secondary"}

@@ -53,6 +53,9 @@ const WIDGETS: {
   stride: dynamic(
     () => import("@evmosapps/instant-dapps/src/dapps/Stride/Stride")
   ),
+  osmosis: dynamic(
+    () => import("@evmosapps/instant-dapps/src/dapps/Osmosis/Osmosis")
+  ),
 };
 
 export const DescriptiondApp = async ({
