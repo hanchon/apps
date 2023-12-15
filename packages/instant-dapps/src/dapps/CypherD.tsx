@@ -4,9 +4,8 @@
 
 import { cache, useEffect } from "react";
 import { useAccount } from "wagmi";
-import { EvmosCopilotRedIcon } from "icons";
 
-import { ConnectionRequired, PrimaryButton } from "@evmosapps/ui-helpers";
+import { ConnectionRequired } from "@evmosapps/ui-helpers";
 import { assertIf, raise } from "helpers";
 import { get } from "lodash-es";
 import { useQuery } from "@tanstack/react-query";

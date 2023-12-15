@@ -1,8 +1,6 @@
-import { getToken, useTokenBalance } from "@evmosapps/evmos-wallet";
 import { getAssetsForAddress } from "@evmosapps/evmos-wallet/src/api/fetch";
 import { ERC20BalanceResponse } from "@evmosapps/evmos-wallet/src/api/types";
 import { useQuery } from "@tanstack/react-query";
-import { useAccount } from "wagmi";
 import { useSelector } from "react-redux";
 import { StoreType } from "@evmosapps/evmos-wallet";
 export type SwapOption = {
@@ -20,7 +18,7 @@ export type SwapOption = {
 export function useOsmosisData() {
   const value = useSelector((state: StoreType) => state.wallet.value);
 
-  const { data, error, isLoading } = useQuery<ERC20BalanceResponse, Error>({
+  const { data } = useQuery<ERC20BalanceResponse, Error>({
     refetchInterval: 15_000,
     queryKey: [
       "assets",
@@ -55,7 +53,7 @@ export function useOsmosisData() {
     symbol: evmosBalance?.symbol ?? "EVMOS",
     tokenIdentifier: evmosBalance?.tokenIdentifier ?? "",
     chain: "Evmos",
-    balance: evmosBalance?.erc20Balance ?? "0",
+    balance: evmosBalance?.cosmosBalance ?? "0",
     price: parseFloat(evmosBalance?.coingeckoPrice ?? "0"),
     decimals: parseInt(evmosBalance?.decimals ?? "0"),
     osmosisDenom:

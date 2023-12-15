@@ -23,14 +23,14 @@ const [, parsedProposals] = E.try(
 const PROPOSALS_TO_REMOVE = parsedProposals ?? [];
 
 const removeProposals = (proposals: Proposal[], proposalToRemove: string[]) => {
-  return proposals.filter(
+  return proposals?.filter(
     (proposal) => !proposalToRemove.includes(proposal.id)
   );
 };
 
 export const useProposals = (pid?: string) => {
   const proposalsResponse = useQuery({
-    queryKey: ["proposals"],
+    queryKey: ["proposalss"],
     queryFn: () => getProposals(),
   });
 
@@ -44,7 +44,7 @@ export const useProposals = (pid?: string) => {
       PROPOSALS_TO_REMOVE
     );
 
-    return filtered.map((item) => {
+    return filtered?.map((item) => {
       const percents = getPercentage([
         item.final_tally_result.yes_count,
         item.final_tally_result.no_count,
@@ -95,7 +95,7 @@ export const useProposals = (pid?: string) => {
       isVotingTimeWithinRange: false,
     };
     if (proposalsResponse.data !== undefined) {
-      const filtered = proposalsResponse.data.proposals.filter(
+      const filtered = proposalsResponse.data.proposals?.filter(
         (proposal) =>
           proposal.id === pid && !PROPOSALS_TO_REMOVE.includes(proposal.id)
       );

@@ -41,7 +41,7 @@ export const useEvmosBalance = () => {
     if ("code" in evmosBalance.data) {
       return { evmosBalance: BigNumber.from(-1) };
     }
-    const amount = evmosBalance.data.balance.amount;
+    const amount = evmosBalance.data.balance?.amount ?? "0";
     if (amount !== "") {
       balance = BigNumber.from(amount);
     }

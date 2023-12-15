@@ -12,12 +12,12 @@ export function useOsmosisQoute() {
     null,
   );
 
-  async function getQoute(
+  function getQoute(
     token0: SwapOption,
     token1: SwapOption,
     amount: string,
   ) {
-    console.log("gett", token0, token1, amount)
+
     if(amount === '0') {
         setLatestQoute({
             price_impact: 0,

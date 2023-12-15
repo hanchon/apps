@@ -1,30 +1,15 @@
 "use client";
-// import {
-//   HexAddress,
-//   getERC20TokenBalances,
-//   normalizeToEvmos,
-//   useAssets,
-//   useTokenBalance,
-// } from "@evmosapps/evmos-wallet";
+import { Link } from "@evmosapps/i18n/client";
 import { useState } from "react";
 import { useAccount } from "wagmi";
-// import { Dispatch, SetStateAction } from "react";
-// import { useSelector } from "react-redux";
-// import {
-//   KEPLR_KEY,
-//   METAMASK_KEY,
-//   WALLECT_CONNECT_KEY,
-//   EVMOS_SYMBOL,
-//   StoreType,
-// } from "@evmosapps/evmos-wallet";
+import { parseUnits } from "@ethersproject/units";
 import { useOsmosisData } from "./useOsmosisData";
 import { cn, convertAndFormat, formatNumber } from "helpers";
 import { useOsmosisQoute } from "./useOsmosQuote";
 import { BigNumber } from "@ethersproject/bignumber";
 
 import { debounce } from "lodash";
-import { formatUnits, parseUnits } from "viem";
-// parseEther
+import { formatUnits } from "viem";
 import {
   ChevronDownIconOsmosis,
   DownArrowIconOsmosisIcon,
@@ -33,24 +18,21 @@ import {
 import { SlippagePopover } from "./SlippagePopover";
 import Image from "next/image";
 import { ConnectionRequired } from "@evmosapps/ui-helpers";
-
-// type SwapOption = {
-//   erc20Address: string;
-//   name: string;
-//   symbol: string;
-// };
+import { useOsmosisPrecompile } from "./useOsmosisPrecompile";
 
 export default function Osmosis() {
-  const { isConnected, connector, address, isDisconnected } = useAccount();
+  const { isDisconnected } = useAccount();
 
   const { osmosis, evmos } = useOsmosisData();
 
+  const [loagingSwap, setLoadingSwap] = useState(false);
+  const [swapHash, setSwapHash] = useState<string | null>();
   const { loading, getQoute, latestQoute } = useOsmosisQoute();
+  const { swap } = useOsmosisPrecompile()
 
   const [detailsOpen, setDetailsOpen] = useState(false);
-  const [inputToken, setInputToken] = useState(evmos);
-  const [outputToken, setOutputToken] = useState(osmosis);
-  // why is 0.0005 ? should'nt it be 1%?
+  const [inputToken, setInputToken] = useState(osmosis);
+  const [outputToken, setOutputToken] = useState(evmos);
   const [currentSlippage, setCurrentSlippage] = useState(1);
 
   const inputTokenData = inputToken.symbol === "OSMO" ? osmosis : evmos;
@@ -58,7 +40,7 @@ export default function Osmosis() {
 
   const number_min_received = parseFloat(
     formatUnits(
-      BigInt(latestQoute?.return_amount?.toString() ?? "0"),
+      BigInt(latestQoute?.return_amount?.toString() ?? ""),
       outputTokenData.decimals
     )
   );
@@ -70,13 +52,15 @@ export default function Osmosis() {
     )
   );
 
-  const minReceivedAfterSlippage = number_min_received * (1 - currentSlippage);
+  const minReceivedAfterSlippage = number_min_received * (1 - currentSlippage/100);
 
-  const [swapAmount, setSwapAmount] = useState(0);
+  const [swapAmount, setSwapAmount] = useState<string | number>("");
 
   const debouncedFetchData = debounce(getQoute, 500); // Adjust the delay as needed
   const [isHoveringSwitchButton, setHoveringSwitchButton] = useState(false);
 
+  const enoughBalance = inputNumberBalance >= parseFloat(swapAmount.toString() === "" ? "0" : swapAmount.toString())
+  
   if (isDisconnected) {
     return (
       <ConnectionRequired
@@ -85,6 +69,30 @@ export default function Osmosis() {
       />
     );
   }
+
+  async function swapTokens() {
+    try {
+      setLoadingSwap(true)
+      setSwapHash(null)
+      const res = await swap({
+        input: inputTokenData.erc20Address,
+        output: outputTokenData.erc20Address,
+        amount: parseUnits(
+          swapAmount.toString(),
+          inputTokenData.decimals
+        ),
+        slippage_tolerance: currentSlippage,
+        window_seconds: 60 * 60 * 24,
+        receiver:"",
+      });
+      setSwapHash(res.hash)
+      setLoadingSwap(false)
+    } catch (e){
+      setSwapHash(null)
+      setLoadingSwap(false)
+    }
+  }
+
   return (
     <div className="font-poppins relative flex flex-col gap-6 overflow-hidden rounded-3xl bg-osmoverse-850 px-6 py-9 md:gap-6 md:px-3 w-full md:pt-4 md:pb-4">
       <SlippagePopover
@@ -103,9 +111,9 @@ export default function Osmosis() {
             </div>
             <div className="flex items-center gap-1.5">
               <button
-                onClick={async () => {
+                onClick={() => {
                   setSwapAmount(inputNumberBalance / 2);
-                  await getQoute(
+                  getQoute(
                     inputTokenData,
                     outputTokenData,
                     parseUnits(
@@ -123,9 +131,9 @@ export default function Osmosis() {
                 HALF
               </button>
               <button
-                onClick={async () => {
+                onClick={() => {
                   setSwapAmount(inputNumberBalance);
-                  await getQoute(
+                  getQoute(
                     inputTokenData,
                     outputTokenData,
                     parseUnits(
@@ -170,13 +178,14 @@ export default function Osmosis() {
             <div className="flex w-full flex-col items-end">
               <input
                 value={swapAmount}
-                onChange={async (e) => {
-                  setSwapAmount(Number(e.target.value));
-                  await debouncedFetchData(
+                onChange={(e) => {
+                  const _amount = parseFloat(e.target.value).toString();
+                  setSwapAmount(Number(_amount));
+                  debouncedFetchData(
                     inputTokenData,
                     outputTokenData,
                     parseUnits(
-                      e.target.value,
+                      _amount,
                       inputTokenData.decimals
                     ).toString()
                   );
@@ -186,17 +195,17 @@ export default function Osmosis() {
                 className="w-full bg-transparent text-2xl font-semibold text-right text-white-full placeholder:text-white-disabled focus:outline-none"
               />
               <span className="opacity-50 text-base font-semibold md:caption whitespace-nowrap text-osmoverse-300 transition-opacity">
-                ≈ ${formatNumber(swapAmount * inputTokenData.price, 5)}
+                ≈ ${formatNumber(swapAmount as number * inputTokenData.price, 5)}
               </span>
             </div>
           </div>
         </div>
         <button
-          onClick={async () => {
+          onClick={() => {
             setOutputToken(inputTokenData);
             setInputToken(outputTokenData);
             setSwapAmount(0);
-            await debouncedFetchData(inputTokenData, outputTokenData, "0");
+            debouncedFetchData(inputTokenData, outputTokenData, "0");
           }}
           className={cn(
             "absolute left-[45%] top-[220px] z-30 flex items-center transition-all duration-500 ease-bounce md:top-[195px]",
@@ -279,24 +288,48 @@ export default function Osmosis() {
             </div>
           </div>
         </div>
+        { swapHash && 
+          <div
+              style={{ height: "50px" }}
+              className={`bg-osmoverse-900 text-sm items-center flex-col justify-center relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 flex py-[10px]`}
+              >
+                <span className="">
+                  Transaction Submitted
+                </span>
+                <Link
+                            rel="noopener noreferrer"
+                            target="_blank"
+                className="text-wosmongton-300 text-xs hover:text-osmoverse-200 transition-colors"
+                href={`https://escan.live/tx/${swapHash}`}
+                >
+                View on Escan
+                </Link>
+          </div>
+        }
         <div
-          style={{ height: detailsOpen ? "220px" : "44px" }}
-          className=" font-inter relative overflow-hidden rounded-lg bg-osmoverse-900 px-4 transition-all duration-300 ease-inOutBack md:px-3 (py-6 if opened) py-[10px]"
+          style={{ height: detailsOpen ? "251px" : "44px" }}
+          className={`${loading ? "font-inter animate-pulse bg-osmoverse-700 [&>*]:invisible" : "bg-osmoverse-900"} relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 (py-6 if opened) py-[10px]`}
         >
           <button
+            disabled={loading || number_min_received === 0}
             onClick={() => {
               setDetailsOpen(!detailsOpen);
             }}
             className="flex text-sm w-full place-content-between items-center transition-opacity cursor-pointer"
           >
             {(swapAmount === 0 || number_min_received === 0) && (
-              <div className="opacity-0">Loading</div>
+                              <span className="flex gap-1">
+                              1<span>{inputTokenData.symbol}</span>≈{" "}
+                              {formatNumber(inputToken.price / (outputToken.price), 5)}{" "}
+                              {outputTokenData.symbol}
+                            </span>
             )}
+
             {swapAmount !== 0 && number_min_received !== 0 && !loading && (
               <>
                 <span className="flex gap-1">
                   1<span>{inputTokenData.symbol}</span>≈{" "}
-                  {formatNumber(number_min_received / swapAmount, 5)}{" "}
+                  {formatNumber(number_min_received / (swapAmount as number), 5)}{" "}
                   {outputTokenData.symbol}
                 </span>
                 <div className="flex items-center gap-2 transition-opacity">
@@ -358,8 +391,11 @@ export default function Osmosis() {
             </div>
           </div>
         </div>
-        <button className="font-semibold flex w-full place-content-center items-center py-2 text-center transition-colors disabled:cursor-default border-2 border-wosmongton-700 bg-wosmongton-700 hover:border-wosmongton-400 hover:bg-wosmongton-400 rounded-xl disabled:border-2 disabled:border-osmoverse-500 disabled:bg-osmoverse-500 disabled:text-osmoverse-100 h-[56px] px-6 subtitle1 tracking-wide">
-          Swap
+        <button
+        onClick={swapTokens}
+        disabled={loading || loagingSwap || number_min_received === 0 || enoughBalance === false}
+        className={`${loading || loagingSwap || number_min_received === 0 ? "opacity-40" : ""} font-semibold flex w-full place-content-center items-center py-2 text-center transition-colors disabled:cursor-default border-2 border-wosmongton-700 bg-wosmongton-700 hover:border-wosmongton-400 hover:bg-wosmongton-400 rounded-xl disabled:border-2 disabled:border-osmoverse-500 disabled:bg-osmoverse-500 disabled:text-osmoverse-100 h-[56px] px-6 subtitle1 tracking-wide`}>
+          {loading ? "Loading..." : !enoughBalance ? "Insufficient balance" : "Swap"} 
         </button>
       </div>
     </div>

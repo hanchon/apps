@@ -74,10 +74,9 @@ const Stride = () => {
   }
 
   return (
-    <div id="" className={`${themeClass} max-w-sm`}>
+    <div id="" className={`${themeClass}`}>
       <LiquidStaking
         stakeAmount={stakedAmount}
-        options={[evmosOption]}
         precision={2}
         reward={reward}
         stakeToken={evmosOption}
@@ -111,11 +110,18 @@ const Stride = () => {
             desc: "The value of 1 stEVMOS if redeemed through the Stride protocol redemption rate grows predictably as staking rewards accrue.",
           },
         ]}
-        onChange={({
-          stakeToken: payloadToken,
-          stakeAmount: payloadStakedAmount,
-        }) => {
-          if (payloadToken) {
+        onChange={(payloadStakedAmount) => {
+            if(isNaN(payloadStakedAmount)) {
+              setStakedAmount(0);
+              setReward((prevReward) => {
+                return {
+                  ...prevReward,
+                  rewardAmount: 0,
+                  priceDisplayAmount: 0,
+                };
+              });
+              return
+            }
             setStakedAmount(payloadStakedAmount);
             setReward((prevReward) => {
               // This is just mock reward calculation
@@ -128,7 +134,7 @@ const Stride = () => {
                 priceDisplayAmount: pda,
               };
             });
-          }
+          
         }}
         footerLabel={
           <Stack
