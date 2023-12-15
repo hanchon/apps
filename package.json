@@ -32,8 +32,8 @@
     "husky": "^8.0.0",
     "prettier": "^3.0.1",
     "prettier-plugin-tailwindcss": "^0.4.1",
-    "viem": "~1.19.1",
-    "wagmi": "~1.4.6"
+    "viem": "~1.19.13",
+    "wagmi": "~1.4.10"
   },
   "browserslist": [
     "last 3 chrome version",

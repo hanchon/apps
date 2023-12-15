@@ -1,3 +1,4 @@
+"use client";
 import {
   ChainPrefixSchema,
   HexSchema,
@@ -23,7 +24,7 @@ export const ReceiptModal = () => {
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Modal.Body className="bg-black-900 shadow-custom-sm">
+      <Modal.Body className="bg-black-900 text-pearl1 shadow-custom-sm">
         {modalProps && <ReceiptModalContent {...modalProps} />}
       </Modal.Body>
     </Modal>
