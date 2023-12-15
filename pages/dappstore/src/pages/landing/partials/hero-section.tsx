@@ -12,6 +12,7 @@ import { translation } from "@evmosapps/i18n/server";
 import {
   CLICK_LEARN_BUTTON,
   CLICK_ON_APPLY_TO_BE_PART_OF_THE_ECOSYSTEM,
+  CLICK_ON_VIEW_ALL_DAPPS,
 } from "tracker";
 import { Trans } from "@evmosapps/i18n/client";
 import { UpRightArrowIcon } from "icons";
@@ -104,14 +105,18 @@ export const HeroSection = async ({ totalApps }: { totalApps: number }) => {
               count: totalApps,
             }}
           />
-
-          <ButtonWithLink
-            href="/dapps"
-            className="flex self-center bg-[#A4A189CC] font-brand px-11"
+          <TrackerEvent
+            event={CLICK_ON_VIEW_ALL_DAPPS}
+            properties={{ Location: "Graphic" }}
           >
-            {t("ecosystem.button.text")}
-            {t("ecosystem.button.text2")}
-          </ButtonWithLink>
+            <ButtonWithLink
+              href="/dapps"
+              className="flex self-center bg-[#A4A189CC] font-brand px-11"
+            >
+              {t("ecosystem.button.text")}
+              {t("ecosystem.button.text2")}
+            </ButtonWithLink>
+          </TrackerEvent>
         </div>
       </div>
     </div>

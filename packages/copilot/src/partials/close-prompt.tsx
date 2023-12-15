@@ -9,6 +9,7 @@ import { PrimaryButton } from "@evmosapps/ui-helpers";
 import { Modal, ModalProps } from "@evmosapps/ui-helpers/src/Modal";
 import { raise, useEffectEvent } from "helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
+import { EXIT_OUT_COPILOT, sendEvent } from "tracker";
 
 const ClosePromptContext = createContext<{
   setClosePromptEnabled: React.Dispatch<React.SetStateAction<boolean>>;
@@ -74,6 +75,7 @@ export const withClosePrompt = <T extends ModalProps>(
                   <button
                     onClick={() => {
                       setClosePromptOpen(false);
+                      sendEvent(EXIT_OUT_COPILOT);
                     }}
                     className="color-gray300 border-gray300 rounded-lg border px-8 py-2 font-normal shadow transition-all duration-300 hover:shadow-md focus-visible:outline-none"
                   >

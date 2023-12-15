@@ -80,7 +80,7 @@ export const CLICK_ON_STAKE_AND_MANAGE_DELEGATION =
   "ClickedCTAButton - Stake & Manage Delegations";
 export const CLICK_ON_PARTICIPATE_IN_GOVERNANCE =
   "ClickedCTAButton - Participate in Governance";
-export const CLICK_ON_VIEW_ALL_DAPPS = "ClickedCTAButton - See all x dApps";
+export const CLICK_ON_VIEW_ALL_DAPPS = "ClickedCTAButton - See all dApps";
 export const CLICK_ON_APPLY_TO_BE_PART_OF_THE_ECOSYSTEM =
   "ClickedCTAButton - Add a dApp";
 export const CLICK_ON_DAPP_INSIDE_LAUNCHER = "AppLauncher";
@@ -97,26 +97,22 @@ export const CLICK_LEARN_BUTTON = "ClickedCTAButton - Learn to Build on Evmos";
 export const CLICK_SEE_MORE_BUTTON = "ClickedCTAButton - See more";
 
 // TODO:
-export const CLICK_EVMOS_COPILOT_START_FLOW =
-  "Click on Evmos Copilot to begin the flow";
-export const EXIT_OUT_COPILOT = "Exit out of Copilot";
+export const CLICK_EVMOS_COPILOT_START_FLOW = "StartedCopilotOnboarding";
+export const EXIT_OUT_COPILOT = "ExitedCopilotOnboarding";
 
 // CHECK
 
-export const CLICK_EVMOS_LOGO = "Click on Evmos Logo";
-export const CLICK_ON_SWAP_ASSETS_PAY_FLOW =
-  "Click 'Swap Asset' to be moved to Forge";
-export const CLICK_ON_PAY = "Click on Pay";
-export const CLICK_ON_GIVE_FEEDBACK_MAIN_PAGE =
-  "Click on 'Give Feedback' from main page";
+export const CLICK_EVMOS_LOGO = "ClickedEvmosLogo";
 
+export const CLICK_ON_GIVE_FEEDBACK = "ClickedGiveFeedback";
+
+// TODO -> remove this events after removing the related components
 export const CLICK_DEPOSIT_CHOOSE_FROM_CHAIN = "Deposit from a specific chain";
 export const CLICK_DEPOSIT_CONFIRM_BUTTON = "Confirm deposit transaction";
 export const CLICK_WITHDRAW_CHOOSE_TOKEN = "Choose a token to withdraw";
 export const CLICK_WITHDRAW_CONFIRM_BUTTON = "Confirm withdraw transaction";
-export const CLICK_HIDE_ZERO_BALANCE = "Hide Zero Balance";
-export const CLICK_CTA_LINKS_REGISTER_TOKEN =
-  "Click on CTA link to register token";
+export const CLICK_HIDE_ZERO_BALANCE = "HideZeroBalance";
+export const CLICK_CTA_LINKS_REGISTER_TOKEN = "ClickedRegisterToken";
 export const CLICK_CTA_LINKS_ASSETS_GUIDE =
   "Click on CTA link to view assets guide";
 
@@ -124,6 +120,4 @@ export const SUCCESSFUL_TX_DEPOSIT = "Successful transaction of Deposit";
 export const UNSUCCESSFUL_TX_DEPOSIT = "Unsuccessful transaction of Deposit";
 export const SUCCESSFUL_TX_WITHDRAW = "Successful transaction of Withdraw";
 export const UNSUCCESSFUL_TX_WITHDRAW = "Unsuccessful transaction of Withdraw";
-export const CLICK_BUTTON_CONVERT = "Convert token";
-export const CLICK_BUTTON_CONFIRM_CONVERT_TX = "Confirm Convert Transaction";
-export const CLICK_BUTTON_CONFIRM_WRAP_TX = "Confirm wrap transaction";
+export const CLICK_BUTTON_CONVERT = "ClickedConvert";

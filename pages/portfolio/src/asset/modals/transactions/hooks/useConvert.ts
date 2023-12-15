@@ -11,13 +11,7 @@ import {
   snackRequestRejected,
   StoreType,
 } from "@evmosapps/evmos-wallet";
-import {
-  useTracker,
-  CLICK_BUTTON_CONFIRM_WRAP_TX,
-  SUCCESSFUL_WRAP_TX,
-  UNSUCCESSFUL_WRAP_TX,
-  sendEvent,
-} from "tracker";
+import { SUCCESSFUL_WRAP_TX, UNSUCCESSFUL_WRAP_TX, sendEvent } from "tracker";
 
 import { useWEVMOS } from "../contracts/hooks/useWEVMOS";
 import { parseUnits } from "@ethersproject/units";
@@ -30,17 +24,11 @@ import { GENERATING_TX_NOTIFICATIONS } from "../../../../utils/transactions/erro
 
 const evmos = getEvmosChainInfo();
 
-const wrapEvmos = "EVMOS <> WEVMOS";
-const unwrapEvmos = "WEVMOS <> EVMOS";
 export const useConvert = (useConvertProps: ConvertProps) => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
 
   const { deposit, withdraw } = useWEVMOS();
-
-  const { handlePreClickAction: clickConfirmWrapTx } = useTracker(
-    CLICK_BUTTON_CONFIRM_WRAP_TX
-  );
 
   const handleConfirmButton = async () => {
     const connectedNetwork = getNetwork();
@@ -52,11 +40,6 @@ export const useConvert = (useConvertProps: ConvertProps) => {
       );
       if (err) return;
     }
-    clickConfirmWrapTx({
-      convert: useConvertProps.balance.isIBCBalance ? wrapEvmos : unwrapEvmos,
-      wallet: wallet?.evmosAddressEthFormat,
-      provider: wallet?.extensionName,
-    });
 
     useConvertProps.setConfirmClicked(true);
     if (wallet.evmosPubkey === null) {

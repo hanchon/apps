@@ -2,7 +2,7 @@ import { ComponentProps } from "react";
 
 import { Badge, TrackerEvent } from "@evmosapps/ui-helpers";
 
-import { COMPLETED_COPILOT_ONBOARDING } from "tracker";
+import { CLICK_ON_VIEW_ALL_DAPPS, COMPLETED_COPILOT_ONBOARDING } from "tracker";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import { cn } from "helpers";
 import { useModal } from "@evmosapps/ui-helpers/src/Modal";
@@ -16,9 +16,9 @@ export const ButtonsNextSteps = () => {
     <>
       <div className="grid w-full grid-cols-1 space-y-3 pb-3 pt-5 md:grid-cols-2 md:space-x-4 md:space-y-0">
         <TrackerEvent
-          event={COMPLETED_COPILOT_ONBOARDING}
+          event={CLICK_ON_VIEW_ALL_DAPPS}
           properties={{
-            "Completed Copilot Onboarding": "Interact with a dApp",
+            Location: "Inside Copilot",
           }}
         >
           <Button href="/dapps">

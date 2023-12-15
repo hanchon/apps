@@ -26,7 +26,7 @@ import { EcosystemCard } from "../../landing/partials/ecosystem-card";
 import { translation } from "@evmosapps/i18n/server";
 import { EcosystemCardGrid } from "../../landing/partials/ecosystem-card-grid";
 import { DescriptionLink } from "./description-link";
-import { CLICK_SOCIAL_BUTTON } from "tracker";
+import { CLICK_SEE_MORE_BUTTON, CLICK_SOCIAL_BUTTON } from "tracker";
 
 const WIDGETS: {
   [key: string]: React.ComponentType<{}>;
@@ -236,7 +236,7 @@ export const DescriptiondApp = async ({
             <DescriptionItem title={t("instantdApp.website.title")}>
               <TrackerEvent
                 event={CLICK_SOCIAL_BUTTON}
-                properties={{ "dApp Social Type": "Website" }}
+                properties={{ "dApp Social Type": "dApp Website" }}
               >
                 <DescriptionLink href={dapp.dapp.url}>
                   <WebsiteIcon width={20} height={20} />{" "}
@@ -263,16 +263,17 @@ export const DescriptiondApp = async ({
         style={{ marginBottom: "-1rem" }}
       >
         <Title tag="h3">{t("instantdApp.relatedApps.title")}</Title>
-
-        <ButtonWithLink
-          href={`/dapps/${dapp.categorySlug}`}
-          className="md:self-center"
-        >
-          <div className="flex items-center space-x-2">
-            <p>{t("instantdApp.relatedApps.button.text")}</p>
-            <RightArrow width={11} height={11} />
-          </div>
-        </ButtonWithLink>
+        <TrackerEvent event={CLICK_SEE_MORE_BUTTON}>
+          <ButtonWithLink
+            href={`/dapps/${dapp.categorySlug}`}
+            className="md:self-center"
+          >
+            <div className="flex items-center space-x-2">
+              <p>{t("instantdApp.relatedApps.button.text")}</p>
+              <RightArrow width={11} height={11} />
+            </div>
+          </ButtonWithLink>
+        </TrackerEvent>
       </div>
       <EcosystemCardGrid>
         {relatedApps?.map((dApp) => (

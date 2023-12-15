@@ -32,8 +32,6 @@ import {
   SNACKBAR_TYPES,
 } from "@evmosapps/evmos-wallet";
 import {
-  useTracker,
-  CLICK_BUTTON_CONFIRM_CONVERT_TX,
   SUCCESSFUL_CONVERT_TX,
   UNSUCCESSFUL_CONVERT_TX,
   sendEvent,
@@ -46,8 +44,6 @@ import { E } from "helpers";
 
 const evmos = getEvmosChainInfo();
 
-const IBC_ERC20 = "IBC<>ERC-20";
-const ERC20_IBC = "ERC-20 <> IBC";
 const Convert = ({
   item,
   feeBalance,
@@ -100,10 +96,6 @@ const Convert = ({
     decimals: item.decimals,
     img: item.pngSrc,
   };
-
-  const { handlePreClickAction: clickConfirmConvertTx } = useTracker(
-    CLICK_BUTTON_CONFIRM_CONVERT_TX
-  );
 
   return (
     <>
@@ -173,12 +165,6 @@ const Convert = ({
               );
               if (err) return;
             }
-            clickConfirmConvertTx({
-              convert: isERC20Selected ? ERC20_IBC : IBC_ERC20,
-              wallet: wallet?.evmosAddressEthFormat,
-              provider: wallet?.extensionName,
-              chain: item.chainIdentifier,
-            });
 
             setConfirmClicked(true);
             if (wallet.evmosPubkey === null) {

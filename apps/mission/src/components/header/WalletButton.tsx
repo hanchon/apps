@@ -1,10 +1,6 @@
 "use client";
-import { CLICK_CONNECT_WALLET_BUTTON } from "tracker";
-import {
-  AddressDisplay,
-  PrimaryButton,
-  TrackerEvent,
-} from "@evmosapps/ui-helpers";
+import { CLICK_CONNECT_WALLET_BUTTON, sendEvent } from "tracker";
+import { AddressDisplay, PrimaryButton } from "@evmosapps/ui-helpers";
 import { cn } from "helpers";
 import {
   getActiveProviderKey,
@@ -37,15 +33,16 @@ export const WalletButton = () => {
   }
   return (
     <ConnectModalTrigger>
-      <TrackerEvent event={CLICK_CONNECT_WALLET_BUTTON}>
-        <PrimaryButton
-          variant={"primary"}
-          data-testid="open-connect-modal"
-          className={cn("rounded-full px-8 py-2 text-sm font-bold")}
-        >
-          Connect
-        </PrimaryButton>
-      </TrackerEvent>
+      <PrimaryButton
+        variant={"primary"}
+        data-testid="open-connect-modal"
+        className={cn("rounded-full px-8 py-2 text-sm font-bold")}
+        onClick={() => {
+          sendEvent(CLICK_CONNECT_WALLET_BUTTON);
+        }}
+      >
+        Connect
+      </PrimaryButton>
     </ConnectModalTrigger>
   );
 };

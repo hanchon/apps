@@ -15,7 +15,7 @@ import HeadAssets from "./components/HeadAssets";
 import Guide from "./Guide";
 
 import { BigNumber } from "@ethersproject/bignumber";
-import { CLICK_HIDE_ZERO_BALANCE, useTracker } from "tracker";
+import { CLICK_HIDE_ZERO_BALANCE, sendEvent } from "tracker";
 import {
   TableData,
   normalizeAssetsData,
@@ -59,18 +59,10 @@ const AssetsTable = () => {
     }
   }, []);
 
-  const { handlePreClickAction: handleZeroBalance } = useTracker(
-    CLICK_HIDE_ZERO_BALANCE,
-    {
-      status: !hideZeroBalance,
-      wallet: value?.evmosAddressEthFormat,
-      provider: value?.extensionName,
-    }
-  );
   const zeroBalance = () => {
     localStorage.setItem("zeroBalance", String(!hideZeroBalance));
     setHideBalance(!hideZeroBalance);
-    handleZeroBalance();
+    sendEvent(CLICK_HIDE_ZERO_BALANCE);
   };
 
   const normalizedAssetsData = useMemo<TableData>(() => {

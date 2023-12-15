@@ -34,8 +34,7 @@ import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/
 import { PayIcon } from "icons";
 import Image from "next/image";
 import {
-  CLICK_ON_PAY,
-  CLICK_ON_SWAP_ASSETS_PAY_FLOW,
+  PROMPTED_TO_IN_SEND,
   SUCCESSFUL_PAY_TX,
   UNSUCESSFUL_PAY_TX,
 } from "tracker";
@@ -321,9 +320,6 @@ export const Content = ({
                     type="submit"
                     disabled={!isReady || isTransferring || hasTransferred}
                     variant={false ? "outline-primary" : undefined}
-                    onClick={() => {
-                      sendEvent(CLICK_ON_PAY);
-                    }}
                     className="w-full text-lg rounded-md capitalize"
                   >
                     {isTransferring || hasTransferred ? (
@@ -342,7 +338,9 @@ export const Content = ({
                   <PrimaryButton
                     variant={"outline-primary"}
                     onClick={() => {
-                      sendEvent(CLICK_ON_SWAP_ASSETS_PAY_FLOW);
+                      sendEvent(PROMPTED_TO_IN_SEND, {
+                        "Send Modal Prompt To": "Forge",
+                      });
                       window.open("https://forge.trade/#/swap", "_blank");
                     }}
                   >

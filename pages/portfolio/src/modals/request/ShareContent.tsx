@@ -19,6 +19,7 @@ import { TokenRef } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { RequestModalProps } from "./RequestModal";
 import {
   CLICK_ON_COPY_ICON_REQUEST_FLOW,
+  CLICK_ON_SHARE_QR_CODE,
   CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW,
   useTracker,
 } from "tracker";
@@ -107,6 +108,10 @@ export const ShareContent = ({
               {shareEnabled && (
                 <button
                   onClick={async () => {
+                    sendEvent(CLICK_ON_SHARE_QR_CODE, {
+                      "Receive Modal Actions": "<Share Payment Request",
+                      "Wallet Provider": activeProviderKey,
+                    });
                     await navigator.share({
                       url: shareURL,
                       title: "Payment Link",

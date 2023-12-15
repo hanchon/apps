@@ -250,7 +250,6 @@ export const TransferModalContent = ({
             topupModal.setIsOpen(true);
             sendEvent(PROMPTED_TO_IN_SEND, {
               "Send Modal Prompt To": "Top Up",
-              Location: "Send Modal",
             });
             return;
           }
@@ -261,13 +260,15 @@ export const TransferModalContent = ({
             window.open(target, "_blank");
             sendEvent(PROMPTED_TO_IN_SEND, {
               "Send Modal Prompt To": "Satellite",
-              Location: "Send Modal",
             });
             return;
           }
 
           if (action === "CONNECT") {
             connectModal.setIsOpen(true, {}, true);
+            sendEvent(PROMPTED_TO_IN_SEND, {
+              "Send Modal Prompt To": "Connect Account",
+            });
             return;
           }
 
@@ -375,7 +376,6 @@ export const TransferModalContent = ({
                       const [err] = await E.try(() => connectWith("keplr"));
                       sendEvent(PROMPTED_TO_IN_SEND, {
                         "Send Modal Prompt To": "Connect To Keplr",
-                        Location: "Send Modal",
                       });
                       // TODO: handle error when user rejects the connection
                       if (err) return false;

@@ -10,11 +10,12 @@ import { AccountBalance } from "./partials/account-balance";
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { HeroSection } from "./partials/hero-section";
-import { ButtonWithLink, Frameline } from "@evmosapps/ui-helpers";
+import { ButtonWithLink, Frameline, TrackerEvent } from "@evmosapps/ui-helpers";
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 
 import { CopilotCard } from "./partials/copilot-card/copilot-card";
 import { translation } from "@evmosapps/i18n/server";
+import { CLICK_ON_VIEW_ALL_DAPPS } from "tracker";
 
 export const LandingPage = async () => {
   const { dApps } = await fetchExplorerData();
@@ -40,10 +41,15 @@ export const LandingPage = async () => {
       <HeroSection totalApps={dApps.length} />
       <EcosystemSection />
       <Frameline>
-        <ButtonWithLink className="w-full " href="/dapps">
-          {t("ecosystem.button.text")} {dApps.length}{" "}
-          {t("ecosystem.button.text2")}
-        </ButtonWithLink>
+        <TrackerEvent
+          event={CLICK_ON_VIEW_ALL_DAPPS}
+          properties={{ Location: "Home Page" }}
+        >
+          <ButtonWithLink className="w-full " href="/dapps">
+            {t("ecosystem.button.text")} {dApps.length}{" "}
+            {t("ecosystem.button.text2")}
+          </ButtonWithLink>
+        </TrackerEvent>
       </Frameline>
     </div>
   );
