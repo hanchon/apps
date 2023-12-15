@@ -2,7 +2,6 @@ import { useTranslation } from "@evmosapps/i18n/client";
 import { IconContainer, Modal, PrimaryButton } from "@evmosapps/ui-helpers";
 
 import ConfettiExplosion from "react-confetti-explosion";
-import { CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT, sendEvent } from "tracker";
 import { useCopilot } from "../../copilot";
 
 export const SetupAccountSuccesStep = () => {
@@ -19,7 +18,8 @@ export const SetupAccountSuccesStep = () => {
 
       <PrimaryButton
         onClick={() => {
-          sendEvent(CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT);
+          // TODO: maybe add a property
+          // sendEvent(CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT);
           nextStep();
         }}
       >

@@ -9,8 +9,9 @@ import {
   CLICK_CONFIRM_VOTE_BUTTON,
   SUCCESSFUL_TX_VOTE,
   UNSUCCESSFUL_TX_VOTE,
+  sendEvent,
 } from "tracker";
-import { useTracker } from "tracker";
+
 import { getNetwork, switchNetwork } from "wagmi/actions";
 import { E } from "helpers";
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
@@ -20,10 +21,7 @@ import { executeVote } from "../../../../utils/transactions/vote";
 const evmos = getEvmosChainInfo();
 export const useVote = (useVoteProps: VoteProps) => {
   const dispatch = useDispatch();
-  const { handlePreClickAction } = useTracker(CLICK_CONFIRM_VOTE_BUTTON);
-  const { handlePreClickAction: successfulTx } = useTracker(SUCCESSFUL_TX_VOTE);
-  const { handlePreClickAction: unsuccessfulTx } =
-    useTracker(UNSUCCESSFUL_TX_VOTE);
+
   const handleConfirmButton = async () => {
     const connectedNetwork = getNetwork();
     if (connectedNetwork.chain?.id !== evmos.id) {
@@ -35,10 +33,11 @@ export const useVote = (useVoteProps: VoteProps) => {
       if (err) return;
     }
 
-    handlePreClickAction({
-      wallet: useVoteProps?.wallet?.evmosAddressEthFormat,
-      provider: useVoteProps?.wallet?.extensionName,
+    sendEvent(CLICK_CONFIRM_VOTE_BUTTON, {
+      "User Wallet Address": useVoteProps.wallet?.evmosAddressEthFormat,
+      "Wallet Provider": useVoteProps.wallet?.extensionName,
     });
+
     if (
       useVoteProps.option === undefined ||
       useVoteProps.option === null ||
@@ -53,18 +52,17 @@ export const useVote = (useVoteProps: VoteProps) => {
     const res = await executeVote(useVoteProps.wallet, useVoteProps.id, option);
     dispatch(snackExecuteIBCTransfer(res));
     if (res.error === true) {
-      unsuccessfulTx({
-        errorMessage: res.message,
-        wallet: useVoteProps.wallet?.evmosAddressEthFormat,
-        provider: useVoteProps.wallet?.extensionName,
-        transaction: "unsuccessful",
+      sendEvent(UNSUCCESSFUL_TX_VOTE, {
+        "User Wallet Address": useVoteProps.wallet?.evmosAddressEthFormat,
+        "Wallet Provider": useVoteProps.wallet?.extensionName,
+        "Governance Proposal": useVoteProps.id,
+        "Error Message": res.message,
       });
     } else {
-      successfulTx({
-        txHash: res.txHash,
-        wallet: useVoteProps.wallet?.evmosAddressEthFormat,
-        provider: useVoteProps.wallet?.extensionName,
-        transaction: "successful",
+      sendEvent(SUCCESSFUL_TX_VOTE, {
+        "User Wallet Address": useVoteProps.wallet?.evmosAddressEthFormat,
+        "Wallet Provider": useVoteProps.wallet?.extensionName,
+        "Governance Proposal": useVoteProps.id,
       });
     }
     useVoteProps.setIsOpen(false);

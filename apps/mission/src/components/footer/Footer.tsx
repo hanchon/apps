@@ -5,6 +5,7 @@ import {
   DISCORD_EVMOS_URL,
   DOCS_SMART_CONTRACTS_URL,
   GITHUB_EVMOS_URL,
+  MEDIUM_URL,
   TELEGRAM_EVMOS_URL,
   TWITTER_EVMOS_URL,
 } from "constants-helper";
@@ -13,22 +14,29 @@ import {
   CommonWealthIcon,
   DiscordIcon,
   GithubIcon,
+  MediumIcon,
   TelegramIcon,
   TwitterIcon,
 } from "icons";
 
-import { translation } from "@evmosapps/i18n/server";
-import { ConsentModalTrigger } from "stateful-components/src/modals/ConsentModal/ConsentModal";
-import { Container } from "@evmosapps/ui-helpers";
 import { Link } from "@evmosapps/i18n/client";
+import { ConsentModalTrigger } from "stateful-components/src/modals/ConsentModal/ConsentModal";
+import { Container, TrackerEvent } from "@evmosapps/ui-helpers";
+
+import { CLICK_ON_FOOTER_CTA } from "tracker";
+import { translation } from "@evmosapps/i18n/server";
 
 export const Footer = async () => {
   const { t } = await translation();
+
   return (
     <Container full className="mt-auto pt-10">
       <footer className="text-gray-700 text-xs mb-10 mt-10 space-y-2 lg:space-y-0 flex lg:justify-between flex-col lg:flex-row items-center">
         <div className="flex flex-col items-center space-y-3 lg:flex-row lg:space-x-10 lg:space-y-0">
-          <p>
+          <TrackerEvent
+            event={CLICK_ON_FOOTER_CTA}
+            properties={{ "Footer Social Type": "Build with evmos" }}
+          >
             <a
               href={DOCS_SMART_CONTRACTS_URL}
               className="flex items-center space-x-3 "
@@ -42,7 +50,7 @@ export const Footer = async () => {
               />
               <span>{t("footer.buildWithUs")}</span>
             </a>
-          </p>
+          </TrackerEvent>
           <div className="flex flex-col lg:flex-row space-x-2 text-center lg:text-left items-center space-y-2 lg:space-y-0">
             <h1>Version: main - {pkg.version}</h1>
             <p>
@@ -59,62 +67,111 @@ export const Footer = async () => {
         </div>
         <div className="flex flex-col lg:flex-row items-center lg:space-x-10 space-y-2 lg:space-y-0">
           <div className="flex items-center space-x-5 mt-2 lg:mt-0">
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={GITHUB_EVMOS_URL}
-              aria-label="github evmos"
+            <TrackerEvent
+              event={CLICK_ON_FOOTER_CTA}
+              properties={{ "Footer Social Type": "Github" }}
             >
-              <GithubIcon width={18} height={18} />
-            </a>
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={TWITTER_EVMOS_URL}
-              aria-label="twitter evmos"
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={GITHUB_EVMOS_URL}
+                aria-label="github evmos"
+              >
+                <GithubIcon width={18} height={18} />
+              </a>
+            </TrackerEvent>
+            <TrackerEvent
+              event={CLICK_ON_FOOTER_CTA}
+              properties={{ "Footer Social Type": "X" }}
             >
-              <TwitterIcon width={15} height={15} />
-            </a>
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={DISCORD_EVMOS_URL}
-              aria-label="discord evmos"
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={TWITTER_EVMOS_URL}
+                aria-label="twitter evmos"
+              >
+                <TwitterIcon width={15} height={15} />
+              </a>
+            </TrackerEvent>
+            <TrackerEvent
+              event={CLICK_ON_FOOTER_CTA}
+              properties={{ "Footer Social Type": "Discord" }}
             >
-              <DiscordIcon width={18} height={18} />
-            </a>
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={TELEGRAM_EVMOS_URL}
-              aria-label="discord telegram"
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={DISCORD_EVMOS_URL}
+                aria-label="discord evmos"
+              >
+                <DiscordIcon width={18} height={18} />
+              </a>
+            </TrackerEvent>
+            <TrackerEvent
+              event={CLICK_ON_FOOTER_CTA}
+              properties={{ "Footer Social Type": "Telegram" }}
             >
-              <TelegramIcon width={18} height={18} />
-            </a>
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={COMMONWEALTH_URL}
-              aria-label="commonwealth evmos"
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={TELEGRAM_EVMOS_URL}
+                aria-label="discord telegram"
+              >
+                <TelegramIcon width={18} height={18} />
+              </a>
+            </TrackerEvent>
+            <TrackerEvent
+              event={CLICK_ON_FOOTER_CTA}
+              properties={{ "Footer Social Type": "Medium" }}
             >
-              <CommonWealthIcon width={18} height={18} />
-            </a>
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={MEDIUM_URL}
+                aria-label="medium evmos"
+              >
+                <MediumIcon width={24} height={24} />
+              </a>
+            </TrackerEvent>
+            <TrackerEvent
+              event={CLICK_ON_FOOTER_CTA}
+              properties={{ "Footer Social Type": "Commonwealth" }}
+            >
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={COMMONWEALTH_URL}
+                aria-label="commonwealth evmos"
+              >
+                <CommonWealthIcon width={18} height={18} />
+              </a>
+            </TrackerEvent>
           </div>
 
           <div className="flex flex-grow flex-col items-center space-y-2 lg:flex-row lg:space-x-5 lg:space-y-0 lg:px-2">
-            <p>
+            <TrackerEvent
+              event={CLICK_ON_FOOTER_CTA}
+              properties={{ "Footer Social Type": "Terms of service" }}
+            >
               <Link href="/terms-of-service" aria-label="terms of services">
                 {t("footer.termsOfService")}
               </Link>
-            </p>
-            <p>
+            </TrackerEvent>
+            <TrackerEvent
+              event={CLICK_ON_FOOTER_CTA}
+              properties={{ "Footer Social Type": "Privacy Statement" }}
+            >
               <Link href={"/privacy-policy"} aria-label="privacy policy">
                 {t("footer.privacyPolicy")}
               </Link>
-            </p>
+            </TrackerEvent>
 
             <ConsentModalTrigger>
-              <p>{t("footer.cookiesSettings")}</p>
+              <TrackerEvent
+                event={CLICK_ON_FOOTER_CTA}
+                properties={{ "Footer Social Type": "Cookie Statement" }}
+              >
+                <p>{t("footer.cookiesSettings")}</p>
+              </TrackerEvent>
             </ConsentModalTrigger>
           </div>
         </div>

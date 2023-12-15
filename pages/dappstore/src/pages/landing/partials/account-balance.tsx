@@ -67,7 +67,7 @@ export const AccountBalance = () => {
             <TrackerEvent
               event={CLICK_ON_TOP_UP_ACCOUNT_DAPP}
               properties={{
-                location: "On the main page",
+                Location: "Home Page",
               }}
             >
               <TopupModalTrigger>

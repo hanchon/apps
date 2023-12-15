@@ -7,12 +7,8 @@ import {
   CREATED_ORDER_ON_TRANSAK,
   FAILED_ORDER_ON_TRANSAK,
   SUCCESSFUL_ORDER_ON_TRANSAK,
-  useTracker,
+  sendEvent,
 } from "tracker";
-
-const ON_RAMP_TYPE = {
-  TRANSAK: "transak",
-};
 
 type transakParams = {
   event_id?: string;
@@ -30,50 +26,21 @@ const TRANSAK_EVENTS = {
   TRANSAK_ORDER_CREATED: "TRANSAK_ORDER_CREATED",
 };
 export const useTransakEvents = () => {
-  const { handlePreClickAction: createdOrder } = useTracker(
-    CREATED_ORDER_ON_TRANSAK
-  );
-  const { handlePreClickAction: orderSuccessful } = useTracker(
-    SUCCESSFUL_ORDER_ON_TRANSAK
-  );
-  const { handlePreClickAction: orderUnsuccessful } = useTracker(
-    FAILED_ORDER_ON_TRANSAK
-  );
-  const { handlePreClickAction: orderCancelled } = useTracker(
-    CANCELLED_ORDER_ON_TRANSAK
-  );
   useEffect(() => {
     const handleMessage = ({ data }: { data: transakParams }) => {
       const eventId = data?.event_id;
-      const dataEvent = data?.data;
       if (eventId) {
         if (eventId === TRANSAK_EVENTS.TRANSAK_ORDER_CREATED) {
-          createdOrder({
-            onRampType: ON_RAMP_TYPE.TRANSAK,
-            amount: dataEvent?.cryptoAmount,
-            transactionType: dataEvent?.isBuyOrSell,
-          });
+          sendEvent(CREATED_ORDER_ON_TRANSAK);
         }
         if (eventId === TRANSAK_EVENTS.TRANSAK_ORDER_SUCCESSFUL) {
-          orderSuccessful({
-            onRampType: ON_RAMP_TYPE.TRANSAK,
-            amount: dataEvent?.cryptoAmount,
-            transactionType: dataEvent?.isBuyOrSell,
-          });
+          sendEvent(SUCCESSFUL_ORDER_ON_TRANSAK);
         }
         if (eventId === TRANSAK_EVENTS.TRANSAK_ORDER_FAILED) {
-          orderUnsuccessful({
-            onRampType: ON_RAMP_TYPE.TRANSAK,
-            amount: dataEvent?.cryptoAmount,
-            transactionType: dataEvent?.isBuyOrSell,
-          });
+          sendEvent(FAILED_ORDER_ON_TRANSAK);
         }
         if (eventId === TRANSAK_EVENTS.TRANSAK_ORDER_CANCELLED) {
-          orderCancelled({
-            onRampType: ON_RAMP_TYPE.TRANSAK,
-            amount: dataEvent?.cryptoAmount,
-            transactionType: dataEvent?.isBuyOrSell,
-          });
+          sendEvent(CANCELLED_ORDER_ON_TRANSAK);
         }
       }
     };
@@ -82,7 +49,7 @@ export const useTransakEvents = () => {
     return () => {
       window.removeEventListener("message", handleMessage);
     };
-  }, [createdOrder, orderSuccessful, orderUnsuccessful, orderCancelled]);
+  }, []);
 
   return {};
 };

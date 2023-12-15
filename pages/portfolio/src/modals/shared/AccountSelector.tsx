@@ -17,6 +17,7 @@ import { Trans } from "next-i18next";
 import { SELECT_TO_NETWORK_SEND_FLOW, useTracker } from "tracker";
 import { useEffectEvent } from "helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
+import { useAccount } from "wagmi";
 
 type WalletTabKey = "WALLET" | "OTHER";
 export const AccountSelector = ({
@@ -34,6 +35,7 @@ export const AccountSelector = ({
 }>) => {
   const { t } = useTranslation("transfer-modal");
   const { sendEvent } = useTracker();
+  const { connector, address: addressConnected } = useAccount();
   const { address, inputProps, errors, setValue } = useAddressInput(value);
   const [selectedNetwork, setSelectedNetwork] = useState<Prefix>("evmos");
   const [selectedWalletTab, setSelectedWalletTab] =
@@ -116,9 +118,9 @@ export const AccountSelector = ({
             onChange={(value) => {
               setSelectedNetwork?.(value);
               sendEvent(SELECT_TO_NETWORK_SEND_FLOW, {
-                network: value,
-                "account provider": getActiveProviderKey(),
-                "user's address or other": activeWalletTab,
+                Network: value,
+                "User Wallet Address": addressConnected,
+                "Wallet Provider": connector?.name,
               });
             }}
           />

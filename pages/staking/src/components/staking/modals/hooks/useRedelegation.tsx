@@ -12,9 +12,9 @@ import {
 } from "@evmosapps/evmos-wallet";
 import {
   CLICK_BUTTON_CONFIRM_REDELEGATE,
-  useTracker,
   SUCCESSFUL_TX_REDELEGATE,
   UNSUCCESSFUL_TX_REDELEGATE,
+  sendEvent,
 } from "tracker";
 
 import { EXPLORER_URL } from "constants-helper";
@@ -27,14 +27,6 @@ const evmos = getEvmosChainInfo();
 
 export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
   const dispatch = useDispatch();
-
-  const { handlePreClickAction } = useTracker(CLICK_BUTTON_CONFIRM_REDELEGATE);
-  const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_REDELEGATE
-  );
-  const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_REDELEGATE
-  );
 
   const { redelegate } = useStakingPrecompile();
 
@@ -49,10 +41,7 @@ export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
       if (err) return;
     }
 
-    handlePreClickAction({
-      wallet: useRedelegateProps?.wallet?.evmosAddressEthFormat,
-      provider: useRedelegateProps?.wallet?.extensionName,
-    });
+    sendEvent(CLICK_BUTTON_CONFIRM_REDELEGATE);
     useRedelegateProps.setConfirmClicked(true);
     if (
       useRedelegateProps.value === undefined ||
@@ -82,19 +71,17 @@ export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
 
       dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx`));
 
-      successfulTx({
-        txHash: res.hash,
-        wallet: useRedelegateProps.wallet?.evmosAddressEthFormat,
-        provider: useRedelegateProps.wallet?.extensionName,
-        transaction: "successful",
+      sendEvent(SUCCESSFUL_TX_REDELEGATE, {
+        "User Wallet Address": useRedelegateProps.wallet?.evmosAddressEthFormat,
+        "Wallet Provider": useRedelegateProps.wallet?.extensionName,
       });
     } catch (e) {
       dispatch(snackErrorGeneratingTx());
-      unsuccessfulTx({
-        errorMessage: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-        wallet: useRedelegateProps.wallet?.evmosAddressEthFormat,
-        provider: useRedelegateProps.wallet?.extensionName,
-        transaction: "unsuccessful",
+      sendEvent(UNSUCCESSFUL_TX_REDELEGATE, {
+        "User Wallet Address": useRedelegateProps.wallet?.evmosAddressEthFormat,
+        "Wallet Provider": useRedelegateProps.wallet?.extensionName,
+        // TODO: we should update this error. Show the correct message for the error
+        "Error Message": GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
       });
     }
     useRedelegateProps.setIsOpen(false);

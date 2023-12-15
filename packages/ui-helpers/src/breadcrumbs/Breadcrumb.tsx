@@ -1,4 +1,6 @@
 import { RightArrow } from "icons";
+import { CLICK_ON_BREADCRUMB } from "tracker";
+import { TrackerEvent } from "../TrackerEvent";
 
 export const Breadcrumb = ({
   pages,
@@ -20,17 +22,22 @@ export const Breadcrumb = ({
                   aria-hidden="true"
                 />
               )}
-              <a
-                href={page.href}
-                className={`pl-1 transition-all duration-200 ${
-                  index === pages.length - 1
-                    ? "text-pearl hover:text-white/90 font-bold"
-                    : "text-white/70 hover:text-pearl font-light"
-                }`}
-                aria-current={index === pages.length - 1 ? "page" : undefined}
+              <TrackerEvent
+                event={CLICK_ON_BREADCRUMB}
+                properties={{ Breadcrumb: page.name }}
               >
-                {page.name}
-              </a>
+                <a
+                  href={page.href}
+                  className={`pl-1 transition-all duration-200 ${
+                    index === pages.length - 1
+                      ? "text-pearl hover:text-white/90 font-bold"
+                      : "text-white/70 hover:text-pearl font-light"
+                  }`}
+                  aria-current={index === pages.length - 1 ? "page" : undefined}
+                >
+                  {page.name}
+                </a>
+              </TrackerEvent>
             </div>
           </li>
         ))}

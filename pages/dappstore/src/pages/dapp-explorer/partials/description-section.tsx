@@ -2,7 +2,12 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import Image from "next/image";
-import { Badge, ButtonWithLink, Frameline } from "@evmosapps/ui-helpers";
+import {
+  Badge,
+  ButtonWithLink,
+  Frameline,
+  TrackerEvent,
+} from "@evmosapps/ui-helpers";
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import {
   DiscordIcon,
@@ -21,6 +26,7 @@ import { EcosystemCard } from "../../landing/partials/ecosystem-card";
 import { translation } from "@evmosapps/i18n/server";
 import { EcosystemCardGrid } from "../../landing/partials/ecosystem-card-grid";
 import { DescriptionLink } from "./description-link";
+import { CLICK_SOCIAL_BUTTON } from "tracker";
 
 const WIDGETS: {
   [key: string]: React.ComponentType<{}>;
@@ -163,22 +169,37 @@ export const DescriptiondApp = async ({
           {(dapp.x || dapp.discord || dapp.telegram) && (
             <DescriptionItem title={t("instantdApp.social")}>
               {dapp.x.url && (
-                <DescriptionLink href={dapp.x.url}>
-                  <TwitterIcon width={20} height={20} /> <p>{dapp.x.label}</p>
-                </DescriptionLink>
+                <TrackerEvent
+                  event={CLICK_SOCIAL_BUTTON}
+                  properties={{ "dApp Social Type": "X" }}
+                >
+                  <DescriptionLink href={dapp.x.url}>
+                    <TwitterIcon width={20} height={20} /> <p>{dapp.x.label}</p>
+                  </DescriptionLink>
+                </TrackerEvent>
               )}
               {dapp.discord.url && (
-                <DescriptionLink href={dapp.discord.url}>
-                  <DiscordIcon width={20} height={20} />{" "}
-                  <p>{dapp.discord.label}</p>
-                </DescriptionLink>
+                <TrackerEvent
+                  event={CLICK_SOCIAL_BUTTON}
+                  properties={{ "dApp Social Type": "Discord" }}
+                >
+                  <DescriptionLink href={dapp.discord.url}>
+                    <DiscordIcon width={20} height={20} />{" "}
+                    <p>{dapp.discord.label}</p>
+                  </DescriptionLink>
+                </TrackerEvent>
               )}
 
               {dapp.telegram.url && (
-                <DescriptionLink href={dapp.telegram.url}>
-                  <TelegramIcon width={20} height={20} />{" "}
-                  <p>{dapp.telegram.label}</p>
-                </DescriptionLink>
+                <TrackerEvent
+                  event={CLICK_SOCIAL_BUTTON}
+                  properties={{ "dApp Social Type": "Telegram" }}
+                >
+                  <DescriptionLink href={dapp.telegram.url}>
+                    <TelegramIcon width={20} height={20} />{" "}
+                    <p>{dapp.telegram.label}</p>
+                  </DescriptionLink>
+                </TrackerEvent>
               )}
             </DescriptionItem>
           )}
@@ -186,28 +207,42 @@ export const DescriptiondApp = async ({
           {dapp.github && (
             <DescriptionItem title={t("instantdApp.information.title")}>
               {dapp.github && (
-                <DescriptionLink href={dapp.github}>
-                  <GithubIcon width={20} height={20} />{" "}
-                  <p>{t("instantdApp.information.options.github")}</p>
-                </DescriptionLink>
+                <TrackerEvent
+                  event={CLICK_SOCIAL_BUTTON}
+                  properties={{ "dApp Social Type": "GitHub" }}
+                >
+                  <DescriptionLink href={dapp.github} type="GitHub">
+                    <GithubIcon width={20} height={20} />{" "}
+                    <p>{t("instantdApp.information.options.github")}</p>
+                  </DescriptionLink>
+                </TrackerEvent>
               )}
               {/* TODO: add documentation */}
               {/* {dapp.documentation && (
-              <Link
-                href={dapp.documentation}
-              
-                target="_blank"
-              >
-                <DocumentationIcon width={20} height={20} /> <p>Documentation</p>
-              </Link>
-            )} */}
+                   <TrackerEvent
+                  event={CLICK_SOCIAL_BUTTON}
+                  properties={{ "dApp Social Type": "Documentation" }}
+                >
+                 <DescriptionLink href={dapp.documentation} >
+                  <<DocumentationIcon width={20} height={20} />{" "}
+                <p>Documentation</p>
+                </DescriptionLink>
+                </TrackerEvent>
+                )}
+           */}
             </DescriptionItem>
           )}
           {dapp.dapp.url && (
             <DescriptionItem title={t("instantdApp.website.title")}>
-              <DescriptionLink href={dapp.dapp.url}>
-                <WebsiteIcon width={20} height={20} /> <p>{dapp.dapp.label}</p>
-              </DescriptionLink>
+              <TrackerEvent
+                event={CLICK_SOCIAL_BUTTON}
+                properties={{ "dApp Social Type": "Website" }}
+              >
+                <DescriptionLink href={dapp.dapp.url}>
+                  <WebsiteIcon width={20} height={20} />{" "}
+                  <p>{dapp.dapp.label}</p>
+                </DescriptionLink>
+              </TrackerEvent>
             </DescriptionItem>
           )}
         </div>

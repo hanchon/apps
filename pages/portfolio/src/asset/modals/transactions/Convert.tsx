@@ -36,6 +36,7 @@ import {
   CLICK_BUTTON_CONFIRM_CONVERT_TX,
   SUCCESSFUL_CONVERT_TX,
   UNSUCCESSFUL_CONVERT_TX,
+  sendEvent,
 } from "tracker";
 import { prepareWriteContract, writeContract } from "wagmi/actions";
 import { EXPLORER_URL } from "constants-helper";
@@ -102,14 +103,6 @@ const Convert = ({
 
   const { handlePreClickAction: clickConfirmConvertTx } = useTracker(
     CLICK_BUTTON_CONFIRM_CONVERT_TX
-  );
-
-  const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_CONVERT_TX
-  );
-
-  const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_CONVERT_TX
   );
 
   return (
@@ -260,22 +253,15 @@ const Convert = ({
               );
 
               if (res.error) {
-                unsuccessfulTx({
-                  errorMessage: res.message,
-                  wallet: wallet?.evmosAddressEthFormat,
-                  provider: wallet?.extensionName,
-                  transaction: "unsuccessful",
-                  convert: isERC20Selected ? ERC20_IBC : IBC_ERC20,
-                  chain: item.chainIdentifier,
+                sendEvent(UNSUCCESSFUL_CONVERT_TX, {
+                  "User Wallet Address": wallet?.evmosAddressEthFormat,
+                  "Wallet Provider": wallet?.extensionName,
+                  "Error Message": res.message,
                 });
               } else {
-                successfulTx({
-                  txHash: res.txHash,
-                  wallet: wallet?.evmosAddressEthFormat,
-                  provider: wallet?.extensionName,
-                  transaction: "successful",
-                  convert: isERC20Selected ? ERC20_IBC : IBC_ERC20,
-                  chain: item.chainIdentifier,
+                sendEvent(SUCCESSFUL_CONVERT_TX, {
+                  "User Wallet Address": wallet?.evmosAddressEthFormat,
+                  "Wallet Provider": wallet?.extensionName,
                 });
               }
             } else {

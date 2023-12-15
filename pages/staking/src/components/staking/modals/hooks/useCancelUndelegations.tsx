@@ -12,9 +12,9 @@ import {
 } from "@evmosapps/evmos-wallet";
 import {
   CLICK_CONFIRM_CANCEL_UNDELEGATION_BUTTON,
-  useTracker,
   SUCCESSFUL_TX_CANCEL_UNDELEGATION,
   UNSUCCESSFUL_TX_CANCEL_UNDELEGATION,
+  sendEvent,
 } from "tracker";
 
 import { EXPLORER_URL } from "constants-helper";
@@ -29,15 +29,6 @@ export const useCancelUndelegations = (
   useCancelUndelegationProps: CancelUndelegationsProps
 ) => {
   const dispatch = useDispatch();
-  const { handlePreClickAction } = useTracker(
-    CLICK_CONFIRM_CANCEL_UNDELEGATION_BUTTON
-  );
-  const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_CANCEL_UNDELEGATION
-  );
-  const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_CANCEL_UNDELEGATION
-  );
 
   const { cancelUnbondingDelegation } = useStakingPrecompile();
 
@@ -52,10 +43,7 @@ export const useCancelUndelegations = (
       );
       if (err) return;
     }
-    handlePreClickAction({
-      wallet: useCancelUndelegationProps?.wallet?.evmosAddressEthFormat,
-      provider: useCancelUndelegationProps?.wallet?.extensionName,
-    });
+    sendEvent(CLICK_CONFIRM_CANCEL_UNDELEGATION_BUTTON);
     useCancelUndelegationProps.setConfirmClicked(true);
     if (
       useCancelUndelegationProps.value === undefined ||
@@ -85,19 +73,20 @@ export const useCancelUndelegations = (
 
       dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx`));
 
-      successfulTx({
-        txHash: res.hash,
-        wallet: useCancelUndelegationProps.wallet?.evmosAddressEthFormat,
-        provider: useCancelUndelegationProps.wallet?.extensionName,
-        transaction: "successful",
+      sendEvent(SUCCESSFUL_TX_CANCEL_UNDELEGATION, {
+        "User Wallet Address":
+          useCancelUndelegationProps.wallet?.evmosAddressEthFormat,
+        "Wallet Provider": useCancelUndelegationProps.wallet?.extensionName,
       });
     } catch (e) {
       dispatch(snackErrorGeneratingTx());
-      unsuccessfulTx({
-        errorMessage: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-        wallet: useCancelUndelegationProps.wallet?.evmosAddressEthFormat,
-        provider: useCancelUndelegationProps.wallet?.extensionName,
-        transaction: "unsuccessful",
+
+      sendEvent(UNSUCCESSFUL_TX_CANCEL_UNDELEGATION, {
+        "User Wallet Address":
+          useCancelUndelegationProps.wallet?.evmosAddressEthFormat,
+        "Wallet Provider": useCancelUndelegationProps.wallet?.extensionName,
+        // TODO: we should update this error. Show the correct message for the error
+        "Error Message": GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
       });
     }
     useCancelUndelegationProps.setIsOpen(false);

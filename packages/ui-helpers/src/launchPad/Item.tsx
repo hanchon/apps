@@ -1,6 +1,6 @@
 import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
 import { dAppsProps } from "./types";
-
+// TODO: REMOVE THIS FILE
 export const Item = ({ itemProps }: { itemProps: dAppsProps }) => {
   const { handlePreClickAction } = useTracker(CLICK_ON_DAPP_INSIDE_LAUNCHER);
 

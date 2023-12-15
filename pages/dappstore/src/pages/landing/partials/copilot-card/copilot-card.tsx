@@ -7,7 +7,8 @@ import { ComponentProps } from "react";
 
 import { SetupAccountModalTrigger } from "stateful-components/src/modals/SetupAccountModal/SetupAccountModal";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
-import { Frameline } from "@evmosapps/ui-helpers";
+import { Frameline, TrackerEvent } from "@evmosapps/ui-helpers";
+import { CLICK_ON_COPILOT_BANNER } from "tracker";
 export const CopilotCard = () => {
   const { address, isConnected } = useAccount();
   const { t } = useTranslation("dappStore");
@@ -77,9 +78,16 @@ export const CopilotCard = () => {
         {setupAccountActive && (
           <Frameline className="w-full p-2">
             <SetupAccountModalTrigger>
-              <button className={`${linkCn} bg-red-300`}>
-                {t("copilotCard.letsGo")}
-              </button>
+              <TrackerEvent
+                event={CLICK_ON_COPILOT_BANNER}
+                properties={{
+                  "Copilot Actions": "Let's go",
+                }}
+              >
+                <button className={`${linkCn} bg-red-300`}>
+                  {t("copilotCard.letsGo")}
+                </button>
+              </TrackerEvent>
             </SetupAccountModalTrigger>
           </Frameline>
         )}
@@ -90,28 +98,48 @@ export const CopilotCard = () => {
                 step: "intro-topup",
               }}
             >
-              <button className={linkCn}>{t("copilotCard.topUp")}</button>
+              <TrackerEvent
+                event={CLICK_ON_COPILOT_BANNER}
+                properties={{
+                  "Copilot Actions": "Top up account",
+                }}
+              >
+                <button className={linkCn}>{t("copilotCard.topUp")}</button>
+              </TrackerEvent>
             </SetupAccountModalTrigger>
           </Frameline>
         )}
         {nextStepsActive && (
           <div className="space-x-4">
-            <Link
-              className={cn(linkCn, "text-sm py-3 rounded-lg bg-pearl/20")}
-              href={"/staking"}
+            <TrackerEvent
+              event={CLICK_ON_COPILOT_BANNER}
+              properties={{
+                "Copilot Actions": "Stake",
+              }}
             >
-              {t("copilotCard.staking")}
-            </Link>
-
-            <Link
-              className={cn(
-                linkCn,
-                "text-sm py-3 rounded-lg bg-pearl/10 text-pearl"
-              )}
-              href={"/dapps/instant-dapps"}
+              <Link
+                className={cn(linkCn, "text-sm py-3 rounded-lg bg-pearl/20")}
+                href={"/staking"}
+              >
+                {t("copilotCard.staking")}
+              </Link>
+            </TrackerEvent>
+            <TrackerEvent
+              event={CLICK_ON_COPILOT_BANNER}
+              properties={{
+                "Copilot Actions": "Use a dApp",
+              }}
             >
-              {t("copilotCard.useADapp")}
-            </Link>
+              <Link
+                className={cn(
+                  linkCn,
+                  "text-sm py-3 rounded-lg bg-pearl/10 text-pearl"
+                )}
+                href={"/dapps/instant-dapps"}
+              >
+                {t("copilotCard.useADapp")}
+              </Link>
+            </TrackerEvent>
           </div>
         )}
       </div>

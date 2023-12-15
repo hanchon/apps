@@ -20,6 +20,7 @@ import { CLICK_ON_GENERATE_PAYMENT_REQUEST, useTracker } from "tracker";
 import { RequestAssetSelector } from "./RequestAssetSelector";
 import { useAccount } from "wagmi";
 import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
+import { getActiveProviderKey } from "@evmosapps/evmos-wallet";
 
 const MAX_MESSAGE_LENGTH = 140;
 
@@ -51,7 +52,7 @@ export const SetUpContent = ({
   const sender = data?.bech32Address;
 
   const disabled = amount == 0n || message?.length === 0;
-
+  const activeProviderKey = getActiveProviderKey();
   return (
     <section className="space-y-8 text-pearl">
       <Modal.Header>
@@ -129,7 +130,9 @@ export const SetUpContent = ({
                     ...prev,
                     step: "share",
                   }));
-                  sendEvent(CLICK_ON_GENERATE_PAYMENT_REQUEST);
+                  sendEvent(CLICK_ON_GENERATE_PAYMENT_REQUEST, {
+                    "Wallet Provider": activeProviderKey,
+                  });
                 }}
                 variant="primary-lg"
                 data-testid="receive-modal-generate-button"

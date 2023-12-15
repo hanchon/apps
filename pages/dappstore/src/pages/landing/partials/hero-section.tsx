@@ -9,7 +9,10 @@ import {
   TrackerEvent,
 } from "@evmosapps/ui-helpers";
 import { translation } from "@evmosapps/i18n/server";
-import { CLICK_EARN_REVENUE_BUTTON } from "tracker";
+import {
+  CLICK_LEARN_BUTTON,
+  CLICK_ON_APPLY_TO_BE_PART_OF_THE_ECOSYSTEM,
+} from "tracker";
 import { Trans } from "@evmosapps/i18n/client";
 import { UpRightArrowIcon } from "icons";
 
@@ -62,16 +65,18 @@ export const HeroSection = async ({ totalApps }: { totalApps: number }) => {
             {t("ecosystem.description")}
           </p>
           <div className="flex flex-col md:flex-row items-center space-x-0 space-y-4 md:space-y-0 md:space-x-2 w-full">
-            <PrimaryButton
-              className="flex-1 font-normal rounded w-full self-stretch text-center"
-              as={"a"}
-              href={ADD_DAPP_FORM_URL}
-              target="_blank"
-              referrerPolicy="no-referrer"
-            >
-              {t("ecosystem.addAppButton")}
-            </PrimaryButton>
-            <TrackerEvent event={CLICK_EARN_REVENUE_BUTTON}>
+            <TrackerEvent event={CLICK_ON_APPLY_TO_BE_PART_OF_THE_ECOSYSTEM}>
+              <PrimaryButton
+                className="flex-1 font-normal rounded w-full self-stretch text-center"
+                as={"a"}
+                href={ADD_DAPP_FORM_URL}
+                target="_blank"
+                referrerPolicy="no-referrer"
+              >
+                {t("ecosystem.addAppButton")}
+              </PrimaryButton>
+            </TrackerEvent>
+            <TrackerEvent event={CLICK_LEARN_BUTTON}>
               <PrimaryButton
                 as={"a"}
                 className="flex-1 font-normal rounded w-full text-center text-sm"

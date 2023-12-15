@@ -69,7 +69,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
                 href={launchPadItems[0].href}
                 onClick={() => {
                   sendEvent(CLICK_ON_DAPP_INSIDE_LAUNCHER, {
-                    dApp: launchPadItems[0]?.mixpanelId,
+                    "dApp Name": launchPadItems[0]?.mixpanelId,
                   });
                 }}
                 icon={launchPadItems[0].icon}
@@ -85,7 +85,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
                 href={href}
                 onClick={() => {
                   sendEvent(CLICK_ON_DAPP_INSIDE_LAUNCHER, {
-                    dApp: mixpanelId,
+                    "dApp Name": mixpanelId,
                   });
                 }}
                 {...rest}
@@ -98,7 +98,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
             className="w-full mt-2"
             onClick={() => {
               sendEvent(CLICK_ON_DAPP_INSIDE_LAUNCHER, {
-                OtherActions: "View all dApps",
+                "Other Actions": "View all dApps",
               });
             }}
           >

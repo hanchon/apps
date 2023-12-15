@@ -95,10 +95,7 @@ export const ProfileModal = () => {
             )}
             onClick={() => {
               disconnect();
-              sendEvent(CLICK_DISCONNECT_WALLET_BUTTON, {
-                wallet: address,
-                provider: connector?.id,
-              });
+              sendEvent(CLICK_DISCONNECT_WALLET_BUTTON);
             }}
           >
             Disconnect

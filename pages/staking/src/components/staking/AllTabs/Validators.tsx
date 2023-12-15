@@ -54,7 +54,6 @@ const Validators = () => {
           validatorAddress: item.validator.operator_address,
         }}
         setIsOpen={setIsOpen}
-        tab="Validators"
       />
     );
   }, []);

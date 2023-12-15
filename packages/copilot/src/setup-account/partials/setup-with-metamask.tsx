@@ -33,6 +33,7 @@ const useInstallMetamask = () => {
 
       if (isInstalled) {
         setStatus("installed");
+        // TODO: add provider ?
         sendEvent(SUCCESSFUL_WALLET_INSTALLATION_COPILOT);
         return;
       }
@@ -97,6 +98,7 @@ export const SetupWithMetamaskSteps = ({
 
   useEffect(() => {
     if (!mappedConnectError) return;
+    // TODO: add props ?
     sendEvent(UNSUCCESSFUL_WALLET_CONNECTION_COPILOT);
   }, [mappedConnectError]);
 

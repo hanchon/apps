@@ -1,10 +1,4 @@
 import { useTranslation } from "@evmosapps/i18n/client";
-
-import {
-  CLICK_ON_DIFFERENT_CRYPTO_OPTION,
-  CLICK_ON_DIFFERENT_ON_RAMP,
-  sendEvent,
-} from "tracker";
 import { OnboardOptionsMenu } from "../partials/onboard-options-menu";
 import ProviderDropwdown from "../partials/provider-dropdown";
 
@@ -23,6 +17,7 @@ import { Modal } from "@evmosapps/ui-helpers";
 import { useCopilot } from "../../copilot";
 import { providerOptions } from "../utils";
 import { useClosePrompt } from "../../partials/close-prompt";
+import { CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT, sendEvent } from "tracker";
 
 const useWatchEvmosBalance = ({
   onBalanceChange,
@@ -100,14 +95,9 @@ export const TopupFundStep = () => {
         <ProviderDropwdown
           selectedValue={selectedProvider}
           onItemClick={(option) => {
-            sendEvent(
-              activeStep === "crypto-topup"
-                ? CLICK_ON_DIFFERENT_CRYPTO_OPTION
-                : CLICK_ON_DIFFERENT_ON_RAMP,
-              {
-                onRampType: option.value,
-              }
-            );
+            sendEvent(CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT, {
+              "Top Up Method": option.value,
+            });
             setSelectedProvider(option);
           }}
           dropdownOptions={options}

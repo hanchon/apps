@@ -880,7 +880,7 @@ importers:
         version: 8.12.0
       chain-token-registry:
         specifier: github:evmos/chain-token-registry#main
-        version: github.com/evmos/chain-token-registry/4cb1d6ab0d38d751d51847d69478c40ec7647262
+        version: github.com/evmos/chain-token-registry/410eb21ca27371952084c7b6998b66b8e031df1f
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -1417,7 +1417,7 @@ importers:
     devDependencies:
       chainapsis-suggest-chain:
         specifier: github:chainapsis/keplr-chain-registry
-        version: github.com/chainapsis/keplr-chain-registry/00356b23dd2314c2175d4b4eee915232609bf5d0(@babel/core@7.23.6)(react-is@18.2.0)
+        version: github.com/chainapsis/keplr-chain-registry/ffdd8696d457a9905751bfb1adb78f04d90d296b(@babel/core@7.23.6)(react-is@18.2.0)
       react-qr-code:
         specifier: ^2.0.12
         version: 2.0.12(react@18.2.0)
@@ -1511,7 +1511,7 @@ importers:
     devDependencies:
       chainapsis-suggest-chain:
         specifier: github:chainapsis/keplr-chain-registry
-        version: github.com/chainapsis/keplr-chain-registry/00356b23dd2314c2175d4b4eee915232609bf5d0(@babel/core@7.23.6)(react-is@18.2.0)
+        version: github.com/chainapsis/keplr-chain-registry/ffdd8696d457a9905751bfb1adb78f04d90d296b(@babel/core@7.23.6)(react-is@18.2.0)
       react-qr-code:
         specifier: ^2.0.12
         version: 2.0.12(react@18.2.0)
@@ -6308,6 +6308,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     bundledDependencies:
       - napi-wasm
 
@@ -16435,6 +16436,9 @@ packages:
     resolution: {integrity: sha512-hmEVtAGYzVQpCKdbQea4skABsdXW4RUh5t5mJ2zzqowJS2OyXZTU1KhDVFhx+NlWZ4ap9mqR9TcDO3LTTttd+g==}
     dev: false
 
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
+
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
@@ -21337,9 +21341,9 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
 
-  github.com/chainapsis/keplr-chain-registry/00356b23dd2314c2175d4b4eee915232609bf5d0(@babel/core@7.23.6)(react-is@18.2.0):
-    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/00356b23dd2314c2175d4b4eee915232609bf5d0}
-    id: github.com/chainapsis/keplr-chain-registry/00356b23dd2314c2175d4b4eee915232609bf5d0
+  github.com/chainapsis/keplr-chain-registry/ffdd8696d457a9905751bfb1adb78f04d90d296b(@babel/core@7.23.6)(react-is@18.2.0):
+    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/ffdd8696d457a9905751bfb1adb78f04d90d296b}
+    id: github.com/chainapsis/keplr-chain-registry/ffdd8696d457a9905751bfb1adb78f04d90d296b
     name: chainapsis-suggest-chain
     version: 0.0.1
     dependencies:
@@ -21372,8 +21376,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  github.com/evmos/chain-token-registry/4cb1d6ab0d38d751d51847d69478c40ec7647262:
-    resolution: {tarball: https://codeload.github.com/evmos/chain-token-registry/tar.gz/4cb1d6ab0d38d751d51847d69478c40ec7647262}
+  github.com/evmos/chain-token-registry/410eb21ca27371952084c7b6998b66b8e031df1f:
+    resolution: {tarball: https://codeload.github.com/evmos/chain-token-registry/tar.gz/410eb21ca27371952084c7b6998b66b8e031df1f}
     name: chain-token-registry#main
     version: 0.0.0
     dev: true

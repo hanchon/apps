@@ -18,7 +18,7 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
   return (
     <TrackerEvent
       event={CLICK_ON_FEATURED_DAPP}
-      properties={{ featured: data.name }}
+      properties={{ "dApp Name": data.name }}
     >
       <Link
         href={

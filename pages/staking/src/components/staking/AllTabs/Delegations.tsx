@@ -68,7 +68,6 @@ const Delegations = () => {
           validatorAddress: item.delegation.validator_address,
         }}
         setIsOpen={setIsOpen}
-        tab="Delegations"
       />
     );
   }, []);

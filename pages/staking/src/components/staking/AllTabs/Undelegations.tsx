@@ -20,7 +20,7 @@ import { convertAndFormat, getRemainingTime } from "helpers";
 import { MessageTable, Modal } from "@evmosapps/ui-helpers";
 import { CancelUndelegation } from "../modals/transactions/CancelUndelegation";
 import { CloseIcon } from "icons";
-import { CLICK_CANCEL_UNDELEGATION_BUTTON, useTracker } from "tracker";
+import { CLICK_CANCEL_UNDELEGATION_BUTTON, sendEvent } from "tracker";
 import { useStakingInfo } from "../../../utils/hooks/useStakingInfo";
 import { useSearchContext, SearchContext } from "../../context/SearchContext";
 const dataHead = [
@@ -44,15 +44,12 @@ const Undelegations = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
-  const { handlePreClickAction } = useTracker(CLICK_CANCEL_UNDELEGATION_BUTTON);
-  const handleOnClick = useCallback(
-    (item: undelegationData) => {
-      handlePreClickAction();
-      setIsOpen(true);
-      setModalContent(<CancelUndelegation item={item} setIsOpen={setIsOpen} />);
-    },
-    [handlePreClickAction]
-  );
+
+  const handleOnClick = useCallback((item: undelegationData) => {
+    sendEvent(CLICK_CANCEL_UNDELEGATION_BUTTON);
+    setIsOpen(true);
+    setModalContent(<CancelUndelegation item={item} setIsOpen={setIsOpen} />);
+  }, []);
 
   const { value } = useSearchContext() as SearchContext;
   const filtered = useMemo(() => {

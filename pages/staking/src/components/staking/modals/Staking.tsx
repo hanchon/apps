@@ -14,7 +14,7 @@ import {
   CLICK_BUTTON_MANAGE_DELEGATE,
   CLICK_BUTTON_MANAGE_UNDELEGATE,
   CLICK_BUTTON_MANAGE_REDELEGATE,
-  useTracker,
+  sendEvent,
 } from "tracker";
 import { EVMOS_DECIMALS } from "@evmosapps/evmos-wallet";
 import { ModalDelegate } from "../../../utils/types";
@@ -22,30 +22,14 @@ import { ModalDelegate } from "../../../utils/types";
 const Staking = ({
   item,
   setIsOpen,
-  tab,
 }: {
   item: ModalDelegate;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  tab: string;
 }) => {
   const [showDelegate, setIsOpenDelegate] = useState(false);
   const [showRedelegate, setIsOpenRedelegate] = useState(false);
   const [showUndelegate, setIsOpenUndelegate] = useState(false);
 
-  const { handlePreClickAction: trackClickManageUndelegate } = useTracker(
-    CLICK_BUTTON_MANAGE_UNDELEGATE,
-    { tabSelected: tab }
-  );
-
-  const { handlePreClickAction: trackClickManageDelegate } = useTracker(
-    CLICK_BUTTON_MANAGE_DELEGATE,
-    { tabSelected: tab }
-  );
-
-  const { handlePreClickAction: trackClickManageRedelegate } = useTracker(
-    CLICK_BUTTON_MANAGE_REDELEGATE,
-    { tabSelected: tab }
-  );
   return (
     <div className="space-y-4">
       <div>
@@ -132,7 +116,7 @@ const Staking = ({
           <SmallButton
             text="UNDELEGATE"
             onClick={() => {
-              trackClickManageUndelegate();
+              sendEvent(CLICK_BUTTON_MANAGE_UNDELEGATE);
               setIsOpenUndelegate(true);
             }}
             className="w-fit text-xs"
@@ -140,7 +124,7 @@ const Staking = ({
           <ConfirmButton
             text="Delegate"
             onClick={() => {
-              trackClickManageDelegate();
+              sendEvent(CLICK_BUTTON_MANAGE_DELEGATE);
               setIsOpenDelegate(true);
             }}
             className="w-fit py-1 text-sm"
@@ -150,7 +134,7 @@ const Staking = ({
             <ConfirmButton
               text="Redelegate"
               onClick={() => {
-                trackClickManageRedelegate();
+                sendEvent(CLICK_BUTTON_MANAGE_REDELEGATE);
                 setIsOpenRedelegate(true);
               }}
               className="w-fit py-1 text-sm"
