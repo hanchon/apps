@@ -9,9 +9,9 @@ import { createNotionPropertiesSchema } from "../utils/createNotionPropertiesSch
 import { createdAtSchema } from "../partials/createdAtSchema";
 import { updatedAtSchema } from "../partials/updatedAtSchema";
 import { selectSchema } from "../partials/selectSchema";
-import slugify from "slugify";
 import { predownloadImages } from "./predownloadImages";
 import { parseUrl } from "helpers/src/parse/urls";
+import { createSlug } from "../utils/createSlug";
 
 const dappPropertiesSchema = createNotionPropertiesSchema(
   z.object({
@@ -46,6 +46,7 @@ const dappPropertiesSchema = createNotionPropertiesSchema(
     updatedAt: updatedAtSchema,
     createdAt: createdAtSchema,
     language: selectSchema,
+    categories: relationSchema,
   })
 );
 
@@ -55,10 +56,7 @@ export const dappSchema = z
     properties: dappPropertiesSchema,
   })
   .transform(async ({ id, properties, ...rest }) => {
-    const slug = slugify(properties.name, {
-      lower: true,
-      trim: true,
-    });
+    const slug = createSlug(properties.name);
     const { cover, thumbnail, icon, ...propetyRest } = properties;
     const images = await predownloadImages(slug, {
       cover,

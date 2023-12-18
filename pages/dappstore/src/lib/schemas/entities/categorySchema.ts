@@ -5,6 +5,7 @@ import { richTextSchema } from "../partials/richTextSchema";
 import { titleSchema } from "../partials/titleSchema";
 import { createNotionPropertiesSchema } from "../utils/createNotionPropertiesSchema";
 import { selectSchema } from "../partials/selectSchema";
+import { createSlug } from "../utils/createSlug";
 
 const categoryPropertiesSchema = createNotionPropertiesSchema(
   z.object({
@@ -25,6 +26,7 @@ export const categorySchema = z
   })
   .transform(({ id, properties }) => ({
     notionId: id,
+    slug: createSlug(properties.name),
 
     localized: {} as Record<
       string,

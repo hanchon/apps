@@ -57,10 +57,16 @@ const WIDGETS: {
   ),
   forge: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Forge")),
   stride: dynamic(
-    () => import("@evmosapps/instant-dapps/src/dapps/Stride/Stride")
+    () => import("@evmosapps/instant-dapps/src/dapps/Stride/Stride"),
+    {
+      ssr: false,
+    }
   ),
   osmosis: dynamic(
-    () => import("@evmosapps/instant-dapps/src/dapps/Osmosis/Osmosis")
+    () => import("@evmosapps/instant-dapps/src/dapps/Osmosis/Osmosis"),
+    {
+      ssr: false,
+    }
   ),
 };
 

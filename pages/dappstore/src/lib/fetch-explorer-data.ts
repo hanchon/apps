@@ -1,47 +1,48 @@
-import slugify from "slugify";
-
 import { cache } from "react";
 
 import { fetchDapps } from "./fetch-dapps";
 import { fetchCategories } from "./fetch-categories";
+import { raise } from "helpers";
 
 export const fetchExplorerData = cache(async () => {
   const categoriesMap = await fetchCategories();
   const dappsMap = await fetchDapps();
-  const categories = [];
-  const dApps = [];
-  for (const { name, projects, ...rest } of categoriesMap.values()) {
-    const categorySlug = slugify(name, { lower: true, strict: true });
-    const categoryName = name;
 
-    const categoryDapps: string[] = [];
-    for (const projectId of projects) {
-      const projectEntry = dappsMap.get(projectId);
-      if (!projectEntry) continue;
-      const { name, ...rest } = projectEntry;
+  const dApps = [...dappsMap.values()].map((projectEntry) => {
+    const { name, slug, categories, ...rest } = projectEntry;
+    const dappCategories = categories.flatMap((categoryId) => {
+      const category = categoriesMap.get(categoryId);
+      if (!category) return [];
+      const { name, slug } = category;
+      return [{ name, slug }];
+    });
 
-      dApps.push({
-        name: name,
+    const mainCategory = dappCategories[0] ?? raise(`No category for ${name}`);
 
-        categorySlug,
-        categoryName,
-        ...rest,
-      });
-
-      categoryDapps.push(rest.slug);
-    }
-    if (categoryDapps.length === 0) continue;
-    const category = {
-      name: categoryName,
-      slug: categorySlug,
-      categoryDapps,
+    return {
+      name: name,
+      slug,
+      categoryName: mainCategory.name,
+      categorySlug: mainCategory.slug,
+      categories: dappCategories,
       ...rest,
     };
-    categories.push(category);
-  }
+  });
 
-  categories.sort((a, b) => a.name.localeCompare(b.name));
-
+  const categories = [...categoriesMap.values()]
+    .map((category) => {
+      const { projects, ...rest } = category;
+      return {
+        categoryDapps: projects.flatMap((projectId) => {
+          const projectEntry = dappsMap.get(projectId);
+          if (!projectEntry) return [];
+          return [projectEntry.slug];
+        }),
+        ...rest,
+      };
+    })
+    .filter(({ categoryDapps }) => categoryDapps.length > 0)
+    .sort((a, b) => a.name.localeCompare(b.name));
   return {
     categories,
     dApps,
