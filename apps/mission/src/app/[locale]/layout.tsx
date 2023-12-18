@@ -1,6 +1,6 @@
 import "../../globals.css";
 import { dir } from "i18next";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 import { languages } from "@evmosapps/i18n";
 import { cn } from "helpers";
 import { nb, evmos, poppins, inter } from "@evmosapps/ui-helpers/src/fonts";
@@ -8,10 +8,10 @@ import { RootProviders } from "./RootProviders";
 import { GoogleAnalytics } from "../../components/GoogleAnalytics";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
-import { Container } from "@evmosapps/ui-helpers";
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Modals } from "../../components/modals";
+import { Container } from "@evmosapps/ui-helpers/src/Container";
 
 export const dynamic = "error";
 

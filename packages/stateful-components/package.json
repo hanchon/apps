@@ -23,7 +23,7 @@
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
     "@types/node": "18.11.14",
-    "@types/react": "^18.2.21",
+    "@types/react": "^18.2.45",
     "@types/react-dom": "18.0.9",
     "autoprefixer": "^10.4.13",
     "constants-helper": "workspace:*",
@@ -34,7 +34,7 @@
     "schummar-translate": "^1.18.0",
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",

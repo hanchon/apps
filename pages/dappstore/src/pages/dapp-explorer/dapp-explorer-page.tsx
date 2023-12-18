@@ -22,7 +22,7 @@ export const DappExplorerPage = async ({
         if (params.category === "instant-dapps") {
           return dapp.instantDapp;
         }
-        return dapp.categorySlug === params.category;
+        return dapp.categories.find(({ slug }) => slug === params.category);
       })
     : dApps;
 
