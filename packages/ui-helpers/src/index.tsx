@@ -78,3 +78,4 @@ export * from "./container/FrameLine";
 export * from "./breadcrumbs/Breadcrumb";
 export * from "./links/Button";
 export { PrimaryLink } from "./links/Link";
+export { ConnectionRequired } from "./ConnectionRequired";

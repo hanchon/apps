@@ -3,7 +3,7 @@ import { dir } from "i18next";
 import { PropsWithChildren } from "react";
 import { languages } from "@evmosapps/i18n";
 import { cn } from "helpers";
-import { nb, evmos } from "@evmosapps/ui-helpers/src/fonts";
+import { nb, evmos, poppins, inter } from "@evmosapps/ui-helpers/src/fonts";
 import { RootProviders } from "./RootProviders";
 import { GoogleAnalytics } from "../../components/GoogleAnalytics";
 import { Header } from "../../components/header/Header";
@@ -59,7 +59,15 @@ function RootLayout({
   return (
     <html lang={locale} dir={dir(locale)} className="dark bg-darkGray1 h-full">
       <head />
-      <body className={cn(nb.variable, evmos.variable, "h-full")}>
+      <body
+        className={cn(
+          nb.variable,
+          evmos.variable,
+          poppins.variable,
+          inter.variable,
+          "h-full"
+        )}
+      >
         <RootProviders>
           <main className="flex flex-col dark:text-white min-h-screen relative">
             <Header />
