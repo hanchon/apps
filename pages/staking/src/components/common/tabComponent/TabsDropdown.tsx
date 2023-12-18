@@ -55,7 +55,9 @@ const TabsDropdown = ({
     (option: tabContent) => {
       setSelectedValue(option.title);
       setActiveTab(option.id);
-      sendEvent(CLICK_TABS_STAKING_OPTIONS);
+      sendEvent(CLICK_TABS_STAKING_OPTIONS, {
+        Tab: option.title,
+      });
     },
     [setActiveTab]
   );

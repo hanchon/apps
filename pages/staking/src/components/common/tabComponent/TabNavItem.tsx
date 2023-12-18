@@ -16,7 +16,9 @@ const TabNavItem = ({
   setActiveTab: Dispatch<SetStateAction<string>>;
 }) => {
   const handleClick = () => {
-    sendEvent(CLICK_TABS_STAKING_OPTIONS);
+    sendEvent(CLICK_TABS_STAKING_OPTIONS, {
+      Tab: title,
+    });
     setActiveTab(id);
   };
 
