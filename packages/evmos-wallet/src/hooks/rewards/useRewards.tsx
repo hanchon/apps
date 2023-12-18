@@ -6,10 +6,10 @@ import { useDispatch } from "react-redux";
 import { executeRewards } from "./rewards";
 import { useCallback } from "react";
 import {
-  CLICK_CLAIM_REWARDS_TOPBAR,
-  useTracker,
+  CLICK_CLAIM_REWARDS_BUTTON,
   SUCCESSFUL_TX_CLAIM_REWARDS,
   UNSUCCESSFUL_TX_CLAIM_REWARDS,
+  sendEvent,
 } from "tracker";
 import { WalletExtension } from "../../internal/wallet/functionality/wallet";
 import { snackExecuteIBCTransfer } from "../../notification/helpers";
@@ -19,17 +19,9 @@ import { E } from "helpers";
 
 const evmos = getEvmosChainInfo();
 
-export const useRewards = (value: WalletExtension, totalRewards: number) => {
+export const useRewards = (value: WalletExtension) => {
   const dispatch = useDispatch();
-  const { handlePreClickAction } = useTracker(CLICK_CLAIM_REWARDS_TOPBAR, {
-    amount: totalRewards,
-  });
-  const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_CLAIM_REWARDS
-  );
-  const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_CLAIM_REWARDS
-  );
+
   const handleConfirmButton = useCallback(async () => {
     const connectedNetwork = getNetwork();
     if (connectedNetwork.chain?.id !== evmos.id) {
@@ -40,27 +32,26 @@ export const useRewards = (value: WalletExtension, totalRewards: number) => {
       );
       if (err) return;
     }
-    handlePreClickAction({
-      wallet: value?.evmosAddressEthFormat,
-      provider: value?.extensionName,
+
+    sendEvent(CLICK_CLAIM_REWARDS_BUTTON, {
+      "User Wallet Address": value?.evmosAddressEthFormat,
+      "Wallet Provider": value?.extensionName,
     });
+
     const res = await executeRewards(value);
     if (res.error === true) {
-      unsuccessfulTx({
-        errorMessage: res.message,
-        wallet: value?.evmosAddressEthFormat,
-        provider: value?.extensionName,
-        transaction: "unsuccessful",
+      sendEvent(UNSUCCESSFUL_TX_CLAIM_REWARDS, {
+        "User Wallet Address": value?.evmosAddressEthFormat,
+        "Wallet Provider": value?.extensionName,
+        "Error Message": res.message,
       });
     } else {
-      successfulTx({
-        txHash: res.txHash,
-        wallet: value?.evmosAddressEthFormat,
-        provider: value?.extensionName,
-        transaction: "successful",
+      sendEvent(SUCCESSFUL_TX_CLAIM_REWARDS, {
+        "User Wallet Address": value?.evmosAddressEthFormat,
+        "Wallet Provider": value?.extensionName,
       });
     }
     dispatch(snackExecuteIBCTransfer(res));
-  }, [dispatch, value, handlePreClickAction, unsuccessfulTx, successfulTx]);
+  }, [dispatch, value]);
   return { handleConfirmButton };
 };

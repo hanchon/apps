@@ -11,12 +11,7 @@ import {
   snackRequestRejected,
   StoreType,
 } from "@evmosapps/evmos-wallet";
-import {
-  useTracker,
-  CLICK_BUTTON_CONFIRM_WRAP_TX,
-  SUCCESSFUL_WRAP_TX,
-  UNSUCCESSFUL_WRAP_TX,
-} from "tracker";
+import { SUCCESSFUL_WRAP_TX, UNSUCCESSFUL_WRAP_TX, sendEvent } from "tracker";
 
 import { useWEVMOS } from "../contracts/hooks/useWEVMOS";
 import { parseUnits } from "@ethersproject/units";
@@ -29,22 +24,11 @@ import { GENERATING_TX_NOTIFICATIONS } from "../../../../utils/transactions/erro
 
 const evmos = getEvmosChainInfo();
 
-const wrapEvmos = "EVMOS <> WEVMOS";
-const unwrapEvmos = "WEVMOS <> EVMOS";
 export const useConvert = (useConvertProps: ConvertProps) => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
 
   const { deposit, withdraw } = useWEVMOS();
-
-  const { handlePreClickAction: clickConfirmWrapTx } = useTracker(
-    CLICK_BUTTON_CONFIRM_WRAP_TX
-  );
-
-  const { handlePreClickAction: successfulTx } = useTracker(SUCCESSFUL_WRAP_TX);
-
-  const { handlePreClickAction: unsuccessfulTx } =
-    useTracker(UNSUCCESSFUL_WRAP_TX);
 
   const handleConfirmButton = async () => {
     const connectedNetwork = getNetwork();
@@ -56,11 +40,6 @@ export const useConvert = (useConvertProps: ConvertProps) => {
       );
       if (err) return;
     }
-    clickConfirmWrapTx({
-      convert: useConvertProps.balance.isIBCBalance ? wrapEvmos : unwrapEvmos,
-      wallet: wallet?.evmosAddressEthFormat,
-      provider: wallet?.extensionName,
-    });
 
     useConvertProps.setConfirmClicked(true);
     if (wallet.evmosPubkey === null) {
@@ -90,22 +69,18 @@ export const useConvert = (useConvertProps: ConvertProps) => {
         const res = await deposit(amount, wallet.evmosAddressEthFormat);
 
         dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx/`));
-        successfulTx({
-          txHash: res.hash,
-          wallet: wallet?.evmosAddressEthFormat,
-          provider: wallet?.extensionName,
-          transaction: "successful",
-          convert: wrapEvmos,
+        sendEvent(SUCCESSFUL_WRAP_TX, {
+          "User Wallet Address": wallet?.evmosAddressEthFormat,
+          "Wallet Provider": wallet?.extensionName,
         });
       } catch (e) {
         Log().error(e);
         dispatch(snackErrorGeneratingTx());
-        unsuccessfulTx({
-          errorMessage: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-          wallet: wallet?.evmosAddressEthFormat,
-          provider: wallet?.extensionName,
-          transaction: "unsuccessful",
-          convert: wrapEvmos,
+        sendEvent(UNSUCCESSFUL_WRAP_TX, {
+          "User Wallet Address": wallet?.evmosAddressEthFormat,
+          "Wallet Provider": wallet?.extensionName,
+          // TODO: we should update this error. Show the correct message for the error
+          "Error Message": GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
         });
       }
     } else {
@@ -115,22 +90,18 @@ export const useConvert = (useConvertProps: ConvertProps) => {
         const res = await withdraw(amount, wallet.evmosAddressEthFormat);
 
         dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx/`));
-        successfulTx({
-          txHash: res.hash,
-          wallet: wallet?.evmosAddressEthFormat,
-          provider: wallet?.extensionName,
-          transaction: "successful",
-          convert: unwrapEvmos,
+        sendEvent(SUCCESSFUL_WRAP_TX, {
+          "User Wallet Address": wallet?.evmosAddressEthFormat,
+          "Wallet Provider": wallet?.extensionName,
         });
       } catch (e) {
         Log().error(e);
         dispatch(snackErrorGeneratingTx());
-        unsuccessfulTx({
-          errorMessage: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-          wallet: wallet?.evmosAddressEthFormat,
-          provider: wallet?.extensionName,
-          transaction: "unsuccessful",
-          convert: unwrapEvmos,
+        sendEvent(UNSUCCESSFUL_WRAP_TX, {
+          "User Wallet Address": wallet?.evmosAddressEthFormat,
+          "Wallet Provider": wallet?.extensionName,
+          // TODO: we should update this error. Show the correct message for the error
+          "Error Message": GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
         });
       }
     }

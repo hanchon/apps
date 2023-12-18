@@ -1,25 +1,23 @@
 import { FeedbackIcon } from "icons";
-import { FEEDBACK_URL } from "constants-helper";
+
+import { ComponentProps } from "react";
+import Link from "next/link";
 
 export const Feedback = ({
-  handleClick,
-  text,
-}: {
-  handleClick: () => void;
-  text: string;
-}) => {
+  children,
+  ...rest
+}: ComponentProps<typeof Link>) => {
   return (
-    <a
+    <Link
       target="_blank"
       rel="noreferrer"
-      href={FEEDBACK_URL}
       className="bg-red-300 text-pearl text-sm hover:bg-red1 active:bg-red2 fixed -right-[81px] top-1/2 hidden -rotate-90 rounded-tl-lg rounded-tr-lg  font-semibold transition-color duration-200 ease-in-out lg:block "
-      onClick={handleClick}
+      {...rest}
     >
       <div className="flex items-center space-x-2 px-5 py-2">
         <FeedbackIcon className="rotate-90" />
-        <span>{text}</span>
+        <span>{children}</span>
       </div>
-    </a>
+    </Link>
   );
 };

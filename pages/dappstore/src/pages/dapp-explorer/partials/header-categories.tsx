@@ -3,13 +3,15 @@
 
 import { ComponentProps, useMemo } from "react";
 import { Link, Trans } from "@evmosapps/i18n/client";
-import { cn } from "helpers";
-import { Badge } from "@evmosapps/ui-helpers";
+
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { Category, DApp } from "../../../lib/fetch-explorer-data";
 
 import { translation } from "@evmosapps/i18n/server";
+import { Badge, TrackerEvent } from "@evmosapps/ui-helpers";
+import { cn } from "helpers";
+import { CLICK_ON_CATEGORY } from "tracker";
 export const HeaderCategories = ({
   categories,
   params,
@@ -45,24 +47,30 @@ export const HeaderCategories = ({
       </div>
       <div className="flex gap-3 md:gap-4 flex-wrap">
         {categories.map((category) => (
-          <Link
-            href={
-              category.slug === params.category
-                ? "/dapps"
-                : `/dapps/${category.slug}`
-            }
+          <TrackerEvent
             key={category.slug}
+            event={CLICK_ON_CATEGORY}
+            properties={{ Category: category.name }}
           >
-            <Badge
-              className={cn({
-                "pl-9 md:pl-9 lg:pl-10 relative before:content-[''] before:absolute before:top-[50%] before:left-3 lg:before:left-[0.9rem] before:-translate-y-1/2 before:w-[12px] before:h-[12px] before:bg-red-300 before:rounded-full":
-                  params.category === category.slug,
-              })}
-              variant="dark"
+            <Link
+              href={
+                category.slug === params.category
+                  ? "/dapps"
+                  : `/dapps/${category.slug}`
+              }
+              key={category.slug}
             >
-              {category.name}
-            </Badge>
-          </Link>
+              <Badge
+                className={cn({
+                  "pl-9 md:pl-9 lg:pl-10 relative before:content-[''] before:absolute before:top-[50%] before:left-3 lg:before:left-[0.9rem] before:-translate-y-1/2 before:w-[12px] before:h-[12px] before:bg-red-300 before:rounded-full":
+                    params.category === category.slug,
+                })}
+                variant="dark"
+              >
+                {category.name}
+              </Badge>
+            </Link>
+          </TrackerEvent>
         ))}
       </div>
     </>

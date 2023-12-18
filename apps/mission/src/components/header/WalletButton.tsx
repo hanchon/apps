@@ -1,5 +1,5 @@
 "use client";
-import { CLICK_CONNECT_WALLET_BUTTON, useTracker } from "tracker";
+import { CLICK_CONNECT_WALLET_BUTTON, sendEvent } from "tracker";
 import { AddressDisplay, PrimaryButton } from "@evmosapps/ui-helpers";
 import { cn } from "helpers";
 import {
@@ -13,8 +13,6 @@ import { ProvidersIcons } from "stateful-components/src/providerIcons";
 
 export const WalletButton = () => {
   const { isConnected, connector, address } = useAccount();
-
-  const { sendEvent } = useTracker();
 
   if (connector && isConnected && address) {
     const Icon = ProvidersIcons[connector.id];
@@ -37,25 +35,11 @@ export const WalletButton = () => {
     <ConnectModalTrigger>
       <PrimaryButton
         variant={"primary"}
-        onClick={() => {
-          const query = new URLSearchParams(window.location.search);
-          const modalAction = query?.get("action");
-          let location = "dApp Store";
-          if (modalAction) {
-            if (modalAction === "transfer") {
-              location = "send modal";
-            } else if (modalAction === "pay") {
-              location = "payment request modal";
-            } else {
-              location = "receive modal";
-            }
-          }
-          sendEvent(CLICK_CONNECT_WALLET_BUTTON, {
-            location,
-          });
-        }}
         data-testid="open-connect-modal"
         className={cn("rounded-full px-8 py-2 text-sm font-bold")}
+        onClick={() => {
+          sendEvent(CLICK_CONNECT_WALLET_BUTTON);
+        }}
       >
         Connect
       </PrimaryButton>

@@ -12,6 +12,7 @@ import {
 } from "icons";
 import {
   CLICK_CONNECTED_WITH,
+  CLICK_EVMOS_COPILOT_START_FLOW,
   SUCCESSFUL_WALLET_CONNECTION,
   UNSUCCESSFUL_WALLET_CONNECTION,
   useTracker,
@@ -96,6 +97,7 @@ export const ConnectModalContent = ({
             className="text-left flex "
             onClick={() => {
               copilot.setIsOpen(true);
+              sendEvent(CLICK_EVMOS_COPILOT_START_FLOW);
             }}
           >
             <EvmosCopilotIcon className="h-9 w-auto" />
@@ -127,19 +129,20 @@ export const ConnectModalContent = ({
                 setIsOpen(false);
 
                 sendEvent(CLICK_CONNECTED_WITH, {
-                  provider,
+                  "Wallet Provider": provider,
                 });
                 const [e] = await E.try(() => connectWith(id));
 
                 if (!e) {
                   sendEvent(SUCCESSFUL_WALLET_CONNECTION, {
-                    provider,
+                    // TODO: event ->  add "User Wallet Address": address,
+                    "Wallet Provider": provider,
                   });
                   return;
                 }
                 sendEvent(UNSUCCESSFUL_WALLET_CONNECTION, {
-                  message: `Failed to connect with ${label}`,
-                  provider,
+                  "Wallet Provider": provider,
+                  "Error Message": `Failed to connect with ${label}`,
                 });
 
                 if (E.match.byPattern(e, /Connector not found/)) {

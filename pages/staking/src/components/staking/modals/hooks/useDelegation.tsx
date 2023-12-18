@@ -11,10 +11,9 @@ import {
 } from "@evmosapps/evmos-wallet";
 import { DelegateProps } from "../types";
 import {
-  CLICK_BUTTON_CONFIRM_DELEGATE,
-  useTracker,
   SUCCESSFUL_TX_DELEGATE,
   UNSUCCESSFUL_TX_DELEGATE,
+  sendEvent,
 } from "tracker";
 
 import { EXPLORER_URL } from "constants-helper";
@@ -27,13 +26,6 @@ const evmos = getEvmosChainInfo();
 
 export const useDelegation = (useDelegateProps: DelegateProps) => {
   const dispatch = useDispatch();
-  const { handlePreClickAction } = useTracker(CLICK_BUTTON_CONFIRM_DELEGATE);
-  const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_DELEGATE
-  );
-  const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_DELEGATE
-  );
 
   const { delegate } = useStakingPrecompile();
 
@@ -48,10 +40,6 @@ export const useDelegation = (useDelegateProps: DelegateProps) => {
       if (err) return;
     }
 
-    handlePreClickAction({
-      wallet: useDelegateProps?.wallet?.evmosAddressEthFormat,
-      provider: useDelegateProps?.wallet?.extensionName,
-    });
     useDelegateProps.setConfirmClicked(true);
     if (
       useDelegateProps.value === undefined ||
@@ -81,19 +69,17 @@ export const useDelegation = (useDelegateProps: DelegateProps) => {
 
       dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx`));
 
-      successfulTx({
-        txHash: res.hash,
-        wallet: useDelegateProps.wallet?.evmosAddressEthFormat,
-        provider: useDelegateProps.wallet?.extensionName,
-        transaction: "successful",
+      sendEvent(SUCCESSFUL_TX_DELEGATE, {
+        "User Wallet Address": useDelegateProps.wallet?.evmosAddressEthFormat,
+        "Wallet Provider": useDelegateProps.wallet?.extensionName,
       });
     } catch (e) {
       dispatch(snackErrorGeneratingTx());
-      unsuccessfulTx({
-        errorMessage: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-        wallet: useDelegateProps.wallet?.evmosAddressEthFormat,
-        provider: useDelegateProps.wallet?.extensionName,
-        transaction: "unsuccessful",
+      sendEvent(UNSUCCESSFUL_TX_DELEGATE, {
+        "User Wallet Address": useDelegateProps.wallet?.evmosAddressEthFormat,
+        "Wallet Provider": useDelegateProps.wallet?.extensionName,
+        // TODO: we should update this error. Show the correct message for the error
+        "Error Message": GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
       });
     }
 

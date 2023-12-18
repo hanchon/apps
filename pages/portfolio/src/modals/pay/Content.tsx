@@ -33,13 +33,7 @@ import { PayModalProps } from "./Modal";
 import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";
 import { PayIcon } from "icons";
 import Image from "next/image";
-import {
-  CLICK_ON_PAY,
-  CLICK_ON_SWAP_ASSETS_PAY_FLOW,
-  SELECT_NETWORK_PAY_FLOW,
-  SUCCESSFUL_PAY_TX,
-  UNSUCESSFUL_PAY_TX,
-} from "tracker";
+import { PROMPTED_TO, SUCCESSFUL_PAY_TX, UNSUCESSFUL_PAY_TX } from "tracker";
 import { useTracker } from "tracker";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { useSend } from "../hooks/useSend";
@@ -93,8 +87,11 @@ export const Content = ({
   useWatch(() => {
     if (!transferError) return;
     sendEvent(UNSUCESSFUL_PAY_TX, {
-      token: getTokenByRef(token).symbol,
-      "destination network": requester && getChainByAddress(requester).name,
+      "User Wallet Address": sender,
+      "Wallet Provider": getActiveProviderKey(),
+      Network: requester && getChainByAddress(requester).name,
+      Token: getTokenByRef(token).symbol,
+      "Error Message": transferError.message,
     });
     return;
   }, [transferError]);
@@ -104,9 +101,10 @@ export const Content = ({
     if (!sender || !requester) return;
 
     sendEvent(SUCCESSFUL_PAY_TX, {
-      token: getTokenByRef(token).symbol,
-      "destination network": requester && getChainByAddress(requester).name,
-      "transaction ID": transferResponse.hash,
+      "User Wallet Address": sender,
+      "Wallet Provider": getActiveProviderKey(),
+      Network: requester && getChainByAddress(requester).name,
+      Token: getTokenByRef(token).symbol,
     });
 
     const chainPrefix = normalizeToPrefix(sender);
@@ -206,7 +204,7 @@ export const Content = ({
               amountInUsd={amountInUsd}
             />
 
-            {isDisconnected && <ConnectToWalletWarning />}
+            {isDisconnected && <ConnectToWalletWarning modalType="Pay" />}
 
             {!isDisconnected && (
               <>
@@ -217,9 +215,6 @@ export const Content = ({
                       setSelectedBalance(
                         balances?.find((b) => b?.type === type)
                       );
-                      sendEvent(SELECT_NETWORK_PAY_FLOW, {
-                        // TODO: we should pass here the network.
-                      });
                     }}
                   >
                     <CryptoSelector.Button>
@@ -305,12 +300,12 @@ export const Content = ({
                         displayIcon={false}
                         className="mt-0 font-normal"
                       >
-                        {t("error.insufficientBalance")}
+                        {t("message.insufficient.balance")}
                       </ErrorMessage>
                     )}
                     {transferRejected && (
                       <ErrorMessage className="justify-center mt-0 pl-0">
-                        {t("error.transactionFailed")}
+                        {t("error.generating.transaction")}
                       </ErrorMessage>
                     )}
                   </div>
@@ -321,9 +316,6 @@ export const Content = ({
                     type="submit"
                     disabled={!isReady || isTransferring || hasTransferred}
                     variant={false ? "outline-primary" : undefined}
-                    onClick={() => {
-                      sendEvent(CLICK_ON_PAY);
-                    }}
                     className="w-full text-lg rounded-md capitalize"
                   >
                     {isTransferring || hasTransferred ? (
@@ -342,7 +334,10 @@ export const Content = ({
                   <PrimaryButton
                     variant={"outline-primary"}
                     onClick={() => {
-                      sendEvent(CLICK_ON_SWAP_ASSETS_PAY_FLOW);
+                      sendEvent(PROMPTED_TO, {
+                        "Prompt To": "Forge",
+                        Modal: "Pay Modal",
+                      });
                       window.open("https://forge.trade/#/swap", "_blank");
                     }}
                   >

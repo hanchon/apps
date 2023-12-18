@@ -4,6 +4,9 @@ import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chai
 import { SetupWithMetamaskSteps } from "../partials/setup-with-metamask";
 import { useCopilot } from "../../copilot";
 import { Modal } from "@evmosapps/ui-helpers";
+import { SUCCESSFUL_WALLET_CONNECTION_COPILOT, sendEvent } from "tracker";
+import { useAccount } from "wagmi";
+import { getActiveProviderKey } from "@evmosapps/evmos-wallet";
 
 export const evmosInfo = getEvmosChainInfo();
 
@@ -11,6 +14,8 @@ export const SetupConnectStep = () => {
   const { t } = useTranslation("copilot-setup-account");
 
   const { nextStep } = useCopilot();
+  const { address } = useAccount();
+  const activeProviderKey = getActiveProviderKey();
 
   return (
     <section className="flex flex-col gap-y-4">
@@ -23,6 +28,10 @@ export const SetupConnectStep = () => {
       <SetupWithMetamaskSteps
         onComplete={() => {
           nextStep();
+          sendEvent(SUCCESSFUL_WALLET_CONNECTION_COPILOT, {
+            "User Wallet Address": address,
+            "Wallet Provider": activeProviderKey,
+          });
         }}
       />
     </section>

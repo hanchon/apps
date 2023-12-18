@@ -19,7 +19,7 @@ import { TokenRef } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { RequestModalProps } from "./RequestModal";
 import {
   CLICK_ON_COPY_ICON_REQUEST_FLOW,
-  CLICK_ON_SHARE_QR_CODE_PAYMENT,
+  CLICK_ON_SHARE_QR_CODE,
   CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW,
   useTracker,
 } from "tracker";
@@ -28,6 +28,7 @@ import QRCode from "react-qr-code";
 import { useAccount } from "wagmi";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
+import { getActiveProviderKey } from "@evmosapps/evmos-wallet";
 
 export const ShareContent = ({
   message,
@@ -67,7 +68,7 @@ export const ShareContent = ({
   const [showCopied, setIsOpenCopied] = useState(false);
 
   const { isDisconnected } = useAccount();
-
+  const activeProviderKey = getActiveProviderKey();
   return (
     <section className="space-y-8 text-pearl">
       <Modal.Header>
@@ -107,11 +108,14 @@ export const ShareContent = ({
               {shareEnabled && (
                 <button
                   onClick={async () => {
+                    sendEvent(CLICK_ON_SHARE_QR_CODE, {
+                      "Receive Modal Actions": "<Share Payment Request",
+                      "Wallet Provider": activeProviderKey,
+                    });
                     await navigator.share({
                       url: shareURL,
                       title: "Payment Link",
                     });
-                    sendEvent(CLICK_ON_SHARE_QR_CODE_PAYMENT);
                   }}
                   className="flex items-center space-x-2 self-center"
                 >
@@ -134,7 +138,9 @@ export const ShareContent = ({
                 showCopyIcon={true}
                 onClickCopy={async () => {
                   await navigator.clipboard.writeText(shareURL);
-                  sendEvent(CLICK_ON_COPY_ICON_REQUEST_FLOW);
+                  sendEvent(CLICK_ON_COPY_ICON_REQUEST_FLOW, {
+                    "Wallet Provider": activeProviderKey,
+                  });
                   setIsOpenCopied(true);
                 }}
               />
@@ -162,11 +168,13 @@ export const ShareContent = ({
                 amountInUsd={amountInUsd}
               />
             </div>
-            {isDisconnected && <ConnectToWalletWarning />}
+            {isDisconnected && <ConnectToWalletWarning modalType="Share" />}
             {!isDisconnected && (
               <PrimaryButton
                 onClick={async () => {
-                  sendEvent(CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW);
+                  sendEvent(CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW, {
+                    "Wallet Provider": activeProviderKey,
+                  });
                   if (shareEnabled) {
                     await navigator.share({
                       url: shareURL,

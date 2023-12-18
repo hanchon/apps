@@ -39,13 +39,11 @@ import { ICONS_TYPES } from "constants-helper";
 import { connectKeplr, installKeplr, reloadPage } from "./utils";
 
 import {
-  CLICK_ON_AXL_REDIRECT,
-  CLICK_ON_TOP_UP_EVMOS,
-  INSUFFICIENT_FEE_AMOUNT,
   useTracker,
-  CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW,
   SUCCESSFUL_SEND_TX,
   UNSUCCESSFUL_SEND_TX,
+  ERROR_IN_SEND,
+  PROMPTED_TO,
 } from "tracker";
 
 import { TransferModalProps } from "./TransferModal";
@@ -157,8 +155,11 @@ export const TransferModalContent = ({
   useWatch(() => {
     if (!transferError) return;
     sendEvent(UNSUCCESSFUL_SEND_TX, {
-      token: getTokenByRef(tokenAmount.ref).symbol,
-      "destination network": getChain(networkPrefix).name,
+      "User Wallet Address": sender,
+      "Wallet Provider": activeProviderKey,
+      Network: getChain(networkPrefix).name,
+      Token: getTokenByRef(tokenAmount.ref).symbol,
+      "Error Message": transferError.message,
     });
   }, [transferError]);
   /**
@@ -167,9 +168,11 @@ export const TransferModalContent = ({
   useWatch(() => {
     if (!transferResponse) return;
     sendEvent(SUCCESSFUL_SEND_TX, {
-      token: getTokenByRef(tokenAmount.ref).symbol,
-      "destination network": getChain(networkPrefix).name,
-      "transaction ID": transferResponse.hash,
+      "User Wallet Address": sender,
+      "Wallet Provider": activeProviderKey,
+      // destination network
+      Network: getChain(networkPrefix).name,
+      Token: getTokenByRef(tokenAmount.ref).symbol,
     });
     // If the user is using the safe wallet, we don't show the receipt modal
     // because the transaction progress is handled by the safe UI
@@ -212,8 +215,17 @@ export const TransferModalContent = ({
 
   useEffect(() => {
     if (!validation.hasSufficientBalanceForFee && !isPreparing)
-      sendEvent(INSUFFICIENT_FEE_AMOUNT);
-  }, [validation.hasSufficientBalanceForFee, isPreparing, sendEvent]);
+      sendEvent(ERROR_IN_SEND, {
+        "Error Message":
+          "Insufficient fee error (not enough balance) when trying to send token",
+        "Wallet Provider": activeProviderKey,
+      });
+  }, [
+    validation.hasSufficientBalanceForFee,
+    isPreparing,
+    sendEvent,
+    activeProviderKey,
+  ]);
 
   const showFeeErrorMessage =
     !validation.hasSufficientBalanceForFee &&
@@ -235,7 +247,10 @@ export const TransferModalContent = ({
 
           if (action === "TOPUP") {
             topupModal.setIsOpen(true);
-            sendEvent(CLICK_ON_TOP_UP_EVMOS);
+            sendEvent(PROMPTED_TO, {
+              "Prompt To": "Top Up",
+              Modal: "Send Modal",
+            });
             return;
           }
 
@@ -243,12 +258,19 @@ export const TransferModalContent = ({
             const target = token.handledByExternalUI?.[0].url;
             if (!target) return;
             window.open(target, "_blank");
-            sendEvent(CLICK_ON_AXL_REDIRECT);
+            sendEvent(PROMPTED_TO, {
+              "Prompt To": "Satellite",
+              Modal: "Send Modal",
+            });
             return;
           }
 
           if (action === "CONNECT") {
             connectModal.setIsOpen(true, {}, true);
+            sendEvent(PROMPTED_TO, {
+              "Prompt To": "Connect Account",
+              Modal: "Send Modal",
+            });
             return;
           }
 
@@ -354,7 +376,10 @@ export const TransferModalContent = ({
                         return;
                       }
                       const [err] = await E.try(() => connectWith("keplr"));
-                      sendEvent(CLICK_ON_CONNECT_WITH_KEPLR_SEND_FLOW);
+                      sendEvent(PROMPTED_TO, {
+                        "Prompt To": "Connect To Keplr",
+                        Modal: "Send Modal",
+                      });
                       // TODO: handle error when user rejects the connection
                       if (err) return false;
                     }}
@@ -395,11 +420,13 @@ export const TransferModalContent = ({
             {/*
              * Call to action Buttons
              */}
-            {action === "CONNECT" && <ConnectToWalletWarning />}
+            {action === "CONNECT" && (
+              <ConnectToWalletWarning modalType="Send" />
+            )}
             {showFeeErrorMessage && (
               <ErrorMessage className="justify-center pl-0">
-                {t("error.insufficientFee")}
-                {feeBalance?.formatted ?? 0} {feeToken?.symbol}
+                {t("error.insufficientFee")} {feeBalance?.formatted ?? 0}{" "}
+                {feeToken?.symbol}
               </ErrorMessage>
             )}
 

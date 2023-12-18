@@ -6,9 +6,10 @@ import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { RightArrow } from "icons";
 import { translation } from "@evmosapps/i18n/server";
-import { ButtonWithLink } from "@evmosapps/ui-helpers";
+import { ButtonWithLink, TrackerEvent } from "@evmosapps/ui-helpers";
 import { fetchExplorerData } from "../../../lib/fetch-explorer-data";
 import { EcosystemCardGrid } from "./ecosystem-card-grid";
+import { CLICK_SEE_MORE_BUTTON } from "tracker";
 
 const landingdAppsOrder = [
   "stride",
@@ -39,12 +40,14 @@ export const EcosystemSection = async () => {
       <div className="space-y-3 md:space-y-0">
         <div className="flex flex-row justify-between w-full ">
           <Title>{t("ecosystem.instantdApps.title")}</Title>
-          <ButtonWithLink href="/dapps/instant-dapps" className="self-center">
-            <div className="flex items-center space-x-2">
-              <p>{t("ecosystem.instantdApps.button.text")}</p>
-              <RightArrow width={11} height={11} />
-            </div>
-          </ButtonWithLink>
+          <TrackerEvent event={CLICK_SEE_MORE_BUTTON}>
+            <ButtonWithLink href="/dapps/instant-dapps" className="self-center">
+              <div className="flex items-center space-x-2">
+                <p>{t("ecosystem.instantdApps.button.text")}</p>
+                <RightArrow width={11} height={11} />
+              </div>
+            </ButtonWithLink>
+          </TrackerEvent>
         </div>
         <Subtitle>{t("ecosystem.instantdApps.description")}</Subtitle>
       </div>

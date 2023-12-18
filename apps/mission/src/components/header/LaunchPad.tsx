@@ -4,13 +4,19 @@ import { Menu, Transition } from "@headlessui/react";
 import { cn } from "helpers";
 import { LaunchIcon } from "icons";
 import { ComponentProps, Fragment } from "react";
-import { CLICK_ON_DAPP_INSIDE_LAUNCHER, useTracker } from "tracker";
-import { ButtonWithLink, NetworkModeSelector } from "@evmosapps/ui-helpers";
+import {
+  CLICK_ON_DAPP_INSIDE_LAUNCHER,
+  CLICK_ON_VIEW_ALL_DAPPS,
+} from "tracker";
+import {
+  ButtonWithLink,
+  NetworkModeSelector,
+  TrackerEvent,
+} from "@evmosapps/ui-helpers";
 import Image from "next/image";
 
 export function LaunchPad({}: { showPing?: boolean }) {
   const { t } = useTranslation();
-  const { sendEvent } = useTracker();
 
   const launchPadItems = [
     {
@@ -64,46 +70,40 @@ export function LaunchPad({}: { showPing?: boolean }) {
         >
           <div className="w-fit">
             {launchPadItems[0] && (
-              <LaunchPadItem
-                key={launchPadItems[0].href}
-                href={launchPadItems[0].href}
-                onClick={() => {
-                  sendEvent(CLICK_ON_DAPP_INSIDE_LAUNCHER, {
-                    dApp: launchPadItems[0]?.mixpanelId,
-                  });
-                }}
-                icon={launchPadItems[0].icon}
+              <TrackerEvent
+                event={CLICK_ON_DAPP_INSIDE_LAUNCHER}
+                properties={{ "dApp Name": launchPadItems[0]?.mixpanelId }}
               >
-                {launchPadItems[0].children}
-              </LaunchPadItem>
+                <LaunchPadItem
+                  key={launchPadItems[0].href}
+                  href={launchPadItems[0].href}
+                  icon={launchPadItems[0].icon}
+                >
+                  {launchPadItems[0].children}
+                </LaunchPadItem>
+              </TrackerEvent>
             )}
           </div>
           <div className="grid grid-cols-3 gap-y-6  py-6">
             {launchPadItems.slice(1).map(({ href, mixpanelId, ...rest }) => (
-              <LaunchPadItem
+              <TrackerEvent
                 key={href}
-                href={href}
-                onClick={() => {
-                  sendEvent(CLICK_ON_DAPP_INSIDE_LAUNCHER, {
-                    dApp: mixpanelId,
-                  });
-                }}
-                {...rest}
-              />
+                event={CLICK_ON_DAPP_INSIDE_LAUNCHER}
+                properties={{ "dApp Name": mixpanelId }}
+              >
+                <LaunchPadItem href={href} {...rest} />
+              </TrackerEvent>
             ))}
           </div>
           {!!process.env.NEXT_PUBLIC_ENABLE_TESTNET && <NetworkModeSelector />}
-          <ButtonWithLink
-            href="/dapps"
-            className="w-full mt-2"
-            onClick={() => {
-              sendEvent(CLICK_ON_DAPP_INSIDE_LAUNCHER, {
-                OtherActions: "View all dApps",
-              });
-            }}
+          <TrackerEvent
+            event={CLICK_ON_VIEW_ALL_DAPPS}
+            properties={{ Location: "App Launcher" }}
           >
-            {t("launchPad.button")}
-          </ButtonWithLink>
+            <ButtonWithLink href="/dapps" className="w-full mt-2">
+              {t("launchPad.button")}
+            </ButtonWithLink>
+          </TrackerEvent>
         </Menu.Items>
       </Transition>
     </Menu>

@@ -27,7 +27,7 @@ export const StakingCard = () => {
 
   const { totalDelegations, totalRewards } = useStake();
   const { evmosPrice, totalEvmosAsset } = useAssets();
-  const { handleConfirmButton } = useRewards(wallet, totalRewards);
+  const { handleConfirmButton } = useRewards(wallet);
 
   const { t } = useTranslation("dappStore");
   return (

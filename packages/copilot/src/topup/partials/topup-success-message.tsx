@@ -5,10 +5,7 @@ import {
   TrackerEvent,
 } from "@evmosapps/ui-helpers";
 
-import {
-  CLICK_ON_CONTINUE_TO_THE_DASHBOARD,
-  CLICK_ON_NEXT_STEPS_COPILOT,
-} from "tracker";
+import { CLICK_ON_NEXT_STEPS_COPILOT } from "tracker";
 import { ICONS_TYPES } from "constants-helper";
 import { useModal } from "@evmosapps/ui-helpers/src/Modal";
 import { useCopilot } from "../../copilot";
@@ -26,16 +23,14 @@ export const TopupSuccessMessage = () => {
           <h3 className="font-bold">{t("successTopupStep.title")}</h3>
           <p className="text-sm">{t("successTopupStep.description")}</p>
           {flowId === "topup" && (
-            <TrackerEvent event={CLICK_ON_CONTINUE_TO_THE_DASHBOARD}>
-              <PrimaryButton
-                onClick={() => {
-                  setIsOpen(false);
-                }}
-                className="ml-0 mt-3"
-              >
-                {t("successTopupStep.actions.goToDashboard") }
-              </PrimaryButton>
-            </TrackerEvent>
+            <PrimaryButton
+              onClick={() => {
+                setIsOpen(false);
+              }}
+              className="ml-0 mt-3"
+            >
+              {t("successTopupStep.actions.goToDashboard")}
+            </PrimaryButton>
           )}
           {flowId === "setup-account" && (
             <TrackerEvent event={CLICK_ON_NEXT_STEPS_COPILOT}>
@@ -45,7 +40,7 @@ export const TopupSuccessMessage = () => {
                 }}
                 className="ml-0 mt-3"
               >
-                {t("successTopupStep.actions.nextSteps") }
+                {t("successTopupStep.actions.nextSteps")}
               </PrimaryButton>
             </TrackerEvent>
           )}

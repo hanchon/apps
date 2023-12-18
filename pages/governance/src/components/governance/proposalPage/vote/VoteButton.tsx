@@ -13,7 +13,7 @@ import { StoreType, MODAL_NOTIFICATIONS } from "@evmosapps/evmos-wallet";
 import { convertFromAtto, getReservedForFeeText } from "helpers";
 import { FEE_VOTE } from "constants-helper";
 import { BigNumber } from "@ethersproject/bignumber";
-import { CLICK_VOTE_BUTTON, useTracker } from "tracker";
+import { CLICK_VOTE_BUTTON, sendEvent } from "tracker";
 import { useEvmosBalance } from "./useEvmosBalance";
 const VoteButton = ({ voteProps }: { voteProps: VoteProps }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +29,6 @@ const VoteButton = ({ voteProps }: { voteProps: VoteProps }) => {
   };
 
   const { handleConfirmButton } = useVote(useVoteProps);
-  const { handlePreClickAction } = useTracker(CLICK_VOTE_BUTTON);
   const isSmallBalance = Number(convertFromAtto(evmosBalance)) < 0.0001;
   return (
     <>
@@ -37,9 +36,9 @@ const VoteButton = ({ voteProps }: { voteProps: VoteProps }) => {
         text="Vote"
         onClick={() => {
           setIsOpen(true);
-          handlePreClickAction({
-            wallet: wallet?.evmosAddressEthFormat,
-            provider: wallet?.extensionName,
+          sendEvent(CLICK_VOTE_BUTTON, {
+            "User Wallet Address": wallet?.evmosAddressEthFormat,
+            "Wallet Provider": wallet?.extensionName,
           });
         }}
         disabled={!wallet.active || !voteProps.isVotingTimeWithinRange}

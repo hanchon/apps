@@ -33,7 +33,9 @@ const useInstallMetamask = () => {
 
       if (isInstalled) {
         setStatus("installed");
-        sendEvent(SUCCESSFUL_WALLET_INSTALLATION_COPILOT);
+        sendEvent(SUCCESSFUL_WALLET_INSTALLATION_COPILOT, {
+          "Wallet Provider": "MetaMask",
+        });
         return;
       }
       // for chrome and brave we need to reload the page to know if the user has Metamask installed
@@ -97,7 +99,11 @@ export const SetupWithMetamaskSteps = ({
 
   useEffect(() => {
     if (!mappedConnectError) return;
-    sendEvent(UNSUCCESSFUL_WALLET_CONNECTION_COPILOT);
+
+    sendEvent(UNSUCCESSFUL_WALLET_CONNECTION_COPILOT, {
+      "Wallet Provider": "MetaMask",
+      "Error Message": mappedConnectError,
+    });
   }, [mappedConnectError]);
 
   const completedConnection =

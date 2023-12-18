@@ -3,25 +3,23 @@
 
 import { QuestionMarkIcon } from "icons";
 
-import { CLICK_CTA_LINKS_REGISTER_TOKEN, useTracker } from "tracker";
+import { CLICK_CTA_LINKS_REGISTER_TOKEN } from "tracker";
 import { REGISTER_TOKEN_URL } from "constants-helper/src/constants";
-import { PrimaryLink } from "@evmosapps/ui-helpers";
+import { PrimaryLink, TrackerEvent } from "@evmosapps/ui-helpers";
 const Guide = () => {
-  const { handlePreClickAction } = useTracker(CLICK_CTA_LINKS_REGISTER_TOKEN);
   return (
     <div className="flex items-center space-x-2 text-pearl text-sm">
       <QuestionMarkIcon className="shrink-0" width={20} height={20} />
       <div>
         Don&apos;t see your token?{" "}
-        <PrimaryLink
-          aria-label="register your token"
-          href={REGISTER_TOKEN_URL}
-          onClick={() => {
-            handlePreClickAction();
-          }}
-        >
-          Register your token here.
-        </PrimaryLink>
+        <TrackerEvent event={CLICK_CTA_LINKS_REGISTER_TOKEN}>
+          <PrimaryLink
+            aria-label="register your token"
+            href={REGISTER_TOKEN_URL}
+          >
+            Register your token here.
+          </PrimaryLink>
+        </TrackerEvent>
       </div>
     </div>
   );

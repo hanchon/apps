@@ -78,7 +78,8 @@ export const ReceiveContent = ({
         {
           setWalletFormat("0x");
           sendEvent(CLICK_ON_DISPLAY_FORMAT, {
-            type: "0x",
+            "Receive Modal Actions": "0x",
+            "Wallet Provider": activeProviderKey,
           });
         }
       },
@@ -92,7 +93,8 @@ export const ReceiveContent = ({
       onClick: () => {
         setWalletFormat("IBC");
         sendEvent(CLICK_ON_DISPLAY_FORMAT, {
-          type: "IBC",
+          "Receive Modal Actions": "IBC",
+          "Wallet Provider": activeProviderKey,
         });
       },
       type: "IBC",
@@ -137,7 +139,10 @@ export const ReceiveContent = ({
                       text: sender ?? "",
                       title: "Wallet Address",
                     });
-                    sendEvent(CLICK_ON_SHARE_QR_CODE);
+                    sendEvent(CLICK_ON_SHARE_QR_CODE, {
+                      "Receive Modal Actions": "<Share Recipient Address",
+                      "Wallet Provider": activeProviderKey,
+                    });
                   }}
                   className="flex items-center space-x-2 self-center"
                 >
@@ -164,7 +169,8 @@ export const ReceiveContent = ({
                     onChange={(prefix) => {
                       setSelectedNetworkPrefix(prefix);
                       sendEvent(SELECT_NETWORK_RECEIVE_FLOW, {
-                        network: prefix,
+                        "Wallet Provider": activeProviderKey,
+                        Network: prefix,
                       });
                     }}
                   >
@@ -205,7 +211,9 @@ export const ReceiveContent = ({
                 showCopyIcon={true}
                 onClickCopy={async () => {
                   await navigator.clipboard.writeText(sender ?? "");
-                  sendEvent(CLICK_ON_COPY_ICON_RECEIVE_FLOW);
+                  sendEvent(CLICK_ON_COPY_ICON_RECEIVE_FLOW, {
+                    "Wallet Provider": activeProviderKey,
+                  });
                   setIsOpenCopied(true);
                 }}
               />
@@ -225,7 +233,7 @@ export const ReceiveContent = ({
                 </ErrorMessage>
               )}
             </div>
-            {isDisconnected && <ConnectToWalletWarning />}
+            {isDisconnected && <ConnectToWalletWarning modalType="Receive" />}
 
             {!isDisconnected && (
               <PrimaryButton
@@ -234,7 +242,9 @@ export const ReceiveContent = ({
                     ...prev,
                     step: "setup",
                   }));
-                  sendEvent(CLICK_ON_REQUEST_FUNDS);
+                  sendEvent(CLICK_ON_REQUEST_FUNDS, {
+                    "Wallet Provider": activeProviderKey,
+                  });
                 }}
                 variant="outline-primary"
                 data-testid="receive-modal-receive-button"

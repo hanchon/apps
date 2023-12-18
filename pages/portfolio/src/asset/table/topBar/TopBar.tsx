@@ -17,7 +17,7 @@ import {
 } from "tracker";
 
 const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
-  const { isDisconnected } = useAccount();
+  const { isDisconnected, address, connector } = useAccount();
   const { t } = useTranslation("portfolio");
 
   const transferModal = useTransferModal();
@@ -42,7 +42,10 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
           data-testid="open-send-modal-button"
           onClick={() => {
             transferModal.setIsOpen(true);
-            sendEvent(CLICK_ON_SEND_BUTTON);
+            sendEvent(CLICK_ON_SEND_BUTTON, {
+              "User Wallet Address": address,
+              "Wallet Provider": connector?.name,
+            });
           }}
         >
           <p>{t("transfer.button")}</p>
@@ -54,7 +57,10 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
           data-testid="open-request-modal-button"
           onClick={() => {
             requestModal.setIsOpen(true);
-            sendEvent(CLICK_ON_RECEIVE_BUTTON);
+            sendEvent(CLICK_ON_RECEIVE_BUTTON, {
+              "User Wallet Address": address,
+              "Wallet Provider": connector?.name,
+            });
           }}
         >
           <p>{t("request.button")}</p>

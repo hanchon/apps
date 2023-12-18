@@ -17,7 +17,7 @@ import { ConvertSTR } from "../../modals/transactions/ConvertSTR";
 import { Description } from "./Description";
 import { SubRowProps } from "./types";
 import { useCallback } from "react";
-import { CLICK_BUTTON_CONVERT, useTracker } from "tracker";
+import { CLICK_BUTTON_CONVERT, sendEvent } from "tracker";
 export const SubRowContent = ({
   item,
   setIsOpen,
@@ -54,13 +54,11 @@ export const SubRowContent = ({
     );
   };
 
-  const { handlePreClickAction: clickConvert } =
-    useTracker(CLICK_BUTTON_CONVERT);
-
   const openModalConvert = () => {
-    clickConvert({
-      chain: item.chainIdentifier,
+    sendEvent(CLICK_BUTTON_CONVERT, {
+      Token: item.tokenName,
     });
+
     if (wallet.evmosAddressCosmosFormat !== "") {
       setIsOpen(true);
       setModalContent(

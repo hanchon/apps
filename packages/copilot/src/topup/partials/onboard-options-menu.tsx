@@ -1,13 +1,7 @@
 import { useTranslation } from "@evmosapps/i18n/client";
-import { TrackerEvent } from "@evmosapps/ui-helpers";
-
 import { cn } from "helpers";
 import { CreditCardsIcon, EthereumIcon } from "icons";
 import { ComponentProps } from "react";
-import {
-  CLICK_ON_TOP_UP_WITH_CARD_COPILOT,
-  CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT,
-} from "tracker";
 import { CheckMark } from "../../partials/check-mark";
 import { useCopilot } from "../../copilot";
 
@@ -48,28 +42,25 @@ export const OnboardOptionsMenu = ({
   const { setActiveStep, activeStep } = useCopilot();
   return (
     <div className="grid grid-cols-1 gap-6 font-medium md:grid-cols-2 md:text-sm">
-      <TrackerEvent event={CLICK_ON_TOP_UP_WITH_CARD_COPILOT}>
-        <OptionButton
-          variant={variant}
-          onClick={() => setActiveStep("fiat-topup")}
-          selected={activeStep === "fiat-topup"}
-        >
-          <CreditCardsIcon />
+      <OptionButton
+        variant={variant}
+        onClick={() => setActiveStep("fiat-topup")}
+        selected={activeStep === "fiat-topup"}
+      >
+        <CreditCardsIcon />
 
-          {t("onboardOptions.fiat")}
-        </OptionButton>
-      </TrackerEvent>
-      <TrackerEvent event={CLICK_ON_TOP_UP_WITH_CRYPTO_COPILOT}>
-        <OptionButton
-          variant={variant}
-          onClick={() => setActiveStep("crypto-topup")}
-          selected={activeStep === "crypto-topup"}
-        >
-          <EthereumIcon />
+        {t("onboardOptions.fiat")}
+      </OptionButton>
 
-          {t("onboardOptions.crypto")}
-        </OptionButton>
-      </TrackerEvent>
+      <OptionButton
+        variant={variant}
+        onClick={() => setActiveStep("crypto-topup")}
+        selected={activeStep === "crypto-topup"}
+      >
+        <EthereumIcon />
+
+        {t("onboardOptions.crypto")}
+      </OptionButton>
     </div>
   );
 };

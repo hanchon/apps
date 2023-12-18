@@ -53,7 +53,7 @@ export const AssetSelector = ({
 }>) => {
   const { t } = useTranslation("transfer-modal");
   const { sendEvent } = useTracker();
-  const { isDisconnected } = useAccount();
+  const { isDisconnected, connector, address: addressConnected } = useAccount();
   const selectedChain = getChain(value.networkPrefix);
 
   const selectedToken = getTokenByRef(value.ref);
@@ -142,10 +142,17 @@ export const AssetSelector = ({
                 amount: 0n,
               });
               sendEvent(SELECT_TOKEN_SEND_FLOW, {
-                "token selected": token.name,
+                Token: token.name,
+                "User Wallet Address": addressConnected,
+                "Wallet Provider": connector?.name,
               });
               sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
-                network: token.sourcePrefix,
+                Network:
+                  value.networkPrefix === "evmos"
+                    ? "evmos"
+                    : token.sourcePrefix,
+                "User Wallet Address": addressConnected,
+                "Wallet Provider": connector?.name,
               });
               setIsMaxClicked(false);
             }}
@@ -191,7 +198,9 @@ export const AssetSelector = ({
               });
 
               sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
-                network: value.networkPrefix,
+                Network: prefix,
+                "User Wallet Address": addressConnected,
+                "Wallet Provider": connector?.name,
               });
               setIsMaxClicked(false);
             }}

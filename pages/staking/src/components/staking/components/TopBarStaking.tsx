@@ -3,7 +3,6 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useSelector } from "react-redux";
-
 import {
   TopBarItem,
   Countdown,
@@ -25,7 +24,7 @@ const TopBarStaking = () => {
     useStakingInfo();
   const { evmosBalance } = useEvmosBalance();
   const { epochs } = useEpochDay();
-  const { handleConfirmButton } = useRewards(value, totalRewards);
+  const { handleConfirmButton } = useRewards(value);
   return (
     <TopBarContainer>
       <>
@@ -120,6 +119,7 @@ const TopBarStaking = () => {
             )
           }
         />
+
         <TopBarItem
           text="Reward Distribution"
           value={
@@ -132,6 +132,7 @@ const TopBarStaking = () => {
             />
           }
         />
+
         <div className=" ">
           <ConfirmButton
             className="w-fit px-4 text-xs"

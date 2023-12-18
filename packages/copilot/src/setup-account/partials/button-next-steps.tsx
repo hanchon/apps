@@ -2,11 +2,7 @@ import { ComponentProps } from "react";
 
 import { Badge, TrackerEvent } from "@evmosapps/ui-helpers";
 
-import {
-  CLICK_ON_INTERACT_WITH_DAPP_COPILOT,
-  CLICK_ON_LEARN_MORE_COPILOT,
-  CLICK_ON_STAKE_YOUR_EVMOS_COPILOT,
-} from "tracker";
+import { CLICK_ON_VIEW_ALL_DAPPS, COMPLETED_COPILOT_ONBOARDING } from "tracker";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import { cn } from "helpers";
 import { useModal } from "@evmosapps/ui-helpers/src/Modal";
@@ -19,7 +15,12 @@ export const ButtonsNextSteps = () => {
   return (
     <>
       <div className="grid w-full grid-cols-1 space-y-3 pb-3 pt-5 md:grid-cols-2 md:space-x-4 md:space-y-0">
-        <TrackerEvent event={CLICK_ON_INTERACT_WITH_DAPP_COPILOT}>
+        <TrackerEvent
+          event={CLICK_ON_VIEW_ALL_DAPPS}
+          properties={{
+            Location: "Inside Copilot",
+          }}
+        >
           <Button href="/dapps">
             <p className="text-sm font-bold">
               {t("nextsteps.interactWithdApp.title")}
@@ -29,14 +30,24 @@ export const ButtonsNextSteps = () => {
             </Badge>
           </Button>
         </TrackerEvent>
-        <TrackerEvent event={CLICK_ON_STAKE_YOUR_EVMOS_COPILOT}>
+        <TrackerEvent
+          event={COMPLETED_COPILOT_ONBOARDING}
+          properties={{
+            "Completed Copilot Onboarding": "Stake your Evmos",
+          }}
+        >
           <Button href="/staking">
             <TitleButton text={t("nextsteps.stakeEvmos.title")} />
             <Badge variant="warning">{t("nextsteps.stakeEvmos.badge")}</Badge>
           </Button>
         </TrackerEvent>
       </div>
-      <TrackerEvent event={CLICK_ON_LEARN_MORE_COPILOT}>
+      <TrackerEvent
+        event={COMPLETED_COPILOT_ONBOARDING}
+        properties={{
+          "Completed Copilot Onboarding": "Learn More",
+        }}
+      >
         <a
           className="border-gray300 w-full cursor-pointer rounded-lg border py-3 shadow transition-all duration-300 hover:shadow-md"
           href="https://academy.evmos.org/faq"

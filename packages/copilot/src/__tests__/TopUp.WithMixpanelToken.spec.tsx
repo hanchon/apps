@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MixpanelProvider } from "tracker";
-import mixpanel from "mixpanel-browser";
+
 describe("TopUp component", () => {
   vi.mock("react-redux", () => {
     return {
@@ -47,12 +47,6 @@ describe("TopUp component", () => {
     expect(getByText(/Top up your account/i)).toBeDefined();
     const cardButton = getByRole("button", { name: /debit\/credit card/i });
     expect(cardButton).toBeDefined();
-    await userEvent.click(cardButton);
-    expect(mixpanel.init).toHaveBeenCalledOnce;
-    expect(mixpanel.track).toHaveBeenCalledWith(
-      "Top up with “Debit/Credit Card” inside Copilot",
-      {}
-    );
 
     const defaultCardOption = getByText(/C14/i);
     expect(defaultCardOption).toBeDefined();
@@ -61,59 +55,28 @@ describe("TopUp component", () => {
     expect(dropdownProvider).toBeDefined();
     await userEvent.click(dropdownProvider);
     const transakOption = getByText(/Transak/i);
-    await userEvent.click(transakOption);
-    expect(mixpanel.track).toHaveBeenCalledWith(
-      "Click on different On-Ramp options inside Copilot",
-      { onRampType: "Transak" }
-    );
-    expect(mixpanel.track).toHaveBeenCalledTimes(2);
+    expect(transakOption).toBeDefined();
 
     await userEvent.click(dropdownProvider);
     const c14Option = getByText(/C14/i);
-    await userEvent.click(c14Option);
-    expect(mixpanel.track).toHaveBeenCalledWith(
-      "Click on different On-Ramp options inside Copilot",
-      { onRampType: "C14" }
-    );
-    expect(mixpanel.track).toHaveBeenCalledTimes(3);
+    expect(c14Option).toBeDefined();
 
     const cryptoButton = getByRole("button", { name: /cryptocurrencies/i });
     expect(cryptoButton).toBeDefined();
-    await userEvent.click(cryptoButton);
-    expect(mixpanel.track).toHaveBeenCalledWith(
-      "Top up with “Cryptocurrencies” inside Copilot",
-      {}
-    );
-    expect(mixpanel.track).toHaveBeenCalledTimes(4);
 
     const defaultCryptoOption = getByText(/Squid/i);
     expect(defaultCryptoOption).toBeDefined();
 
     await userEvent.click(dropdownProvider);
     const layerSwapOption = getByText(/layerswap/i);
-    await userEvent.click(layerSwapOption);
-    expect(mixpanel.track).toHaveBeenCalledWith(
-      "Click on different cryptocurrency top-up options inside Copilot",
-      { "Swap Type": "LayerSwap" }
-    );
-    expect(mixpanel.track).toHaveBeenCalledTimes(5);
+    expect(layerSwapOption).toBeDefined();
 
     await userEvent.click(dropdownProvider);
     const cypherOption = getByText(/cypher wallet/i);
-    await userEvent.click(cypherOption);
-    expect(mixpanel.track).toHaveBeenCalledWith(
-      "Click on different cryptocurrency top-up options inside Copilot",
-      { "Swap Type": "Cypher Wallet" }
-    );
-    expect(mixpanel.track).toHaveBeenCalledTimes(6);
+    expect(cypherOption).toBeDefined();
 
     await userEvent.click(dropdownProvider);
     const squidOption = getByText(/squid/i);
-    await userEvent.click(squidOption);
-    expect(mixpanel.track).toHaveBeenCalledWith(
-      "Click on different cryptocurrency top-up options inside Copilot",
-      { "Swap Type": "Squid" }
-    );
-    expect(mixpanel.track).toHaveBeenCalledTimes(7);
+    expect(squidOption).toBeDefined();
   });
 });
