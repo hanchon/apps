@@ -56,7 +56,6 @@ export const SubRowContent = ({
 
   const openModalConvert = () => {
     sendEvent(CLICK_BUTTON_CONVERT, {
-      // TODO: event -> check if token name is the right prop to pass
       Token: item.tokenName,
     });
 

@@ -147,7 +147,10 @@ export const AssetSelector = ({
                 "Wallet Provider": connector?.name,
               });
               sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
-                Network: token.sourcePrefix,
+                Network:
+                  value.networkPrefix === "evmos"
+                    ? "evmos"
+                    : token.sourcePrefix,
                 "User Wallet Address": addressConnected,
                 "Wallet Provider": connector?.name,
               });
@@ -195,7 +198,7 @@ export const AssetSelector = ({
               });
 
               sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
-                Network: value.networkPrefix,
+                Network: prefix,
                 "User Wallet Address": addressConnected,
                 "Wallet Provider": connector?.name,
               });

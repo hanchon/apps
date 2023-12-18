@@ -2,8 +2,13 @@ import { ErrorMessage, PrimaryButton } from "@evmosapps/ui-helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { Trans } from "next-i18next";
 import { useConnectModal } from "stateful-components/src/modals/ConnectModal/ConnectModal";
+import { PROMPTED_TO, sendEvent } from "tracker";
 
-export const ConnectToWalletWarning = () => {
+export const ConnectToWalletWarning = ({
+  modalType,
+}: {
+  modalType: string;
+}) => {
   const { t } = useTranslation("transfer-modal");
   const { setIsOpen } = useConnectModal();
   return (
@@ -25,6 +30,10 @@ export const ConnectToWalletWarning = () => {
         onClick={(e) => {
           e.preventDefault();
           setIsOpen(true, {}, true);
+          sendEvent(PROMPTED_TO, {
+            "Prompt To": "Connect Account",
+            Modal: modalType,
+          });
         }}
       >
         {t("connect.button")}

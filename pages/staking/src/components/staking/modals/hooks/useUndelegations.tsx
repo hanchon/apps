@@ -12,7 +12,6 @@ import {
 } from "@evmosapps/evmos-wallet";
 
 import {
-  CLICK_BUTTON_CONFIRM_UNDELEGATE,
   SUCCESSFUL_TX_UNDELEGATE,
   UNSUCCESSFUL_TX_UNDELEGATE,
   sendEvent,
@@ -41,7 +40,6 @@ export const useUndelegation = (useUndelegateProps: UndelegateProps) => {
       );
       if (err) return;
     }
-    sendEvent(CLICK_BUTTON_CONFIRM_UNDELEGATE);
     useUndelegateProps.setConfirmClicked(true);
     if (
       useUndelegateProps.value === undefined ||

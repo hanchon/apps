@@ -11,7 +11,6 @@ import {
 } from "@evmosapps/evmos-wallet";
 import { DelegateProps } from "../types";
 import {
-  CLICK_BUTTON_CONFIRM_DELEGATE,
   SUCCESSFUL_TX_DELEGATE,
   UNSUCCESSFUL_TX_DELEGATE,
   sendEvent,
@@ -41,7 +40,6 @@ export const useDelegation = (useDelegateProps: DelegateProps) => {
       if (err) return;
     }
 
-    sendEvent(CLICK_BUTTON_CONFIRM_DELEGATE);
     useDelegateProps.setConfirmClicked(true);
     if (
       useDelegateProps.value === undefined ||

@@ -43,7 +43,7 @@ import {
   SUCCESSFUL_SEND_TX,
   UNSUCCESSFUL_SEND_TX,
   ERROR_IN_SEND,
-  PROMPTED_TO_IN_SEND,
+  PROMPTED_TO,
 } from "tracker";
 
 import { TransferModalProps } from "./TransferModal";
@@ -248,8 +248,9 @@ export const TransferModalContent = ({
 
           if (action === "TOPUP") {
             topupModal.setIsOpen(true);
-            sendEvent(PROMPTED_TO_IN_SEND, {
-              "Send Modal Prompt To": "Top Up",
+            sendEvent(PROMPTED_TO, {
+              "Prompt To": "Top Up",
+              Modal: "Send Modal",
             });
             return;
           }
@@ -258,16 +259,18 @@ export const TransferModalContent = ({
             const target = token.handledByExternalUI?.[0].url;
             if (!target) return;
             window.open(target, "_blank");
-            sendEvent(PROMPTED_TO_IN_SEND, {
-              "Send Modal Prompt To": "Satellite",
+            sendEvent(PROMPTED_TO, {
+              "Prompt To": "Satellite",
+              Modal: "Send Modal",
             });
             return;
           }
 
           if (action === "CONNECT") {
             connectModal.setIsOpen(true, {}, true);
-            sendEvent(PROMPTED_TO_IN_SEND, {
-              "Send Modal Prompt To": "Connect Account",
+            sendEvent(PROMPTED_TO, {
+              "Prompt To": "Connect Account",
+              Modal: "Send Modal",
             });
             return;
           }
@@ -374,8 +377,9 @@ export const TransferModalContent = ({
                         return;
                       }
                       const [err] = await E.try(() => connectWith("keplr"));
-                      sendEvent(PROMPTED_TO_IN_SEND, {
-                        "Send Modal Prompt To": "Connect To Keplr",
+                      sendEvent(PROMPTED_TO, {
+                        "Prompt To": "Connect To Keplr",
+                        Modal: "Send Modal",
                       });
                       // TODO: handle error when user rejects the connection
                       if (err) return false;
@@ -417,11 +421,13 @@ export const TransferModalContent = ({
             {/*
              * Call to action Buttons
              */}
-            {action === "CONNECT" && <ConnectToWalletWarning />}
+            {action === "CONNECT" && (
+              <ConnectToWalletWarning modalType="Send" />
+            )}
             {showFeeErrorMessage && (
               <ErrorMessage className="justify-center pl-0">
-                {t("error.insufficientFee")}
-                {feeBalance?.formatted ?? 0} {feeToken?.symbol}
+                {t("error.insufficientFee")} {feeBalance?.formatted ?? 0}{" "}
+                {feeToken?.symbol}
               </ErrorMessage>
             )}
 

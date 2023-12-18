@@ -6,11 +6,11 @@ import { convertFromAtto } from "helpers";
 
 import { useTranslation } from "@evmosapps/i18n/client";
 import { useAssets, useStake } from "@evmosapps/evmos-wallet";
-import { CLICK_ON_TOP_UP_ACCOUNT_DAPP } from "tracker";
+import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, sendEvent } from "tracker";
 
 import { useAccount } from "wagmi";
 import { TopupModalTrigger } from "stateful-components/src/modals/TopupModal/TopupModal";
-import { ButtonWithoutLink, TrackerEvent } from "@evmosapps/ui-helpers";
+import { ButtonWithoutLink } from "@evmosapps/ui-helpers";
 
 export const AccountBalance = () => {
   const { isConnected } = useAccount();
@@ -64,18 +64,17 @@ export const AccountBalance = () => {
         </div>
         {isConnected && (
           <div className="md:relative md:left-[16px] md:top-[1px] ">
-            <TrackerEvent
-              event={CLICK_ON_TOP_UP_ACCOUNT_DAPP}
-              properties={{
-                Location: "Home Page",
-              }}
-            >
-              <TopupModalTrigger>
-                <ButtonWithoutLink>
-                  {t("account.balance.topUp")}
-                </ButtonWithoutLink>
-              </TopupModalTrigger>
-            </TrackerEvent>
+            <TopupModalTrigger>
+              <ButtonWithoutLink
+                onClick={() => {
+                  sendEvent(CLICK_ON_TOP_UP_ACCOUNT_DAPP, {
+                    Location: "Home Page",
+                  });
+                }}
+              >
+                {t("account.balance.topUp")}
+              </ButtonWithoutLink>
+            </TopupModalTrigger>
           </div>
         )}
       </div>

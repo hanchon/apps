@@ -11,7 +11,6 @@ import {
   snackErrorGeneratingTx,
 } from "@evmosapps/evmos-wallet";
 import {
-  CLICK_BUTTON_CONFIRM_REDELEGATE,
   SUCCESSFUL_TX_REDELEGATE,
   UNSUCCESSFUL_TX_REDELEGATE,
   sendEvent,
@@ -41,7 +40,6 @@ export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
       if (err) return;
     }
 
-    sendEvent(CLICK_BUTTON_CONFIRM_REDELEGATE);
     useRedelegateProps.setConfirmClicked(true);
     if (
       useRedelegateProps.value === undefined ||

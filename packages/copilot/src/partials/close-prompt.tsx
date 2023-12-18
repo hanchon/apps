@@ -75,7 +75,6 @@ export const withClosePrompt = <T extends ModalProps>(
                   <button
                     onClick={() => {
                       setClosePromptOpen(false);
-                      sendEvent(EXIT_OUT_COPILOT);
                     }}
                     className="color-gray300 border-gray300 rounded-lg border px-8 py-2 font-normal shadow transition-all duration-300 hover:shadow-md focus-visible:outline-none"
                   >
@@ -86,6 +85,7 @@ export const withClosePrompt = <T extends ModalProps>(
                     onClick={() => {
                       setIsOpen(false);
                       setClosePromptOpen(false);
+                      sendEvent(EXIT_OUT_COPILOT);
                     }}
                     className="w-auto px-8"
                   >

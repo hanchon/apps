@@ -5,12 +5,7 @@ import { useDispatch } from "react-redux";
 
 import { VoteProps } from "../types";
 import { snackExecuteIBCTransfer } from "@evmosapps/evmos-wallet";
-import {
-  CLICK_CONFIRM_VOTE_BUTTON,
-  SUCCESSFUL_TX_VOTE,
-  UNSUCCESSFUL_TX_VOTE,
-  sendEvent,
-} from "tracker";
+import { SUCCESSFUL_TX_VOTE, UNSUCCESSFUL_TX_VOTE, sendEvent } from "tracker";
 
 import { getNetwork, switchNetwork } from "wagmi/actions";
 import { E } from "helpers";
@@ -32,11 +27,6 @@ export const useVote = (useVoteProps: VoteProps) => {
       );
       if (err) return;
     }
-
-    sendEvent(CLICK_CONFIRM_VOTE_BUTTON, {
-      "User Wallet Address": useVoteProps.wallet?.evmosAddressEthFormat,
-      "Wallet Provider": useVoteProps.wallet?.extensionName,
-    });
 
     if (
       useVoteProps.option === undefined ||

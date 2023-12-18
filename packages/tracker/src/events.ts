@@ -7,7 +7,7 @@ export const SELECT_TOKEN_SEND_FLOW = "SelectToken";
 export const SELECT_FROM_NETWORK_SEND_FLOW = "SelectNetworkFrom";
 export const SELECT_TO_NETWORK_SEND_FLOW = "SelectNetworkTo";
 export const ERROR_IN_SEND = "ErrorInSend";
-export const PROMPTED_TO_IN_SEND = "PromptedToInSend";
+export const PROMPTED_TO = "PromptedTo";
 export const CLICK_ON_COPY_ICON_RECEIVE_FLOW = "CopyRecipientAddress";
 export const CLICK_ON_DISPLAY_FORMAT = "ChooseDisplayFormat";
 export const SELECT_NETWORK_RECEIVE_FLOW = "SelectNetworkReceive";
@@ -16,7 +16,6 @@ export const CLICK_ON_GENERATE_PAYMENT_REQUEST = "GeneratePaymentRequest";
 export const CLICK_ON_SHARE_QR_CODE = "ShareQRCode";
 export const CLICK_ON_COPY_ICON_REQUEST_FLOW = "CopyPaymentRequestLink";
 export const CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW = "SharePaymentRequestLink";
-
 export const SUCCESSFUL_SEND_TX = "SuccessfulSend";
 export const UNSUCCESSFUL_SEND_TX = "UnsuccessfulSend";
 export const SUCCESSFUL_PAY_TX = "SuccessfulPay";
@@ -28,16 +27,13 @@ export const CLICK_TABS_STAKING_OPTIONS = "ClickedStakingTabMenu";
 export const CLICK_BUTTON_MANAGE_DELEGATE = "ClickedDelegate";
 export const CLICK_BUTTON_MANAGE_UNDELEGATE = "ClickedUndelegate";
 export const CLICK_BUTTON_MANAGE_REDELEGATE = "ClickedRedelegate";
-export const CLICK_BUTTON_CONFIRM_DELEGATE = "ConfirmedDelegate";
-export const CLICK_BUTTON_CONFIRM_UNDELEGATE = "ConfirmedUndelegate";
-export const CLICK_BUTTON_CONFIRM_REDELEGATE = "ConfirmedRedelegate";
+
 export const CLICK_CANCEL_UNDELEGATION_BUTTON = "ClickedCancelUndelegate";
-export const CLICK_CONFIRM_CANCEL_UNDELEGATION_BUTTON =
-  "ConfirmedCancelUndelegate";
+
 export const CLICK_COMMONWEALTH_OUTLINK = "ClickedCommonwealthOutlink";
 export const CLICK_GOVERNANCE_PROPOSAL = "ClickedOnGovernanceProposal";
 export const CLICK_VOTE_BUTTON = "ClickedOnVote";
-export const CLICK_CONFIRM_VOTE_BUTTON = "ConfirmedToVote";
+
 export const SUCCESSFUL_TX_VOTE = "SuccessfulVote";
 export const UNSUCCESSFUL_TX_VOTE = "UnsuccessfulVote";
 export const SUCCESSFUL_TX_DELEGATE = "SuccessfulDelegate";
@@ -96,28 +92,22 @@ export const CLICK_ON_FOOTER_CTA = "ClickedFooterCTA";
 export const CLICK_LEARN_BUTTON = "ClickedCTAButton - Learn to Build on Evmos";
 export const CLICK_SEE_MORE_BUTTON = "ClickedCTAButton - See more";
 
-// TODO:
 export const CLICK_EVMOS_COPILOT_START_FLOW = "StartedCopilotOnboarding";
 export const EXIT_OUT_COPILOT = "ExitedCopilotOnboarding";
-
-// CHECK
-
 export const CLICK_EVMOS_LOGO = "ClickedEvmosLogo";
-
 export const CLICK_ON_GIVE_FEEDBACK = "ClickedGiveFeedback";
+export const CLICK_BUTTON_CONVERT = "ClickedConvert";
+export const CLICK_HIDE_ZERO_BALANCE = "HideZeroBalance";
+export const CLICK_CTA_LINKS_REGISTER_TOKEN = "ClickedRegisterToken";
 
 // TODO -> remove this events after removing the related components
 export const CLICK_DEPOSIT_CHOOSE_FROM_CHAIN = "Deposit from a specific chain";
 export const CLICK_DEPOSIT_CONFIRM_BUTTON = "Confirm deposit transaction";
 export const CLICK_WITHDRAW_CHOOSE_TOKEN = "Choose a token to withdraw";
 export const CLICK_WITHDRAW_CONFIRM_BUTTON = "Confirm withdraw transaction";
-export const CLICK_HIDE_ZERO_BALANCE = "HideZeroBalance";
-export const CLICK_CTA_LINKS_REGISTER_TOKEN = "ClickedRegisterToken";
 export const CLICK_CTA_LINKS_ASSETS_GUIDE =
   "Click on CTA link to view assets guide";
-
 export const SUCCESSFUL_TX_DEPOSIT = "Successful transaction of Deposit";
 export const UNSUCCESSFUL_TX_DEPOSIT = "Unsuccessful transaction of Deposit";
 export const SUCCESSFUL_TX_WITHDRAW = "Successful transaction of Withdraw";
 export const UNSUCCESSFUL_TX_WITHDRAW = "Unsuccessful transaction of Withdraw";
-export const CLICK_BUTTON_CONVERT = "ClickedConvert";

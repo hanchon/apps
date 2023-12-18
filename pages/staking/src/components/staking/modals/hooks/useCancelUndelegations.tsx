@@ -11,7 +11,6 @@ import {
   snackErrorGeneratingTx,
 } from "@evmosapps/evmos-wallet";
 import {
-  CLICK_CONFIRM_CANCEL_UNDELEGATION_BUTTON,
   SUCCESSFUL_TX_CANCEL_UNDELEGATION,
   UNSUCCESSFUL_TX_CANCEL_UNDELEGATION,
   sendEvent,
@@ -43,7 +42,6 @@ export const useCancelUndelegations = (
       );
       if (err) return;
     }
-    sendEvent(CLICK_CONFIRM_CANCEL_UNDELEGATION_BUTTON);
     useCancelUndelegationProps.setConfirmClicked(true);
     if (
       useCancelUndelegationProps.value === undefined ||

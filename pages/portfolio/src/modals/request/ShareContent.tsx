@@ -168,7 +168,7 @@ export const ShareContent = ({
                 amountInUsd={amountInUsd}
               />
             </div>
-            {isDisconnected && <ConnectToWalletWarning />}
+            {isDisconnected && <ConnectToWalletWarning modalType="Share" />}
             {!isDisconnected && (
               <PrimaryButton
                 onClick={async () => {

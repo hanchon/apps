@@ -33,11 +33,7 @@ import { PayModalProps } from "./Modal";
 import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";
 import { PayIcon } from "icons";
 import Image from "next/image";
-import {
-  PROMPTED_TO_IN_SEND,
-  SUCCESSFUL_PAY_TX,
-  UNSUCESSFUL_PAY_TX,
-} from "tracker";
+import { PROMPTED_TO, SUCCESSFUL_PAY_TX, UNSUCESSFUL_PAY_TX } from "tracker";
 import { useTracker } from "tracker";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { useSend } from "../hooks/useSend";
@@ -208,7 +204,7 @@ export const Content = ({
               amountInUsd={amountInUsd}
             />
 
-            {isDisconnected && <ConnectToWalletWarning />}
+            {isDisconnected && <ConnectToWalletWarning modalType="Pay" />}
 
             {!isDisconnected && (
               <>
@@ -304,12 +300,12 @@ export const Content = ({
                         displayIcon={false}
                         className="mt-0 font-normal"
                       >
-                        {t("error.insufficientBalance")}
+                        {t("message.insufficient.balance")}
                       </ErrorMessage>
                     )}
                     {transferRejected && (
                       <ErrorMessage className="justify-center mt-0 pl-0">
-                        {t("error.transactionFailed")}
+                        {t("error.generating.transaction")}
                       </ErrorMessage>
                     )}
                   </div>
@@ -338,8 +334,9 @@ export const Content = ({
                   <PrimaryButton
                     variant={"outline-primary"}
                     onClick={() => {
-                      sendEvent(PROMPTED_TO_IN_SEND, {
-                        "Send Modal Prompt To": "Forge",
+                      sendEvent(PROMPTED_TO, {
+                        "Prompt To": "Forge",
+                        Modal: "Pay Modal",
                       });
                       window.open("https://forge.trade/#/swap", "_blank");
                     }}
