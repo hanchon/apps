@@ -2,15 +2,19 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { convertFromAtto } from "helpers";
+// import { convertFromAtto } from "helpers";
 
 import { useTranslation } from "@evmosapps/i18n/client";
-import { useAssets, useStake } from "@evmosapps/evmos-wallet";
+// import { useAssets, useStake } from "@evmosapps/evmos-wallet";
 import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, sendEvent } from "tracker";
 
 import { useAccount } from "wagmi";
 import { TopupModalTrigger } from "stateful-components/src/modals/TopupModal/TopupModal";
-import { ButtonWithoutLink } from "@evmosapps/ui-helpers";
+import { useStake } from "@evmosapps/evmos-wallet/src/api/useStake";
+import { useAssets } from "@evmosapps/evmos-wallet/src/api/useAssets";
+import { convertFromAtto } from "helpers/src/styles";
+import { ButtonWithoutLink } from "@evmosapps/ui-helpers/src/links/Button";
+// import { ButtonWithoutLink } from "@evmosapps/ui-helpers";
 
 export const AccountBalance = () => {
   const { isConnected } = useAccount();

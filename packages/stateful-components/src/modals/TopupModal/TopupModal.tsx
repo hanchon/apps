@@ -1,12 +1,9 @@
 "use client";
 
-import { modalLink, useModal } from "helpers";
-
-import { Modal } from "@evmosapps/ui-helpers";
-
 import { TopupFlow } from "@evmosapps/copilot/src/topup/topup-flow";
-import { ModalProps } from "@evmosapps/ui-helpers/src/Modal";
+import { Modal, ModalProps } from "@evmosapps/ui-helpers/src/Modal";
 import { withClosePrompt } from "@evmosapps/copilot/src/partials/close-prompt";
+import { modalLink, useModal } from "helpers/src/modals";
 export const useTopupModal = () => useModal("topup");
 
 export const TopupModalTrigger = modalLink("topup");

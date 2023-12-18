@@ -1,7 +1,7 @@
 import { fetchExplorerData } from "@evmosapps/dappstore-page/src/lib/fetch-explorer-data";
 import { raise } from "helpers";
 
-export { DappDetailsPage as default } from "@evmosapps/dappstore-page";
+export { DappDetailsPage as default } from "@evmosapps/dappstore-page/src/pages/dapp-explorer/dapp-details/dapp-details-page";
 
 export const generateStaticParams = async () => {
   const { dApps } = await fetchExplorerData();

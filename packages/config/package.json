@@ -39,6 +39,7 @@
     "eslint-plugin-sonarjs": "^0.20.0",
     "eslint-plugin-vitest": "^0.2.8",
     "jsdom": "^22.1.0",
+    "next-plugin-bundle-stats": "^4.8.3",
     "typescript": "^5.3.3",
     "vitest": "^0.34.6"
   }

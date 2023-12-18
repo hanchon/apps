@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BigNumber } from "@ethersproject/bignumber";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { convertStringFromAtto } from "helpers";
+
 import {
   DelegationsResponse,
   StakingInfoResponse,
@@ -13,6 +13,7 @@ import {
 } from "./types";
 import { getStakingInfo } from "./fetch";
 import { StoreType } from "../redux/Store";
+import { convertStringFromAtto } from "helpers/src/styles";
 
 export const useStake = () => {
   const value = useSelector((state: StoreType) => state.wallet.value);

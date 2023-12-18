@@ -5,11 +5,16 @@ import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { ERC20BalanceResponse } from "./types";
 import { getAssetsForAddress } from "./fetch";
-import { addAssets, addDollarAssets, amountToDollars } from "helpers";
+
 import { BigNumber } from "@ethersproject/bignumber";
 import { useAccount } from "wagmi";
 import { normalizeToEvmos } from "../wallet";
 import { isNaN } from "lodash-es";
+import {
+  addAssets,
+  addDollarAssets,
+  amountToDollars,
+} from "helpers/src/styles";
 
 const usdFormat = new Intl.NumberFormat("en-US", {
   style: "currency",

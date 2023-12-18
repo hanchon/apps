@@ -11,6 +11,8 @@ import {
   LiquidStakingProps,
   useTheme,
 } from "@interchain-ui/react";
+import "@interchain-ui/react/styles";
+import { ThemeProvider } from "@interchain-ui/react";
 
 import { RiTimeLine, RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
 
@@ -21,7 +23,7 @@ import { convertFromAtto } from "helpers";
 import { ConnectionRequired } from "@evmosapps/ui-helpers";
 import { useAccount } from "wagmi";
 
-const Stride = () => {
+const StrideWidget = () => {
   const { themeClass, setTheme } = useTheme();
 
   const { evmosPrice, totalEvmosAsset } = useAssets();
@@ -111,30 +113,29 @@ const Stride = () => {
           },
         ]}
         onChange={(payloadStakedAmount) => {
-            if(isNaN(payloadStakedAmount)) {
-              setStakedAmount(0);
-              setReward((prevReward) => {
-                return {
-                  ...prevReward,
-                  rewardAmount: 0,
-                  priceDisplayAmount: 0,
-                };
-              });
-              return
-            }
-            setStakedAmount(payloadStakedAmount);
+          if (isNaN(payloadStakedAmount)) {
+            setStakedAmount(0);
             setReward((prevReward) => {
-              // This is just mock reward calculation
-
-              const ra = payloadStakedAmount / redemptionRate;
-              const pda = parseFloat(evmosPrice ?? 0) * redemptionRate;
               return {
                 ...prevReward,
-                rewardAmount: ra,
-                priceDisplayAmount: pda,
+                rewardAmount: 0,
+                priceDisplayAmount: 0,
               };
             });
-          
+            return;
+          }
+          setStakedAmount(payloadStakedAmount);
+          setReward((prevReward) => {
+            // This is just mock reward calculation
+
+            const ra = payloadStakedAmount / redemptionRate;
+            const pda = parseFloat(evmosPrice ?? 0) * redemptionRate;
+            return {
+              ...prevReward,
+              rewardAmount: ra,
+              priceDisplayAmount: pda,
+            };
+          });
         }}
         footerLabel={
           <Stack
@@ -206,4 +207,10 @@ const Stride = () => {
   );
 };
 
-export default Stride;
+export default function Stride() {
+  return (
+    <ThemeProvider>
+      <StrideWidget />
+    </ThemeProvider>
+  );
+}

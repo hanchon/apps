@@ -3,8 +3,7 @@
 
 import { Link } from "@evmosapps/i18n/client";
 import { ComponentProps } from "react";
-import cx from "clsx";
-import { cn } from "helpers";
+import { cn } from "helpers/src/classnames";
 
 export const ButtonWithLink = ({
   className,
@@ -27,7 +26,7 @@ export const ButtonWithoutLink = ({
 }: ComponentProps<"button">) => {
   return (
     <button
-      className={cx(
+      className={cn(
         "w-fit self-start rounded bg-[#423D37] px-5 py-3 text-xs text-pearl transition-all duration-200 ease-in-out hover:bg-[#534d46] active:bg-[#666059]",
         className
       )}

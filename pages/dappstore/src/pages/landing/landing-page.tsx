@@ -10,12 +10,14 @@ import { AccountBalance } from "./partials/account-balance";
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
 import { HeroSection } from "./partials/hero-section";
-import { ButtonWithLink, Frameline, TrackerEvent } from "@evmosapps/ui-helpers";
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 
 import { CopilotCard } from "./partials/copilot-card/copilot-card";
 import { translation } from "@evmosapps/i18n/server";
 import { CLICK_ON_VIEW_ALL_DAPPS } from "tracker";
+import { Frameline } from "@evmosapps/ui-helpers/src/container/FrameLine";
+import { TrackerEvent } from "@evmosapps/ui-helpers/src/TrackerEvent";
+import { ButtonWithLink } from "@evmosapps/ui-helpers/src/links/Button";
 
 export const LandingPage = async () => {
   const { dApps } = await fetchExplorerData();

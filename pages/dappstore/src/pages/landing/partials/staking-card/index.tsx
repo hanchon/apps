@@ -7,20 +7,20 @@ import { BalanceDisplay } from "./balance-display";
 import { CardDescription } from "../card-description";
 import { CardTitle } from "../card-title";
 import { useSelector } from "react-redux";
-import {
-  StoreType,
-  useAssets,
-  useStake,
-  useRewards,
-  getBalance,
-  getBalanceInDollars,
-  getNumberBalance,
-  getNumberBalanceInDollars,
-} from "@evmosapps/evmos-wallet";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { CLICK_ON_STAKE_AND_MANAGE_DELEGATION } from "tracker";
 import { ButtonWithLink, TrackerEvent } from "@evmosapps/ui-helpers";
 import { Card } from "../card";
+import { useStake } from "@evmosapps/evmos-wallet/src/api/useStake";
+import { useAssets } from "@evmosapps/evmos-wallet/src/api/useAssets";
+import { useRewards } from "@evmosapps/evmos-wallet/src/hooks/rewards/useRewards";
+import { type StoreType } from "@evmosapps/evmos-wallet/src/redux/Store";
+import {
+  getBalance,
+  getBalanceInDollars,
+  getNumberBalance,
+  getNumberBalanceInDollars,
+} from "@evmosapps/evmos-wallet/src/hooks/rewards/helpers";
 
 export const StakingCard = () => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
