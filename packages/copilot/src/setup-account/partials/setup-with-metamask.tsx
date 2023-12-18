@@ -103,7 +103,6 @@ export const SetupWithMetamaskSteps = ({
     sendEvent(UNSUCCESSFUL_WALLET_CONNECTION_COPILOT, {
       "Wallet Provider": "MetaMask",
       "Error Message": mappedConnectError,
-      // TODO: event -> can we add "User Wallet Address": address ? I'm not sure if we have access to it here,
     });
   }, [mappedConnectError]);
 

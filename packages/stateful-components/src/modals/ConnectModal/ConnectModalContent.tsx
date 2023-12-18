@@ -143,7 +143,6 @@ export const ConnectModalContent = ({
                 sendEvent(UNSUCCESSFUL_WALLET_CONNECTION, {
                   "Wallet Provider": provider,
                   "Error Message": `Failed to connect with ${label}`,
-                  // TODO: event -> can we add "User Wallet Address": address ? I'm not sure if we have access to it here,
                 });
 
                 if (E.match.byPattern(e, /Connector not found/)) {

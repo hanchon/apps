@@ -19,7 +19,6 @@ export const SetupAccountSuccesStep = () => {
 
       <PrimaryButton
         onClick={() => {
-          // TODO: maybe add a property
           sendEvent(CLICK_ON_TOP_UP_ACCOUNT_DAPP, {
             Location: "Inside Copilot",
           });

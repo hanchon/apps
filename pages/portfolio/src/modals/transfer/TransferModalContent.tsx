@@ -216,7 +216,6 @@ export const TransferModalContent = ({
   useEffect(() => {
     if (!validation.hasSufficientBalanceForFee && !isPreparing)
       sendEvent(ERROR_IN_SEND, {
-        // TODO: check if we should list this error like this
         "Error Message":
           "Insufficient fee error (not enough balance) when trying to send token",
         "Wallet Provider": activeProviderKey,
