@@ -635,7 +635,7 @@ importers:
         version: 1.19.1(@types/react@18.2.45)(react@18.2.0)
       vitest:
         specifier: ^0.34.6
-        version: 0.34.6
+        version: 0.34.6(jsdom@22.1.0)(playwright@1.40.1)
     devDependencies:
       '@evmosapps/config':
         specifier: workspace:*
@@ -797,7 +797,7 @@ importers:
         version: link:../ui-helpers
       '@forge-trade/widgets':
         specifier: ^1.2.5
-        version: 1.2.5(@babel/runtime@7.23.6)(@ethersproject/abi@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@types/react@18.2.45)(ethers@5.7.2)(hardhat@2.19.2)(react-dom@18.2.0)(react-redux@9.0.4)(react@18.2.0)(redux@5.0.0)(styled-components@6.1.1)
+        version: 1.2.5(@babel/core@7.23.6)(@babel/runtime@7.23.6)(@ethersproject/abi@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@types/react@18.2.45)(ethers@5.7.2)(hardhat@2.19.2)(react-dom@18.2.0)(react-redux@8.1.3)(react@18.2.0)(redux@4.2.1)(styled-components@6.1.1)
       '@tippyjs/react':
         specifier: ^4.2.6
         version: 4.2.6(react-dom@18.2.0)(react@18.2.0)
@@ -1246,7 +1246,7 @@ importers:
         version: link:../tracker
       vitest:
         specifier: ^0.34.6
-        version: 0.34.6
+        version: 0.34.6(jsdom@22.1.0)(playwright@1.40.1)
     devDependencies:
       '@evmosapps/config':
         specifier: workspace:*
@@ -4233,7 +4233,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@forge-trade/widgets@1.2.5(@babel/runtime@7.23.6)(@ethersproject/abi@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@types/react@18.2.45)(ethers@5.7.2)(hardhat@2.19.2)(react-dom@18.2.0)(react-redux@9.0.4)(react@18.2.0)(redux@5.0.0)(styled-components@6.1.1):
+  /@forge-trade/widgets@1.2.5(@babel/core@7.23.6)(@babel/runtime@7.23.6)(@ethersproject/abi@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@types/react@18.2.45)(ethers@5.7.2)(hardhat@2.19.2)(react-dom@18.2.0)(react-redux@8.1.3)(react@18.2.0)(redux@4.2.1)(styled-components@6.1.1):
     resolution: {integrity: sha512-gCiHjXuDMF1Ls6vn0XUi1aH5AwTVZVRhFdHlQLnacDVe28MJK//jmUqNr8Bg1HFna5NYdj+d8wLB74ZCwHGABQ==}
     requiresBuild: true
     peerDependencies:
@@ -4252,10 +4252,10 @@ packages:
       '@forge-trade/smart-order-router': 3.5.8(bufferutil@4.0.8)(encoding@0.1.13)(hardhat@2.19.2)(jsbi@3.2.5)(utf-8-validate@5.0.10)
       '@orbitalapes/sdk-core': 3.2.6
       '@popperjs/core': 2.11.8
-      '@reduxjs/toolkit': 1.9.7(react-redux@9.0.4)(react@18.2.0)
+      '@reduxjs/toolkit': 1.9.7(react-redux@8.1.3)(react@18.2.0)
       '@uniswap/conedison': 1.8.0(@uniswap/sdk-core@4.0.9)(ethers@5.7.2)
       '@uniswap/permit2-sdk': 1.2.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      '@uniswap/redux-multicall': 1.1.8(@ethersproject/abi@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@reduxjs/toolkit@1.9.7)(react-redux@9.0.4)(react@18.2.0)
+      '@uniswap/redux-multicall': 1.1.8(@ethersproject/abi@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@reduxjs/toolkit@1.9.7)(react-redux@8.1.3)(react@18.2.0)
       '@uniswap/router-sdk': 1.7.1(hardhat@2.19.2)
       '@uniswap/sdk-core': 4.0.9
       '@uniswap/smart-order-router': 3.19.1(bufferutil@4.0.8)(encoding@0.1.13)(hardhat@2.19.2)(jsbi@3.2.5)(utf-8-validate@5.0.10)
@@ -4276,7 +4276,7 @@ packages:
       cids: 1.1.9
       ethers: 5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       immer: 9.0.21
-      jotai: 1.4.0(immer@9.0.21)(react@18.2.0)
+      jotai: 1.4.0(@babel/core@7.23.6)(immer@9.0.21)(react@18.2.0)
       jsbi: 3.2.5
       make-plural: 7.3.0
       ms.macro: 2.0.0
@@ -4292,11 +4292,11 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       react-feather: 2.0.10(react@18.2.0)
       react-popper: 2.3.0(@popperjs/core@2.11.8)(react-dom@18.2.0)(react@18.2.0)
-      react-redux: 9.0.4(@types/react@18.2.45)(react@18.2.0)(redux@5.0.0)
+      react-redux: 8.1.3(@types/react-dom@18.0.9)(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
       react-virtualized-auto-sizer: 1.0.20(react-dom@18.2.0)(react@18.2.0)
       react-window: 1.8.10(react-dom@18.2.0)(react@18.2.0)
       rebass: 4.0.7(react@18.2.0)
-      redux: 5.0.0
+      redux: 4.2.1
       resize-observer-polyfill: 1.5.1
       setimmediate: 1.0.5
       styled-components: 6.1.1(react-dom@18.2.0)(react@18.2.0)
@@ -7652,25 +7652,6 @@ packages:
       redux-thunk: 2.4.2(redux@4.2.1)
       reselect: 4.1.8
 
-  /@reduxjs/toolkit@1.9.7(react-redux@9.0.4)(react@18.2.0):
-    resolution: {integrity: sha512-t7v8ZPxhhKgOKtU+uyJT13lu4vL7az5aFi4IdoDs/eS548edn2M8Ik9h8fxgvMjGoAUVFSt6ZC1P5cWmQ014QQ==}
-    peerDependencies:
-      react: ^16.9.0 || ^17.0.0 || ^18
-      react-redux: ^7.2.1 || ^8.0.2
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-redux:
-        optional: true
-    dependencies:
-      immer: 9.0.21
-      react: 18.2.0
-      react-redux: 9.0.4(@types/react@18.2.45)(react@18.2.0)(redux@5.0.0)
-      redux: 4.2.1
-      redux-thunk: 2.4.2(redux@4.2.1)
-      reselect: 4.1.8
-    dev: false
-
   /@rollup/rollup-android-arm-eabi@4.9.1:
     resolution: {integrity: sha512-6vMdBZqtq1dVQ4CWdhFwhKZL6E4L1dV6jUjuBvsavvNJSppzi6dLBbuV+3+IyUREaj9ZFvQefnQm28v4OCXlig==}
     cpu: [arm]
@@ -8427,7 +8408,7 @@ packages:
   /@types/bn.js@5.1.5:
     resolution: {integrity: sha512-V46N0zwKRF5Q00AZ6hWtN0T8gGmDUaUzLWQvHFo5yThtVwK/VCenFY3wXVbOvNfajEpsTfQM4IN9k/d6gUVX3A==}
     dependencies:
-      '@types/node': 18.11.14
+      '@types/node': 20.10.4
     dev: false
 
   /@types/btoa-lite@1.0.2:
@@ -8646,6 +8627,7 @@ packages:
 
   /@types/node@20.4.1:
     resolution: {integrity: sha512-JIzsAvJeA/5iY6Y/OxZbv1lUcc8dNSE77lb2gnBH+/PJ3lFR1Ccvgwl5JWnHAkNHcRsT0TbpVOsiMKZ1F/yyJg==}
+    dev: true
 
   /@types/parse-json@4.0.2:
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
@@ -8686,7 +8668,7 @@ packages:
   /@types/readable-stream@2.3.15:
     resolution: {integrity: sha512-oM5JSKQCcICF1wvGgmecmHldZ48OZamtMxcGGVICOJA8o8cahXC1zEVAif8iwoc5j8etxFaRFnf095+CDsuoFQ==}
     dependencies:
-      '@types/node': 18.11.14
+      '@types/node': 20.10.4
       safe-buffer: 5.1.2
     dev: false
 
@@ -8973,7 +8955,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@uniswap/redux-multicall@1.1.8(@ethersproject/abi@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@reduxjs/toolkit@1.9.7)(react-redux@9.0.4)(react@18.2.0):
+  /@uniswap/redux-multicall@1.1.8(@ethersproject/abi@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@reduxjs/toolkit@1.9.7)(react-redux@8.1.3)(react@18.2.0):
     resolution: {integrity: sha512-LttOBVJuoRNC6N4MHsb5dF2GszLsj1ddPKKccEw1XOX17bGrFdm2A6GwKgES+v+Hj3lluDbQL6atcQtymP21iw==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -8987,9 +8969,9 @@ packages:
       '@ethersproject/abi': 5.7.0
       '@ethersproject/bignumber': 5.7.0
       '@ethersproject/contracts': 5.7.0
-      '@reduxjs/toolkit': 1.9.7(react-redux@9.0.4)(react@18.2.0)
+      '@reduxjs/toolkit': 1.9.7(react-redux@8.1.3)(react@18.2.0)
       react: 18.2.0
-      react-redux: 9.0.4(@types/react@18.2.45)(react@18.2.0)(redux@5.0.0)
+      react-redux: 8.1.3(@types/react-dom@18.0.9)(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
     dev: false
 
   /@uniswap/router-sdk@1.7.1(hardhat@2.19.2):
@@ -14808,7 +14790,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.4.1
+      '@types/node': 20.10.4
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false
@@ -14827,7 +14809,7 @@ packages:
       '@sideway/pinpoint': 2.0.0
     dev: true
 
-  /jotai@1.4.0(immer@9.0.21)(react@18.2.0):
+  /jotai@1.4.0(@babel/core@7.23.6)(immer@9.0.21)(react@18.2.0):
     resolution: {integrity: sha512-CUB+A3N+WjtimZvtDnMXvVRognzKh86KB3rKnQlbRvpnmGYU+O9aOZMWSgTaxstXc4Y5GYy02LBEjiv4Rs8MAg==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -14861,6 +14843,7 @@ packages:
       xstate:
         optional: true
     dependencies:
+      '@babel/core': 7.23.6
       immer: 9.0.21
       react: 18.2.0
     dev: false
@@ -18168,28 +18151,6 @@ packages:
       redux: 4.2.1
       use-sync-external-store: 1.2.0(react@18.2.0)
 
-  /react-redux@9.0.4(@types/react@18.2.45)(react@18.2.0)(redux@5.0.0):
-    resolution: {integrity: sha512-9J1xh8sWO0vYq2sCxK2My/QO7MzUMRi3rpiILP/+tDr8krBHixC6JMM17fMK88+Oh3e4Ae6/sHIhNBgkUivwFA==}
-    peerDependencies:
-      '@types/react': ^18.2.25
-      react: ^18.0
-      react-native: '>=0.69'
-      redux: ^5.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      react-native:
-        optional: true
-      redux:
-        optional: true
-    dependencies:
-      '@types/react': 18.2.45
-      '@types/use-sync-external-store': 0.0.3
-      react: 18.2.0
-      redux: 5.0.0
-      use-sync-external-store: 1.2.0(react@18.2.0)
-    dev: false
-
   /react-refresh@0.14.0:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
     engines: {node: '>=0.10.0'}
@@ -18401,10 +18362,6 @@ packages:
     resolution: {integrity: sha512-LAUYz4lc+Do8/g7aeRa8JkyDErK6ekstQaqWQrNRW//MY1TvCEpMtpTWvlQ+FPbWCx+Xixu/6SHt5N0HR+SB4w==}
     dependencies:
       '@babel/runtime': 7.23.6
-
-  /redux@5.0.0:
-    resolution: {integrity: sha512-blLIYmYetpZMET6Q6uCY7Jtl/Im5OBldy+vNPauA8vvsdqyt66oep4EUpAMWNHauTC6xa9JuRPhRB72rY82QGA==}
-    dev: false
 
   /reflect.getprototypeof@1.0.4:
     resolution: {integrity: sha512-ECkTw8TmJwW60lOTR+ZkODISW6RQ8+2CL3COqtiJKLd6MmB45hN51HprHFziKLGkAuTGQhBb91V8cy+KHlaCjw==}
@@ -20735,71 +20692,6 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitest@0.34.6:
-    resolution: {integrity: sha512-+5CALsOvbNKnS+ZHMXtuUC7nL8/7F1F2DnHGjSsszX8zCjWSSviphCb/NuS9Nzf4Q03KyyDRBAXhF/8lffME4Q==}
-    engines: {node: '>=v14.18.0'}
-    hasBin: true
-    peerDependencies:
-      '@edge-runtime/vm': '*'
-      '@vitest/browser': '*'
-      '@vitest/ui': '*'
-      happy-dom: '*'
-      jsdom: '*'
-      playwright: '*'
-      safaridriver: '*'
-      webdriverio: '*'
-    peerDependenciesMeta:
-      '@edge-runtime/vm':
-        optional: true
-      '@vitest/browser':
-        optional: true
-      '@vitest/ui':
-        optional: true
-      happy-dom:
-        optional: true
-      jsdom:
-        optional: true
-      playwright:
-        optional: true
-      safaridriver:
-        optional: true
-      webdriverio:
-        optional: true
-    dependencies:
-      '@types/chai': 4.3.10
-      '@types/chai-subset': 1.3.5
-      '@types/node': 20.10.4
-      '@vitest/expect': 0.34.6
-      '@vitest/runner': 0.34.6
-      '@vitest/snapshot': 0.34.6
-      '@vitest/spy': 0.34.6
-      '@vitest/utils': 0.34.6
-      acorn: 8.11.2
-      acorn-walk: 8.3.0
-      cac: 6.7.14
-      chai: 4.3.10
-      debug: 4.3.4(supports-color@5.5.0)
-      local-pkg: 0.4.3
-      magic-string: 0.30.5
-      pathe: 1.1.1
-      picocolors: 1.0.0
-      std-env: 3.6.0
-      strip-literal: 1.3.0
-      tinybench: 2.5.1
-      tinypool: 0.7.0
-      vite: 5.0.10(@types/node@20.10.4)
-      vite-node: 0.34.6(@types/node@20.10.4)
-      why-is-node-running: 2.2.2
-    transitivePeerDependencies:
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: false
-
   /vitest@0.34.6(jsdom@22.1.0)(playwright@1.40.1):
     resolution: {integrity: sha512-+5CALsOvbNKnS+ZHMXtuUC7nL8/7F1F2DnHGjSsszX8zCjWSSviphCb/NuS9Nzf4Q03KyyDRBAXhF/8lffME4Q==}
     engines: {node: '>=v14.18.0'}
@@ -21235,19 +21127,6 @@ packages:
         optional: true
     dev: true
 
-  /ws@8.15.1:
-    resolution: {integrity: sha512-W5OZiCjXEmk0yZ66ZN82beM5Sz7l7coYxpRkzS+p9PP+ToQry8szKh+61eNktr7EA9DOwvFGhfC605jDHbP6QQ==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: '>=5.0.2'
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
-    dev: true
-
   /ws@8.15.1(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     resolution: {integrity: sha512-W5OZiCjXEmk0yZ66ZN82beM5Sz7l7coYxpRkzS+p9PP+ToQry8szKh+61eNktr7EA9DOwvFGhfC605jDHbP6QQ==}
     engines: {node: '>=10.0.0'}
@@ -21519,7 +21398,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       serverless-http: 3.2.0
       styled-components: 5.3.11(@babel/core@7.23.6)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
-      ws: 8.15.1
+      ws: 8.15.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros

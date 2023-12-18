@@ -9,7 +9,6 @@ import { createNotionPropertiesSchema } from "../utils/createNotionPropertiesSch
 import { createdAtSchema } from "../partials/createdAtSchema";
 import { updatedAtSchema } from "../partials/updatedAtSchema";
 import { selectSchema } from "../partials/selectSchema";
-import { predownloadImages } from "./predownloadImages";
 import { parseUrl } from "helpers/src/parse/urls";
 import { createSlug } from "../utils/createSlug";
 
@@ -55,15 +54,8 @@ export const dappSchema = z
     id: z.string(),
     properties: dappPropertiesSchema,
   })
-  .transform(async ({ id, properties, ...rest }) => {
+  .transform(({ id, properties, ...rest }) => {
     const slug = createSlug(properties.name);
-    const { cover, thumbnail, icon, ...propetyRest } = properties;
-    const images = await predownloadImages(slug, {
-      cover,
-      thumbnail,
-      icon,
-    });
-    // console.log(images);
     return {
       notionId: id,
       slug,
@@ -74,8 +66,7 @@ export const dappSchema = z
           description: string;
         }
       >,
-      ...propetyRest,
-      ...images,
+      ...properties,
       ...rest,
     };
   });
