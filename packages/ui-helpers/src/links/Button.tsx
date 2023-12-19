@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { Link } from "@evmosapps/i18n/client";
+import { Link } from "@evmosapps/i18n/client/components/Link";
 import { ComponentProps } from "react";
 import cx from "clsx";
 import { cn } from "helpers";

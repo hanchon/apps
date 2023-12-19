@@ -1426,7 +1426,7 @@ importers:
     devDependencies:
       chainapsis-suggest-chain:
         specifier: github:chainapsis/keplr-chain-registry
-        version: github.com/chainapsis/keplr-chain-registry/c322eed2605b3db136b6fff6ac6a3a8fa58070e9(@babel/core@7.23.6)(react-is@18.2.0)
+        version: github.com/chainapsis/keplr-chain-registry/4b9149b987c98a3d03fc50672734fbc82aa79d3e(@babel/core@7.23.6)(react-is@18.2.0)
       react-qr-code:
         specifier: ^2.0.12
         version: 2.0.12(react@18.2.0)
@@ -1520,7 +1520,7 @@ importers:
     devDependencies:
       chainapsis-suggest-chain:
         specifier: github:chainapsis/keplr-chain-registry
-        version: github.com/chainapsis/keplr-chain-registry/c322eed2605b3db136b6fff6ac6a3a8fa58070e9(@babel/core@7.23.6)(react-is@18.2.0)
+        version: github.com/chainapsis/keplr-chain-registry/4b9149b987c98a3d03fc50672734fbc82aa79d3e(@babel/core@7.23.6)(react-is@18.2.0)
       react-qr-code:
         specifier: ^2.0.12
         version: 2.0.12(react@18.2.0)
@@ -21377,9 +21377,9 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
 
-  github.com/chainapsis/keplr-chain-registry/c322eed2605b3db136b6fff6ac6a3a8fa58070e9(@babel/core@7.23.6)(react-is@18.2.0):
-    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/c322eed2605b3db136b6fff6ac6a3a8fa58070e9}
-    id: github.com/chainapsis/keplr-chain-registry/c322eed2605b3db136b6fff6ac6a3a8fa58070e9
+  github.com/chainapsis/keplr-chain-registry/4b9149b987c98a3d03fc50672734fbc82aa79d3e(@babel/core@7.23.6)(react-is@18.2.0):
+    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/4b9149b987c98a3d03fc50672734fbc82aa79d3e}
+    id: github.com/chainapsis/keplr-chain-registry/4b9149b987c98a3d03fc50672734fbc82aa79d3e
     name: chainapsis-suggest-chain
     version: 0.0.1
     dependencies:

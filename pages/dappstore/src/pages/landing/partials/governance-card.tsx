@@ -23,7 +23,11 @@ export const GovernanceCard = () => {
         <hr className="text-pearl/30" />
       </div>
       <TrackerEvent event={CLICK_ON_PARTICIPATE_IN_GOVERNANCE}>
-        <ButtonWithLink href="/governance" className="w-full">
+        <ButtonWithLink
+          href="/governance"
+          className="w-full"
+          aria-label="governance card"
+        >
           {t("card.governance.button.text")}
         </ButtonWithLink>
       </TrackerEvent>

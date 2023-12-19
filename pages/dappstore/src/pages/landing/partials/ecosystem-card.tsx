@@ -29,6 +29,7 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
         target={data.instantDapp ? "" : "_blank"}
         key={data.name}
         className="relative space-y-2 rounded-lg bg-[#262017] pb-8 transition-all duration-150 ease-out hover:scale-105 overflow-hidden"
+        aria-label={data.name}
       >
         <div className="relative aspect-[3/2] w-full bg-white/5 overflow-hidden">
           {img && (
