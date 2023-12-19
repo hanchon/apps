@@ -29,7 +29,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
       icon: "/ecosystem/portfolio.png",
       children: t("launchPad.assets.title"),
       href: "/portfolio",
-      mixpanelId: "Assets",
+      mixpanelId: "Portfolio",
     },
     {
       icon: "/ecosystem/staking.png",
@@ -119,6 +119,7 @@ export const LaunchPadItem = ({
 }) => {
   return (
     <Link
+      aria-label={children?.toString()}
       rel="noopener noreferrer"
       className="text-pearl text-sm  flex flex-col space-y-2 h-[100px]"
       {...rest}

@@ -42,6 +42,7 @@ export const Footer = async () => {
               className="flex items-center space-x-3 "
               target="_blank"
               rel="noreferrer"
+              aria-label="build with evmos"
             >
               <CodeIcon
                 width={18}
@@ -114,7 +115,7 @@ export const Footer = async () => {
                 target="_blank"
                 rel="noreferrer"
                 href={TELEGRAM_EVMOS_URL}
-                aria-label="discord telegram"
+                aria-label="telegram evmos"
               >
                 <TelegramIcon width={18} height={18} />
               </a>
@@ -170,7 +171,9 @@ export const Footer = async () => {
                 event={CLICK_ON_FOOTER_CTA}
                 properties={{ "Footer Social Type": "Cookie Statement" }}
               >
-                <p>{t("footer.cookiesSettings")}</p>
+                <p aria-label="cookies settings">
+                  {t("footer.cookiesSettings")}
+                </p>
               </TrackerEvent>
             </ConsentModalTrigger>
           </div>

@@ -11,6 +11,7 @@ export const Feedback = ({
     <Link
       target="_blank"
       rel="noreferrer"
+      aria-label="Give Feedback"
       className="bg-red-300 text-pearl text-sm hover:bg-red1 active:bg-red2 fixed -right-[81px] top-1/2 hidden -rotate-90 rounded-tl-lg rounded-tr-lg  font-semibold transition-color duration-200 ease-in-out lg:block "
       {...rest}
     >
