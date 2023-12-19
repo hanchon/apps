@@ -74,8 +74,6 @@ describe("Testing Ecosystem Card", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_ON_FEATURED_DAPP, {
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 });

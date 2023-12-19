@@ -6,11 +6,15 @@ import mixpanel from "mixpanel-browser";
 import { CLICK_EVMOS_LOGO, disableMixpanel } from "tracker";
 
 import { WalletButton } from "./WalletButton";
+import { RootProviders } from "../../app/[locale]/RootProviders";
 // same as vitest.setup.ts
 const TOKEN = "testToken";
 describe("Testing Branding", () => {
+  const wrapper = ({ children }: { children: JSX.Element }) => {
+    return <RootProviders>{children}</RootProviders>;
+  };
   test("should call mixpanel event for Connect Wallet", async () => {
-    const { getByTestId } = render(<WalletButton />);
+    const { getByTestId } = render(<WalletButton />, { wrapper });
     const button = getByTestId(/open-connect-modal/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
@@ -27,8 +31,6 @@ describe("Testing Branding", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_EVMOS_LOGO, {
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 });

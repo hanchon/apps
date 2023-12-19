@@ -26,8 +26,6 @@ describe("Testing Branding", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_EVMOS_LOGO, {
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 });

@@ -1,4 +1,4 @@
-import { test, describe, expect } from "vitest";
+import { test, describe, expect, vi, beforeAll } from "vitest";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
@@ -10,24 +10,27 @@ import {
 } from "tracker";
 
 import { ExplorerBreadcrumbs } from "./explorer-breadcrumbs";
+import { fetchExplorerData } from "../../../lib/fetch-explorer-data";
 
 // same as vitest.setup.ts
+
 const TOKEN = "testToken";
 
 describe("Testing Ecosystem Card", () => {
   test("should call mixpanel event for featured dapp", async () => {
-    const { getByLabelText } = render(
-      <ExplorerBreadcrumbs
-        params={{
+    const { getByLabelText, debug } = render(
+      await ExplorerBreadcrumbs({
+        params: {
           category: "All",
           dapp: "Test",
-        }}
-      />
+        },
+      })
     );
 
+    debug();
     const button = getByLabelText(/All/i);
     expect(button).toBeDefined();
-    // debug();
+
     await userEvent.click(button);
 
     expect(mixpanel.init).toHaveBeenCalledOnce();

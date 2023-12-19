@@ -1323,7 +1323,7 @@ importers:
         version: link:../../packages/icons
       next:
         specifier: 14.0.4
-        version: 14.0.4(@babel/core@7.23.6)(react-dom@18.2.0)(react@18.2.0)
+        version: 14.0.4(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -1429,7 +1429,7 @@ importers:
     devDependencies:
       chainapsis-suggest-chain:
         specifier: github:chainapsis/keplr-chain-registry
-        version: github.com/chainapsis/keplr-chain-registry/4b9149b987c98a3d03fc50672734fbc82aa79d3e(@babel/core@7.23.6)(react-is@18.2.0)
+        version: github.com/chainapsis/keplr-chain-registry/32d990329e2768f8967b5b7d9b08d99eea785120(@babel/core@7.23.6)(react-is@18.2.0)
       react-qr-code:
         specifier: ^2.0.12
         version: 2.0.12(react@18.2.0)
@@ -1523,7 +1523,7 @@ importers:
     devDependencies:
       chainapsis-suggest-chain:
         specifier: github:chainapsis/keplr-chain-registry
-        version: github.com/chainapsis/keplr-chain-registry/4b9149b987c98a3d03fc50672734fbc82aa79d3e(@babel/core@7.23.6)(react-is@18.2.0)
+        version: github.com/chainapsis/keplr-chain-registry/32d990329e2768f8967b5b7d9b08d99eea785120(@babel/core@7.23.6)(react-is@18.2.0)
       react-qr-code:
         specifier: ^2.0.12
         version: 2.0.12(react@18.2.0)
@@ -16700,6 +16700,46 @@ packages:
       - '@babel/core'
       - babel-plugin-macros
 
+  /next@14.0.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-qbwypnM7327SadwFtxXnQdGiKpkuhaRLE2uq62/nRul9cj9KhQ5LhHmlziTNqUidZotw/Q1I9OjirBROdUJNgA==}
+    engines: {node: '>=18.17.0'}
+    hasBin: true
+    peerDependencies:
+      '@opentelemetry/api': ^1.1.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      sass: ^1.3.0
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+      sass:
+        optional: true
+    dependencies:
+      '@next/env': 14.0.4
+      '@swc/helpers': 0.5.2
+      busboy: 1.6.0
+      caniuse-lite: 1.0.30001570
+      graceful-fs: 4.2.11
+      postcss: 8.4.31
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      styled-jsx: 5.1.1(react@18.2.0)
+      watchpack: 2.4.0
+    optionalDependencies:
+      '@next/swc-darwin-arm64': 14.0.4
+      '@next/swc-darwin-x64': 14.0.4
+      '@next/swc-linux-arm64-gnu': 14.0.4
+      '@next/swc-linux-arm64-musl': 14.0.4
+      '@next/swc-linux-x64-gnu': 14.0.4
+      '@next/swc-linux-x64-musl': 14.0.4
+      '@next/swc-win32-arm64-msvc': 14.0.4
+      '@next/swc-win32-ia32-msvc': 14.0.4
+      '@next/swc-win32-x64-msvc': 14.0.4
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
+    dev: false
+
   /nibble@0.0.2:
     resolution: {integrity: sha512-AfrgfkDCDXIEQep7Fjf4MIc3b5FwObeFb7YN3pJ6tuCfA9QzCu8qFq7AcR7amUz4pxfnUnW1wq1Quy3xZCqwaQ==}
     dev: false
@@ -19530,6 +19570,23 @@ packages:
       client-only: 0.0.1
       react: 18.2.0
 
+  /styled-jsx@5.1.1(react@18.2.0):
+    resolution: {integrity: sha512-pW7uC1l4mBZ8ugbiZrcIsiIvVx1UmTfw7UkC3Um2tmfUq9Bhk8IiyEIPl6F8agHgjzku6j0xQEZbfA5uSgSaCw==}
+    engines: {node: '>= 12.0.0'}
+    peerDependencies:
+      '@babel/core': '*'
+      babel-plugin-macros: '*'
+      react: '>= 16.8.0 || 17.x.x || ^18.0.0-0'
+    peerDependenciesMeta:
+      '@babel/core':
+        optional: true
+      babel-plugin-macros:
+        optional: true
+    dependencies:
+      client-only: 0.0.1
+      react: 18.2.0
+    dev: false
+
   /styled-system@5.1.5:
     resolution: {integrity: sha512-7VoD0o2R3RKzOzPK0jYrVnS8iJdfkKsQJNiLRDjikOpQVqQHns/DXWaPZOH4tIKkhAT7I6wIsy9FWTWh2X3q+A==}
     dependencies:
@@ -21491,9 +21548,9 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
 
-  github.com/chainapsis/keplr-chain-registry/4b9149b987c98a3d03fc50672734fbc82aa79d3e(@babel/core@7.23.6)(react-is@18.2.0):
-    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/4b9149b987c98a3d03fc50672734fbc82aa79d3e}
-    id: github.com/chainapsis/keplr-chain-registry/4b9149b987c98a3d03fc50672734fbc82aa79d3e
+  github.com/chainapsis/keplr-chain-registry/32d990329e2768f8967b5b7d9b08d99eea785120(@babel/core@7.23.6)(react-is@18.2.0):
+    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/32d990329e2768f8967b5b7d9b08d99eea785120}
+    id: github.com/chainapsis/keplr-chain-registry/32d990329e2768f8967b5b7d9b08d99eea785120
     name: chainapsis-suggest-chain
     version: 0.0.1
     dependencies:

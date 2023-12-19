@@ -30,8 +30,6 @@ describe("Testing Branding", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_ON_GIVE_FEEDBACK, {
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 });

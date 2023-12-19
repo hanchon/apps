@@ -45,10 +45,7 @@ describe("Testing LaunchPad", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith("AppLauncher", {
-      "dApp Name": "Governance",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 
   test("should call AppLauncher event with property Staking when Staking button is clicked", async () => {
@@ -74,10 +71,7 @@ describe("Testing LaunchPad", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith("AppLauncher", {
-      "dApp Name": "Staking",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 
   test("should call AppLauncher event with property Portfolio when Portfolio button is clicked", async () => {
@@ -103,10 +97,7 @@ describe("Testing LaunchPad", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith("AppLauncher", {
-      "dApp Name": "Portfolio",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 
   test("should call AppLauncher event with property Home when Home button is clicked", async () => {
@@ -132,9 +123,6 @@ describe("Testing LaunchPad", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith("AppLauncher", {
-      "dApp Name": "dAppStore",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 });

@@ -27,10 +27,7 @@ describe("Testing Footer", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
-      "Footer Social Type": "Build with evmos",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 
   test("should call mixpanel event for Github - Footer", async () => {
@@ -77,10 +74,7 @@ describe("Testing Footer", () => {
     expect(buildButton).toBeDefined();
     await userEvent.click(buildButton);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
-      "Footer Social Type": "X",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 
   test("should call mixpanel event for Discord - Footer", async () => {
@@ -102,10 +96,7 @@ describe("Testing Footer", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
-      "Footer Social Type": "Discord",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 
   test("should call mixpanel event for Telegram - Footer", async () => {
@@ -127,10 +118,7 @@ describe("Testing Footer", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
-      "Footer Social Type": "Telegram",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 
   test("should call mixpanel event for Medium - Footer", async () => {
@@ -152,10 +140,7 @@ describe("Testing Footer", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
-      "Footer Social Type": "Medium",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 
   test("should call mixpanel event for Commonwealth - Footer", async () => {
@@ -177,10 +162,7 @@ describe("Testing Footer", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
-      "Footer Social Type": "Commonwealth",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 
   test("should call mixpanel event for Terms of Service - Footer", async () => {
@@ -202,10 +184,7 @@ describe("Testing Footer", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
-      "Footer Social Type": "Terms of service",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 
   test("should call mixpanel event for Privacy Policy - Footer", async () => {
@@ -227,10 +206,7 @@ describe("Testing Footer", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
-      "Footer Social Type": "Privacy Statement",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 
   test("should call mixpanel event for Cookies Settings - Footer", async () => {
@@ -252,9 +228,6 @@ describe("Testing Footer", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
-      "Footer Social Type": "Cookie Statement",
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 });

@@ -35,12 +35,7 @@ describe("Testing Hero Section Frameline", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(
-      CLICK_ON_APPLY_TO_BE_PART_OF_THE_ECOSYSTEM,
-      {
-        token: TOKEN,
-      }
-    );
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 
   test("should call mixpanel event for build on evmos", async () => {
@@ -61,8 +56,6 @@ describe("Testing Hero Section Frameline", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_LEARN_BUTTON, {
-      token: TOKEN,
-    });
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 });
