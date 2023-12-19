@@ -1,16 +1,15 @@
-import { z } from "zod";
 import { dappSchema } from "./schemas/entities/dappSchema";
 import { inspect } from "util";
 import { ECOSYSTEM_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 import { Log } from "helpers";
 import { notion } from "helpers/src/notion-client";
+import { cache } from "react";
+import { handleDappImages } from "./schemas/dapp-images-handler/handleDappImages";
 
-export const fetchDapps = async () => {
+export const fetchDapps = cache(async () => {
   const dapps = await notion.databases.query({
     database_id: ECOSYSTEM_PAGE_NOTION_ID,
   });
-
-  const dappsMap = new Map<string, z.output<typeof dappSchema>>();
 
   const parsedDapps = await Promise.all(
     dapps.results.map(async (value) => {
@@ -23,17 +22,19 @@ export const fetchDapps = async () => {
       }
       return result;
     })
-  );
+  )
+    .then((results) =>
+      results.flatMap((result) => {
+        if (!result.success || result.data.listed === false) {
+          return [];
+        }
+        return [result.data];
+      })
+    )
+    .then(handleDappImages);
+  const dappsMap = new Map<string, (typeof parsedDapps)[number]>();
 
-  for (const result of parsedDapps) {
-    if (!result.success) {
-      continue;
-    }
-    if (result.data.listed === false) {
-      continue;
-    }
-
-    const parsed = result.data;
+  for (const parsed of parsedDapps) {
     parsed.localized = Object.fromEntries(
       parsed.subItem.map((notionId) => {
         const subItem = dappsMap.get(notionId);
@@ -53,4 +54,4 @@ export const fetchDapps = async () => {
     dappsMap.set(parsed.notionId, parsed);
   }
   return dappsMap;
-};
+});

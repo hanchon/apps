@@ -1,4 +1,4 @@
-import mixpanel, { Dict } from "mixpanel-browser";
+import mixpanel, { type Dict } from "mixpanel-browser";
 import * as events from "./events";
 export type TrackerEvents = (typeof events)[keyof typeof events];
 import { DISABLE_TRACKER_LOCALSTORAGE } from "./constants";

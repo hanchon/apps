@@ -7,8 +7,10 @@ import { ComponentProps } from "react";
 
 import { SetupAccountModalTrigger } from "stateful-components/src/modals/SetupAccountModal/SetupAccountModal";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
-import { Frameline, TrackerEvent } from "@evmosapps/ui-helpers";
+
 import { CLICK_ON_COPILOT_BANNER } from "tracker";
+import { Frameline } from "@evmosapps/ui-helpers/src/container/FrameLine";
+import { TrackerEvent } from "@evmosapps/ui-helpers/src/TrackerEvent";
 export const CopilotCard = () => {
   const { address, isConnected } = useAccount();
   const { t } = useTranslation("dappStore");

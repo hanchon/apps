@@ -21,54 +21,12 @@ import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
 import { DApp } from "../../../lib/fetch-explorer-data";
 import { cn } from "helpers";
-import dynamic from "next/dynamic";
 import { EcosystemCard } from "../../landing/partials/ecosystem-card";
 import { translation } from "@evmosapps/i18n/server";
 import { EcosystemCardGrid } from "../../landing/partials/ecosystem-card-grid";
 import { DescriptionLink } from "./description-link";
 import { CLICK_SEE_MORE_BUTTON, CLICK_SOCIAL_BUTTON } from "tracker";
-
-const WIDGETS: {
-  [key: string]: React.ComponentType<{}>;
-} = {
-  layerswap: dynamic(
-    () => import("@evmosapps/instant-dapps/src/dapps/Layerswap"),
-    {
-      loading: () => <p>Loading...</p>,
-    }
-  ),
-  squid: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Squid"), {
-    loading: () => <p>Loading...</p>,
-  }),
-  "cypher-wallet": dynamic(
-    () => import("@evmosapps/instant-dapps/src/dapps/CypherD"),
-    {
-      loading: () => <p>Loading...</p>,
-    }
-  ),
-  c14: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/C14"), {
-    loading: () => <p>Loading...</p>,
-  }),
-  transak: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Transak"), {
-    loading: () => <p>Loading...</p>,
-  }),
-  wormhole: dynamic(
-    () => import("@evmosapps/instant-dapps/src/dapps/Wormhole")
-  ),
-  forge: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Forge")),
-  stride: dynamic(
-    () => import("@evmosapps/instant-dapps/src/dapps/Stride/Stride"),
-    {
-      ssr: false,
-    }
-  ),
-  osmosis: dynamic(
-    () => import("@evmosapps/instant-dapps/src/dapps/Osmosis/Osmosis"),
-    {
-      ssr: false,
-    }
-  ),
-};
+import { WIDGETS } from "./widgets-index";
 
 export const DescriptiondApp = async ({
   dapp,
