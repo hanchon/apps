@@ -1,16 +1,12 @@
-import { test, describe, expect, vi, beforeAll } from "vitest";
-import { getByText, render } from "@testing-library/react";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+import { test, describe, expect, vi } from "vitest";
+import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
-
-import {
-  CLICK_ON_BREADCRUMB,
-  CLICK_ON_PARTICIPATE_IN_GOVERNANCE,
-  disableMixpanel,
-} from "tracker";
-
+import { CLICK_ON_BREADCRUMB, disableMixpanel } from "tracker";
 import { ExplorerBreadcrumbs } from "./explorer-breadcrumbs";
-
 import { PropsWithChildren } from "react";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
@@ -20,7 +16,6 @@ vi.mock("@tanstack/react-query-next-experimental", () => ({
 vi.mock("react", async (importOriginal: () => Promise<{}>) => {
   return {
     ...(await importOriginal()),
-
     cache: (fn: unknown) => fn,
   };
 });
@@ -45,9 +40,29 @@ vi.mock("../../../lib/fetch-explorer-data", () => ({
   },
 }));
 
-describe("Testing Ecosystem Card", () => {
-  test("should call mixpanel event for featured dapp", async () => {
-    const { getByText, debug } = render(
+describe("Testing Explorer Breadcrumbs", () => {
+  test("should call mixpanel event for breadcrumbs clicks", async () => {
+    const { getByText } = render(
+      await ExplorerBreadcrumbs({
+        params: {
+          category: MOCK_CATEGORIES[2]!.slug,
+          dapp: MOCK_DAPPS[1]!.slug,
+        },
+      })
+    );
+    const button = getByText(MOCK_CATEGORIES[2]!.name);
+    expect(button).toBeDefined();
+    await userEvent.click(button);
+    expect(mixpanel.init).toHaveBeenCalledOnce();
+    expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_BREADCRUMB, {
+      Breadcrumb: MOCK_CATEGORIES[2]!.name,
+      token: TOKEN,
+    });
+  });
+
+  test("should not call mixpanel event for breadcrumbs clicks", async () => {
+    disableMixpanel();
+    const { getByText } = render(
       await ExplorerBreadcrumbs({
         params: {
           category: MOCK_CATEGORIES[2]!.slug,
@@ -56,17 +71,10 @@ describe("Testing Ecosystem Card", () => {
       })
     );
 
-    debug();
     const button = getByText(MOCK_CATEGORIES[2]!.name);
     expect(button).toBeDefined();
-
     await userEvent.click(button);
-
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_BREADCRUMB, {
-      Breadcrumb: MOCK_CATEGORIES[2]!.name,
-      token: TOKEN,
-    });
-    // debug();
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 });

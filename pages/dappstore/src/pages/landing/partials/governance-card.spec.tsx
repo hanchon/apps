@@ -1,19 +1,21 @@
-import { test, describe, expect, vi } from "vitest";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+import { test, describe, expect } from "vitest";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 
 import { CLICK_ON_PARTICIPATE_IN_GOVERNANCE, disableMixpanel } from "tracker";
 import { GovernanceCard } from "./governance-card";
-import React, { ReactElement } from "react";
 
 // same as vitest.setup.ts
 const TOKEN = "testToken";
 
-describe("Testing Ecosystem Card", () => {
-  test("should call mixpanel event for featured dapp", async () => {
-    const { getByLabelText } = render(<GovernanceCard />);
-    const button = getByLabelText(/governance card/i);
+describe("Testing Governance Card", () => {
+  test("should call mixpanel event for click on participate in governance", async () => {
+    const { findByLabelText } = render(<GovernanceCard />);
+    const button = await findByLabelText(/governance card/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -25,10 +27,10 @@ describe("Testing Ecosystem Card", () => {
     );
   });
 
-  test("should not call mixpanel event for featured dapp", async () => {
+  test("should not call mixpanel event for click on participate in governance", async () => {
     disableMixpanel();
-    const { getByLabelText } = render(<GovernanceCard />);
-    const button = getByLabelText(/governance card/i);
+    const { findByLabelText } = render(<GovernanceCard />);
+    const button = await findByLabelText(/governance card/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

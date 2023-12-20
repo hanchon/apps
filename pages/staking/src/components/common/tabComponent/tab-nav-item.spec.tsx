@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { test, describe, expect, vi } from "vitest";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";

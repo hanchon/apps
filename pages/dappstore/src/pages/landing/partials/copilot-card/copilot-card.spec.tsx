@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { test, describe, expect, vi } from "vitest";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -22,11 +25,14 @@ vi.mock("react", async (importOriginal: () => Promise<{}>) => {
 });
 
 describe("Testing Ecosystem Card", () => {
+  const wrapper = ({ children }: { children: JSX.Element }) => {
+    return <RootProviders>{children}</RootProviders>;
+  };
   test("should call mixpanel event for featured dapp", async () => {
-    const wrapper = ({ children }: { children: JSX.Element }) => {
-      return <RootProviders>{children}</RootProviders>;
-    };
-    const { getByLabelText, debug } = render(<CopilotCard />, { wrapper });
+    const { findByText, debug } = render(<CopilotCard />, { wrapper });
+    const button = await findByText("Let's go");
+
+    expect(button).toBeDefined();
     debug();
   });
 });

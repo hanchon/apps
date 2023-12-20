@@ -32,7 +32,6 @@ export const HeroSectionExplore = async ({
         <ButtonWithLink
           href="/dapps"
           className="flex self-center bg-[#A4A189CC] font-brand px-11"
-          aria-label="view all dapps"
         >
           {t("ecosystem.button.text")}
           {t("ecosystem.button.text2")}
