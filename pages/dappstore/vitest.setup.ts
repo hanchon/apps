@@ -4,7 +4,6 @@ import { cleanup } from "@testing-library/react";
 import { afterEach, beforeEach, vi } from "vitest";
 import mixpanel from "mixpanel-browser";
 import { enableMixpanel } from "tracker";
-import { useTranslation } from "@evmosapps/i18n/client";
 
 setConfig(config);
 
@@ -14,8 +13,6 @@ const initializeMixpanelAndEnable = () => {
   enableMixpanel();
 };
 beforeEach(() => {
-  useTranslation.mockReturnValue({ t: (key) => key });
-
   vi.spyOn(mixpanel, "init");
   vi.spyOn(mixpanel, "track");
   initializeMixpanelAndEnable();
