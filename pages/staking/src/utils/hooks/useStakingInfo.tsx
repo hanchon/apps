@@ -18,8 +18,8 @@ export const useStakingInfo = () => {
   const value = useSelector((state: StoreType) => state.wallet.value);
 
   const stakingInfo = useQuery<StakingInfoResponse, Error>({
-    queryKey: ["stakingInfo", value.evmosAddressCosmosFormat],
-    queryFn: () => getStakingInfo(value.evmosAddressCosmosFormat),
+    queryKey: ["stakingInfo", value?.evmosAddressCosmosFormat],
+    queryFn: () => getStakingInfo(value?.evmosAddressCosmosFormat),
     refetchInterval: 15_000,
   });
 
