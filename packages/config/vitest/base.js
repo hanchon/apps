@@ -7,7 +7,6 @@ const config = defineConfig({
 
   test: {
     environment: "jsdom",
-
     exclude: [
       "**/.netlify/**",
       "**/node_modules/**",

@@ -24,9 +24,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@testing-library/react": "^14.0.0",
-    "mixpanel-browser": "2.47.0",
-    "vitest": "^0.34.6"
+    "mixpanel-browser": "2.47.0"
   },
   "browserslist": [
     "last 3 chrome version",

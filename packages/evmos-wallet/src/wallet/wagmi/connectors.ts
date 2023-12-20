@@ -6,10 +6,15 @@ import { KeplrConnector } from "./keplrConnector";
 import { getEvmosChainInfo } from "./chains";
 
 const evmos = getEvmosChainInfo();
+
 export const walletConnectConnector = new WalletConnectConnector({
   chains: [evmos],
   options: {
-    showQrModal: true,
+    /**
+     * Workaround for a bug in wallet connect libraries when bundled by vite
+     * https://github.com/WalletConnect/walletconnect-monorepo/issues/3852
+     */
+    showQrModal: process.env.NODE_ENV !== "test",
     projectId: WALLET_CONNECT_PROJECT_ID,
   },
 });

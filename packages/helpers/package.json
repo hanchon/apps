@@ -41,7 +41,6 @@
     "fs": "0.0.1-security",
     "lodash-es": "^4.17.21",
     "querystring": "^0.2.1",
-    "tailwind-merge": "^1.14.0",
-    "vitest": "^0.34.6"
+    "tailwind-merge": "^1.14.0"
   }
 }
