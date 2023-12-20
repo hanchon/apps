@@ -7,13 +7,10 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { StoreType } from "@evmosapps/evmos-wallet";
 import { ERC20BalanceResponse } from "./types";
-
 import { Modal, Switch } from "@evmosapps/ui-helpers";
-
 import { cn, getTotalAssets } from "helpers";
 import HeadAssets from "./components/HeadAssets";
 import Guide from "./Guide";
-
 import { BigNumber } from "@ethersproject/bignumber";
 import { CLICK_HIDE_ZERO_BALANCE, sendEvent } from "tracker";
 import {
@@ -22,7 +19,6 @@ import {
 } from "../../utils/table/normalizeData";
 import { useStakedEvmos } from "../../utils/hooks/useStakedEvmos";
 import { getAssetsForAddress } from "../../utils/fetch";
-
 import ContentTable from "./ContentTable";
 import TopBar from "./topBar/TopBar";
 
