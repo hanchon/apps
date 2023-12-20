@@ -3,6 +3,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
+import { sortApps } from "../../lib/sort/sort-dapps";
 import { EcosystemCard } from "../landing/partials/ecosystem-card";
 import { EcosystemCardGrid } from "../landing/partials/ecosystem-card-grid";
 import { ExplorerBreadcrumbs } from "./partials/explorer-breadcrumbs";
@@ -26,16 +27,7 @@ export const DappExplorerPage = async ({
       })
     : dApps;
 
-  const sortedApps = filteredApps.sort((a, b) => {
-    const alphabeticalOrder = a.name.localeCompare(b.name);
-
-    // If both apps have the same instant-dapp property, return alphabetical order
-    if (a.instantDapp === b.instantDapp) {
-      return alphabeticalOrder;
-    }
-    // Otherwise, instant-dapp apps come first
-    return a.instantDapp ? -1 : 1;
-  });
+  const sortedApps = sortApps(filteredApps);
   const instantDappCategory = {
     categoryDapps: sortedApps
       .filter(({ instantDapp }) => instantDapp)

@@ -5,6 +5,7 @@ import { notFound, redirect } from "next/navigation";
 import { fetchExplorerData } from "../../../lib/fetch-explorer-data";
 import { DescriptiondApp } from "../partials/description-section";
 import { ExplorerBreadcrumbs } from "../partials/explorer-breadcrumbs";
+import { sortApps } from "../../../lib/sort/sort-dapps";
 
 export const DappDetailsPage = async ({
   params,
@@ -24,16 +25,6 @@ export const DappDetailsPage = async ({
       (dApp) =>
         dApp.categoryName === dapp?.categoryName && dApp.slug !== dapp?.slug
     )
-    .sort((a, b) => {
-      const alphabeticalOrder = a.name.localeCompare(b.name);
-
-      // If both apps have the same instant-dapp property, return alphabetical order
-      if (a.instantDapp === b.instantDapp) {
-        return alphabeticalOrder;
-      }
-      // Otherwise, instant-dapp apps come first
-      return a.instantDapp ? -1 : 1;
-    })
     .slice(0, 4);
 
   if (!dapp) {
@@ -48,7 +39,7 @@ export const DappDetailsPage = async ({
       <ExplorerBreadcrumbs params={params} />
       <DescriptiondApp
         dapp={dapp}
-        relatedApps={relatedApps}
+        relatedApps={sortApps(relatedApps)}
         totalApps={dApps.length}
       />
     </>
