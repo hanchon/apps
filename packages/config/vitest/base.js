@@ -6,6 +6,9 @@ const config = defineConfig({
   plugins: [react()],
 
   test: {
+    alias: {
+      "server-only": "next",
+    },
     environment: "jsdom",
     exclude: [
       "**/.netlify/**",

@@ -1,5 +1,5 @@
 import { test, describe, expect, vi, beforeAll } from "vitest";
-import { render } from "@testing-library/react";
+import { getByText, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 
@@ -10,33 +10,62 @@ import {
 } from "tracker";
 
 import { ExplorerBreadcrumbs } from "./explorer-breadcrumbs";
-import { fetchExplorerData } from "../../../lib/fetch-explorer-data";
 
-// same as vitest.setup.ts
+import { PropsWithChildren } from "react";
+
+vi.mock("@tanstack/react-query-next-experimental", () => ({
+  ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
+}));
+
+vi.mock("react", async (importOriginal: () => Promise<{}>) => {
+  return {
+    ...(await importOriginal()),
+
+    cache: (fn: unknown) => fn,
+  };
+});
+
+const MOCK_CATEGORIES = [
+  "DeFi",
+  "NFTs",
+  "Games",
+  "DAOs",
+  "Infrastructure",
+  "Social",
+].map((name) => ({ name, slug: name.toLowerCase() }));
 
 const TOKEN = "testToken";
+const MOCK_DAPPS = ["Forge", "Stride", "Wormhole"].map((name) => ({
+  name,
+  slug: name.toLowerCase(),
+}));
+vi.mock("../../../lib/fetch-explorer-data", () => ({
+  fetchExplorerData: () => {
+    return { categories: MOCK_CATEGORIES, dApps: MOCK_DAPPS };
+  },
+}));
 
 describe("Testing Ecosystem Card", () => {
   test("should call mixpanel event for featured dapp", async () => {
-    const { getByLabelText, debug } = render(
+    const { getByText, debug } = render(
       await ExplorerBreadcrumbs({
         params: {
-          category: "All",
-          dapp: "Test",
+          category: MOCK_CATEGORIES[2]!.slug,
+          dapp: MOCK_DAPPS[1]!.slug,
         },
       })
     );
 
     debug();
-    const button = getByLabelText(/All/i);
+    const button = getByText(MOCK_CATEGORIES[2]!.name);
     expect(button).toBeDefined();
 
     await userEvent.click(button);
 
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_BREADCRUMB, {
-      //   Breadcrumb: "",
-      //   token: TOKEN,
+      Breadcrumb: MOCK_CATEGORIES[2]!.name,
+      token: TOKEN,
     });
     // debug();
   });
