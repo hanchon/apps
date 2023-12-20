@@ -46,7 +46,7 @@ export const SubRowContent = ({
     setModalContent(
       <ConvertSTR
         item={item}
-        address={wallet.evmosAddressCosmosFormat}
+        address={wallet?.evmosAddressCosmosFormat}
         setIsOpen={setIsOpen}
         isIBCBalance={isIBCBalance}
         feeBalance={feeBalance}
@@ -59,13 +59,13 @@ export const SubRowContent = ({
       Token: item.tokenName,
     });
 
-    if (wallet.evmosAddressCosmosFormat !== "") {
+    if (wallet?.evmosAddressCosmosFormat !== "") {
       setIsOpen(true);
       setModalContent(
         <Convert
           item={item}
           feeBalance={feeBalance}
-          address={wallet.evmosAddressCosmosFormat}
+          address={wallet?.evmosAddressCosmosFormat}
           setIsOpen={setIsOpen}
         />
       );
@@ -84,7 +84,7 @@ export const SubRowContent = ({
 
     return (
       <div className="flex w-full justify-end pr-8">
-        <Button disabled={!wallet.active} onClick={openModalConvertEvmos}>
+        <Button disabled={!wallet?.active} onClick={openModalConvertEvmos}>
           <div className="flex w-16 flex-row items-center justify-center">
             <span className="px-2">{label}</span>
           </div>

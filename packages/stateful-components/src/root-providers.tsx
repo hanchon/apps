@@ -6,11 +6,11 @@ import { PropsWithChildren, useState } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { MavaWidget } from "@evmosapps/ui-helpers";
 import { Snackbars, getAllSnackbars } from "@evmosapps/evmos-wallet";
-import { GiveFeedback } from "../../components/GiveFeedback";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
+import { GiveFeedback } from "./give-feedback";
 
 function SnackbarsInternal() {
   const valueRedux = useSelector((state: StoreType) => getAllSnackbars(state));

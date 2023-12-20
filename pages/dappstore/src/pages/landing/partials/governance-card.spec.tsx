@@ -20,7 +20,6 @@ describe("Testing Ecosystem Card", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(
       CLICK_ON_PARTICIPATE_IN_GOVERNANCE,
       {
-        "dApp Name": "Transak",
         token: TOKEN,
       }
     );
@@ -33,11 +32,6 @@ describe("Testing Ecosystem Card", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).not.toHaveBeenCalledWith(
-      CLICK_ON_PARTICIPATE_IN_GOVERNANCE,
-      {
-        token: TOKEN,
-      }
-    );
+    expect(mixpanel.track).not.toHaveBeenCalled();
   });
 });

@@ -4,7 +4,7 @@ import { type PropsWithChildren } from "react";
 import { languages } from "@evmosapps/i18n";
 import { cn } from "helpers";
 import { nb, evmos, poppins, inter } from "@evmosapps/ui-helpers/src/fonts";
-import { RootProviders } from "./RootProviders";
+import { RootProviders } from "stateful-components/src/root-providers";
 import { GoogleAnalytics } from "../../components/GoogleAnalytics";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";

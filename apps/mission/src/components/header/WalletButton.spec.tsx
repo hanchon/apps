@@ -2,11 +2,9 @@ import { test, describe, expect, vi } from "vitest";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
-
-import { CLICK_EVMOS_LOGO, disableMixpanel } from "tracker";
-
+import { RootProviders } from "stateful-components/src/root-providers";
+import { CLICK_CONNECT_WALLET_BUTTON, disableMixpanel } from "tracker";
 import { WalletButton } from "./WalletButton";
-import { RootProviders } from "../../app/[locale]/RootProviders";
 import { PropsWithChildren } from "react";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
@@ -30,19 +28,21 @@ describe("Testing Branding", () => {
   };
   test("should call mixpanel event for Connect Wallet", async () => {
     const { getByTestId } = render(<WalletButton />, { wrapper });
+
     const button = getByTestId(/open-connect-modal/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
-    expect(mixpanel.track).toHaveBeenCalledWith(CLICK_EVMOS_LOGO, {
+    expect(mixpanel.track).toHaveBeenCalledWith(CLICK_CONNECT_WALLET_BUTTON, {
       token: TOKEN,
     });
   });
 
   test("should not call mixpanel event for Connect Wallet", async () => {
     disableMixpanel();
-    const { getByLabelText } = render(<WalletButton />, { wrapper });
-    const button = getByLabelText(/Home/i);
+    const { getByTestId } = render(<WalletButton />, { wrapper });
+
+    const button = getByTestId(/open-connect-modal/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
