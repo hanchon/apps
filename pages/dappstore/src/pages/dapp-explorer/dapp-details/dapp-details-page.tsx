@@ -5,6 +5,7 @@ import { notFound, redirect } from "next/navigation";
 import { fetchExplorerData } from "../../../lib/fetch-explorer-data";
 import { DescriptiondApp } from "../partials/description-section";
 import { ExplorerBreadcrumbs } from "../partials/explorer-breadcrumbs";
+import { sortApps } from "../../../lib/sort/sort-dapps";
 
 export const DappDetailsPage = async ({
   params,
@@ -38,7 +39,7 @@ export const DappDetailsPage = async ({
       <ExplorerBreadcrumbs params={params} />
       <DescriptiondApp
         dapp={dapp}
-        relatedApps={relatedApps}
+        relatedApps={sortApps(relatedApps)}
         totalApps={dApps.length}
       />
     </>
