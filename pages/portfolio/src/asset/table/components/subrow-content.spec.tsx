@@ -6,9 +6,10 @@ import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { CLICK_BUTTON_CONVERT, disableMixpanel } from "tracker";
-
 import { SubRowContent } from "./SubRowContent";
 import { BigNumber } from "@ethersproject/bignumber";
+import { RootProviders } from "stateful-components/src/root-providers";
+import { PropsWithChildren } from "react";
 // same as vitest.setup.ts
 const TOKEN = "testToken";
 const MOCKED_TOKEN = {
@@ -29,18 +30,13 @@ const MOCKED_TOKEN = {
     "https://raw.githubusercontent.com/cosmos/chain-registry/master/gravitybridge/images/gweth.png",
   prefix: "gravity",
 };
+vi.mock("@tanstack/react-query-next-experimental", () => ({
+  ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
+}));
 describe("Testing Tab Nav Item ", () => {
-  vi.mock("react-redux", () => {
-    return {
-      useDispatch: vi.fn(),
-      useSelector: vi.fn(),
-    };
-  });
-  vi.mock("@evmosapps/evmos-wallet", () => {
-    return {
-      EVMOS_SYMBOL: "EVMOS",
-    };
-  });
+  const wrapper = ({ children }: { children: JSX.Element }) => {
+    return <RootProviders>{children}</RootProviders>;
+  };
   test("should call mixpanel event for convert button", async () => {
     const { getByText } = render(
       <SubRowContent
@@ -49,7 +45,8 @@ describe("Testing Tab Nav Item ", () => {
         setModalContent={vi.fn()}
         feeBalance={BigNumber.from(1)}
         isIBCBalance={true}
-      />
+      />,
+      { wrapper }
     );
     const button = getByText("Convert");
     expect(button).toBeDefined();
@@ -70,7 +67,8 @@ describe("Testing Tab Nav Item ", () => {
         setModalContent={vi.fn()}
         feeBalance={BigNumber.from(1)}
         isIBCBalance={true}
-      />
+      />,
+      { wrapper }
     );
 
     const button = getByText("Convert");

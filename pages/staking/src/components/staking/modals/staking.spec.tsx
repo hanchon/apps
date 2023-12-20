@@ -12,7 +12,8 @@ import {
   disableMixpanel,
 } from "tracker";
 import Staking from "./Staking";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RootProviders } from "stateful-components/src/root-providers";
+import { PropsWithChildren } from "react";
 
 // same as vitest.setup.ts
 const TOKEN = "testToken";
@@ -27,27 +28,15 @@ const validator = {
   validatorAddress: "evmosvaloper1dgpv4leszpeg2jusx2xgyfnhdzghf3rf0qq22v",
 };
 
+vi.mock("@tanstack/react-query-next-experimental", () => ({
+  ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
+}));
+
 describe("Testing Tab Dropdowns ", () => {
-  vi.mock("@evmosapps/evmos-wallet", () => {
-    return {
-      EVMOS_DECIMALS: "18",
-    };
-  });
-
-  vi.mock("react-redux", () => {
-    return {
-      useDispatch: vi.fn(),
-      useSelector: vi.fn(),
-    };
-  });
-
-  const queryClient = new QueryClient();
-
   const wrapper = ({ children }: { children: JSX.Element }) => {
-    return (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    );
+    return <RootProviders>{children}</RootProviders>;
   };
+
   test("should call mixpanel event for delegate button - Staking", async () => {
     const { getByRole } = render(
       <Staking item={validator} setIsOpen={vi.fn()} />,
