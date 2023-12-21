@@ -22,52 +22,95 @@ vi.mock("../../../utils/hooks/useStakingInfo", () => ({
     return {
       undelegations: [
         {
-          delegator_address: "test",
+          // eslint-disable-next-line no-secrets/no-secrets
+          delegator_address: "evmos14uepnqnvkuyyvwe65wmncejq5g2f0tjft3wr65",
+          validator_address:
+            // eslint-disable-next-line no-secrets/no-secrets
+            "evmosvaloper1g57n4k08sk5z6ramzsgzrapgpsjsyh4t5tldw5",
           entries: [
             {
-              balance: "123",
-              completion_time: "",
-              creation_height: "",
-              initial_balance: "",
+              creation_height: "17742507",
+              completion_time: "2023-12-29T14:13:21.353523017Z",
+              initial_balance: "99500031659400",
+              balance: "99500031659400",
             },
           ],
           validator: {
+            operator_address:
+              // eslint-disable-next-line no-secrets/no-secrets
+              "evmosvaloper1g57n4k08sk5z6ramzsgzrapgpsjsyh4t5tldw5",
+            consensus_pubkey: { type_url: "", value: "" },
+            jailed: false,
+            status: "BOND_STATUS_BONDED",
+            tokens: "42596004901001064019893",
+            delegator_shares: "43025149485324771526956.187671335620019796",
+            description: {
+              moniker: "01node",
+              identity: "7BDD4C2E94392626",
+              website: "https://01node.com",
+              security_contact: "",
+              details:
+                "01node Professional Staking Services for  Evmos, Nomic, Juno, Regen, Osmosis, Cosmos, Terra, Solana, Near, Skale, Gnosis, Sentinel, Persistence, TheGraph",
+            },
+            unbonding_height: "14841878",
+            unbonding_time: "2023-08-09T20:49:34.623089892Z",
             commission: {
               commission_rates: {
-                max_change_rate: "test",
-                max_rate: "test",
-                rate: "test",
+                rate: "0.050000000000000000",
+                max_rate: "0.100000000000000000",
+                max_change_rate: "0.010000000000000000",
               },
+              update_time: "2022-03-04T12:09:47.344991395Z",
             },
-            update_time: "test",
-            consensus_key: {
-              type_url: "test",
-              value: "test",
-            },
-            delegator_shares: "test",
-            description: {
-              details: "test",
-              identity: "test",
-              moniker: "123",
-              security_contract: "test",
-              website: "test",
-            },
-            jailed: false,
-            min_self_delegation: "test",
-            operator_address: "test",
-            rank: 1,
-            status: "test",
-            tokens: "test",
-            unbonding_height: "test",
-            unbonding_time: "test",
+            min_self_delegation: "1000000",
+            rank: 146,
           },
-          validator_address: "test",
         },
       ],
+      rewards: {
+        rewards: [
+          {
+            validator_address:
+              // eslint-disable-next-line no-secrets/no-secrets
+              "evmosvaloper1zwr06uz8vrwkcnd05e5yddamvghn93a4hsyewa",
+            reward: [
+              { denom: "aevmos", amount: "6013254571185.269380000000000000" },
+            ],
+          },
+          {
+            validator_address:
+              // eslint-disable-next-line no-secrets/no-secrets
+              "evmosvaloper1g57n4k08sk5z6ramzsgzrapgpsjsyh4t5tldw5",
+            reward: [{ denom: "aevmos", amount: "0.002951063665499585" }],
+          },
+          {
+            validator_address:
+              // eslint-disable-next-line no-secrets/no-secrets
+              "evmosvaloper1dgpv4leszpeg2jusx2xgyfnhdzghf3rf0qq22v",
+            reward: [
+              {
+                denom: "aevmos",
+                amount: "10177325788350250.076855064594440018",
+              },
+            ],
+          },
+          {
+            validator_address:
+              // eslint-disable-next-line no-secrets/no-secrets
+              "evmosvaloper1mx9nqk5agvlsvt2yc8259nwztmxq7zjqep5khu",
+            reward: [
+              { denom: "aevmos", amount: "7070039330030.917000000000000000" },
+            ],
+          },
+        ],
+        total: [
+          { denom: "aevmos", amount: "10190409082251466.266186128259939603" },
+        ],
+      },
     };
   },
 }));
-describe("Testing Branding", () => {
+describe("Testing Undelegations", () => {
   const ResizeObserver = vi.fn(() => ({
     observe: vi.fn(),
     unobserve: vi.fn(),

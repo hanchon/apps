@@ -121,7 +121,9 @@ export const SetUpContent = ({
                 placeholder={t("section.request.messageInputPlaceholder")}
               />
             </div>
-            {isDisconnected && <ConnectToWalletWarning modalType="Request" />}
+            {isDisconnected && (
+              <ConnectToWalletWarning modalType="Request Modal" />
+            )}
             {!isDisconnected && (
               <PrimaryButton
                 disabled={disabled}

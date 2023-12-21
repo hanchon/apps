@@ -159,10 +159,7 @@ export const Content = ({
   }, [balances, selectedBalance]);
 
   const action =
-    (validation.hasSufficientBalance && validation.hasSufficientBalance) ||
-    isPreparing
-      ? "PAY"
-      : "SWAP";
+    validation.hasSufficientBalance || isPreparing ? "PAY" : "SWAP";
 
   return (
     <section className="space-y-8 text-pearl">
@@ -204,7 +201,7 @@ export const Content = ({
               amountInUsd={amountInUsd}
             />
 
-            {isDisconnected && <ConnectToWalletWarning modalType="Pay" />}
+            {isDisconnected && <ConnectToWalletWarning modalType="Pay Modal" />}
 
             {!isDisconnected && (
               <>

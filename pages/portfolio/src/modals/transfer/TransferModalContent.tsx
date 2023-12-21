@@ -373,11 +373,15 @@ export const TransferModalContent = ({
                     onClick={async () => {
                       if (getGlobalKeplrProvider() === null) {
                         connectKeplr();
+                        sendEvent(PROMPTED_TO, {
+                          "Prompt To": "Install Keplr",
+                          Modal: "Send Modal",
+                        });
                         return;
                       }
                       const [err] = await E.try(() => connectWith("keplr"));
                       sendEvent(PROMPTED_TO, {
-                        "Prompt To": "Connect To Keplr",
+                        "Prompt To": "Connect to Keplr",
                         Modal: "Send Modal",
                       });
                       // TODO: handle error when user rejects the connection
@@ -421,7 +425,7 @@ export const TransferModalContent = ({
              * Call to action Buttons
              */}
             {action === "CONNECT" && (
-              <ConnectToWalletWarning modalType="Send" />
+              <ConnectToWalletWarning modalType="Send Modal" />
             )}
             {showFeeErrorMessage && (
               <ErrorMessage className="justify-center pl-0">

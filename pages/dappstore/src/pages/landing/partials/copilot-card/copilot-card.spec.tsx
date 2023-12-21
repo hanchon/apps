@@ -3,14 +3,14 @@
 
 import { test, describe, expect, vi } from "vitest";
 import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import mixpanel from "mixpanel-browser";
-import { CLICK_ON_PARTICIPATE_IN_GOVERNANCE, disableMixpanel } from "tracker";
+// import userEvent from "@testing-library/user-event";
+// import mixpanel from "mixpanel-browser";
+// import { CLICK_ON_PARTICIPATE_IN_GOVERNANCE, disableMixpanel } from "tracker";
 import { CopilotCard } from "./copilot-card";
 import { PropsWithChildren } from "react";
 import { RootProviders } from "stateful-components/src/root-providers";
 // same as vitest.setup.ts
-const TOKEN = "testToken";
+// const TOKEN = "testToken";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,

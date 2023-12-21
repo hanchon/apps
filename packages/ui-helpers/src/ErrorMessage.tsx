@@ -26,7 +26,7 @@ export function ErrorMessage({
       )}
     >
       {displayIcon && <ErrorIcon />}
-      <p {...rest} />
+      <div {...rest} />
     </div>
   );
 }

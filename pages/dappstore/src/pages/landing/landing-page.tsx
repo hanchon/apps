@@ -14,10 +14,7 @@ import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 
 import { CopilotCard } from "./partials/copilot-card/copilot-card";
 import { translation } from "@evmosapps/i18n/server";
-import { CLICK_ON_VIEW_ALL_DAPPS } from "tracker";
-import { Frameline } from "@evmosapps/ui-helpers/src/container/FrameLine";
-import { TrackerEvent } from "@evmosapps/ui-helpers/src/TrackerEvent";
-import { ButtonWithLink } from "@evmosapps/ui-helpers/src/links/Button";
+import { ButtonSeedApps } from "./partials/button-see-dapps";
 
 export const LandingPage = async () => {
   const { dApps } = await fetchExplorerData();
@@ -42,17 +39,7 @@ export const LandingPage = async () => {
 
       <HeroSection totalApps={dApps.length} />
       <EcosystemSection />
-      <Frameline>
-        <TrackerEvent
-          event={CLICK_ON_VIEW_ALL_DAPPS}
-          properties={{ Location: "Home Page" }}
-        >
-          <ButtonWithLink className="w-full " href="/dapps">
-            {t("ecosystem.button.text")} {dApps.length}{" "}
-            {t("ecosystem.button.text2")}
-          </ButtonWithLink>
-        </TrackerEvent>
-      </Frameline>
+      <ButtonSeedApps totalApps={dApps.length} />
     </div>
   );
 };

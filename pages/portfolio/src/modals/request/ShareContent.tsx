@@ -129,6 +129,7 @@ export const ShareContent = ({
 
             <div>
               <TextInput
+                readOnly={true}
                 data-testid="request-modal-share-url-input"
                 className="text-ellipsis whitespace-nowrap overflow-hidden"
                 onFocus={(e) => {
@@ -168,7 +169,9 @@ export const ShareContent = ({
                 amountInUsd={amountInUsd}
               />
             </div>
-            {isDisconnected && <ConnectToWalletWarning modalType="Share" />}
+            {isDisconnected && (
+              <ConnectToWalletWarning modalType="Share Modal" />
+            )}
             {!isDisconnected && (
               <PrimaryButton
                 onClick={async () => {
