@@ -36,13 +36,14 @@ export default function useStrideData() {
   useEffect(() => {
     fetch(
       "https://stride-api.polkachu.com/Stride-Labs/stride/stakeibc/host_zone/evmos_9001-2",
-    ).then(async (res) => {
-      const data = (await res.json()) as StrideHostZoneResponse;
-      const { host_zone } = data;
-      const redemption_rate = host_zone.redemption_rate;
-      setRedemptionRate(parseFloat(redemption_rate));
-    })
-    .catch(() => {});
+    )
+      .then(async (res) => {
+        const data = (await res.json()) as StrideHostZoneResponse;
+        const { host_zone } = data;
+        const redemption_rate = host_zone.redemption_rate;
+        setRedemptionRate(parseFloat(redemption_rate));
+      })
+      .catch(() => {});
   }, []);
 
   return { strideYield, redemptionRate };

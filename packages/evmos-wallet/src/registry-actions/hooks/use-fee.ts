@@ -15,7 +15,10 @@ import { getFeeToken } from "../getFeeToken";
  */
 const fakeWalletAddress = "0x0000000000000000000000000000000000000001";
 
-const ethToBech32 = <T extends Prefix>(address: HexAddress, prefix: T) => {
+export const ethToBech32 = <T extends Prefix>(
+  address: HexAddress,
+  prefix: T,
+) => {
   const words = bech32.toWords(Buffer.from(address.slice(2), "hex"));
   return bech32.encode(prefix, words) as CosmosAddress<T>;
 };
@@ -48,7 +51,7 @@ export const useFee = ({
             ...token,
             amount: 1n,
           },
-        })
+        }),
       );
 
       if (err) {

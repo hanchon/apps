@@ -73,7 +73,7 @@ export const SlippagePopover = ({
                         {
                           "border-2 border-wosmongton-200":
                             currentSlippage === slippage,
-                        }
+                        },
                       )}
                       onClick={(e) => {
                         e.preventDefault();
@@ -94,7 +94,7 @@ export const SlippagePopover = ({
                       ? manualSlippageError
                         ? "bg-red"
                         : "bg-osmoverse-900"
-                      : "bg-osmoverse-900"
+                      : "bg-osmoverse-900",
                   )}
                   onClick={(e) => {
                     e.preventDefault();

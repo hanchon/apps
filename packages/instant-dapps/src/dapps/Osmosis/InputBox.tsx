@@ -56,7 +56,7 @@ export const InputBox: FunctionComponent<Props> = ({
             style !== "no-border" && style === "enabled" && !inputFocused,
           "border-missionError": style === "error",
         },
-        className
+        className,
       )}
     >
       <label

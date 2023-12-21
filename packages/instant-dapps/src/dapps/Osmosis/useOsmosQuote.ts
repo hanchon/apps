@@ -12,18 +12,13 @@ export function useOsmosisQoute() {
     null,
   );
 
-  function getQoute(
-    token0: SwapOption,
-    token1: SwapOption,
-    amount: string,
-  ) {
-
-    if(amount === '0') {
-        setLatestQoute({
-            price_impact: 0,
-            return_amount: 0,
-        });
-        return
+  function getQoute(token0: SwapOption, token1: SwapOption, amount: string) {
+    if (amount === "0") {
+      setLatestQoute({
+        price_impact: 0,
+        return_amount: 0,
+      });
+      return;
     }
     setLoading(true);
     fetch(`

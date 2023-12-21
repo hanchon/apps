@@ -28,7 +28,7 @@ export default function Osmosis() {
   const [loagingSwap, setLoadingSwap] = useState(false);
   const [swapHash, setSwapHash] = useState<string | null>();
   const { loading, getQoute, latestQoute } = useOsmosisQoute();
-  const { swap } = useOsmosisPrecompile()
+  const { swap } = useOsmosisPrecompile();
 
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [inputToken, setInputToken] = useState(osmosis);
@@ -41,26 +41,30 @@ export default function Osmosis() {
   const number_min_received = parseFloat(
     formatUnits(
       BigInt(latestQoute?.return_amount?.toString() ?? ""),
-      outputTokenData.decimals
-    )
+      outputTokenData.decimals,
+    ),
   );
 
   const inputNumberBalance = parseFloat(
     convertAndFormat(
       BigNumber.from(inputTokenData.balance),
-      inputTokenData.decimals
-    )
+      inputTokenData.decimals,
+    ),
   );
 
-  const minReceivedAfterSlippage = number_min_received * (1 - currentSlippage/100);
+  const minReceivedAfterSlippage =
+    number_min_received * (1 - currentSlippage / 100);
 
   const [swapAmount, setSwapAmount] = useState<string | number>("");
 
   const debouncedFetchData = debounce(getQoute, 500); // Adjust the delay as needed
   const [isHoveringSwitchButton, setHoveringSwitchButton] = useState(false);
+  const [showBalanceLink, setShowBalanceLink] = useState(false);
 
-  const enoughBalance = inputNumberBalance >= parseFloat(swapAmount.toString() === "" ? "0" : swapAmount.toString())
-  
+  const enoughBalance =
+    inputNumberBalance >=
+    parseFloat(swapAmount.toString() === "" ? "0" : swapAmount.toString());
+
   if (isDisconnected) {
     return (
       <ConnectionRequired
@@ -72,24 +76,35 @@ export default function Osmosis() {
 
   async function swapTokens() {
     try {
-      setLoadingSwap(true)
-      setSwapHash(null)
+      setLoadingSwap(true);
+      setSwapHash(null);
+      // TODO: this is for testnet testing. Rmove for mainnet
+      const input =
+        inputToken.symbol === "OSMO"
+          ? "ibc/803421C62F3B697809CE5755E53E68CCDE7E02DA4ACD5C7C79A3648B8B8AF8DC"
+          : "atevmos";
+      const output =
+        inputToken.symbol === "OSMO"
+          ? "ibc/EA833DEBB8D9517E461DFF3BBE7018384B04D5FDB92CF83EBD95DBAC0522D498"
+          : "uosmo";
       const res = await swap({
-        input: inputTokenData.erc20Address,
-        output: outputTokenData.erc20Address,
-        amount: parseUnits(
-          swapAmount.toString(),
-          inputTokenData.decimals
-        ),
-        slippage_tolerance: currentSlippage,
-        window_seconds: 60 * 60 * 24,
-        receiver:"",
+        // input: inputTokenData.erc20Address,
+        input: input,
+        output: output,
+        amount: parseUnits(swapAmount.toString(), inputTokenData.decimals),
+        // amount: swapAmount.toString(),
+        // slippage_tolerance: currentSlippage,
+        // window_seconds: 60 * 60 * 24,
+        // receiver: "",
       });
-      setSwapHash(res.hash)
-      setLoadingSwap(false)
-    } catch (e){
-      setSwapHash(null)
-      setLoadingSwap(false)
+      setSwapHash(res.hash);
+      setLoadingSwap(false);
+      setTimeout(() => {
+        setShowBalanceLink(true);
+      }, 30000);
+    } catch (e) {
+      setSwapHash(null);
+      setLoadingSwap(false);
     }
   }
 
@@ -118,8 +133,8 @@ export default function Osmosis() {
                     outputTokenData,
                     parseUnits(
                       (inputNumberBalance / 2).toString(),
-                      inputTokenData.decimals
-                    ).toString()
+                      inputTokenData.decimals,
+                    ).toString(),
                   );
                 }}
                 className="flex place-content-center items-center  text-center 
@@ -138,8 +153,8 @@ export default function Osmosis() {
                     outputTokenData,
                     parseUnits(
                       inputNumberBalance.toString(),
-                      inputTokenData.decimals
-                    ).toString()
+                      inputTokenData.decimals,
+                    ).toString(),
                   );
                 }}
                 className="flex place-content-center items-center text-center transition-colors 
@@ -179,15 +194,15 @@ export default function Osmosis() {
               <input
                 value={swapAmount}
                 onChange={(e) => {
+                  setShowBalanceLink(false);
+                  setLoadingSwap(false);
+                  setSwapHash(null);
                   const _amount = parseFloat(e.target.value).toString();
                   setSwapAmount(Number(_amount));
                   debouncedFetchData(
                     inputTokenData,
                     outputTokenData,
-                    parseUnits(
-                      _amount,
-                      inputTokenData.decimals
-                    ).toString()
+                    parseUnits(_amount, inputTokenData.decimals).toString(),
                   );
                 }}
                 placeholder="0"
@@ -195,7 +210,8 @@ export default function Osmosis() {
                 className="w-full bg-transparent text-2xl font-semibold text-right text-white-full placeholder:text-white-disabled focus:outline-none"
               />
               <span className="opacity-50 text-base font-semibold md:caption whitespace-nowrap text-osmoverse-300 transition-opacity">
-                ≈ ${formatNumber(swapAmount as number * inputTokenData.price, 5)}
+                ≈ $
+                {formatNumber((swapAmount as number) * inputTokenData.price, 5)}
               </span>
             </div>
           </div>
@@ -204,6 +220,9 @@ export default function Osmosis() {
           onClick={() => {
             setOutputToken(inputTokenData);
             setInputToken(outputTokenData);
+            setLoadingSwap(false);
+            setSwapHash(null);
+            setShowBalanceLink(false);
             setSwapAmount(0);
             debouncedFetchData(inputTokenData, outputTokenData, "0");
           }}
@@ -213,7 +232,7 @@ export default function Osmosis() {
               "h-10 w-10 md:h-8 md:w-8": !isHoveringSwitchButton,
               "h-11 w-11 -translate-x-[2px] md:h-9 md:w-9":
                 isHoveringSwitchButton,
-            }
+            },
           )}
           onMouseEnter={() => {
             setHoveringSwitchButton(true);
@@ -234,7 +253,7 @@ export default function Osmosis() {
                   "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-bounce",
                   {
                     "rotate-180 opacity-0": isHoveringSwitchButton,
-                  }
+                  },
                 )}
               >
                 <DownArrowIconOsmosisIcon />
@@ -245,7 +264,7 @@ export default function Osmosis() {
                   {
                     "rotate-180 opacity-100": isHoveringSwitchButton,
                     "opacity-0": !isHoveringSwitchButton,
-                  }
+                  },
                 )}
               >
                 <SwapIcon aria-label="switch" />
@@ -288,27 +307,39 @@ export default function Osmosis() {
             </div>
           </div>
         </div>
-        { swapHash && 
+        {swapHash && (
           <div
-              style={{ height: "50px" }}
-              className={`bg-osmoverse-900 text-sm items-center flex-col justify-center relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 flex py-[10px]`}
-              >
-                <span className="">
-                  Transaction Submitted
-                </span>
-                <Link
-                            rel="noopener noreferrer"
-                            target="_blank"
+            style={{ height: "50px" }}
+            className={`bg-osmoverse-900 text-sm items-center flex-col justify-center relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 flex py-[10px]`}
+          >
+            <span className="">Transaction Submitted</span>
+            <div className="flex gap-3">
+              <Link
+                rel="noopener noreferrer"
+                target="_blank"
                 className="text-wosmongton-300 text-xs hover:text-osmoverse-200 transition-colors"
                 href={`https://escan.live/tx/${swapHash}`}
-                >
+              >
                 View on Escan
+              </Link>
+              {showBalanceLink && (
+                <Link
+                  className="text-wosmongton-300 text-xs hover:text-osmoverse-200 transition-colors"
+                  href={`/portfolio`}
+                >
+                  View Balance in Portfolio
                 </Link>
+              )}
+            </div>
           </div>
-        }
+        )}
         <div
           style={{ height: detailsOpen ? "251px" : "44px" }}
-          className={`${loading ? "font-inter animate-pulse bg-osmoverse-700 [&>*]:invisible" : "bg-osmoverse-900"} relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 (py-6 if opened) py-[10px]`}
+          className={`${
+            loading
+              ? "font-inter animate-pulse bg-osmoverse-700 [&>*]:invisible"
+              : "bg-osmoverse-900"
+          } relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 (py-6 if opened) py-[10px]`}
         >
           <button
             disabled={loading || number_min_received === 0}
@@ -318,18 +349,21 @@ export default function Osmosis() {
             className="flex text-sm w-full place-content-between items-center transition-opacity cursor-pointer"
           >
             {(swapAmount === 0 || number_min_received === 0) && (
-                              <span className="flex gap-1">
-                              1<span>{inputTokenData.symbol}</span>≈{" "}
-                              {formatNumber(inputToken.price / (outputToken.price), 5)}{" "}
-                              {outputTokenData.symbol}
-                            </span>
+              <span className="flex gap-1">
+                1<span>{inputTokenData.symbol}</span>≈{" "}
+                {formatNumber(inputToken.price / outputToken.price, 5)}{" "}
+                {outputTokenData.symbol}
+              </span>
             )}
 
             {swapAmount !== 0 && number_min_received !== 0 && !loading && (
               <>
                 <span className="flex gap-1">
                   1<span>{inputTokenData.symbol}</span>≈{" "}
-                  {formatNumber(number_min_received / (swapAmount as number), 5)}{" "}
+                  {formatNumber(
+                    number_min_received / (swapAmount as number),
+                    5,
+                  )}{" "}
                   {outputTokenData.symbol}
                 </span>
                 <div className="flex items-center gap-2 transition-opacity">
@@ -338,7 +372,7 @@ export default function Osmosis() {
                   <ChevronDownIconOsmosis
                     className={cn(
                       "text-osmoverse-400 transition-all",
-                      detailsOpen ? "rotate-180" : "rotate-0"
+                      detailsOpen ? "rotate-180" : "rotate-0",
                       // isEstimateDetailRelevant ? "opacity-100" : "opacity-0"
                     )}
                   />
@@ -360,7 +394,7 @@ export default function Osmosis() {
                 ≈ $
                 {formatNumber(
                   (number_min_received * outputTokenData.price * 0.2) / 100,
-                  4
+                  4,
                 )}
               </span>
             </div>
@@ -384,7 +418,7 @@ export default function Osmosis() {
                   ≈ $
                   {formatNumber(
                     minReceivedAfterSlippage * outputTokenData.price,
-                    5
+                    5,
                   )}
                 </span>
               </div>
@@ -392,10 +426,24 @@ export default function Osmosis() {
           </div>
         </div>
         <button
-        onClick={swapTokens}
-        disabled={loading || loagingSwap || number_min_received === 0 || enoughBalance === false}
-        className={`${loading || loagingSwap || number_min_received === 0 ? "opacity-40" : ""} font-semibold flex w-full place-content-center items-center py-2 text-center transition-colors disabled:cursor-default border-2 border-wosmongton-700 bg-wosmongton-700 hover:border-wosmongton-400 hover:bg-wosmongton-400 rounded-xl disabled:border-2 disabled:border-osmoverse-500 disabled:bg-osmoverse-500 disabled:text-osmoverse-100 h-[56px] px-6 subtitle1 tracking-wide`}>
-          {loading ? "Loading..." : !enoughBalance ? "Insufficient balance" : "Swap"} 
+          onClick={swapTokens}
+          disabled={
+            loading ||
+            loagingSwap ||
+            number_min_received === 0 ||
+            enoughBalance === false
+          }
+          className={`${
+            loading || loagingSwap || number_min_received === 0
+              ? "opacity-40"
+              : ""
+          } font-semibold flex w-full place-content-center items-center py-2 text-center transition-colors disabled:cursor-default border-2 border-wosmongton-700 bg-wosmongton-700 hover:border-wosmongton-400 hover:bg-wosmongton-400 rounded-xl disabled:border-2 disabled:border-osmoverse-500 disabled:bg-osmoverse-500 disabled:text-osmoverse-100 h-[56px] px-6 subtitle1 tracking-wide`}
+        >
+          {loading
+            ? "Loading..."
+            : !enoughBalance
+              ? "Insufficient balance"
+              : "Swap"}
         </button>
       </div>
     </div>

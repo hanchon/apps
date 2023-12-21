@@ -28,7 +28,7 @@ export function useOsmosisData() {
     queryFn: () =>
       getAssetsForAddress(
         value.evmosAddressCosmosFormat,
-        value.evmosAddressEthFormat
+        value.evmosAddressEthFormat,
       ),
   });
 
