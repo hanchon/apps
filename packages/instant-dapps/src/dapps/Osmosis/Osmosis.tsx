@@ -99,9 +99,7 @@ export default function Osmosis() {
       });
       setSwapHash(res.hash);
       setLoadingSwap(false);
-      setTimeout(() => {
-        setShowBalanceLink(true);
-      }, 30000);
+      setShowBalanceLink(true);
     } catch (e) {
       setSwapHash(null);
       setLoadingSwap(false);

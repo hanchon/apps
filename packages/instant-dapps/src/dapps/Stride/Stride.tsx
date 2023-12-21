@@ -54,9 +54,7 @@ const StrideWidget = () => {
       });
       setTransactionHash(res.hash);
       setLoadingLiquidStake(false);
-      setTimeout(() => {
-        setShowBalanceLink(true);
-      }, 30000);
+      setShowBalanceLink(true);
     } catch (e) {
       setLoadingLiquidStake(false);
     }
