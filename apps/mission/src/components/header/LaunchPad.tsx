@@ -119,7 +119,6 @@ export const LaunchPadItem = ({
 }) => {
   return (
     <Link
-      aria-label={children?.toString()}
       rel="noopener noreferrer"
       className="text-pearl text-sm  flex flex-col space-y-2 h-[100px]"
       {...rest}

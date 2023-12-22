@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { SELECT_TO_NETWORK_SEND_FLOW, disableMixpanel } from "tracker";
@@ -21,7 +21,7 @@ describe("Testing Account Selector", () => {
   };
 
   test("should call mixpanel event when changing network (TO)", async () => {
-    const { findByTestId, getByTestId } = render(
+    render(
       <AccountSelector
         onChange={vi.fn()}
         networkOptions={["stride", "evmos"]}
@@ -31,12 +31,12 @@ describe("Testing Account Selector", () => {
         wrapper,
       }
     );
-    const button = await findByTestId(
+    const button = await screen.findByTestId(
       /account-selector-network-selector-button/i
     );
     expect(button).toBeDefined();
     await userEvent.click(button);
-    const buttonEvmos = getByTestId(
+    const buttonEvmos = screen.getByTestId(
       /account-selector-network-selector-option-EVMOS/i
     );
     expect(buttonEvmos).toBeDefined();
@@ -53,7 +53,7 @@ describe("Testing Account Selector", () => {
 
   test("should not call mixpanel event when changing network (TO)", async () => {
     disableMixpanel();
-    const { findByTestId, getByTestId } = render(
+    render(
       <AccountSelector
         onChange={vi.fn()}
         networkOptions={["stride", "evmos"]}
@@ -63,12 +63,12 @@ describe("Testing Account Selector", () => {
         wrapper,
       }
     );
-    const button = await findByTestId(
+    const button = await screen.findByTestId(
       /account-selector-network-selector-button/i
     );
     expect(button).toBeDefined();
     await userEvent.click(button);
-    const buttonEvmos = getByTestId(
+    const buttonEvmos = screen.getByTestId(
       /account-selector-network-selector-option-EVMOS/i
     );
     expect(buttonEvmos).toBeDefined();

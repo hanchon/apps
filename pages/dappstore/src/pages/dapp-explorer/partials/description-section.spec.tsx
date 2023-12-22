@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 import { DescriptiondApp } from "./description-section";
 
@@ -166,14 +166,14 @@ const RELATED_APPS = [
 ];
 describe.skip("Testing Description section", () => {
   test("should call mixpanel event for social buttons", async () => {
-    const { findByRole } = render(
+    render(
       await DescriptiondApp({
         dapp: DAPP,
         relatedApps: RELATED_APPS,
         totalApps: 3,
       })
     );
-    const button = await findByRole("button", { name: "See More" });
+    const button = await screen.findByRole("button", { name: "See More" });
     expect(button).toBeDefined();
   });
 });

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import {
@@ -36,12 +36,9 @@ describe("Testing Tab Dropdowns ", () => {
   };
 
   test("should call mixpanel event for delegate button - Staking", async () => {
-    const { getByRole } = render(
-      <Staking item={validator} setIsOpen={vi.fn()} />,
-      { wrapper }
-    );
+    render(<Staking item={validator} setIsOpen={vi.fn()} />, { wrapper });
 
-    const button = getByRole("button", { name: "Delegate" });
+    const button = screen.getByRole("button", { name: "Delegate" });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -52,12 +49,9 @@ describe("Testing Tab Dropdowns ", () => {
 
   test("should not call mixpanel event for delegate button - Staking", async () => {
     disableMixpanel();
-    const { getByRole } = render(
-      <Staking item={validator} setIsOpen={vi.fn()} />,
-      { wrapper }
-    );
+    render(<Staking item={validator} setIsOpen={vi.fn()} />, { wrapper });
 
-    const button = getByRole("button", { name: "Delegate" });
+    const button = screen.getByRole("button", { name: "Delegate" });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -65,12 +59,9 @@ describe("Testing Tab Dropdowns ", () => {
   });
 
   test("should call mixpanel event for undelegate button - Staking", async () => {
-    const { getByRole } = render(
-      <Staking item={validator} setIsOpen={vi.fn()} />,
-      { wrapper }
-    );
+    render(<Staking item={validator} setIsOpen={vi.fn()} />, { wrapper });
 
-    const button = getByRole("button", { name: "UNDELEGATE" });
+    const button = screen.getByRole("button", { name: "UNDELEGATE" });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -84,12 +75,9 @@ describe("Testing Tab Dropdowns ", () => {
 
   test("should not call mixpanel event for Undelegate button - Staking", async () => {
     disableMixpanel();
-    const { getByRole } = render(
-      <Staking item={validator} setIsOpen={vi.fn()} />,
-      { wrapper }
-    );
+    render(<Staking item={validator} setIsOpen={vi.fn()} />, { wrapper });
 
-    const button = getByRole("button", { name: "UNDELEGATE" });
+    const button = screen.getByRole("button", { name: "UNDELEGATE" });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -97,12 +85,9 @@ describe("Testing Tab Dropdowns ", () => {
   });
 
   test("should call mixpanel event for Redelegate button - Staking", async () => {
-    const { getByRole } = render(
-      <Staking item={validator} setIsOpen={vi.fn()} />,
-      { wrapper }
-    );
+    render(<Staking item={validator} setIsOpen={vi.fn()} />, { wrapper });
 
-    const button = getByRole("button", { name: "Redelegate" });
+    const button = screen.getByRole("button", { name: "Redelegate" });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -116,12 +101,9 @@ describe("Testing Tab Dropdowns ", () => {
 
   test("should not call mixpanel event for Redelegate button - Staking", async () => {
     disableMixpanel();
-    const { getByRole } = render(
-      <Staking item={validator} setIsOpen={vi.fn()} />,
-      { wrapper }
-    );
+    render(<Staking item={validator} setIsOpen={vi.fn()} />, { wrapper });
 
-    const button = getByRole("button", { name: "Redelegate" });
+    const button = screen.getByRole("button", { name: "Redelegate" });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

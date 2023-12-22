@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { CopilotCard } from "./copilot-card";
 import { PropsWithChildren } from "react";
 import { RootProviders } from "stateful-components/src/root-providers";
@@ -26,8 +26,8 @@ describe.skip("Testing Copilot Card", () => {
     return <RootProviders>{children}</RootProviders>;
   };
   test("should call mixpanel event for clicking on let's go", async () => {
-    const { findByText } = render(<CopilotCard />, { wrapper });
-    const button = await findByText("Let's go");
+    render(<CopilotCard />, { wrapper });
+    const button = await screen.findByText("Let's go");
     expect(button).toBeDefined();
   });
 });

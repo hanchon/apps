@@ -8,6 +8,6 @@ import { SetupWithMetamaskSteps } from "./setup-with-metamask";
 
 describe.skip("Testing Setup With Metamask ", () => {
   test("should call mixpanel event for tab navItem - Staking", () => {
-    const {} = render(<SetupWithMetamaskSteps />);
+    render(<SetupWithMetamaskSteps />);
   });
 });

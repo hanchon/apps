@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 
@@ -21,8 +21,8 @@ describe.skip("Testing Staking Card", () => {
     return <RootProviders>{children}</RootProviders>;
   };
   test("should call mixpanel event for click on participate in Staking", async () => {
-    const { findByText } = render(<StakingCard />, { wrapper });
-    const button = await findByText(
+    render(<StakingCard />, { wrapper });
+    const button = await screen.findByText(
       "Earn rewards for participating in the network's security"
     );
     expect(button).toBeDefined();
@@ -38,8 +38,8 @@ describe.skip("Testing Staking Card", () => {
 
   test("should not call mixpanel event for click on participate in Staking", async () => {
     disableMixpanel();
-    const { findByRole } = render(<StakingCard />, { wrapper });
-    const button = await findByRole("button", {
+    render(<StakingCard />, { wrapper });
+    const button = await screen.findByRole("button", {
       name: /Stake & manage delegations/i,
     });
     expect(button).toBeDefined();

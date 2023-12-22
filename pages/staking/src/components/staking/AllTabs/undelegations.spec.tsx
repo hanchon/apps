@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 
@@ -127,8 +127,8 @@ describe("Testing Undelegations", () => {
 
   test("should call mixpanel event for undelegations ", async () => {
     vi.stubGlobal("ResizeObserver", ResizeObserver);
-    const { getByLabelText } = render(<Undelegations />, { wrapper });
-    const button = getByLabelText(/start undelegations/i);
+    render(<Undelegations />, { wrapper });
+    const button = screen.getByLabelText(/start undelegations/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -144,8 +144,8 @@ describe("Testing Undelegations", () => {
   test("should not call mixpanel event for undelegations ", async () => {
     disableMixpanel();
     vi.stubGlobal("ResizeObserver", ResizeObserver);
-    const { getByLabelText } = render(<Undelegations />, { wrapper });
-    const button = getByLabelText(/start undelegations/i);
+    render(<Undelegations />, { wrapper });
+    const button = screen.getByLabelText(/start undelegations/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

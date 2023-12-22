@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 
@@ -17,8 +17,8 @@ import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
 describe("Testing Hero Section Frameline", () => {
   test("should call mixpanel event for add dapp", async () => {
-    const { getByLabelText } = render(await HeroSectionFrameline());
-    const button = getByLabelText(/add dapp/i);
+    render(await HeroSectionFrameline());
+    const button = screen.getByRole("link", { name: /add your dapp/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -32,8 +32,8 @@ describe("Testing Hero Section Frameline", () => {
 
   test("should not call mixpanel event for add dapp", async () => {
     disableMixpanel();
-    const { getByLabelText } = render(await HeroSectionFrameline());
-    const button = getByLabelText(/add dapp/i);
+    render(await HeroSectionFrameline());
+    const button = screen.getByRole("link", { name: /add your dapp/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -41,8 +41,8 @@ describe("Testing Hero Section Frameline", () => {
   });
 
   test("should call mixpanel event for build on evmos", async () => {
-    const { getByLabelText } = render(await HeroSectionFrameline());
-    const button = getByLabelText(/build on evmos/i);
+    render(await HeroSectionFrameline());
+    const button = screen.getByRole("link", { name: /build on evmos/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -53,8 +53,8 @@ describe("Testing Hero Section Frameline", () => {
 
   test("should not call mixpanel event for build on evmos", async () => {
     disableMixpanel();
-    const { getByLabelText } = render(await HeroSectionFrameline());
-    const button = getByLabelText(/build on evmos/i);
+    render(await HeroSectionFrameline());
+    const button = screen.getByRole("link", { name: /build on evmos/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

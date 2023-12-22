@@ -18,7 +18,6 @@ const Search = ({ placeholder }: { placeholder: string }) => {
           value={value}
           className="w-full text-sm bg-transparent text-pearl placeholder:text-darkGray3 focus-visible:outline-none"
           placeholder={placeholder}
-          aria-label="search validators"
         />
       </TrackerEvent>
       <SearchIcon className="h-8 w-8 text-darkGray3" />

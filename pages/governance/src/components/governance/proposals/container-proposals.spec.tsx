@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, vi, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { CLICK_GOVERNANCE_PROPOSAL, disableMixpanel } from "tracker";
@@ -31,11 +31,11 @@ describe("Testing Container Proposals", () => {
     return <RootProviders>{children}</RootProviders>;
   };
   test("should call mixpanel event for clicking on proposal Card", async () => {
-    const { getByText } = render(
+    render(
       <ContainerProposals proposals={PROPOSALS} loading={false} error={""} />,
       { wrapper }
     );
-    const button = getByText(/test/i);
+    const button = screen.getByText(/test/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -49,11 +49,11 @@ describe("Testing Container Proposals", () => {
 
   test("should not call mixpanel event for clicking on proposal Card", async () => {
     disableMixpanel();
-    const { getByText } = render(
+    render(
       <ContainerProposals proposals={PROPOSALS} loading={false} error={""} />,
       { wrapper }
     );
-    const button = getByText(/test/i);
+    const button = screen.getByText(/test/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

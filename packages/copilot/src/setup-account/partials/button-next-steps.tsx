@@ -21,7 +21,7 @@ export const ButtonsNextSteps = () => {
             Location: "Inside Copilot",
           }}
         >
-          <Button href="/dapps" aria-label="interact with dapp">
+          <Button href="/dapps">
             <p className="text-sm font-bold">
               {t("nextsteps.interactWithdApp.title")}
             </p>
@@ -36,7 +36,7 @@ export const ButtonsNextSteps = () => {
             "Completed Copilot Onboarding": "Stake your Evmos",
           }}
         >
-          <Button href="/staking" aria-label="stake your evmos">
+          <Button href="/staking">
             <TitleButton text={t("nextsteps.stakeEvmos.title")} />
             <Badge variant="warning">{t("nextsteps.stakeEvmos.badge")}</Badge>
           </Button>
@@ -49,7 +49,6 @@ export const ButtonsNextSteps = () => {
         }}
       >
         <a
-          aria-label="learn more"
           className="border-gray300 w-full cursor-pointer rounded-lg border py-3 shadow transition-all duration-300 hover:shadow-md"
           href="https://academy.evmos.org/faq"
           target="_blank"

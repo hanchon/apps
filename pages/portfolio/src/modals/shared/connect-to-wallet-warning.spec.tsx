@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { PROMPTED_TO, disableMixpanel } from "tracker";
@@ -23,10 +23,8 @@ vi.mock("react", async (importOriginal: () => Promise<{}>) => {
 });
 describe("Testing Connect To Wallet Warning", () => {
   test("should call mixpanel event for connect in pay modal", async () => {
-    const { findByRole } = render(
-      <ConnectToWalletWarning modalType="Pay Modal" />
-    );
-    const button = await findByRole("button", { name: /connect/i });
+    render(<ConnectToWalletWarning modalType="Pay Modal" />);
+    const button = await screen.findByRole("button", { name: /connect/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -39,11 +37,9 @@ describe("Testing Connect To Wallet Warning", () => {
 
   test("should not call mixpanel event for connect in pay modal", async () => {
     disableMixpanel();
-    const { findByRole } = render(
-      <ConnectToWalletWarning modalType="Pay Modal" />
-    );
+    render(<ConnectToWalletWarning modalType="Pay Modal" />);
 
-    const button = await findByRole("button", { name: /connect/i });
+    const button = await screen.findByRole("button", { name: /connect/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

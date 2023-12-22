@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import {
@@ -33,11 +33,8 @@ describe("Testing Connect Modal Content", () => {
     return <RootProviders>{children}</RootProviders>;
   };
   test("should call mixpanel event for connect specific wallet + failed connection", async () => {
-    const { getByTestId } = render(
-      <ConnectModalContent setIsOpen={() => true} />,
-      { wrapper }
-    );
-    const button = getByTestId(/connect-with-metaMask/);
+    render(<ConnectModalContent setIsOpen={() => true} />, { wrapper });
+    const button = screen.getByTestId(/connect-with-metaMask/);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -58,11 +55,8 @@ describe("Testing Connect Modal Content", () => {
 
   test("should not call mixpanel event for connect specific wallet + failed connection", async () => {
     disableMixpanel();
-    const { getByTestId } = render(
-      <ConnectModalContent setIsOpen={() => true} />,
-      { wrapper }
-    );
-    const button = getByTestId(/connect-with-metaMask/);
+    render(<ConnectModalContent setIsOpen={() => true} />, { wrapper });
+    const button = screen.getByTestId(/connect-with-metaMask/);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -70,11 +64,8 @@ describe("Testing Connect Modal Content", () => {
   });
 
   test("should call mixpanel event for connect with copilot", async () => {
-    const { getByTestId } = render(
-      <ConnectModalContent setIsOpen={() => true} />,
-      { wrapper }
-    );
-    const button = getByTestId(/connect-with-evmos-copilot/);
+    render(<ConnectModalContent setIsOpen={() => true} />, { wrapper });
+    const button = screen.getByTestId(/connect-with-evmos-copilot/);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -89,11 +80,8 @@ describe("Testing Connect Modal Content", () => {
 
   test("should not call mixpanel event for connect with copilot", async () => {
     disableMixpanel();
-    const { getByTestId } = render(
-      <ConnectModalContent setIsOpen={() => true} />,
-      { wrapper }
-    );
-    const button = getByTestId(/connect-with-evmos-copilot/);
+    render(<ConnectModalContent setIsOpen={() => true} />, { wrapper });
+    const button = screen.getByTestId(/connect-with-evmos-copilot/);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

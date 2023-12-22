@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { CLICK_TABS_STAKING_OPTIONS, disableMixpanel } from "tracker";
@@ -11,7 +11,7 @@ import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
 describe("Testing Tab Nav Item ", () => {
   test("should call mixpanel event for tab navItem - Staking", async () => {
-    const { getByText } = render(
+    render(
       <TabNavItem
         id="tab2"
         title="validators"
@@ -20,10 +20,10 @@ describe("Testing Tab Nav Item ", () => {
       />
     );
 
-    const button = getByText(/Validators/i);
+    const button = screen.getByText(/Validators/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
-    const validators = getByText(/Validators/i);
+    const validators = screen.getByText(/Validators/i);
     expect(validators).toBeDefined();
     await userEvent.click(validators);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -35,7 +35,7 @@ describe("Testing Tab Nav Item ", () => {
 
   test("should not call mixpanel event for tab navItem - Staking", async () => {
     disableMixpanel();
-    const { getByText } = render(
+    render(
       <TabNavItem
         id="tab2"
         title="validators"
@@ -44,10 +44,10 @@ describe("Testing Tab Nav Item ", () => {
       />
     );
 
-    const button = getByText(/Validators/i);
+    const button = screen.getByText(/Validators/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
-    const validators = getByText(/Validators/i);
+    const validators = screen.getByText(/Validators/i);
     expect(validators).toBeDefined();
     await userEvent.click(validators);
     expect(mixpanel.init).toHaveBeenCalledOnce();

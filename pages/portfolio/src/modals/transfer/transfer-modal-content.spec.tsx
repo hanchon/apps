@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { PROMPTED_TO, disableMixpanel } from "tracker";
@@ -79,7 +79,7 @@ describe("Testing Transfer Modal Content", () => {
   };
 
   test("should call mixpanel event for top up in send modal", async () => {
-    const { findByRole } = render(
+    render(
       <TransferModalContent
         receiver={RECEIVER}
         networkPrefix="evmos"
@@ -90,7 +90,7 @@ describe("Testing Transfer Modal Content", () => {
       />,
       { wrapper }
     );
-    const button = await findByRole("button", { name: /top-up evmos/i });
+    const button = await screen.findByRole("button", { name: /top-up evmos/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -102,7 +102,7 @@ describe("Testing Transfer Modal Content", () => {
   });
 
   test("should call mixpanel event for satellite ", async () => {
-    const { findByRole } = render(
+    render(
       <TransferModalContent
         receiver={RECEIVER}
         networkPrefix="axelar"
@@ -113,7 +113,9 @@ describe("Testing Transfer Modal Content", () => {
       />,
       { wrapper }
     );
-    const button = await findByRole("button", { name: /go to satellite/i });
+    const button = await screen.findByRole("button", {
+      name: /go to satellite/i,
+    });
     expect(button).toBeDefined();
 
     await userEvent.click(button);
@@ -126,7 +128,7 @@ describe("Testing Transfer Modal Content", () => {
   });
 
   test("should call mixpanel event for connect with keplr", async () => {
-    const { findByRole } = render(
+    render(
       <TransferModalContent
         receiver={RECEIVER}
         networkPrefix="axelar"
@@ -137,7 +139,9 @@ describe("Testing Transfer Modal Content", () => {
       />,
       { wrapper }
     );
-    const button = await findByRole("button", { name: /install keplr/i });
+    const button = await screen.findByRole("button", {
+      name: /install keplr/i,
+    });
     expect(button).toBeDefined();
 
     await userEvent.click(button);
@@ -151,7 +155,7 @@ describe("Testing Transfer Modal Content", () => {
 
   test("should not call mixpanel event for top up in send modal", async () => {
     disableMixpanel();
-    const { findByRole } = render(
+    render(
       <TransferModalContent
         receiver={RECEIVER}
         networkPrefix="evmos"
@@ -162,7 +166,7 @@ describe("Testing Transfer Modal Content", () => {
       />,
       { wrapper }
     );
-    const button = await findByRole("button", { name: /top-up evmos/i });
+    const button = await screen.findByRole("button", { name: /top-up evmos/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -171,7 +175,7 @@ describe("Testing Transfer Modal Content", () => {
 
   test("should not call mixpanel event for satellite ", async () => {
     disableMixpanel();
-    const { findByRole } = render(
+    render(
       <TransferModalContent
         receiver={RECEIVER}
         networkPrefix="axelar"
@@ -182,7 +186,9 @@ describe("Testing Transfer Modal Content", () => {
       />,
       { wrapper }
     );
-    const button = await findByRole("button", { name: /go to satellite/i });
+    const button = await screen.findByRole("button", {
+      name: /go to satellite/i,
+    });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -191,7 +197,7 @@ describe("Testing Transfer Modal Content", () => {
 
   test("should not call mixpanel event for connect with keplr", async () => {
     disableMixpanel();
-    const { findByRole } = render(
+    render(
       <TransferModalContent
         receiver={RECEIVER}
         networkPrefix="axelar"
@@ -202,7 +208,9 @@ describe("Testing Transfer Modal Content", () => {
       />,
       { wrapper }
     );
-    const button = await findByRole("button", { name: /install keplr/i });
+    const button = await screen.findByRole("button", {
+      name: /install keplr/i,
+    });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { PROMPTED_TO, disableMixpanel } from "tracker";
@@ -71,7 +71,7 @@ describe("Testing Content Pay", () => {
   };
 
   test("should call mixpanel event for prompt to Forge", async () => {
-    const { findByText, getByRole } = render(
+    render(
       <Content // eslint-disable-next-line no-secrets/no-secrets
         requester="evmos14uepnqnvkuyyvwe65wmncejq5g2f0tjft3wr65"
         token="evmos:EVMOS"
@@ -84,9 +84,9 @@ describe("Testing Content Pay", () => {
       { wrapper }
     );
 
-    const text = await findByText(/Payment Request/i);
+    const text = await screen.findByText(/Payment Request/i);
     expect(text).toBeDefined();
-    const button = getByRole("button", { name: /Swap Asset/i });
+    const button = screen.getByRole("button", { name: /Swap Asset/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -99,7 +99,7 @@ describe("Testing Content Pay", () => {
 
   test("should not call mixpanel event for prompt to Forge", async () => {
     disableMixpanel();
-    const { findByText, getByRole } = render(
+    render(
       <Content
         // eslint-disable-next-line no-secrets/no-secrets
         requester="evmos14uepnqnvkuyyvwe65wmncejq5g2f0tjft3wr65"
@@ -113,9 +113,9 @@ describe("Testing Content Pay", () => {
       { wrapper }
     );
 
-    const text = await findByText(/Payment Request/i);
+    const text = await screen.findByText(/Payment Request/i);
     expect(text).toBeDefined();
-    const button = getByRole("button", { name: /Swap Asset/i });
+    const button = screen.getByRole("button", { name: /Swap Asset/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import {
@@ -27,7 +27,7 @@ describe("Testing Assets Selector", () => {
   };
 
   test("should call mixpanel event when changing token", async () => {
-    const { findByText, getByTestId } = render(
+    render(
       <AssetSelector
         value={{
           networkPrefix: "evmos",
@@ -42,12 +42,12 @@ describe("Testing Assets Selector", () => {
       }
     );
 
-    const text = await findByText(/token/i);
+    const text = await screen.findByText(/token/i);
     expect(text).toBeDefined();
-    const button = getByTestId(/asset-selector-token-selector-button/i);
+    const button = screen.getByTestId(/asset-selector-token-selector-button/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
-    const buttonEvmos = getByTestId(
+    const buttonEvmos = screen.getByTestId(
       /asset-selector-token-selector-option-EVMOS/i
     );
     expect(buttonEvmos).toBeDefined();
@@ -70,7 +70,7 @@ describe("Testing Assets Selector", () => {
 
   test("should not call mixpanel event when changing token", async () => {
     disableMixpanel();
-    const { findByText, getByTestId } = render(
+    render(
       <AssetSelector
         value={{
           networkPrefix: "evmos",
@@ -85,12 +85,12 @@ describe("Testing Assets Selector", () => {
       }
     );
 
-    const text = await findByText(/token/i);
+    const text = await screen.findByText(/token/i);
     expect(text).toBeDefined();
-    const button = getByTestId(/asset-selector-token-selector-button/i);
+    const button = screen.getByTestId(/asset-selector-token-selector-button/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
-    const buttonEvmos = getByTestId(
+    const buttonEvmos = screen.getByTestId(
       /asset-selector-token-selector-option-EVMOS/i
     );
     expect(buttonEvmos).toBeDefined();
@@ -100,7 +100,7 @@ describe("Testing Assets Selector", () => {
   });
 
   test("should call mixpanel event when changing network", async () => {
-    const { findByText, getByTestId } = render(
+    render(
       <AssetSelector
         value={{
           networkPrefix: "evmos",
@@ -114,12 +114,14 @@ describe("Testing Assets Selector", () => {
         wrapper,
       }
     );
-    const text = await findByText(/token/i);
+    const text = await screen.findByText(/token/i);
     expect(text).toBeDefined();
-    const button = getByTestId(/asset-selector-network-selector-button/i);
+    const button = screen.getByTestId(
+      /asset-selector-network-selector-button/i
+    );
     expect(button).toBeDefined();
     await userEvent.click(button);
-    const buttonEvmos = getByTestId(
+    const buttonEvmos = screen.getByTestId(
       /asset-selector-network-selector-option-EVMOS/i
     );
     expect(buttonEvmos).toBeDefined();
@@ -136,7 +138,7 @@ describe("Testing Assets Selector", () => {
 
   test("should not call mixpanel event when changing network", async () => {
     disableMixpanel();
-    const { findByText, getByTestId } = render(
+    render(
       <AssetSelector
         value={{
           networkPrefix: "evmos",
@@ -150,12 +152,14 @@ describe("Testing Assets Selector", () => {
         wrapper,
       }
     );
-    const text = await findByText(/token/i);
+    const text = await screen.findByText(/token/i);
     expect(text).toBeDefined();
-    const button = getByTestId(/asset-selector-network-selector-button/i);
+    const button = screen.getByTestId(
+      /asset-selector-network-selector-button/i
+    );
     expect(button).toBeDefined();
     await userEvent.click(button);
-    const buttonEvmos = getByTestId(
+    const buttonEvmos = screen.getByTestId(
       /asset-selector-network-selector-option-EVMOS/i
     );
     expect(buttonEvmos).toBeDefined();

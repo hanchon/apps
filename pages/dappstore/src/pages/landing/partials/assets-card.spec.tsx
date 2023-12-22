@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 
@@ -22,8 +22,8 @@ describe("Testing Staking Card", () => {
     return <RootProviders>{children}</RootProviders>;
   };
   test("should call mixpanel event for click on see porftolio", async () => {
-    const { findByRole } = render(<AssetsCard />, { wrapper });
-    const button = await findByRole("link", { name: "See Portfolio" });
+    render(<AssetsCard />, { wrapper });
+    const button = await screen.findByRole("link", { name: "See Portfolio" });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -34,8 +34,8 @@ describe("Testing Staking Card", () => {
 
   test("should not call mixpanel event for click on see porftolio", async () => {
     disableMixpanel();
-    const { findByRole } = render(<AssetsCard />, { wrapper });
-    const button = await findByRole("link", { name: "See Portfolio" });
+    render(<AssetsCard />, { wrapper });
+    const button = await screen.findByRole("link", { name: "See Portfolio" });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 
@@ -25,11 +25,8 @@ describe("Testing Banner Black", () => {
   };
 
   test("should call mixpanel event for commonwealth link", async () => {
-    const { getByText } = render(
-      <BannerBlack text={TEXT} href={COMMONWEALTH_URL} />,
-      { wrapper }
-    );
-    const button = getByText(/Test/i);
+    render(<BannerBlack text={TEXT} href={COMMONWEALTH_URL} />, { wrapper });
+    const button = screen.getByText(/Test/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -40,11 +37,8 @@ describe("Testing Banner Black", () => {
 
   test("should not call mixpanel event for fcommonwealth link", async () => {
     disableMixpanel();
-    const { getByText } = render(
-      <BannerBlack text={TEXT} href={COMMONWEALTH_URL} />,
-      { wrapper }
-    );
-    const button = getByText(/Test/i);
+    render(<BannerBlack text={TEXT} href={COMMONWEALTH_URL} />, { wrapper });
+    const button = screen.getByText(/Test/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

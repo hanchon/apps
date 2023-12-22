@@ -13,10 +13,7 @@ const Guide = () => {
       <div>
         Don&apos;t see your token?{" "}
         <TrackerEvent event={CLICK_CTA_LINKS_REGISTER_TOKEN}>
-          <PrimaryLink
-            aria-label="register your token"
-            href={REGISTER_TOKEN_URL}
-          >
+          <PrimaryLink href={REGISTER_TOKEN_URL}>
             Register your token here.
           </PrimaryLink>
         </TrackerEvent>

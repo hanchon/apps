@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import {
@@ -45,7 +45,7 @@ describe("Testing Set Up Content", () => {
 
   test("should call mixpanel event when clicking on copy payment request link", async () => {
     userEvent.setup();
-    const { findByLabelText } = render(
+    render(
       <ShareContent
         setState={vi.fn()}
         token="evmos:EVMOS"
@@ -57,7 +57,7 @@ describe("Testing Set Up Content", () => {
       }
     );
 
-    const button = await findByLabelText(/Copy to clipboard/i);
+    const button = await screen.findByLabelText(/Copy to clipboard/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -74,7 +74,7 @@ describe("Testing Set Up Content", () => {
   test("should not call mixpanel event when clicking on copy payment request link", async () => {
     userEvent.setup();
     disableMixpanel();
-    const { findByLabelText } = render(
+    render(
       <ShareContent
         setState={vi.fn()}
         token="evmos:EVMOS"
@@ -86,7 +86,7 @@ describe("Testing Set Up Content", () => {
       }
     );
 
-    const button = await findByLabelText(/Copy to clipboard/i);
+    const button = await screen.findByLabelText(/Copy to clipboard/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -95,7 +95,7 @@ describe("Testing Set Up Content", () => {
 
   test("should call mixpanel event when clicking on share message", async () => {
     userEvent.setup();
-    const { findByRole } = render(
+    render(
       <ShareContent
         setState={vi.fn()}
         token="evmos:EVMOS"
@@ -107,7 +107,9 @@ describe("Testing Set Up Content", () => {
       }
     );
 
-    const button = await findByRole("button", { name: /share message/i });
+    const button = await screen.findByRole("button", {
+      name: /share message/i,
+    });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -124,7 +126,7 @@ describe("Testing Set Up Content", () => {
   test("should not call mixpanel event when clicking on share message", async () => {
     disableMixpanel();
     userEvent.setup();
-    const { findByRole } = render(
+    render(
       <ShareContent
         setState={vi.fn()}
         token="evmos:EVMOS"
@@ -136,7 +138,9 @@ describe("Testing Set Up Content", () => {
       }
     );
 
-    const button = await findByRole("button", { name: /share message/i });
+    const button = await screen.findByRole("button", {
+      name: /share message/i,
+    });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

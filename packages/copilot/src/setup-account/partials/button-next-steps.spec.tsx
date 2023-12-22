@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import {
@@ -15,8 +15,10 @@ import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 describe("Testing Top up success message", () => {
   test("should call mixpanel event for clicking on interact with dapp", async () => {
-    const { findByLabelText } = render(<ButtonsNextSteps />);
-    const button = await findByLabelText("interact with dapp");
+    render(<ButtonsNextSteps />);
+    const button = await screen.findByRole("link", {
+      name: /interact with a dapp/i,
+    });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -28,8 +30,10 @@ describe("Testing Top up success message", () => {
 
   test("should not call mixpanel event for clicking on interact with dapp", async () => {
     disableMixpanel();
-    const { findByLabelText } = render(<ButtonsNextSteps />);
-    const button = await findByLabelText("interact with dapp");
+    const { findByRole } = render(<ButtonsNextSteps />);
+    const button = await findByRole("link", {
+      name: /interact with a dapp/i,
+    });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -37,8 +41,8 @@ describe("Testing Top up success message", () => {
   });
 
   test("should call mixpanel event for clicking on learn more", async () => {
-    const { findByLabelText } = render(<ButtonsNextSteps />);
-    const button = await findByLabelText("learn more");
+    render(<ButtonsNextSteps />);
+    const button = await screen.findByRole("link", { name: /learn more/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -50,8 +54,8 @@ describe("Testing Top up success message", () => {
 
   test("should not call mixpanel event for clicking on learn more", async () => {
     disableMixpanel();
-    const { findByLabelText } = render(<ButtonsNextSteps />);
-    const button = await findByLabelText("learn more");
+    render(<ButtonsNextSteps />);
+    const button = await screen.findByRole("link", { name: /learn more/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -59,8 +63,10 @@ describe("Testing Top up success message", () => {
   });
 
   test("should call mixpanel event for clicking on Stake your evmos", async () => {
-    const { findByLabelText } = render(<ButtonsNextSteps />);
-    const button = await findByLabelText("stake your evmos");
+    render(<ButtonsNextSteps />);
+    const button = await screen.findByRole("link", {
+      name: /stake your evmos/i,
+    });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -71,8 +77,10 @@ describe("Testing Top up success message", () => {
   });
   test("should not call mixpanel event for clicking on Stake your evmos", async () => {
     disableMixpanel();
-    const { findByLabelText } = render(<ButtonsNextSteps />);
-    const button = await findByLabelText("stake your evmos");
+    render(<ButtonsNextSteps />);
+    const button = await screen.findByRole("link", {
+      name: /stake your evmos/i,
+    });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

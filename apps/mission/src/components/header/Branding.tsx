@@ -23,7 +23,6 @@ export const Branding = () => {
         href={"/"}
         rel="noreferrer"
         className="flex justify-center items-center h-7 md:h-8 lg:h-7"
-        aria-label="home"
       >
         <Image
           src="/evmos_logo.png"

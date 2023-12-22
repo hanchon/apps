@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { CLICK_BUTTON_CONVERT, disableMixpanel } from "tracker";
@@ -38,7 +38,7 @@ describe("Testing Tab Nav Item ", () => {
     return <RootProviders>{children}</RootProviders>;
   };
   test("should call mixpanel event for convert button", async () => {
-    const { getByText } = render(
+    render(
       <SubRowContent
         item={MOCKED_TOKEN}
         setIsOpen={vi.fn()}
@@ -48,7 +48,7 @@ describe("Testing Tab Nav Item ", () => {
       />,
       { wrapper }
     );
-    const button = getByText("Convert");
+    const button = screen.getByText("Convert");
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -59,7 +59,7 @@ describe("Testing Tab Nav Item ", () => {
   });
   test("should not call mixpanel event for convert button", async () => {
     disableMixpanel();
-    const { getByText } = render(
+    render(
       <SubRowContent
         item={MOCKED_TOKEN}
         setIsOpen={vi.fn()}
@@ -70,7 +70,7 @@ describe("Testing Tab Nav Item ", () => {
       { wrapper }
     );
 
-    const button = getByText("Convert");
+    const button = screen.getByText("Convert");
     expect(button).toBeDefined();
     await userEvent.click(button);
 

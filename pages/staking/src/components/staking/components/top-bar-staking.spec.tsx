@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { BigNumber } from "@ethersproject/bignumber";
@@ -60,8 +60,8 @@ describe("Testing Claim Rewards", () => {
   };
 
   test("should call mixpanel event for clicking on claim rewards + unsuccessful claim", async () => {
-    const { getByRole } = render(<TopBarStaking />, { wrapper });
-    const button = getByRole("button", { name: /Claim rewards/i });
+    render(<TopBarStaking />, { wrapper });
+    const button = screen.getByRole("button", { name: /Claim rewards/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -80,8 +80,8 @@ describe("Testing Claim Rewards", () => {
 
   test("should not call mixpanel event for clicking on claim rewards + unsuccessful claim", async () => {
     disableMixpanel();
-    const { getByRole } = render(<TopBarStaking />, { wrapper });
-    const button = getByRole("button", { name: /Claim rewards/i });
+    render(<TopBarStaking />, { wrapper });
+    const button = screen.getByRole("button", { name: /Claim rewards/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

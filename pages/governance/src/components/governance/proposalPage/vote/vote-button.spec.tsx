@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, vi, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { CLICK_VOTE_BUTTON, disableMixpanel } from "tracker";
@@ -35,10 +35,10 @@ describe("Testing Container Proposals", () => {
   };
   test("should call mixpanel event for clicking on proposal Card", async () => {
     vi.stubGlobal("ResizeObserver", ResizeObserver);
-    const { getByRole } = render(<VoteButton voteProps={VOTE_PROPS} />, {
+    render(<VoteButton voteProps={VOTE_PROPS} />, {
       wrapper,
     });
-    const button = getByRole("button", { name: "Vote" });
+    const button = screen.getByRole("button", { name: "Vote" });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -54,10 +54,10 @@ describe("Testing Container Proposals", () => {
   test("should call mixpanel event for clicking on proposal Card", async () => {
     disableMixpanel();
     vi.stubGlobal("ResizeObserver", ResizeObserver);
-    const { getByRole } = render(<VoteButton voteProps={VOTE_PROPS} />, {
+    render(<VoteButton voteProps={VOTE_PROPS} />, {
       wrapper,
     });
-    const button = getByRole("button", { name: "Vote" });
+    const button = screen.getByRole("button", { name: "Vote" });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

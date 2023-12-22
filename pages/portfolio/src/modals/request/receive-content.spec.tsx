@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import {
@@ -49,16 +49,13 @@ describe("Testing Receive Content", () => {
   };
 
   test("should call mixpanel event when changing display format", async () => {
-    const { findByText, getByText } = render(
-      <ReceiveContent setState={vi.fn()} />,
-      {
-        wrapper,
-      }
-    );
+    render(<ReceiveContent setState={vi.fn()} />, {
+      wrapper,
+    });
 
-    const button0x = await findByText(/0x/i);
+    const button0x = await screen.findByText(/0x/i);
     expect(button0x).toBeDefined();
-    const buttonIBC = getByText(/IBC/i);
+    const buttonIBC = screen.getByText(/IBC/i);
     expect(buttonIBC).toBeDefined();
     await userEvent.click(buttonIBC);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -78,15 +75,12 @@ describe("Testing Receive Content", () => {
 
   test("should not call mixpanel event when changing display format", async () => {
     disableMixpanel();
-    const { findByText, getByText } = render(
-      <ReceiveContent setState={vi.fn()} />,
-      {
-        wrapper,
-      }
-    );
-    const button0x = await findByText(/0x/i);
+    render(<ReceiveContent setState={vi.fn()} />, {
+      wrapper,
+    });
+    const button0x = await screen.findByText(/0x/i);
     expect(button0x).toBeDefined();
-    const buttonIBC = getByText(/IBC/i);
+    const buttonIBC = screen.getByText(/IBC/i);
     expect(buttonIBC).toBeDefined();
     await userEvent.click(buttonIBC);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -96,10 +90,10 @@ describe("Testing Receive Content", () => {
   //   Copy to clipboard
   test("should call mixpanel event when clicking on copy address", async () => {
     userEvent.setup();
-    const { findByLabelText } = render(<ReceiveContent setState={vi.fn()} />, {
+    render(<ReceiveContent setState={vi.fn()} />, {
       wrapper,
     });
-    const button = await findByLabelText(/Copy to clipboard/i);
+    const button = await screen.findByLabelText(/Copy to clipboard/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
 
@@ -117,10 +111,10 @@ describe("Testing Receive Content", () => {
   test("should not call mixpanel event when clicking on copy address", async () => {
     disableMixpanel();
     userEvent.setup();
-    const { findByLabelText } = render(<ReceiveContent setState={vi.fn()} />, {
+    render(<ReceiveContent setState={vi.fn()} />, {
       wrapper,
     });
-    const button = await findByLabelText(/Copy to clipboard/i);
+    const button = await screen.findByLabelText(/Copy to clipboard/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -128,10 +122,12 @@ describe("Testing Receive Content", () => {
   });
 
   test("should call mixpanel event when clicking on request funds", async () => {
-    const { findByRole } = render(<ReceiveContent setState={vi.fn()} />, {
+    render(<ReceiveContent setState={vi.fn()} />, {
       wrapper,
     });
-    const button = await findByRole("button", { name: /request funds/i });
+    const button = await screen.findByRole("button", {
+      name: /request funds/i,
+    });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -144,10 +140,12 @@ describe("Testing Receive Content", () => {
 
   test("should not call mixpanel event when clicking on request funds", async () => {
     disableMixpanel();
-    const { findByRole } = render(<ReceiveContent setState={vi.fn()} />, {
+    render(<ReceiveContent setState={vi.fn()} />, {
       wrapper,
     });
-    const button = await findByRole("button", { name: /request funds/i });
+    const button = await screen.findByRole("button", {
+      name: /request funds/i,
+    });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

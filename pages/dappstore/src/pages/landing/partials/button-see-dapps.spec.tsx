@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 
@@ -13,8 +13,8 @@ import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
 describe("Testing Button See all dApps", () => {
   test("should call mixpanel event for click on see all dapps", async () => {
-    const { findByRole } = render(await ButtonSeedApps({ totalApps: 5 }));
-    const button = await findByRole("link", { name: /see all /i });
+    render(await ButtonSeedApps({ totalApps: 5 }));
+    const button = await screen.findByRole("link", { name: /see all /i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -26,8 +26,8 @@ describe("Testing Button See all dApps", () => {
 
   //   TODO: FIX -> Error: A component suspended while responding to synchronous input. This will cause the UI to be replaced with a loading indicator. To fix, updates that suspend should be wrapped with startTransition.
   //   test("should not call mixpanel event for click on see all dapps", async () => {
-  //     const { findByText } = render(await ButtonSeedApps({ totalApps: 5 }));
-  //     const button = await findByText(/See all 5 dapps/i);
+  //    render(await ButtonSeedApps({ totalApps: 5 }));
+  //     const button = await screen.findByText(/See all 5 dapps/i);
   //     expect(button).toBeDefined();
   //     await userEvent.click(button);
   //     disableMixpanel();

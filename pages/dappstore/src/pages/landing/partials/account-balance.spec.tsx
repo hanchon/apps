@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, disableMixpanel } from "tracker";
@@ -39,8 +39,10 @@ describe("Testing Setup success step", () => {
     return <RootProviders>{children}</RootProviders>;
   };
   test("should call mixpanel event for click on top up", async () => {
-    const { findByRole } = render(<AccountBalance />, { wrapper });
-    const button = await findByRole("button", { name: /Top Up Account/i });
+    render(<AccountBalance />, { wrapper });
+    const button = await screen.findByRole("button", {
+      name: /Top Up Account/i,
+    });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -52,8 +54,10 @@ describe("Testing Setup success step", () => {
 
   test("should not call mixpanel event for click on top up", async () => {
     disableMixpanel();
-    const { findByRole } = render(<AccountBalance />, { wrapper });
-    const button = await findByRole("button", { name: /Top Up Account/i });
+    render(<AccountBalance />, { wrapper });
+    const button = await screen.findByRole("button", {
+      name: /Top Up Account/i,
+    });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

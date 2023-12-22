@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 
@@ -52,8 +52,8 @@ describe("Testing Profile Modal", () => {
     return <RootProviders>{children}</RootProviders>;
   };
   test("should call mixpanel event for Disconnect wallet", async () => {
-    const { getByRole } = render(<ProfileModal />, { wrapper });
-    const button = getByRole("button", { name: /Disconnect/i });
+    render(<ProfileModal />, { wrapper });
+    const button = screen.getByRole("button", { name: /Disconnect/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -68,8 +68,8 @@ describe("Testing Profile Modal", () => {
   test("should not  call mixpanel event for Disconnect wallet", async () => {
     vi.stubGlobal("ResizeObserver", ResizeObserver);
     disableMixpanel();
-    const { getByRole } = render(<ProfileModal />, { wrapper });
-    const button = getByRole("button", { name: /Disconnect/i });
+    render(<ProfileModal />, { wrapper });
+    const button = screen.getByRole("button", { name: /Disconnect/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

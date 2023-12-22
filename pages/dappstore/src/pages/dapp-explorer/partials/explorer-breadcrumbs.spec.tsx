@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { CLICK_ON_BREADCRUMB, disableMixpanel } from "tracker";
@@ -42,7 +42,7 @@ vi.mock("../../../lib/fetch-explorer-data", () => ({
 
 describe("Testing Explorer Breadcrumbs", () => {
   test("should call mixpanel event for breadcrumbs clicks", async () => {
-    const { getByText } = render(
+    render(
       await ExplorerBreadcrumbs({
         params: {
           category: MOCK_CATEGORIES[2]!.slug,
@@ -50,7 +50,7 @@ describe("Testing Explorer Breadcrumbs", () => {
         },
       })
     );
-    const button = getByText(MOCK_CATEGORIES[2]!.name);
+    const button = screen.getByText(MOCK_CATEGORIES[2]!.name);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -62,7 +62,7 @@ describe("Testing Explorer Breadcrumbs", () => {
 
   test("should not call mixpanel event for breadcrumbs clicks", async () => {
     disableMixpanel();
-    const { getByText } = render(
+    render(
       await ExplorerBreadcrumbs({
         params: {
           category: MOCK_CATEGORIES[2]!.slug,
@@ -71,7 +71,7 @@ describe("Testing Explorer Breadcrumbs", () => {
       })
     );
 
-    const button = getByText(MOCK_CATEGORIES[2]!.name);
+    const button = screen.getByText(MOCK_CATEGORIES[2]!.name);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

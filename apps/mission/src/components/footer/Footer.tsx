@@ -42,7 +42,6 @@ export const Footer = async () => {
               className="flex items-center space-x-3 "
               target="_blank"
               rel="noreferrer"
-              aria-label="build with evmos"
             >
               <CodeIcon
                 width={18}
@@ -55,12 +54,7 @@ export const Footer = async () => {
           <div className="flex flex-col lg:flex-row space-x-2 text-center lg:text-left items-center space-y-2 lg:space-y-0">
             <h1>Version: main - {pkg.version}</h1>
             <p>
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={COINGECKO_URL}
-                aria-label="coingecko"
-              >
+              <a target="_blank" rel="noreferrer" href={COINGECKO_URL}>
                 {t("footer.coingeckoAttribution")}
               </a>
             </p>
@@ -153,17 +147,13 @@ export const Footer = async () => {
               event={CLICK_ON_FOOTER_CTA}
               properties={{ "Footer Social Type": "Terms of service" }}
             >
-              <Link href="/terms-of-service" aria-label="terms of services">
-                {t("footer.termsOfService")}
-              </Link>
+              <Link href="/terms-of-service">{t("footer.termsOfService")}</Link>
             </TrackerEvent>
             <TrackerEvent
               event={CLICK_ON_FOOTER_CTA}
               properties={{ "Footer Social Type": "Privacy Statement" }}
             >
-              <Link href={"/privacy-policy"} aria-label="privacy policy">
-                {t("footer.privacyPolicy")}
-              </Link>
+              <Link href={"/privacy-policy"}>{t("footer.privacyPolicy")}</Link>
             </TrackerEvent>
 
             <ConsentModalTrigger>

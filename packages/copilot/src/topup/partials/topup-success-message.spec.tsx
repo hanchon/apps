@@ -1,5 +1,5 @@
 import { test, describe, vi, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { CLICK_ON_NEXT_STEPS_COPILOT, disableMixpanel } from "tracker";
@@ -38,10 +38,10 @@ describe("Testing Top up success message", () => {
     );
   };
   test("should call mixpanel event for clicking on next steps", async () => {
-    const { findByRole } = render(<TopupSuccessMessage />, {
+    render(<TopupSuccessMessage />, {
       wrapper,
     });
-    const button = await findByRole("button", { name: "Next steps" });
+    const button = await screen.findByRole("button", { name: "Next steps" });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -52,10 +52,10 @@ describe("Testing Top up success message", () => {
 
   test("should not call mixpanel event for clicking on next steps", async () => {
     disableMixpanel();
-    const { findByRole } = render(<TopupSuccessMessage />, {
+    render(<TopupSuccessMessage />, {
       wrapper,
     });
-    const button = await findByRole("button", { name: "Next steps" });
+    const button = await screen.findByRole("button", { name: "Next steps" });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

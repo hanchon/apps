@@ -65,7 +65,6 @@ export const HeroSectionFrameline = async () => {
               href={ADD_DAPP_FORM_URL}
               target="_blank"
               referrerPolicy="no-referrer"
-              aria-label="add dapp"
             >
               {t("ecosystem.addAppButton")}
             </PrimaryButton>
@@ -78,7 +77,6 @@ export const HeroSectionFrameline = async () => {
               href={DOCS_EVMOS_URL}
               target="_blank"
               referrerPolicy="no-referrer"
-              aria-label="build on evmos"
             >
               {t("ecosystem.buildButton")}
             </PrimaryButton>

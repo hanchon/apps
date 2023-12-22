@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { LaunchPad } from "./LaunchPad";
 import mixpanel from "mixpanel-browser";
@@ -12,8 +12,8 @@ import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 describe("Testing LaunchPad", () => {
   test("should display LaunchPad button", () => {
-    const { getByRole } = render(<LaunchPad />);
-    const launchPadButton = getByRole("button", { name: /launchpad/i });
+    render(<LaunchPad />);
+    const launchPadButton = screen.getByRole("button", { name: /launchpad/i });
     expect(launchPadButton).toBeDefined();
   });
 
@@ -26,10 +26,10 @@ describe("Testing LaunchPad", () => {
   });
 
   test("should call AppLauncher event with property Governance when Governance button is clicked", async () => {
-    const { getByLabelText, getByRole } = render(<LaunchPad />);
-    const launchPadButton = getByRole("button", { name: /launchpad/i });
+    render(<LaunchPad />);
+    const launchPadButton = screen.getByRole("button", { name: /launchpad/i });
     await userEvent.click(launchPadButton);
-    const button = getByLabelText(/Governance/i);
+    const button = screen.getByRole("link", { name: /Governance/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -41,10 +41,10 @@ describe("Testing LaunchPad", () => {
 
   test("should not call AppLauncher event with property Governance when Governance button is clicked", async () => {
     disableMixpanel();
-    const { getByLabelText, getByRole } = render(<LaunchPad />);
-    const launchPadButton = getByRole("button", { name: /launchpad/i });
+    render(<LaunchPad />);
+    const launchPadButton = screen.getByRole("button", { name: /launchpad/i });
     await userEvent.click(launchPadButton);
-    const button = getByLabelText(/Governance/i);
+    const button = screen.getByRole("link", { name: /Governance/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -52,10 +52,10 @@ describe("Testing LaunchPad", () => {
   });
 
   test("should call AppLauncher event with property Staking when Staking button is clicked", async () => {
-    const { getByLabelText, getByRole } = render(<LaunchPad />);
-    const launchPadButton = getByRole("button", { name: /launchpad/i });
+    render(<LaunchPad />);
+    const launchPadButton = screen.getByRole("button", { name: /launchpad/i });
     await userEvent.click(launchPadButton);
-    const button = getByLabelText(/Staking/i);
+    const button = screen.getByRole("link", { name: /Staking/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -67,10 +67,10 @@ describe("Testing LaunchPad", () => {
 
   test("should not call AppLauncher event with property Staking when Staking button is clicked", async () => {
     disableMixpanel();
-    const { getByLabelText, getByRole } = render(<LaunchPad />);
-    const launchPadButton = getByRole("button", { name: /launchpad/i });
+    render(<LaunchPad />);
+    const launchPadButton = screen.getByRole("button", { name: /launchpad/i });
     await userEvent.click(launchPadButton);
-    const button = getByLabelText(/Staking/i);
+    const button = screen.getByRole("link", { name: /Staking/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -78,10 +78,10 @@ describe("Testing LaunchPad", () => {
   });
 
   test("should call AppLauncher event with property Portfolio when Portfolio button is clicked", async () => {
-    const { getByLabelText, getByRole } = render(<LaunchPad />);
-    const launchPadButton = getByRole("button", { name: /launchpad/i });
+    render(<LaunchPad />);
+    const launchPadButton = screen.getByRole("button", { name: /launchpad/i });
     await userEvent.click(launchPadButton);
-    const button = getByLabelText(/Portfolio/i);
+    const button = screen.getByRole("link", { name: /Portfolio/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -93,10 +93,10 @@ describe("Testing LaunchPad", () => {
 
   test("should not call AppLauncher event with property Portfolio when Portfolio button is clicked", async () => {
     disableMixpanel();
-    const { getByLabelText, getByRole } = render(<LaunchPad />);
-    const launchPadButton = getByRole("button", { name: /launchpad/i });
+    render(<LaunchPad />);
+    const launchPadButton = screen.getByRole("button", { name: /launchpad/i });
     await userEvent.click(launchPadButton);
-    const button = getByLabelText(/Portfolio/i);
+    const button = screen.getByRole("link", { name: /Portfolio/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -104,10 +104,10 @@ describe("Testing LaunchPad", () => {
   });
 
   test("should call AppLauncher event with property Home when Home button is clicked", async () => {
-    const { getByLabelText, getByRole } = render(<LaunchPad />);
-    const launchPadButton = getByRole("button", { name: /launchpad/i });
+    render(<LaunchPad />);
+    const launchPadButton = screen.getByRole("button", { name: /launchpad/i });
     await userEvent.click(launchPadButton);
-    const button = getByLabelText(/Home/i);
+    const button = screen.getByRole("link", { name: /Home/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -119,10 +119,10 @@ describe("Testing LaunchPad", () => {
 
   test("should not call AppLauncher event with property Home when Home button is clicked", async () => {
     disableMixpanel();
-    const { getByLabelText, getByRole } = render(<LaunchPad />);
-    const launchPadButton = getByRole("button", { name: /launchpad/i });
+    render(<LaunchPad />);
+    const launchPadButton = screen.getByRole("button", { name: /launchpad/i });
     await userEvent.click(launchPadButton);
-    const button = getByLabelText(/Home/i);
+    const button = screen.getByRole("link", { name: /Home/i });
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();

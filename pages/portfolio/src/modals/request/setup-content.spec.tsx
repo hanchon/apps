@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { CLICK_ON_GENERATE_PAYMENT_REQUEST, disableMixpanel } from "tracker";
@@ -43,7 +43,7 @@ describe("Testing Set Up Content", () => {
   };
 
   test("should call mixpanel event when clicking on generate payment request", async () => {
-    const { findByTestId } = render(
+    render(
       <SetUpContent
         setState={vi.fn()}
         setMessage={vi.fn()}
@@ -56,7 +56,7 @@ describe("Testing Set Up Content", () => {
       }
     );
 
-    const button = await findByTestId(/receive-modal-generate-button/i);
+    const button = await screen.findByTestId(/receive-modal-generate-button/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
@@ -72,7 +72,7 @@ describe("Testing Set Up Content", () => {
 
   test("should not call mixpanel event when clicking on generate payment request", async () => {
     disableMixpanel();
-    const { findByTestId } = render(
+    render(
       <SetUpContent
         setState={vi.fn()}
         setMessage={vi.fn()}
@@ -85,7 +85,7 @@ describe("Testing Set Up Content", () => {
       }
     );
 
-    const button = await findByTestId(/receive-modal-generate-button/i);
+    const button = await screen.findByTestId(/receive-modal-generate-button/i);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
