@@ -94,7 +94,8 @@ export const ConnectModalContent = ({
       <>
         <div className="md:mt-5">
           <ButtonWallet
-            className="text-left flex "
+            data-testid="connect-with-evmos-copilot"
+            className="text-left flex"
             onClick={() => {
               copilot.setIsOpen(true);
               sendEvent(CLICK_EVMOS_COPILOT_START_FLOW);

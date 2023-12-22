@@ -7,6 +7,7 @@ import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import {
   CLICK_CONNECTED_WITH,
+  CLICK_EVMOS_COPILOT_START_FLOW,
   UNSUCCESSFUL_WALLET_CONNECTION,
   disableMixpanel,
 } from "tracker";
@@ -64,6 +65,37 @@ describe("Testing Connect Modal Content", () => {
       { wrapper }
     );
     const button = getByTestId(/connect-with-metaMask/);
+    expect(button).toBeDefined();
+    await userEvent.click(button);
+    expect(mixpanel.init).toHaveBeenCalledOnce();
+    expect(mixpanel.track).not.toHaveBeenCalled();
+  });
+
+  test("should call mixpanel event for connect with copilot", async () => {
+    const { getByTestId } = render(
+      <ConnectModalContent setIsOpen={() => true} />,
+      { wrapper }
+    );
+    const button = getByTestId(/connect-with-evmos-copilot/);
+    expect(button).toBeDefined();
+    await userEvent.click(button);
+    expect(mixpanel.init).toHaveBeenCalledOnce();
+    expect(mixpanel.track).toHaveBeenCalledWith(
+      CLICK_EVMOS_COPILOT_START_FLOW,
+      {
+        token: TOKEN,
+      }
+    );
+    expect(mixpanel.track).toHaveBeenCalledTimes(1);
+  });
+
+  test("should not call mixpanel event for connect with copilot", async () => {
+    disableMixpanel();
+    const { getByTestId } = render(
+      <ConnectModalContent setIsOpen={() => true} />,
+      { wrapper }
+    );
+    const button = getByTestId(/connect-with-evmos-copilot/);
     expect(button).toBeDefined();
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
