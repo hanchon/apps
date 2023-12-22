@@ -9,9 +9,7 @@ import mixpanel from "mixpanel-browser";
 import { CLICK_ON_FEATURED_DAPP, disableMixpanel } from "tracker";
 
 import { EcosystemCard } from "./ecosystem-card";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
 const CARD_EXAMPLE = {
   name: "Transak",
@@ -66,7 +64,7 @@ describe("Testing Ecosystem Card", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_FEATURED_DAPP, {
       "dApp Name": "Transak",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

@@ -13,9 +13,8 @@ import {
 } from "tracker";
 
 import { HeroSectionFrameline } from "./hero-section-frameline";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 describe("Testing Hero Section Frameline", () => {
   test("should call mixpanel event for add dapp", async () => {
     const { getByLabelText } = render(await HeroSectionFrameline());
@@ -26,7 +25,7 @@ describe("Testing Hero Section Frameline", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(
       CLICK_ON_APPLY_TO_BE_PART_OF_THE_ECOSYSTEM,
       {
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
       }
     );
   });
@@ -48,7 +47,7 @@ describe("Testing Hero Section Frameline", () => {
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_LEARN_BUTTON, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

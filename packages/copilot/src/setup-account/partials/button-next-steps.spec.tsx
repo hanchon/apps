@@ -11,9 +11,7 @@ import {
   disableMixpanel,
 } from "tracker";
 import { ButtonsNextSteps } from "./button-next-steps";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 describe("Testing Top up success message", () => {
   test("should call mixpanel event for clicking on interact with dapp", async () => {
@@ -24,7 +22,7 @@ describe("Testing Top up success message", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_VIEW_ALL_DAPPS, {
       Location: "Inside Copilot",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -46,7 +44,7 @@ describe("Testing Top up success message", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(COMPLETED_COPILOT_ONBOARDING, {
       "Completed Copilot Onboarding": "Learn More",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -68,7 +66,7 @@ describe("Testing Top up success message", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(COMPLETED_COPILOT_ONBOARDING, {
       "Completed Copilot Onboarding": "Stake your Evmos",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
   test("should not call mixpanel event for clicking on Stake your evmos", async () => {

@@ -9,9 +9,7 @@ import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, disableMixpanel } from "tracker";
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
 import { AccountBalance } from "./account-balance";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
@@ -48,7 +46,7 @@ describe("Testing Setup success step", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_TOP_UP_ACCOUNT_DAPP, {
       Location: "Home Page",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

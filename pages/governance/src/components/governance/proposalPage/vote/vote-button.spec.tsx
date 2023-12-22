@@ -11,9 +11,8 @@ import { RootProviders } from "stateful-components/src/root-providers";
 
 import VoteButton from "./VoteButton";
 import { PropsWithChildren } from "react";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../../vitest.setup";
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 const VOTE_PROPS = {
   id: "1",
   title: "Test",
@@ -47,7 +46,7 @@ describe("Testing Container Proposals", () => {
       "User Wallet Address": "",
       "Wallet Provider": "",
 
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
     vi.unstubAllGlobals();
   });

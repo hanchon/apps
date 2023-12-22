@@ -6,10 +6,9 @@ import mixpanel from "mixpanel-browser";
 import { enableMixpanel } from "tracker";
 
 setConfig(config);
-
-const TOKEN = "testToken";
+export const MIXPANEL_TOKEN_FOR_TEST = "testToken";
 const initializeMixpanelAndEnable = () => {
-  mixpanel.init(TOKEN, { ip: false });
+  mixpanel.init(MIXPANEL_TOKEN_FOR_TEST, { ip: false });
   enableMixpanel();
 };
 beforeEach(() => {

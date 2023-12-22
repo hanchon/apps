@@ -8,9 +8,7 @@ import mixpanel from "mixpanel-browser";
 import { CLICK_CTA_LINKS_REGISTER_TOKEN, disableMixpanel } from "tracker";
 
 import Guide from "./Guide";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 describe("Testing Guide ", () => {
   test("should call mixpanel event for register your token", async () => {
@@ -22,7 +20,7 @@ describe("Testing Guide ", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(
       CLICK_CTA_LINKS_REGISTER_TOKEN,
       {
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
       }
     );
   });

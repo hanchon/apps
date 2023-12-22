@@ -7,9 +7,8 @@ import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { CLICK_ON_VIEW_ALL_DAPPS } from "tracker";
 import { HeroSectionExplore } from "./hero-section-explore";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 const AMOUNT_DAPPS = 8;
 describe("Testing Hero Section Explore", () => {
   test("should call mixpanel event for view all dapps", async () => {
@@ -23,7 +22,7 @@ describe("Testing Hero Section Explore", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_VIEW_ALL_DAPPS, {
       Location: "Graphic",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 });

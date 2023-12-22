@@ -14,9 +14,7 @@ import {
 import { RootProviders } from "../../root-providers";
 import { PropsWithChildren } from "react";
 import { ConnectModalContent } from "./ConnectModalContent";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
@@ -44,13 +42,13 @@ describe("Testing Connect Modal Content", () => {
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_CONNECTED_WITH, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
       "Wallet Provider": "metamask",
     });
     expect(mixpanel.track).toHaveBeenCalledWith(
       UNSUCCESSFUL_WALLET_CONNECTION,
       {
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
         "Error Message": "Failed to connect with MetaMask",
         "Wallet Provider": "metamask",
       }
@@ -83,7 +81,7 @@ describe("Testing Connect Modal Content", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(
       CLICK_EVMOS_COPILOT_START_FLOW,
       {
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
       }
     );
     expect(mixpanel.track).toHaveBeenCalledTimes(1);

@@ -8,9 +8,7 @@ import mixpanel from "mixpanel-browser";
 import { CLICK_TABS_STAKING_OPTIONS, disableMixpanel } from "tracker";
 import TabsDropdown from "./TabsDropdown";
 import { tabsContent } from "../../staking/Tabs/Content";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
 describe("Testing Tab Dropdowns ", () => {
   test("should call mixpanel event for dropdown tabs - Staking", async () => {
@@ -27,7 +25,7 @@ describe("Testing Tab Dropdowns ", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_TABS_STAKING_OPTIONS, {
       Tab: "validators",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

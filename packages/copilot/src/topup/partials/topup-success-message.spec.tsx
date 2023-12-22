@@ -6,9 +6,7 @@ import { CLICK_ON_NEXT_STEPS_COPILOT, disableMixpanel } from "tracker";
 
 import { TopupSuccessMessage } from "./topup-success-message";
 import { CopilotContext } from "../../copilot";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 describe("Testing Top up success message", () => {
   const wrapper = ({ children }: { children: JSX.Element }) => {
@@ -48,7 +46,7 @@ describe("Testing Top up success message", () => {
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_NEXT_STEPS_COPILOT, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

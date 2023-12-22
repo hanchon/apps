@@ -11,8 +11,8 @@ import Undelegations from "./Undelegations";
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
 import { SearchWrapper } from "../../context/SearchContext";
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
+
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
 }));
@@ -135,7 +135,7 @@ describe("Testing Undelegations", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(
       CLICK_CANCEL_UNDELEGATION_BUTTON,
       {
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
       }
     );
     vi.unstubAllGlobals();

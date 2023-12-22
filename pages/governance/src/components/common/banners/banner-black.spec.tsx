@@ -12,8 +12,8 @@ import { COMMONWEALTH_URL } from "constants-helper";
 
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
+
 const TEXT = "Test";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
@@ -34,7 +34,7 @@ describe("Testing Banner Black", () => {
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_COMMONWEALTH_OUTLINK, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

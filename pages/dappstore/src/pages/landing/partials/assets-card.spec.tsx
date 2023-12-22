@@ -11,9 +11,8 @@ import { CLICK_ON_SEE_PORTFOLIO, disableMixpanel } from "tracker";
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
 import { AssetsCard } from "./assets-card";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
 }));
@@ -29,7 +28,7 @@ describe("Testing Staking Card", () => {
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_SEE_PORTFOLIO, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

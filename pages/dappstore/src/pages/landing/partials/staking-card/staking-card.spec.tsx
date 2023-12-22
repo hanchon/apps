@@ -10,9 +10,8 @@ import { CLICK_ON_STAKE_AND_MANAGE_DELEGATION, disableMixpanel } from "tracker";
 import { StakingCard } from ".";
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../../vitest.setup";
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
 }));
@@ -32,7 +31,7 @@ describe.skip("Testing Staking Card", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(
       CLICK_ON_STAKE_AND_MANAGE_DELEGATION,
       {
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
       }
     );
   });

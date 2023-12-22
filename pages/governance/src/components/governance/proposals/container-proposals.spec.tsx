@@ -9,9 +9,8 @@ import { CLICK_GOVERNANCE_PROPOSAL, disableMixpanel } from "tracker";
 import ContainerProposals from "./ContainerProposals";
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 const PROPOSALS = [
   {
     id: "1",
@@ -44,7 +43,7 @@ describe("Testing Container Proposals", () => {
       "User Wallet Address": undefined,
       "Wallet Provider": null,
       "Governance Proposal": "1",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

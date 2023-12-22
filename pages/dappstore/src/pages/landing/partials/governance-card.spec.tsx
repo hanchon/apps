@@ -8,9 +8,7 @@ import mixpanel from "mixpanel-browser";
 
 import { CLICK_ON_PARTICIPATE_IN_GOVERNANCE, disableMixpanel } from "tracker";
 import { GovernanceCard } from "./governance-card";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
 describe("Testing Governance Card", () => {
   test("should call mixpanel event for click on participate in governance", async () => {
@@ -22,7 +20,7 @@ describe("Testing Governance Card", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(
       CLICK_ON_PARTICIPATE_IN_GOVERNANCE,
       {
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
       }
     );
   });

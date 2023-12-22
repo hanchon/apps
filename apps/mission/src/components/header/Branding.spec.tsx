@@ -8,8 +8,8 @@ import mixpanel from "mixpanel-browser";
 
 import { CLICK_EVMOS_LOGO, disableMixpanel } from "tracker";
 import { Branding } from "./Branding";
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
+
 describe("Testing Branding", () => {
   test("should call mixpanel event for Logo", async () => {
     const { getByLabelText } = render(<Branding />);
@@ -18,7 +18,7 @@ describe("Testing Branding", () => {
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_EVMOS_LOGO, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

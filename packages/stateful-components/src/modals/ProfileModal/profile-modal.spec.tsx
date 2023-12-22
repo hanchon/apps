@@ -11,9 +11,8 @@ import { CLICK_DISCONNECT_WALLET_BUTTON, disableMixpanel } from "tracker";
 import { ProfileModal } from "./ProfileModal";
 import { RootProviders } from "../../root-providers";
 import { PropsWithChildren } from "react";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 const ResizeObserver = vi.fn(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
@@ -61,7 +60,7 @@ describe("Testing Profile Modal", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(
       CLICK_DISCONNECT_WALLET_BUTTON,
       {
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
       }
     );
   });

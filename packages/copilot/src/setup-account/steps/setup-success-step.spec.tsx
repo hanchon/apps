@@ -8,9 +8,7 @@ import mixpanel from "mixpanel-browser";
 import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, disableMixpanel } from "tracker";
 import { SetupAccountSuccesStep } from "./setup-success-step";
 import { CopilotContext } from "../../copilot";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 describe("Testing Setup success step", () => {
   const wrapper = ({ children }: { children: JSX.Element }) => {
@@ -49,7 +47,7 @@ describe("Testing Setup success step", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_TOP_UP_ACCOUNT_DAPP, {
       Location: "Inside Copilot",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

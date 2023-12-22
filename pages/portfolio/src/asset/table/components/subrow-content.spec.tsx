@@ -10,8 +10,8 @@ import { SubRowContent } from "./SubRowContent";
 import { BigNumber } from "@ethersproject/bignumber";
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
+
 const MOCKED_TOKEN = {
   name: "Wrapped Ether",
   symbol: "gWETH",
@@ -51,11 +51,10 @@ describe("Testing Tab Nav Item ", () => {
     const button = getByText("Convert");
     expect(button).toBeDefined();
     await userEvent.click(button);
-
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_BUTTON_CONVERT, {
       Token: MOCKED_TOKEN.tokenName,
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
   test("should not call mixpanel event for convert button", async () => {

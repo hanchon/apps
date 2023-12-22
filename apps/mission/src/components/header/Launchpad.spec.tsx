@@ -8,8 +8,8 @@ import { LaunchPad } from "./LaunchPad";
 import mixpanel from "mixpanel-browser";
 
 import { disableMixpanel } from "tracker";
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
+
 describe("Testing LaunchPad", () => {
   test("should display LaunchPad button", () => {
     const { getByRole } = render(<LaunchPad />);
@@ -35,7 +35,7 @@ describe("Testing LaunchPad", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith("AppLauncher", {
       "dApp Name": "Governance",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -61,7 +61,7 @@ describe("Testing LaunchPad", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith("AppLauncher", {
       "dApp Name": "Staking",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -87,7 +87,7 @@ describe("Testing LaunchPad", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith("AppLauncher", {
       "dApp Name": "Portfolio",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -113,7 +113,7 @@ describe("Testing LaunchPad", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith("AppLauncher", {
       "dApp Name": "dAppStore",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

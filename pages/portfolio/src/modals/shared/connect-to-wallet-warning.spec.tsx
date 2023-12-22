@@ -8,9 +8,7 @@ import mixpanel from "mixpanel-browser";
 import { PROMPTED_TO, disableMixpanel } from "tracker";
 import { PropsWithChildren } from "react";
 import { ConnectToWalletWarning } from "./ConnectToWalletWarning";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
@@ -35,7 +33,7 @@ describe("Testing Connect To Wallet Warning", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(PROMPTED_TO, {
       Modal: "Pay Modal",
       "Prompt To": "Connect Account",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

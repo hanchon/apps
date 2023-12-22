@@ -8,9 +8,7 @@ import mixpanel from "mixpanel-browser";
 import { CLICK_TOGGLE_FOR_VALIDATORS, disableMixpanel } from "tracker";
 import ValidatorToggle from "./Toggle";
 import { ValidatorStateWrapper } from "../context/ValidatorStateContext";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 describe("Testing Toggle Validators ", () => {
   const wrapper = ({ children }: { children: JSX.Element }) => {
@@ -24,7 +22,7 @@ describe("Testing Toggle Validators ", () => {
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_TOGGLE_FOR_VALIDATORS, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

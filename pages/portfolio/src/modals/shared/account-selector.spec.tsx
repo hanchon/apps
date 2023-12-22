@@ -9,10 +9,7 @@ import { SELECT_TO_NETWORK_SEND_FLOW, disableMixpanel } from "tracker";
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
 import { AccountSelector } from "./AccountSelector";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
-// eslint-disable-next-line no-secrets/no-secrets
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
@@ -49,7 +46,7 @@ describe("Testing Account Selector", () => {
       Network: "evmos",
       "User Wallet Address": undefined,
       "Wallet Provider": null,
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
     expect(mixpanel.track).toHaveBeenCalledTimes(1);
   });

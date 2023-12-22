@@ -7,9 +7,7 @@ import userEvent from "@testing-library/user-event";
 import mixpanel from "mixpanel-browser";
 import { CLICK_TABS_STAKING_OPTIONS, disableMixpanel } from "tracker";
 import TabNavItem from "./TabNavItem";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
 describe("Testing Tab Nav Item ", () => {
   test("should call mixpanel event for tab navItem - Staking", async () => {
@@ -31,7 +29,7 @@ describe("Testing Tab Nav Item ", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_TABS_STAKING_OPTIONS, {
       Tab: "validators",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

@@ -9,9 +9,8 @@ import { CLICK_ON_GENERATE_PAYMENT_REQUEST, disableMixpanel } from "tracker";
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
 import { SetUpContent } from "./SetupContent";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 // eslint-disable-next-line no-secrets/no-secrets
 const ADDRESS = "0xC1dC8C6c0dCd24226c721a7E109E4A7C20F7bF0f";
 vi.mock("@tanstack/react-query-next-experimental", () => ({
@@ -65,7 +64,7 @@ describe("Testing Set Up Content", () => {
       CLICK_ON_GENERATE_PAYMENT_REQUEST,
       {
         "Wallet Provider": null,
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
       }
     );
     expect(mixpanel.track).toHaveBeenCalledTimes(1);

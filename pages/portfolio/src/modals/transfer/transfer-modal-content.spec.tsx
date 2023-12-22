@@ -9,9 +9,7 @@ import { PROMPTED_TO, disableMixpanel } from "tracker";
 import { PropsWithChildren } from "react";
 import { TransferModalContent } from "./TransferModalContent";
 import { RootProviders } from "stateful-components/src/root-providers";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
@@ -99,7 +97,7 @@ describe("Testing Transfer Modal Content", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(PROMPTED_TO, {
       Modal: "Send Modal",
       "Prompt To": "Top Up",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -123,7 +121,7 @@ describe("Testing Transfer Modal Content", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(PROMPTED_TO, {
       Modal: "Send Modal",
       "Prompt To": "Satellite",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -147,7 +145,7 @@ describe("Testing Transfer Modal Content", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(PROMPTED_TO, {
       Modal: "Send Modal",
       "Prompt To": "Install Keplr",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

@@ -9,9 +9,7 @@ import mixpanel from "mixpanel-browser";
 import { CLICK_ON_VIEW_ALL_DAPPS } from "tracker";
 
 import { ButtonSeedApps } from "./button-see-dapps";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
 describe("Testing Button See all dApps", () => {
   test("should call mixpanel event for click on see all dapps", async () => {
@@ -22,7 +20,7 @@ describe("Testing Button See all dApps", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_VIEW_ALL_DAPPS, {
       Location: "Home Page",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

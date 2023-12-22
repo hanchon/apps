@@ -14,9 +14,7 @@ import {
 import { PropsWithChildren } from "react";
 import TopBarStaking from "./TopBarStaking";
 import { RootProviders } from "stateful-components/src/root-providers";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
@@ -68,12 +66,12 @@ describe("Testing Claim Rewards", () => {
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_CLAIM_REWARDS_BUTTON, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
       "User Wallet Address": "",
       "Wallet Provider": "",
     });
     expect(mixpanel.track).toHaveBeenCalledWith(UNSUCCESSFUL_TX_CLAIM_REWARDS, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
       "User Wallet Address": "",
       "Wallet Provider": "",
       "Error Message": "ACCOUNT_NOT_FOUND",

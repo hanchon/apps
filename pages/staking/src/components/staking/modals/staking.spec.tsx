@@ -14,9 +14,7 @@ import {
 import Staking from "./Staking";
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
 
 const validator = {
   moniker: "Hanchon.live",
@@ -48,7 +46,7 @@ describe("Testing Tab Dropdowns ", () => {
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_BUTTON_MANAGE_DELEGATE, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -79,7 +77,7 @@ describe("Testing Tab Dropdowns ", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(
       CLICK_BUTTON_MANAGE_UNDELEGATE,
       {
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
       }
     );
   });
@@ -111,7 +109,7 @@ describe("Testing Tab Dropdowns ", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(
       CLICK_BUTTON_MANAGE_REDELEGATE,
       {
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
       }
     );
   });

@@ -6,8 +6,6 @@ import { render } from "@testing-library/react";
 import { CopilotCard } from "./copilot-card";
 import { PropsWithChildren } from "react";
 import { RootProviders } from "stateful-components/src/root-providers";
-// same as vitest.setup.ts
-// const TOKEN = "testToken";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,

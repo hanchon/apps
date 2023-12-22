@@ -15,9 +15,8 @@ import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
 
 import { ReceiveContent } from "./ReceiveContent";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 // eslint-disable-next-line no-secrets/no-secrets
 const ADDRESS = "0xC1dC8C6c0dCd24226c721a7E109E4A7C20F7bF0f";
 vi.mock("@tanstack/react-query-next-experimental", () => ({
@@ -66,13 +65,13 @@ describe("Testing Receive Content", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_DISPLAY_FORMAT, {
       "Receive Modal Actions": "IBC",
       "Wallet Provider": null,
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
     await userEvent.click(button0x);
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_DISPLAY_FORMAT, {
       "Receive Modal Actions": "0x",
       "Wallet Provider": null,
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
     expect(mixpanel.track).toHaveBeenCalledTimes(2);
   });
@@ -108,7 +107,7 @@ describe("Testing Receive Content", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(
       CLICK_ON_COPY_ICON_RECEIVE_FLOW,
       {
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
         "Wallet Provider": null,
       }
     );
@@ -137,7 +136,7 @@ describe("Testing Receive Content", () => {
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_REQUEST_FUNDS, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
       "Wallet Provider": null,
     });
     expect(mixpanel.track).toHaveBeenCalledTimes(1);

@@ -15,8 +15,8 @@ import {
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
 import TopBar from "./TopBar";
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../../vitest.setup";
+
 const TOP_BAR_PROPS = {
   totalAssets: "1",
   evmosPrice: 1,
@@ -82,7 +82,7 @@ describe("Testing Top bar Portfolio", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_SEND_BUTTON, {
       "User Wallet Address": ADDRESS,
       "Wallet Provider": "metaMask",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -109,7 +109,7 @@ describe("Testing Top bar Portfolio", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_RECEIVE_BUTTON, {
       "User Wallet Address": ADDRESS,
       "Wallet Provider": "metaMask",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

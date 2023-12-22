@@ -8,8 +8,8 @@ import mixpanel from "mixpanel-browser";
 
 import { CLICK_ON_FOOTER_CTA, disableMixpanel } from "tracker";
 import { Footer } from "./Footer";
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
+
 describe("Testing Footer", () => {
   test("should call mixpanel event for build with evmos - Footer", async () => {
     const { getByLabelText } = render(await Footer());
@@ -19,7 +19,7 @@ describe("Testing Footer", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
       "Footer Social Type": "Build with evmos",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -41,7 +41,7 @@ describe("Testing Footer", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
       "Footer Social Type": "Github",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -54,7 +54,7 @@ describe("Testing Footer", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).not.toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
       "Footer Social Type": "Github",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -66,7 +66,7 @@ describe("Testing Footer", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
       "Footer Social Type": "X",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -88,7 +88,7 @@ describe("Testing Footer", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
       "Footer Social Type": "Discord",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -110,7 +110,7 @@ describe("Testing Footer", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
       "Footer Social Type": "Telegram",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -132,7 +132,7 @@ describe("Testing Footer", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
       "Footer Social Type": "Medium",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -154,7 +154,7 @@ describe("Testing Footer", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
       "Footer Social Type": "Commonwealth",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -176,7 +176,7 @@ describe("Testing Footer", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
       "Footer Social Type": "Terms of service",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -198,7 +198,7 @@ describe("Testing Footer", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
       "Footer Social Type": "Privacy Statement",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
@@ -220,7 +220,7 @@ describe("Testing Footer", () => {
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_FOOTER_CTA, {
       "Footer Social Type": "Cookie Statement",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

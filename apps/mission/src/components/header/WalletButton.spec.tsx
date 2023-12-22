@@ -9,6 +9,7 @@ import { RootProviders } from "stateful-components/src/root-providers";
 import { CLICK_CONNECT_WALLET_BUTTON, disableMixpanel } from "tracker";
 import { WalletButton } from "./WalletButton";
 import { PropsWithChildren } from "react";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
@@ -23,8 +24,6 @@ vi.mock("react", async (importOriginal: () => Promise<{}>) => {
   };
 });
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 describe("Testing Branding", () => {
   const wrapper = ({ children }: { children: JSX.Element }) => {
     return <RootProviders>{children}</RootProviders>;
@@ -37,14 +36,13 @@ describe("Testing Branding", () => {
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_CONNECT_WALLET_BUTTON, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
   test("should not call mixpanel event for Connect Wallet", async () => {
     disableMixpanel();
     const { getByTestId } = render(<WalletButton />, { wrapper });
-
     const button = getByTestId(/open-connect-modal/i);
     expect(button).toBeDefined();
     await userEvent.click(button);

@@ -13,9 +13,8 @@ import {
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
 import { RequestAssetSelector } from "./RequestAssetSelector";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 // eslint-disable-next-line no-secrets/no-secrets
 const ADDRESS = "evmos14uepnqnvkuyyvwe65wmncejq5g2f0tjft3wr65";
 vi.mock("@tanstack/react-query-next-experimental", () => ({
@@ -58,13 +57,13 @@ describe("Testing Request Assets Selector", () => {
       Token: "EVMOS",
       "User Wallet Address": undefined,
       "Wallet Provider": null,
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
     expect(mixpanel.track).toHaveBeenCalledWith(SELECT_FROM_NETWORK_SEND_FLOW, {
       Network: "evmos",
       "User Wallet Address": undefined,
       "Wallet Provider": null,
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
     expect(mixpanel.track).toHaveBeenCalledTimes(2);
   });
@@ -130,7 +129,7 @@ describe("Testing Request Assets Selector", () => {
       Network: "evmos",
       "User Wallet Address": undefined,
       "Wallet Provider": null,
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
     expect(mixpanel.track).toHaveBeenCalledTimes(1);
   });

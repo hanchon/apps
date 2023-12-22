@@ -13,9 +13,7 @@ import {
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
 import { ShareContent } from "./ShareContent";
-
-// same as vitest.setup.ts
-const TOKEN = "testToken";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
 vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
@@ -67,7 +65,7 @@ describe("Testing Set Up Content", () => {
       CLICK_ON_COPY_ICON_REQUEST_FLOW,
       {
         "Wallet Provider": null,
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
       }
     );
     expect(mixpanel.track).toHaveBeenCalledTimes(1);
@@ -117,7 +115,7 @@ describe("Testing Set Up Content", () => {
       CLICK_ON_SHARE_VIA_APP_REQUEST_FLOW,
       {
         "Wallet Provider": null,
-        token: TOKEN,
+        token: MIXPANEL_TOKEN_FOR_TEST,
       }
     );
     expect(mixpanel.track).toHaveBeenCalledTimes(1);

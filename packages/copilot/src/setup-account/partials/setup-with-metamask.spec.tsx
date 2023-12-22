@@ -5,8 +5,6 @@ import { test, describe } from "vitest";
 import { render } from "@testing-library/react";
 
 import { SetupWithMetamaskSteps } from "./setup-with-metamask";
-// same as vitest.setup.ts
-// const TOKEN = "testToken";
 
 describe.skip("Testing Setup With Metamask ", () => {
   test("should call mixpanel event for tab navItem - Staking", () => {

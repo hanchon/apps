@@ -10,9 +10,8 @@ import { PROMPTED_TO, disableMixpanel } from "tracker";
 import { RootProviders } from "stateful-components/src/root-providers";
 import { PropsWithChildren } from "react";
 import { Content } from "./Content";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../../../vitest.setup";
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 // eslint-disable-next-line no-secrets/no-secrets
 const ADDRESS = "evmos1c8wgcmqde5jzymrjrflpp8j20ss000c00zd0ak";
 
@@ -94,7 +93,7 @@ describe("Testing Content Pay", () => {
     expect(mixpanel.track).toHaveBeenCalledWith(PROMPTED_TO, {
       Modal: "Pay Modal",
       "Prompt To": "Forge",
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 

@@ -8,9 +8,8 @@ import mixpanel from "mixpanel-browser";
 
 import { CLICK_ON_GIVE_FEEDBACK, disableMixpanel } from "tracker";
 import { GiveFeedback } from "./give-feedback";
+import { MIXPANEL_TOKEN_FOR_TEST } from "../vitest.setup";
 
-// same as vitest.setup.ts
-const TOKEN = "testToken";
 describe("Testing Branding", () => {
   test("should call mixpanel event for CLICK_ON_GIVE_FEEDBACK", async () => {
     const { getByLabelText } = render(<GiveFeedback />);
@@ -19,7 +18,7 @@ describe("Testing Branding", () => {
     await userEvent.click(button);
     expect(mixpanel.init).toHaveBeenCalledOnce();
     expect(mixpanel.track).toHaveBeenCalledWith(CLICK_ON_GIVE_FEEDBACK, {
-      token: TOKEN,
+      token: MIXPANEL_TOKEN_FOR_TEST,
     });
   });
 
