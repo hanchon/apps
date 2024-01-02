@@ -68,7 +68,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
             " fixed shadow-custom md:absolute w-full px-8 top-32 md:top-9 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] py-8 drop-shadow-md drop-shadow-red1 border border-darkGray700 "
           )}
         >
-          <div className="w-fit">
+          <div className="grid grid-cols-3">
             {launchPadItems[0] && (
               <TrackerEvent
                 event={CLICK_ON_DAPP_INSIDE_LAUNCHER}
@@ -84,7 +84,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
               </TrackerEvent>
             )}
           </div>
-          <div className="grid grid-cols-3 gap-y-6  py-6">
+          <div className="grid grid-cols-3 gap-y-6 py-6">
             {launchPadItems.slice(1).map(({ href, mixpanelId, ...rest }) => (
               <TrackerEvent
                 key={href}
@@ -128,7 +128,7 @@ export const LaunchPadItem = ({
         width={100}
         height={100}
         alt={icon}
-        className="transition-all duration-150 ease-in hover:scale-105"
+        className="transition-all duration-150 ease-in hover:scale-105 w-auto"
       />
       <p className="text-center">{children}</p>
     </Link>

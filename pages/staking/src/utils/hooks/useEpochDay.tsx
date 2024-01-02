@@ -21,5 +21,5 @@ export const useEpochDay = () => {
     );
   }
 
-  return { epochs: convertedEpochStart };
+  return { epochs: convertedEpochStart, error: epochs.error };
 };

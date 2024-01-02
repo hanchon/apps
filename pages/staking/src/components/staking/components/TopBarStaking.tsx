@@ -5,7 +5,6 @@
 import { useSelector } from "react-redux";
 import {
   TopBarItem,
-  Countdown,
   TopBarContainer,
   ConfirmButton,
   Tooltip,
@@ -13,11 +12,10 @@ import {
 import { useEvmosBalance, useRewards } from "@evmosapps/evmos-wallet";
 import { StoreType } from "@evmosapps/evmos-wallet";
 import { convertFromAtto, displayTopBarTooltip } from "helpers";
-import { FULL_DAY_MINUS_ONE_SECOND } from "constants-helper";
 import { BigNumber } from "@ethersproject/bignumber";
-import { useEpochDay } from "../../../utils/hooks/useEpochDay";
 import { useStakingInfo } from "../../../utils/hooks/useStakingInfo";
 import { useAccount } from "wagmi";
+import { StatefulCountdown } from "./stateful-countdown";
 
 const TopBarStaking = () => {
   const value = useSelector((state: StoreType) => state.wallet.value);
@@ -25,7 +23,6 @@ const TopBarStaking = () => {
   const { totalDelegations, totalUndelegations, totalRewards } =
     useStakingInfo();
   const { evmosBalance } = useEvmosBalance();
-  const { epochs } = useEpochDay();
   const { handleConfirmButton } = useRewards(value);
   return (
     <TopBarContainer>
@@ -122,18 +119,7 @@ const TopBarStaking = () => {
           }
         />
 
-        <TopBarItem
-          text="Reward Distribution"
-          value={
-            <Countdown
-              epochs={
-                epochs > 1000
-                  ? epochs + FULL_DAY_MINUS_ONE_SECOND
-                  : "Loading..."
-              }
-            />
-          }
-        />
+        <TopBarItem text="Reward Distribution" value={<StatefulCountdown />} />
 
         <div className=" ">
           <ConfirmButton
