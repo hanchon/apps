@@ -9,7 +9,7 @@ export const SetupAccountSuccesStep = () => {
   const { t } = useTranslation("copilot-setup-account");
   const { nextStep } = useCopilot();
   return (
-    <section className=" h-full w-full space-y-1 overflow-hidden text-center flex flex-col items-center">
+    <section className="h-full w-full space-y-1 overflow-hidden text-center flex flex-col">
       <Modal.Header />
       <div className="flex items-center justify-center ">
         <IconContainer type="BIG_CONFETTI" />
@@ -18,6 +18,7 @@ export const SetupAccountSuccesStep = () => {
       <p className="pb-5 text-sm">{t("connectSuccessStep.body")}</p>
 
       <PrimaryButton
+        className="self-center"
         onClick={() => {
           sendEvent(CLICK_ON_TOP_UP_ACCOUNT_DAPP, {
             Location: "Inside Copilot",
