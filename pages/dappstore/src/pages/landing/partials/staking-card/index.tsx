@@ -3,7 +3,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { BalanceDisplay } from "./balance-display";
-
+import { useState } from "react";
 import { CardDescription } from "../card-description";
 import { CardTitle } from "../card-title";
 import { useSelector } from "react-redux";
@@ -27,9 +27,14 @@ export const StakingCard = () => {
 
   const { totalDelegations, totalRewards } = useStake();
   const { evmosPrice, totalEvmosAsset } = useAssets();
-  const { handleConfirmButton } = useRewards(wallet);
 
+  const [confirmClicked, setConfirmClicked] = useState(false);
   const { t } = useTranslation("dappStore");
+
+  const { handleConfirmButton } = useRewards({
+    wallet,
+    setConfirmClicked,
+  });
   return (
     <Card>
       <>
@@ -76,7 +81,10 @@ export const StakingCard = () => {
             onClick={handleConfirmButton}
             className={`w-fit h-fit flex space-x-2 rounded-lg bg-red-300 px-5 py-2 text-base font-bold normal-case text-pearl shadow transition-all duration-300 hover:bg-red1 hover:shadow-md active:bg-red2 
           ${
-            !wallet.active || !totalRewards || totalRewards < 0.005
+            !wallet.active ||
+            !totalRewards ||
+            confirmClicked ||
+            totalRewards < 0.005
               ? "disabled"
               : ""
           }

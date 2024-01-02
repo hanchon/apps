@@ -3,6 +3,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useSelector } from "react-redux";
+import { useState } from "react";
 import {
   TopBarItem,
   TopBarContainer,
@@ -18,12 +19,18 @@ import { useAccount } from "wagmi";
 import { StatefulCountdown } from "./stateful-countdown";
 
 const TopBarStaking = () => {
-  const value = useSelector((state: StoreType) => state.wallet.value);
+  const wallet = useSelector((state: StoreType) => state.wallet.value);
   const { isDisconnected } = useAccount();
   const { totalDelegations, totalUndelegations, totalRewards } =
     useStakingInfo();
   const { evmosBalance } = useEvmosBalance();
-  const { handleConfirmButton } = useRewards(value);
+
+  const [confirmClicked, setConfirmClicked] = useState(false);
+
+  const { handleConfirmButton } = useRewards({
+    wallet,
+    setConfirmClicked,
+  });
   return (
     <TopBarContainer>
       <>
@@ -131,7 +138,10 @@ const TopBarStaking = () => {
             }
             onClick={handleConfirmButton}
             disabled={
-              isDisconnected || !totalRewards || totalRewards < 0.005 // insure that small residual is covered
+              isDisconnected ||
+              !totalRewards ||
+              confirmClicked ||
+              totalRewards < 0.005 // insure that small residual is covered
             }
           />
         </div>
