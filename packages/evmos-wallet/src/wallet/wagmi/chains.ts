@@ -5,7 +5,9 @@ import { Chain } from "viem";
 import { evmos, evmoslocal, evmostestnet } from "@evmosapps/registry";
 import { getSelectedNetworkMode } from "@evmosapps/ui-helpers/src/getSelectedNetworkMode";
 import { raise } from "helpers";
+
 let registry: typeof evmos | typeof evmoslocal | typeof evmostestnet = evmos;
+
 if (getSelectedNetworkMode() === "localtestnet") {
   registry = evmoslocal;
 } else if (getSelectedNetworkMode() === "testnet") {
@@ -33,6 +35,6 @@ export const config: Chain & {
   },
 };
 
-export function getEvmosChainInfo(): Chain & { cosmosId: string } {
-  return config;
+export function getEvmosChainInfo() {
+  return { ...config, registry };
 }

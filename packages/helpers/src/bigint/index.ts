@@ -9,13 +9,16 @@ export function min(a: number | bigint, b: number | bigint): number | bigint {
   return a < b ? a : b;
 }
 
-export function clamp(value: bigint, min: bigint, max: bigint): bigint;
+export function clamp(value: bigint, min: number, max: number): bigint;
+export function clamp(value: bigint, min: bigint, max?: bigint | null): bigint;
 export function clamp(value: number, min: number, max: number): number;
 export function clamp(
   value: number | bigint,
   start: number | bigint,
-  end: number | bigint,
+  end: number | bigint | null = Infinity
 ): number | bigint {
+  if (end === null || end === Infinity || typeof end === "undefined")
+    return max(value as never, start as never);
   return max(min(value as never, end as never), start as never);
 }
 
@@ -30,7 +33,7 @@ export function clamp(
 export function multiply(
   a: bigint,
   b: bigint | number | string,
-  precision = 18,
+  precision = 18
 ) {
   try {
     return a * BigInt(b);

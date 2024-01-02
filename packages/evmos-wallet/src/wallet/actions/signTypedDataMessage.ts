@@ -1,9 +1,13 @@
-import { getAccount, getWalletClient } from "wagmi/actions";
+import { getAccount, getWalletClient, switchNetwork } from "wagmi/actions";
 import { assertIf, raise } from "helpers";
 import { TypedData } from "../../utils";
+import { Hex, fromHex } from "viem";
 
 export async function signTypedDataMessage(transaction: TypedData) {
   const { address = raise("WALLET_NOT_CONNECTED") } = getAccount();
+  await switchNetwork({
+    chainId: fromHex(transaction.domain.chainId as Hex, "number"),
+  });
 
   const client = (await getWalletClient()) ?? raise("PROVIDER_NOT_AVAILABLE");
 

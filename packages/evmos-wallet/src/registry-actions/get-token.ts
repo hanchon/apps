@@ -12,5 +12,9 @@ export function getToken<T extends Prefix>(
   prefix: T,
   token: string
 ): Token | null {
-  return getChain(prefix)?.tokens.find((t) => t.minCoinDenom === token) ?? null;
+  return (
+    getChain(prefix)?.tokens.find(
+      (t) => t.minCoinDenom === token || t.sourceDenom === token
+    ) ?? null
+  );
 }

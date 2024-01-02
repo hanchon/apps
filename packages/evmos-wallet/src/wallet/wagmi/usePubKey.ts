@@ -16,6 +16,7 @@ const recoveryMessage = "generate_pubkey";
 const hashedMessage = Buffer.from(
   fromHex(hashMessage(recoveryMessage), "bytes")
 );
+
 const baseKey = "evmos/pubkey";
 
 const queryFn = async () => {

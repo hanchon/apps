@@ -17,6 +17,7 @@ import {
 import { ApiPresignTx } from "../../utils";
 import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
 const evmosInfo = getEvmosChainInfo();
+
 export async function signBackendTypedDataTransaction({
   typedData,
   legacyAmino,

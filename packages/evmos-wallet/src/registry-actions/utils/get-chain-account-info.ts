@@ -2,7 +2,6 @@ import { getChainByAddress } from "../get-chain-by-account";
 import { Prefix } from "../types";
 import { Address, getPubkey, normalizeToEvmos } from "../../wallet";
 import { apiCosmosAccountByAddress } from "../../api";
-import { isValidCosmosAddress } from "../../wallet/utils/addresses/is-valid-cosmos-address";
 import * as secp256k1 from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/crypto/secp256k1/keys_pb";
 import * as ethsecp256k1 from "@buf/evmos_evmos.bufbuild_es/ethermint/crypto/v1/ethsecp256k1/keys_pb";
 import { get } from "lodash-es";
@@ -26,9 +25,7 @@ const isBaseAccount = (account: unknown): account is BaseAccount => {
   );
 };
 export const getChainAccountInfo = async (address: Address<Prefix>) => {
-  const cosmosAddress = isValidCosmosAddress(address)
-    ? address
-    : normalizeToEvmos(address);
+  const cosmosAddress = normalizeToEvmos(address);
 
   const chain = getChainByAddress(address);
 
@@ -61,22 +58,26 @@ export const getChainAccountInfo = async (address: Address<Prefix>) => {
     throw new Error(`Unsupported account type: ${account["@type"]}`);
   }
 
-  const pubkey = baseAccount.pub_key
-    ? Buffer.from(baseAccount.pub_key.key, "base64")
-    : await getPubkey({
+  let pubkey = baseAccount.pub_key
+    ? Uint8Array.from(Buffer.from(baseAccount.pub_key.key, "base64"))
+    : null;
+  if (pubkey === null) {
+    try {
+      pubkey = await getPubkey({
         cosmosChainId: chain.cosmosId,
       });
-
+    } catch (e) {}
+  }
   return {
     address: cosmosAddress,
     sequence: BigInt(baseAccount.sequence),
     publicKey:
       chain.prefix === "evmos"
         ? new ethsecp256k1.PubKey({
-            key: pubkey,
+            key: pubkey ?? new Uint8Array(),
           })
         : new secp256k1.PubKey({
-            key: pubkey,
+            key: pubkey ?? new Uint8Array(),
           }),
     accountNumber: baseAccount.account_number,
   };
