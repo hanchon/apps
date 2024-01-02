@@ -29,7 +29,7 @@ export const Branding = () => {
           alt="evmos logo"
           width={50}
           height={50}
-          className="mr-2 lg:mr-3"
+          className="mr-2 lg:mr-3 w-auto"
         />
         <p className="text-red-300 relative top-[3px] lg:top-[5px] text-[24px] lg:text-[1.8rem] font-evmos">
           <span className="text-pearl mr-4 md:mr-5 lg:mr-6 font-brand">
