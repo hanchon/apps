@@ -46,6 +46,7 @@
     "mixpanel-browser": "^2.47.0",
     "next": "14.0.4",
     "react": "18.2.0",
+    "react-confetti": "^6.1.0",
     "react-confetti-explosion": "^2.1.2",
     "react-dom": "^18.2.0",
     "tracker": "workspace:*",

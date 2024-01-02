@@ -1,16 +1,38 @@
 import { useTranslation } from "@evmosapps/i18n/client";
 import { IconContainer, Modal, PrimaryButton } from "@evmosapps/ui-helpers";
-
-import ConfettiExplosion from "react-confetti-explosion";
+import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from "react-confetti";
 import { useCopilot } from "../../copilot";
 import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, sendEvent } from "tracker";
+import { createPortal } from "react-dom";
+import { useConfetti } from "../../partials/use-confetti";
 
 export const SetupAccountSuccesStep = () => {
+  const { width, height } = useWindowSize();
   const { t } = useTranslation("copilot-setup-account");
   const { nextStep } = useCopilot();
+  const { portalContainer } = useConfetti();
+
   return (
-    <section className="h-full w-full space-y-1 overflow-hidden text-center flex flex-col">
+    <section className="h-full w-full space-y-1 overflow-hidden text-center flex flex-col z-[1]">
       <Modal.Header />
+      {createPortal(
+        <Confetti
+          style={{ zIndex: 99999 }}
+          width={width}
+          className="pointer-events-none"
+          height={height}
+          numberOfPieces={2000}
+          recycle={false}
+          confettiSource={{
+            x: width / 6,
+            y: height / 6,
+            w: 3000,
+            h: 3000,
+          }}
+        />,
+        portalContainer
+      )}
       <div className="flex items-center justify-center ">
         <IconContainer type="BIG_CONFETTI" />
       </div>
@@ -28,14 +50,6 @@ export const SetupAccountSuccesStep = () => {
       >
         {t("connectSuccessStep.action")}
       </PrimaryButton>
-
-      <ConfettiExplosion
-        zIndex={10000}
-        duration={7000}
-        particleCount={250}
-        height={3000}
-        width={3000}
-      />
     </section>
   );
 };

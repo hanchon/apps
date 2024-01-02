@@ -467,6 +467,9 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
+      react-confetti:
+        specifier: ^6.1.0
+        version: 6.1.0(react@18.2.0)
       react-confetti-explosion:
         specifier: ^2.1.2
         version: 2.1.2(react-dom@18.2.0)(react@18.2.0)
@@ -1377,7 +1380,7 @@ importers:
     devDependencies:
       chainapsis-suggest-chain:
         specifier: github:chainapsis/keplr-chain-registry
-        version: github.com/chainapsis/keplr-chain-registry/66c207eebd8fb08e92da8739587e677f0a9ce7a6(@babel/core@7.23.6)(react-is@18.2.0)
+        version: github.com/chainapsis/keplr-chain-registry/08675796b7e8fdfdd717cde3928a31a3d0d9d371(@babel/core@7.23.6)(react-is@18.2.0)
       react-qr-code:
         specifier: ^2.0.12
         version: 2.0.12(react@18.2.0)
@@ -1471,7 +1474,7 @@ importers:
     devDependencies:
       chainapsis-suggest-chain:
         specifier: github:chainapsis/keplr-chain-registry
-        version: github.com/chainapsis/keplr-chain-registry/66c207eebd8fb08e92da8739587e677f0a9ce7a6(@babel/core@7.23.6)(react-is@18.2.0)
+        version: github.com/chainapsis/keplr-chain-registry/08675796b7e8fdfdd717cde3928a31a3d0d9d371(@babel/core@7.23.6)(react-is@18.2.0)
       react-qr-code:
         specifier: ^2.0.12
         version: 2.0.12(react@18.2.0)
@@ -18153,6 +18156,16 @@ packages:
       react-jss: 10.10.0(react@18.2.0)
     dev: false
 
+  /react-confetti@6.1.0(react@18.2.0):
+    resolution: {integrity: sha512-7Ypx4vz0+g8ECVxr88W9zhcQpbeujJAVqL14ZnXJ3I23mOI9/oBVTQ3dkJhUmB0D6XOtCZEM6N0Gm9PMngkORw==}
+    engines: {node: '>=10.18'}
+    peerDependencies:
+      react: ^16.3.0 || ^17.0.1 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      tween-functions: 1.2.0
+    dev: false
+
   /react-display-name@0.2.5:
     resolution: {integrity: sha512-I+vcaK9t4+kypiSgaiVWAipqHRXYmZIuAiS8vzFvXHHXVigg/sMKwlRgLy6LH2i3rmP+0Vzfl5lFsFRwF1r3pg==}
     dev: false
@@ -20409,6 +20422,10 @@ packages:
       turbo-windows-arm64: 1.10.16
     dev: false
 
+  /tween-functions@1.2.0:
+    resolution: {integrity: sha512-PZBtLYcCLtEcjL14Fzb1gSxPBeL7nWvGhO5ZFPGqziCcr8uvHp0NDmdjBchp6KHL+tExcg0m3NISmKxhU394dA==}
+    dev: false
+
   /tweetnacl-util@0.15.1:
     resolution: {integrity: sha512-RKJBIj8lySrShN4w6i/BonWp2Z/uxwC3h4y7xsRrpP59ZboCd0GpEVsOnMDYLMmKBpYhb5TgHzZXy7wTfYFBRw==}
 
@@ -21830,9 +21847,9 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
 
-  github.com/chainapsis/keplr-chain-registry/66c207eebd8fb08e92da8739587e677f0a9ce7a6(@babel/core@7.23.6)(react-is@18.2.0):
-    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/66c207eebd8fb08e92da8739587e677f0a9ce7a6}
-    id: github.com/chainapsis/keplr-chain-registry/66c207eebd8fb08e92da8739587e677f0a9ce7a6
+  github.com/chainapsis/keplr-chain-registry/08675796b7e8fdfdd717cde3928a31a3d0d9d371(@babel/core@7.23.6)(react-is@18.2.0):
+    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/08675796b7e8fdfdd717cde3928a31a3d0d9d371}
+    id: github.com/chainapsis/keplr-chain-registry/08675796b7e8fdfdd717cde3928a31a3d0d9d371
     name: chainapsis-suggest-chain
     version: 0.0.1
     dependencies:
