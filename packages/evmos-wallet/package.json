@@ -21,7 +21,6 @@
     "@types/node": "18.11.14",
     "@types/react": "18.2.45",
     "@types/react-dom": "18.0.9",
-    "@walletconnect/modal": "^2.6.1",
     "autoprefixer": "^10.4.13",
     "constants-helper": "workspace:*",
     "helpers": "workspace:*",
@@ -71,8 +70,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.2",
     "redux": "^4.2.1",
-    "schummar-translate": "^1.19.0",
-    "vitest": "^0.34.6"
+    "schummar-translate": "^1.19.0"
   },
   "browserslist": [
     "last 3 chrome version",

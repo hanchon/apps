@@ -1,4 +1,5 @@
 "use server";
+
 import { Breadcrumb } from "@evmosapps/ui-helpers";
 import { fetchExplorerData } from "../../../lib/fetch-explorer-data";
 

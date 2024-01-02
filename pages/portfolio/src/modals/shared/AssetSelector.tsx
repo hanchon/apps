@@ -12,7 +12,12 @@ import {
   TokenAmount,
 } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "@evmosapps/ui-helpers";
-import { Address, getChain, useTokenBalance } from "@evmosapps/evmos-wallet";
+import {
+  Address,
+  getActiveProviderKey,
+  getChain,
+  useTokenBalance,
+} from "@evmosapps/evmos-wallet";
 import { CryptoSelectorTitle } from "@evmosapps/ui-helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { formatUnits } from "viem";
@@ -53,7 +58,8 @@ export const AssetSelector = ({
 }>) => {
   const { t } = useTranslation("transfer-modal");
   const { sendEvent } = useTracker();
-  const { isDisconnected, connector, address: addressConnected } = useAccount();
+  const { isDisconnected, address: addressConnected } = useAccount();
+  const activeProvider = getActiveProviderKey();
   const selectedChain = getChain(value.networkPrefix);
 
   const selectedToken = getTokenByRef(value.ref);
@@ -144,7 +150,7 @@ export const AssetSelector = ({
               sendEvent(SELECT_TOKEN_SEND_FLOW, {
                 Token: token.name,
                 "User Wallet Address": addressConnected,
-                "Wallet Provider": connector?.name,
+                "Wallet Provider": activeProvider,
               });
               sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
                 Network:
@@ -152,7 +158,7 @@ export const AssetSelector = ({
                     ? "evmos"
                     : token.sourcePrefix,
                 "User Wallet Address": addressConnected,
-                "Wallet Provider": connector?.name,
+                "Wallet Provider": activeProvider,
               });
               setIsMaxClicked(false);
             }}
@@ -200,7 +206,7 @@ export const AssetSelector = ({
               sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
                 Network: prefix,
                 "User Wallet Address": addressConnected,
-                "Wallet Provider": connector?.name,
+                "Wallet Provider": activeProvider,
               });
               setIsMaxClicked(false);
             }}

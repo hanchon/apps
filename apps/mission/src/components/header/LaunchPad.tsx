@@ -29,7 +29,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
       icon: "/ecosystem/portfolio.png",
       children: t("launchPad.assets.title"),
       href: "/portfolio",
-      mixpanelId: "Assets",
+      mixpanelId: "Portfolio",
     },
     {
       icon: "/ecosystem/staking.png",

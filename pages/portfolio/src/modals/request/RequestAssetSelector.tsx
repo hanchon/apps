@@ -11,7 +11,12 @@ import {
   TokenAmount,
 } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "@evmosapps/ui-helpers";
-import { Address, getChain, useTokenBalance } from "@evmosapps/evmos-wallet";
+import {
+  Address,
+  getActiveProviderKey,
+  getChain,
+  useTokenBalance,
+} from "@evmosapps/evmos-wallet";
 import { CryptoSelectorTitle } from "@evmosapps/ui-helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { formatUnits } from "viem";
@@ -48,7 +53,8 @@ export const RequestAssetSelector = ({
 }>) => {
   const { t } = useTranslation("transfer-modal");
   const { sendEvent } = useTracker();
-  const { isDisconnected, connector, address: addressConnected } = useAccount();
+  const { isDisconnected, address: addressConnected } = useAccount();
+  const activeProvider = getActiveProviderKey();
   const selectedChain = getChain(value.networkPrefix);
   const onChangeEvent = useEffectEvent(
     (next: Asset | ((value: Asset) => Asset)) => {
@@ -105,12 +111,12 @@ export const RequestAssetSelector = ({
               sendEvent(SELECT_TOKEN_SEND_FLOW, {
                 Token: token.name,
                 "User Wallet Address": addressConnected,
-                "Wallet Provider": connector?.name,
+                "Wallet Provider": activeProvider,
               });
               sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
                 Network: token.sourcePrefix,
                 "User Wallet Address": addressConnected,
-                "Wallet Provider": connector?.name,
+                "Wallet Provider": activeProvider,
               });
             }}
           >
@@ -156,11 +162,14 @@ export const RequestAssetSelector = ({
               sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
                 Network: value.networkPrefix,
                 "User Wallet Address": addressConnected,
-                "Wallet Provider": connector?.name,
+                "Wallet Provider": activeProvider,
               });
             }}
           >
-            <CryptoSelector.Button src={`/chains/${value.networkPrefix}.png`}>
+            <CryptoSelector.Button
+              src={`/chains/${value.networkPrefix}.png`}
+              data-testid="request-asset-selector-network-button"
+            >
               {selectedChain.name}
             </CryptoSelector.Button>
             <CryptoSelector.Options
@@ -174,6 +183,7 @@ export const RequestAssetSelector = ({
                     src={`/chains/${value}.png`}
                     key={value}
                     value={value}
+                    data-testid={`request-asset-selector-network-option-${value}`}
                   >
                     {chain.name}
                   </CryptoSelector.Option>

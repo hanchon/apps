@@ -4,10 +4,8 @@ import { useAccount } from "wagmi";
 import { normalizeToEvmos } from "@evmosapps/evmos-wallet";
 import { cn } from "helpers";
 import { ComponentProps } from "react";
-
 import { SetupAccountModalTrigger } from "stateful-components/src/modals/SetupAccountModal/SetupAccountModal";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
-
 import { CLICK_ON_COPILOT_BANNER } from "tracker";
 import { Frameline } from "@evmosapps/ui-helpers/src/container/FrameLine";
 import { TrackerEvent } from "@evmosapps/ui-helpers/src/TrackerEvent";

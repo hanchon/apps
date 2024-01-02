@@ -4,7 +4,6 @@
 
 import { PrimaryButton, TopBarItem } from "@evmosapps/ui-helpers";
 import { TopBarProps } from "./types";
-
 import { useAccount } from "wagmi";
 import { ReceiveIcon, SendIcon } from "icons";
 import { useTranslation } from "@evmosapps/i18n/client";
@@ -15,9 +14,11 @@ import {
   CLICK_ON_SEND_BUTTON,
   useTracker,
 } from "tracker";
+import { getActiveProviderKey } from "@evmosapps/evmos-wallet";
 
 const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
-  const { isDisconnected, address, connector } = useAccount();
+  const { isDisconnected, address } = useAccount();
+  const activeProvider = getActiveProviderKey();
   const { t } = useTranslation("portfolio");
 
   const transferModal = useTransferModal();
@@ -44,7 +45,7 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
             transferModal.setIsOpen(true);
             sendEvent(CLICK_ON_SEND_BUTTON, {
               "User Wallet Address": address,
-              "Wallet Provider": connector?.name,
+              "Wallet Provider": activeProvider,
             });
           }}
         >
@@ -59,7 +60,7 @@ const TopBar = ({ topProps }: { topProps: TopBarProps }) => {
             requestModal.setIsOpen(true);
             sendEvent(CLICK_ON_RECEIVE_BUTTON, {
               "User Wallet Address": address,
-              "Wallet Provider": connector?.name,
+              "Wallet Provider": activeProvider,
             });
           }}
         >

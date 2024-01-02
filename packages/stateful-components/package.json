@@ -38,12 +38,9 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
     "@types/mixpanel-browser": "2.47.1",
     "clsx": "^2.0.0",
-    "mixpanel-browser": "^2.47.0",
-    "vitest": "^0.34.6"
+    "mixpanel-browser": "^2.47.0"
   },
   "browserslist": [
     "last 3 chrome version",

@@ -17,9 +17,11 @@ import { FULL_DAY_MINUS_ONE_SECOND } from "constants-helper";
 import { BigNumber } from "@ethersproject/bignumber";
 import { useEpochDay } from "../../../utils/hooks/useEpochDay";
 import { useStakingInfo } from "../../../utils/hooks/useStakingInfo";
+import { useAccount } from "wagmi";
 
 const TopBarStaking = () => {
   const value = useSelector((state: StoreType) => state.wallet.value);
+  const { isDisconnected } = useAccount();
   const { totalDelegations, totalUndelegations, totalRewards } =
     useStakingInfo();
   const { evmosBalance } = useEvmosBalance();
@@ -143,7 +145,7 @@ const TopBarStaking = () => {
             }
             onClick={handleConfirmButton}
             disabled={
-              !value.active || !totalRewards || totalRewards < 0.005 // insure that small residual is covered
+              isDisconnected || !totalRewards || totalRewards < 0.005 // insure that small residual is covered
             }
           />
         </div>

@@ -74,7 +74,6 @@
     "@tanstack/react-query-devtools": "^5.14.1",
     "@tanstack/react-query-next-experimental": "^5.14.1",
     "@tanstack/react-query-persist-client": "^5.14.1",
-    "@testing-library/react": "^14.0.0",
     "@types/lodash-es": "^4.17.8",
     "@types/mixpanel-browser": "2.47.1",
     "accept-language": "^3.0.18",

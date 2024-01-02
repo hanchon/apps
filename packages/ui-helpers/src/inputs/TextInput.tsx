@@ -36,6 +36,7 @@ export function TextInput({
       />
       {showCopyIcon && (
         <button
+          aria-label="Copy to clipboard"
           type="button"
           className={
             "w-auto h-4 flex items-center active:transform active:scale-75 active:duration-300"

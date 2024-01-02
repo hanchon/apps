@@ -35,7 +35,7 @@ export const AccountSelector = ({
 }>) => {
   const { t } = useTranslation("transfer-modal");
   const { sendEvent } = useTracker();
-  const { connector, address: addressConnected } = useAccount();
+  const { address: addressConnected } = useAccount();
   const { address, inputProps, errors, setValue } = useAddressInput(value);
   const [selectedNetwork, setSelectedNetwork] = useState<Prefix>("evmos");
   const [selectedWalletTab, setSelectedWalletTab] =
@@ -120,7 +120,7 @@ export const AccountSelector = ({
               sendEvent(SELECT_TO_NETWORK_SEND_FLOW, {
                 Network: value,
                 "User Wallet Address": addressConnected,
-                "Wallet Provider": connector?.name,
+                "Wallet Provider": activeProviderKey,
               });
             }}
           />

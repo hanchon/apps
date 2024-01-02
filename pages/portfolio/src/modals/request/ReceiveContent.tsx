@@ -233,7 +233,9 @@ export const ReceiveContent = ({
                 </ErrorMessage>
               )}
             </div>
-            {isDisconnected && <ConnectToWalletWarning modalType="Receive" />}
+            {isDisconnected && (
+              <ConnectToWalletWarning modalType="Receive Modal" />
+            )}
 
             {!isDisconnected && (
               <PrimaryButton

@@ -33,8 +33,6 @@
     "@evmosapps/ui-helpers": "workspace:*",
     "@fireworks-js/react": "^2.10.7",
     "@headlessui/react": "^1.7.15",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
     "@types/mixpanel": "2.14.1",
     "@types/mixpanel-browser": "2.47.1",
     "@types/node": "18.11.14",
