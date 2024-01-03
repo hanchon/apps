@@ -5,13 +5,11 @@ import Confetti from "react-confetti";
 import { useCopilot } from "../../copilot";
 import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, sendEvent } from "tracker";
 import { createPortal } from "react-dom";
-import { useConfetti } from "../../partials/use-confetti";
 
 export const SetupAccountSuccesStep = () => {
   const { width, height } = useWindowSize();
   const { t } = useTranslation("copilot-setup-account");
   const { nextStep } = useCopilot();
-  const { portalContainer } = useConfetti();
 
   return (
     <section className="h-full w-full space-y-1 overflow-hidden text-center flex flex-col z-[1]">
@@ -22,7 +20,7 @@ export const SetupAccountSuccesStep = () => {
           width={width}
           className="pointer-events-none"
           height={height}
-          numberOfPieces={2000}
+          numberOfPieces={3000}
           recycle={false}
           confettiSource={{
             x: width / 6,
@@ -31,7 +29,7 @@ export const SetupAccountSuccesStep = () => {
             h: 3000,
           }}
         />,
-        portalContainer
+        document.body
       )}
       <div className="flex items-center justify-center ">
         <IconContainer type="BIG_CONFETTI" />

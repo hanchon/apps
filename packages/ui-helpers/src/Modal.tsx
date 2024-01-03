@@ -118,9 +118,14 @@ const ModalHeader = ({
       {...rest}
     >
       <div className="flex items-center">{children}</div>
-      <button className="cursor-pointer" onClick={() => setIsOpen(false)}>
+      <button
+        className="cursor-pointer focus-visible:outline-none"
+        onClick={() => setIsOpen(false)}
+      >
         <CloseIcon
-          className={cn("h-6 w-auto text-current")}
+          className={cn(
+            "h-6 w-auto text-current focus:outline-none focus-visible:outline-none"
+          )}
           aria-hidden="true"
         />
       </button>
