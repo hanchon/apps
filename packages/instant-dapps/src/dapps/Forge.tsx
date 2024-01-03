@@ -1,18 +1,24 @@
 "use client";
+import { ConnectionRequired } from "@evmosapps/ui-helpers";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { SwapWidget } from '@forge-trade/widgets'
-import '@forge-trade/widgets/fonts.css'
+import Forge from "@evmosapps/widgets/src/forge";
+import { ConnectButton } from "stateful-components/src/connect-button";
+import { useAccount } from "wagmi";
 
-const Forge = () => {
-    return <div className='Uniswap'>
-        <SwapWidget
-            width={"100%"}
-            defaultChainId={9001}
-            routerUrl={"https://forge-router.evmosdao.xyz/"}
-        />
-    </div>
+export default function ForgeInstantDapp() {
+  const { isDisconnected } = useAccount();
+
+  if (isDisconnected) {
+    return (
+      <ConnectionRequired
+        bgUrl="bg-[url(/ecosystem/blur/forge-blur.png)]"
+        dappName="Forge"
+      >
+        <ConnectButton />
+      </ConnectionRequired>
+    );
+  }
+  return <Forge />;
 }
-
-export default Forge
