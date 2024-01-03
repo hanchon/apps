@@ -6,7 +6,7 @@ import { cn } from "helpers";
 import { ComponentProps } from "react";
 import { SetupAccountModalTrigger } from "stateful-components/src/modals/SetupAccountModal/SetupAccountModal";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
-import { CLICK_ON_COPILOT_BANNER } from "tracker";
+import { CLICK_ON_COPILOT_BANNER, sendEvent } from "tracker";
 import { Frameline } from "@evmosapps/ui-helpers/src/container/FrameLine";
 import { TrackerEvent } from "@evmosapps/ui-helpers/src/TrackerEvent";
 export const CopilotCard = () => {
@@ -78,16 +78,16 @@ export const CopilotCard = () => {
         {setupAccountActive && (
           <Frameline className="w-full p-2">
             <SetupAccountModalTrigger>
-              <TrackerEvent
-                event={CLICK_ON_COPILOT_BANNER}
-                properties={{
-                  "Copilot Actions": "Let's go",
+              <button
+                onClick={() => {
+                  sendEvent(CLICK_ON_COPILOT_BANNER, {
+                    "Copilot Actions": "Let's go",
+                  });
                 }}
+                className={`${linkCn} bg-red-300`}
               >
-                <button className={`${linkCn} bg-red-300`}>
-                  {t("copilotCard.letsGo")}
-                </button>
-              </TrackerEvent>
+                {t("copilotCard.letsGo")}
+              </button>
             </SetupAccountModalTrigger>
           </Frameline>
         )}
@@ -98,14 +98,16 @@ export const CopilotCard = () => {
                 step: "intro-topup",
               }}
             >
-              <TrackerEvent
-                event={CLICK_ON_COPILOT_BANNER}
-                properties={{
-                  "Copilot Actions": "Top up account",
+              <button
+                onClick={() => {
+                  sendEvent(CLICK_ON_COPILOT_BANNER, {
+                    "Copilot Actions": "Top up account",
+                  });
                 }}
+                className={linkCn}
               >
-                <button className={linkCn}>{t("copilotCard.topUp")}</button>
-              </TrackerEvent>
+                {t("copilotCard.topUp")}
+              </button>
             </SetupAccountModalTrigger>
           </Frameline>
         )}
