@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 import { FireworksHandlers } from "@fireworks-js/react";
 
 export const useFireworks = () => {
-  const portalContainer = document.createElement("div");
   const fireworksRef = useRef<FireworksHandlers | null>(null);
 
   const handleStopFireworks = async () => {
@@ -22,11 +21,5 @@ export const useFireworks = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  useEffect(() => {
-    document.body.appendChild(portalContainer);
-    return () => {
-      document.body.removeChild(portalContainer);
-    };
-  }, [portalContainer]);
-  return { fireworksRef, portalContainer };
+  return { fireworksRef };
 };

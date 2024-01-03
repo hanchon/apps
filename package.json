@@ -58,7 +58,6 @@
     "helpers": "workspace:*",
     "kill-port": "^2.0.1",
     "playwright": "^1.40.1",
-    "react-confetti-explosion": "^2.1.2",
     "react-hook-form": "^7.44.3",
     "tsx": "^3.13.0",
     "turbo": "^1.10.16",

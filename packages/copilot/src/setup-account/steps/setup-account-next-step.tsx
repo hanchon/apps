@@ -8,7 +8,7 @@ import Fireworks from "@fireworks-js/react";
 import { createPortal } from "react-dom";
 
 export const SetupAccountNextStep = () => {
-  const { fireworksRef, portalContainer } = useFireworks();
+  const { fireworksRef } = useFireworks();
 
   const { t } = useTranslation("copilot-setup-account");
 
@@ -23,7 +23,7 @@ export const SetupAccountNextStep = () => {
     return () => clearInterval(interval);
   }, [fireworksRef]);
   return (
-    <div className="flex flex-col items-center justify-center space-y-2 text-center">
+    <div className="flex flex-col justify-center space-y-2 text-center">
       <Modal.Header />
       {createPortal(
         <Fireworks
@@ -35,9 +35,11 @@ export const SetupAccountNextStep = () => {
             explosion: 7,
           }}
         />,
-        portalContainer
+        document.body
       )}
-      <IconContainer type={ICONS_TYPES.BIG_HANDS} />
+      <div className="self-center">
+        <IconContainer type={ICONS_TYPES.BIG_HANDS} />
+      </div>
       <h1 className="font-bold text-base">{t("nextsteps.title")}</h1>
       <p className="text-sm">{t("nextsteps.body")}</p>
 
