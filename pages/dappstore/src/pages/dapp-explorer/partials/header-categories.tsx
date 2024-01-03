@@ -13,6 +13,7 @@ import { Badge, TrackerEvent } from "@evmosapps/ui-helpers";
 import { cn } from "helpers";
 import { CLICK_ON_CATEGORY } from "tracker";
 export const HeaderCategories = ({
+  amountAppsSelected,
   categories,
   params,
 }: {
@@ -28,21 +29,12 @@ export const HeaderCategories = ({
     return categories.find((category) => category.slug === params.category);
   }, [categories, params.category]);
 
-  const totalAmountdApps = useMemo(() => {
-    return categories.reduce((acc, category) => {
-      if (category.slug === "instant-dapps") {
-        return acc;
-      }
-      return acc + category.categoryDapps.length;
-    }, 0);
-  }, [categories]);
-
   return (
     <>
       <div className="flex flex-col relative">
         <CategoryHeader
           category={selectedCategory}
-          totalCategoryCount={totalAmountdApps}
+          totalCategoryCount={amountAppsSelected}
         />
       </div>
       <div className="flex gap-3 md:gap-4 flex-wrap">
