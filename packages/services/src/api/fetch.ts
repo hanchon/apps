@@ -3,7 +3,8 @@
 
 import { TotalStakedResponse } from "./types";
 
-const EVMOS_BACKEND = "https://goapi.evmos.org";
+const EVMOS_BACKEND =
+  process.env.NEXT_PUBLIC_EVMOS_BACKEND || "https://goapi.evmos.org";
 const EVMOS_SYMBOL = "EVMOS";
 
 export const getTotalStaked = async (address: string) => {
