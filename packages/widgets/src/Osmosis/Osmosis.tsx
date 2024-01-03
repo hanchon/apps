@@ -1,7 +1,6 @@
 "use client";
 import { Link } from "@evmosapps/i18n/client";
 import { useState } from "react";
-import { useAccount } from "wagmi";
 import { parseUnits } from "@ethersproject/units";
 import { useOsmosisData } from "./useOsmosisData";
 import { cn, convertAndFormat, formatNumber } from "helpers";
@@ -17,12 +16,9 @@ import {
 } from "icons";
 import { SlippagePopover } from "./SlippagePopover";
 import Image from "next/image";
-import { ConnectionRequired } from "@evmosapps/ui-helpers";
 import { useOsmosisPrecompile } from "./useOsmosisPrecompile";
 
 export default function Osmosis() {
-  const { isDisconnected } = useAccount();
-
   const { osmosis, evmos } = useOsmosisData();
 
   const [loagingSwap, setLoadingSwap] = useState(false);
@@ -41,15 +37,15 @@ export default function Osmosis() {
   const number_min_received = parseFloat(
     formatUnits(
       BigInt(latestQoute?.return_amount?.toString() ?? ""),
-      outputTokenData.decimals,
-    ),
+      outputTokenData.decimals
+    )
   );
 
   const inputNumberBalance = parseFloat(
     convertAndFormat(
       BigNumber.from(inputTokenData.balance),
-      inputTokenData.decimals,
-    ),
+      inputTokenData.decimals
+    )
   );
 
   const minReceivedAfterSlippage =
@@ -64,15 +60,6 @@ export default function Osmosis() {
   const enoughBalance =
     inputNumberBalance >=
     parseFloat(swapAmount.toString() === "" ? "0" : swapAmount.toString());
-
-  if (isDisconnected) {
-    return (
-      <ConnectionRequired
-        bgUrl="bg-[url(/ecosystem/blur/osmosis-blur.png)]"
-        dappName="Osmosis "
-      />
-    );
-  }
 
   async function swapTokens() {
     try {
@@ -131,8 +118,8 @@ export default function Osmosis() {
                     outputTokenData,
                     parseUnits(
                       (inputNumberBalance / 2).toString(),
-                      inputTokenData.decimals,
-                    ).toString(),
+                      inputTokenData.decimals
+                    ).toString()
                   );
                 }}
                 className="flex place-content-center items-center  text-center 
@@ -151,8 +138,8 @@ export default function Osmosis() {
                     outputTokenData,
                     parseUnits(
                       inputNumberBalance.toString(),
-                      inputTokenData.decimals,
-                    ).toString(),
+                      inputTokenData.decimals
+                    ).toString()
                   );
                 }}
                 className="flex place-content-center items-center text-center transition-colors 
@@ -200,7 +187,7 @@ export default function Osmosis() {
                   debouncedFetchData(
                     inputTokenData,
                     outputTokenData,
-                    parseUnits(_amount, inputTokenData.decimals).toString(),
+                    parseUnits(_amount, inputTokenData.decimals).toString()
                   );
                 }}
                 placeholder="0"
@@ -230,7 +217,7 @@ export default function Osmosis() {
               "h-10 w-10 md:h-8 md:w-8": !isHoveringSwitchButton,
               "h-11 w-11 -translate-x-[2px] md:h-9 md:w-9":
                 isHoveringSwitchButton,
-            },
+            }
           )}
           onMouseEnter={() => {
             setHoveringSwitchButton(true);
@@ -251,7 +238,7 @@ export default function Osmosis() {
                   "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-bounce",
                   {
                     "rotate-180 opacity-0": isHoveringSwitchButton,
-                  },
+                  }
                 )}
               >
                 <DownArrowIconOsmosisIcon />
@@ -262,7 +249,7 @@ export default function Osmosis() {
                   {
                     "rotate-180 opacity-100": isHoveringSwitchButton,
                     "opacity-0": !isHoveringSwitchButton,
-                  },
+                  }
                 )}
               >
                 <SwapIcon aria-label="switch" />
@@ -360,7 +347,7 @@ export default function Osmosis() {
                   1<span>{inputTokenData.symbol}</span>≈{" "}
                   {formatNumber(
                     number_min_received / (swapAmount as number),
-                    5,
+                    5
                   )}{" "}
                   {outputTokenData.symbol}
                 </span>
@@ -370,7 +357,7 @@ export default function Osmosis() {
                   <ChevronDownIconOsmosis
                     className={cn(
                       "text-osmoverse-400 transition-all",
-                      detailsOpen ? "rotate-180" : "rotate-0",
+                      detailsOpen ? "rotate-180" : "rotate-0"
                       // isEstimateDetailRelevant ? "opacity-100" : "opacity-0"
                     )}
                   />
@@ -392,7 +379,7 @@ export default function Osmosis() {
                 ≈ $
                 {formatNumber(
                   (number_min_received * outputTokenData.price * 0.2) / 100,
-                  4,
+                  4
                 )}
               </span>
             </div>
@@ -416,7 +403,7 @@ export default function Osmosis() {
                   ≈ $
                   {formatNumber(
                     minReceivedAfterSlippage * outputTokenData.price,
-                    5,
+                    5
                   )}
                 </span>
               </div>
@@ -440,8 +427,8 @@ export default function Osmosis() {
           {loading
             ? "Loading..."
             : !enoughBalance
-              ? "Insufficient balance"
-              : "Swap"}
+            ? "Insufficient balance"
+            : "Swap"}
         </button>
       </div>
     </div>

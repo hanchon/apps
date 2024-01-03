@@ -38,16 +38,11 @@ export const WIDGETS: {
   forge: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Forge"), {
     ssr: false,
   }),
-  stride: dynamic(
-    () => import("@evmosapps/instant-dapps/src/dapps/Stride/Stride"),
-    {
-      ssr: false,
-    }
-  ),
-  osmosis: dynamic(
-    () => import("@evmosapps/instant-dapps/src/dapps/Osmosis/Osmosis"),
-    {
-      ssr: false,
-    }
-  ),
+  stride: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Stride"), {
+    loading: () => <p>Loading...</p>,
+    ssr: false,
+  }),
+  osmosis: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Osmosis"), {
+    ssr: false,
+  }),
 };

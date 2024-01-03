@@ -1,15 +1,13 @@
 "use client";
-import { CLICK_CONNECT_WALLET_BUTTON, sendEvent } from "tracker";
-import { AddressDisplay, PrimaryButton } from "@evmosapps/ui-helpers";
-import { cn } from "helpers";
+import { AddressDisplay } from "@evmosapps/ui-helpers";
 import {
   getActiveProviderKey,
   normalizeToEvmos,
 } from "@evmosapps/evmos-wallet";
 import { useAccount } from "wagmi";
-import { ConnectModalTrigger } from "stateful-components/src/modals/ConnectModal/ConnectModal";
 import { ProfileModalTrigger } from "stateful-components/src/modals/ProfileModal/ProfileModal";
 import { ProvidersIcons } from "stateful-components/src/providerIcons";
+import { ConnectButton } from "stateful-components/src/connect-button";
 
 export const WalletButton = () => {
   const { isConnected, connector, address } = useAccount();
@@ -31,18 +29,5 @@ export const WalletButton = () => {
       </ProfileModalTrigger>
     );
   }
-  return (
-    <ConnectModalTrigger>
-      <PrimaryButton
-        variant={"primary"}
-        data-testid="open-connect-modal"
-        className={cn("rounded-full px-8 py-2 text-sm font-bold")}
-        onClick={() => {
-          sendEvent(CLICK_CONNECT_WALLET_BUTTON);
-        }}
-      >
-        Connect
-      </PrimaryButton>
-    </ConnectModalTrigger>
-  );
+  return <ConnectButton />;
 };

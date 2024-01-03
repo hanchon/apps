@@ -20,8 +20,6 @@ import { useEffect, useState } from "react";
 import useStrideData from "./useStrideData";
 import { useAssets } from "@evmosapps/evmos-wallet";
 import { convertFromAtto } from "helpers";
-import { ConnectionRequired } from "@evmosapps/ui-helpers";
-import { useAccount } from "wagmi";
 import { useStridePrecompile } from "./useStridePrecompile";
 import { parseUnits } from "viem";
 import Link from "next/link";
@@ -86,16 +84,6 @@ const StrideWidget = () => {
   });
 
   const [stakedAmount, setStakedAmount] = useState<number>(0);
-
-  const { isDisconnected } = useAccount();
-  if (isDisconnected) {
-    return (
-      <ConnectionRequired
-        bgUrl="bg-[url(/ecosystem/blur/stride-blur.png)]"
-        dappName="Stride "
-      />
-    );
-  }
 
   return (
     <div id="" className={`${themeClass}`}>

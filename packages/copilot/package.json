@@ -29,7 +29,7 @@
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",
     "@evmosapps/evmos-wallet": "workspace:*",
-    "@evmosapps/instant-dapps": "workspace:*",
+    "@evmosapps/widgets": "workspace:*",
     "@evmosapps/ui-helpers": "workspace:*",
     "@fireworks-js/react": "^2.10.7",
     "@headlessui/react": "^1.7.15",

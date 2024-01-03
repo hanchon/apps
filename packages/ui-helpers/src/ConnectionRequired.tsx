@@ -1,12 +1,13 @@
 import { EvmosCopilotRedIcon } from "icons";
-import { PrimaryButton } from "./PrimaryButton";
 
 export const ConnectionRequired = ({
   bgUrl,
   dappName,
+  children,
 }: {
   bgUrl: string;
   dappName: string;
+  children?: React.ReactNode;
 }) => {
   return (
     <div
@@ -16,12 +17,10 @@ export const ConnectionRequired = ({
         <EvmosCopilotRedIcon height={50} />
         <p className="text-pearl ">Connection required</p>
         <p className="font-light">
-          Please connect your account in order to interact with the {dappName}
+          Please connect your account in order to interact with the {dappName}{" "}
           Instant dApp
         </p>
-        <PrimaryButton as="a" variant={"primary"} href="?action=connect">
-          Connect
-        </PrimaryButton>
+        {children}
       </div>
     </div>
   );
