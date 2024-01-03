@@ -17,11 +17,15 @@ import { getNetwork, switchNetwork } from "wagmi/actions";
 import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
 import { E } from "helpers";
 
+type RewardsProps = {
+  wallet: WalletExtension;
+  setConfirmClicked: (value: boolean) => void;
+};
 const evmos = getEvmosChainInfo();
 
-export const useRewards = (value: WalletExtension) => {
+export const useRewards = (rewardsProps: RewardsProps) => {
   const dispatch = useDispatch();
-
+  const { wallet: value, setConfirmClicked } = rewardsProps;
   const handleConfirmButton = useCallback(async () => {
     const connectedNetwork = getNetwork();
     if (connectedNetwork.chain?.id !== evmos.id) {
@@ -38,6 +42,7 @@ export const useRewards = (value: WalletExtension) => {
       "Wallet Provider": value?.extensionName,
     });
 
+    setConfirmClicked(true);
     const res = await executeRewards(value);
     if (res.error === true) {
       sendEvent(UNSUCCESSFUL_TX_CLAIM_REWARDS, {
@@ -51,7 +56,8 @@ export const useRewards = (value: WalletExtension) => {
         "Wallet Provider": value?.extensionName,
       });
     }
+    setConfirmClicked(false);
     dispatch(snackExecuteIBCTransfer(res));
-  }, [dispatch, value]);
+  }, [dispatch, value, setConfirmClicked]);
   return { handleConfirmButton };
 };
