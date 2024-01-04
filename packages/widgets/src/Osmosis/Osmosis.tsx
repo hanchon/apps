@@ -68,21 +68,17 @@ export default function Osmosis() {
       // TODO: this is for testnet testing. Rmove for mainnet
       const input =
         inputToken.symbol === "OSMO"
-          ? "ibc/803421C62F3B697809CE5755E53E68CCDE7E02DA4ACD5C7C79A3648B8B8AF8DC"
-          : "atevmos";
+          ? "0x5db67696C3c088DfBf588d3dd849f44266ff0ffa"
+          : "0xcc491f589b45d4a3c679016195b3fb87d7848210";
       const output =
         inputToken.symbol === "OSMO"
-          ? "ibc/EA833DEBB8D9517E461DFF3BBE7018384B04D5FDB92CF83EBD95DBAC0522D498"
-          : "uosmo";
+          ? "0xcc491f589b45d4a3c679016195b3fb87d7848210"
+          : "0x5db67696C3c088DfBf588d3dd849f44266ff0ffa";
       const res = await swap({
-        // input: inputTokenData.erc20Address,
         input: input,
         output: output,
-        amount: parseUnits(swapAmount.toString(), inputTokenData.decimals),
-        // amount: swapAmount.toString(),
-        // slippage_tolerance: currentSlippage,
-        // window_seconds: 60 * 60 * 24,
-        // receiver: "",
+        amount: parseUnits(swapAmount.toString(), 1),
+        slippage_tolerance: currentSlippage,
       });
       setSwapHash(res.hash);
       setLoadingSwap(false);
@@ -303,7 +299,7 @@ export default function Osmosis() {
                 rel="noopener noreferrer"
                 target="_blank"
                 className="text-wosmongton-300 text-xs hover:text-osmoverse-200 transition-colors"
-                href={`https://escan.live/tx/${swapHash}`}
+                href={`https://testnet.escan.live/tx/${swapHash}`}
               >
                 View on Escan
               </Link>
