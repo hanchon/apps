@@ -1,5 +1,5 @@
 "use client";
-import type NextLink from "next/link";
+import NextLink from "next/link";
 import { forwardRef } from "react";
 import { defaultLocale, languages } from "../../settings";
 import { useTranslation } from "../instrumentation";
@@ -21,5 +21,5 @@ export const Link: typeof NextLink = forwardRef(function Link(
     url = url.replace(new RegExp(`^/${defaultLocale}`), "");
   }
 
-  return <a href={url.toString()} ref={ref} {...props} role="link" />;
+  return <NextLink href={url.toString()} ref={ref} {...props} />;
 });

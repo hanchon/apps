@@ -4,7 +4,9 @@ import { useMemo, SetStateAction, useEffect, useRef } from "react";
 import { z } from "zod";
 import { useEffectEvent } from "../hooks/use-effect-event";
 import React from "react";
-import { _useRouter } from "./_useRouter";
+
+import { useSearchParams, useRouter } from "next/navigation";
+
 import { get } from "lodash-es";
 
 const serialize = <T extends z.output<z.AnyZodObject>>(obj: T) => {
@@ -42,8 +44,8 @@ export const useModal = <T extends z.AnyZodObject>(
   schema: T = z.object({}) as T
 ) => {
   const safeParse: T["safeParse"] = useEffectEvent(schema.safeParse);
-  const { push, replace, searchParams } = _useRouter();
-  // const searchParams = useSearchParams().toString();
+  const { push, replace } = useRouter();
+  const searchParams = useSearchParams().toString();
 
   const query = useMemo(() => {
     return qs.decode(searchParams);
@@ -147,7 +149,7 @@ export const modalLink = <T extends z.AnyZodObject>(
   schema: T = z.object({}) as T
 ) =>
   function ModalLink({ initialState, children }: ModalLinkProps<T>) {
-    const { push } = _useRouter();
+    const { push } = useRouter();
     const onClick = async () => {
       const state =
         (initialState instanceof Function
