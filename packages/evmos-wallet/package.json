@@ -12,8 +12,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint .",
-    "gen-cosmos-types": "openapi-typescript https://api.evmos.dev/openapi.json -o ./src/api/cosmos-clients/autogen-cosmos-client.d.ts --exclude-deprecated",
-    "postinstall": "pnpm gen-cosmos-types"
+    "gen:cosmos-types": "openapi-typescript https://api.evmos.dev/openapi.json -o ./autogen/cosmos-client.d.ts --exclude-deprecated",
+    "postinstall": "pnpm gen:cosmos-types"
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",

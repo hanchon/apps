@@ -3,7 +3,7 @@ import createClient, {
   createFinalURL,
   defaultQuerySerializer,
 } from "openapi-fetch";
-import { paths } from "./autogen-cosmos-client";
+
 import { getChain } from "../../registry-actions";
 import { Prefixish } from "../../registry-actions/utils/normalize-to-prefix";
 
@@ -14,6 +14,7 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { omit } from "lodash-es";
+import { paths } from "../../../autogen/cosmos-client";
 
 export const cosmosClient = (prefix: Prefixish) =>
   createClient<paths>({

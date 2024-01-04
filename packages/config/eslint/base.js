@@ -99,7 +99,7 @@ const lintConfig = [
       "**/.testnet/**/*",
       "**/.turbo/**/*",
       "**/test-results/**/*",
-      "**/autogen-cosmos-client.d.ts",
+      "**/autogen/**",
     ],
   },
   ...configCompat({

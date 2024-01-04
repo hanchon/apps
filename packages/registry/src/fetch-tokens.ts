@@ -1,9 +1,11 @@
+"use server";
 import { devModeCache } from "helpers/src/dev/dev-mode-cache";
 
 import { TokenEntity } from "../autogen/token-entity";
 import { github } from "helpers/src/clients/github";
 import { loadRegistryTokenExtensions } from "./load-registry-token-extensions";
 
+export const revalidate = 3600;
 export const fetchTokens = devModeCache(
   async function fetchTokens() {
     const fromRegistry = github

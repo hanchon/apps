@@ -1,7 +1,10 @@
+"use server";
 import { devModeCache } from "helpers/src/dev/dev-mode-cache";
 import { github } from "helpers/src/clients/github";
 import { ChainEntity } from "../autogen/chain-entity";
 import { loadRegistryChainExtensions } from "./load-registry-chain-extensions";
+
+export const revalidate = 3600;
 export const fetchChains = devModeCache(
   async function fetchChains() {
     const fromRegistry = github
