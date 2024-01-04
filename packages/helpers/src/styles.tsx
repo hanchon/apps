@@ -383,22 +383,18 @@ export function checkMetaMaskFormatAddress(address: string) {
   return false;
 }
 
-export function indexOfMax(arr: number[]) {
-  // given an array of numbers, convert them to
-  // numbers and returns index of greatest value
-  if (arr === undefined || arr?.length === 0) {
-    return -1;
-  }
+export function indexOfMax(arr: number[]): number {
+  if (!arr?.length) return -1;
 
-  let max = arr[0] ?? 0;
   let maxIndex = 0;
+  let maxValue = arr[0] ?? 0;
 
-  for (let i = 1; i < arr.length; i++) {
-    if (arr[i] ?? max > max) {
-      maxIndex = i;
-      max = arr[i] ?? max;
+  arr.forEach((value, index) => {
+    if (value !== undefined && value > maxValue) {
+      maxValue = value;
+      maxIndex = index;
     }
-  }
+  });
 
   return maxIndex;
 }

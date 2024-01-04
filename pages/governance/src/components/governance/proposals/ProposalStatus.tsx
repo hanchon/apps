@@ -3,6 +3,7 @@
 
 import {
   PROPOSAL_STATUS,
+  PROPOSAL_STATUS_FAILED,
   PROPOSAL_STATUS_PASSED,
   PROPOSAL_STATUS_REJECTED,
 } from "../../../utils/types";
@@ -15,6 +16,14 @@ const ProposalStatus = ({ status }: { status: string }) => {
       <div className={`${style} bg-black`}>
         <span>{<CloseIcon width={18} height={18} />}</span>
         <span>{PROPOSAL_STATUS.PROPOSAL_STATUS_REJECTED}</span>
+      </div>
+    );
+  }
+  if (status === PROPOSAL_STATUS_FAILED) {
+    return (
+      <div className={`${style} bg-black`}>
+        <span>{<CloseIcon width={18} height={18} />}</span>
+        <span>{PROPOSAL_STATUS.PROPOSAL_STATUS_FAILED}</span>
       </div>
     );
   }
