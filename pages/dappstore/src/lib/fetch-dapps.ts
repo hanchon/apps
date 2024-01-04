@@ -2,14 +2,24 @@ import { dappSchema } from "./schemas/entities/dappSchema";
 import { inspect } from "util";
 import { ECOSYSTEM_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 import { Log } from "helpers";
-import { notion } from "helpers/src/notion-client";
+import { notion } from "helpers/src/clients/notion";
 import { cache } from "react";
 import { handleDappImages } from "./schemas/dapp-images-handler/handleDappImages";
 
+import { devModeCache } from "helpers/src/dev/dev-mode-cache";
+
+const fetchNotionEcosystemDb = devModeCache(
+  cache(async () =>
+    notion.databases.query({
+      database_id: ECOSYSTEM_PAGE_NOTION_ID,
+    })
+  ),
+  {
+    cacheKey: "fetchNotionEcosystemDb",
+  }
+);
 export const fetchDapps = cache(async () => {
-  const dapps = await notion.databases.query({
-    database_id: ECOSYSTEM_PAGE_NOTION_ID,
-  });
+  const dapps = await fetchNotionEcosystemDb();
 
   const parsedDapps = await Promise.all(
     dapps.results.map(async (value) => {

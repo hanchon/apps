@@ -23,7 +23,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "clear-cache": "sh ./clear-cache.sh",
     "kill": "turbo run kill",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "clear-dev-cache": "rm -rf ./node_modules/.cache/evmosapps && echo 'Dev cache cleared!'"
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",

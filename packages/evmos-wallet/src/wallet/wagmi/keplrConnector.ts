@@ -326,7 +326,9 @@ export class KeplrConnector extends Connector<Keplr, {}> {
   protected onChainChanged(): void {
     throw new Error("Method not implemented.");
   }
-  protected onDisconnect(): void {}
+  protected onDisconnect() {
+    this.emit("disconnect");
+  }
   // This has to be a promise to conform to the interface
   // eslint-disable-next-line @typescript-eslint/require-await
   async switchChain(chainId: number): Promise<Chain> {
