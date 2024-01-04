@@ -1,15 +1,17 @@
 import "server-only";
-import findCacheDirectory from "find-cache-dir";
+
 import { readFile, writeFile, mkdir } from "fs/promises";
 import { ArgumentsType } from "vitest";
 import path from "path";
-import os from "os";
+
 import { E } from "../error-handling";
 import { Log } from "helpers/src/logger";
+import { fileURLToPath } from "node:url";
 
-const cacheDir =
-  findCacheDirectory({ name: "evmosapps" }) ??
-  path.join(os.tmpdir(), "evmosapps");
+const cacheDir = path.join(
+  fileURLToPath(import.meta.url),
+  "../../../../../node_modules/.cache/evmosapps"
+);
 
 /**
  * Caches the result of a function in development mode only.
@@ -91,13 +93,16 @@ export const devModeCache = <T extends (...args: any[]) => Promise<unknown>>(
 
     const isStale = Date.now() - cached.date > revalidate * 1000;
 
-    if (isStale && staleWhileRevalidate) {
-      // revalidate in background
-      void fetchAndCache();
-      return cached.response as Awaited<ReturnType<T>>;
+    if (isStale) {
+      if (staleWhileRevalidate) {
+        // revalidate in background
+        void fetchAndCache();
+        return cached.response as Awaited<ReturnType<T>>;
+      }
+      return fetchAndCache();
     }
 
-    return fetchAndCache();
+    return cached.response as Awaited<ReturnType<T>>;
   };
 
   return req as T;
