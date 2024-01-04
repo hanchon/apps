@@ -1,5 +1,3 @@
-import "server-only";
-
 import { readFile, writeFile, mkdir } from "fs/promises";
 import { ArgumentsType } from "vitest";
 import path from "path";
@@ -17,6 +15,15 @@ const cacheDir = path.join(
  * Caches the result of a function in development mode only.
  *
  * To clear the cache, run 'pnpm -w clear-dev-cache'
+ *
+ * WHY THIS EXISTS???
+ *
+ * communication with external apis are subject to rate limits,
+ * while we usually stay well below the limits for most things in production (because request are mostly done at build time)
+ * we can easly hit some of these limits in development mode.
+ * Not to mention that many Next caching features are disabled in dev mode.
+ * That slows down hot reload and makes development a pain.
+ *
  */
 
 export const devModeCache = <T extends (...args: any[]) => Promise<unknown>>(

@@ -1,7 +1,10 @@
 import path from "path";
 import { fileURLToPath } from "url";
+
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
+
+export const autogenDir = path.join(__dirname, "../autogen");
 export const registryDir = path.resolve(
   fileURLToPath(
     // eslint-disable-next-line @typescript-eslint/await-thenable

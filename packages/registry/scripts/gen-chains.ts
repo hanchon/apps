@@ -112,7 +112,7 @@ for (const chainRegistry of chains) {
     }) ?? [];
 
   const isTestnet = configuration.configurationType === "testnet";
-  const feeTokenFromChainConfig = configuration.currencies[0];
+  const feeTokenFromChainConfig = configuration.currencies[0]!;
   let feeToken = tokens.find(
     (token) =>
       token.minCoinDenom === feeTokenFromChainConfig.coinMinDenom ||

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/schema.chain.json",
+  "prefix": "osmo",
+  "gasPriceStep": {
+    "low": "0.005",
+    "average": "0.025",
+    "high": "0.04"
+  },
+  "bip44": {
+    "coinType": "118"
+  },
+  "configurations": [
+    {
+      "chainId": "osmo-test-5",
+      "chainName": "Osmosis Testnet",
+      "identifier": "osmosistestnet",
+      "clientId": "07-tendermint-0",
+      "rest": ["https://lcd.osmotest5.osmosis.zone"],
+      "jrpc": [
+        "https://rpc.osmotest5.osmosis.zone",
+        "https://rpc.testnet.osl.zone"
+      ],
+      "rpc": [],
+      "currencies": [
+        {
+          "coinDenom": "OSMO",
+          "coinMinDenom": "uosmo",
+          "coinDecimals": "6"
+        }
+      ],
+      "source": {
+        "sourceChannel": "channel-1653",
+        "sourceIBCDenomToEvmos": "",
+        "destinationChannel": "channel-207",
+        "jsonRPC": ["https://rpc-osmosis.blockapsis.com/"]
+      },
+      "configurationType": "testnet",
+      "explorerTxUrl": "https://testnet.mintscan.io/osmosis-testnet/txs",
+      "img": {
+        "png": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/assets/chainConfig/osmosis.png"
+      },
+      "cosmosRegistryUrl": "https://raw.githubusercontent.com/cosmos/chain-registry/master/osmosis/chain.json"
+    }
+  ]
+}

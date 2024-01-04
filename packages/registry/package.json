@@ -11,7 +11,10 @@
     "build:registry": "NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./scripts/gen-chains.ts",
     "check-clients": "NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./scripts/check-clients.ts",
     "lint": "eslint .",
-    "postinstall": "tsx ./scripts/gen-types.ts"
+    "gen:schema-types": "NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./scripts/gen-schema-types.ts",
+    "gen:registry-types": "NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./scripts/gen-registry-types.ts",
+    "gen:types": "pnpm run gen:schema-types && pnpm run gen:registry-types",
+    "postinstall": "pnpm run gen:types"
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",

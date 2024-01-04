@@ -25,6 +25,7 @@ export const useAssets = () => {
 
   const assets = useQuery<ERC20BalanceResponse, Error>({
     queryKey: ["commonAssets", address],
+    staleTime: 1000 * 60 * 5,
     queryFn: () =>
       getAssetsForAddress(
         address ? normalizeToEvmos(address) : address,
