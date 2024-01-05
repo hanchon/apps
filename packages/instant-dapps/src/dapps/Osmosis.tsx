@@ -14,8 +14,8 @@ export default function OsmosisInstantDapp() {
   if (isDisconnected) {
     return (
       <ConnectionRequired
-        bgUrl="bg-[url(/ecosystem/blur/cypher-blur.png)]"
-        dappName="Cypher Wallet"
+        bgUrl="bg-[url(/ecosystem/blur/osmosis-blur.png)]"
+        dappName="Osmosis"
       >
         <ConnectButton />
       </ConnectionRequired>
