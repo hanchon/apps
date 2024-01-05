@@ -4,9 +4,10 @@ import { devModeCache } from "helpers/src/dev/dev-mode-cache";
 import { TokenEntity } from "../autogen/token-entity";
 import { github } from "helpers/src/clients/github";
 import { loadRegistryTokenExtensions } from "./load-registry-token-extensions";
+import { unstable_cache } from "next/cache";
 
-export const revalidate = 3600;
-export const fetchTokens = devModeCache(
+const revalidate = 3600;
+const _fetchTokens = devModeCache(
   async function fetchTokens() {
     const fromRegistry = github
       .request("GET /repos/{owner}/{repo}/git/trees/{tree_sha}", {
@@ -32,10 +33,16 @@ export const fetchTokens = devModeCache(
       .flatMap((x) => x)
       .map((token) => ({
         ...token,
-        source: token.ibc.source,
+        source: token.ibc.source!,
       }));
   },
+
   {
+    revalidate,
     cacheKey: "fetchTokens",
   }
 );
+
+export const fetchTokens = unstable_cache(_fetchTokens, ["fetchTokens"], {
+  revalidate,
+});

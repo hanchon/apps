@@ -6,9 +6,9 @@ import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 import { Search } from "@evmosapps/ui-helpers";
 import { useTranslation } from "next-i18next";
-import { _useRouter } from "helpers/src/modals/_useRouter";
+import { useRouter } from "next/navigation";
 export const SearchVesting = () => {
-  const router = _useRouter();
+  const router = useRouter();
 
   const handleRouting = () => {
     const url = new URL(window.location.href);
