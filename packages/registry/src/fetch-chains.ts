@@ -3,10 +3,9 @@ import { devModeCache } from "helpers/src/dev/dev-mode-cache";
 import { github } from "helpers/src/clients/github";
 import { ChainEntity } from "../autogen/chain-entity";
 import { loadRegistryChainExtensions } from "./load-registry-chain-extensions";
-import { unstable_cache } from "next/cache";
 
 const revalidate = 3600;
-const _fetchChains = devModeCache(
+export const fetchChains = devModeCache(
   async function fetchChains() {
     const fromRegistry = github
       .request("GET /repos/{owner}/{repo}/git/trees/{tree_sha}", {
@@ -50,7 +49,3 @@ const _fetchChains = devModeCache(
     revalidate,
   }
 );
-
-export const fetchChains = unstable_cache(_fetchChains, ["fetchChains"], {
-  revalidate,
-});

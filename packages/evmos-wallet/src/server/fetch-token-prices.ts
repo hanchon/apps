@@ -2,7 +2,6 @@
 import { fetchTokens } from "@evmosapps/registry/src/fetch-tokens";
 import { isUndefined } from "helpers";
 import { devModeCache } from "helpers/src/dev/dev-mode-cache";
-import { unstable_cache } from "next/cache";
 import { z } from "zod";
 
 const revalidate = 5 * 60 * 1000; // 5 minutes
@@ -17,7 +16,7 @@ const CoingeckoPriceSchema = z
 const CoingeckoPriceResponseSchema = z.record(CoingeckoPriceSchema);
 const { entries, fromEntries, keys } = Object;
 
-const _fetchTokenPrices = devModeCache(
+export const fetchTokenPrices = devModeCache(
   async () => {
     const url = new URL("https://api.coingecko.com/api/v3/simple/price");
     url.searchParams.set("include_24hr_change", "true");
@@ -66,14 +65,6 @@ const _fetchTokenPrices = devModeCache(
   },
   {
     cacheKey: "fetchTokenPrices",
-    revalidate,
-  }
-);
-
-export const fetchTokenPrices = unstable_cache(
-  _fetchTokenPrices,
-  ["fetchTokenPrices"],
-  {
     revalidate,
   }
 );
