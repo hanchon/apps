@@ -51,6 +51,7 @@ export const HeaderCategories = ({
                   : `/dapps/${category.slug}`
               }
               key={category.slug}
+              scroll={false}
             >
               <Badge
                 className={cn({

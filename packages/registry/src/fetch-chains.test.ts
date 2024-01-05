@@ -5,7 +5,7 @@ import { sleep } from "helpers/src/sleep";
 
 describe("fetchChains", () => {
   it("should fetch chains", async () => {
-    const chains = await fetchChains();
+    const { chains } = await fetchChains();
 
     expect(chains.length).toBeGreaterThan(0);
 

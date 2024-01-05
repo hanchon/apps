@@ -3,9 +3,10 @@ import { devModeCache } from "helpers/src/dev/dev-mode-cache";
 import { github } from "helpers/src/clients/github";
 import { ChainEntity } from "../autogen/chain-entity";
 import { loadRegistryChainExtensions } from "./load-registry-chain-extensions";
+import { unstable_cache as cache } from "next/cache";
 
 const revalidate = 3600;
-export const fetchChains = devModeCache(
+export const _fetchChains = devModeCache(
   async function fetchChains() {
     const fromRegistry = github
       .request("GET /repos/{owner}/{repo}/git/trees/{tree_sha}", {
@@ -42,10 +43,14 @@ export const fetchChains = devModeCache(
     if (flattened.length !== new Set(flattened.map((x) => x.identifier)).size) {
       throw new Error("Duplicate chain identifiers");
     }
-    return flattened;
+    return { chains: flattened, dt: new Date().toISOString() };
   },
   {
     cacheKey: "fetchChains",
     revalidate,
   }
 );
+
+export const fetchChains = cache(_fetchChains, ["fetchChains"], {
+  revalidate,
+});

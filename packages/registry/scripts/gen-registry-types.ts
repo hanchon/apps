@@ -1,7 +1,7 @@
 import { writeFile } from "fs/promises";
 import path from "path";
-import { fetchChains } from "../src/fetch-chains";
-import { fetchTokens } from "../src/fetch-tokens";
+import { _fetchChains } from "../src/fetch-chains";
+import { _fetchTokens } from "../src/fetch-tokens";
 import { autogenDir } from "./constants";
 
 const types: string[] = [`/* eslint-disable */`];
@@ -15,7 +15,7 @@ const genUnion = (name: string, union: string[]) => {
 };
 
 const genChainTypes = async () => {
-  const chains = await fetchChains();
+  const { chains } = await _fetchChains();
   const chainPrefixes = chains.map((chain) => chain.prefix);
 
   genUnion("ChainPrefix", chainPrefixes);
@@ -26,7 +26,7 @@ const genChainTypes = async () => {
 };
 
 const genTokenTypes = async () => {
-  const { tokens } = await fetchTokens();
+  const { tokens } = await _fetchTokens();
   const tokenSymbols = tokens.map((token) => token.coinDenom);
 
   genUnion("TokenSymbol", tokenSymbols);
