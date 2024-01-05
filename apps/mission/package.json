@@ -24,7 +24,6 @@
     "@evmosapps/config": "workspace:*",
     "@evmosapps/copilot": "workspace:*",
     "@evmosapps/dappstore-page": "workspace:*",
-    "@evmosapps/evmos-wallet": "workspace:*",
     "@evmosapps/governance-page": "workspace:*",
     "@evmosapps/i18n": "workspace:*",
     "@evmosapps/portfolio-page": "workspace:*",
@@ -66,6 +65,8 @@
     "last 3 safari version"
   ],
   "dependencies": {
+    "@evmosapps/evmos-wallet": "workspace:*",
+    "@evmosapps/registry": "workspace:*",
     "@interchain-ui/react": "1.16.5",
     "@netlify/plugin-nextjs": "^4.41.3",
     "@notionhq/client": "^2.2.13",

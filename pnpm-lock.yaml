@@ -105,6 +105,12 @@ importers:
 
   apps/mission:
     dependencies:
+      '@evmosapps/evmos-wallet':
+        specifier: workspace:*
+        version: link:../../packages/evmos-wallet
+      '@evmosapps/registry':
+        specifier: workspace:*
+        version: link:../../packages/registry
       '@interchain-ui/react':
         specifier: 1.16.5
         version: 1.16.5(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
@@ -190,9 +196,6 @@ importers:
       '@evmosapps/dappstore-page':
         specifier: workspace:*
         version: link:../../pages/dappstore
-      '@evmosapps/evmos-wallet':
-        specifier: workspace:*
-        version: link:../../packages/evmos-wallet
       '@evmosapps/governance-page':
         specifier: workspace:*
         version: link:../../pages/governance
@@ -6328,6 +6331,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     bundledDependencies:
       - napi-wasm
 
@@ -16600,6 +16604,9 @@ packages:
   /napi-macros@2.2.2:
     resolution: {integrity: sha512-hmEVtAGYzVQpCKdbQea4skABsdXW4RUh5t5mJ2zzqowJS2OyXZTU1KhDVFhx+NlWZ4ap9mqR9TcDO3LTTttd+g==}
     dev: false
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
 
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
