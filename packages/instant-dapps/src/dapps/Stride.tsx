@@ -12,8 +12,8 @@ export default function StrideInstantDapp() {
   if (isDisconnected) {
     return (
       <ConnectionRequired
-        bgUrl="bg-[url(/ecosystem/blur/cypher-blur.png)]"
-        dappName="Cypher Wallet"
+        bgUrl="bg-[url(/ecosystem/blur/stride-blur.png)]"
+        dappName="Stride"
       >
         <ConnectButton />
       </ConnectionRequired>

@@ -61,6 +61,18 @@ export default function Osmosis() {
     inputNumberBalance >=
     parseFloat(swapAmount.toString() === "" ? "0" : swapAmount.toString());
 
+  const showDollarsAmount = (amount: number | string) => {
+    if (typeof amount === "string" && amount === "") {
+      return false;
+    }
+    if (isNaN(amount as number)) {
+      return false;
+    }
+    if (amount === 0) {
+      return false;
+    }
+    return true;
+  };
   async function swapTokens() {
     try {
       setLoadingSwap(true);
@@ -151,7 +163,13 @@ export default function Osmosis() {
           </div>
           <div className="mt-3 flex place-content-between items-center">
             <div className="flex items-center justify-center md:justify-start">
-              <div className="flex items-center gap-2 text-left transition-opacity cursor-pointer">
+              <div
+                className={`flex items-center gap-2 text-left transition-opacity cursor-pointer
+                ${
+                  inputTokenData?.tokenIdentifier === "" &&
+                  "animate-pulse bg-osmoverse-700 [&>*]:invisible h-[50px] rounded-xl"
+                } `}
+              >
                 <div className="mr-1 h-[50px] w-[50px] shrink-0 rounded-full md:h-13 md:w-13">
                   <Image
                     src={`/tokenIdentifier/${inputTokenData.tokenIdentifier}.png`}
@@ -174,26 +192,40 @@ export default function Osmosis() {
             <div className="flex w-full flex-col items-end">
               <input
                 value={swapAmount}
+                onKeyDown={(event) => {
+                  if (event.key === "-") {
+                    event.preventDefault();
+                  }
+                }}
                 onChange={(e) => {
                   setShowBalanceLink(false);
                   setLoadingSwap(false);
                   setSwapHash(null);
                   const _amount = parseFloat(e.target.value).toString();
-                  setSwapAmount(Number(_amount));
+                  setSwapAmount(_amount === "NaN" ? "" : Number(_amount));
                   debouncedFetchData(
                     inputTokenData,
                     outputTokenData,
-                    parseUnits(_amount, inputTokenData.decimals).toString()
+                    parseUnits(
+                      _amount === "NaN" ? "0" : _amount,
+                      inputTokenData.decimals
+                    ).toString()
                   );
                 }}
                 placeholder="0"
                 type="number"
-                className="w-full bg-transparent text-2xl font-semibold text-right text-white-full placeholder:text-white-disabled focus:outline-none"
+                className={`w-full bg-transparent text-2xl font-semibold text-right  placeholder:text-[#ffffff61] focus:outline-none
+                ${swapAmount === 0 ? "text-[#ffffff61]" : "text-white-full"}`}
               />
-              <span className="opacity-50 text-base font-semibold md:caption whitespace-nowrap text-osmoverse-300 transition-opacity">
-                ≈ $
-                {formatNumber((swapAmount as number) * inputTokenData.price, 5)}
-              </span>
+              {showDollarsAmount(swapAmount) && (
+                <span className="opacity-50 text-base font-semibold md:caption whitespace-nowrap text-osmoverse-300 transition-opacity">
+                  ≈ $
+                  {formatNumber(
+                    (swapAmount as number) * inputTokenData.price,
+                    5
+                  )}
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -256,7 +288,14 @@ export default function Osmosis() {
         <div className="rounded-xl bg-osmoverse-900 px-4 py-[22px] transition-all md:rounded-xl md:px-3 md:py-2.5">
           <div className="flex place-content-between items-center transition-transform">
             <div className="flex items-center justify-center md:justify-start">
-              <div className="flex items-center gap-2 text-left transition-opacity cursor-pointer">
+              <div
+                className={`
+                flex items-center gap-2 text-left transition-opacity cursor-pointer
+                ${
+                  outputTokenData?.tokenIdentifier === "" &&
+                  "animate-pulse bg-osmoverse-700 [&>*]:invisible h-[50px] rounded-xl"
+                } `}
+              >
                 <div className="mr-1 h-[50px] w-[50px] shrink-0 rounded-full md:h-13 md:w-13">
                   <Image
                     src={`/tokenIdentifier/${outputTokenData.tokenIdentifier}.png`}
@@ -277,14 +316,22 @@ export default function Osmosis() {
               </div>
             </div>
             <div className="flex w-full flex-col items-end">
-              <h5 className="text-2xl font-semibold whitespace-nowrap text-right transition-opacity text-white-full">
-                ≈ {formatNumber(number_min_received, 5)}{" "}
-                {/* {outputTokenData.symbol} */}
+              <h5
+                className={`text-2xl font-semibold whitespace-nowrap text-right transition-opacity
+                      ${
+                        number_min_received === 0
+                          ? "text-[#ffffff61]"
+                          : "text-white-full"
+                      }`}
+              >
+                ≈ {formatNumber(number_min_received, 5)}
               </h5>
-              <span className="md:caption text-base font-semibold text-osmoverse-300 opacity-100 transition-opacity">
-                ≈ $
-                {formatNumber(number_min_received * outputTokenData.price, 5)}
-              </span>
+              {showDollarsAmount(swapAmount) && (
+                <span className="md:caption text-base font-semibold text-osmoverse-300 opacity-100 transition-opacity">
+                  ≈ $
+                  {formatNumber(number_min_received * outputTokenData.price, 5)}
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -317,7 +364,7 @@ export default function Osmosis() {
         <div
           style={{ height: detailsOpen ? "251px" : "44px" }}
           className={`${
-            loading
+            loading || inputToken?.price === 0 || outputToken?.price === 0
               ? "font-inter animate-pulse bg-osmoverse-700 [&>*]:invisible"
               : "bg-osmoverse-900"
           } relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 (py-6 if opened) py-[10px]`}
@@ -329,37 +376,42 @@ export default function Osmosis() {
             }}
             className="flex text-sm w-full place-content-between items-center transition-opacity cursor-pointer"
           >
-            {(swapAmount === 0 || number_min_received === 0) && (
-              <span className="flex gap-1">
+            {(swapAmount === 0 ||
+              swapAmount === "" ||
+              number_min_received === 0) && (
+              <span className="flex gap-1 opacity-50">
                 1<span>{inputTokenData.symbol}</span>≈{" "}
                 {formatNumber(inputToken.price / outputToken.price, 5)}{" "}
                 {outputTokenData.symbol}
               </span>
             )}
 
-            {swapAmount !== 0 && number_min_received !== 0 && !loading && (
-              <>
-                <span className="flex gap-1">
-                  1<span>{inputTokenData.symbol}</span>≈{" "}
-                  {formatNumber(
-                    number_min_received / (swapAmount as number),
-                    5
-                  )}{" "}
-                  {outputTokenData.symbol}
-                </span>
-                <div className="flex items-center gap-2 transition-opacity">
-                  {/* price impact warning ?,
+            {swapAmount !== 0 &&
+              swapAmount !== "" &&
+              number_min_received !== 0 &&
+              !loading && (
+                <>
+                  <span className="flex gap-1">
+                    1<span>{inputTokenData.symbol}</span>≈{" "}
+                    {formatNumber(
+                      number_min_received / (swapAmount as number),
+                      5
+                    )}{" "}
+                    {outputTokenData.symbol}
+                  </span>
+                  <div className="flex items-center gap-2 transition-opacity">
+                    {/* price impact warning ?,
                   add loading effects */}
-                  <ChevronDownIconOsmosis
-                    className={cn(
-                      "text-osmoverse-400 transition-all",
-                      detailsOpen ? "rotate-180" : "rotate-0"
-                      // isEstimateDetailRelevant ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                </div>
-              </>
-            )}
+                    <ChevronDownIconOsmosis
+                      className={cn(
+                        "text-osmoverse-400 transition-all",
+                        detailsOpen ? "rotate-180" : "rotate-0"
+                        // isEstimateDetailRelevant ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </div>
+                </>
+              )}
           </button>
 
           <div className="absolute text-xs flex flex-col gap-4 pt-5 transition-opacity w-[358px] md:w-[94%]">
