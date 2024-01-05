@@ -5,13 +5,16 @@ import { raise } from "helpers/src/error-handling/assertions";
 import { unstable_cache } from "next/cache";
 export const fetchTokenPriceByDenom = unstable_cache(
   async (denom: TokenSymbol | (string & {})) => {
-    return (
+    const token =
       (await fetchTokenPrices().then((prices) =>
         Object.values(prices).find(({ coinDenom }) => {
           return coinDenom.toLowerCase() === denom.toLowerCase();
         })
-      )) ?? raise("Token price not found")
-    );
+      )) ?? raise("Token price not found");
+    return {
+      ...token,
+      dt: new Date().toISOString(),
+    };
   },
   ["fetchTokenPriceByDenom"],
   {
