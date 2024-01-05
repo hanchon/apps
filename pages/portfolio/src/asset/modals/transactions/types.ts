@@ -7,7 +7,6 @@ import {
   TableData,
   TableDataElement,
 } from "../../../utils/table/normalizeData";
-import { DepositElement } from "./DepositSTR";
 
 export type ButtonActionsProps = {
   data: TableData;
@@ -26,17 +25,6 @@ export type WithdrawProps = {
   setDisabled: Dispatch<SetStateAction<boolean>>;
   feeBalance: BigNumber;
   chain: TableDataElement | undefined;
-};
-
-export type DepositProps = {
-  setConfirmClicked: Dispatch<SetStateAction<boolean>>;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-  token: TableDataElement | undefined;
-  inputValue: string;
-  receiverAddress: string;
-  setDisabled: Dispatch<SetStateAction<boolean>>;
-  balance: BigNumber;
-  chain: DepositElement | undefined;
 };
 
 export type ConvertProps = {

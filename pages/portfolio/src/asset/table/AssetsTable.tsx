@@ -18,9 +18,10 @@ import {
   normalizeAssetsData,
 } from "../../utils/table/normalizeData";
 import { useStakedEvmos } from "../../utils/hooks/useStakedEvmos";
-import { getAssetsForAddress } from "../../utils/fetch";
+
 import ContentTable from "./ContentTable";
 import TopBar from "./topBar/TopBar";
+import { getAssetsForAddress } from "@evmosapps/evmos-wallet/src/api/fetch";
 
 const AssetsTable = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,11 +39,7 @@ const AssetsTable = () => {
       value.evmosAddressCosmosFormat,
       value.evmosAddressEthFormat,
     ],
-    queryFn: () =>
-      getAssetsForAddress(
-        value.evmosAddressCosmosFormat,
-        value.evmosAddressEthFormat
-      ),
+    queryFn: () => getAssetsForAddress(value.evmosAddressCosmosFormat),
   });
 
   const [hideZeroBalance, setHideBalance] = useState(false);

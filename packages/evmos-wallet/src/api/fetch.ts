@@ -1,25 +1,57 @@
-import { EVMOS_BACKEND } from "../internal/wallet/functionality/networkConfig";
-import { ERC20BalanceResponse, StakingInfoResponse } from "./types";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+import { Hex } from "viem";
+import { EVMOS_BACKEND } from "../internal/wallet/functionality/networkConfig";
+import { getAccountBalances } from "../registry-actions";
+import { fetchLegacyERC20ModuleBalance } from "../server/fetch-legacy-erc20modulebalance";
+import { normalizeToCosmosAddress } from "../wallet";
+import { StakingInfoResponse } from "./types";
 export const getAssets = async () => {
-  const res = await fetch(`${EVMOS_BACKEND}/ERC20ModuleBalance`);
-  return res.json() as Promise<ERC20BalanceResponse>;
+  return await fetchLegacyERC20ModuleBalance();
 };
 
-export const getAssetsForAddress = async (
-  address: string,
-  hexAddress: string
-) => {
+export const getAssetsForAddress = async (address?: string) => {
   // If not wallet selected return everything empty
-  if (address === "" || hexAddress === "") {
-    return getAssets();
+  if (!address) {
+    return await getAssets();
   }
+  const [{ balance: assets }, balances] = await Promise.all([
+    getAssets(),
+    getAccountBalances({ address: normalizeToCosmosAddress(address as Hex) }),
+  ]);
 
-  const res = await fetch(
-    `${EVMOS_BACKEND}/ERC20ModuleBalance/${address}/${hexAddress}`
+  const balancesMap = Object.fromEntries(
+    balances.map((balance) => [balance.denom + "-" + balance.type, balance])
   );
 
-  return res.json() as Promise<ERC20BalanceResponse>;
+  return {
+    balance: assets
+      .map((asset) => {
+        const cosmosBalance =
+          balancesMap[asset.tokenName + "-" + "ICS20"]?.value.toString() ?? "0";
+        const erc20Balance =
+          balancesMap[asset.tokenName + "-" + "ERC20"]?.value.toString() ?? "0";
+
+        return {
+          ...asset,
+          cosmosBalance,
+          erc20Balance,
+        };
+      })
+      .sort((a, b) => {
+        if (a.tokenName === "EVMOS") {
+          return -1;
+        }
+        if (b.tokenName === "EVMOS") {
+          return 1;
+        }
+        return BigInt(a.cosmosBalance) + BigInt(a.erc20Balance) >
+          BigInt(b.cosmosBalance) + BigInt(b.erc20Balance)
+          ? -1
+          : 1;
+      }),
+  };
 };
 
 export const getStakingInfo = async (address: string) => {

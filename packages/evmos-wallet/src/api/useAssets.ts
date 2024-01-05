@@ -4,17 +4,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { ERC20BalanceResponse } from "./types";
-import { getAssetsForAddress } from "./fetch";
 
 import { BigNumber } from "@ethersproject/bignumber";
 import { useAccount } from "wagmi";
-import { normalizeToEvmos } from "../wallet";
 import { isNaN } from "lodash-es";
 import {
   addAssets,
   addDollarAssets,
   amountToDollars,
 } from "helpers/src/styles";
+import { getAssetsForAddress } from "./fetch";
 
 const usdFormat = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -26,11 +25,7 @@ export const useAssets = () => {
   const assets = useQuery<ERC20BalanceResponse, Error>({
     queryKey: ["commonAssets", address],
     staleTime: 1000 * 60 * 5,
-    queryFn: () =>
-      getAssetsForAddress(
-        address ? normalizeToEvmos(address) : address,
-        address
-      ),
+    queryFn: () => getAssetsForAddress(address),
   });
   const balance = useMemo(
     () => assets.data?.balance ?? [],

@@ -25,11 +25,7 @@ export function useOsmosisData() {
       value.evmosAddressCosmosFormat,
       value.evmosAddressEthFormat,
     ],
-    queryFn: () =>
-      getAssetsForAddress(
-        value.evmosAddressCosmosFormat,
-        value.evmosAddressEthFormat,
-      ),
+    queryFn: () => getAssetsForAddress(value.evmosAddressCosmosFormat),
   });
 
   const osmoBalance = data?.balance?.find((b) => b.symbol === "OSMO");
