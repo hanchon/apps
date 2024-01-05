@@ -1,14 +1,13 @@
 "use client";
 import { Link } from "@evmosapps/i18n/client";
 import { useState } from "react";
-import { parseUnits } from "@ethersproject/units";
+import { parseUnits, formatUnits } from "@ethersproject/units";
 import { useOsmosisData } from "./useOsmosisData";
 import { cn, convertAndFormat, formatNumber } from "helpers";
 import { useOsmosisQoute } from "./useOsmosQuote";
 import { BigNumber } from "@ethersproject/bignumber";
 
 import { debounce } from "lodash";
-import { formatUnits } from "viem";
 import {
   ChevronDownIconOsmosis,
   DownArrowIconOsmosisIcon,
@@ -36,7 +35,9 @@ export default function Osmosis() {
 
   const number_min_received = parseFloat(
     formatUnits(
-      BigInt(latestQoute?.return_amount?.toString() ?? ""),
+      latestQoute?.return_amount?.toLocaleString("fullwide", {
+        useGrouping: false,
+      }) ?? "0",
       outputTokenData.decimals
     )
   );
