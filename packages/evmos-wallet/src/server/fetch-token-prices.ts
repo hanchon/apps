@@ -3,68 +3,36 @@ import { fetchTokens } from "@evmosapps/registry/src/fetch-tokens";
 import { isUndefined } from "helpers";
 import { devModeCache } from "helpers/src/dev/dev-mode-cache";
 import { cache } from "react";
-import { z } from "zod";
 
 const revalidate = 5 * 60 * 1000; // 5 minutes
 
-const CoingeckoPriceSchema = z
-  .object({
-    usd: z.number().optional(),
-    usd_24h_change: z.number().optional(),
-  })
-  .passthrough();
+type CoingeckoTokenPriceResponse<C extends string> = {
+  [x in C | `${C}_24h_change` | "last_updated_at"]?: number;
+};
+type CoingeckoResponse<T extends string, C extends string> = string extends T
+  ? Record<string, CoingeckoTokenPriceResponse<C>>
+  : {
+      [K in T]: CoingeckoTokenPriceResponse<C>;
+    };
 
-const CoingeckoPriceResponseSchema = z.record(CoingeckoPriceSchema);
-const { entries, fromEntries, keys } = Object;
-
-export const fetchTokenPrices = cache(
+export const fetchCoinGeckoTokenPrices = cache(
   devModeCache(
-    async () => {
+    async function <const T extends string, const C extends string>(
+      coingeckoIds: T[],
+      currencies?: C[]
+    ) {
       const url = new URL("https://api.coingecko.com/api/v3/simple/price");
       url.searchParams.set("include_24hr_change", "true");
-      url.searchParams.set("vs_currencies", "usd");
+      url.searchParams.set("include_last_updated_at", "true");
+      url.searchParams.set("vs_currencies", currencies?.join(",") ?? "usd");
 
-      const tokenByCoingecko = await fetchTokens()
-        .then((tokens) =>
-          tokens.flatMap((token) => {
-            if (
-              !token.coingeckoId ||
-              token.source.endsWith("testnet") ||
-              token.source.endsWith("localnet")
-            ) {
-              return [];
-            }
-            return [[token.coingeckoId, token] as const];
-          })
-        )
-        .then((tokens) => fromEntries(tokens));
+      url.searchParams.set("ids", coingeckoIds.join(","));
 
-      url.searchParams.set("ids", keys(tokenByCoingecko).join(","));
-
-      return await fetch(url)
+      return (await fetch(url)
         .then((res) => res.json() as Promise<unknown>)
-        .then((tokenPrices) => CoingeckoPriceResponseSchema.parse(tokenPrices))
-        .then((tokenPrices) =>
-          entries(tokenPrices).flatMap(([id, { usd, usd_24h_change }]) => {
-            const token = tokenByCoingecko[id];
-            if (!token || isUndefined(usd) || isUndefined(usd_24h_change)) {
-              return [];
-            }
-            return [
-              [
-                token.coinDenom,
-                {
-                  price: {
-                    usd,
-                    usd24hChange: usd_24h_change,
-                  },
-                  coinDenom: token.coinDenom,
-                },
-              ] as const,
-            ];
-          })
-        )
-        .then((tokenPrices) => fromEntries(tokenPrices));
+        .then((tokenPrices) => tokenPrices)) as Promise<
+        CoingeckoResponse<T, C>
+      >;
     },
     {
       cacheKey: "fetchTokenPrices",
@@ -72,3 +40,56 @@ export const fetchTokenPrices = cache(
     }
   )
 );
+
+export const fetchTokenPrices = async () => {
+  const url = new URL("https://api.coingecko.com/api/v3/simple/price");
+  url.searchParams.set("include_24hr_change", "true");
+  url.searchParams.set("include_last_updated_at", "true");
+  url.searchParams.set("vs_currencies", "usd");
+  const { tokens } = await fetchTokens();
+
+  const coingeckoIds = [
+    ...tokens.reduce((acc, token) => {
+      if (token.coingeckoId) acc.add(token.coingeckoId);
+      return acc;
+    }, new Set<string>()),
+  ];
+
+  url.searchParams.set("ids", coingeckoIds.join(","));
+  const coingeckoPrices = await fetchCoinGeckoTokenPrices(coingeckoIds, [
+    "usd",
+  ]);
+
+  return Object.entries(coingeckoPrices).reduce<
+    {
+      usd: {
+        price: number;
+        priceChange: number;
+      };
+      lastUpdatedAt: string;
+      coingeckoId: string;
+      coinDenoms: string[];
+    }[]
+  >((acc, [coingeckoId, { usd, usd_24h_change, last_updated_at }]) => {
+    if (
+      isUndefined(usd) ||
+      isUndefined(usd_24h_change) ||
+      isUndefined(last_updated_at)
+    ) {
+      return acc;
+    }
+
+    acc.push({
+      usd: {
+        price: usd,
+        priceChange: usd_24h_change,
+      },
+      lastUpdatedAt: new Date(last_updated_at * 1000).toISOString(),
+      coingeckoId,
+      coinDenoms: tokens
+        .filter((token) => token.coingeckoId === coingeckoId)
+        .map((token) => token.coinDenom),
+    });
+    return acc;
+  }, []);
+};

@@ -26,7 +26,7 @@ const genChainTypes = async () => {
 };
 
 const genTokenTypes = async () => {
-  const tokens = await fetchTokens();
+  const { tokens } = await fetchTokens();
   const tokenSymbols = tokens.map((token) => token.coinDenom);
 
   genUnion("TokenSymbol", tokenSymbols);

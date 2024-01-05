@@ -1,3 +1,5 @@
+import { ChainEntity } from "../autogen/chain-entity";
+
 type NetworkUrls = {
   http: [string, ...string[]];
 };
@@ -64,3 +66,8 @@ export interface Chain {
     tendermintRest: NetworkUrls | null;
   } | null;
 }
+
+// v2
+
+export type ChainEntityConfiguration = ChainEntity["configurations"][0];
+export type ChainType = ChainEntityConfiguration["configurationType"];

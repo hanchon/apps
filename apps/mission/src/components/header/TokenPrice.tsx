@@ -2,7 +2,7 @@
 import { EvmosRedIcon, PriceDown, PriceUp } from "icons";
 import { fetchTokenPriceByDenom } from "@evmosapps/evmos-wallet/src/server/fetch-token-price-by-denom";
 
-import { cn } from "helpers";
+import { cn, raise } from "helpers";
 import { useQuery } from "@tanstack/react-query";
 const formatFiat = (value: number) => {
   return value.toLocaleString("en-US", {
@@ -14,7 +14,8 @@ export const EvmosPrice = () => {
   const { error, data, status } = useQuery({
     queryKey: ["apiFetchTokenPriceByDenom", "evmos"],
     refetchOnWindowFocus: true,
-    queryFn: () => fetchTokenPriceByDenom("EVMOS"),
+    queryFn: async () =>
+      (await fetchTokenPriceByDenom("EVMOS")) ?? raise("Token Price Not Found"),
     refetchInterval: 1000 * 60 * 5,
   });
 
@@ -30,18 +31,16 @@ export const EvmosPrice = () => {
       >
         {data && (
           <>
-            <span>{formatFiat(data.price.usd)}</span>
+            <span>{formatFiat(data.usd.price)}</span>
 
             <div className="flex items-center gap-1">
-              {data.price.usd24hChange >= 0 ? <PriceUp /> : <PriceDown />}
+              {data.usd.priceChange >= 0 ? <PriceUp /> : <PriceDown />}
               <span
                 className={
-                  data.price.usd24hChange > 0
-                    ? "text-[#31B886]"
-                    : "text-[#ED4E33]"
+                  data.usd.priceChange > 0 ? "text-[#31B886]" : "text-[#ED4E33]"
                 }
               >
-                {data.price.usd24hChange.toFixed(2)}%
+                {data.usd.priceChange.toFixed(2)}%
               </span>
             </div>
           </>

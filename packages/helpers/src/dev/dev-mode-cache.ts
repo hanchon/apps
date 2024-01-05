@@ -26,7 +26,8 @@ const cacheDir = path.join(
  *
  */
 
-export const devModeCache = <T extends (...args: any[]) => Promise<unknown>>(
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const devModeCache = <T extends Function>(
   fn: T,
   options: {
     /**
@@ -54,9 +55,11 @@ export const devModeCache = <T extends (...args: any[]) => Promise<unknown>>(
   if (process.env.NODE_ENV === "test") {
     staleWhileRevalidate = false;
   }
-  const req = async (...args: ArgumentsType<T>) => {
+  const req = async (...args: unknown[]) => {
     const resolvedKey =
-      typeof cacheKey === "function" ? cacheKey(...args) : cacheKey ?? fn.name;
+      typeof cacheKey === "function"
+        ? cacheKey(...(args as ArgumentsType<T>))
+        : cacheKey ?? fn.name;
     if (!resolvedKey)
       throw new Error(
         "if cacheKey is not provided, a named function is required"
@@ -73,7 +76,7 @@ export const devModeCache = <T extends (...args: any[]) => Promise<unknown>>(
 
     const fetchAndCache = async () => {
       await mkdir(cacheDir, { recursive: true });
-      const response = await fn.call(null, ...args);
+      const response = (await fn.call(null, ...args)) as unknown;
 
       const [err, responseAsString] = E.try(() =>
         JSON.stringify({
@@ -94,7 +97,7 @@ export const devModeCache = <T extends (...args: any[]) => Promise<unknown>>(
         `\ncacheDir: ${cacheDir}`
       );
 
-      return response as Awaited<ReturnType<T>>;
+      return response;
     };
     if (readErr) return fetchAndCache();
 
@@ -104,13 +107,13 @@ export const devModeCache = <T extends (...args: any[]) => Promise<unknown>>(
       if (staleWhileRevalidate) {
         // revalidate in background
         void fetchAndCache();
-        return cached.response as Awaited<ReturnType<T>>;
+        return cached.response;
       }
       return fetchAndCache();
     }
 
-    return cached.response as Awaited<ReturnType<T>>;
+    return cached.response;
   };
 
-  return req as T;
+  return req as never;
 };
