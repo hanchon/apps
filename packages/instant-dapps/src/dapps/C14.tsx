@@ -9,7 +9,7 @@ import { InstantDappContainer } from "./instant-dapp-container";
 export default function C14InstantDapp() {
   return (
     <InstantDappContainer
-      image="bg-[url(/ecosystem/blur/C14-blur.png)]"
+      image="bg-[url(/ecosystem/blur/c14-blur.png)]"
       dappName="C14"
       widget={<C14 />}
     />
