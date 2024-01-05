@@ -41,10 +41,10 @@ export default {
   "tokens": [
     {
       "name": "USDT on Kava",
-      "ref": "kava:USDT",
+      "ref": "kava:kavaUSDT",
       "description": "Native USDT issued on Kava",
-      "symbol": "USDT",
-      "denom": "USDT",
+      "symbol": "kavaUSDT",
+      "denom": "kavaUSDT",
       "sourcePrefix": "kava",
       "sourceDenom": "erc20/tether/usdt",
       "minCoinDenom": "erc20/tether/usdt",

@@ -26,7 +26,8 @@ export default {
   "feeToken": "uworm",
   "cosmosRest": [
     "https://rest.cosmos.directory/wormhole",
-    "https://wormchain-lcd.quickapi.com"
+    "https://wormchain-lcd.quickapi.com",
+    "https://tncnt-eu-wormchain-main-01.rpc.p2p.world/lcd"
   ],
   "tendermintRest": [
     "https://rpc.cosmos.directory/wormhole",
@@ -38,57 +39,11 @@ export default {
   ],
   "tokens": [
     {
-      "name": "Wormhole ETH",
-      "ref": "wormhole:WETH",
-      "description": "Wrapped Ether (Wormhole)",
-      "symbol": "WETH",
-      "denom": "WETH",
-      "sourcePrefix": "wormhole",
-      "sourceDenom": "weth",
-      "minCoinDenom": "nweth",
-      "category": "ethereum",
-      "tokenRepresentation": "WETH",
-      "type": "IBC",
-      "decimals": 8,
-      "erc20Address": "0x4D036A97e9ad9e805f0E7B163Ea681B3dE83B7BF",
-      "handledByExternalUI": [
-        {
-          "url": "https://portalbridge.com/cosmos/",
-          "handlingAction": "Deposit and Withdraw"
-        }
-      ],
-      "listed": true,
-      "coingeckoId": "weth"
-    },
-    {
-      "name": "Wormhole Bitcoin",
-      "ref": "wormhole:WBTC",
-      "description": "Wormhole Bitcoin",
-      "symbol": "WBTC",
-      "denom": "WBTC",
-      "sourcePrefix": "wormhole",
-      "sourceDenom": "wbtc",
-      "minCoinDenom": "nwbtc",
-      "category": "ethereum",
-      "tokenRepresentation": "WBTC",
-      "type": "IBC",
-      "decimals": 8,
-      "erc20Address": "0xC732284e5deDb565ba403216d718a485038E55A6",
-      "handledByExternalUI": [
-        {
-          "url": "https://portalbridge.com/cosmos/",
-          "handlingAction": "Deposit and Withdraw"
-        }
-      ],
-      "listed": true,
-      "coingeckoId": "wrapped-bitcoin"
-    },
-    {
       "name": "Wormhole USDT on Ethereum",
-      "ref": "wormhole:USDT",
+      "ref": "wormhole:wormUSDT",
       "description": "Wormhole USDT on Ethereum",
-      "symbol": "USDT",
-      "denom": "USDT",
+      "symbol": "wormUSDT",
+      "denom": "wormUSDT",
       "sourcePrefix": "wormhole",
       "sourceDenom": "usdt",
       "minCoinDenom": "uusdt",
@@ -131,10 +86,10 @@ export default {
     },
     {
       "name": "Wormhole SOL token from Solana",
-      "ref": "wormhole:SOL",
+      "ref": "wormhole:wormSOL",
       "description": "Wormhole SOL token from Solana",
-      "symbol": "SOL",
-      "denom": "SOL",
+      "symbol": "wormSOL",
+      "denom": "wormSOL",
       "sourcePrefix": "wormhole",
       "sourceDenom": "sol",
       "minCoinDenom": "nsol",
@@ -151,6 +106,52 @@ export default {
       ],
       "listed": true,
       "coingeckoId": "solana"
+    },
+    {
+      "name": "Wormhole ETH",
+      "ref": "wormhole:wormETH",
+      "description": "Wrapped Ether (Wormhole)",
+      "symbol": "wormETH",
+      "denom": "wormETH",
+      "sourcePrefix": "wormhole",
+      "sourceDenom": "weth",
+      "minCoinDenom": "nweth",
+      "category": "ethereum",
+      "tokenRepresentation": "WETH",
+      "type": "IBC",
+      "decimals": 8,
+      "erc20Address": "0x4D036A97e9ad9e805f0E7B163Ea681B3dE83B7BF",
+      "handledByExternalUI": [
+        {
+          "url": "https://portalbridge.com/cosmos/",
+          "handlingAction": "Deposit and Withdraw"
+        }
+      ],
+      "listed": true,
+      "coingeckoId": "weth"
+    },
+    {
+      "name": "Wormhole Bitcoin",
+      "ref": "wormhole:wormBTC",
+      "description": "Wormhole Bitcoin",
+      "symbol": "wormBTC",
+      "denom": "wormBTC",
+      "sourcePrefix": "wormhole",
+      "sourceDenom": "wbtc",
+      "minCoinDenom": "nwbtc",
+      "category": "ethereum",
+      "tokenRepresentation": "WBTC",
+      "type": "IBC",
+      "decimals": 8,
+      "erc20Address": "0xC732284e5deDb565ba403216d718a485038E55A6",
+      "handledByExternalUI": [
+        {
+          "url": "https://portalbridge.com/cosmos/",
+          "handlingAction": "Deposit and Withdraw"
+        }
+      ],
+      "listed": true,
+      "coingeckoId": "wrapped-bitcoin"
     },
     {
       "category": "cosmos",

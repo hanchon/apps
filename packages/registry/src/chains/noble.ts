@@ -27,7 +27,6 @@ export default {
   "cosmosRest": [
     "https://rest.cosmos.directory/noble",
     "https://noble-api.polkachu.com",
-    "https://api.mainnet.noble.strange.love",
     "https://api.mainnet.noble.strange.love"
   ],
   "tendermintRest": [

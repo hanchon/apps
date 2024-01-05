@@ -19,7 +19,7 @@ export { default as kujira } from "./kujira";
 export { default as kava } from "./kava";
 export { default as juno } from "./juno";
 export { default as injective } from "./injective";
-export { default as gravity } from "./gravity";
+export { default as gravitybridge } from "./gravitybridge";
 export { default as evmos } from "./evmos";
 export { default as evmostestnet } from "./evmostestnet";
 export { default as evmoslocal } from "./evmoslocal";
