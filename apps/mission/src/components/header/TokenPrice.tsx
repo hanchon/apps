@@ -15,7 +15,9 @@ export const EvmosPrice = () => {
     queryKey: ["evmosPrice"],
     refetchOnWindowFocus: true,
     queryFn: () => {
-      return fetchTokenPriceByDenom("EVMOS");
+      return fetch("/api/actions/token-price-by-denom/evmos").then(
+        (res) => res.json() as ReturnType<typeof fetchTokenPriceByDenom>
+      );
     },
     refetchInterval: 1000 * 60 * 5,
   });

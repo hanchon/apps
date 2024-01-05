@@ -50,3 +50,4 @@ dist/
 prefetched-images
 
 autogen
+.vercel
