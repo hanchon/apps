@@ -159,7 +159,6 @@ export const SubRowContent = ({
       {/* mobile view for description and convert */}
       <div className="flex items-center lg:hidden">
         <Description symbol={symbol} description={description} subRow={true} />
-
         {item.symbol === EVMOS_SYMBOL && createEvmosConvertButton()}
         {item.symbol !== EVMOS_SYMBOL &&
           !item.cosmosBalance.eq(BigNumber.from(0)) &&
@@ -234,7 +233,7 @@ export const SubRowContent = ({
           {((item.symbol !== EVMOS_SYMBOL &&
             item.handledByExternalUI !== null) ||
             (item.symbol !== EVMOS_SYMBOL &&
-              item.chainIdentifier?.toLowerCase() === "gravity")) &&
+              item.chainIdentifier?.toLowerCase() === "gravitybridge")) &&
             createConvertButton()}
         </div>
       </div>
