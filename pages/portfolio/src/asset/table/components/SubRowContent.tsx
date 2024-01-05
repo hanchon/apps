@@ -152,8 +152,9 @@ export const SubRowContent = ({
   const displayConvertButton = useMemo(() => {
     if (item.symbol === EVMOS_SYMBOL) return false;
     if (item.cosmosBalance.gt(0)) return true;
-    if (["gravitybridge", "axelar", "wormhole"].includes(item.chainIdentifier))
+    if (["gravitybridge", "wormhole"].includes(item.chainIdentifier))
       return true;
+    if (item.chainIdentifier === "axelar" && item.symbol !== "AXL") return true;
     return false;
   }, [item]);
   return (
