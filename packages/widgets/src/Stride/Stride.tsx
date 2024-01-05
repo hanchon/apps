@@ -15,6 +15,7 @@ import "@interchain-ui/react/styles";
 import { ThemeProvider } from "@interchain-ui/react";
 
 import { RiTimeLine, RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
+import { UpRightArrowIcon } from "icons";
 
 import { useEffect, useState } from "react";
 import useStrideData from "./useStrideData";
@@ -197,25 +198,31 @@ const StrideWidget = () => {
             {transactionHash !== null && (
               <div
                 style={{ height: "50px" }}
-                className={`text-sm text-black border-2 border-[#d12e71] items-center flex-col justify-center relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 flex py-[10px]`}
+                className={`text-sm text-black border-2 border-[#262B30] items-center flex-col justify-center relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 flex py-[10px]`}
               >
                 <span className="">Transaction Submitted</span>
                 <div className="flex gap-3">
-                  <Link
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    className="text-[#d12e71] text-xs  transition-colors"
-                    href={`https://escan.live/tx/${transactionHash}`}
-                  >
-                    View on Escan
-                  </Link>
-                  {showBalanceLink && (
+                  <div className="flex items-center gap-1">
                     <Link
+                      rel="noopener noreferrer"
+                      target="_blank"
                       className="text-[#d12e71] text-xs  transition-colors"
-                      href={`/portfolio`}
+                      href={`https://escan.live/tx/${transactionHash}`}
                     >
-                      View Balance in Portfolio
+                      Track on Escan
                     </Link>
+                    <UpRightArrowIcon className="text-[#262B30] h-1.5 w-1.5" />
+                  </div>
+                  {showBalanceLink && (
+                    <div className="flex items-center gap-1">
+                      <Link
+                        className="text-[#d12e71] text-xs  transition-colors"
+                        href={`/portfolio`}
+                      >
+                        View Balance in Evmos Portfolio
+                      </Link>
+                      <UpRightArrowIcon className="text-[#262B30] h-1.5 w-1.5" />
+                    </div>
                   )}
                 </div>
               </div>
