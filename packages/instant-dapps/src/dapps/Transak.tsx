@@ -3,7 +3,14 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import Transak from "@evmosapps/widgets/src/transak";
+import { InstantDappContainer } from "./instant-dapp-container";
 
 export default function TransakInstantDapp() {
-  return <Transak />;
+  return (
+    <InstantDappContainer
+      image="bg-[url(/ecosystem/blur/transak-blur.png)]"
+      dappName="Transak"
+      widget={<Transak />}
+    />
+  );
 }
