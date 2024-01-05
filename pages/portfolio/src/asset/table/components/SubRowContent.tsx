@@ -16,7 +16,7 @@ import Convert from "../../modals/transactions/Convert";
 import { ConvertSTR } from "../../modals/transactions/ConvertSTR";
 import { Description } from "./Description";
 import { SubRowProps } from "./types";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { CLICK_BUTTON_CONVERT, sendEvent } from "tracker";
 export const SubRowContent = ({
   item,
@@ -74,7 +74,7 @@ export const SubRowContent = ({
     }
   };
 
-  const createEvmosConvertButton = () => {
+  const EvmosConvertButton = () => {
     let label = "Convert";
     if (symbol === "EVMOS") {
       label = "WRAP";
@@ -93,7 +93,7 @@ export const SubRowContent = ({
     );
   };
 
-  const createConvertButton = () => {
+  const ConvertButton = () => {
     return (
       <div className="flex w-full justify-end pr-8">
         <Button onClick={openModalConvert}>
@@ -149,6 +149,13 @@ export const SubRowContent = ({
       />
     );
   }, []);
+  const displayConvertButton = useMemo(() => {
+    if (item.symbol === EVMOS_SYMBOL) return false;
+    if (item.cosmosBalance.gt(0)) return true;
+    if (["gravitybridge", "axelar", "wormhole"].includes(item.chainIdentifier))
+      return true;
+    return false;
+  }, [item]);
   return (
     <div className="mr-8 flex w-full flex-col lg:mr-0 lg:flex-row">
       <div className="md:w-[5%]"></div>
@@ -159,10 +166,8 @@ export const SubRowContent = ({
       {/* mobile view for description and convert */}
       <div className="flex items-center lg:hidden">
         <Description symbol={symbol} description={description} subRow={true} />
-        {item.symbol === EVMOS_SYMBOL && createEvmosConvertButton()}
-        {item.symbol !== EVMOS_SYMBOL &&
-          !item.cosmosBalance.eq(BigNumber.from(0)) &&
-          createConvertButton()}
+        {item.symbol === EVMOS_SYMBOL && <EvmosConvertButton />}
+        {displayConvertButton && <ConvertButton />}
       </div>
       <div className="mt-2 flex w-full pl-4 text-right uppercase lg:mt-0 lg:w-[50%] lg:items-center lg:pl-0 lg:text-left">
         <div className=" mx-2.5 lg:mx-0"></div>
@@ -221,20 +226,10 @@ export const SubRowContent = ({
         </div>
 
         <div className="hidden lg:block">
-          {item.symbol === EVMOS_SYMBOL && createEvmosConvertButton()}
+          {item.symbol === EVMOS_SYMBOL && EvmosConvertButton()}
         </div>
         <div className="hidden lg:block">
-          {/* displays convert button if user still has ibc balance */}
-          {item.symbol !== EVMOS_SYMBOL &&
-            !item.cosmosBalance.eq(BigNumber.from(0)) &&
-            createConvertButton()}
-          {/* to withdraw axelar, the users need to convert
-          the erc20 to ibc-balance */}
-          {((item.symbol !== EVMOS_SYMBOL &&
-            item.handledByExternalUI !== null) ||
-            (item.symbol !== EVMOS_SYMBOL &&
-              item.chainIdentifier?.toLowerCase() === "gravitybridge")) &&
-            createConvertButton()}
+          {displayConvertButton && <ConvertButton />}
         </div>
       </div>
     </div>
