@@ -1,6 +1,6 @@
 "use client";
 import { EvmosRedIcon, PriceDown, PriceUp } from "icons";
-import { fetchTokenPriceByDenom } from "@evmosapps/evmos-wallet/src/server/fetch-token-price-by-denom";
+import { apiFetchTokenPriceByDenom } from "@evmosapps/evmos-wallet/src/server/fetch-token-price-by-denom";
 
 import { cn } from "helpers";
 import { useQuery } from "@tanstack/react-query";
@@ -12,13 +12,9 @@ const formatFiat = (value: number) => {
 };
 export const EvmosPrice = () => {
   const { error, data, status } = useQuery({
-    queryKey: ["evmosPrice"],
+    queryKey: ["apiFetchTokenPriceByDenom", "evmos"],
     refetchOnWindowFocus: true,
-    queryFn: () => {
-      return fetch("/api/actions/token-price-by-denom/evmos").then(
-        (res) => res.json() as ReturnType<typeof fetchTokenPriceByDenom>
-      );
-    },
+    queryFn: () => apiFetchTokenPriceByDenom("EVMOS"),
     refetchInterval: 1000 * 60 * 5,
   });
 

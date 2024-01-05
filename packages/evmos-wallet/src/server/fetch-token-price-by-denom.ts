@@ -14,3 +14,11 @@ export const fetchTokenPriceByDenom = async (
     )) ?? raise("Token price not found")
   );
 };
+
+export const apiFetchTokenPriceByDenom = async (
+  denom: TokenSymbol | (string & {})
+) => {
+  return fetch(`/api/actions/token-price-by-denom/${denom.toLowerCase()}`).then(
+    (res) => res.json()
+  ) as ReturnType<typeof fetchTokenPriceByDenom>;
+};
