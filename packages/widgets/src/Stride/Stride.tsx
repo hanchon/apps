@@ -207,7 +207,7 @@ const StrideWidget = () => {
                       rel="noopener noreferrer"
                       target="_blank"
                       className="text-[#d12e71] text-xs  transition-colors"
-                      href={`https://escan.live/tx/${transactionHash}`}
+                      href={`https://testnet.escan.live/tx/${transactionHash}`}
                     >
                       Track on Escan
                     </Link>
