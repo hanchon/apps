@@ -17,24 +17,26 @@ import { useWEVMOS } from "../contracts/hooks/useWEVMOS";
 import { parseUnits } from "@ethersproject/units";
 import { Log } from "helpers";
 import { EXPLORER_URL } from "constants-helper";
-import { getNetwork, switchNetwork } from "wagmi/actions";
+
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { E } from "helpers";
 import { GENERATING_TX_NOTIFICATIONS } from "../../../../utils/transactions/errors";
+import { useConfig } from "wagmi";
+import { getChainId, switchChain } from "wagmi/actions";
 
 const evmos = getEvmosChainInfo();
 
 export const useConvert = (useConvertProps: ConvertProps) => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
+  const config = useConfig();
 
   const { deposit, withdraw } = useWEVMOS();
 
   const handleConfirmButton = async () => {
-    const connectedNetwork = getNetwork();
-    if (connectedNetwork.chain?.id !== evmos.id) {
+    if (getChainId(config) !== evmos.id) {
       const [err] = await E.try(() =>
-        switchNetwork({
+        switchChain(config, {
           chainId: evmos.id,
         })
       );
@@ -66,9 +68,9 @@ export const useConvert = (useConvertProps: ConvertProps) => {
       try {
         useConvertProps.setDisabled(true);
 
-        const res = await deposit(amount, wallet.evmosAddressEthFormat);
+        const hash = await deposit(amount, wallet.evmosAddressEthFormat);
 
-        dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx/`));
+        dispatch(snackBroadcastSuccessful(hash, `${EXPLORER_URL}/tx/`));
         sendEvent(SUCCESSFUL_WRAP_TX, {
           "User Wallet Address": wallet?.evmosAddressEthFormat,
           "Wallet Provider": wallet?.extensionName,
@@ -87,9 +89,9 @@ export const useConvert = (useConvertProps: ConvertProps) => {
       try {
         useConvertProps.setDisabled(true);
 
-        const res = await withdraw(amount, wallet.evmosAddressEthFormat);
+        const hash = await withdraw(amount, wallet.evmosAddressEthFormat);
 
-        dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx/`));
+        dispatch(snackBroadcastSuccessful(hash, `${EXPLORER_URL}/tx/`));
         sendEvent(SUCCESSFUL_WRAP_TX, {
           "User Wallet Address": wallet?.evmosAddressEthFormat,
           "Wallet Provider": wallet?.extensionName,

@@ -24,9 +24,9 @@ const SetupAccountModalContent = withClosePrompt(
       initialStepId?: string;
     }
   ) => {
-    const { isOpen, initialStepId, onStepChange } = props;
+    const { isOpen, initialStepId, onStepChange, ...rest } = props;
     return (
-      <Modal {...props}>
+      <Modal isOpen={isOpen} {...rest}>
         <Modal.Body className="p-0 overflow-hidden max-w-3xl">
           {isOpen && (
             <SetupAccountFlow

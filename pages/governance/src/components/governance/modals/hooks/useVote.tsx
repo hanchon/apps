@@ -7,21 +7,21 @@ import { VoteProps } from "../types";
 import { snackExecuteIBCTransfer } from "@evmosapps/evmos-wallet";
 import { SUCCESSFUL_TX_VOTE, UNSUCCESSFUL_TX_VOTE, sendEvent } from "tracker";
 
-import { getNetwork, switchNetwork } from "wagmi/actions";
 import { E } from "helpers";
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { optionVoteSelected } from "../../../../utils/types";
 import { executeVote } from "../../../../utils/transactions/vote";
+import { useConfig } from "wagmi";
+import { getChainId, switchChain } from "wagmi/actions";
 
 const evmos = getEvmosChainInfo();
 export const useVote = (useVoteProps: VoteProps) => {
   const dispatch = useDispatch();
-
+  const config = useConfig();
   const handleConfirmButton = async () => {
-    const connectedNetwork = getNetwork();
-    if (connectedNetwork.chain?.id !== evmos.id) {
+    if (getChainId(config) !== evmos.id) {
       const [err] = await E.try(() =>
-        switchNetwork({
+        switchChain(config, {
           chainId: evmos.id,
         })
       );

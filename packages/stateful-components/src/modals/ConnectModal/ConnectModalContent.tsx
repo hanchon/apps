@@ -3,13 +3,7 @@
 
 import { ComponentProps, useEffect } from "react";
 
-import {
-  EvmosCopilotIcon,
-  EvmosRedIcon,
-  KeplrIcon,
-  MetamaskIcon,
-  WalletConnectIcon,
-} from "icons";
+import { EvmosCopilotIcon } from "icons";
 import {
   CLICK_CONNECTED_WITH,
   CLICK_EVMOS_COPILOT_START_FLOW,
@@ -22,35 +16,14 @@ import { E, cn } from "helpers";
 
 import { Badge, Divider } from "@evmosapps/ui-helpers";
 import { useAccount, useConnect } from "wagmi";
-import { connectWith } from "@evmosapps/evmos-wallet";
+
 import {
   WALLET_NOTIFICATIONS,
   notifyError,
 } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/errors";
 import { useSetupCopilotModal } from "../SetupAccountModal/SetupAccountModal";
+import { ProvidersIcons } from "../../providerIcons";
 
-const providers = [
-  {
-    label: "Keplr",
-    id: "keplr",
-    icon: <KeplrIcon className="h-7 w-auto" />,
-  },
-  {
-    label: "MetaMask",
-    id: "metaMask",
-    icon: <MetamaskIcon className="h-7 w-auto" />,
-  },
-  {
-    label: "WalletConnect",
-    id: "walletConnect",
-    icon: <WalletConnectIcon className="h-7 w-auto" />,
-  },
-  {
-    label: "Evmos Safe",
-    id: "safe",
-    icon: <EvmosRedIcon />,
-  },
-] as const;
 export const ButtonWallet = ({
   className,
   disabled,
@@ -79,8 +52,65 @@ export const ConnectModalContent = ({
   setIsOpen: (isOpen: boolean) => void;
 }) => {
   const { sendEvent } = useTracker();
-  const { connectors } = useConnect();
-  const connectorIds = connectors.map((c) => c.id);
+  const { connectors, connect } = useConnect({
+    mutation: {
+      onSuccess: (_, { connector }) => {
+        sendEvent(SUCCESSFUL_WALLET_CONNECTION, {
+          "Wallet Provider": connector.name,
+        });
+        setIsOpen(false);
+      },
+
+      onError: (e, { connector }) => {
+        sendEvent(UNSUCCESSFUL_WALLET_CONNECTION, {
+          "Wallet Provider": connector.name,
+          "Error Message": `Failed to connect with ${connector.name}`,
+        });
+        if (E.match.byPattern(e, /Connector not found/)) {
+          notifyError(
+            "{walletName} not found",
+            WALLET_NOTIFICATIONS.ExtensionNotFoundSubtext,
+            {
+              walletName: connector.name,
+            }
+          );
+          return;
+        }
+        if (
+          E.match.byCode(e, -32002) || // metamask
+          E.match.byMessage(e, "PROVIDER_NOT_AVAILABLE") // keplr
+        ) {
+          notifyError(
+            "{walletName} not found",
+            WALLET_NOTIFICATIONS.AddressSubtext,
+            {
+              walletName: connector.name,
+            }
+          );
+          return;
+        }
+        if (
+          E.match.byCode(e, 4001) ||
+          E.match.byPattern(e, /Connection request reset/) || // wallet connect
+          E.match.byPattern(e, /Request rejected/) // keplr
+        ) {
+          notifyError(
+            WALLET_NOTIFICATIONS.ErrorTitle,
+            "The connection was rejected",
+            {
+              walletName: connector.name,
+            }
+          );
+          return;
+        }
+        // Didn't find a match, so we'll just isOpen the error
+        notifyError(WALLET_NOTIFICATIONS.ErrorTitle, "", {
+          walletName: connector.name,
+        });
+      },
+    },
+  });
+
   const copilot = useSetupCopilotModal();
 
   const { isConnected } = useAccount();
@@ -113,85 +143,33 @@ export const ConnectModalContent = ({
         <Divider>or</Divider>
       </>
       <div className="flex flex-col space-y-3">
-        {providers
-          .filter((p) => connectorIds.indexOf(p.id) !== -1)
-          .map(({ icon, label, id }) => (
-            <ButtonWallet
-              key={id}
-              data-testid={`connect-with-${id}`}
-              onClick={async () => {
-                /**
-                 * TODO: discuss:
-                 * I'm lowercasing the id here because the old ids were all lowercase
-                 * wagmi has them slightly different
-                 * I'm not sure if we need to do that though
-                 */
-                const provider = id.toLocaleLowerCase();
-                setIsOpen(false);
+        {connectors
+          .filter((connector) => {
+            if (connector.id === "io.metamask") return false;
+            if (connector.name === "Safe") return false;
+            return true;
+          })
+          .map((connector) => {
+            const Icon = ProvidersIcons[connector.name];
 
-                sendEvent(CLICK_CONNECTED_WITH, {
-                  "Wallet Provider": provider,
-                });
-                const [e] = await E.try(() => connectWith(id));
-
-                if (!e) {
-                  sendEvent(SUCCESSFUL_WALLET_CONNECTION, {
-                    // TODO: event ->  add "User Wallet Address": address,
-                    "Wallet Provider": provider,
+            return (
+              <ButtonWallet
+                key={connector.uid}
+                data-testid={`connect-with-${connector.name}`}
+                onClick={() => {
+                  sendEvent(CLICK_CONNECTED_WITH, {
+                    "Wallet Provider": connector.name,
                   });
-                  return;
-                }
-                sendEvent(UNSUCCESSFUL_WALLET_CONNECTION, {
-                  "Wallet Provider": provider,
-                  "Error Message": `Failed to connect with ${label}`,
-                });
-
-                if (E.match.byPattern(e, /Connector not found/)) {
-                  notifyError(
-                    "{walletName} not found",
-                    WALLET_NOTIFICATIONS.ExtensionNotFoundSubtext,
-                    {
-                      walletName: label,
-                    }
-                  );
-                  return;
-                }
-                if (
-                  E.match.byCode(e, -32002) || // metamask
-                  E.match.byMessage(e, "PROVIDER_NOT_AVAILABLE") // keplr
-                ) {
-                  notifyError(
-                    "{walletName} not found",
-                    WALLET_NOTIFICATIONS.AddressSubtext,
-                    {
-                      walletName: label,
-                    }
-                  );
-                  return;
-                }
-                if (
-                  E.match.byCode(e, 4001) ||
-                  E.match.byPattern(e, /Connection request reset/) || // wallet connect
-                  E.match.byPattern(e, /Request rejected/) // keplr
-                ) {
-                  notifyError(
-                    WALLET_NOTIFICATIONS.ErrorTitle,
-                    "The connection was rejected",
-                    {
-                      walletName: label,
-                    }
-                  );
-                  return;
-                }
-                // Didn't find a match, so we'll just isOpen the error
-                notifyError(WALLET_NOTIFICATIONS.ErrorTitle, "", {
-                  walletName: label,
-                });
-              }}
-            >
-              {icon} <span>{label}</span>
-            </ButtonWallet>
-          ))}
+                  connect({
+                    connector,
+                  });
+                }}
+              >
+                {Icon && <Icon className="w-7" />}
+                <span>{connector.name}</span>
+              </ButtonWallet>
+            );
+          })}
       </div>
     </div>
   );

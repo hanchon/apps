@@ -1,7 +1,13 @@
 "use client";
-import { useEffect, PropsWithChildren, useLayoutEffect, useRef } from "react";
-import { WagmiConfig, useAccount, useConnect, useDisconnect } from "wagmi";
-import { usePubKey, wagmiConfig } from "../wagmi";
+import { useEffect, PropsWithChildren, useLayoutEffect } from "react";
+import {
+  useAccount,
+  useAccountEffect,
+  useConnect,
+  useDisconnect,
+  useReconnect,
+} from "wagmi";
+import { usePubKey } from "../wagmi";
 import {
   WALLET_NOTIFICATIONS,
   notifyError,
@@ -19,11 +25,13 @@ import { useWatch } from "helpers";
 type WalletProviderProps = PropsWithChildren<{}>;
 
 function Provider({ children }: WalletProviderProps) {
-  const isReconnecting = useRef(false);
-  const { address, connector, isConnected } = useAccount({
-    onConnect: ({ connector, address }) => {
-      if (isReconnecting.current) {
-        isReconnecting.current = false;
+  const { reconnect } = useReconnect();
+
+  const { address, connector, isConnected } = useAccount();
+
+  useAccountEffect({
+    onConnect: ({ connector, address, isReconnected }) => {
+      if (isReconnected) {
         return;
       }
 
@@ -42,21 +50,19 @@ function Provider({ children }: WalletProviderProps) {
       store.dispatch(resetWallet());
     },
   });
-
   const { variables } = useConnect();
   const { disconnect } = useDisconnect();
   const { pubkey, error: pubkeyError, isFetching } = usePubKey();
   useLayoutEffect(() => {
-    isReconnecting.current = true;
-    void wagmiConfig.autoConnect();
-  }, []);
+    reconnect();
+  }, [reconnect]);
 
   useEffect(() => {
     const connectorId = connector?.id.toLowerCase();
     if (
       !connectorId ||
       !address ||
-      (!pubkey && getActiveProviderKey() !== "safe")
+      (!pubkey && getActiveProviderKey() !== "Safe")
     )
       return;
     /**
@@ -79,7 +85,7 @@ function Provider({ children }: WalletProviderProps) {
   }, [isConnected, connector, pubkey, address]);
 
   useWatch(() => {
-    if (getActiveProviderKey() === "safe") return;
+    if (getActiveProviderKey() === "Safe") return;
     if (!pubkeyError || isFetching) return;
 
     disconnect();
@@ -95,9 +101,5 @@ function Provider({ children }: WalletProviderProps) {
 }
 
 export function WalletProvider(props: WalletProviderProps) {
-  return (
-    <WagmiConfig config={wagmiConfig}>
-      <Provider {...props} />
-    </WagmiConfig>
-  );
+  return <Provider {...props} />;
 }

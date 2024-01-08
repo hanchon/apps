@@ -72,17 +72,17 @@ export const reloadPage = () => {
 };
 
 const checkConnectionKeplr = () => {
-  if (getActiveProviderKey() === "keplr") {
+  if (getActiveProviderKey() === "Keplr") {
     return true;
   }
   return false;
 };
 
 const switchToKeplr = async () => {
-  if (getActiveProviderKey() === "keplr") {
+  if (getActiveProviderKey() === "Keplr") {
     return true;
   } else {
-    const [e] = await E.try(() => connectWith("keplr"));
+    const [e] = await E.try(() => connectWith("Keplr"));
     if (e === null) {
       return true;
     } else {

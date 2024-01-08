@@ -143,7 +143,7 @@ export const transfer = async ({
      * Nano Ledger on keplr doesn't support sign direct mode, so we have to use legacy amino json
      */
     let mode: keyof typeof SignMode = "DIRECT";
-    if (getActiveProviderKey() === "keplr") {
+    if (getActiveProviderKey() === "Keplr") {
       const keplr = await getKeplrProvider();
       const chain = getChainByAddress(sender);
       const { isNanoLedger } = await keplr.getKey(chain.cosmosId);
@@ -151,13 +151,14 @@ export const transfer = async ({
         mode = "LEGACY_AMINO_JSON";
       }
     }
-    return await executeCosmosIBCTransfer({
+    const result = await executeCosmosIBCTransfer({
       sender,
       receiver,
       token,
       fee,
       mode,
     });
+    return result.hash;
   }
 
   throw new Error("UNSUPPORTED_TRANSFER_METHOD");

@@ -42,7 +42,7 @@ export const AccountSelector = ({
     useState<WalletTabKey>("WALLET");
   const activeProviderKey = getActiveProviderKey();
   const disableWalletRequest =
-    activeProviderKey !== "keplr" || senderPrefix === selectedNetwork;
+    activeProviderKey !== "Keplr" || senderPrefix === selectedNetwork;
 
   const activeWalletTab = disableWalletRequest ? "OTHER" : selectedWalletTab;
 
@@ -67,7 +67,7 @@ export const AccountSelector = ({
 
   const { requestAccount, account } = useRequestWalletAccount();
   const shouldRequestWalletState =
-    activeProviderKey === "keplr" && activeWalletTab === "WALLET";
+    activeProviderKey === "Keplr" && activeWalletTab === "WALLET";
   useEffect(() => {
     if (!shouldRequestWalletState) return;
     requestAccount(selectedNetwork);

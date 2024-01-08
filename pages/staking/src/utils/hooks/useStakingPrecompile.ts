@@ -3,26 +3,25 @@ import { useSelector } from "react-redux";
 import { StoreType, getAbi } from "@evmosapps/evmos-wallet";
 import { BigNumber } from "@ethersproject/bignumber";
 import { Hex } from "viem";
+import { useConfig } from "wagmi";
 
 const STAKING_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000800";
 
 export function useStakingPrecompile() {
   const address = useSelector((state: StoreType) => state.wallet.value);
+  const config = useConfig();
 
   async function delegate(
     delegatorAddress: string,
     validatorAddress: string,
     amount: BigNumber
   ) {
-    return await writeContract({
-      mode: "prepared",
-      request: {
-        address: STAKING_CONTRACT_ADDRESS,
-        abi: getAbi("staking"),
-        functionName: "delegate",
-        account: address.evmosAddressEthFormat as `0x${string}`,
-        args: [delegatorAddress as Hex, validatorAddress, amount.toBigInt()],
-      },
+    return await writeContract(config, {
+      address: STAKING_CONTRACT_ADDRESS,
+      abi: getAbi("staking"),
+      functionName: "delegate",
+      account: address.evmosAddressEthFormat as `0x${string}`,
+      args: [delegatorAddress as Hex, validatorAddress, amount.toBigInt()],
     });
   }
 
@@ -31,15 +30,12 @@ export function useStakingPrecompile() {
     validatorAddress: string,
     amount: BigNumber
   ) {
-    return await writeContract({
-      mode: "prepared",
-      request: {
-        address: STAKING_CONTRACT_ADDRESS,
-        abi: getAbi("staking"),
-        functionName: "undelegate",
-        account: address.evmosAddressEthFormat as `0x${string}`,
-        args: [delegatorAddress as Hex, validatorAddress, amount.toBigInt()],
-      },
+    return await writeContract(config, {
+      address: STAKING_CONTRACT_ADDRESS,
+      abi: getAbi("staking"),
+      functionName: "undelegate",
+      account: address.evmosAddressEthFormat as `0x${string}`,
+      args: [delegatorAddress as Hex, validatorAddress, amount.toBigInt()],
     });
   }
 
@@ -49,20 +45,17 @@ export function useStakingPrecompile() {
     validatorDstAddress: string,
     amount: BigNumber
   ) {
-    return await writeContract({
-      mode: "prepared",
-      request: {
-        address: STAKING_CONTRACT_ADDRESS,
-        abi: getAbi("staking"),
-        functionName: "redelegate",
-        account: address.evmosAddressEthFormat as `0x${string}`,
-        args: [
-          delegatorAddress as Hex,
-          validatorSrcAddress,
-          validatorDstAddress,
-          amount.toBigInt(),
-        ],
-      },
+    return await writeContract(config, {
+      address: STAKING_CONTRACT_ADDRESS,
+      abi: getAbi("staking"),
+      functionName: "redelegate",
+      account: address.evmosAddressEthFormat as `0x${string}`,
+      args: [
+        delegatorAddress as Hex,
+        validatorSrcAddress,
+        validatorDstAddress,
+        amount.toBigInt(),
+      ],
     });
   }
 
@@ -72,20 +65,17 @@ export function useStakingPrecompile() {
     amount: BigNumber,
     creationHeight: string
   ) {
-    return await writeContract({
-      mode: "prepared",
-      request: {
-        address: STAKING_CONTRACT_ADDRESS,
-        abi: getAbi("staking"),
-        functionName: "cancelUnbondingDelegation",
-        account: address.evmosAddressEthFormat as `0x${string}`,
-        args: [
-          delegatorAddress as Hex,
-          validatorAddress,
-          amount.toBigInt(),
-          BigInt(creationHeight),
-        ],
-      },
+    return await writeContract(config, {
+      address: STAKING_CONTRACT_ADDRESS,
+      abi: getAbi("staking"),
+      functionName: "cancelUnbondingDelegation",
+      account: address.evmosAddressEthFormat as `0x${string}`,
+      args: [
+        delegatorAddress as Hex,
+        validatorAddress,
+        amount.toBigInt(),
+        BigInt(creationHeight),
+      ],
     });
   }
 

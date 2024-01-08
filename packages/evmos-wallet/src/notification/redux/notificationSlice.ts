@@ -2,7 +2,6 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { createSlice } from "@reduxjs/toolkit";
-import { StoreType } from "../../redux/Store";
 import Snackbar from "../Snackbar";
 
 export type Snackbar = {
@@ -37,7 +36,7 @@ export const notificationSlice = createSlice({
     },
     removeSnackbar: (
       state,
-      action: { type: string; payload: { id: number } },
+      action: { type: string; payload: { id: number } }
     ) => {
       const newMap: Snackbar[] = [];
       state.value.snackbars.forEach((v) => {
@@ -51,22 +50,6 @@ export const notificationSlice = createSlice({
 });
 
 export const { addSnackbar, removeSnackbar } = notificationSlice.actions;
-
-export const getAllSnackbars = (state: StoreType) => {
-  const snackbars: Snackbar[] = [];
-  state.snackbar.value.snackbars.forEach((v) => {
-    snackbars.push(v);
-  });
-  snackbars.sort((a, b) => {
-    if (a.id > b.id) {
-      return 1;
-    } else if (a.id < b.id) {
-      return -1;
-    }
-    return 0;
-  });
-  return snackbars;
-};
 
 export const NotificacionReducer = notificationSlice.reducer;
 export type NotificationType = typeof notificationSlice;

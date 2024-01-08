@@ -12,7 +12,12 @@ import {
   AddressDisplay,
 } from "@evmosapps/ui-helpers";
 
-import { FetchTransactionResult, fetchTransaction } from "wagmi/actions";
+import {
+  GetTransactionReturnType,
+  // FetchTransactionResult,
+  // fetchTransaction,
+  getTransaction,
+} from "wagmi/actions";
 import { Hex, decodeFunctionData, formatUnits } from "viem";
 import {
   Address,
@@ -38,6 +43,7 @@ import { ReceiptModalProps } from "./ReceiptModal";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { useEffect, useState } from "react";
 import { getFormattedDate } from "helpers";
+import { useConfig } from "wagmi";
 const generateReceipt = ({
   sender,
   receiver,
@@ -59,7 +65,7 @@ const generateReceipt = ({
   height: BigInt(height),
 });
 
-const generateICS20TransferReceipt = (result: FetchTransactionResult) => {
+const generateICS20TransferReceipt = (result: GetTransactionReturnType) => {
   const { args, functionName } = decodeFunctionData({
     abi: getAbi("ics20"),
     data: result.input,
@@ -82,7 +88,7 @@ const generateICS20TransferReceipt = (result: FetchTransactionResult) => {
   });
 };
 
-const generateERC20TransferReceipt = (result: FetchTransactionResult) => {
+const generateERC20TransferReceipt = (result: GetTransactionReturnType) => {
   const { args, functionName } = decodeFunctionData({
     abi: getAbi("erc20"),
     data: result.input,
@@ -109,7 +115,7 @@ const generateERC20TransferReceipt = (result: FetchTransactionResult) => {
   });
 };
 
-const generateEVMTxReceipt = (result: FetchTransactionResult) => {
+const generateEVMTxReceipt = (result: GetTransactionReturnType) => {
   return generateReceipt({
     sender: result.from,
     receiver: result.to ?? raise("Missing receiver"),
@@ -129,6 +135,7 @@ const isIBCMsgTransfer = (message: unknown): message is MsgTransfer => {
 };
 
 const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
+  const config = useConfig();
   const { data, ...rest } = useQuery({
     queryKey: ["receipt", hash],
     enabled: !!hash && !!chainPrefix,
@@ -142,7 +149,7 @@ const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
        * ethereum transactions
        */
       if (chainPrefix === "evmos") {
-        const result = await fetchTransaction({
+        const result = await getTransaction(config, {
           hash: hash,
         });
 

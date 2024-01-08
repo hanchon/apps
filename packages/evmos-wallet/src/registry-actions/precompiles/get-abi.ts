@@ -1,10 +1,10 @@
 import { ics20Abi, stakingAbi } from "@evmosapps/registry/src/abi";
-import { erc20ABI } from "wagmi";
+import { erc20Abi } from "viem";
 
 export const ABI = {
   ics20: ics20Abi,
   staking: stakingAbi,
-  erc20: erc20ABI,
+  erc20: erc20Abi,
 } as const;
 
 export type ABIKey = keyof typeof ABI;

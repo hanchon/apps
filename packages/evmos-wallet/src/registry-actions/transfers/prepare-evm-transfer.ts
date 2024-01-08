@@ -1,5 +1,5 @@
-import { prepareSendTransaction, sendTransaction } from "wagmi/actions";
-import { normalizeToEth, Address } from "../../wallet";
+import { estimateGas, sendTransaction } from "wagmi/actions";
+import { normalizeToEth, Address, wagmiConfig } from "../../wallet";
 import { TokenAmount } from "../types";
 import { buffGasEstimate } from "../utils/buff-gas-estimate";
 import { raise } from "helpers";
@@ -11,14 +11,18 @@ export const prepareEvmTransfer = async ({
   receiver: Address<"evmos">;
   amount: TokenAmount;
 }) => {
-  const response = await prepareSendTransaction({
+  const args = {
+    to: normalizeToEth(receiver),
+    value: amount.amount,
+  } as const;
+  const gasEstimate = await estimateGas(wagmiConfig, {
     to: normalizeToEth(receiver),
     value: amount.amount,
   });
 
   return {
-    tx: response,
-    estimatedGas: buffGasEstimate(response.gas ?? raise("No gas estimate")),
+    tx: args,
+    estimatedGas: buffGasEstimate(gasEstimate ?? raise("No gas estimate")),
   };
 };
 
@@ -34,8 +38,5 @@ export const writeEvmTransfer = async ({
     amount,
   });
 
-  //Safe apps can not have data as undefined
-  if (!response.tx.data) response.tx.data = "0x";
-
-  return sendTransaction(response.tx);
+  return sendTransaction(wagmiConfig, response.tx);
 };

@@ -36,11 +36,12 @@ import {
   UNSUCCESSFUL_CONVERT_TX,
   sendEvent,
 } from "tracker";
-import { prepareWriteContract, writeContract } from "wagmi/actions";
+import { getChainId, switchChain, writeContract } from "wagmi/actions";
 import { EXPLORER_URL } from "constants-helper";
-import { getNetwork, switchNetwork } from "wagmi/actions";
+
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { E } from "helpers";
+import { useConfig } from "wagmi";
 
 const evmos = getEvmosChainInfo();
 
@@ -96,7 +97,7 @@ const Convert = ({
     decimals: item.decimals,
     img: item.pngSrc,
   };
-
+  const config = useConfig();
   return (
     <>
       <Modal.Header>
@@ -156,10 +157,9 @@ const Convert = ({
         <ConfirmButton
           disabled={disabled}
           onClick={async () => {
-            const connectedNetwork = getNetwork();
-            if (connectedNetwork.chain?.id !== evmos.id) {
+            if (getChainId(config) !== evmos.id) {
               const [err] = await E.try(() =>
-                switchNetwork({
+                switchChain(config, {
                   chainId: evmos.id,
                 })
               );
@@ -253,29 +253,13 @@ const Convert = ({
             } else {
               if (isERC20Selected) {
                 try {
-                  const contract = await prepareWriteContract({
+                  setDisabled(true);
+                  const hash = await writeContract(config, {
                     address: WEVMOS_CONTRACT_ADDRESS,
                     abi: WETH_ABI,
                     functionName: "withdraw",
                     value: amount.toBigInt(),
                   });
-
-                  if (contract === null) {
-                    dispatch(
-                      addSnackbar({
-                        id: 0,
-                        content: {
-                          type: SNACKBAR_CONTENT_TYPES.TEXT,
-                          title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-                        },
-                        type: SNACKBAR_TYPES.ERROR,
-                      })
-                    );
-                    setIsOpen(false);
-                    return;
-                  }
-                  setDisabled(true);
-                  const res = await writeContract(contract);
 
                   dispatch(
                     addSnackbar({
@@ -283,7 +267,7 @@ const Convert = ({
                       content: {
                         type: SNACKBAR_CONTENT_TYPES.LINK,
                         title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
-                        hash: res.hash,
+                        hash: hash,
                         explorerTxUrl: `${EXPLORER_URL}/tx/`,
                       },
                       type: SNACKBAR_TYPES.SUCCESS,
@@ -303,35 +287,20 @@ const Convert = ({
                 }
               } else {
                 try {
-                  const contract = await prepareWriteContract({
+                  setDisabled(true);
+                  const hash = await writeContract(config, {
                     address: WEVMOS_CONTRACT_ADDRESS,
                     abi: WETH_ABI,
                     functionName: "deposit",
                     value: amount.toBigInt(),
                   });
-                  if (contract === null) {
-                    dispatch(
-                      addSnackbar({
-                        id: 0,
-                        content: {
-                          type: SNACKBAR_CONTENT_TYPES.TEXT,
-                          title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
-                        },
-                        type: SNACKBAR_TYPES.ERROR,
-                      })
-                    );
-                    setIsOpen(false);
-                    return;
-                  }
-                  setDisabled(true);
-                  const res = await writeContract(contract);
                   dispatch(
                     addSnackbar({
                       id: 0,
                       content: {
                         type: SNACKBAR_CONTENT_TYPES.LINK,
                         title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
-                        hash: res.hash,
+                        hash,
                         explorerTxUrl: `${EXPLORER_URL}/tx/`,
                       },
                       type: SNACKBAR_TYPES.SUCCESS,

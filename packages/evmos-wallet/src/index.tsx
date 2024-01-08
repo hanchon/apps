@@ -38,7 +38,6 @@ export { METAMASK_KEY } from "./internal/wallet/functionality/wallet";
 export { WALLECT_CONNECT_KEY } from "./internal/wallet/functionality/wallet";
 export type { StoreType } from "./redux/Store";
 export type { AppDispatch } from "./redux/Store";
-export { getAllSnackbars } from "./notification/redux/notificationSlice";
 export * from "./internal/wallet/functionality/wallet";
 // components
 
