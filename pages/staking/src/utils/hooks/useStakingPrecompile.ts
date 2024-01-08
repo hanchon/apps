@@ -20,7 +20,6 @@ export function useStakingPrecompile() {
         address: STAKING_CONTRACT_ADDRESS,
         abi: getAbi("staking"),
         functionName: "delegate",
-        value: 0n,
         account: address.evmosAddressEthFormat as `0x${string}`,
         args: [delegatorAddress as Hex, validatorAddress, amount.toBigInt()],
       },
@@ -38,7 +37,6 @@ export function useStakingPrecompile() {
         address: STAKING_CONTRACT_ADDRESS,
         abi: getAbi("staking"),
         functionName: "undelegate",
-        value: 0n,
         account: address.evmosAddressEthFormat as `0x${string}`,
         args: [delegatorAddress as Hex, validatorAddress, amount.toBigInt()],
       },
@@ -57,7 +55,6 @@ export function useStakingPrecompile() {
         address: STAKING_CONTRACT_ADDRESS,
         abi: getAbi("staking"),
         functionName: "redelegate",
-        value: 0n,
         account: address.evmosAddressEthFormat as `0x${string}`,
         args: [
           delegatorAddress as Hex,
@@ -81,7 +78,6 @@ export function useStakingPrecompile() {
         address: STAKING_CONTRACT_ADDRESS,
         abi: getAbi("staking"),
         functionName: "cancelUnbondingDelegation",
-        value: 0n,
         account: address.evmosAddressEthFormat as `0x${string}`,
         args: [
           delegatorAddress as Hex,
