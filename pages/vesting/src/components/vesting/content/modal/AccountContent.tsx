@@ -1,11 +1,11 @@
 import { KEPLR_KEY, StoreType, normalizeToEth } from "@evmosapps/evmos-wallet";
-import { useTranslation } from "next-i18next";
 import { useSelector } from "react-redux";
 import { ConfirmButton } from "@evmosapps/ui-helpers";
 import { VestingAccountDetail } from "../../../../internal/types";
 import { AmountItem } from "./AmountItem";
 import { AddresItem } from "./AddressItem";
 import { ethers } from "ethers";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 type AccountContentProps = {
   vestingDetails: VestingAccountDetail;
@@ -18,7 +18,7 @@ export const AccountContent = ({
   accountName,
   handleClawbackClick,
 }: AccountContentProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("vesting");
   const value = useSelector((state: StoreType) => state.wallet.value);
 
   const vestedEvmos = ethers.formatEther(vestingDetails?.originalVestingAmount);

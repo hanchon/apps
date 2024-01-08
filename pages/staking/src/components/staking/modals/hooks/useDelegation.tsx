@@ -17,10 +17,11 @@ import {
 } from "tracker";
 
 import { EXPLORER_URL } from "constants-helper";
-import { getNetwork, switchNetwork } from "wagmi/actions";
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { E } from "helpers";
 import { useStakingPrecompile } from "../../../../utils/hooks/useStakingPrecompile";
+import { useConfig } from "wagmi";
+import { getChainId, switchChain } from "wagmi/actions";
 
 const evmos = getEvmosChainInfo();
 
@@ -28,12 +29,11 @@ export const useDelegation = (useDelegateProps: DelegateProps) => {
   const dispatch = useDispatch();
 
   const { delegate } = useStakingPrecompile();
-
+  const config = useConfig();
   const handleConfirmButton = async () => {
-    const connectedNetwork = getNetwork();
-    if (connectedNetwork.chain?.id !== evmos.id) {
+    if (getChainId(config) !== evmos.id) {
       const [err] = await E.try(() =>
-        switchNetwork({
+        switchChain(config, {
           chainId: evmos.id,
         })
       );
@@ -61,13 +61,13 @@ export const useDelegation = (useDelegateProps: DelegateProps) => {
     useDelegateProps.setDisabled(true);
 
     try {
-      const res = await delegate(
+      const hash = await delegate(
         useDelegateProps.wallet.evmosAddressEthFormat,
         useDelegateProps.item.validatorAddress,
         amount
       );
 
-      dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx`));
+      dispatch(snackBroadcastSuccessful(hash, `${EXPLORER_URL}/tx`));
 
       sendEvent(SUCCESSFUL_TX_DELEGATE, {
         "User Wallet Address": useDelegateProps.wallet?.evmosAddressEthFormat,

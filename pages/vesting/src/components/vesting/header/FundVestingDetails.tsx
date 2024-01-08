@@ -23,18 +23,17 @@ import { useSelector } from "react-redux";
 import { VestingResponse } from "../../../internal/types";
 import { BigNumber } from "@ethersproject/bignumber";
 
-import { useTranslation } from "next-i18next";
-
 import { getVesting } from "../../../internal/fetch";
 import { getEvmosBalance } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/fetch";
 import { ethers } from "ethers";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 export default function FundVestingDetails({
   onNext,
 }: {
   onNext: (d: FieldValues) => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("vesting");
 
   const [disabled, setDisabled] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);

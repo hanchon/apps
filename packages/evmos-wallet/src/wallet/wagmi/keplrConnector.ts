@@ -5,7 +5,7 @@ import {
   OfflineDirectSigner,
 } from "@keplr-wallet/types";
 import { getPublicClient } from "wagmi/actions";
-import { Chain, Connector } from "wagmi";
+import { Chain, Connector, createConnector } from "wagmi";
 
 import { getKeplrProvider } from "../utils/keplr";
 
@@ -340,3 +340,49 @@ export class KeplrConnector extends Connector<Keplr, {}> {
     return chain;
   }
 }
+
+const evmos = getEvmosChainInfo();
+export const keplr = createConnector(() => ({
+  id: "keplr",
+  name: "Keplr",
+  type: "keplr",
+
+  connect: async () => {
+    const provider = await getKeplrProvider();
+    const signer = provider.getOfflineSigner(evmos.cosmosId);
+    const [account = raise("Account not found")] = await signer.getAccounts();
+    return {
+      accounts: [normalizeToEth(account.address)],
+      chainId: evmosInfo.id,
+    };
+  },
+
+  async disconnect() {
+    // do nothing
+  },
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async isAuthorized() {
+    return true;
+  },
+  async getAccounts() {
+    const provider = await getKeplrProvider();
+    const signer = provider.getOfflineSigner(evmos.cosmosId);
+    const [account = raise("Account not found")] = await signer.getAccounts();
+    return [normalizeToEth(account.address)];
+  },
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async getChainId() {
+    return evmosInfo.id;
+  },
+
+  async getProvider() {
+    return {
+      request(args: { method: string; params: unknown[] }) {},
+    };
+  },
+
+  onAccountsChanged() {},
+
+  onChainChanged() {},
+  onDisconnect() {},
+}));

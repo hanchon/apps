@@ -6,9 +6,9 @@ import { StoreType } from "@evmosapps/evmos-wallet";
 import { useState } from "react";
 import { FundVestingAccount } from "./FundVestingAccount";
 import { EnableVestingModal } from "./EnableVestingModal";
-import { useTranslation } from "next-i18next";
 import ApproveFunding from "./ApproveFunding";
 import { Modal } from "../../Modal";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 export const Header = () => {
   const handleConfirmClick = () => {
@@ -28,7 +28,8 @@ export const Header = () => {
   const [showApproveModal, setShowApproveModal] = useState(false);
 
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
-  const { t } = useTranslation();
+  const { t } = useTranslation("vesting");
+
   return (
     <header className="flex w-full flex-col items-center space-y-2 lg:flex-row lg:justify-end lg:space-x-2 lg:space-y-0">
       <div className="flex flex-col md:flex-row w-full justify-between space-y-3 md:space-y-0">

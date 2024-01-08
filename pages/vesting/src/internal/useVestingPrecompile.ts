@@ -1,29 +1,28 @@
 import VestingABI from "./abis/VestingABI.json";
 import { Period } from "@evmos/transactions";
-import { prepareWriteContract, writeContract } from "wagmi/actions";
+import { writeContract } from "wagmi/actions";
 import { useSelector } from "react-redux";
 import { StoreType } from "@evmosapps/evmos-wallet";
+import { useConfig } from "wagmi";
 
 const VESTING_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000803";
 
 export function useVestingPrecompile() {
   const address = useSelector((state: StoreType) => state.wallet.value);
+  const config = useConfig();
 
   async function createClawbackVestingAccount(
     funderAddress: string,
     vestingAddress: string,
     enableGovClawback: boolean
   ) {
-    return await writeContract({
-      mode: "prepared",
-      request: {
-        address: VESTING_CONTRACT_ADDRESS,
-        abi: VestingABI,
-        functionName: "createClawbackVestingAccount",
-        value: 0n,
-        account: address.evmosAddressEthFormat as `0x${string}`,
-        args: [funderAddress, vestingAddress, enableGovClawback],
-      },
+    return await writeContract(config, {
+      address: VESTING_CONTRACT_ADDRESS,
+      abi: VestingABI,
+      functionName: "createClawbackVestingAccount",
+      value: 0n,
+      account: address.evmosAddressEthFormat as `0x${string}`,
+      args: [funderAddress, vestingAddress, enableGovClawback],
     });
   }
 
@@ -34,36 +33,30 @@ export function useVestingPrecompile() {
     lockupPeriods: Period[],
     vestingPeriods: Period[]
   ) {
-    return await writeContract({
-      mode: "prepared",
-      request: {
-        address: VESTING_CONTRACT_ADDRESS,
-        abi: VestingABI,
-        functionName: "fundVestingAccount",
-        value: 0n,
-        account: address.evmosAddressEthFormat as `0x${string}`,
-        args: [
-          funderAddress,
-          vestingAddress,
-          startTime,
-          lockupPeriods,
-          vestingPeriods,
-        ],
-      },
+    return await writeContract(config, {
+      address: VESTING_CONTRACT_ADDRESS,
+      abi: VestingABI,
+      functionName: "fundVestingAccount",
+      value: 0n,
+      account: address.evmosAddressEthFormat as `0x${string}`,
+      args: [
+        funderAddress,
+        vestingAddress,
+        startTime,
+        lockupPeriods,
+        vestingPeriods,
+      ],
     });
   }
 
   async function approveFunding(safeAddress: string) {
-    return await writeContract({
-      mode: "prepared",
-      request: {
-        address: VESTING_CONTRACT_ADDRESS,
-        abi: VestingABI,
-        functionName: "approve",
-        value: 0n,
-        account: address.evmosAddressEthFormat as `0x${string}`,
-        args: [safeAddress, "/evmos.vesting.v2.MsgFundVestingAccount"],
-      },
+    return await writeContract(config, {
+      address: VESTING_CONTRACT_ADDRESS,
+      abi: VestingABI,
+      functionName: "approve",
+      value: 0n,
+      account: address.evmosAddressEthFormat as `0x${string}`,
+      args: [safeAddress, "/evmos.vesting.v2.MsgFundVestingAccount"],
     });
   }
 
@@ -72,7 +65,7 @@ export function useVestingPrecompile() {
     accountAddress: string,
     destinationAddress: string
   ) {
-    const { request } = await prepareWriteContract({
+    return await writeContract(config, {
       address: VESTING_CONTRACT_ADDRESS,
       abi: VestingABI,
       functionName: "clawback",
@@ -80,7 +73,6 @@ export function useVestingPrecompile() {
       account: address.evmosAddressEthFormat as `0x${string}`,
       args: [founderAddress, accountAddress, destinationAddress],
     });
-    return await writeContract(request);
   }
 
   return {
