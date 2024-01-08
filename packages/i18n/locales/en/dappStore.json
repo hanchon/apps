@@ -5,35 +5,7 @@
       "topUp": "Top Up Account"
     }
   },
-  "card": {
-    "title": "Evmos dApps",
-    "description": "The core dApps built by the Evmos team",
-    "assets": {
-      "title": "Portfolio",
-      "description": "Manage your assets on Evmos",
-      "button": {
-        "text": "See Portfolio"
-      }
-    },
-    "governance": {
-      "title": "Governance",
-      "description": "Decide on the future of Evmos",
-      "button": {
-        "text": "Participate in Governance"
-      }
-    },
-    "staking": {
-      "title": "Staking",
-      "description": "Earn rewards for participating in the network's security",
-      "button": {
-        "text": "Stake & manage delegations",
-        "claim": "Claim Rewards"
-      },
-      "available": "Available Balance",
-      "staked": "Staked Balance",
-      "rewards": "Claimable Rewards"
-    }
-  },
+
   "copilotCard": {
     "title": "Get started",
     "subtitle": "with Evmos in 5 minutes",
