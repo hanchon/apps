@@ -226,14 +226,14 @@ export const DescriptiondApp = async ({
       </div>
 
       <div
-        className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0"
+        className="flex justify-between items-center md:items-start"
         style={{ marginBottom: "-1rem" }}
       >
         <Title tag="h3">{t("instantdApp.relatedApps.title")}</Title>
         <TrackerEvent event={CLICK_SEE_MORE_BUTTON}>
           <ButtonWithLink
             href={`/dapps/${dapp.categorySlug}`}
-            className="md:self-center"
+            className="self-center"
           >
             <div className="flex items-center space-x-2">
               <p>{t("instantdApp.relatedApps.button.text")}</p>
