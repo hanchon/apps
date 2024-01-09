@@ -5,8 +5,8 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 import { Search } from "@evmosapps/ui-helpers";
-import { useTranslation } from "next-i18next";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "@evmosapps/i18n/client";
 export const SearchVesting = () => {
   const router = useRouter();
 
@@ -30,7 +30,7 @@ export const SearchVesting = () => {
     setValue(e.target.value);
   };
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("vesting");
 
   const props = {
     placeholder: t("search.placeholder"),

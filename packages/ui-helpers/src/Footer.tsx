@@ -2,7 +2,6 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import {
-  DOCS_SMART_CONTRACTS_URL,
   COMMONWEALTH_URL,
   GITHUB_EVMOS_URL,
   MEDIUM_URL,
@@ -12,6 +11,7 @@ import {
   DISCORD_EVMOS_URL,
   TELEGRAM_EVMOS_URL,
   TOS_EVMOS_URL,
+  DOCS_EVMOS_URL,
 } from "constants-helper";
 
 import {
@@ -44,7 +44,7 @@ export const Footer = ({
       <div className="flex flex-col items-center space-y-3 lg:flex-row lg:space-x-10 lg:space-y-0">
         <p>
           <a
-            href={DOCS_SMART_CONTRACTS_URL}
+            href={DOCS_EVMOS_URL}
             className="flex items-center space-x-3 text-sm"
             target="_blank"
             rel="noreferrer"

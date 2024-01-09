@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { EXPLORER_URL } from "constants-helper";
-import { getNetwork, switchNetwork } from "wagmi/actions";
+import { getChainId, switchChain } from "wagmi/actions";
 import { E } from "helpers";
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { Dayjs } from "dayjs";
@@ -18,13 +18,15 @@ import {
   GENERATING_TX_NOTIFICATIONS,
   BROADCASTED_NOTIFICATIONS,
 } from "@evmosapps/evmos-wallet";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { setVestingAccountNameLocalstorage } from "../helpers";
 import { BigNumber } from "@ethersproject/bignumber";
 import { useSelector } from "react-redux";
 import { StoreType } from "@evmosapps/evmos-wallet";
-import { useTranslation } from "next-i18next";
+
+import { useConfig } from "wagmi";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 const evmos = getEvmosChainInfo();
 
@@ -41,13 +43,13 @@ export default function ExecuteFund({
   const { fundVestingAccount } = useVestingPrecompile();
   const [loading, setloading] = useState(false);
   const wallet = useSelector((state: StoreType) => state.wallet.value);
-  const { t } = useTranslation();
+  const { t } = useTranslation("vesting");
+  const config = useConfig();
 
   const handleOnClick = async () => {
-    const connectedNetwork = getNetwork();
-    if (connectedNetwork.chain?.id !== evmos.id) {
+    if (getChainId(config) !== evmos.id) {
       const [err] = await E.try(() =>
-        switchNetwork({
+        switchChain(config, {
           chainId: evmos.id,
         })
       );
@@ -70,7 +72,7 @@ export default function ExecuteFund({
           }
         );
 
-      const res = await fundVestingAccount(
+      const hash = await fundVestingAccount(
         wallet.evmosAddressEthFormat,
         vestingData.address as string,
         startTime,
@@ -84,7 +86,7 @@ export default function ExecuteFund({
           content: {
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
-            hash: res.hash,
+            hash,
             explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,

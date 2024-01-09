@@ -13,7 +13,7 @@ import { TopupModalTrigger } from "stateful-components/src/modals/TopupModal/Top
 import { useStake } from "@evmosapps/evmos-wallet/src/api/useStake";
 import { useAssets } from "@evmosapps/evmos-wallet/src/api/useAssets";
 import { convertFromAtto } from "helpers/src/styles";
-import { ButtonWithoutLink } from "@evmosapps/ui-helpers/src/links/Button";
+import { PrimaryButton } from "@evmosapps/ui-helpers";
 // import { ButtonWithoutLink } from "@evmosapps/ui-helpers";
 
 export const AccountBalance = () => {
@@ -69,7 +69,7 @@ export const AccountBalance = () => {
         {isConnected && (
           <div className="md:relative md:left-[16px] md:top-[1px] ">
             <TopupModalTrigger>
-              <ButtonWithoutLink
+              <PrimaryButton
                 onClick={() => {
                   sendEvent(CLICK_ON_TOP_UP_ACCOUNT_DAPP, {
                     Location: "Home Page",
@@ -77,7 +77,7 @@ export const AccountBalance = () => {
                 }}
               >
                 {t("account.balance.topUp")}
-              </ButtonWithoutLink>
+              </PrimaryButton>
             </TopupModalTrigger>
           </div>
         )}

@@ -83,7 +83,7 @@ export function withEvmosConfig(config = {}) {
             {
               key: "Content-Security-Policy",
               value:
-                "font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self' safe.evmos.dev safe.evmos.org;",
+                "font-src 'self' fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self' safe.evmos.dev safe.evmos.org;",
             },
             {
               key: "Permissions-Policy",

@@ -1,6 +1,6 @@
 "use client";
 import { createTxRaw } from "@evmos/proto";
-import { getAccount, getNetwork } from "wagmi/actions";
+import { getAccount, getChainId } from "wagmi/actions";
 import { assertIf } from "helpers";
 import {
   signTypedDataMessage,
@@ -8,6 +8,7 @@ import {
   getKeplrProvider,
   signKeplrAminoTransaction,
   ethToEvmos,
+  wagmiConfig,
 } from "../../wallet";
 import {
   apiBroadcastAmino,
@@ -22,11 +23,10 @@ export async function signBackendTypedDataTransaction({
   typedData,
   legacyAmino,
 }: ApiPresignTx) {
-  const { address, connector } = getAccount();
-  const { chain } = getNetwork();
-
+  const { address, connector } = getAccount(wagmiConfig);
+  const chainId = getChainId(wagmiConfig);
   assertIf(
-    chain && address && connector && typedData,
+    chainId && address && connector && typedData,
     "COULD_NOT_SIGN_TRANSACTION"
   );
 
@@ -36,7 +36,7 @@ export async function signBackendTypedDataTransaction({
     signature,
     broadcast: () =>
       apiBroadcastEip712({
-        chainId: chain.id,
+        chainId,
         feePayer: ethToEvmos(address),
         feePayerSig: signature,
         body: legacyAmino.body,
@@ -46,12 +46,11 @@ export async function signBackendTypedDataTransaction({
 }
 
 export async function signBackendDirectTransaction(transaction: ApiPresignTx) {
-  const { address, connector } = getAccount();
-  const { chain } = getNetwork();
+  const { address, connector } = getAccount(wagmiConfig);
 
-  assertIf(chain && address && connector, "COULD_NOT_SIGN_TRANSACTION");
+  assertIf(address && connector, "COULD_NOT_SIGN_TRANSACTION");
 
-  assertIf(connector.id === "keplr", "UNSUPPORTED_SIGN_METHOD");
+  assertIf(connector.name === "Keplr", "UNSUPPORTED_SIGN_METHOD");
 
   const response = await signKeplrDirect({
     chainId: transaction.chainId,
@@ -76,12 +75,10 @@ export async function signApiAminoTx(
   transaction: ApiPresignTx,
   network: string
 ) {
-  const { address, connector } = getAccount();
-  const { chain } = getNetwork();
+  const { address, connector } = getAccount(wagmiConfig);
+  assertIf(address && connector, "COULD_NOT_SIGN_TRANSACTION");
 
-  assertIf(chain && address && connector, "COULD_NOT_SIGN_TRANSACTION");
-
-  assertIf(connector.id === "keplr", "UNSUPPORTED_SIGN_METHOD");
+  assertIf(connector.name === "Keplr", "UNSUPPORTED_SIGN_METHOD");
   const keplr = await getKeplrProvider();
   keplr.defaultOptions = {
     sign: {
@@ -102,14 +99,14 @@ export async function signApiAminoTx(
 }
 
 export async function signApiPresignTx(presignedTx: ApiPresignTx) {
-  const { address, connector } = getAccount();
-  const { chain } = getNetwork();
-  assertIf(chain && address && connector, "COULD_NOT_SIGN_TRANSACTION");
+  const { address, connector } = getAccount(wagmiConfig);
+
+  assertIf(address && connector, "COULD_NOT_SIGN_TRANSACTION");
   /**
    * If the connector is keplr, we need to check if the key is a ledger key.
    * If it is, we need to sign the transaction as typed data
    */
-  if (connector.id === "keplr") {
+  if (connector.name === "Keplr") {
     const keplr = await getKeplrProvider();
 
     keplr.defaultOptions = {

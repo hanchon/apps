@@ -8,27 +8,31 @@ import { QueryClient, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { signatureToPubkey } from "@hanchon/signature-to-pubkey";
 import { assertIf, raise } from "helpers";
-import { keplrConnector } from "./connectors";
+
 import { getActiveProviderKey } from "../actions";
-import { normalizeToEvmos } from "../utils";
+import { getKeplrProvider, normalizeToEvmos } from "../utils";
 import { getAccount, signMessage } from "wagmi/actions";
+import { wagmiConfig } from "./config";
+import { getEvmosChainInfo } from "./chains";
 const recoveryMessage = "generate_pubkey";
 const hashedMessage = Buffer.from(
   fromHex(hashMessage(recoveryMessage), "bytes")
 );
 
 const baseKey = "evmos/pubkey";
-
+const evmos = getEvmosChainInfo();
 const queryFn = async () => {
-  const { address, connector } = getAccount();
+  const { address, connector } = getAccount(wagmiConfig);
   assertIf(address, "WALLET_ACCOUNT_NOT_AVAILABLE");
   let pubkey = window.localStorage.getItem([baseKey, address].join("/"));
 
   if (pubkey) return pubkey;
 
-  if (connector === keplrConnector) {
-    const pubkey = await keplrConnector.getPubkey();
-    return Buffer.from(pubkey).toString("base64");
+  if (connector?.name === "Keplr") {
+    const keplr = await getKeplrProvider();
+    const account = await keplr.getKey(evmos.cosmosId);
+
+    return Buffer.from(account.pubKey).toString("base64");
   }
 
   pubkey = await queryPubKey(
@@ -37,11 +41,11 @@ const queryFn = async () => {
   );
 
   if (pubkey) return pubkey;
-  const signature = await signMessage({
+  const signature = await signMessage(wagmiConfig, {
     message: recoveryMessage,
   });
 
-  if (getActiveProviderKey() === "safe") {
+  if (getActiveProviderKey() === "Safe") {
     return "";
   }
 
@@ -52,7 +56,7 @@ const queryFn = async () => {
 };
 
 export const prefetchPubkey = async (queryClient: QueryClient) => {
-  const { address } = getAccount();
+  const { address } = getAccount(wagmiConfig);
   return queryClient.fetchQuery({ queryKey: [baseKey, address], queryFn });
 };
 export const usePubKey = () => {

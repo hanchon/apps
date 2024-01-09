@@ -60,7 +60,7 @@ export const ReceiveContent = ({
 
   const activeProviderKey = getActiveProviderKey();
   const networkOptions = useMemo(() => {
-    if (activeProviderKey == "metaMask") {
+    if (activeProviderKey === "MetaMask") {
       return ["evmos"] as Prefix[];
     }
     return sortedChains;

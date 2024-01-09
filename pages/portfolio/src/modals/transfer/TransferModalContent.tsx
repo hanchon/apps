@@ -69,7 +69,6 @@ export const TransferModalContent = ({
   const { t } = useTranslation("transfer-modal");
   const { sendEvent } = useTracker();
   const { isDisconnected } = useAccount();
-
   const receiptModal = useReceiptModal();
   const topupModal = useTopupModal();
   const connectModal = useConnectModal();
@@ -86,8 +85,9 @@ export const TransferModalContent = ({
   } = useRequestWalletAccount();
 
   const { address } = useAccount();
+
   useEffect(() => {
-    if (networkPrefix !== "evmos" && getActiveProviderKey() !== "keplr") return;
+    if (networkPrefix !== "evmos" && getActiveProviderKey() !== "Keplr") return;
     requestAccount(networkPrefix);
   }, [networkPrefix, requestAccount, address]);
 
@@ -130,7 +130,7 @@ export const TransferModalContent = ({
     ),
     networkNotSupportedByConnectedWallet:
       activeProviderKey &&
-      activeProviderKey !== "keplr" &&
+      activeProviderKey !== "Keplr" &&
       networkPrefix !== "evmos",
   };
 
@@ -176,9 +176,9 @@ export const TransferModalContent = ({
     });
     // If the user is using the safe wallet, we don't show the receipt modal
     // because the transaction progress is handled by the safe UI
-    if (getActiveProviderKey() === "safe") return;
+    if (getActiveProviderKey() === "Safe") return;
     receiptModal.setIsOpen(true, {
-      hash: transferResponse.hash,
+      hash: transferResponse,
       chainPrefix: networkPrefix,
     });
   }, [transferResponse]);
@@ -379,7 +379,7 @@ export const TransferModalContent = ({
                         });
                         return;
                       }
-                      const [err] = await E.try(() => connectWith("keplr"));
+                      const [err] = await E.try(() => connectWith("Keplr"));
                       sendEvent(PROMPTED_TO, {
                         "Prompt To": "Connect to Keplr",
                         Modal: "Send Modal",

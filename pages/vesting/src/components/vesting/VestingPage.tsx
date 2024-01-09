@@ -6,8 +6,9 @@ import { Header } from "./header/Header";
 import { Navigation } from "@evmosapps/ui-helpers";
 import { NAV_TO_VESTING } from "constants-helper";
 import { AccountDetails } from "./content/AccountDetails";
-import { useTranslation } from "next-i18next";
+
 import { useLayoutEffect, useState } from "react";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 export const VestingPageContent = () => {
   const [account, setAccount] = useState<string | undefined>();
@@ -17,7 +18,7 @@ export const VestingPageContent = () => {
     setAccount(searchParams.get("account") || undefined);
   }, []);
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("vesting");
   return (
     <div className="px-2 md:px-0">
       {account !== undefined && <Navigation href="/" text={NAV_TO_VESTING} />}

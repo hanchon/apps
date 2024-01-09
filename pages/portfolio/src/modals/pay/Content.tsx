@@ -110,9 +110,9 @@ export const Content = ({
     const chainPrefix = normalizeToPrefix(sender);
     // If the user is using the safe wallet, we don't show the receipt modal
     // because the transaction progress is handled by the safe UI
-    if (getActiveProviderKey() === "safe") return;
+    if (getActiveProviderKey() === "Safe") return;
     receiptModal.setIsOpen(true, {
-      hash: transferResponse.hash,
+      hash: transferResponse,
       chainPrefix,
     });
   }, [transferResponse]);

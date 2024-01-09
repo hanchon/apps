@@ -1,4 +1,3 @@
-import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { useDispatch } from "react-redux";
@@ -11,9 +10,10 @@ import {
 } from "@evmosapps/evmos-wallet";
 import { EXPLORER_URL } from "constants-helper";
 import { ModalTitle } from "../../ModalTitle";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 export default function ApproveFunding({ onClose }: { onClose: () => void }) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("vesting");
   const [safeAddress, setSafeAddress] = useState<string>("");
   const { approveFunding } = useVestingPrecompile();
   const dispatch = useDispatch();
@@ -25,14 +25,14 @@ export default function ApproveFunding({ onClose }: { onClose: () => void }) {
   async function handleApprove() {
     setIsLoading(true);
     try {
-      const res = await approveFunding(safeAddress);
+      const hash = await approveFunding(safeAddress);
       dispatch(
         addSnackbar({
           id: 0,
           content: {
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
-            hash: res.hash,
+            hash,
             explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,

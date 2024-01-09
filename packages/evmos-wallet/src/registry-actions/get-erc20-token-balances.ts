@@ -1,10 +1,10 @@
-import { erc20ABI } from "wagmi";
-import { Address, evmosClient } from "../wallet";
+import { Address, wagmiConfig } from "../wallet";
 import { getTokens } from "./get-tokens";
 import { normalizeToEth, normalizeToEvmos } from "../wallet/utils/addresses";
 import { makeBalance } from "./utils/make-balance";
-import { Hex } from "viem";
+import { Hex, erc20Abi } from "viem";
 import { FormattedBalance } from "./types";
+import { multicall } from "wagmi/actions";
 
 export async function getERC20TokenBalances({
   address,
@@ -13,9 +13,10 @@ export async function getERC20TokenBalances({
 }) {
   const tokens = getTokens().filter(({ erc20Address }) => erc20Address);
   const ethAddress = normalizeToEth(address);
-  const response = await evmosClient.multicall({
+
+  const response = await multicall(wagmiConfig, {
     contracts: tokens.map((token) => ({
-      abi: erc20ABI,
+      abi: erc20Abi,
       address: token.erc20Address as Hex,
       functionName: "balanceOf",
       args: [ethAddress],
@@ -25,10 +26,17 @@ export async function getERC20TokenBalances({
   const evmosAddress = normalizeToEvmos(address);
   return response
     .reduce<FormattedBalance[]>((acc, response, index) => {
+      if (response.status !== "success") return acc;
       const token = tokens[index];
       if (!token) return acc;
+
       acc.push(
-        makeBalance(token, evmosAddress, response.result ?? "0", "ERC20")
+        makeBalance(
+          token,
+          evmosAddress,
+          BigInt(response.result ?? "0"),
+          "ERC20"
+        )
       );
       return acc;
     }, [])

@@ -6,6 +6,7 @@ import {
   getChain,
   getKeplrProvider,
   normalizeToCosmosAddress,
+  wagmiConfig,
 } from "@evmosapps/evmos-wallet";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { E } from "helpers";
@@ -83,7 +84,7 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
       }
       const activeProvider = getActiveProviderKey();
       if (!activeProvider) return;
-      if (activeProvider === "keplr") {
+      if (activeProvider === "Keplr") {
         const keplr = await getKeplrProvider();
 
         const [suggestChainErr] = await E.try(() => suggestChain(chain.prefix));
@@ -124,7 +125,7 @@ export const requestWalletAccount = async (prefix: Prefix) => {
   const activeProvider = getActiveProviderKey();
   if (!activeProvider) throw new Error("NO_ACTIVE_PROVIDER");
   const chain = getChain(prefix);
-  if (activeProvider === "keplr") {
+  if (activeProvider === "Keplr") {
     const keplr = await getKeplrProvider();
     const [suggestChainErr] = await E.try(() => suggestChain(prefix));
     if (suggestChainErr) {
@@ -148,7 +149,7 @@ export const requestWalletAccount = async (prefix: Prefix) => {
 
   if (prefix !== "evmos") throw new Error("NETWORK_NOT_SUPPORTED_BY_WALLET");
 
-  const { address } = getAccount();
+  const { address } = getAccount(wagmiConfig);
   if (!address) throw new Error("NOT_CONNECTED");
   return {
     prefix: prefix,

@@ -4,7 +4,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { BigNumber } from "@ethersproject/bignumber";
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
 
 import {
   DelegationsResponse,
@@ -12,15 +11,22 @@ import {
   UndelegationsResponse,
 } from "./types";
 import { getStakingInfo } from "./fetch";
-import { StoreType } from "../redux/Store";
+
 import { convertStringFromAtto } from "helpers/src/styles";
+import { useAccount } from "wagmi";
+import { normalizeToCosmosAddress } from "../wallet";
+import { raise } from "helpers";
 
 export const useStake = () => {
-  const value = useSelector((state: StoreType) => state.wallet.value);
+  const { address } = useAccount();
 
   const stakingInfo = useQuery<StakingInfoResponse, Error>({
-    queryKey: ["stakingInfo", value.evmosAddressCosmosFormat],
-    queryFn: () => getStakingInfo(value.evmosAddressCosmosFormat),
+    queryKey: ["stakingInfo", address],
+    enabled: !!address,
+    queryFn: () =>
+      getStakingInfo(
+        normalizeToCosmosAddress(address ?? raise("Address not found"))
+      ),
     refetchInterval: 15_000,
   });
 

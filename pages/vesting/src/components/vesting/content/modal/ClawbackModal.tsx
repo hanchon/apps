@@ -15,12 +15,15 @@ import {
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useVestingPrecompile } from "../../../../internal/useVestingPrecompile";
-import { useTranslation } from "next-i18next";
+
 import { EXPLORER_URL } from "constants-helper";
-import { getNetwork, switchNetwork } from "wagmi/actions";
+
 import { E } from "helpers";
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { ModalTitle } from "../../../ModalTitle";
+import { useConfig } from "wagmi";
+import { getChainId, switchChain } from "wagmi/actions";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 const evmos = getEvmosChainInfo();
 
@@ -34,12 +37,11 @@ export const ClawbackModal = ({
   const [disabled, setDisabled] = useState(false);
 
   const { clawback } = useVestingPrecompile();
-
+  const config = useConfig();
   const handleOnClick = async () => {
-    const connectedNetwork = getNetwork();
-    if (connectedNetwork.chain?.id !== evmos.id) {
+    if (getChainId(config) !== evmos.id) {
       const [err] = await E.try(() =>
-        switchNetwork({
+        switchChain(config, {
           chainId: evmos.id,
         })
       );
@@ -48,7 +50,7 @@ export const ClawbackModal = ({
     try {
       setDisabled(true);
 
-      const res = await clawback(
+      const hash = await clawback(
         normalizeToEth(vestingDetails?.funderAddress) ?? "",
         normalizeToEth(vestingDetails?.accountAddress) ?? "",
         normalizeToEth(vestingDetails?.funderAddress) ?? ""
@@ -59,7 +61,7 @@ export const ClawbackModal = ({
           content: {
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
-            hash: res?.hash,
+            hash,
             explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
@@ -92,7 +94,7 @@ export const ClawbackModal = ({
     );
   };
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("vesting");
   return (
     <div className="space-y-5">
       <ModalTitle title={t("clawback.title")} />

@@ -87,13 +87,13 @@ export default function Osmosis() {
         inputToken.symbol === "OSMO"
           ? "0xcc491f589b45d4a3c679016195b3fb87d7848210"
           : "0x5db67696C3c088DfBf588d3dd849f44266ff0ffa";
-      const res = await swap({
+      const hash = await swap({
         input: input,
         output: output,
         amount: parseUnits(swapAmount.toString(), 1),
         slippage_tolerance: currentSlippage,
       });
-      setSwapHash(res.hash);
+      setSwapHash(hash);
       setLoadingSwap(false);
       setShowBalanceLink(true);
     } catch (e) {
@@ -476,8 +476,8 @@ export default function Osmosis() {
           {loading
             ? "Loading..."
             : !enoughBalance
-            ? "Insufficient balance"
-            : "Swap"}
+              ? "Insufficient balance"
+              : "Swap"}
         </button>
       </div>
     </div>
