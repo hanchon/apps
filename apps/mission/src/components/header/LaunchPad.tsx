@@ -32,13 +32,13 @@ export function LaunchPad({}: { showPing?: boolean }) {
       mixpanelId: "Portfolio",
     },
     {
-      icon: "/ecosystem/comming_soon2.png",
-      children: t("launchPad.commingSoon.title"),
+      icon: "/ecosystem/comingSoon.png",
+      children: t("messages.comingSoon"),
       href: "/",
     },
     {
-      icon: "/ecosystem/comming_soon.png",
-      children: t("launchPad.commingSoon.title"),
+      icon: "/ecosystem/comingSoon.png",
+      children: t("messages.comingSoon"),
       href: "/",
     },
   ];
@@ -82,9 +82,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
               </TrackerEvent>
             )}
           </div>
-          <p className="text-center text-xs opacity-90">
-            {t("launchPad.subtitle")}
-          </p>
+          <p className="text-xs opacity-90">{t("launchPad.subtitle")}</p>
           <div className="grid grid-cols-3 gap-y-6 pb-6 pt-3">
             {launchPadItems.slice(1).map(({ href, mixpanelId, ...rest }) => {
               const disabled = mixpanelId === undefined;
