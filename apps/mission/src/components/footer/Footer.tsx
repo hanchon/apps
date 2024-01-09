@@ -20,11 +20,11 @@ import {
 } from "icons";
 
 import { Link } from "@evmosapps/i18n/client";
-import { ConsentModalTrigger } from "stateful-components/src/modals/ConsentModal/ConsentModal";
 import { Container, TrackerEvent } from "@evmosapps/ui-helpers";
 
 import { CLICK_ON_FOOTER_CTA } from "tracker";
 import { translation } from "@evmosapps/i18n/server";
+import { CookiesSettings } from "./cookies-settings";
 
 export const Footer = async () => {
   const { t } = await translation();
@@ -159,17 +159,7 @@ export const Footer = async () => {
                 <p>{t("footer.privacyPolicy")}</p>
               </Link>
             </TrackerEvent>
-
-            <ConsentModalTrigger>
-              <TrackerEvent
-                event={CLICK_ON_FOOTER_CTA}
-                properties={{ "Footer Social Type": "Cookie Statement" }}
-              >
-                <p aria-label="cookies settings" className="cursor-pointer">
-                  {t("footer.cookiesSettings")}
-                </p>
-              </TrackerEvent>
-            </ConsentModalTrigger>
+            <CookiesSettings />
           </div>
         </div>
       </footer>
