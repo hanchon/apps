@@ -3,7 +3,7 @@ import {
   COINGECKO_URL,
   COMMONWEALTH_URL,
   DISCORD_EVMOS_URL,
-  DOCS_SMART_CONTRACTS_URL,
+  DOCS_EVMOS_URL,
   GITHUB_EVMOS_URL,
   MEDIUM_URL,
   TELEGRAM_EVMOS_URL,
@@ -38,7 +38,7 @@ export const Footer = async () => {
             properties={{ "Footer Social Type": "Build with evmos" }}
           >
             <a
-              href={DOCS_SMART_CONTRACTS_URL}
+              href={DOCS_EVMOS_URL}
               className="flex items-center space-x-3 "
               target="_blank"
               rel="noreferrer"
