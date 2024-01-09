@@ -4,23 +4,33 @@
 import { LeapIcon, RabbyIcon } from "icons";
 import { ButtonWallet } from "./ConnectModalContent";
 import { Badge } from "@evmosapps/ui-helpers";
+import { useTranslation } from "@evmosapps/i18n/client";
+
+const wallets = [
+  {
+    name: "Leap Wallet",
+    icon: <LeapIcon className="w-7" />,
+  },
+  { name: "Rabby Wallet", icon: <RabbyIcon className="w-7" /> },
+];
 
 export const ComingSoonWallets = () => {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col space-y-3">
-      <ButtonWallet className="flex w-full" disabled={true}>
-        <LeapIcon className="w-7" />
-        <span className="grow flex">Leap</span>
-
-        <Badge variant="danger">Coming soon</Badge>
-      </ButtonWallet>
-
-      <ButtonWallet className="flex w-full" disabled={true}>
-        <RabbyIcon className="w-7" />
-        <span className="grow flex">Rabby</span>
-
-        <Badge variant="danger">Coming soon</Badge>
-      </ButtonWallet>
+      {wallets.map((wallet) => {
+        return (
+          <ButtonWallet
+            key={wallet.name}
+            className="flex w-full"
+            disabled={true}
+          >
+            {wallet.icon}
+            <span className="grow flex">{wallet.name}</span>
+            <Badge variant="danger">{t("messages.comingSoon")}</Badge>
+          </ButtonWallet>
+        );
+      })}
     </div>
   );
 };

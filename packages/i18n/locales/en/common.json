@@ -45,5 +45,8 @@
     "description": "We use cookies to enhance your browsing experience and analyze our traffic. By clicking 'Accept All', you agree to our <privacy>privacy policy</privacy> and <cookies>cookie policy</cookies>.",
     "acceptButton": "Accept All",
     "rejectButton": "Reject"
+  },
+  "messages": {
+    "comingSoon": "Coming soon"
   }
 }
