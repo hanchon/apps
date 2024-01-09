@@ -48,7 +48,7 @@ export const Footer = async () => {
                 height={18}
                 className="text-gray-700 hover:text-gray-700"
               />
-              <span>{t("footer.buildWithUs")}</span>
+              <p>{t("footer.buildWithUs")}</p>
             </a>
           </TrackerEvent>
           <div className="flex flex-col lg:flex-row space-x-2 text-center lg:text-left items-center space-y-2 lg:space-y-0">
@@ -147,13 +147,17 @@ export const Footer = async () => {
               event={CLICK_ON_FOOTER_CTA}
               properties={{ "Footer Social Type": "Terms of service" }}
             >
-              <Link href="/terms-of-service">{t("footer.termsOfService")}</Link>
+              <Link href="/terms-of-service">
+                <p>{t("footer.termsOfService")}</p>
+              </Link>
             </TrackerEvent>
             <TrackerEvent
               event={CLICK_ON_FOOTER_CTA}
               properties={{ "Footer Social Type": "Privacy Statement" }}
             >
-              <Link href={"/privacy-policy"}>{t("footer.privacyPolicy")}</Link>
+              <Link href={"/privacy-policy"}>
+                <p>{t("footer.privacyPolicy")}</p>
+              </Link>
             </TrackerEvent>
 
             <ConsentModalTrigger>
@@ -161,7 +165,7 @@ export const Footer = async () => {
                 event={CLICK_ON_FOOTER_CTA}
                 properties={{ "Footer Social Type": "Cookie Statement" }}
               >
-                <p aria-label="cookies settings">
+                <p aria-label="cookies settings" className="cursor-pointer">
                   {t("footer.cookiesSettings")}
                 </p>
               </TrackerEvent>
