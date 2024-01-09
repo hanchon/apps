@@ -32,16 +32,14 @@ export function LaunchPad({}: { showPing?: boolean }) {
       mixpanelId: "Portfolio",
     },
     {
-      icon: "/ecosystem/staking.png",
-      children: t("launchPad.staking.title"),
-      href: "/staking",
-      mixpanelId: "Staking",
+      icon: "/ecosystem/comingSoon.png",
+      children: t("messages.comingSoon"),
+      href: "/",
     },
     {
-      icon: "/ecosystem/governance.png",
-      children: t("launchPad.governance.title"),
-      href: "/governance",
-      mixpanelId: "Governance",
+      icon: "/ecosystem/comingSoon.png",
+      children: t("messages.comingSoon"),
+      href: "/",
     },
   ];
 
@@ -68,7 +66,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
             " fixed shadow-custom md:absolute w-full px-8 top-32 md:top-9 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] py-8 drop-shadow-md drop-shadow-red1 border border-darkGray700 "
           )}
         >
-          <div className="grid grid-cols-3">
+          <div className="grid grid-cols-3 pb-6">
             {launchPadItems[0] && (
               <TrackerEvent
                 event={CLICK_ON_DAPP_INSIDE_LAUNCHER}
@@ -84,16 +82,20 @@ export function LaunchPad({}: { showPing?: boolean }) {
               </TrackerEvent>
             )}
           </div>
-          <div className="grid grid-cols-3 gap-y-6 py-6">
-            {launchPadItems.slice(1).map(({ href, mixpanelId, ...rest }) => (
-              <TrackerEvent
-                key={href}
-                event={CLICK_ON_DAPP_INSIDE_LAUNCHER}
-                properties={{ "dApp Name": mixpanelId }}
-              >
-                <LaunchPadItem href={href} {...rest} />
-              </TrackerEvent>
-            ))}
+          <p className="text-xs opacity-90">{t("launchPad.subtitle")}</p>
+          <div className="grid grid-cols-3 gap-y-6 pb-6 pt-3">
+            {launchPadItems.slice(1).map(({ href, mixpanelId, ...rest }) => {
+              const disabled = mixpanelId === undefined;
+              return (
+                <TrackerEvent
+                  key={href}
+                  event={CLICK_ON_DAPP_INSIDE_LAUNCHER}
+                  properties={{ "dApp Name": mixpanelId }}
+                >
+                  <LaunchPadItem href={href} disabled={disabled} {...rest} />
+                </TrackerEvent>
+              );
+            })}
           </div>
           {!!process.env.NEXT_PUBLIC_ENABLE_TESTNET && <NetworkModeSelector />}
           <TrackerEvent
@@ -112,24 +114,34 @@ export function LaunchPad({}: { showPing?: boolean }) {
 
 export const LaunchPadItem = ({
   icon,
+  disabled,
   children,
   ...rest
 }: ComponentProps<typeof Link> & {
   icon: string;
+  disabled?: boolean;
 }) => {
   return (
     <Link
       rel="noopener noreferrer"
-      className="text-pearl text-sm  flex flex-col space-y-2 h-[100px]"
+      className={`text-pearl text-sm flex flex-col space-y-2
+      ${disabled && "pointer-events-none opacity-50"}`}
       {...rest}
     >
-      <Image
-        src={icon}
-        width={100}
-        height={100}
-        alt={icon}
-        className="transition-all duration-150 ease-in hover:scale-105 w-auto"
-      />
+      <div
+        className={cn(
+          "relative shrink-0 w-16 h-16 aspect-square overflow-hidden self-center transition-all duration-150 ease-in hover:scale-105",
+          "md:w-20 md:h-20"
+        )}
+      >
+        <Image
+          src={icon}
+          alt={icon}
+          fill={true}
+          className="object-cover"
+          sizes={"400w"}
+        />
+      </div>
       <p className="text-center">{children}</p>
     </Link>
   );
