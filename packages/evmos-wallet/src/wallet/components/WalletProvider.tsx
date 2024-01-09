@@ -1,5 +1,12 @@
 "use client";
-import { useEffect, PropsWithChildren, useLayoutEffect } from "react";
+import {
+  useEffect,
+  PropsWithChildren,
+  useLayoutEffect,
+  useState,
+  createContext,
+  useContext,
+} from "react";
 import {
   useAccount,
   useAccountEffect,
@@ -14,7 +21,12 @@ import {
   notifySuccess,
 } from "../../internal/wallet/functionality/errors";
 import { truncateAddress } from "../../internal/wallet/style/format";
-import { getActiveProviderKey, normalizeToEvmos, store } from "../..";
+import {
+  getActiveProviderKey,
+  normalizeToCosmosAddress,
+  normalizeToEvmos,
+  store,
+} from "../..";
 import { resetWallet, setWallet } from "../redux/WalletSlice";
 import {
   RemoveWalletFromLocalStorage,
@@ -24,7 +36,38 @@ import { useEffectEvent, useWatch } from "helpers";
 
 type WalletProviderProps = PropsWithChildren<{}>;
 
+const WalletContext = createContext<{
+  isWalletHydrated: boolean;
+  config: typeof wagmiConfig;
+}>({
+  isWalletHydrated: false,
+  config: wagmiConfig,
+});
+
+export const useWalletContext = () => {
+  const context = useContext(WalletContext);
+  if (!context) {
+    throw new Error("useWalletContext must be used within a WalletProvider");
+  }
+  return context;
+};
+
+export const useWallet = () => {
+  const { isWalletHydrated } = useWalletContext();
+
+  const account = useAccount();
+  return {
+    ...account,
+    bech32Address: account.address
+      ? normalizeToCosmosAddress(account.address)
+      : null,
+    isHydrating: !isWalletHydrated,
+  };
+};
+
 function Provider({ children }: WalletProviderProps) {
+  const [isWalletHydrated, setIsWalletHydrated] = useState(false);
+
   const { reconnect } = useReconnect();
   const { address, connector, isConnected } = useAccount();
 
@@ -35,6 +78,7 @@ function Provider({ children }: WalletProviderProps) {
    */
   const reconnectIfRecent = useEffectEvent(async () => {
     const recentId = await wagmiConfig.storage?.getItem("recentConnectorId");
+    setIsWalletHydrated(true);
     if (!recentId) return;
     reconnect();
   });
@@ -107,7 +151,16 @@ function Provider({ children }: WalletProviderProps) {
       { walletName: variables?.connector?.name ?? "" }
     );
   }, [isFetching]);
-  return <>{children}</>;
+  return (
+    <WalletContext.Provider
+      value={{
+        isWalletHydrated,
+        config: wagmiConfig,
+      }}
+    >
+      {children}
+    </WalletContext.Provider>
+  );
 }
 
 export function WalletProvider(props: WalletProviderProps) {
