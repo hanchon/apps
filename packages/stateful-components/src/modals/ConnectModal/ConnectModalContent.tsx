@@ -23,6 +23,7 @@ import {
 } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/errors";
 import { useSetupCopilotModal } from "../SetupAccountModal/SetupAccountModal";
 import { ProvidersIcons } from "../../providerIcons";
+import { ComingSoonWallets } from "./coming-soon-wallets";
 
 export const ButtonWallet = ({
   className,
@@ -33,7 +34,7 @@ export const ButtonWallet = ({
     <button
       className={cn(
         className,
-        "flex w-full px-4 py-3",
+        "flex w-full px-4 py-2",
         "hover:bg-grayOpacity hover:shadow-md",
         "border-darkPearl shadow rounded border",
         "capitalize items-center space-x-3 text-sm font-bold",
@@ -171,6 +172,7 @@ export const ConnectModalContent = ({
             );
           })}
       </div>
+      <ComingSoonWallets />
     </div>
   );
 };
