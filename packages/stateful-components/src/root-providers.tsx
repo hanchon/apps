@@ -47,7 +47,7 @@ export const RootProviders = ({ children }: PropsWithChildren) => {
   }));
   return (
     <Provider store={store}>
-      <WagmiProvider config={wagmiConfig} reconnectOnMount={false}>
+      <WagmiProvider config={wagmiConfig}>
         <PersistQueryClientProvider
           client={queryClient}
           persistOptions={{ persister }}

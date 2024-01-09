@@ -1,11 +1,3 @@
-// import { configureChains, createConfig } from "wagmi";
-// import { publicProvider } from "wagmi/providers/public";
-// import {
-//   keplrConnector,
-//   metamaskConnector,
-//   safeConnector,
-//   walletConnectConnector,
-// } from "./connectors";
 import { createConfig, http } from "wagmi";
 import { getEvmosChainInfo } from "./chains";
 import { metaMask, safe, walletConnect } from "wagmi/connectors";
@@ -13,28 +5,13 @@ import { WALLET_CONNECT_PROJECT_ID } from "../../internal/wallet/functionality/n
 import { keplr } from "./keplrConnector";
 
 const evmos = getEvmosChainInfo();
-// const { publicClient } = configureChains(
-//   [getEvmosChainInfo()],
-//   [publicProvider()]
-// );
-// export const evmosClient = publicClient({
-//   chainId: evmos.id,
-// });
-// export const wagmiConfig = createConfig({
-//   autoConnect: false,
-//   connectors: [
-//     ...(safeConnector.ready
-//       ? [safeConnector]
-//       : [metamaskConnector, walletConnectConnector, keplrConnector]),
-//   ],
-//   publicClient,
-// });
 
 export const wagmiConfig = createConfig({
   chains: [evmos],
   transports: {
     [evmos.id]: http(),
   },
+  ssr: true,
   connectors: [
     metaMask(),
     walletConnect({

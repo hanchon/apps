@@ -1,12 +1,6 @@
 "use client";
-import { useEffect, PropsWithChildren, useLayoutEffect } from "react";
-import {
-  useAccount,
-  useAccountEffect,
-  useConnect,
-  useDisconnect,
-  useReconnect,
-} from "wagmi";
+import { useEffect, PropsWithChildren } from "react";
+import { useAccount, useAccountEffect, useConnect, useDisconnect } from "wagmi";
 import { usePubKey } from "../wagmi";
 import {
   WALLET_NOTIFICATIONS,
@@ -25,8 +19,6 @@ import { useWatch } from "helpers";
 type WalletProviderProps = PropsWithChildren<{}>;
 
 function Provider({ children }: WalletProviderProps) {
-  const { reconnect } = useReconnect();
-
   const { address, connector, isConnected } = useAccount();
 
   useAccountEffect({
@@ -53,9 +45,6 @@ function Provider({ children }: WalletProviderProps) {
   const { variables } = useConnect();
   const { disconnect } = useDisconnect();
   const { pubkey, error: pubkeyError, isFetching } = usePubKey();
-  useLayoutEffect(() => {
-    reconnect();
-  }, [reconnect]);
 
   useEffect(() => {
     const connectorId = connector?.id.toLowerCase();
