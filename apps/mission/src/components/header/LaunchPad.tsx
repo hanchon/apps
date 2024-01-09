@@ -34,12 +34,12 @@ export function LaunchPad({}: { showPing?: boolean }) {
     {
       icon: "/ecosystem/comingSoon.png",
       children: t("messages.comingSoon"),
-      href: "/",
+      href: "/coming soon 1",
     },
     {
       icon: "/ecosystem/comingSoon.png",
       children: t("messages.comingSoon"),
-      href: "/",
+      href: "/coming_soon",
     },
   ];
 
@@ -122,27 +122,32 @@ export const LaunchPadItem = ({
   disabled?: boolean;
 }) => {
   return (
-    <Link
-      rel="noopener noreferrer"
-      className={`text-pearl text-sm flex flex-col space-y-2
+    <Menu.Item>
+      {({ close }) => (
+        <Link
+          onClick={close}
+          rel="noopener noreferrer"
+          className={`text-pearl text-sm flex flex-col space-y-2
       ${disabled && "pointer-events-none opacity-50"}`}
-      {...rest}
-    >
-      <div
-        className={cn(
-          "relative shrink-0 w-16 h-16 aspect-square overflow-hidden self-center transition-all duration-150 ease-in hover:scale-105",
-          "md:w-20 md:h-20"
-        )}
-      >
-        <Image
-          src={icon}
-          alt={icon}
-          fill={true}
-          className="object-cover"
-          sizes={"400w"}
-        />
-      </div>
-      <p className="text-center">{children}</p>
-    </Link>
+          {...rest}
+        >
+          <div
+            className={cn(
+              "relative shrink-0 w-16 h-16 aspect-square overflow-hidden self-center transition-all duration-150 ease-in hover:scale-105",
+              "md:w-20 md:h-20"
+            )}
+          >
+            <Image
+              src={icon}
+              alt={icon}
+              fill={true}
+              className="object-cover"
+              sizes={"400w"}
+            />
+          </div>
+          <p className="text-center">{children}</p>
+        </Link>
+      )}
+    </Menu.Item>
   );
 };
