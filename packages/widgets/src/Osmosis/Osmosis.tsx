@@ -1,6 +1,6 @@
 "use client";
 import { Link } from "@evmosapps/i18n/client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { parseUnits, formatUnits } from "@ethersproject/units";
 import { useOsmosisData } from "./useOsmosisData";
 import { cn, convertAndFormat, formatNumber, useWatch } from "helpers";
@@ -33,23 +33,29 @@ export default function Osmosis() {
   const inputTokenData = inputToken.symbol === "OSMO" ? osmosis : evmos;
   const outputTokenData = outputToken.symbol === "OSMO" ? osmosis : evmos;
 
-  const number_min_received = parseFloat(
-    formatUnits(
-      latestQoute?.return_amount?.toLocaleString("fullwide", {
-        useGrouping: false,
-      }) ?? "0",
-      outputTokenData.decimals
-    )
-  );
+  const number_min_received = useMemo(() => {
+    return parseFloat(
+      formatUnits(
+        latestQoute?.return_amount?.toLocaleString("fullwide", {
+          useGrouping: false,
+        }) ?? "0",
+        outputTokenData.decimals
+      )
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [latestQoute]);
 
-  const input_amount_received = parseFloat(
-    formatUnits(
-      latestQoute?.input_amount?.toLocaleString("fullwide", {
-        useGrouping: false,
-      }) ?? "0",
-      inputTokenData.decimals
-    )
-  );
+  const input_amount_received = useMemo(() => {
+    return parseFloat(
+      formatUnits(
+        latestQoute?.input_amount?.toLocaleString("fullwide", {
+          useGrouping: false,
+        }) ?? "0",
+        inputTokenData.decimals
+      )
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [latestQoute]);
 
   const inputNumberBalance = parseFloat(
     convertAndFormat(
@@ -216,7 +222,7 @@ export default function Osmosis() {
               <input
                 value={swapAmount}
                 onKeyDown={(event) => {
-                  if (event.key === "-") {
+                  if (event.key === "-" || event.key === ".") {
                     event.preventDefault();
                   }
                 }}
@@ -266,7 +272,7 @@ export default function Osmosis() {
             setSwapHash(null);
             setShowBalanceLink(false);
             const _amount = swapAmount === "" ? "0" : swapAmount.toString();
-            debouncedFetchData(
+            getQoute(
               outputTokenData,
               inputTokenData,
               parseUnits(
