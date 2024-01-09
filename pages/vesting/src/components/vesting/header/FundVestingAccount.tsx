@@ -37,7 +37,7 @@ import {
 } from "../../../internal/helpers/types";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { Dayjs } from "dayjs";
-import { useTranslation } from "next-i18next";
+
 import { BigNumber } from "@ethersproject/bignumber";
 
 import { getVesting } from "../../../internal/fetch";
@@ -45,10 +45,12 @@ import { VestingResponse } from "../../../internal/types";
 import { getEvmosBalance } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/fetch";
 import { ethers } from "ethers";
 import { EXPLORER_URL } from "constants-helper";
-import { getNetwork, switchNetwork } from "wagmi/actions";
+import { switchChain, getChainId } from "wagmi/actions";
 import { E } from "helpers";
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { ModalTitle } from "../../ModalTitle";
+import { useConfig } from "wagmi";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 const evmos = getEvmosChainInfo();
 export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
@@ -62,6 +64,7 @@ export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
   const { fundVestingAccount } = useVestingPrecompile();
   const [funderBalance, setFunderBalance] = useState(BigNumber.from(0));
   const [fundAmount, setAmount] = useState("0");
+  const config = useConfig();
 
   useEffect(() => {
     getEvmosBalance(wallet.evmosAddressCosmosFormat)
@@ -127,10 +130,10 @@ export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
   }, [vestingAddress]);
 
   const handleOnClick = async (d: FieldValues) => {
-    const connectedNetwork = getNetwork();
-    if (connectedNetwork.chain?.id !== evmos.id) {
+    const connectedNetwork = getChainId(config);
+    if (connectedNetwork !== evmos.id) {
       const [err] = await E.try(() =>
-        switchNetwork({
+        switchChain(config, {
           chainId: evmos.id,
         })
       );
@@ -152,7 +155,7 @@ export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
           }
         );
 
-      const res = await fundVestingAccount(
+      const hash = await fundVestingAccount(
         wallet.evmosAddressEthFormat,
         d.address as string,
         startTime,
@@ -166,7 +169,7 @@ export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
           content: {
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
-            hash: res.hash,
+            hash,
             explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
@@ -217,7 +220,8 @@ export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
     return getEndDate(selectedStartDate, selectedVestingDuration);
   }, [selectedStartDate, selectedVestingDuration]);
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("vesting");
+
   return (
     <div className="space-y-5">
       <ModalTitle title={t("vesting.fund.title")} />

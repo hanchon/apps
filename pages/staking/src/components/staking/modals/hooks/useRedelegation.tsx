@@ -17,10 +17,12 @@ import {
 } from "tracker";
 
 import { EXPLORER_URL } from "constants-helper";
-import { getNetwork, switchNetwork } from "wagmi/actions";
+
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { E } from "helpers";
 import { useStakingPrecompile } from "../../../../utils/hooks/useStakingPrecompile";
+import { getChainId, switchChain } from "wagmi/actions";
+import { useConfig } from "wagmi";
 
 const evmos = getEvmosChainInfo();
 
@@ -28,12 +30,11 @@ export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
   const dispatch = useDispatch();
 
   const { redelegate } = useStakingPrecompile();
-
+  const config = useConfig();
   const handleConfirmButton = async () => {
-    const connectedNetwork = getNetwork();
-    if (connectedNetwork.chain?.id !== evmos.id) {
+    if (getChainId(config) !== evmos.id) {
       const [err] = await E.try(() =>
-        switchNetwork({
+        switchChain(config, {
           chainId: evmos.id,
         })
       );
@@ -60,14 +61,14 @@ export const useRedelegation = (useRedelegateProps: RedelegateProps) => {
 
     useRedelegateProps.setDisabled(true);
     try {
-      const res = await redelegate(
+      const hash = await redelegate(
         useRedelegateProps.wallet.evmosAddressEthFormat,
         useRedelegateProps.item.validatorAddress,
         useRedelegateProps.validatorDst,
         amount
       );
 
-      dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx`));
+      dispatch(snackBroadcastSuccessful(hash, `${EXPLORER_URL}/tx`));
 
       sendEvent(SUCCESSFUL_TX_REDELEGATE, {
         "User Wallet Address": useRedelegateProps.wallet?.evmosAddressEthFormat,

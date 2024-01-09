@@ -9,11 +9,13 @@ import { ProfileModalTrigger } from "stateful-components/src/modals/ProfileModal
 import { ProvidersIcons } from "stateful-components/src/providerIcons";
 import { ConnectButton } from "stateful-components/src/connect-button";
 
+// import { getAccount } from "wagmi/actions";
+
 export const WalletButton = () => {
   const { isConnected, connector, address } = useAccount();
 
   if (connector && isConnected && address) {
-    const Icon = ProvidersIcons[connector.id];
+    const Icon = ProvidersIcons[connector.name];
     return (
       <ProfileModalTrigger>
         <button

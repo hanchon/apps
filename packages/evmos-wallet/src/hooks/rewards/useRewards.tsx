@@ -13,9 +13,10 @@ import {
 } from "tracker";
 import { WalletExtension } from "../../internal/wallet/functionality/wallet";
 import { snackExecuteIBCTransfer } from "../../notification/helpers";
-import { getNetwork, switchNetwork } from "wagmi/actions";
+import { getChainId, switchChain } from "wagmi/actions";
 import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
 import { E } from "helpers";
+import { wagmiConfig } from "../../wallet";
 
 type RewardsProps = {
   wallet: WalletExtension;
@@ -27,10 +28,9 @@ export const useRewards = (rewardsProps: RewardsProps) => {
   const dispatch = useDispatch();
   const { wallet: value, setConfirmClicked } = rewardsProps;
   const handleConfirmButton = useCallback(async () => {
-    const connectedNetwork = getNetwork();
-    if (connectedNetwork.chain?.id !== evmos.id) {
+    if (getChainId(wagmiConfig) !== evmos.id) {
       const [err] = await E.try(() =>
-        switchNetwork({
+        switchChain(wagmiConfig, {
           chainId: evmos.id,
         })
       );

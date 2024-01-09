@@ -62,6 +62,7 @@ export const useSend = ({
     isPending: isTransferring,
     data: transferResponse,
   } = transferQuery;
+
   /**
    * Balances
    */

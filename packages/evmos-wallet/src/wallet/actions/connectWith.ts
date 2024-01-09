@@ -1,8 +1,11 @@
 import { connect } from "wagmi/actions";
-import { CONNECTOR_MAP } from "../wagmi";
+import { ConnetorId, wagmiConfig } from "../wagmi";
+import { raise } from "helpers";
 
-export function connectWith(provider: keyof typeof CONNECTOR_MAP) {
-  return connect({
-    connector: CONNECTOR_MAP[provider],
+export function connectWith(provider: ConnetorId) {
+  return connect(wagmiConfig, {
+    connector:
+      wagmiConfig.connectors.find((c) => c.id === provider) ??
+      raise("Invalid provider"),
   });
 }

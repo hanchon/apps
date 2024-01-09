@@ -1,10 +1,10 @@
 import { useTranslation } from "@evmosapps/i18n/client";
 
-import { metamaskConnector, usePubKey } from "@evmosapps/evmos-wallet";
+import { usePubKey, wagmiConfig } from "@evmosapps/evmos-wallet";
 import { METAMASK_DOWNLOAD_URL } from "constants-helper";
 import { useEffect, useMemo, useState } from "react";
-import { E, useEffectEvent } from "helpers";
-import { useAccount, useConnect, useNetwork, useSwitchNetwork } from "wagmi";
+import { E, raise, useEffectEvent } from "helpers";
+import { useAccount, useConnect, useSwitchChain } from "wagmi";
 import { SetupStep } from "./setup-step";
 import {
   CLICK_ON_CONNECT_ACCOUNT_COPILOT,
@@ -14,11 +14,12 @@ import {
   sendEvent,
 } from "tracker";
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
+import { getChainId } from "wagmi/actions";
 
 const evmosInfo = getEvmosChainInfo();
 
 const isMetamaskInstalled = () => {
-  return metamaskConnector.ready;
+  return "ethereum" in window;
 };
 
 const useInstallMetamask = () => {
@@ -60,18 +61,15 @@ export const SetupWithMetamaskSteps = ({
   const [metamaskStatus, setMetamaskStatus] = useInstallMetamask();
 
   const { isConnected } = useAccount();
-  const { chain } = useNetwork();
+
   const {
     connect,
-    isLoading: isConnecting,
+    isPending: isConnecting,
     status,
     error: connectError,
-  } = useConnect({
-    chainId: evmosInfo.id,
-  });
-  const { switchNetwork, error: switchError } = useSwitchNetwork({
-    chainId: evmosInfo.id,
-  });
+  } = useConnect({ config: wagmiConfig });
+
+  const { switchChain, error: switchError } = useSwitchChain();
 
   const { pubkey, error: pubkeyError, refetch } = usePubKey();
   const mappedConnectError = useMemo(() => {
@@ -107,7 +105,9 @@ export const SetupWithMetamaskSteps = ({
   }, [mappedConnectError]);
 
   const completedConnection =
-    isConnected && chain?.id === evmosInfo.id && pubkey !== undefined;
+    isConnected &&
+    getChainId(wagmiConfig) === evmosInfo.id &&
+    pubkey !== undefined;
 
   const _onComplete = useEffectEvent(onComplete || (() => {}));
 
@@ -119,7 +119,7 @@ export const SetupWithMetamaskSteps = ({
     if (completedConnection) {
       return t("connectStep.actions.connect.connected");
     }
-    if (status === "loading") {
+    if (status === "pending") {
       return t("connectStep.actions.connect.waitingApproval");
     }
     if (mappedConnectError) {
@@ -159,8 +159,15 @@ export const SetupWithMetamaskSteps = ({
           }
           sendEvent(CLICK_ON_CONNECT_ACCOUNT_COPILOT);
 
-          connect({ connector: metamaskConnector, chainId: evmosInfo.id });
-          switchNetwork?.(evmosInfo.id);
+          connect({
+            connector:
+              wagmiConfig.connectors.find(({ name }) => name === "MetaMask") ??
+              raise("MetaMask connector not found"),
+            chainId: evmosInfo.id,
+          });
+          switchChain({
+            chainId: evmosInfo.id,
+          });
         }}
         completed={completedConnection}
         disabled={metamaskStatus !== "installed" || completedConnection}

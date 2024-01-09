@@ -17,10 +17,12 @@ import {
 } from "tracker";
 
 import { EXPLORER_URL } from "constants-helper";
-import { getNetwork, switchNetwork } from "wagmi/actions";
+
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { E } from "helpers";
 import { useStakingPrecompile } from "../../../../utils/hooks/useStakingPrecompile";
+import { getChainId, switchChain } from "wagmi/actions";
+import { useConfig } from "wagmi";
 
 const evmos = getEvmosChainInfo();
 
@@ -30,13 +32,12 @@ export const useCancelUndelegations = (
   const dispatch = useDispatch();
 
   const { cancelUnbondingDelegation } = useStakingPrecompile();
-
+  const config = useConfig();
   //   async
   const handleConfirmButton = async () => {
-    const connectedNetwork = getNetwork();
-    if (connectedNetwork.chain?.id !== evmos.id) {
+    if (getChainId(config) !== evmos.id) {
       const [err] = await E.try(() =>
-        switchNetwork({
+        switchChain(config, {
           chainId: evmos.id,
         })
       );
@@ -62,14 +63,14 @@ export const useCancelUndelegations = (
 
     useCancelUndelegationProps.setDisabled(true);
     try {
-      const res = await cancelUnbondingDelegation(
+      const hash = await cancelUnbondingDelegation(
         useCancelUndelegationProps.wallet.evmosAddressEthFormat,
         useCancelUndelegationProps.item.validatorAddress,
         amount,
         useCancelUndelegationProps.item.creationHeight
       );
 
-      dispatch(snackBroadcastSuccessful(res.hash, `${EXPLORER_URL}/tx`));
+      dispatch(snackBroadcastSuccessful(hash, `${EXPLORER_URL}/tx`));
 
       sendEvent(SUCCESSFUL_TX_CANCEL_UNDELEGATION, {
         "User Wallet Address":

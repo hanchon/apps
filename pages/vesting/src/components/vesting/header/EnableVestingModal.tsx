@@ -17,13 +17,16 @@ import {
 } from "@evmosapps/evmos-wallet";
 import { useSelector, useDispatch } from "react-redux";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
-import { useTranslation } from "next-i18next";
+
 import { Log } from "helpers";
 import { EXPLORER_URL } from "constants-helper";
-import { getNetwork, switchNetwork } from "wagmi/actions";
+
 import { E } from "helpers";
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { ModalTitle } from "../../ModalTitle";
+import { getChainId, switchChain } from "wagmi/actions";
+import { useConfig } from "wagmi";
+import { useTranslation } from "@evmosapps/i18n/client";
 
 const evmos = getEvmosChainInfo();
 export const EnableVestingModal = ({ onClose }: { onClose: () => void }) => {
@@ -31,12 +34,11 @@ export const EnableVestingModal = ({ onClose }: { onClose: () => void }) => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);
   const dispatch = useDispatch();
   const { createClawbackVestingAccount } = useVestingPrecompile();
-
+  const config = useConfig();
   const handleOnClick = async (d: FieldValues) => {
-    const connectedNetwork = getNetwork();
-    if (connectedNetwork.chain?.id !== evmos.id) {
+    if (getChainId(config) !== evmos.id) {
       const [err] = await E.try(() =>
-        switchNetwork({
+        switchChain(config, {
           chainId: evmos.id,
         })
       );
@@ -45,7 +47,7 @@ export const EnableVestingModal = ({ onClose }: { onClose: () => void }) => {
     try {
       setDisabled(true);
 
-      const res = await createClawbackVestingAccount(
+      const hash = await createClawbackVestingAccount(
         d.address as string,
         wallet.evmosAddressEthFormat,
         false
@@ -57,7 +59,7 @@ export const EnableVestingModal = ({ onClose }: { onClose: () => void }) => {
           content: {
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
-            hash: res.hash,
+            hash,
             explorerTxUrl: `${EXPLORER_URL}/tx/`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
@@ -96,7 +98,7 @@ export const EnableVestingModal = ({ onClose }: { onClose: () => void }) => {
     defaultValues: { address: "" },
   });
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("vesting");
   return (
     <div className="space-y-5">
       <ModalTitle title={t("enable.modal.title")} />

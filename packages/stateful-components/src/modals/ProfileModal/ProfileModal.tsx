@@ -45,8 +45,10 @@ export const ProfileModal = () => {
   const { connector, address } = useAccount();
   const { sendEvent } = useTracker();
   const { disconnect } = useDisconnect({
-    onSuccess: () => {
-      setIsOpen(false);
+    mutation: {
+      onSuccess: () => {
+        setIsOpen(false);
+      },
     },
   });
   if (!connector || !address) {
@@ -54,7 +56,7 @@ export const ProfileModal = () => {
   }
   const evmosAddress = normalizeToEvmos(address);
 
-  const Icon = ProvidersIcons[connector.id];
+  const Icon = ProvidersIcons[connector.name];
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Modal.Body>

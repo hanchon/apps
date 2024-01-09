@@ -22,7 +22,7 @@
     "prettier": "^3.0.1"
   },
   "dependencies": {
-    "@forge-trade/widgets": "^1.2.5",
+    "@forge-trade/widgets": "^1.2.6",
     "@tippyjs/react": "^4.2.6",
     "@types/node": "18.11.14",
     "@types/react": "18.2.45",

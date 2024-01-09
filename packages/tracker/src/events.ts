@@ -72,17 +72,12 @@ export const CREATED_ORDER_ON_TRANSAK = "CreatedOrderTransak";
 export const CANCELLED_ORDER_ON_TRANSAK = "CancelledOrderTransak";
 export const FAILED_ORDER_ON_TRANSAK = "FailedOrderTransak";
 export const SUCCESSFUL_ORDER_ON_TRANSAK = "SuccessfulOrderTransak";
-export const CLICK_ON_STAKE_AND_MANAGE_DELEGATION =
-  "ClickedCTAButton - Stake & Manage Delegations";
-export const CLICK_ON_PARTICIPATE_IN_GOVERNANCE =
-  "ClickedCTAButton - Participate in Governance";
 export const CLICK_ON_VIEW_ALL_DAPPS = "ClickedCTAButton - See all dApps";
 export const CLICK_ON_APPLY_TO_BE_PART_OF_THE_ECOSYSTEM =
   "ClickedCTAButton - Add a dApp";
 export const CLICK_ON_DAPP_INSIDE_LAUNCHER = "AppLauncher";
 export const CLICK_ON_FEATURED_DAPP = "ClickedProductThumbnail";
 export const CLICK_ON_TOP_UP_ACCOUNT_DAPP = "ClickedTopUp";
-export const CLICK_ON_SEE_PORTFOLIO = "ClickedCTAButton - See Portfolio";
 export const CLICK_ON_COPILOT_BANNER = "ClickedCopilotBanner";
 
 export const CLICK_SOCIAL_BUTTON = "ClickedSocialCTAButton";

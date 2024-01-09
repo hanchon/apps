@@ -51,7 +51,7 @@ const StrideWidget = () => {
       const res = await liquidStake({
         amount: parseUnits(stakedAmount.toString(), 18).toString(),
       });
-      setTransactionHash(res.hash);
+      setTransactionHash(res);
       setLoadingLiquidStake(false);
       setShowBalanceLink(true);
     } catch (e) {
