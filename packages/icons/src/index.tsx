@@ -78,3 +78,5 @@ export { DownArrowIconOsmosisIcon } from "./osmosis/DownArrow";
 export { CloseIconOsmosis } from "./osmosis/Close";
 export { InfoIconOsmosis } from "./osmosis/Info";
 export { ChevronDownIconOsmosis } from "./osmosis/ChevronDown";
+export { LeapIcon } from "./LeapWalletIcon";
+export { RabbyIcon } from "./RabbyWalletIcon";
