@@ -6,18 +6,11 @@ import { notion } from "helpers/src/clients/notion";
 import { cache } from "react";
 import { handleDappImages } from "./schemas/dapp-images-handler/handleDappImages";
 
-import { devModeCache } from "helpers/src/dev/dev-mode-cache";
+const fetchNotionEcosystemDb = async () =>
+  notion.databases.query({
+    database_id: ECOSYSTEM_PAGE_NOTION_ID,
+  });
 
-const fetchNotionEcosystemDb = devModeCache(
-  cache(async () =>
-    notion.databases.query({
-      database_id: ECOSYSTEM_PAGE_NOTION_ID,
-    })
-  ),
-  {
-    cacheKey: "fetchNotionEcosystemDb",
-  }
-);
 export const fetchDapps = cache(async () => {
   const dapps = await fetchNotionEcosystemDb();
 

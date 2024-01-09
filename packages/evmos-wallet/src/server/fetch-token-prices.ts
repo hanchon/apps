@@ -1,8 +1,7 @@
 "use server";
 import { fetchTokens } from "@evmosapps/registry/src/fetch-tokens";
 import { isUndefined } from "helpers";
-import { devModeCache } from "helpers/src/dev/dev-mode-cache";
-import { cache } from "react";
+import { cachedFetch } from "helpers/src/cached-fetch";
 
 const revalidate = 5 * 60 * 1000; // 5 minutes
 
@@ -15,31 +14,30 @@ type CoingeckoResponse<T extends string, C extends string> = string extends T
       [K in T]: CoingeckoTokenPriceResponse<C>;
     };
 
-export const fetchCoinGeckoTokenPrices = cache(
-  devModeCache(
-    async function <const T extends string, const C extends string>(
-      coingeckoIds: T[],
-      currencies?: C[]
-    ) {
-      const url = new URL("https://api.coingecko.com/api/v3/simple/price");
-      url.searchParams.set("include_24hr_change", "true");
-      url.searchParams.set("include_last_updated_at", "true");
-      url.searchParams.set("vs_currencies", currencies?.join(",") ?? "usd");
+export const fetchCoinGeckoTokenPrices = async function <
+  const T extends string,
+  const C extends string,
+>(coingeckoIds: T[], currencies?: C[]) {
+  const url = new URL("https://api.coingecko.com/api/v3/simple/price");
+  url.searchParams.set("include_24hr_change", "true");
+  url.searchParams.set("include_last_updated_at", "true");
+  url.searchParams.set("vs_currencies", currencies?.join(",") ?? "usd");
 
-      url.searchParams.set("ids", coingeckoIds.join(","));
+  url.searchParams.set("ids", coingeckoIds.join(","));
 
-      return (await fetch(url)
-        .then((res) => res.json() as Promise<unknown>)
-        .then((tokenPrices) => tokenPrices)) as Promise<
-        CoingeckoResponse<T, C>
-      >;
-    },
-    {
-      cacheKey: "fetchTokenPrices",
+  return (await cachedFetch(url, {
+    next: {
       revalidate,
-    }
-  )
-);
+      tags: ["coingecko-token-prices"],
+    },
+    devCache: {
+      revalidate,
+      tags: ["coingecko-token-prices"],
+    },
+  })
+    .then((res) => res.json() as Promise<unknown>)
+    .then((tokenPrices) => tokenPrices)) as Promise<CoingeckoResponse<T, C>>;
+};
 
 export const fetchTokenPrices = async () => {
   const url = new URL("https://api.coingecko.com/api/v3/simple/price");

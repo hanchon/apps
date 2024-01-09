@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { _fetchTokens } from "./fetch-tokens";
+import { fetchTokens } from "./fetch-tokens";
 import { sleep } from "helpers/src/sleep";
 
 describe("fetchTokens", () => {
   it("should fetch tokens", async () => {
-    const { tokens } = await _fetchTokens();
+    const { tokens } = await fetchTokens();
 
     expect(tokens.length).toBeGreaterThan(0);
 

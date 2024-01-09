@@ -4,19 +4,12 @@ import { categorySchema } from "./schemas/entities/categorySchema";
 import { CATEGORIES_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 import { Log } from "helpers";
 import { notion } from "helpers/src/clients/notion";
-import { cache } from "react";
-import { devModeCache } from "helpers/src/dev/dev-mode-cache";
 
-const fetchNotionCategories = devModeCache(
-  cache(async () =>
-    notion.databases.query({
-      database_id: CATEGORIES_PAGE_NOTION_ID,
-    })
-  ),
-  {
-    cacheKey: "fetchNotionCategories",
-  }
-);
+const fetchNotionCategories = async () =>
+  notion.databases.query({
+    database_id: CATEGORIES_PAGE_NOTION_ID,
+  });
+
 export const fetchCategories = async () => {
   const categories = await fetchNotionCategories();
 
