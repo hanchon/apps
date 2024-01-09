@@ -1,7 +1,13 @@
 "use client";
-import { useEffect, PropsWithChildren } from "react";
-import { useAccount, useAccountEffect, useConnect, useDisconnect } from "wagmi";
-import { usePubKey } from "../wagmi";
+import { useEffect, PropsWithChildren, useLayoutEffect } from "react";
+import {
+  useAccount,
+  useAccountEffect,
+  useConnect,
+  useDisconnect,
+  useReconnect,
+} from "wagmi";
+import { usePubKey, wagmiConfig } from "../wagmi";
 import {
   WALLET_NOTIFICATIONS,
   notifyError,
@@ -14,12 +20,27 @@ import {
   RemoveWalletFromLocalStorage,
   SaveProviderToLocalStorate,
 } from "../../internal/wallet/functionality/localstorage";
-import { useWatch } from "helpers";
+import { useEffectEvent, useWatch } from "helpers";
 
 type WalletProviderProps = PropsWithChildren<{}>;
 
 function Provider({ children }: WalletProviderProps) {
+  const { reconnect } = useReconnect();
   const { address, connector, isConnected } = useAccount();
+
+  /**
+   * I would expect that the behavior of reconnect would be to only reconnect if there was a previous connection
+   * however, even when you don't have a recent connection, it reconnects to the first in the list
+   * I'm not sure if that's a bug or not, but this is a workaround for now
+   */
+  const reconnectIfRecent = useEffectEvent(async () => {
+    const recentId = await wagmiConfig.storage?.getItem("recentConnectorId");
+    if (!recentId) return;
+    reconnect();
+  });
+  useLayoutEffect(() => {
+    void reconnectIfRecent();
+  }, [reconnectIfRecent]);
 
   useAccountEffect({
     onConnect: ({ connector, address, isReconnected }) => {

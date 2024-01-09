@@ -14,11 +14,12 @@ export const wagmiConfig = createConfig({
   ssr: true,
   connectors: [
     metaMask(),
+
+    keplr,
     walletConnect({
       showQrModal: process.env.NODE_ENV !== "test",
       projectId: WALLET_CONNECT_PROJECT_ID,
     }),
-    keplr,
     safe({
       debug: false,
     }),
