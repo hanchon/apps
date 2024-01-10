@@ -9,7 +9,7 @@ import { CopyIcon, ExternalLinkIcon } from "icons";
 import { useEffect, useState } from "react";
 import { CLICK_DISCONNECT_WALLET_BUTTON, useTracker } from "tracker";
 
-export const useProfileModal = () => useModal("profile");
+const useProfileModal = () => useModal("profile");
 export const ProfileModalTrigger = modalLink("profile");
 
 const CopyButton = ({ text }: { text: string }) => {

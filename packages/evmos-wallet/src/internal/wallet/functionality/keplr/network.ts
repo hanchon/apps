@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-export interface Configuration {
+interface Configuration {
   chainId: string;
   clientId: string;
   chainName: string;
@@ -22,7 +22,7 @@ export interface Configuration {
   explorerTxUrl: string;
 }
 
-export interface NetworkChainConfig {
+interface NetworkChainConfig {
   configurations: Configuration[];
   bip44: {
     coinType: number;

@@ -63,7 +63,7 @@ export const ButtonsNextSteps = () => {
   );
 };
 
-export const Button = ({ className, ...rest }: ComponentProps<typeof Link>) => {
+const Button = ({ className, ...rest }: ComponentProps<typeof Link>) => {
   return (
     <Link
       className={cn(

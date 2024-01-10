@@ -15,7 +15,7 @@ const notDevWarning = () => {
     );
   }
 };
-export type CacheEntry<T = unknown> = {
+type CacheEntry<T = unknown> = {
   tags: string[];
   cacheDate: number;
   cacheKey: string;

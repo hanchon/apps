@@ -5,7 +5,7 @@ export type TotalStakedResponse = {
   value: string;
 };
 
-export type Epochs = {
+type Epochs = {
   current_epoch: string;
   current_epoch_start_height: string;
   current_epoch_start_time: string;

@@ -10,7 +10,7 @@ const setFirstClickLauncherPad = (value: string) => {
   window.localStorage.setItem(FIRST_CLICK_LAUNCHER_PAD, value);
 };
 
-export const getFirstClickLauncherPad = () => {
+const getFirstClickLauncherPad = () => {
   return window.localStorage.getItem(FIRST_CLICK_LAUNCHER_PAD);
 };
 

@@ -53,7 +53,7 @@ export type TokenBalanceProps = {
   token: TokenRef;
   tokenType?: "ERC20" | "ICS20";
 };
-export const ERC20Balance = ({
+const ERC20Balance = ({
   address,
   token,
   tokenType,
@@ -73,7 +73,7 @@ export const ERC20Balance = ({
   );
 };
 
-export const TokenAmountInput = ({
+const TokenAmountInput = ({
   token,
   address,
   tokenType,

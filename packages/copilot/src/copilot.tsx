@@ -164,7 +164,7 @@ const CopilotSteps = ({
 
 Copilot.Steps = CopilotSteps;
 
-export const CopilotHeader = ({
+const CopilotHeader = ({
   title,
   description,
 

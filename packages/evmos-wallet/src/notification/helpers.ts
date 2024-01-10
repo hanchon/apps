@@ -6,7 +6,6 @@ import {
   BROADCASTED_NOTIFICATIONS,
   EXECUTED_NOTIFICATIONS,
   GENERATING_TX_NOTIFICATIONS,
-  MODAL_NOTIFICATIONS,
   WALLET_NOTIFICATIONS,
 } from "./errors";
 import {
@@ -117,17 +116,6 @@ export function snackErrorGettingBalanceExtChain() {
     content: {
       type: SNACKBAR_CONTENT_TYPES.TEXT,
       title: BALANCE_NOTIFICATIONS.ErrorGetBalanceExtChain,
-    },
-    type: SNACKBAR_TYPES.ERROR,
-  });
-}
-
-export function snackErrorAmountGt() {
-  return addSnackbar({
-    id: 0,
-    content: {
-      type: SNACKBAR_CONTENT_TYPES.TEXT,
-      title: MODAL_NOTIFICATIONS.ErrorsAmountGt,
     },
     type: SNACKBAR_TYPES.ERROR,
   });

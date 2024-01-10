@@ -1,14 +1,11 @@
 import { useTranslation } from "@evmosapps/i18n/client";
 import { Trans } from "react-i18next";
-import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { SetupWithMetamaskSteps } from "../partials/setup-with-metamask";
 import { useCopilot } from "../../copilot";
 import { Modal } from "@evmosapps/ui-helpers";
 import { SUCCESSFUL_WALLET_CONNECTION_COPILOT, sendEvent } from "tracker";
 import { useAccount } from "wagmi";
 import { getActiveProviderKey } from "@evmosapps/evmos-wallet";
-
-export const evmosInfo = getEvmosChainInfo();
 
 export const SetupConnectStep = () => {
   const { t } = useTranslation("copilot-setup-account");

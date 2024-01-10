@@ -112,7 +112,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
   );
 }
 
-export const LaunchPadItem = ({
+const LaunchPadItem = ({
   icon,
   disabled,
   children,

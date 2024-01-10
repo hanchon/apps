@@ -16,10 +16,6 @@ export type TokenByDenom = Readonly<{
   [K in TokenDenom]: Readonly<Extract<Token, { denom: K }>>;
 }>;
 
-export type TokenByMinDenom = Readonly<{
-  [K in TokenMinDenom]: Readonly<Extract<Token, { minCoinDenom: K }>>;
-}>;
-
 export type TokenAmount = {
   ref: TokenRef;
   amount: bigint;

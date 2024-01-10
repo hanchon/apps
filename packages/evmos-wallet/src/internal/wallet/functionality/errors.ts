@@ -34,17 +34,6 @@ export const METAMASK_SUCCESS_MESSAGES = {
   Disconnected: "Disconnected from Metamask",
 } as const;
 
-export const KEPLR_ERRORS = {
-  ExtensionNotFound: "Could not find Keplr Extension",
-  ConnectionError: "Could not connect to Evmos and Osmosis Network",
-  RequestRejectedError: "Request rejected",
-} as const;
-
-export const KEPLR_SUCCESS_MESSAGES = {
-  Connected: "Successfully connected to Keplr",
-  Disconnected: "Disconnected from Keplr",
-} as const;
-
 // NOTIFICATIONS
 export const METAMASK_NOTIFICATIONS = {
   ErrorTitle: "Error connecting with Metamask",
@@ -95,10 +84,10 @@ export const WALLET_NOTIFICATIONS = {
   ErrorAddToken: "Could not add token, please try again",
 } as const;
 
-export const formatNotification = (
+const formatNotification = (
   title: string,
   text: string,
-  properties: Record<string, string> = {},
+  properties: Record<string, string> = {}
 ) => {
   return {
     title: replaceProperties(title, properties),
@@ -109,7 +98,7 @@ export const formatNotification = (
 export const notifyError = (
   title: string,
   text: string,
-  properties: Record<string, string> = {},
+  properties: Record<string, string> = {}
 ) => {
   NotifyError(
     {
@@ -117,14 +106,14 @@ export const notifyError = (
       ...formatNotification(title, text, properties),
     },
     store,
-    true,
+    true
   );
 };
 
 export const notifySuccess = (
   title: string,
   text: string,
-  properties: Record<string, string> = {},
+  properties: Record<string, string> = {}
 ) => {
   NotifySuccess(
     {
@@ -132,13 +121,13 @@ export const notifySuccess = (
       ...formatNotification(title, text, properties),
     },
     store,
-    true,
+    true
   );
 };
 
 const replaceProperties = (
   text: string,
-  properties: Record<string, string>,
+  properties: Record<string, string>
 ) => {
   return Object.entries(properties).reduce((acc, [key, value]) => {
     return acc.replace(new RegExp(`{${key}}`, "g"), value);

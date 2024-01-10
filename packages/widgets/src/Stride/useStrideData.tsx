@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export type StrideStakeStatsResponse = {
+type StrideStakeStatsResponse = {
   stats: [
     {
       denom: string;
@@ -9,7 +9,7 @@ export type StrideStakeStatsResponse = {
   ];
 };
 
-export type StrideHostZoneResponse = {
+type StrideHostZoneResponse = {
   host_zone: {
     redemption_rate: string;
   };

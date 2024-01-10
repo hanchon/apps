@@ -23,7 +23,7 @@ import { Keplr } from "@keplr-wallet/types";
 import { getTxTimeout } from "../utils/getTxTimeout";
 import { raise } from "helpers";
 
-export const createProtobufIBCTransferMsg = async ({
+const createProtobufIBCTransferMsg = async ({
   sender,
   receiver,
   token,

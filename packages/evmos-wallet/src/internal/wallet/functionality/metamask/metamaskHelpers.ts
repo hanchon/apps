@@ -22,7 +22,7 @@ import { setWallet } from "../../../../wallet/redux/WalletSlice";
 import { METAMASK_KEY } from "../wallet";
 import type { MetaMaskInpageProvider } from "@metamask/providers";
 import { normalizeToEth, normalizeToEvmos } from "../../../../wallet";
-export const getMetamaskProvider = () => {
+const getMetamaskProvider = () => {
   if (typeof window === "undefined") return null;
   if (!("ethereum" in window)) {
     return null;

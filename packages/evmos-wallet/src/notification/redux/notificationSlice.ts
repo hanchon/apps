@@ -21,7 +21,7 @@ const initialValue: { currentId: number; snackbars: Snackbar[] } = {
   snackbars: [],
 };
 
-export const notificationSlice = createSlice({
+const notificationSlice = createSlice({
   name: "notificationSlice",
   initialState: {
     value: initialValue,
@@ -52,4 +52,3 @@ export const notificationSlice = createSlice({
 export const { addSnackbar, removeSnackbar } = notificationSlice.actions;
 
 export const NotificacionReducer = notificationSlice.reducer;
-export type NotificationType = typeof notificationSlice;

@@ -14,7 +14,7 @@ type CoingeckoResponse<T extends string, C extends string> = string extends T
       [K in T]: CoingeckoTokenPriceResponse<C>;
     };
 
-export const fetchCoinGeckoTokenPrices = async function <
+const fetchCoinGeckoTokenPrices = async function <
   const T extends string,
   const C extends string,
 >(coingeckoIds: T[], currencies?: C[]) {

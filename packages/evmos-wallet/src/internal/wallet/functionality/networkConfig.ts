@@ -25,8 +25,6 @@ export const EVMOS_NETWORK_FOR_BACKEND =
 export const EVMOS_BACKEND =
   process.env.NEXT_PUBLIC_EVMOS_BACKEND ?? "https://goapi-staging.evmos.org";
 
-export const OSMOSIS_CHAIN_ID =
-  process.env.NEXT_PUBLIC_OSMOSIS_CHAIN_ID ?? "osmosis-1";
 export const EVMOS_MINIMAL_COIN_DENOM =
   process.env.NEXT_PUBLIC_EVMOS_MINIMAL_COIN_DENOM ?? "aevmos";
 
@@ -34,7 +32,8 @@ export const WALLET_CONNECT_PROJECT_ID =
   process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ??
   "ae920fe62c5a565cfaaa6edacbbb6fa7";
 export const REGISTRY_NETWORK_BLOCK_LIST = (
-  process.env.NEXT_PUBLIC_REGISTRY_NETWORK_BLOCK_LIST ?? "regen,emoney,quick,wormhole"
+  process.env.NEXT_PUBLIC_REGISTRY_NETWORK_BLOCK_LIST ??
+  "regen,emoney,quick,wormhole"
 )
   .split(",")
   .map((s) => s.trim());

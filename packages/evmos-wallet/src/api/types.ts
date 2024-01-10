@@ -1,4 +1,4 @@
-export type ERC20Element = {
+type ERC20Element = {
   name: string;
   cosmosBalance: string;
   decimals: string;
@@ -70,7 +70,7 @@ type description = {
   website: string;
 };
 
-export type ValidatorResponse = {
+type ValidatorResponse = {
   commission: commission;
   consensus_key: consensusPubKey;
   delegator_shares: string;

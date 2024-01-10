@@ -58,20 +58,16 @@ export enum PlansType {
   Custom = "Custom",
 }
 
-export const plans = [
-  PlansType.Custom,
-  PlansType.Team,
-  PlansType.Grantee,
-] as const;
-export const duration = [TimeWindow["4-years"], TimeWindow["1-year"]] as const;
-export const cliff = [
+const plans = [PlansType.Custom, PlansType.Team, PlansType.Grantee] as const;
+const duration = [TimeWindow["4-years"], TimeWindow["1-year"]] as const;
+const cliff = [
   TimeWindow["1-year"],
   TimeWindow["1-month"],
   TimeWindow["1-day"],
   TimeWindow["none"],
 ] as const;
-export const schedule = [Intervals["month"], Intervals["quarter"]] as const;
-export const lockup = [
+const schedule = [Intervals["month"], Intervals["quarter"]] as const;
+const lockup = [
   TimeWindow["none"],
   TimeWindow["1-year"],
   TimeWindow["1-month"],
@@ -170,12 +166,6 @@ export const DEFAULT_FORM_VALUES = {
   lockupDuration: TimeWindow["1-year"],
   startDate: " ",
 };
-
-export interface VestingProps {
-  accountAddress: string;
-  funderAddress: string;
-  isVesting: boolean;
-}
 
 export const isEthereumAddressValid = (address: string): boolean => {
   const ethereumAddressRegex = /^0x[0-9a-fA-F]{40}$/;

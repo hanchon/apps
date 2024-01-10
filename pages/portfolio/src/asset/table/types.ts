@@ -4,7 +4,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { TableData } from "../../utils/table/normalizeData";
 
-export type ERC20Element = {
+type ERC20Element = {
   name: string;
   cosmosBalance: string;
   decimals: string;
