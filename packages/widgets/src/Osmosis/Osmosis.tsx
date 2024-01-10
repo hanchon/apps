@@ -1,9 +1,9 @@
 "use client";
 import { Link } from "@evmosapps/i18n/client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { parseUnits, formatUnits } from "@ethersproject/units";
 import { useOsmosisData } from "./useOsmosisData";
-import { cn, convertAndFormat, formatNumber } from "helpers";
+import { cn, convertAndFormat, formatNumber, useWatch } from "helpers";
 import { useOsmosisQoute } from "./useOsmosQuote";
 import { BigNumber } from "@ethersproject/bignumber";
 
@@ -33,14 +33,29 @@ export default function Osmosis() {
   const inputTokenData = inputToken.symbol === "OSMO" ? osmosis : evmos;
   const outputTokenData = outputToken.symbol === "OSMO" ? osmosis : evmos;
 
-  const number_min_received = parseFloat(
-    formatUnits(
-      latestQoute?.return_amount?.toLocaleString("fullwide", {
-        useGrouping: false,
-      }) ?? "0",
-      outputTokenData.decimals
-    )
-  );
+  const number_min_received = useMemo(() => {
+    return parseFloat(
+      formatUnits(
+        latestQoute?.return_amount?.toLocaleString("fullwide", {
+          useGrouping: false,
+        }) ?? "0",
+        outputTokenData.decimals
+      )
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [latestQoute]);
+
+  const input_amount_received = useMemo(() => {
+    return parseFloat(
+      formatUnits(
+        latestQoute?.input_amount?.toLocaleString("fullwide", {
+          useGrouping: false,
+        }) ?? "0",
+        inputTokenData.decimals
+      )
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [latestQoute]);
 
   const inputNumberBalance = parseFloat(
     convertAndFormat(
@@ -102,6 +117,14 @@ export default function Osmosis() {
     }
   }
 
+  useWatch(() => {
+    getQoute(
+      inputTokenData,
+      outputTokenData,
+      parseUnits("1", inputTokenData.decimals).toString()
+    );
+  }, []);
+
   return (
     <div className="font-poppins relative flex flex-col gap-6 overflow-hidden rounded-3xl bg-osmoverse-850 px-6 py-9 md:gap-6 md:px-3 w-full md:pt-4 md:pb-4">
       <SlippagePopover
@@ -131,11 +154,12 @@ export default function Osmosis() {
                     ).toString()
                   );
                 }}
-                className="flex place-content-center items-center  text-center 
+                className={`flex place-content-center items-center  text-center 
               transition-colors disabled:cursor-default border 
               border-wosmongton-300 hover:border-wosmongton-200 text-wosmongton-300 hover:text-wosmongton-200 
               rounded-md disabled:border-osmoverse-600 disabled:text-osmoverse-400 h-[24px] w-auto text-caption 
-              font-semibold tracking-wider py-1 px-1.5 text-xs bg-transparent"
+              font-semibold tracking-wider py-1 px-1.5 text-xs bg-transparent
+              ${inputNumberBalance === 0 && "pointer-events-none opacity-50"}`}
               >
                 HALF
               </button>
@@ -151,12 +175,16 @@ export default function Osmosis() {
                     ).toString()
                   );
                 }}
-                className="flex place-content-center items-center text-center transition-colors 
+                className={`flex place-content-center items-center text-center transition-colors 
                 disabled:cursor-default border
                  border-wosmongton-300 hover:border-wosmongton-200
                   text-wosmongton-300 hover:text-wosmongton-200 rounded-md disabled:border-osmoverse-600
                    disabled:text-osmoverse-400 h-[24px] w-auto text-caption font-semibold 
-                   tracking-wider py-1 px-1.5 text-xs bg-transparent"
+                   tracking-wider py-1 px-1.5 text-xs bg-transparent
+                   ${
+                     inputNumberBalance === 0 &&
+                     "pointer-events-none opacity-50"
+                   }`}
               >
                 MAX
               </button>
@@ -194,7 +222,7 @@ export default function Osmosis() {
               <input
                 value={swapAmount}
                 onKeyDown={(event) => {
-                  if (event.key === "-") {
+                  if (event.key === "-" || event.key === ".") {
                     event.preventDefault();
                   }
                 }}
@@ -203,12 +231,18 @@ export default function Osmosis() {
                   setLoadingSwap(false);
                   setSwapHash(null);
                   const _amount = parseFloat(e.target.value).toString();
-                  setSwapAmount(_amount === "NaN" ? "" : Number(_amount));
+                  setSwapAmount(
+                    (typeof _amount === "number" && _amount === 0) ||
+                      _amount === "NaN"
+                      ? ""
+                      : Number(_amount)
+                  );
+
                   debouncedFetchData(
                     inputTokenData,
                     outputTokenData,
                     parseUnits(
-                      _amount === "NaN" ? "0" : _amount,
+                      _amount === "0" || _amount === "NaN" ? "1" : _amount,
                       inputTokenData.decimals
                     ).toString()
                   );
@@ -237,8 +271,15 @@ export default function Osmosis() {
             setLoadingSwap(false);
             setSwapHash(null);
             setShowBalanceLink(false);
-            setSwapAmount(0);
-            debouncedFetchData(inputTokenData, outputTokenData, "0");
+            const _amount = swapAmount === "" ? "0" : swapAmount.toString();
+            getQoute(
+              outputTokenData,
+              inputTokenData,
+              parseUnits(
+                _amount === "0" ? "1" : _amount,
+                outputTokenData.decimals
+              ).toString()
+            );
           }}
           className={cn(
             "absolute left-[45%] top-[220px] z-30 flex items-center transition-all duration-500 ease-bounce md:top-[195px]",
@@ -320,12 +361,12 @@ export default function Osmosis() {
               <h5
                 className={`text-2xl font-semibold whitespace-nowrap text-right transition-opacity
                       ${
-                        number_min_received === 0
+                        number_min_received === 0 || swapAmount === ""
                           ? "text-[#ffffff61]"
                           : "text-white-full"
                       }`}
               >
-                ≈ {formatNumber(number_min_received, 5)}
+                {swapAmount === "" ? "0" : formatNumber(number_min_received, 5)}
               </h5>
               {showDollarsAmount(swapAmount) && (
                 <span className="md:caption text-base font-semibold text-osmoverse-300 opacity-100 transition-opacity">
@@ -382,7 +423,7 @@ export default function Osmosis() {
               number_min_received === 0) && (
               <span className="flex gap-1 opacity-50">
                 1<span>{inputTokenData.symbol}</span>≈{" "}
-                {formatNumber(inputToken.price / outputToken.price, 5)}{" "}
+                {formatNumber(number_min_received / input_amount_received, 5)}{" "}
                 {outputTokenData.symbol}
               </span>
             )}
@@ -395,19 +436,16 @@ export default function Osmosis() {
                   <span className="flex gap-1">
                     1<span>{inputTokenData.symbol}</span>≈{" "}
                     {formatNumber(
-                      number_min_received / (swapAmount as number),
+                      number_min_received / input_amount_received,
                       5
                     )}{" "}
                     {outputTokenData.symbol}
                   </span>
                   <div className="flex items-center gap-2 transition-opacity">
-                    {/* price impact warning ?,
-                  add loading effects */}
                     <ChevronDownIconOsmosis
                       className={cn(
                         "text-osmoverse-400 transition-all",
                         detailsOpen ? "rotate-180" : "rotate-0"
-                        // isEstimateDetailRelevant ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </div>

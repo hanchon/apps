@@ -4,12 +4,13 @@ import { SwapOption } from "./useOsmosisData";
 type OsmosisQouteResponse = {
   price_impact: number;
   return_amount: number;
+  input_amount: number;
 };
 
 export function useOsmosisQoute() {
   const [loading, setLoading] = useState(false);
   const [latestQoute, setLatestQoute] = useState<OsmosisQouteResponse | null>(
-    null,
+    null
   );
 
   function getQoute(token0: SwapOption, token1: SwapOption, amount: string) {
@@ -17,6 +18,7 @@ export function useOsmosisQoute() {
       setLatestQoute({
         price_impact: 0,
         return_amount: 0,
+        input_amount: 1,
       });
       return;
     }
