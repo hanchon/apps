@@ -780,9 +780,6 @@ importers:
 
   packages/ui-helpers:
     dependencies:
-      '@evmosapps/icons':
-        specifier: workspace:*
-        version: link:../icons
       '@notionhq/client':
         specifier: ^2.2.14
         version: 2.2.14
@@ -811,6 +808,9 @@ importers:
       '@evmosapps/config':
         specifier: workspace:*
         version: link:../config
+      '@evmosapps/icons':
+        specifier: workspace:*
+        version: link:../icons
       '@types/node':
         specifier: 18.11.14
         version: 18.11.14

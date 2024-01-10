@@ -29,7 +29,7 @@ type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;
 };
 
-export const queryFn = async function <T extends keyof Routes>(url: string) {
+const queryFn = async function <T extends keyof Routes>(url: string) {
   const res = await fetch(url, {
     headers: {
       Accept: "application/json",

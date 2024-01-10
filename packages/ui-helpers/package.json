@@ -15,11 +15,11 @@
   },
   "peerDependencies": {
     "constants-helper": "workspace:*",
-    "@evmosapps/icons": "workspace:*",
     "tracker": "workspace:*"
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
+    "@evmosapps/icons": "workspace:*",
     "@types/node": "18.11.14",
     "api-endpoints": "link:@notionhq/client/build/src/api-endpoints",
     "lodash-es": "^4.17.21",

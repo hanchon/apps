@@ -1,19 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-export const EXECUTED_NOTIFICATIONS = {
-  SuccessTitle: "Successfully executed",
-  ErrorTitle: "Executing transaction",
-  UnexpectedSubtext: "Unexpected error",
-  WaitingTitle:
-    "Waiting for ibc transaction to be executed in the destination chain",
-  IBCTransferInformation: {
-    text: "Note",
-    subtext:
-      "IBC transfer takes up to 15 mins in time of congestion. Please be patient before attempting to resend the transaction.",
-  },
-} as const;
-
 export const BROADCASTED_NOTIFICATIONS = {
   SuccessTitle: "Successfully broadcasted",
   ErrorTitle: "Error broadcasting tx",
@@ -34,11 +21,6 @@ export const MODAL_NOTIFICATIONS = {
   ErrorTokenEmpty: "Please, select a token",
   ErrorWrongPrefix: "Incorrect address",
   ErrorValidatorEmpty: "Please, select a validator",
-} as const;
-
-export const BALANCE_NOTIFICATIONS = {
-  ErrorGetBalance: "Error getting balance, please try again later",
-  ErrorGetBalanceExtChain: "Error getting balance from external chain",
 } as const;
 
 export const GENERATING_TX_NOTIFICATIONS = {
