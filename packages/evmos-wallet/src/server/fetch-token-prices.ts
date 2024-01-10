@@ -1,7 +1,7 @@
 "use server";
 import { fetchTokens } from "@evmosapps/registry/src/fetch-tokens";
 import { isUndefined } from "helpers";
-import { cachedFetch } from "helpers/src/cached-fetch";
+import { cachedFetch } from "helpers/src/dev/cached-fetch";
 
 const revalidate = 5 * 60 * 1000; // 5 minutes
 
