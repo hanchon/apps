@@ -12,7 +12,7 @@ import tsPlugin from "@typescript-eslint/eslint-plugin";
 // @ts-ignore
 import tsParser from "@typescript-eslint/parser";
 
-export const tsLintConfig = {
+const tsLintConfig = {
   files: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
   plugins: {
     "@typescript-eslint": tsPlugin,
