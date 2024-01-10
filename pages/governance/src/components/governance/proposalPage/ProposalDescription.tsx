@@ -5,7 +5,7 @@ import { ProposalDetailProps } from "../../../utils/types";
 import IdContainer from "../common/IdContainer";
 import TitleContainer from "../common/TitleContainer";
 import DescriptionItem from "./DescriptionItem";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { BannerMessages } from "@evmosapps/ui-helpers";

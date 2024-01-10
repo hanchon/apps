@@ -4,10 +4,6 @@
 import { withEvmosConfig } from "@evmosapps/config/next/with-config.js";
 
 export default withEvmosConfig({
-  experimental: {
-    appDir: true,
-    serverActions: true,
-  },
   images: {
     remotePatterns: [
       {

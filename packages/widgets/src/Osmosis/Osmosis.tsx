@@ -7,7 +7,7 @@ import { cn, convertAndFormat, formatNumber, useWatch } from "helpers";
 import { useOsmosisQoute } from "./useOsmosQuote";
 import { BigNumber } from "@ethersproject/bignumber";
 
-import { debounce } from "lodash";
+import { debounce } from "lodash-es";
 import {
   ChevronDownIconOsmosis,
   DownArrowIconOsmosisIcon,

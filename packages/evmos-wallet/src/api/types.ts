@@ -107,7 +107,7 @@ type Rewards = {
   validator_address: string;
 };
 
-export type rewardsResponse = {
+type rewardsResponse = {
   rewards: Rewards[];
   total: totalRewards[];
 };

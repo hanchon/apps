@@ -6,9 +6,7 @@
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
   "dependencies": {
-    "@evmosapps/copilot": "workspace:*",
     "@evmosapps/evmos-wallet": "workspace:*",
-    "@evmosapps/registry": "workspace:*",
     "@evmosapps/ui-helpers": "workspace:*",
     "constants-helper": "workspace:*",
     "dayjs": "^1.11.10",
@@ -17,12 +15,16 @@
     "next": "14.0.4",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
-    "services": "workspace:*",
-    "stateful-components": "workspace:*",
     "tracker": "workspace:*"
   },
   "devDependencies": {
-    "chainapsis-suggest-chain": "github:chainapsis/keplr-chain-registry",
-    "react-qr-code": "^2.0.12"
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/bytes": "^5.7.0",
+    "@ethersproject/contracts": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
+    "@evmos/transactions": "^0.2.12",
+    "ethers": "^6.9.2",
+    "react-redux": "^8.1.2"
   }
 }

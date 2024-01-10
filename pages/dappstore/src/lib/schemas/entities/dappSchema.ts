@@ -32,7 +32,6 @@ const dappPropertiesSchema = createNotionPropertiesSchema(
       url,
       label: url && parseUrl(url),
     })),
-    project: urlSchema,
     github: urlSchema,
     discord: urlSchema.transform((url) => ({
       url,

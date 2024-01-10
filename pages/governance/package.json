@@ -8,7 +8,6 @@
   "dependencies": {
     "@evmosapps/copilot": "workspace:*",
     "@evmosapps/evmos-wallet": "workspace:*",
-    "@evmosapps/registry": "workspace:*",
     "@evmosapps/ui-helpers": "workspace:*",
     "constants-helper": "workspace:*",
     "helpers": "workspace:*",
@@ -16,8 +15,14 @@
     "next": "14.0.4",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
-    "services": "workspace:*",
     "stateful-components": "workspace:*",
     "tracker": "workspace:*"
+  },
+  "devDependencies": {
+    "@ethersproject/bignumber": "^5.7.0",
+    "mixpanel-browser": "^2.48.1",
+    "react-markdown": "^9.0.1",
+    "react-redux": "^8.1.2",
+    "remark-gfm": "^4.0.0"
   }
 }

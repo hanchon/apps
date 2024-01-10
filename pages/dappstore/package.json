@@ -9,7 +9,6 @@
     "@evmosapps/copilot": "workspace:*",
     "@evmosapps/evmos-wallet": "workspace:*",
     "@evmosapps/instant-dapps": "workspace:*",
-    "@evmosapps/registry": "workspace:*",
     "@evmosapps/ui-helpers": "workspace:*",
     "constants-helper": "workspace:*",
     "helpers": "workspace:*",
@@ -17,9 +16,14 @@
     "next": "14.0.4",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
-    "services": "workspace:*",
     "slugify": "^1.6.6",
     "stateful-components": "workspace:*",
     "tracker": "workspace:*"
+  },
+  "devDependencies": {
+    "@noble/hashes": "^1.3.2",
+    "lodash-es": "^4.17.21",
+    "mixpanel-browser": "^2.48.1",
+    "sharp": "^0.32.6"
   }
 }
