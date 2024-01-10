@@ -1,20 +1,12 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-export const EVMOS_RPC_URL =
-  process.env.NEXT_PUBLIC_EVMOS_RPC_URL || "https://evmos.lava.build/";
 export const EVMOS_GRPC_URL =
   process.env.NEXT_PUBLIC_EVMOS_GRPC_URL || "https://rest.evmos.lava.build/";
-export const EVMOS_CHAIN_NAME =
-  process.env.NEXT_PUBLIC_EVMOS_CHAIN_NAME ?? "Evmos";
 export const EVMOS_SYMBOL = process.env.NEXT_PUBLIC_EVMOS_SYMBOL ?? "EVMOS";
 export const EVMOS_DECIMALS = parseInt(
   process.env.NEXT_PUBLIC_EVMOS_DECIMALS ?? "18"
 );
-export const EVMOS_COSMOS_EXPLORER =
-  process.env.NEXT_PUBLIC_EVMOS_COSMOS_EXPLORER ?? "https://escan.live/";
-export const EVMOS_ETH_CHAIN_ID =
-  process.env.NEXT_PUBLIC_EVMOS_ETH_CHAIN_ID ?? "0x2329";
 
 export const EVMOS_NETWORK_FOR_BACKEND =
   process.env.NEXT_PUBLIC_EVMOS_NETWORK_FOR_BACKEND ?? "EVMOS";

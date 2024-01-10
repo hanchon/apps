@@ -13,12 +13,6 @@ export const DOCS_EVMOS_REVENUE =
 export const DOCS_EVMOS_URL = "https://docs.evmos.org/";
 export const ADD_DAPP_FORM_URL = "https://tally.so/r/wbWjlL";
 export const MAVA_WIDGET_URL = "https://widget.mava.app";
-export const STEP_STATUS = {
-  DONE: "done",
-  PROCESSING: "processing",
-  CURRENT: "current",
-  NOT_PROCESSED: "not_processed",
-};
 export const METAMASK_DOWNLOAD_URL = "https://metamask.io/download/";
 export const KEPLR_DOWNLOAD_URL = "https://www.keplr.app/download";
 export const EXPLORER_URL = "https://escan.live";

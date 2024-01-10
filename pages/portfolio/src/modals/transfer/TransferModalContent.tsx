@@ -31,7 +31,7 @@ import { AccountSelector } from "../shared/AccountSelector";
 
 import { TransferSummary } from "../shared/TransferSummary";
 import { SendIcon } from "@evmosapps/icons/SendIcon";
-import { WizardIcon } from "@evmosapps/icons/wizard-icon";
+import { WizardIcon } from "@evmosapps/icons/Wizard";
 import { E, useWatch } from "helpers";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";
