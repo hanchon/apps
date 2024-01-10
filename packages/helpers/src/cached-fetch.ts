@@ -6,8 +6,8 @@ import { snakeCase } from "lodash-es";
 const cacheHeader = "evmos-dev-cache";
 const serializeHeaders = (headers: Headers) => {
   const obj = new Map<string, string>();
-  headers.forEach((v, k) => {
-    obj.set(k as string, v as string);
+  headers.forEach((v: string, k: string) => {
+    obj.set(k, v);
   });
   return Object.fromEntries(obj);
 };

@@ -18,21 +18,21 @@
     "@evmosapps/evmos-wallet": "workspace:*",
     "@evmosapps/ui-helpers": "workspace:*",
     "@evmosapps/widgets": "workspace:*",
-    "stateful-components": "workspace:*",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.20",
-    "prettier": "^3.0.1"
+    "prettier": "^3.0.1",
+    "stateful-components": "workspace:*"
   },
   "dependencies": {
     "@types/node": "18.11.14",
     "@types/react": "18.2.45",
     "@types/react-dom": "18.0.9",
-    "eslint": "^8.54.0",
+    "eslint": "^8.56.0",
     "next": "14.0.4",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
-    "typescript": "^5.3.3",
-    "tracker": "workspace:*"
+    "tracker": "workspace:*",
+    "typescript": "^5.3.3"
   },
   "browserslist": [
     "last 3 chrome version",

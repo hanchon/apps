@@ -13,7 +13,7 @@
     "@tenkeylabs/dappwright": "^2.5.5",
     "@types/inquirer": "^9.0.4",
     "octokit": "^3.1.1",
-    "tsx": "^3.13.0"
+    "tsx": "^4.7.0"
   },
   "dependencies": {
     "@commander-js/extra-typings": "^11.1.0",

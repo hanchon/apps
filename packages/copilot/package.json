@@ -29,8 +29,8 @@
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",
     "@evmosapps/evmos-wallet": "workspace:*",
-    "@evmosapps/widgets": "workspace:*",
     "@evmosapps/ui-helpers": "workspace:*",
+    "@evmosapps/widgets": "workspace:*",
     "@fireworks-js/react": "^2.10.7",
     "@headlessui/react": "^1.7.15",
     "@types/mixpanel": "2.14.1",
@@ -39,7 +39,7 @@
     "@types/react": "18.2.45",
     "@types/react-dom": "18.0.9",
     "constants-helper": "workspace:*",
-    "eslint": "^8.54.0",
+    "eslint": "^8.56.0",
     "ethers": "^6.7.1",
     "helpers": "workspace:*",
     "icons": "workspace:*",

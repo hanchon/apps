@@ -57,7 +57,7 @@
     "bech32": "^2.0.0",
     "clsx": "^2.0.0",
     "cosmjs-types": "^0.8.0",
-    "eslint": "^8.54.0",
+    "eslint": "^8.56.0",
     "eth-sig-util": "^3.0.1",
     "lodash-es": "^4.17.21",
     "long": "^5.2.3",
