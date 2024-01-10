@@ -34,7 +34,8 @@ export const WALLET_CONNECT_PROJECT_ID =
   process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ??
   "ae920fe62c5a565cfaaa6edacbbb6fa7";
 export const REGISTRY_NETWORK_BLOCK_LIST = (
-  process.env.NEXT_PUBLIC_REGISTRY_NETWORK_BLOCK_LIST ?? "regen,emoney,quick,wormhole"
+  process.env.NEXT_PUBLIC_REGISTRY_NETWORK_BLOCK_LIST ??
+  "regen,emoney,quick,wormhole"
 )
   .split(",")
   .map((s) => s.trim());
@@ -54,3 +55,6 @@ export const TERMS_OF_SERVICE_PAGE_NOTION_ID =
 export const PRIVACY_POLICY_PAGE_NOTION_ID =
   process.env.NEXT_PUBLIC_PRIVACY_POLICY_PAGE_NOTION_ID ||
   "5d9bf99b588c4c748bda46419f0e2248";
+export const EVMOS_UTILS_PAGE_NOTION_ID =
+  // process.env.NEXT_PUBLIC_EVMOS_UTILS_PAGE_NOTION_ID ||
+  "d5c2aeb0eb50431d946f1e8a334bc88a";

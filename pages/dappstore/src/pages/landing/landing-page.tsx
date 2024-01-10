@@ -7,9 +7,11 @@ import { HeroSection } from "./partials/hero-section";
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 import { CopilotCard } from "./partials/copilot-card/copilot-card";
 import { ButtonSeedApps } from "./partials/button-see-dapps";
+import { fetchEvmosUtils } from "../../lib/fetch-evmos-utils";
 
 export const LandingPage = async () => {
   const { dApps } = await fetchExplorerData();
+  const evmosUtilsMap = await fetchEvmosUtils();
 
   return (
     <div className="space-y-8 md:space-y-16 text-display ">
