@@ -1,7 +1,7 @@
 import { ZodRawShape, z } from "zod";
 import { isValidCosmosAddress } from "../../wallet/utils/addresses/is-valid-cosmos-address";
 
-export const PaginatedCosmosSchema = z.object({
+const PaginatedCosmosSchema = z.object({
   pagination: z.object({
     next_key: z.string().nullable(),
     total: z.string(),

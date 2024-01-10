@@ -1,6 +1,6 @@
 import { has, isString } from "../assertions";
 
-export function matchByCode<TCode>(
+function matchByCode<TCode>(
   error: unknown,
   code: TCode
 ): error is {
@@ -10,7 +10,7 @@ export function matchByCode<TCode>(
   return error.code === code;
 }
 
-export function matchByName<TName>(
+function matchByName<TName>(
   error: unknown,
   name: TName
 ): error is {
@@ -20,7 +20,7 @@ export function matchByName<TName>(
   return error.name === name;
 }
 
-export function matchByMessage(
+function matchByMessage(
   error: unknown,
   message: string
 ): error is {
@@ -30,12 +30,12 @@ export function matchByMessage(
   return error.message === message;
 }
 
-export function matchByPattern(error: unknown, pattern: RegExp) {
+function matchByPattern(error: unknown, pattern: RegExp) {
   if (!has(error, "message")) return false;
   if (!isString(error.message)) return false;
   return pattern.test(error.message);
 }
-export function matchByClass<TClass>(
+function matchByClass<TClass>(
   error: unknown,
   Class: new (...args: any[]) => TClass
 ): error is TClass {

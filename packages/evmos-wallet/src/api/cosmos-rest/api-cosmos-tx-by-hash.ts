@@ -42,7 +42,7 @@ const TxSchema = z.object({
   signatures: z.array(z.unknown()),
 });
 
-export const TxResponseSchema = z.object({
+const TxResponseSchema = z.object({
   tx: TxSchema,
   tx_response: z.object({
     height: z.string(),

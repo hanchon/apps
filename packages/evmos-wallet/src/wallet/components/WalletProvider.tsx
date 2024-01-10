@@ -44,7 +44,7 @@ const WalletContext = createContext<{
   config: wagmiConfig,
 });
 
-export const useWalletContext = () => {
+const useWalletContext = () => {
   const context = useContext(WalletContext);
   if (!context) {
     throw new Error("useWalletContext must be used within a WalletProvider");

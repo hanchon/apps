@@ -76,15 +76,3 @@ export async function queryPubKey(evmosEndpoint: string, address: string) {
 
   return null;
 }
-
-export const getSequence = async (evmosEndpoint: string, address: string) => {
-  if (address === "") {
-    return null;
-  }
-  const base = await getBaseAccountData(evmosEndpoint, address);
-  if (base != null) {
-    return base.sequence;
-  }
-
-  return null;
-};

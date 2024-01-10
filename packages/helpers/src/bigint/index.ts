@@ -3,9 +3,9 @@ export function max(a: number, b: number): number;
 export function max(a: number | bigint, b: number | bigint): number | bigint {
   return a > b ? a : b;
 }
-export function min(a: bigint, b: bigint): bigint;
-export function min(a: number, b: number): number;
-export function min(a: number | bigint, b: number | bigint): number | bigint {
+function min(a: bigint, b: bigint): bigint;
+function min(a: number, b: number): number;
+function min(a: number | bigint, b: number | bigint): number | bigint {
   return a < b ? a : b;
 }
 

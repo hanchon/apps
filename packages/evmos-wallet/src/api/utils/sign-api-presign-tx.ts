@@ -6,20 +6,15 @@ import {
   signTypedDataMessage,
   signKeplrDirect,
   getKeplrProvider,
-  signKeplrAminoTransaction,
   ethToEvmos,
   wagmiConfig,
 } from "../../wallet";
-import {
-  apiBroadcastAmino,
-  apiBroadcastEip712,
-  apiBroadcastRawTx,
-} from "../evmos-api/broadcast";
+import { apiBroadcastEip712, apiBroadcastRawTx } from "../evmos-api/broadcast";
 import { ApiPresignTx } from "../../utils";
 import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
 const evmosInfo = getEvmosChainInfo();
 
-export async function signBackendTypedDataTransaction({
+async function signBackendTypedDataTransaction({
   typedData,
   legacyAmino,
 }: ApiPresignTx) {
@@ -45,7 +40,7 @@ export async function signBackendTypedDataTransaction({
   } as const;
 }
 
-export async function signBackendDirectTransaction(transaction: ApiPresignTx) {
+async function signBackendDirectTransaction(transaction: ApiPresignTx) {
   const { address, connector } = getAccount(wagmiConfig);
 
   assertIf(address && connector, "COULD_NOT_SIGN_TRANSACTION");
@@ -67,33 +62,6 @@ export async function signBackendDirectTransaction(transaction: ApiPresignTx) {
           response.signed.authInfoBytes,
           [new Uint8Array(Buffer.from(response.signature.signature, "base64"))]
         ),
-      }),
-  } as const;
-}
-
-export async function signApiAminoTx(
-  transaction: ApiPresignTx,
-  network: string
-) {
-  const { address, connector } = getAccount(wagmiConfig);
-  assertIf(address && connector, "COULD_NOT_SIGN_TRANSACTION");
-
-  assertIf(connector.name === "Keplr", "UNSUPPORTED_SIGN_METHOD");
-  const keplr = await getKeplrProvider();
-  keplr.defaultOptions = {
-    sign: {
-      preferNoSetFee: transaction.chainId === evmosInfo.cosmosId,
-    },
-  };
-  const response = await signKeplrAminoTransaction(transaction.aminoSignDoc);
-
-  return {
-    signature: response.signature.signature,
-    broadcast: () =>
-      apiBroadcastAmino({
-        signature: response.signature,
-        signed: response.signed,
-        network,
       }),
   } as const;
 }

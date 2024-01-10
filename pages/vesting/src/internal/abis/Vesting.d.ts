@@ -78,7 +78,7 @@ interface VestingIInterface extends ethers.utils.Interface {
   events: {};
 }
 
-export class VestingI extends Contract {
+class VestingI extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;

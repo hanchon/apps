@@ -3,7 +3,7 @@ import { apiTendermintFetch } from "./api-tendermint-fetch";
 import { makeJSONRPCResponseSchema } from "./validation";
 import { BigIntSchema } from "../cosmos-rest";
 
-export const TendermintStatusResponse = makeJSONRPCResponseSchema({
+const TendermintStatusResponse = makeJSONRPCResponseSchema({
   result: z.object({
     node_info: z.object({
       protocol_version: z.object({

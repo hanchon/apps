@@ -6,19 +6,6 @@ import { keplr } from "./keplrConnector";
 
 const evmos = getEvmosChainInfo();
 
-// const test = injected({
-//   target: () => {
-//     if (!window) {
-//       return {};
-//     }
-//     // console.log(window);
-//     window.addEventListener("eip6963:announceProvider", (event) => {
-//       console.log("eip6963:announceProvider", event.detail);
-//     });
-
-//     window.dispatchEvent(new Event("eip6963:requestProvider"));
-//   },
-// });
 export const wagmiConfig = createConfig({
   chains: [evmos],
   transports: {
@@ -40,7 +27,4 @@ export const wagmiConfig = createConfig({
   ],
 });
 
-export const CONNECTOR_IDS = wagmiConfig.connectors.map(
-  (c) => c.name
-) as ConnetorId[];
 export type ConnetorId = "MetaMask" | "WalletConnect" | "Keplr" | "Safe";

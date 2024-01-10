@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const EIP712DomainSchema = z.object({
+const EIP712DomainSchema = z.object({
   name: z.string(),
   version: z.string(),
   chainId: z.string(),

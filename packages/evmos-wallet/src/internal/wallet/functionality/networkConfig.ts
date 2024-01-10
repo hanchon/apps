@@ -15,10 +15,6 @@ export const EVMOS_COSMOS_EXPLORER =
   process.env.NEXT_PUBLIC_EVMOS_COSMOS_EXPLORER ?? "https://escan.live/";
 export const EVMOS_ETH_CHAIN_ID =
   process.env.NEXT_PUBLIC_EVMOS_ETH_CHAIN_ID ?? "0x2329";
-export const EVMOS_CHAIN = {
-  chainId: parseInt(process.env.NEXT_PUBLIC_CHAIN_ID ?? "9001"),
-  cosmosChainId: process.env.NEXT_PUBLIC_COSMOS_CHAIN_ID ?? "evmos_9001-2",
-};
 
 export const EVMOS_NETWORK_FOR_BACKEND =
   process.env.NEXT_PUBLIC_EVMOS_NETWORK_FOR_BACKEND ?? "EVMOS";
