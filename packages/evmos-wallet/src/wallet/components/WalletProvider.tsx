@@ -1,5 +1,12 @@
 "use client";
-import { useEffect, PropsWithChildren, useLayoutEffect } from "react";
+import {
+  useEffect,
+  PropsWithChildren,
+  useLayoutEffect,
+  useState,
+  createContext,
+  useContext,
+} from "react";
 import {
   useAccount,
   useAccountEffect,
@@ -7,27 +14,77 @@ import {
   useDisconnect,
   useReconnect,
 } from "wagmi";
-import { usePubKey } from "../wagmi";
+import { usePubKey, wagmiConfig } from "../wagmi";
 import {
   WALLET_NOTIFICATIONS,
   notifyError,
   notifySuccess,
 } from "../../internal/wallet/functionality/errors";
 import { truncateAddress } from "../../internal/wallet/style/format";
-import { getActiveProviderKey, normalizeToEvmos, store } from "../..";
+import {
+  getActiveProviderKey,
+  normalizeToCosmosAddress,
+  normalizeToEvmos,
+  store,
+} from "../..";
 import { resetWallet, setWallet } from "../redux/WalletSlice";
 import {
   RemoveWalletFromLocalStorage,
   SaveProviderToLocalStorate,
 } from "../../internal/wallet/functionality/localstorage";
-import { useWatch } from "helpers";
+import { useEffectEvent, useWatch } from "helpers";
 
 type WalletProviderProps = PropsWithChildren<{}>;
 
-function Provider({ children }: WalletProviderProps) {
-  const { reconnect } = useReconnect();
+const WalletContext = createContext<{
+  isWalletHydrated: boolean;
+  config: typeof wagmiConfig;
+}>({
+  isWalletHydrated: false,
+  config: wagmiConfig,
+});
 
+export const useWalletContext = () => {
+  const context = useContext(WalletContext);
+  if (!context) {
+    throw new Error("useWalletContext must be used within a WalletProvider");
+  }
+  return context;
+};
+
+export const useWallet = () => {
+  const { isWalletHydrated } = useWalletContext();
+
+  const account = useAccount();
+  return {
+    ...account,
+    bech32Address: account.address
+      ? normalizeToCosmosAddress(account.address)
+      : null,
+    isHydrating: !isWalletHydrated,
+  };
+};
+
+function Provider({ children }: WalletProviderProps) {
+  const [isWalletHydrated, setIsWalletHydrated] = useState(false);
+
+  const { reconnect } = useReconnect();
   const { address, connector, isConnected } = useAccount();
+
+  /**
+   * I would expect that the behavior of reconnect would be to only reconnect if there was a previous connection
+   * however, even when you don't have a recent connection, it reconnects to the first in the list
+   * I'm not sure if that's a bug or not, but this is a workaround for now
+   */
+  const reconnectIfRecent = useEffectEvent(async () => {
+    const recentId = await wagmiConfig.storage?.getItem("recentConnectorId");
+    setIsWalletHydrated(true);
+    if (!recentId) return;
+    reconnect();
+  });
+  useLayoutEffect(() => {
+    void reconnectIfRecent();
+  }, [reconnectIfRecent]);
 
   useAccountEffect({
     onConnect: ({ connector, address, isReconnected }) => {
@@ -53,9 +110,6 @@ function Provider({ children }: WalletProviderProps) {
   const { variables } = useConnect();
   const { disconnect } = useDisconnect();
   const { pubkey, error: pubkeyError, isFetching } = usePubKey();
-  useLayoutEffect(() => {
-    reconnect();
-  }, [reconnect]);
 
   useEffect(() => {
     const connectorId = connector?.id.toLowerCase();
@@ -97,7 +151,16 @@ function Provider({ children }: WalletProviderProps) {
       { walletName: variables?.connector?.name ?? "" }
     );
   }, [isFetching]);
-  return <>{children}</>;
+  return (
+    <WalletContext.Provider
+      value={{
+        isWalletHydrated,
+        config: wagmiConfig,
+      }}
+    >
+      {children}
+    </WalletContext.Provider>
+  );
 }
 
 export function WalletProvider(props: WalletProviderProps) {

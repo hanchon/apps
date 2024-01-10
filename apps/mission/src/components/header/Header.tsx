@@ -1,10 +1,11 @@
 import { Branding } from "./Branding";
 import { LaunchPad } from "./LaunchPad";
 
-import { WalletButton } from "./WalletButton";
 import { Container } from "@evmosapps/ui-helpers";
 import { EvmosPrice } from "./TokenPrice";
 import { Suspense } from "react";
+import { WalletButton } from "./WalletButton";
+
 export const Header = () => {
   return (
     <Container
@@ -13,12 +14,13 @@ export const Header = () => {
     >
       <Branding />
 
-      <div className="flex items-center space-x-3 text-xs sm:text-base leading-none">
-        <EvmosPrice />
-        <LaunchPad />
+      <div className="flex justify-stretch items-stretch space-x-3 text-xs sm:text-base leading-none">
         <Suspense>
-          <WalletButton />
+          <EvmosPrice />
         </Suspense>
+        <LaunchPad />
+
+        <WalletButton />
       </div>
     </Container>
   );

@@ -1,16 +1,57 @@
 import { readFile, writeFile, mkdir } from "fs/promises";
-import { ArgumentsType } from "vitest";
+
 import path from "path";
+import { sha256 } from "@noble/hashes/sha256";
 
 import { E } from "../error-handling";
 import { Log } from "helpers/src/logger";
 import { fileURLToPath } from "node:url";
 
-const cacheDir = path.join(
+export const cacheDir = path.join(
   fileURLToPath(import.meta.url),
   "../../../../../node_modules/.cache/evmosapps"
 );
 
+export const writeCache = async (
+  key: string,
+  data: unknown,
+  tags: string[]
+) => {
+  await mkdir(cacheDir, { recursive: true });
+  Log("dev-cache-mode").info(
+    `Response cached for key '${key}'`,
+    `\ncacheDir: ${cacheDir}`
+  );
+  return await writeFile(
+    path.join(cacheDir, key),
+    JSON.stringify({
+      tags,
+      cacheDate: Date.now(),
+      cacheKey: key,
+      data,
+    })
+  );
+};
+
+export const readCache = async <T = unknown>(
+  key: string,
+  revalidate = 3600
+) => {
+  const [err, cached] = await E.try(
+    () =>
+      readFile(path.join(cacheDir, key), "utf8").then(JSON.parse) as Promise<{
+        tags: string[];
+        cacheDate: number;
+        cacheKey: string;
+        data: T;
+      }>
+  );
+  if (err) return null;
+  return {
+    stale: Date.now() - cached.cacheDate > revalidate * 1000,
+    ...cached,
+  };
+};
 /**
  * Caches the result of a function in development mode only.
  *
@@ -34,7 +75,7 @@ export const devModeCache = <T extends Function>(
      * The cache key for the function. Can be a string or a function that generates the cache key based on the function arguments.
      * if not provided, the function name will be used
      */
-    cacheKey?: string | ((...args: ArgumentsType<T>) => string);
+    tags?: string[];
     /**
      * The cache duration in seconds.
      * @default 60 * 5 // (5 minutes)
@@ -50,69 +91,47 @@ export const devModeCache = <T extends Function>(
 ): T => {
   if (process.env.NODE_ENV !== "development" && process.env.NODE_ENV !== "test")
     return fn;
-  let { cacheKey, revalidate = 60 * 5, staleWhileRevalidate = true } = options;
+  let { tags = [], revalidate = 60 * 5, staleWhileRevalidate = true } = options;
 
   if (process.env.NODE_ENV === "test") {
     staleWhileRevalidate = false;
   }
   const req = async (...args: unknown[]) => {
-    const resolvedKey =
-      typeof cacheKey === "function"
-        ? cacheKey(...(args as ArgumentsType<T>))
-        : cacheKey ?? fn.name;
-    if (!resolvedKey)
-      throw new Error(
-        "if cacheKey is not provided, a named function is required"
-      );
-    const cachePath = path.join(cacheDir, resolvedKey);
-
-    const [readErr, cached] = await E.try(
-      () =>
-        readFile(cachePath, "utf8").then(JSON.parse) as Promise<{
-          date: number;
-          response: unknown;
-        }>
+    tags = [...tags];
+    if (tags.length === 0 && fn.name) {
+      tags.push(fn.name);
+    }
+    tags.push(
+      Buffer.from(sha256(JSON.stringify(args)).slice(0, 6)).toString(
+        "base64url"
+      )
     );
 
+    tags.push(
+      Buffer.from(sha256(fn.toString()).slice(0, 6)).toString("base64url")
+    );
+    const resolvedKey = tags.join("-");
+    const cached = await readCache(resolvedKey, revalidate);
+
     const fetchAndCache = async () => {
-      await mkdir(cacheDir, { recursive: true });
       const response = (await fn.call(null, ...args)) as unknown;
 
-      const [err, responseAsString] = E.try(() =>
-        JSON.stringify({
-          date: Date.now(),
-          response,
-        })
-      );
-      if (err) {
-        throw new Error(
-          `response of ${resolvedKey} is not serializable: ${err.message}`
-        );
-      }
-
-      await writeFile(cachePath, responseAsString);
-
-      Log("dev-cache-mode").info(
-        `Response cached for key '${resolvedKey}'`,
-        `\ncacheDir: ${cacheDir}`
-      );
+      await writeCache(resolvedKey, response, tags);
 
       return response;
     };
-    if (readErr) return fetchAndCache();
+    if (!cached) return fetchAndCache();
 
-    const isStale = Date.now() - cached.date > revalidate * 1000;
-
-    if (isStale) {
+    if (cached.stale) {
       if (staleWhileRevalidate) {
         // revalidate in background
         void fetchAndCache();
-        return cached.response;
+        return cached.data;
       }
       return fetchAndCache();
     }
 
-    return cached.response;
+    return cached.data;
   };
 
   return req as never;

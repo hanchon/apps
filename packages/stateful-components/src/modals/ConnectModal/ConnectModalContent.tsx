@@ -24,7 +24,7 @@ import {
 import { useSetupCopilotModal } from "../SetupAccountModal/SetupAccountModal";
 import { ProvidersIcons } from "../../providerIcons";
 import { ComingSoonWallets } from "./coming-soon-wallets";
-
+import Image from "next/image";
 export const ButtonWallet = ({
   className,
   disabled,
@@ -146,7 +146,9 @@ export const ConnectModalContent = ({
       <div className="flex flex-col space-y-3">
         {connectors
           .filter((connector) => {
-            if (connector.id === "io.metamask") return false;
+            if (connector.id.startsWith("io.")) {
+              return false;
+            }
             if (connector.name === "Safe") return false;
             return true;
           })
@@ -167,6 +169,14 @@ export const ConnectModalContent = ({
                 }}
               >
                 {Icon && <Icon className="w-7" />}
+                {connector.icon && (
+                  <Image
+                    src={connector.icon}
+                    alt={connector.name}
+                    width={100}
+                    height={100}
+                  />
+                )}
                 <span>{connector.name}</span>
               </ButtonWallet>
             );

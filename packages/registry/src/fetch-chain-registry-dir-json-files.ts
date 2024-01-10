@@ -15,6 +15,7 @@ export const fetchChainRegistryDirJsonFiles = async <T>(dir: string) => {
   if (!Array.isArray(data)) {
     throw new Error("Expected array");
   }
+
   const result = await Promise.all(
     data.flatMap((file) => {
       if (file.type !== "file" || !file.name.endsWith(".json")) {
@@ -39,5 +40,6 @@ export const fetchChainRegistryDirJsonFiles = async <T>(dir: string) => {
       ];
     })
   );
+
   return result as T[];
 };
