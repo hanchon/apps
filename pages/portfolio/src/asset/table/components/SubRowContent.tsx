@@ -11,7 +11,7 @@ import {
   StoreType,
 } from "@evmosapps/evmos-wallet";
 import { Button, Tooltip } from "@evmosapps/ui-helpers";
-import { QuestionMarkIcon } from "icons";
+import { QuestionMarkIcon } from "@evmosapps/icons/QuestionMarkIcon";
 import Convert from "../../modals/transactions/Convert";
 import { ConvertSTR } from "../../modals/transactions/ConvertSTR";
 import { Description } from "./Description";

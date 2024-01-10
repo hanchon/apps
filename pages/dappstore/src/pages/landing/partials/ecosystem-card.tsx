@@ -9,7 +9,7 @@ import { Badge, TrackerEvent } from "@evmosapps/ui-helpers";
 import { CLICK_ON_FEATURED_DAPP } from "tracker";
 
 import { Link } from "@evmosapps/i18n/client";
-import { UpRightArrowIcon } from "icons";
+import { UpRightArrowIcon } from "@evmosapps/icons/UpRightArrowIcon";
 import { DApp } from "../../../lib/fetch-explorer-data";
 
 export const EcosystemCard = ({ data }: { data: DApp }) => {

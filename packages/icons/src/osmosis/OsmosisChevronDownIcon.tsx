@@ -5,7 +5,7 @@ type ChevronDownIconProps = React.SVGAttributes<SVGElement> & {
   color?: string;
 };
 
-export const ChevronDownIconOsmosis: React.FC<ChevronDownIconProps> = ({
+export const OsmosisChevronDownIcon: React.FC<ChevronDownIconProps> = ({
   ...restProps
 }) => {
   return (

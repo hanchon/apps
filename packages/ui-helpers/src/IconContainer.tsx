@@ -1,10 +1,8 @@
-import {
-  CheckIcon,
-  CloseBorderIcon,
-  KeplrIcon,
-  MetamaskIcon,
-  WalletConnectIcon,
-} from "icons";
+import { CheckIcon } from "@evmosapps/icons/CheckIcon";
+import { CloseBorderIcon } from "@evmosapps/icons/CloseBorderIcon";
+import { KeplrIcon } from "@evmosapps/icons/KeplrIcon";
+import { MetamaskIcon } from "@evmosapps/icons/MetamaskIcon";
+import { WalletConnectIcon } from "@evmosapps/icons/WalletConnectIcon";
 import { ComponentProps } from "react";
 import { EMOJIS, ICONS_TYPES } from "constants-helper";
 

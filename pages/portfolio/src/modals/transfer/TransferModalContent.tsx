@@ -30,7 +30,8 @@ import {
 import { AccountSelector } from "../shared/AccountSelector";
 
 import { TransferSummary } from "../shared/TransferSummary";
-import { SendIcon, WizardIcon } from "icons";
+import { SendIcon } from "@evmosapps/icons/SendIcon";
+import { WizardIcon } from "@evmosapps/icons/WizardIcon";
 import { E, useWatch } from "helpers";
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";

@@ -1,10 +1,8 @@
-import {
-  C14Icon,
-  CypherDIcon,
-  LayerSwapIcon,
-  SquidIcon,
-  TransakIcon,
-} from "icons";
+import { C14Icon } from "@evmosapps/icons/C14Icon";
+import { CypherDIcon } from "@evmosapps/icons/CypherDIcon";
+import { LayerSwapIcon } from "@evmosapps/icons/LayerSwapIcon";
+import { SquidIcon } from "@evmosapps/icons/SquidIcon";
+import { TransakIcon } from "@evmosapps/icons/TransakIcon";
 
 export type DropdownOption = {
   name: string;

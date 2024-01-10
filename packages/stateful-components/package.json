@@ -17,7 +17,7 @@
     "@evmosapps/copilot": "workspace:*",
     "@evmosapps/evmos-wallet": "workspace:*",
     "@evmosapps/ui-helpers": "workspace:*",
-    "icons": "workspace:*",
+    "@evmosapps/icons": "workspace:*",
     "tracker": "workspace:*"
   },
   "devDependencies": {

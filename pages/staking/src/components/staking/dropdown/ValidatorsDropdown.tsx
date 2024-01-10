@@ -11,7 +11,7 @@ import React, {
   useState,
 } from "react";
 
-import { DropdownArrow } from "icons";
+import { DropdownArrowIcon } from "@evmosapps/icons/DropdownArrowIcon";
 import { ValidatorsList } from "../../../utils/types";
 import { useAllValidators } from "../../../utils/hooks/useAllValidators";
 
@@ -127,7 +127,7 @@ const ValidatorsDropdown = ({
           onClick={handleInputClick}
         />
         <div className="ml-10">
-          <DropdownArrow />
+          <DropdownArrowIcon />
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ type InfoIconProps = React.SVGAttributes<SVGElement> & {
   color?: string;
 };
 
-export const InfoIconOsmosis: React.FC<InfoIconProps> = ({ ...restProps }) => {
+export const OsmosisInfoIcon: React.FC<InfoIconProps> = ({ ...restProps }) => {
   return (
     <svg
       width="16"

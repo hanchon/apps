@@ -5,7 +5,7 @@ type SwapIconProps = React.SVGAttributes<SVGElement> & {
   color?: string;
 };
 
-export const SwapIcon: React.FC<SwapIconProps> = ({ ...restProps }) => {
+export const OsmosisSwapIcon: React.FC<SwapIconProps> = ({ ...restProps }) => {
   return (
     <svg
       width="20"

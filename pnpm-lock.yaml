@@ -166,6 +166,9 @@ importers:
       '@evmosapps/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@evmosapps/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
       '@evmosapps/portfolio-page':
         specifier: workspace:*
         version: link:../../pages/portfolio
@@ -196,9 +199,6 @@ importers:
       i18next:
         specifier: ^23.7.6
         version: 23.7.6
-      icons:
-        specifier: workspace:*
-        version: link:../../packages/icons
       postcss:
         specifier: ^8.4.20
         version: 8.4.33
@@ -290,6 +290,9 @@ importers:
       '@evmosapps/evmos-wallet':
         specifier: workspace:*
         version: link:../evmos-wallet
+      '@evmosapps/icons':
+        specifier: workspace:*
+        version: link:../icons
       '@evmosapps/ui-helpers':
         specifier: workspace:*
         version: link:../ui-helpers
@@ -311,9 +314,6 @@ importers:
       helpers:
         specifier: workspace:*
         version: link:../helpers
-      icons:
-        specifier: workspace:*
-        version: link:../icons
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -433,6 +433,9 @@ importers:
       '@evmosapps/config':
         specifier: workspace:*
         version: link:../config
+      '@evmosapps/icons':
+        specifier: workspace:*
+        version: link:../icons
       '@types/node':
         specifier: 18.11.14
         version: 18.11.14
@@ -442,9 +445,6 @@ importers:
       helpers:
         specifier: workspace:*
         version: link:../helpers
-      icons:
-        specifier: workspace:*
-        version: link:../icons
       tracker:
         specifier: workspace:*
         version: link:../tracker
@@ -623,12 +623,12 @@ importers:
       '@evmosapps/evmos-wallet':
         specifier: workspace:*
         version: link:../evmos-wallet
+      '@evmosapps/icons':
+        specifier: workspace:*
+        version: link:../icons
       '@evmosapps/ui-helpers':
         specifier: workspace:*
         version: link:../ui-helpers
-      icons:
-        specifier: workspace:*
-        version: link:../icons
       mixpanel-browser:
         specifier: ^2.47.0
         version: 2.47.0
@@ -780,6 +780,9 @@ importers:
 
   packages/ui-helpers:
     dependencies:
+      '@evmosapps/icons':
+        specifier: workspace:*
+        version: link:../icons
       '@notionhq/client':
         specifier: ^2.2.14
         version: 2.2.14
@@ -789,9 +792,6 @@ importers:
       constants-helper:
         specifier: workspace:*
         version: link:../constants-helper
-      icons:
-        specifier: workspace:*
-        version: link:../icons
       mixpanel-browser:
         specifier: ^2.47.0
         version: 2.47.0
@@ -826,6 +826,9 @@ importers:
 
   packages/widgets:
     dependencies:
+      '@evmosapps/icons':
+        specifier: workspace:*
+        version: link:../icons
       '@forge-trade/widgets':
         specifier: ^1.2.6
         version: 1.2.6(@babel/core@7.23.7)(@babel/runtime@7.23.8)(@ethersproject/abi@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@types/react@18.2.47)(ethers@5.7.2)(hardhat@2.19.4)(react-dom@18.2.0)(react-redux@8.1.3)(react@18.2.0)(redux@4.2.1)(styled-components@6.1.8)
@@ -841,9 +844,6 @@ importers:
       '@wormhole-foundation/wormhole-connect':
         specifier: ^0.1.3
         version: 0.1.4(@emotion/react@11.11.3)(@types/react@18.2.47)(react-dom@18.2.0)(react@18.2.0)
-      icons:
-        specifier: workspace:*
-        version: link:../icons
       next:
         specifier: 14.0.4
         version: 14.0.4(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
@@ -899,6 +899,9 @@ importers:
       '@evmosapps/evmos-wallet':
         specifier: workspace:*
         version: link:../../packages/evmos-wallet
+      '@evmosapps/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
       '@evmosapps/instant-dapps':
         specifier: workspace:*
         version: link:../../packages/instant-dapps
@@ -911,9 +914,6 @@ importers:
       helpers:
         specifier: workspace:*
         version: link:../../packages/helpers
-      icons:
-        specifier: workspace:*
-        version: link:../../packages/icons
       next:
         specifier: 14.0.4
         version: 14.0.4(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
@@ -954,6 +954,9 @@ importers:
       '@evmosapps/evmos-wallet':
         specifier: workspace:*
         version: link:../../packages/evmos-wallet
+      '@evmosapps/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
       '@evmosapps/ui-helpers':
         specifier: workspace:*
         version: link:../../packages/ui-helpers
@@ -963,9 +966,6 @@ importers:
       helpers:
         specifier: workspace:*
         version: link:../../packages/helpers
-      icons:
-        specifier: workspace:*
-        version: link:../../packages/icons
       next:
         specifier: 14.0.4
         version: 14.0.4(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
@@ -1006,6 +1006,9 @@ importers:
       '@evmosapps/evmos-wallet':
         specifier: workspace:*
         version: link:../../packages/evmos-wallet
+      '@evmosapps/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
       '@evmosapps/registry':
         specifier: workspace:*
         version: link:../../packages/registry
@@ -1018,9 +1021,6 @@ importers:
       helpers:
         specifier: workspace:*
         version: link:../../packages/helpers
-      icons:
-        specifier: workspace:*
-        version: link:../../packages/icons
       next:
         specifier: 14.0.4
         version: 14.0.4(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
@@ -1097,6 +1097,9 @@ importers:
       '@evmosapps/evmos-wallet':
         specifier: workspace:*
         version: link:../../packages/evmos-wallet
+      '@evmosapps/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
       '@evmosapps/ui-helpers':
         specifier: workspace:*
         version: link:../../packages/ui-helpers
@@ -1106,9 +1109,6 @@ importers:
       helpers:
         specifier: workspace:*
         version: link:../../packages/helpers
-      icons:
-        specifier: workspace:*
-        version: link:../../packages/icons
       next:
         specifier: 14.0.4
         version: 14.0.4(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
@@ -1146,6 +1146,9 @@ importers:
       '@evmosapps/evmos-wallet':
         specifier: workspace:*
         version: link:../../packages/evmos-wallet
+      '@evmosapps/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
       '@evmosapps/ui-helpers':
         specifier: workspace:*
         version: link:../../packages/ui-helpers
@@ -1158,9 +1161,6 @@ importers:
       helpers:
         specifier: workspace:*
         version: link:../../packages/helpers
-      icons:
-        specifier: workspace:*
-        version: link:../../packages/icons
       next:
         specifier: 14.0.4
         version: 14.0.4(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)

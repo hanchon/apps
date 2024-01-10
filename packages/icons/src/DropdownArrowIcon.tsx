@@ -5,7 +5,7 @@ type DownArrowProps = React.SVGAttributes<SVGElement> & {
   color?: string;
 };
 
-export const DropdownArrow: React.FC<DownArrowProps> = ({
+export const DropdownArrowIcon: React.FC<DownArrowProps> = ({
   width = "20",
   height = "20",
   color = "currentColor",

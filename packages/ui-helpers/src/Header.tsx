@@ -2,7 +2,10 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import Link from "next/link";
-import { EvmosRedIcon, Logo, PriceDown, PriceUp } from "icons";
+import { EvmosRedIcon } from "@evmosapps/icons/EvmosRedIcon";
+import { Logo } from "@evmosapps/icons/Logo";
+import { PriceDownIcon } from "@evmosapps/icons/PriceDownIcon";
+import { PriceUpIcon } from "@evmosapps/icons/PriceUpIcon";
 import { EVMOS_PAGE_URL } from "constants-helper";
 import { LaunchContainer } from "./launchPad/Container";
 import { LaunchPadProps } from "./launchPad/types";
@@ -45,7 +48,7 @@ export const Header = ({
           <span>{price}</span>
 
           <div className="flex items-center gap-1">
-            {evmosPriceChange > 0 ? <PriceUp /> : <PriceDown />}
+            {evmosPriceChange > 0 ? <PriceUpIcon /> : <PriceDownIcon />}
             <span
               className={`${
                 evmosPriceChange > 0 ? "text-[#31B886]" : "text-[#ED4E33]"

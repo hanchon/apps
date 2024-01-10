@@ -21,7 +21,7 @@
     "@types/node": "18.11.14",
     "constants-helper": "workspace:*",
     "helpers": "workspace:*",
-    "icons": "workspace:*",
+    "@evmosapps/icons": "workspace:*",
     "tracker": "workspace:*",
     "typescript": "^5.3.3",
     "zod": "^3.22.1"

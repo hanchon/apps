@@ -1,4 +1,4 @@
-import { FeedbackIcon } from "icons";
+import { FeedbackIcon } from "@evmosapps/icons/FeedbackIcon";
 
 import { ComponentProps } from "react";
 import Link from "next/link";

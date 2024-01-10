@@ -5,7 +5,7 @@ type CloseIconProps = React.SVGAttributes<SVGElement> & {
   color?: string;
 };
 
-export const CloseIconOsmosis: React.FC<CloseIconProps> = ({
+export const OsmosisCloseIcon: React.FC<CloseIconProps> = ({
   ...restProps
 }) => {
   return (

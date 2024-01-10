@@ -15,7 +15,7 @@
   },
   "peerDependencies": {
     "constants-helper": "workspace:*",
-    "icons": "workspace:*",
+    "@evmosapps/icons": "workspace:*",
     "tracker": "workspace:*"
   },
   "devDependencies": {

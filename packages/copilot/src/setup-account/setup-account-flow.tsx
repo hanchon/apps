@@ -1,5 +1,5 @@
 "use client";
-import { EvmosCopilotIcon } from "icons";
+import { EvmosCopilotIcon } from "@evmosapps/icons/EvmosCopilotIcon";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { TopupEntryStep, TopupFundStep } from "../topup/steps";
 import { SetupConnectStep } from "./steps/setup-connect-step";

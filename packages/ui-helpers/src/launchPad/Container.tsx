@@ -2,7 +2,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { LaunchIcon } from "icons";
+import { LaunchIcon } from "@evmosapps/icons/LaunchIcon";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Item } from "./Item";

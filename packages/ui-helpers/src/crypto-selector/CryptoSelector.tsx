@@ -5,7 +5,7 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, PropsWithChildren } from "react";
 import Image from "next/image";
-import { DropdownArrow } from "icons";
+import { DropdownArrowIcon } from "@evmosapps/icons/DropdownArrowIcon";
 import { cn } from "helpers";
 import cx from "clsx";
 export function CryptoSelector<T>(
@@ -54,7 +54,7 @@ const Button = ({
         />
       )}
       <span className="text-xxs md:text-xs text-white">{children}</span>
-      <DropdownArrow
+      <DropdownArrowIcon
         className="h-5 w-5 pointer-events-none text-red-300"
         aria-hidden="true"
       />

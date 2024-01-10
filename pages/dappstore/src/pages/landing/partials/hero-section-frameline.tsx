@@ -8,7 +8,7 @@ import {
   CLICK_ON_APPLY_TO_BE_PART_OF_THE_ECOSYSTEM,
 } from "tracker";
 
-import { UpRightArrowIcon } from "icons";
+import { UpRightArrowIcon } from "@evmosapps/icons/UpRightArrowIcon";
 
 export const HeroSectionFrameline = async () => {
   const { t } = await translation("dappStore");

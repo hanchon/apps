@@ -31,7 +31,7 @@ import { truncateAddress } from "@evmosapps/evmos-wallet/src/internal/wallet/sty
 import { AmountBox } from "../common/AmountBox";
 import { PayModalProps } from "./Modal";
 import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";
-import { PayIcon } from "icons";
+import { PayIcon } from "@evmosapps/icons/PayIcon";
 import Image from "next/image";
 import { PROMPTED_TO, SUCCESSFUL_PAY_TX, UNSUCESSFUL_PAY_TX } from "tracker";
 import { useTracker } from "tracker";

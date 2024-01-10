@@ -5,7 +5,9 @@ type SettingsIconProps = React.SVGAttributes<SVGElement> & {
   color?: string;
 };
 
-export const SettingsIcon: React.FC<SettingsIconProps> = ({ ...restProps }) => {
+export const OsmosisSettingsIcon: React.FC<SettingsIconProps> = ({
+  ...restProps
+}) => {
   return (
     <svg
       width="24"

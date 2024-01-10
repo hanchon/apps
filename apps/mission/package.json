@@ -32,7 +32,7 @@
     "constants-helper": "workspace:*",
     "helpers": "workspace:*",
     "i18next": "^23.7.6",
-    "icons": "workspace:*",
+    "@evmosapps/icons": "workspace:*",
     "postcss": "^8.4.20",
     "stateful-components": "workspace:*",
     "tracker": "workspace:*",

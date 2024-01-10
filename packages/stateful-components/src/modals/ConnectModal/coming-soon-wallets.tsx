@@ -1,7 +1,8 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { LeapIcon, RabbyIcon } from "icons";
+import { LeapIcon } from "@evmosapps/icons/LeapWalletIcon";
+import { RabbyIcon } from "@evmosapps/icons/RabbyWalletIcon";
 import { ButtonWallet } from "./ConnectModalContent";
 import { Badge } from "@evmosapps/ui-helpers";
 import { useTranslation } from "@evmosapps/i18n/client";

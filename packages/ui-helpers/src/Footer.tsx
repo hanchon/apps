@@ -14,15 +14,13 @@ import {
   DOCS_EVMOS_URL,
 } from "constants-helper";
 
-import {
-  TwitterIcon,
-  TelegramIcon,
-  GithubIcon,
-  DiscordIcon,
-  CommonWealthIcon,
-  CodeIcon,
-  MediumIcon,
-} from "icons";
+import { GithubIcon } from "@evmosapps/icons/GithubIcon";
+import { TwitterIcon } from "@evmosapps/icons/TwitterIcon";
+import { TelegramIcon } from "@evmosapps/icons/TelegramIcon";
+import { DiscordIcon } from "@evmosapps/icons/DiscordIcon";
+import { CommonWealthIcon } from "@evmosapps/icons/CommonWealthIcon";
+import { CodeIcon } from "@evmosapps/icons/CodeIcon";
+import { MediumIcon } from "@evmosapps/icons/MediumIcon";
 
 export const Footer = ({
   handleCookies,

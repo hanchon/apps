@@ -1,9 +1,9 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { CheckIcon } from "icons";
+import { CheckIcon } from "@evmosapps/icons/CheckIcon";
 import { STEP_STATUS } from "constants-helper";
-import { HandsEmoji } from "icons";
+import { HandsEmoji } from "@evmosapps/icons/HandsEmoji";
 import { ErrorMessage } from "../modal/ErrorMessage";
 
 function classNames(...classes: string[]): string {
@@ -83,8 +83,8 @@ export const Button = ({ props }: { props: ButtonProps }) => {
               props.statusButton === STEP_STATUS.NOT_PROCESSED
                 ? "pointer-events-none opacity-70"
                 : props.statusButton === STEP_STATUS.DONE
-                ? "bg-green1 pointer-events-none"
-                : ""
+                  ? "bg-green1 pointer-events-none"
+                  : ""
             }
           ${BUTTON_STYLES[props.status]}
           `}

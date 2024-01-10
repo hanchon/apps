@@ -1,4 +1,4 @@
-import { EvmosCopilotRedIcon } from "icons";
+import { EvmosCopilotRedIcon } from "@evmosapps/icons/EvmosCopilotRedIcon";
 
 export const ConnectionRequired = ({
   bgUrl,

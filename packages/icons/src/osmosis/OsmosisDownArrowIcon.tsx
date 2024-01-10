@@ -5,9 +5,9 @@ type DownArrowIconOsmosisIconProps = React.SVGAttributes<SVGElement> & {
   color?: string;
 };
 
-export const DownArrowIconOsmosisIcon: React.FC<
-  DownArrowIconOsmosisIconProps
-> = ({ ...restProps }) => {
+export const OsmosisDownArrowIcon: React.FC<DownArrowIconOsmosisIconProps> = ({
+  ...restProps
+}) => {
   return (
     <svg
       width="20"

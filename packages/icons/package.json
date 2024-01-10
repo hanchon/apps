@@ -1,8 +1,14 @@
 {
-  "name": "icons",
+  "name": "@evmosapps/icons",
   "version": "1.0.11",
-  "main": "./src/index.tsx",
-  "types": "./src/index.tsx",
+  "exports": {
+    "./*": {
+      "import": {
+        "types": "./src/*.tsx",
+        "default": "./src/*.tsx"
+      }
+    }
+  },
   "type": "module",
   "license": "SEE LICENSE IN LICENSE",
   "sideEffects": false,

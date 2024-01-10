@@ -4,7 +4,7 @@
 import { EcosystemCard } from "./ecosystem-card";
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
 import { Subtitle } from "@evmosapps/ui-helpers/src/titles/Subtitle";
-import { RightArrow } from "icons";
+import { RightArrow } from "@evmosapps/icons/RightArrow";
 import { translation } from "@evmosapps/i18n/server";
 import { ButtonWithLink, TrackerEvent } from "@evmosapps/ui-helpers";
 import { fetchExplorerData } from "../../../lib/fetch-explorer-data";

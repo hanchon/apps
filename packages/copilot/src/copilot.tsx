@@ -2,7 +2,8 @@
 import { Title, Description } from "@evmosapps/ui-helpers";
 import { useModal } from "@evmosapps/ui-helpers/src/Modal";
 import { cn, raise, useEffectEvent } from "helpers";
-import { CloseIcon, EvmosRedIcon } from "icons";
+import { CloseIcon } from "@evmosapps/icons/CloseIcon";
+import { EvmosRedIcon } from "@evmosapps/icons/EvmosRedIcon";
 import { get, omit } from "lodash-es";
 import {
   ComponentProps,

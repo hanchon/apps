@@ -10,7 +10,8 @@ import {
 } from "@evmosapps/ui-helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
-import { BackArrowIcon, RequestIcon } from "icons";
+import { BackArrowIcon } from "@evmosapps/icons/BackArrowIcon";
+import { RequestIcon } from "@evmosapps/icons/RequestIcon";
 import {
   TokenAmount,
   TokenRef,

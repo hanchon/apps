@@ -1,4 +1,5 @@
-import { DownArrowIcon, EvmosRedIcon } from "icons";
+import { DownArrowIcon } from "@evmosapps/icons/DownArrowIcon";
+import { EvmosRedIcon } from "@evmosapps/icons/EvmosRedIcon";
 import { TextBox } from "./TextBox";
 
 export const TokenCard = () => {

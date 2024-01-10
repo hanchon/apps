@@ -9,14 +9,14 @@ import {
   TrackerEvent,
 } from "@evmosapps/ui-helpers";
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
-import {
-  DiscordIcon,
-  GithubIcon,
-  RightArrow,
-  TelegramIcon,
-  TwitterIcon,
-  WebsiteIcon,
-} from "icons";
+
+import { DiscordIcon } from "@evmosapps/icons/DiscordIcon";
+import { GithubIcon } from "@evmosapps/icons/GithubIcon";
+import { RightArrow } from "@evmosapps/icons/RightArrow";
+import { TelegramIcon } from "@evmosapps/icons/TelegramIcon";
+import { TwitterIcon } from "@evmosapps/icons/TwitterIcon";
+import { WebsiteIcon } from "@evmosapps/icons/WebsiteIcon";
+
 import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
 import { DApp } from "../../../lib/fetch-explorer-data";

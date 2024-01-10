@@ -1,6 +1,7 @@
 import { useTranslation } from "@evmosapps/i18n/client";
 import { cn } from "helpers";
-import { CreditCardsIcon, EthereumIcon } from "icons";
+import { CreditCardsIcon } from "@evmosapps/icons/CreditCardsIcon";
+import { EthereumIcon } from "@evmosapps/icons/EthereumIcon";
 import { ComponentProps } from "react";
 import { CheckMark } from "../../partials/check-mark";
 import { useCopilot } from "../../copilot";
