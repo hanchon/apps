@@ -30,7 +30,9 @@ import {
   getTokens,
   normalizeToCosmosAddress,
 } from "@evmosapps/evmos-wallet";
-import { FailTxIcon, ProcessingTxIcon, SuccessTxIcon } from "icons";
+import { FailTxIcon } from "@evmosapps/icons/FailTxIcon";
+import { ProcessingTxIcon } from "@evmosapps/icons/ProcessingTxIcon";
+import { SuccessTxIcon } from "@evmosapps/icons/SuccessTxIcon";
 import {
   Prefix,
   Token,

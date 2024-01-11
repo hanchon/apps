@@ -18,7 +18,7 @@ import { isUndefined } from "helpers";
  * We also want to preserve the cursor position
  *
  */
-export const formatMoneyInput = ({
+const formatMoneyInput = ({
   value,
   cursor,
   decimals = 18,

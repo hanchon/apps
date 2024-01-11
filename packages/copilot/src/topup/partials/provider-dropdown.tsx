@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 
-import { DropdownArrow } from "icons";
+import { DropdownArrowIcon } from "@evmosapps/icons/DropdownArrowIcon";
 
 import { DropdownOption } from "../utils";
 
@@ -63,7 +63,7 @@ export default function ProviderDropwdown<
           {selectedValue?.image}
           <span className="text-sm"> {selectedValue?.name}</span>
         </div>
-        <DropdownArrow />
+        <DropdownArrowIcon />
       </div>
     </div>
   );

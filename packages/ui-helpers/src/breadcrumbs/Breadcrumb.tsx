@@ -1,4 +1,4 @@
-import { RightArrow } from "icons";
+import { RightArrow } from "@evmosapps/icons/RightArrow";
 import { CLICK_ON_BREADCRUMB } from "tracker";
 import { TrackerEvent } from "../TrackerEvent";
 

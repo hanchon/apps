@@ -2,7 +2,7 @@ import type { TypedDataDomain } from "abitype";
 
 import { Hex } from "viem";
 
-export type EvmosTypedDataDomain =
+type EvmosTypedDataDomain =
   | TypedDataDomain
   | {
       chainId: Hex;

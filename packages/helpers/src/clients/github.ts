@@ -1,5 +1,5 @@
 import { Octokit } from "octokit";
-import { cachedFetch } from "../cached-fetch";
+import { cachedFetch } from "../dev/cached-fetch";
 
 export const github = new Octokit({
   auth: process.env.GITHUB_TOKEN,

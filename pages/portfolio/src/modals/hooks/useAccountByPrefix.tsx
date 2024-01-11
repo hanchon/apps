@@ -121,7 +121,7 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
   });
 };
 
-export const requestWalletAccount = async (prefix: Prefix) => {
+const requestWalletAccount = async (prefix: Prefix) => {
   const activeProvider = getActiveProviderKey();
   if (!activeProvider) throw new Error("NO_ACTIVE_PROVIDER");
   const chain = getChain(prefix);

@@ -6,13 +6,10 @@ import { useOsmosisData } from "./useOsmosisData";
 import { cn, convertAndFormat, formatNumber, useWatch } from "helpers";
 import { useOsmosisQoute } from "./useOsmosQuote";
 import { BigNumber } from "@ethersproject/bignumber";
-
-import { debounce } from "lodash";
-import {
-  ChevronDownIconOsmosis,
-  DownArrowIconOsmosisIcon,
-  SwapIcon,
-} from "icons";
+import { debounce } from "lodash-es";
+import { OsmosisChevronDownIcon } from "@evmosapps/icons/osmosis/OsmosisChevronDownIcon";
+import { OsmosisDownArrowIcon } from "@evmosapps/icons/osmosis/OsmosisDownArrowIcon";
+import { OsmosisSwapIcon } from "@evmosapps/icons/osmosis/OsmosisSwapIcon";
 import { SlippagePopover } from "./SlippagePopover";
 import Image from "next/image";
 import { useOsmosisPrecompile } from "./useOsmosisPrecompile";
@@ -311,7 +308,7 @@ export default function Osmosis() {
                   }
                 )}
               >
-                <DownArrowIconOsmosisIcon />
+                <OsmosisDownArrowIcon />
               </div>
               <div
                 className={cn(
@@ -322,7 +319,7 @@ export default function Osmosis() {
                   }
                 )}
               >
-                <SwapIcon aria-label="switch" />
+                <OsmosisSwapIcon aria-label="switch" />
               </div>
             </div>
           </div>
@@ -442,7 +439,7 @@ export default function Osmosis() {
                     {outputTokenData.symbol}
                   </span>
                   <div className="flex items-center gap-2 transition-opacity">
-                    <ChevronDownIconOsmosis
+                    <OsmosisChevronDownIcon
                       className={cn(
                         "text-osmoverse-400 transition-all",
                         detailsOpen ? "rotate-180" : "rotate-0"

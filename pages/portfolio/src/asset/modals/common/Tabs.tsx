@@ -5,7 +5,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import { convertAndFormat } from "helpers";
-import { QuestionMarkIcon } from "icons";
+import { QuestionMarkIcon } from "@evmosapps/icons/QuestionMarkIcon";
 import { Tooltip } from "@evmosapps/ui-helpers";
 
 const Tabs = ({

@@ -1,6 +1,6 @@
 import { TopupEntryStep, TopupFundStep } from "./steps";
 
-import { EvmosCopilotIcon } from "icons";
+import { EvmosCopilotIcon } from "@evmosapps/icons/EvmosCopilotIcon";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { Copilot } from "../copilot";
 

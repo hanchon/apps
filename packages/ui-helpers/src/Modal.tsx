@@ -12,7 +12,7 @@ import {
   useContext,
 } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { CloseIcon } from "icons";
+import { CloseIcon } from "@evmosapps/icons/CloseIcon";
 import { cn } from "helpers";
 
 const ModalContext = createContext<{

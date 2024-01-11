@@ -1,5 +1,5 @@
 "use server";
-import { ListBlockChildrenResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { ListBlockChildrenResponse } from "@notionhq/client/build/src/api-endpoints";
 import { retrieveBlockList } from "./retrieveBlockList";
 import { NotionBlocksRenderer } from "./NotionBlocksRenderer";
 

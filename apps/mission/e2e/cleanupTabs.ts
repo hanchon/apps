@@ -10,7 +10,7 @@ export const cleanupTabs = async (context: BrowserContext) => {
     }
   }
 };
-export const getMMPopup = async (context: BrowserContext) => {
+const getMMPopup = async (context: BrowserContext) => {
   const pages = context.pages();
   return (
     pages.find((page) => page.url().startsWith("chrome-extension://")) ||

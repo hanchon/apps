@@ -1,4 +1,4 @@
-import { InformationIcon } from "icons";
+import { InformationIcon } from "@evmosapps/icons/InformationIcon";
 import { Tooltip } from "../Tooltip";
 
 type LabelProps = {

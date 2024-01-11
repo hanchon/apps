@@ -5,7 +5,7 @@
 import { useTransakEvents } from "./useTransakEvents";
 import { useAccount } from "wagmi";
 
-export const TRANSAK_API_KEY = process.env.NEXT_PUBLIC_TRANSAK_API_KEY ?? "";
+const TRANSAK_API_KEY = process.env.NEXT_PUBLIC_TRANSAK_API_KEY ?? "";
 
 const Transak = () => {
   const { address } = useAccount();

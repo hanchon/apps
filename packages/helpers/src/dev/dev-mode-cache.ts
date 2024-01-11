@@ -1,57 +1,6 @@
-import { readFile, writeFile, mkdir } from "fs/promises";
+import { hashString } from "../hash/hash-string";
+import { readDevCache, writeDevCache } from "./dev-cache-crud";
 
-import path from "path";
-import { sha256 } from "@noble/hashes/sha256";
-
-import { E } from "../error-handling";
-import { Log } from "helpers/src/logger";
-import { fileURLToPath } from "node:url";
-
-export const cacheDir = path.join(
-  fileURLToPath(import.meta.url),
-  "../../../../../node_modules/.cache/evmosapps"
-);
-
-export const writeCache = async (
-  key: string,
-  data: unknown,
-  tags: string[]
-) => {
-  await mkdir(cacheDir, { recursive: true });
-  Log("dev-cache-mode").info(
-    `Response cached for key '${key}'`,
-    `\ncacheDir: ${cacheDir}`
-  );
-  return await writeFile(
-    path.join(cacheDir, key),
-    JSON.stringify({
-      tags,
-      cacheDate: Date.now(),
-      cacheKey: key,
-      data,
-    })
-  );
-};
-
-export const readCache = async <T = unknown>(
-  key: string,
-  revalidate = 3600
-) => {
-  const [err, cached] = await E.try(
-    () =>
-      readFile(path.join(cacheDir, key), "utf8").then(JSON.parse) as Promise<{
-        tags: string[];
-        cacheDate: number;
-        cacheKey: string;
-        data: T;
-      }>
-  );
-  if (err) return null;
-  return {
-    stale: Date.now() - cached.cacheDate > revalidate * 1000,
-    ...cached,
-  };
-};
 /**
  * Caches the result of a function in development mode only.
  *
@@ -68,7 +17,7 @@ export const readCache = async <T = unknown>(
  */
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const devModeCache = <T extends Function>(
+export const devCache = <T extends Function>(
   fn: T,
   options: {
     /**
@@ -101,22 +50,17 @@ export const devModeCache = <T extends Function>(
     if (tags.length === 0 && fn.name) {
       tags.push(fn.name);
     }
-    tags.push(
-      Buffer.from(sha256(JSON.stringify(args)).slice(0, 6)).toString(
-        "base64url"
-      )
-    );
 
-    tags.push(
-      Buffer.from(sha256(fn.toString()).slice(0, 6)).toString("base64url")
-    );
+    tags.push(hashString(JSON.stringify(args)));
+    tags.push(hashString(fn.toString()));
+
     const resolvedKey = tags.join("-");
-    const cached = await readCache(resolvedKey, revalidate);
+    const cached = await readDevCache(resolvedKey, revalidate);
 
     const fetchAndCache = async () => {
       const response = (await fn.call(null, ...args)) as unknown;
 
-      await writeCache(resolvedKey, response, tags);
+      await writeDevCache(resolvedKey, response, tags);
 
       return response;
     };

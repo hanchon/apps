@@ -55,7 +55,6 @@ export type ProposalProps = {
 // actualizar estos
 export const PROPOSAL_STATUS_REJECTED = "PROPOSAL_STATUS_REJECTED";
 export const PROPOSAL_STATUS_PASSED = "PROPOSAL_STATUS_PASSED";
-export const PROPOSAL_STATUS_VOTING_PERIOD = "PROPOSAL_STATUS_VOTING_PERIOD";
 export const PROPOSAL_STATUS_FAILED = "PROPOSAL_STATUS_FAILED";
 export const PROPOSAL_STATUS = {
   PROPOSAL_STATUS_UNSPECIFIED: "Default",
@@ -75,7 +74,7 @@ export const PROPOSAL_DISPLAY_MAPPING: Record<string, string> = {
   PROPOSAL_STATUS_FAILED: "Failed",
 };
 
-export type TallyingProps = {
+type TallyingProps = {
   quorum: string;
   threshold: string;
   veto_threshold: string;

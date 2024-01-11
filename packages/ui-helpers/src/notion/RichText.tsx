@@ -1,4 +1,4 @@
-import { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 import { cn } from "helpers";
 
 export const RichText = ({ annotations, plain_text }: RichTextItemResponse) => {

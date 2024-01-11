@@ -1,11 +1,7 @@
-import { setConfig } from "next/config";
-import config from "./next.config.mjs";
 import { cleanup } from "@testing-library/react";
 import { afterEach, beforeEach, vi } from "vitest";
 import mixpanel from "mixpanel-browser";
 import { enableMixpanel } from "tracker";
-
-setConfig(config);
 
 export const MIXPANEL_TOKEN_FOR_TEST = "testToken";
 const initializeMixpanelAndEnable = () => {

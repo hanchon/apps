@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { getTokenMinDenomList } from "../get-token-min-denom-list";
-import { TokenMinDenom, Prefix, TokenRef } from "../types";
+import { Prefix, TokenRef } from "../types";
 import { Hex, isHex } from "viem";
 import { isString } from "helpers";
 import { Address, isValidCosmosAddress, isValidHexAddress } from "../../wallet";
@@ -10,10 +9,6 @@ import { getChains } from "../get-chain";
 
 export const TokenRefSchema = z.custom<TokenRef>((v) => {
   return getTokens().find((token) => token.ref === v) !== undefined;
-});
-
-export const MinDenomSchema = z.custom<TokenMinDenom>((v) => {
-  return getTokenMinDenomList().includes(v as TokenMinDenom);
 });
 
 export const ChainPrefixSchema = z.custom<Prefix>((v) => {

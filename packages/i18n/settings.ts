@@ -1,7 +1,7 @@
 export const defaultLocale = "en";
 export const languages = [defaultLocale];
 
-export const defaultNS = "common";
+const defaultNS = "common";
 export const cookieName = "i18next";
 
 export function getOptions(lng = defaultLocale, ns = defaultNS) {

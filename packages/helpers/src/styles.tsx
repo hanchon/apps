@@ -4,13 +4,13 @@
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits, parseEther } from "@ethersproject/units";
 
-export type addAssetsType = {
+type addAssetsType = {
   cosmosBalance: BigNumber;
   decimals: number;
   erc20Balance: BigNumber;
 };
 
-export interface addDolarsAssetsType extends addAssetsType {
+interface addDolarsAssetsType extends addAssetsType {
   coingeckoPrice: number;
 }
 
@@ -343,41 +343,8 @@ export function getTotalAssets(
   return totalAssets.toFixed(2);
 }
 
-export const getChainIds = (
-  token: TableDataElement | undefined,
-  chain: TableDataElement | undefined
-) => {
-  let chainId = token?.chainId;
-  let chainIdentifier = token?.chainIdentifier;
-  if (token?.prefix === "evmos") {
-    chainId = chain?.chainId;
-    chainIdentifier = chain?.chainIdentifier;
-  }
-
-  return { chainId: chainId, chainIdentifier: chainIdentifier };
-};
-
-export const getPrefix = (
-  token: TableDataElement | undefined,
-  chain: TableDataElement | undefined,
-  address: string
-) => {
-  let prefix = token?.prefix;
-  if (chain !== undefined && address.startsWith(chain?.prefix)) {
-    prefix = chain.prefix;
-  }
-  return prefix;
-};
-
 export function checkFormatAddress(address: string, prefix: string) {
   if (address.startsWith(prefix.toLocaleLowerCase() + "1")) {
-    return true;
-  }
-  return false;
-}
-
-export function checkMetaMaskFormatAddress(address: string) {
-  if (address.startsWith("0x")) {
     return true;
   }
   return false;

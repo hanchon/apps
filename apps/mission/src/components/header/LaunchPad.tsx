@@ -2,7 +2,7 @@
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import { Menu, Transition } from "@headlessui/react";
 import { cn } from "helpers";
-import { LaunchIcon } from "icons";
+import { LaunchIcon } from "@evmosapps/icons/LaunchIcon";
 import { ComponentProps, Fragment } from "react";
 import {
   CLICK_ON_DAPP_INSIDE_LAUNCHER,
@@ -112,7 +112,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
   );
 }
 
-export const LaunchPadItem = ({
+const LaunchPadItem = ({
   icon,
   disabled,
   children,

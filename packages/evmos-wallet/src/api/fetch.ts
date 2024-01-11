@@ -7,7 +7,7 @@ import { getAccountBalances } from "../registry-actions";
 import { fetchLegacyERC20ModuleBalance } from "../server/fetch-legacy-erc20modulebalance";
 import { normalizeToCosmosAddress } from "../wallet";
 import { StakingInfoResponse } from "./types";
-export const getAssets = async () => {
+const getAssets = async () => {
   return await fetchLegacyERC20ModuleBalance();
 };
 

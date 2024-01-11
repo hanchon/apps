@@ -15,23 +15,18 @@
   },
   "peerDependencies": {
     "constants-helper": "workspace:*",
-    "icons": "workspace:*",
     "tracker": "workspace:*"
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
+    "@evmosapps/icons": "workspace:*",
     "@types/node": "18.11.14",
-    "@types/react": "^18.2.45",
-    "@types/react-dom": "18.0.9",
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.20",
-    "prettier": "^3.0.1",
-    "tailwind-config": "workspace:*",
-    "tsup": "^7.2.0",
+    "api-endpoints": "link:@notionhq/client/build/src/api-endpoints",
+    "lodash-es": "^4.17.21",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@types/mixpanel-browser": "2.47.1",
+    "@notionhq/client": "^2.2.14",
     "clsx": "^2.0.0",
     "mixpanel-browser": "^2.47.0",
     "next": "14.0.4",

@@ -9,15 +9,14 @@ import {
   TELEGRAM_EVMOS_URL,
   TWITTER_EVMOS_URL,
 } from "constants-helper";
-import {
-  CodeIcon,
-  CommonWealthIcon,
-  DiscordIcon,
-  GithubIcon,
-  MediumIcon,
-  TelegramIcon,
-  TwitterIcon,
-} from "icons";
+
+import { CodeIcon } from "@evmosapps/icons/CodeIcon";
+import { CommonWealthIcon } from "@evmosapps/icons/CommonWealthIcon";
+import { DiscordIcon } from "@evmosapps/icons/DiscordIcon";
+import { GithubIcon } from "@evmosapps/icons/GithubIcon";
+import { MediumIcon } from "@evmosapps/icons/MediumIcon";
+import { TelegramIcon } from "@evmosapps/icons/TelegramIcon";
+import { TwitterIcon } from "@evmosapps/icons/TwitterIcon";
 
 import { Link } from "@evmosapps/i18n/client";
 import { Container, TrackerEvent } from "@evmosapps/ui-helpers";

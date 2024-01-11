@@ -21,7 +21,8 @@ import {
   getChain,
   normalizeToEvmos,
 } from "@evmosapps/evmos-wallet";
-import { ReceiveIcon, ShareIcon } from "icons";
+import { ReceiveIcon } from "@evmosapps/icons/ReceiveIcon";
+import { ShareIcon } from "@evmosapps/icons/ShareIcon";
 import { CryptoSelectorDropdownBox } from "@evmosapps/ui-helpers";
 import { CryptoSelectorTitle } from "@evmosapps/ui-helpers";
 import { Prefix } from "@evmosapps/evmos-wallet/src/registry-actions/types";

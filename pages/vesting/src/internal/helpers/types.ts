@@ -16,14 +16,3 @@ export type VestingSchedule = {
   vestingInterval: Intervals;
   lockingPeriod: TimeWindow;
 };
-
-export type PlanType = {
-  fullVestingPeriod: TimeWindow;
-  vestingCliff: TimeWindow;
-  vestingInterval: Intervals;
-  lockingPeriod: TimeWindow;
-};
-
-export type Period = {
-  length: number;
-};

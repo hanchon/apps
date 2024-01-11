@@ -6,12 +6,12 @@ import { get } from "lodash-es";
  * This is a port of the core logic from evmos to encode EIP-712 types.
  * https://github.com/evmos/evmos/blob/main/ethereum/eip712/types.go
  */
-export type Eip712Type = {
+type Eip712Type = {
   name: string;
   type: string;
 };
 
-export type Eip712Types = Record<string, Eip712Type[]>;
+type Eip712Types = Record<string, Eip712Type[]>;
 
 type Msg = {
   type: string;
@@ -90,7 +90,7 @@ const addMsgTypesToRoot = (
   addMsgTypeDefToTxSchema(eip712Types, msgField, msgTypeDef);
 };
 
-export const getMsgRootType = (msg: Msg) => {
+const getMsgRootType = (msg: Msg) => {
   const msgType = msg.type;
   if (msgType === "") {
     throw new Error("malformed message type value, expected type string");
@@ -109,7 +109,7 @@ const addMsgTypeDefToTxSchema = (
   get(eip712Types, txField)?.push({ name: msgField, type: msgTypeDef });
 };
 
-export const recursivelyAddTypesToRoot = (
+const recursivelyAddTypesToRoot = (
   typeMap: Eip712Types,
   rootType: string,
   prefix: string,

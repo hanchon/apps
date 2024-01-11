@@ -3,7 +3,7 @@ import { FunctionComponent, HTMLInputTypeAttribute, useState } from "react";
 import { Optional } from "utility-types";
 import AutosizeInput from "react-input-autosize";
 
-export interface InputProps<T> {
+interface InputProps<T> {
   currentValue: string;
   onInput: (value: T) => void;
   autoFocus?: boolean;

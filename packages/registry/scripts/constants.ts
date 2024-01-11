@@ -1,25 +1,10 @@
 import path from "path";
 import { fileURLToPath } from "url";
 
-export const __filename = fileURLToPath(import.meta.url);
-export const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const autogenDir = path.join(__dirname, "../autogen");
-export const registryDir = path.resolve(
-  fileURLToPath(
-    // eslint-disable-next-line @typescript-eslint/await-thenable
-    (await import.meta.resolve?.(
-      "chain-token-registry/chainConfig/evmos.json"
-    )) || ""
-  ),
-  "../.."
-);
-
-export const chainRegistryDir = path.resolve(registryDir, "chainConfig");
-export const tokenRegistryDir = path.resolve(registryDir, "tokens");
-export const rootDir = process.cwd();
-export const chainOutDir = path.resolve(rootDir, "src/chain");
-export const assetsDir = path.resolve(rootDir, "statics");
 
 export const fileHeader = `/* eslint-disable */
 /**

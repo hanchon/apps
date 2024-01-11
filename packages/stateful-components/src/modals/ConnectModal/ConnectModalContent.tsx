@@ -3,7 +3,7 @@
 
 import { ComponentProps, useEffect } from "react";
 
-import { EvmosCopilotIcon } from "icons";
+import { EvmosCopilotIcon } from "@evmosapps/icons/EvmosCopilotIcon";
 import {
   CLICK_CONNECTED_WITH,
   CLICK_EVMOS_COPILOT_START_FLOW,

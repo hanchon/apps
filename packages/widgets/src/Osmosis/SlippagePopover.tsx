@@ -1,6 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { cn } from "helpers";
-import { CloseIconOsmosis, SettingsIcon } from "icons";
+import { OsmosisCloseIcon } from "@evmosapps/icons/osmosis/OsmosisCloseIcon";
+import { OsmosisSettingsIcon } from "@evmosapps/icons/osmosis/OsmosisSettingsIcon";
 import { Fragment, useRef, useState } from "react";
 import { InfoTooltip } from "./InfoTooltip";
 import { InputBox } from "./InputBox";
@@ -35,7 +36,7 @@ export const SlippagePopover = ({
                   e.stopPropagation();
                 }}
               >
-                <SettingsIcon
+                <OsmosisSettingsIcon
                   aria-label="Open swap settings"
                   className={
                     open ? "text-white" : "text-osmoverse-400 hover:text-white"
@@ -50,7 +51,7 @@ export const SlippagePopover = ({
             >
               <div className="flex items-center justify-between">
                 <h6 className="text-xl font-semibold">Transaction settings</h6>
-                <CloseIconOsmosis
+                <OsmosisCloseIcon
                   aria-label="close"
                   className="text-osmoverse-400 cursor-pointer"
                   onClick={() => close()}
@@ -73,7 +74,7 @@ export const SlippagePopover = ({
                         {
                           "border-2 border-wosmongton-200":
                             currentSlippage === slippage,
-                        },
+                        }
                       )}
                       onClick={(e) => {
                         e.preventDefault();
@@ -94,7 +95,7 @@ export const SlippagePopover = ({
                       ? manualSlippageError
                         ? "bg-red"
                         : "bg-osmoverse-900"
-                      : "bg-osmoverse-900",
+                      : "bg-osmoverse-900"
                   )}
                   onClick={(e) => {
                     e.preventDefault();

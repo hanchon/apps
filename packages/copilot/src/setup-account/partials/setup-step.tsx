@@ -1,4 +1,5 @@
-import { CheckIcon, ErrorIcon } from "icons";
+import { CheckIcon } from "@evmosapps/icons/CheckIcon";
+import { ErrorIcon } from "@evmosapps/icons/ErrorIcon";
 import { ComponentProps } from "react";
 import { cn } from "helpers";
 

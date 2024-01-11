@@ -94,15 +94,3 @@ export const CLICK_ON_GIVE_FEEDBACK = "ClickedGiveFeedback";
 export const CLICK_BUTTON_CONVERT = "ClickedConvert";
 export const CLICK_HIDE_ZERO_BALANCE = "HideZeroBalance";
 export const CLICK_CTA_LINKS_REGISTER_TOKEN = "ClickedRegisterToken";
-
-// TODO -> remove this events after removing the related components
-export const CLICK_DEPOSIT_CHOOSE_FROM_CHAIN = "Deposit from a specific chain";
-export const CLICK_DEPOSIT_CONFIRM_BUTTON = "Confirm deposit transaction";
-export const CLICK_WITHDRAW_CHOOSE_TOKEN = "Choose a token to withdraw";
-export const CLICK_WITHDRAW_CONFIRM_BUTTON = "Confirm withdraw transaction";
-export const CLICK_CTA_LINKS_ASSETS_GUIDE =
-  "Click on CTA link to view assets guide";
-export const SUCCESSFUL_TX_DEPOSIT = "Successful transaction of Deposit";
-export const UNSUCCESSFUL_TX_DEPOSIT = "Unsuccessful transaction of Deposit";
-export const SUCCESSFUL_TX_WITHDRAW = "Successful transaction of Withdraw";
-export const UNSUCCESSFUL_TX_WITHDRAW = "Unsuccessful transaction of Withdraw";

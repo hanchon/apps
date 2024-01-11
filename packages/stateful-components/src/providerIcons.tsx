@@ -1,5 +1,7 @@
 "use client";
-import { KeplrIcon, MetamaskIcon, WalletConnectIcon } from "icons";
+import { KeplrIcon } from "@evmosapps/icons/KeplrIcon";
+import { MetamaskIcon } from "@evmosapps/icons/MetamaskIcon";
+import { WalletConnectIcon } from "@evmosapps/icons/WalletConnectIcon";
 
 export const ProvidersIcons: Record<
   string,

@@ -35,17 +35,6 @@ for (const chain of Object.values(others)) {
   }
 }
 
-export const normalizeToMinDenom = (denom: string) => {
-  if (denom.startsWith("ibc/")) {
-    return IBC_DENOMS_MAP[denom]?.minCoinDenom ?? null;
-  }
-  const token = getTokens().find(
-    ({ minCoinDenom, denom: tokenDenom }) =>
-      minCoinDenom === denom || tokenDenom === denom
-  );
-  return token?.minCoinDenom ?? null;
-};
-
 export const findToken = ({
   prefix,
   denom,

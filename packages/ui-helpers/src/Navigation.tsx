@@ -3,7 +3,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import Link from "next/link";
-import { LeftArrowIcon } from "icons";
+import { LeftArrowIcon } from "@evmosapps/icons/LeftArrowIcon";
 
 export const Navigation = ({
   href,

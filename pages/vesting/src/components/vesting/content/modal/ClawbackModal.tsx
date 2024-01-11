@@ -1,6 +1,6 @@
 import { ConfirmButton } from "@evmosapps/ui-helpers";
 import { ItemModal } from "./ItemModal";
-import { ExclamationIcon } from "icons";
+import { ExclamationIcon } from "@evmosapps/icons/ExclamationIcon";
 import { VestingAccountDetail } from "../../../../internal/types";
 import { convertFromAtto, formatNumber } from "helpers";
 

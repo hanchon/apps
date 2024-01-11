@@ -3,29 +3,7 @@
 
 import { BigNumber } from "@ethersproject/bignumber";
 import { Dispatch, SetStateAction } from "react";
-import {
-  TableData,
-  TableDataElement,
-} from "../../../utils/table/normalizeData";
-
-export type ButtonActionsProps = {
-  data: TableData;
-  feeBalance: BigNumber;
-  address: string;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-};
-
-export type WithdrawProps = {
-  setConfirmClicked: Dispatch<SetStateAction<boolean>>;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-  token: TableDataElement | undefined;
-  inputValue: string;
-  receiverAddress: string;
-  address: string;
-  setDisabled: Dispatch<SetStateAction<boolean>>;
-  feeBalance: BigNumber;
-  chain: TableDataElement | undefined;
-};
+import { TableDataElement } from "../../../utils/table/normalizeData";
 
 export type ConvertProps = {
   setConfirmClicked: Dispatch<SetStateAction<boolean>>;
