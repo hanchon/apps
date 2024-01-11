@@ -403,7 +403,7 @@ export default function Osmosis() {
         <div
           style={{ height: detailsOpen ? "251px" : "44px" }}
           className={`${
-            loading || inputToken?.price === 0 || outputToken?.price === 0
+            loading
               ? "font-inter animate-pulse bg-osmoverse-700 [&>*]:invisible"
               : "bg-osmoverse-900"
           } relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 (py-6 if opened) py-[10px]`}
