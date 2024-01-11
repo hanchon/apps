@@ -22,7 +22,3 @@ export type EpochsResponse = {
     total: string;
   };
 };
-
-export type RemainingEpochsResponse = {
-  remainingEpochs: number;
-};

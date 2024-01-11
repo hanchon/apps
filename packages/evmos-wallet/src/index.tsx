@@ -29,7 +29,7 @@ export { store } from "./redux/Store";
 export { KEPLR_KEY } from "./internal/wallet/functionality/wallet";
 
 export type { StoreType } from "./redux/Store";
-export type { AppDispatch } from "./redux/Store";
+
 export * from "./internal/wallet/functionality/wallet";
 // components
 
@@ -48,16 +48,9 @@ export { addToken } from "./internal/wallet/functionality/metamask/metamaskHelpe
 export type { Token } from "./internal/wallet/functionality/metamask/metamaskHelpers";
 
 // Probably move it to assets
-export type { IBCChainParams } from "./notification/transactionsTypes";
-export type { IBCTransferResponse } from "./notification/transactionsTypes";
 export type { ConvertMsg } from "./notification/transactionsTypes";
-export type { executedTx } from "./notification/transactionsTypes";
 
-export type {
-  txStatusErrorResponse,
-  txStatusError,
-} from "./notification/transactionsTypes";
-export type { txStatusResponse } from "./notification/transactionsTypes";
+export type { txStatusError } from "./notification/transactionsTypes";
 
 export { useEvmosBalance } from "./internal/wallet/functionality/hooks/useEvmosBalance";
 export { useAssets } from "./api/useAssets";

@@ -3,7 +3,7 @@ import { signApiPresignTx } from "./sign-api-presign-tx";
 
 import { E } from "helpers";
 
-export type ExecuteResponse = {
+type ExecuteResponse = {
   error: boolean;
   message: string;
   title: string;

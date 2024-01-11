@@ -7,7 +7,7 @@ const ABI = {
   erc20: erc20Abi,
 } as const;
 
-export type ABIKey = keyof typeof ABI;
+type ABIKey = keyof typeof ABI;
 export function getAbi<T extends ABIKey>(abiKey: T) {
   return ABI[abiKey];
 }

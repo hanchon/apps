@@ -4,13 +4,13 @@
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits, parseEther } from "@ethersproject/units";
 
-export type addAssetsType = {
+type addAssetsType = {
   cosmosBalance: BigNumber;
   decimals: number;
   erc20Balance: BigNumber;
 };
 
-export interface addDolarsAssetsType extends addAssetsType {
+interface addDolarsAssetsType extends addAssetsType {
   coingeckoPrice: number;
 }
 

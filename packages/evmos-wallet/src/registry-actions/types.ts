@@ -4,16 +4,12 @@ import { CosmosAddress } from "../wallet";
 export type Chain = (typeof chains)[keyof typeof chains];
 export type Prefix = Chain["prefix"];
 export type Token = Chain["tokens"][number];
-export type TokenDenom = Token["denom"];
+type TokenDenom = Token["denom"];
 export type TokenMinDenom = Token["minCoinDenom"];
 
 export type TokenRef = Token["ref"];
 export type TokenByRef = Readonly<{
   [K in TokenRef]: Readonly<Extract<Token, { ref: K }>>;
-}>;
-
-export type TokenByDenom = Readonly<{
-  [K in TokenDenom]: Readonly<Extract<Token, { denom: K }>>;
 }>;
 
 export type TokenAmount = {

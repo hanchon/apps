@@ -51,3 +51,4 @@ prefetched-images
 
 autogen
 .vercel
+**/autogen/**

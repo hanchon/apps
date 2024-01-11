@@ -8,12 +8,6 @@ import {
 import { SNACKBAR_CONTENT_TYPES } from "../../../notification/types";
 import { store } from "../../../redux/Store";
 
-// List of the posible errors to display to the user
-export declare type ResultMessage = {
-  result: boolean;
-  message: string;
-};
-
 // NOTIFICATIONS
 export const METAMASK_NOTIFICATIONS = {
   ErrorTitle: "Error connecting with Metamask",
