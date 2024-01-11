@@ -198,7 +198,9 @@ export default function Osmosis() {
               >
                 <div className="mr-1 h-[50px] w-[50px] shrink-0 rounded-full md:h-13 md:w-13">
                   <Image
-                    src={`/tokenIdentifier/${inputTokenData.tokenIdentifier}.png`}
+                    src={`/tokenIdentifier/${inputTokenData.tokenIdentifier
+                      .toLowerCase()
+                      .replace(/\s/g, "")}.png`}
                     width={50}
                     height={50}
                     alt="token icon"
@@ -337,7 +339,9 @@ export default function Osmosis() {
               >
                 <div className="mr-1 h-[50px] w-[50px] shrink-0 rounded-full md:h-13 md:w-13">
                   <Image
-                    src={`/tokenIdentifier/${outputTokenData.tokenIdentifier}.png`}
+                    src={`/tokenIdentifier/${outputTokenData.tokenIdentifier
+                      .toLowerCase()
+                      .replace(/\s/g, "")}.png`}
                     width={50}
                     height={50}
                     alt="token icon"
@@ -358,12 +362,16 @@ export default function Osmosis() {
               <h5
                 className={`text-2xl font-semibold whitespace-nowrap text-right transition-opacity
                       ${
-                        number_min_received === 0 || swapAmount === ""
+                        number_min_received === 0 ||
+                        swapAmount === "" ||
+                        swapAmount === 0
                           ? "text-[#ffffff61]"
                           : "text-white-full"
                       }`}
               >
-                {swapAmount === "" ? "0" : formatNumber(number_min_received, 5)}
+                {swapAmount === "" || swapAmount === 0
+                  ? "0"
+                  : formatNumber(number_min_received, 5)}
               </h5>
               {showDollarsAmount(swapAmount) && (
                 <span className="md:caption text-base font-semibold text-osmoverse-300 opacity-100 transition-opacity">
@@ -403,7 +411,7 @@ export default function Osmosis() {
         <div
           style={{ height: detailsOpen ? "251px" : "44px" }}
           className={`${
-            loading || inputToken?.price === 0 || outputToken?.price === 0
+            loading
               ? "font-inter animate-pulse bg-osmoverse-700 [&>*]:invisible"
               : "bg-osmoverse-900"
           } relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 (py-6 if opened) py-[10px]`}

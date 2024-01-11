@@ -18,8 +18,14 @@
     "useADapp": "Use a dApp"
   },
   "ecosystem": {
-    "title": "Add your dApp to",
-    "title2": "the Store",
+    "title": {
+      "word": "Add",
+      "word2": "your",
+      "word3": "dApp",
+      "word4": "to",
+      "word5": "the",
+      "word6": "Store"
+    },
     "description": "Interested in adding your dApp to our dApp Store and earning revenue?",
     "addAppButton": "Add your dApp",
     "buildButton": "Build with Us",
