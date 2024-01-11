@@ -14,7 +14,7 @@ if (getSelectedNetworkMode() === "localtestnet") {
   registry = evmostestnet;
 }
 
-export const config: Chain & {
+const config: Chain & {
   cosmosId: string;
 } = {
   ...wagmiEvmos,

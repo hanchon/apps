@@ -15,7 +15,7 @@ const ConvertModalSchema = z.object({
 
 export type ConvertModalProps = ModalProps<typeof ConvertModalSchema>;
 
-export const useConvertModal = () => useModal("convert", ConvertModalSchema);
+const useConvertModal = () => useModal("convert", ConvertModalSchema);
 
 export const ConvertModal = () => {
   const { isOpen, setIsOpen, modalProps } = useConvertModal();

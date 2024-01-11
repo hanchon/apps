@@ -3,7 +3,8 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { useState } from "react";
-import { DownArrowIcon, UpArrowIcon } from "icons";
+import { DownArrowIcon } from "@evmosapps/icons/DownArrowIcon";
+import { UpArrowIcon } from "@evmosapps/icons/UpArrowIcon";
 
 export const Accordion = ({
   title,

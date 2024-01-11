@@ -10,7 +10,9 @@ import {
   Title,
 } from "@evmosapps/ui-helpers";
 import { Trans } from "next-i18next";
-import { BackArrowIcon, RequestIcon, ShareIcon } from "icons";
+import { BackArrowIcon } from "@evmosapps/icons/BackArrowIcon";
+import { RequestIcon } from "@evmosapps/icons/RequestIcon";
+import { ShareIcon } from "@evmosapps/icons/ShareIcon";
 import { useWalletAccountByPrefix } from "../hooks/useAccountByPrefix";
 import { tokenToUSD } from "../common/utils";
 import { useTokenPrice } from "../hooks/useTokenPrice";

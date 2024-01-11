@@ -5,7 +5,8 @@
 import { PrimaryButton, TopBarItem } from "@evmosapps/ui-helpers";
 import { TopBarProps } from "./types";
 import { useAccount } from "wagmi";
-import { ReceiveIcon, SendIcon } from "icons";
+import { ReceiveIcon } from "@evmosapps/icons/ReceiveIcon";
+import { SendIcon } from "@evmosapps/icons/SendIcon";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { useTransferModal } from "../../../modals/transfer/TransferModal";
 import { useRequestModal } from "../../../modals/request/RequestModal";

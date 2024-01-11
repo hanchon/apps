@@ -1,10 +1,10 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { QuestionMarkIcon } from "icons";
+import { QuestionMarkIcon } from "@evmosapps/icons/QuestionMarkIcon";
 
 import { CLICK_CTA_LINKS_REGISTER_TOKEN } from "tracker";
-import { REGISTER_TOKEN_URL } from "constants-helper/src/constants";
+import { REGISTER_TOKEN_URL } from "constants-helper";
 import { PrimaryLink, TrackerEvent } from "@evmosapps/ui-helpers";
 const Guide = () => {
   return (

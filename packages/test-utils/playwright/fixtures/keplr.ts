@@ -12,7 +12,7 @@ const makeKeplr = async (context: BrowserContext, extensionId: string) => {
 };
 const workerIndex = process.env.TEST_WORKER_INDEX || "0";
 
-export const sessionPath = path.resolve(
+const sessionPath = path.resolve(
   tmpdir(),
   "keplr",
   "session",

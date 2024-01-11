@@ -25,7 +25,7 @@ const PayModalSchema = z.object({
 
 export type PayModalProps = ModalProps<typeof PayModalSchema>;
 
-export const usePayModal = () => useModal("pay", PayModalSchema);
+const usePayModal = () => useModal("pay", PayModalSchema);
 
 export const PayModal = () => {
   const { isOpen, setIsOpen, modalProps } = usePayModal();

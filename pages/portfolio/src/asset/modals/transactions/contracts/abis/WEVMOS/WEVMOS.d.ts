@@ -106,7 +106,7 @@ interface WEVMOSInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "Withdrawal"): EventFragment;
 }
 
-export class WEVMOS extends Contract {
+class WEVMOS extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;

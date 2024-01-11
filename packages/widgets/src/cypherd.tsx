@@ -7,7 +7,7 @@ import { useAccount } from "wagmi";
 import { assertIf, raise } from "helpers";
 import { get } from "lodash-es";
 import { useQuery } from "@tanstack/react-query";
-export const CYPHERD_API_KEY = process.env.NEXT_PUBLIC_CYPHERD_KEY ?? "";
+const CYPHERD_API_KEY = process.env.NEXT_PUBLIC_CYPHERD_KEY ?? "";
 
 type Cypher = (args: Record<string, string>) => void;
 

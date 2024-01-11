@@ -1,7 +1,8 @@
-"use client"
+"use client";
 import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, DropdownArrow } from "icons";
+import { CheckIcon } from "@evmosapps/icons/CheckIcon";
+import { DropdownArrowIcon } from "@evmosapps/icons/DropdownArrowIcon";
 
 import { Label } from "./Label";
 
@@ -44,7 +45,7 @@ export const SelectMenu = ({
             >
               <span>{selected}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                <DropdownArrow className="h-5 w-5" aria-hidden="true" />
+                <DropdownArrowIcon className="h-5 w-5" aria-hidden="true" />
               </span>
             </Listbox.Button>
 

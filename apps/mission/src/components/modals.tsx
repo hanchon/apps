@@ -2,7 +2,7 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
-export const ConnectModal = dynamic(
+const ConnectModal = dynamic(
   async () =>
     (await import("stateful-components/src/modals/ConnectModal/ConnectModal"))
       .ConnectModal,
@@ -10,7 +10,7 @@ export const ConnectModal = dynamic(
     ssr: false,
   }
 );
-export const SetupAccountModal = dynamic(
+const SetupAccountModal = dynamic(
   () =>
     import(
       "stateful-components/src/modals/SetupAccountModal/SetupAccountModal"
@@ -19,7 +19,7 @@ export const SetupAccountModal = dynamic(
     ssr: false,
   }
 );
-export const ProfileModal = dynamic(
+const ProfileModal = dynamic(
   () =>
     import("stateful-components/src/modals/ProfileModal/ProfileModal").then(
       (mod) => mod.ProfileModal
@@ -28,7 +28,7 @@ export const ProfileModal = dynamic(
     ssr: false,
   }
 );
-export const TopupModal = dynamic(
+const TopupModal = dynamic(
   () =>
     import("stateful-components/src/modals/TopupModal/TopupModal").then(
       (mod) => mod.TopupModal
@@ -37,7 +37,7 @@ export const TopupModal = dynamic(
     ssr: false,
   }
 );
-export const TermsOfServiceModal = dynamic(
+const TermsOfServiceModal = dynamic(
   () =>
     import(
       "stateful-components/src/modals/TermsOfServices/TermsOfServiceModal"
@@ -47,7 +47,7 @@ export const TermsOfServiceModal = dynamic(
   }
 );
 
-export const ConsentModal = dynamic(
+const ConsentModal = dynamic(
   () =>
     import("stateful-components/src/modals/ConsentModal/ConsentModal").then(
       (mod) => mod.ConsentModal

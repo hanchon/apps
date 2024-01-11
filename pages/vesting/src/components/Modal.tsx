@@ -1,4 +1,4 @@
-import { CloseIcon } from "icons";
+import { CloseIcon } from "@evmosapps/icons/CloseIcon";
 import useEventListener from "@evmosapps/ui-helpers/src/useEventListener";
 export const Modal = ({
   children,

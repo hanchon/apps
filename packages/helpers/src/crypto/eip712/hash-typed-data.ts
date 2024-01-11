@@ -4,7 +4,7 @@ import type { AbiParameter } from "abitype";
 import { assertIf, raise } from "helpers";
 import { EvmosTypedData } from "./types";
 
-export function hashDomain({
+function hashDomain({
   domain,
   types,
 }: {

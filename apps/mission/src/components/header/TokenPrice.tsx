@@ -1,5 +1,7 @@
 "use client";
-import { EvmosRedIcon, PriceDown, PriceUp } from "icons";
+import { EvmosRedIcon } from "@evmosapps/icons/EvmosRedIcon";
+import { PriceDownIcon } from "@evmosapps/icons/PriceDownIcon";
+import { PriceUpIcon } from "@evmosapps/icons/PriceUpIcon";
 import { fetchTokenPriceByDenom } from "@evmosapps/evmos-wallet/src/server/fetch-token-price-by-denom";
 
 import { cn, raise } from "helpers";
@@ -34,7 +36,7 @@ export const EvmosPrice = () => {
             <span>{formatFiat(data.usd.price)}</span>
 
             <div className="flex items-center gap-1">
-              {data.usd.priceChange >= 0 ? <PriceUp /> : <PriceDown />}
+              {data.usd.priceChange >= 0 ? <PriceUpIcon /> : <PriceDownIcon />}
               <span
                 className={
                   data.usd.priceChange > 0 ? "text-[#31B886]" : "text-[#ED4E33]"

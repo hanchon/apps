@@ -11,7 +11,7 @@ const E2E_TEST_EVMOS_CHAIN_ID = parseInt(
 );
 const E2E_TEST_EVMOS_SYMBOL = process.env.E2E_TEST_EVMOS_SYMBOL ?? "EVMOS";
 
-export const web3Test = test.extend<{
+const web3Test = test.extend<{
   context: BrowserContext;
   wallet: Dappwright;
 }>({
@@ -43,7 +43,7 @@ export const web3Test = test.extend<{
   },
 });
 
-export const web3TestWithoutNetwork = test.extend<{
+const web3TestWithoutNetwork = test.extend<{
   context: BrowserContext;
   wallet: Dappwright;
 }>({
@@ -66,7 +66,6 @@ export const web3TestWithoutNetwork = test.extend<{
   },
 });
 
-export const helpers = { web3Test, web3TestWithoutNetwork };
 export const mmFixture = {
   test: web3Test,
   ...web3Test,

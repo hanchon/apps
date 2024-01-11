@@ -11,9 +11,3 @@ export type TopBarProps = {
   setModalContent: Dispatch<SetStateAction<JSX.Element>>;
   tableData: TableData;
 };
-
-export type actionsProps = {
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-  setModalContent: Dispatch<SetStateAction<JSX.Element>>;
-  tableData: TableData;
-};

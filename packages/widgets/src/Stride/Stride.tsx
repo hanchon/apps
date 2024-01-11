@@ -15,7 +15,7 @@ import "@interchain-ui/react/styles";
 import { ThemeProvider } from "@interchain-ui/react";
 
 import { RiTimeLine, RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
-import { UpRightArrowIcon } from "icons";
+import { UpRightArrowIcon } from "@evmosapps/icons/UpRightArrowIcon";
 
 import { useEffect, useState } from "react";
 import useStrideData from "./useStrideData";

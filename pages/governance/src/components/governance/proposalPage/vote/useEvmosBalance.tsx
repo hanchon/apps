@@ -17,7 +17,7 @@ type BalanceResponse = {
     amount: string;
   };
 };
-export const getEvmosBalance = async (address: string) => {
+const getEvmosBalance = async (address: string) => {
   if (address === "" || address == undefined || address == null) {
     return { balance: { denom: "", amount: "" } };
   }

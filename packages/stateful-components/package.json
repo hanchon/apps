@@ -17,29 +17,22 @@
     "@evmosapps/copilot": "workspace:*",
     "@evmosapps/evmos-wallet": "workspace:*",
     "@evmosapps/ui-helpers": "workspace:*",
-    "icons": "workspace:*",
+    "@evmosapps/icons": "workspace:*",
     "tracker": "workspace:*"
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
+    "@tanstack/query-sync-storage-persister": "^5.17.9",
+    "@tanstack/react-query-devtools": "^5.17.9",
     "@types/node": "18.11.14",
-    "@types/react": "^18.2.45",
-    "@types/react-dom": "18.0.9",
-    "autoprefixer": "^10.4.13",
     "constants-helper": "workspace:*",
-    "postcss": "^8.4.20",
-    "prettier": "^3.0.1",
+    "next": "14.0.4",
+    "react-i18next": "^14.0.0",
     "react-redux": "^8.1.2",
     "redux": "^4.2.1",
-    "schummar-translate": "^1.18.0",
-    "tailwind-config": "workspace:*",
-    "tsup": "^7.2.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.9.5",
-    "@types/mixpanel-browser": "2.47.1",
-    "clsx": "^2.0.0",
     "mixpanel-browser": "^2.47.0"
   },
   "browserslist": [

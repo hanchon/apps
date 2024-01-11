@@ -1,42 +1,50 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-export { VERSION_TAG } from "./constants";
-export { COMMONWEALTH_URL } from "./constants";
-export { EVMOS_PAGE_URL } from "./constants";
-export { NAV_TO_MISSION_CONTROL } from "./constants";
-export { NAV_TO_GOVERNANCE } from "./constants";
-export { FULL_DAY_MINUS_ONE_SECOND } from "./constants";
-export { FEE_STAKING_ACTIONS } from "./constants";
-export { FEE_VOTE } from "./constants";
-export { FEE_WITHDRAW } from "./constants";
-export { PRIVACY_POLICY_URL } from "./constants";
-export { COOKIE_POLICY_URL } from "./constants";
-export { EVMOS_TOS_VERSION } from "./constants";
-export { NAV_TO_VESTING } from "./constants";
-export { ECOSYSTEM_URL } from "./constants";
-export { STAKING_URL } from "./constants";
-export { GOOGLE_FORM_URL } from "./constants";
-export { FEEDBACK_URL } from "./constants";
-export { DOCS_SMART_CONTRACTS_URL } from "./constants";
-export { STRIDE_URL } from "./constants";
-export { FORGE_URL } from "./constants";
-export { TASHI_URL } from "./constants";
-export { ORBITAL_APES_URL } from "./constants";
-export { MAVA_WIDGET_URL } from "./constants";
-export { STEP_STATUS } from "./constants";
-export { METAMASK_DOWNLOAD_URL } from "./constants";
-export { KEPLR_DOWNLOAD_URL } from "./constants";
-export { ICONS_TYPES } from "./constants";
-export { EMOJIS } from "./constants";
-export { EXPLORER_URL } from "./constants";
-export { DOCS_EVMOS_REVENUE } from "./constants";
-export { ADD_DAPP_FORM_URL } from "./constants";
-export { DOCS_EVMOS_URL } from "./constants";
-export { GITHUB_EVMOS_URL } from "./constants";
-export { MEDIUM_URL } from "./constants";
-export { COINGECKO_URL } from "./constants";
-export { TWITTER_EVMOS_URL } from "./constants";
-export { DISCORD_EVMOS_URL } from "./constants";
-export { TELEGRAM_EVMOS_URL } from "./constants";
-export { TOS_EVMOS_URL } from "./constants";
+export const COMMONWEALTH_URL = "https://commonwealth.im/evmos";
+export const NAV_TO_VESTING = "Back to Vesting";
+export const FULL_DAY_MINUS_ONE_SECOND = 86399000;
+export const FEE_STAKING_ACTIONS = "8049999999999999";
+export const FEE_VOTE = "6250000000000000";
+export const EVMOS_TOS_VERSION = "evmos-TOS-v2";
+export const FEEDBACK_URL = "https://evmos.canny.io/feedback";
+export const DOCS_EVMOS_REVENUE =
+  "https://docs.evmos.org/protocol/modules/revenue#abstract";
+export const DOCS_EVMOS_URL = "https://docs.evmos.org/";
+export const ADD_DAPP_FORM_URL = "https://tally.so/r/wbWjlL";
+export const MAVA_WIDGET_URL = "https://widget.mava.app";
+export const METAMASK_DOWNLOAD_URL = "https://metamask.io/download/";
+export const KEPLR_DOWNLOAD_URL = "https://www.keplr.app/download";
+export const EXPLORER_URL = "https://escan.live";
+export const ICONS_TYPES = {
+  CHECK: "CHECK",
+  CANCEL: "CANCEL",
+  CONFETTI: "CONFETTI",
+  BIG_CONFETTI: "BIG_CONFETTI",
+  BIG_HANDS: "BIG_HANDS",
+  DOLLAR_BAG: "DOLLAR_BAG",
+  DOLLAR_WITH_WINGS: "DOLLAR_WITH_WINGS",
+  KEY: "KEY",
+  SHRUG: "SHRUG",
+  METAMASK: "METAMASK",
+  KEPLR: "KEPLR",
+  WALLETCONNECT: "WALLETCONNECT",
+};
+
+export const EMOJIS = {
+  CONFETTI: "🎉",
+  HANDS: "👏",
+  DOLLAR_BAG: "💰",
+  DOLLAR_WITH_WINGS: "💸",
+  KEY: "🔑",
+  SHRUG: "🤷",
+};
+
+export const REGISTER_TOKEN_URL =
+  "https://github.com/evmos/chain-token-registry";
+export const MEDIUM_URL = "https://medium.com/evmos";
+export const GITHUB_EVMOS_URL = "https://github.com/evmos/apps";
+export const COINGECKO_URL = "https://www.coingecko.com";
+export const TWITTER_EVMOS_URL = "https://twitter.com/evmosorg";
+export const DISCORD_EVMOS_URL = "https://discord.com/invite/evmos";
+export const TELEGRAM_EVMOS_URL = "https://t.me/EvmosOrg";

@@ -3,7 +3,7 @@ import { useAccount } from "wagmi";
 import { hashMessage, fromHex } from "viem";
 import { EVMOS_GRPC_URL } from "../../internal/wallet/functionality/networkConfig";
 import { queryPubKey } from "../../internal/wallet/functionality/pubkey";
-import { QueryClient, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { useEffect } from "react";
 import { signatureToPubkey } from "@hanchon/signature-to-pubkey";
@@ -55,10 +55,6 @@ const queryFn = async () => {
   raise("WALLET_DID_NOT_SIGN_PUBKEY_MESSAGE");
 };
 
-export const prefetchPubkey = async (queryClient: QueryClient) => {
-  const { address } = getAccount(wagmiConfig);
-  return queryClient.fetchQuery({ queryKey: [baseKey, address], queryFn });
-};
 export const usePubKey = () => {
   const { address, isConnected } = useAccount();
 

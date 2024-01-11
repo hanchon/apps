@@ -1,5 +1,5 @@
 import { get } from "lodash-es";
-import {
+import type {
   BlockObjectResponse,
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";

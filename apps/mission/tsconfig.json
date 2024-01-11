@@ -1,6 +1,7 @@
 {
   "extends": "@evmosapps/config/ts/nextjs.json",
   "compilerOptions": {
+    "moduleResolution": "Bundler",
     "noUncheckedIndexedAccess": true,
     "plugins": [
       {

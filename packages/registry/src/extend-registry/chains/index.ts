@@ -1,3 +1,3 @@
-export { default as cosmos } from "./cosmos.json";
-export { default as evmos } from "./evmos.json";
-export { default as osmosis } from "./osmosis.json";
+export {  } from "./cosmos.json";
+export {  } from "./evmos.json";
+export {  } from "./osmosis.json";

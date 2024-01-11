@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import { tabContent } from "../../staking/Tabs/Content";
 
-import { DropdownArrow } from "icons";
+import { DropdownArrowIcon } from "@evmosapps/icons/DropdownArrowIcon";
 import { CLICK_TABS_STAKING_OPTIONS, sendEvent } from "tracker";
 
 const TabsDropdown = ({
@@ -92,7 +92,7 @@ const TabsDropdown = ({
         )}
         {getDisplay()}
         <div className="ml-10">
-          <DropdownArrow />
+          <DropdownArrowIcon />
         </div>
       </div>
     </div>

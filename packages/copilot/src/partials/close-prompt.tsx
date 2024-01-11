@@ -2,7 +2,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { AlertIcon } from "icons";
+import { AlertIcon } from "@evmosapps/icons/AlertIcon";
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { PrimaryButton } from "@evmosapps/ui-helpers";

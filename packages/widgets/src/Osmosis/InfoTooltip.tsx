@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { FunctionComponent } from "react";
 import { TooltipProps } from "./types";
 import { cn } from "helpers";
-import { InfoIconOsmosis } from "icons";
+import { OsmosisInfoIcon } from "@evmosapps/icons/osmosis/OsmosisInfoIcon";
 
 const Tippy = dynamic(() => import("@tippyjs/react"), { ssr: false });
 
@@ -19,7 +19,7 @@ export const InfoTooltip: FunctionComponent<TooltipProps> = ({
       className={cn("flex cursor-pointer align-middle text-wosmongton-300")}
       onClick={(e) => e.stopPropagation()}
     >
-      <InfoIconOsmosis />
+      <OsmosisInfoIcon />
     </div>
   </Tippy>
 );

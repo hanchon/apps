@@ -13,7 +13,7 @@ import { chromium } from "@playwright/test";
 /**
  * Launch Playwright chromium instance with wallet plugin installed
  * */
-export const sessionPath = path.resolve(os.tmpdir(), "dappwright", "session");
+const sessionPath = path.resolve(os.tmpdir(), "dappwright", "session");
 
 export async function launch(
   browserName: string,

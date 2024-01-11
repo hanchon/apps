@@ -8,7 +8,6 @@ import {
 
 const modes = ["mainnet", "testnet", "localtestnet"];
 
-export const isMainnet = () => getSelectedNetworkMode() === "mainnet";
 export const NetworkModeSelector = () => {
   const [mode, setMode] = useState<null | string>(null);
 

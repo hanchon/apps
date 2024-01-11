@@ -1,4 +1,4 @@
-import { CheckIcon } from "icons";
+import { CheckIcon } from "@evmosapps/icons/CheckIcon";
 
 export const CheckMark = () => (
   <span className="rounded-full bg-red-300 h-4 w-4 flex items-center justify-center">

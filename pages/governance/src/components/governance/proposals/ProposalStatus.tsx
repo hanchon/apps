@@ -7,7 +7,9 @@ import {
   PROPOSAL_STATUS_PASSED,
   PROPOSAL_STATUS_REJECTED,
 } from "../../../utils/types";
-import { CloseIcon, CheckIcon } from "icons";
+import { CloseIcon } from "@evmosapps/icons/CloseIcon";
+import { CheckIcon } from "@evmosapps/icons/CheckIcon";
+
 const ProposalStatus = ({ status }: { status: string }) => {
   const style =
     "text-sm flex items-center space-x-2 px-4 py-2 rounded-3xl opacity-80";

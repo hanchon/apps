@@ -1,7 +1,8 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { DownArrowHollowIcon } from "icons";
+import { DownArrowHollowIcon } from "@evmosapps/icons/DownArrowHollowIcon";
+
 const Arrow = () => {
   return (
     <div className="relative h-5">

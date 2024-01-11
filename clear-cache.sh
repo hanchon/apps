@@ -3,7 +3,7 @@
 # Find all subdirectories of the 'apps' and 'packages' folders
 subdirs=$(find . -type d -not -path "*/node_modules/*")
 
-delete_dirs=(".next" "dist" ".turbo" "node_modules" "test-results" "playwright-report" ".notion-cache" ".netlify" ".testnet")
+delete_dirs=(".next" "dist" ".turbo" "node_modules" "test-results" "playwright-report" ".notion-cache" ".netlify" ".testnet" "./vite-node")
 # Loop through each subdirectory and delete any '.next' or 'dist' folders within it
 for dir in $subdirs; do
     for delete_dir in ${delete_dirs[@]}; do

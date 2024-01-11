@@ -9,14 +9,14 @@ import {
   TrackerEvent,
 } from "@evmosapps/ui-helpers";
 import { Title } from "@evmosapps/ui-helpers/src/titles/Title";
-import {
-  DiscordIcon,
-  GithubIcon,
-  RightArrow,
-  TelegramIcon,
-  TwitterIcon,
-  WebsiteIcon,
-} from "icons";
+
+import { DiscordIcon } from "@evmosapps/icons/DiscordIcon";
+import { GithubIcon } from "@evmosapps/icons/GithubIcon";
+import { RightArrow } from "@evmosapps/icons/RightArrow";
+import { TelegramIcon } from "@evmosapps/icons/TelegramIcon";
+import { TwitterIcon } from "@evmosapps/icons/TwitterIcon";
+import { WebsiteIcon } from "@evmosapps/icons/WebsiteIcon";
+
 import { HeroSection } from "../../landing/partials/hero-section";
 import { DescriptionItem } from "./description-item";
 import { DApp } from "../../../lib/fetch-explorer-data";
@@ -113,7 +113,7 @@ export const DescriptiondApp = async ({
         </header>
       </div>
       <div className="flex flex-col lg:flex-row gap-y-12 lg:gap-y-24 gap-x-24 items-start">
-        <div className=" w-full grid grid-rows-8 gap-y-8">
+        <div className=" w-full grid gap-y-8">
           {dapp.description && (
             <DescriptionItem
               title={t("instantdApp.description.title", {

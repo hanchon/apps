@@ -10,7 +10,8 @@ import {
 } from "../../../utils/types";
 import { EVMOS_SYMBOL } from "@evmosapps/evmos-wallet";
 import Arc from "../../common/arc/Arc";
-import { CloseIcon, CheckIcon } from "icons";
+import { CheckIcon } from "@evmosapps/icons/CheckIcon";
+import { CloseIcon } from "@evmosapps/icons/CloseIcon";
 import { BAR_COLORS } from "../bar/styles";
 import VotingDetails from "../common/VotingDetails";
 import VoteButton from "./vote/VoteButton";

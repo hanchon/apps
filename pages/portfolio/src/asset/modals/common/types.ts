@@ -2,34 +2,28 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { Dispatch, SetStateAction } from "react";
-import {
-  TableData,
-  TableDataElement,
-} from "../../../utils/table/normalizeData";
-import { DropdownChainsProps } from "../../dropdown/types";
-
 import { BigNumber } from "@ethersproject/bignumber";
 
-export type Fee = {
+type Fee = {
   fee: BigNumber;
   feeDenom: string;
   feeBalance: BigNumber;
   feeDecimals: number;
 };
 
-export type Balance = {
+type Balance = {
   denom: string;
   amount: BigNumber;
   decimals: number;
 };
 
-export type Input = {
+type Input = {
   value: string;
   setInputValue: Dispatch<SetStateAction<string>>;
   confirmClicked: boolean;
 };
 
-export type Style = {
+type Style = {
   tokenTo: string;
   address: string;
   img: string;
@@ -41,24 +35,4 @@ export type FromProps = {
   balance: Balance;
   input: Input;
   style: Style;
-};
-
-export type WithdrawReceiverProps = {
-  token: TableDataElement | undefined;
-  receiverAddress: string;
-  setReceiverAddress: Dispatch<SetStateAction<string>>;
-  confirmClicked: boolean;
-  dropChainProps: DropdownChainsProps;
-};
-
-export type AmountWithdrawProps = {
-  data: TableData;
-  setToken: Dispatch<SetStateAction<TableDataElement | undefined>>;
-  token: TableDataElement | undefined;
-  value: string;
-  setValue: Dispatch<SetStateAction<string>>;
-  confirmClicked: boolean;
-  setReceiverAddress: Dispatch<SetStateAction<string>>;
-  setChain: Dispatch<SetStateAction<TableDataElement | undefined>>;
-  chain: TableDataElement | undefined;
 };

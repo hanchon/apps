@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-export function polarToCartesian(
+function polarToCartesian(
   centerX: number,
   centerY: number,
   radius: number,
@@ -15,7 +15,7 @@ export function polarToCartesian(
   };
 }
 
-export function describeArc(
+function describeArc(
   x: number,
   y: number,
   radius: number,

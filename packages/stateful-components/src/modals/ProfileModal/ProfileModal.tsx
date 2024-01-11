@@ -5,11 +5,12 @@ import { ProvidersIcons } from "../../providerIcons";
 import { useAccount, useDisconnect } from "wagmi";
 import { normalizeToEvmos } from "@evmosapps/evmos-wallet";
 import { EXPLORER_URL } from "constants-helper";
-import { CopyIcon, ExternalLinkIcon } from "icons";
+import { CopyIcon } from "@evmosapps/icons/CopyIcon";
+import { ExternalLinkIcon } from "@evmosapps/icons/ExternalLinkIcon";
 import { useEffect, useState } from "react";
 import { CLICK_DISCONNECT_WALLET_BUTTON, useTracker } from "tracker";
 
-export const useProfileModal = () => useModal("profile");
+const useProfileModal = () => useModal("profile");
 export const ProfileModalTrigger = modalLink("profile");
 
 const CopyButton = ({ text }: { text: string }) => {

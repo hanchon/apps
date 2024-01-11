@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { externalSchema } from "./externalSchema";
 
-export const fileSchema = z
+const fileSchema = z
   .object({
     type: z.literal("file"),
     file: z.object({

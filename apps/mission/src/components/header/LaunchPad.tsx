@@ -2,7 +2,7 @@
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import { Menu, Transition } from "@headlessui/react";
 import { cn } from "helpers";
-import { LaunchIcon } from "icons";
+import { LaunchIcon } from "@evmosapps/icons/LaunchIcon";
 import { ComponentProps, Fragment } from "react";
 import {
   CLICK_ON_DAPP_INSIDE_LAUNCHER,
@@ -66,7 +66,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
             " fixed shadow-custom md:absolute w-full px-8 top-32 md:top-9 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] py-8 drop-shadow-md drop-shadow-red1 border border-darkGray700 "
           )}
         >
-          <div className="grid grid-cols-3 pb-6">
+          <div className="flex pb-6">
             {launchPadItems[0] && (
               <TrackerEvent
                 event={CLICK_ON_DAPP_INSIDE_LAUNCHER}
@@ -83,7 +83,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
             )}
           </div>
           <p className="text-xs opacity-90">{t("launchPad.subtitle")}</p>
-          <div className="grid grid-cols-3 gap-y-6 pb-6 pt-3">
+          <div className="flex justify-between pb-6 pt-3">
             {launchPadItems.slice(1).map(({ href, mixpanelId, ...rest }) => {
               const disabled = mixpanelId === undefined;
               return (
@@ -112,7 +112,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
   );
 }
 
-export const LaunchPadItem = ({
+const LaunchPadItem = ({
   icon,
   disabled,
   children,

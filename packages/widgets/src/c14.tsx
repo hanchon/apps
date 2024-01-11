@@ -4,7 +4,7 @@
 
 import { useAccount } from "wagmi";
 
-export const C14_API_KEY = process.env.NEXT_PUBLIC_C14_API_KEY ?? "";
+const C14_API_KEY = process.env.NEXT_PUBLIC_C14_API_KEY ?? "";
 
 export default function C14() {
   const { address } = useAccount();

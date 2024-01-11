@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { cn } from "helpers";
-import { ErrorIcon } from "icons";
+import { ErrorIcon } from "@evmosapps/icons/ErrorIcon";
 import { ComponentProps } from "react";
 
 export function ErrorMessage({

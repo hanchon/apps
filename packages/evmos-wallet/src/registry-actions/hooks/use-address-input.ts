@@ -14,7 +14,7 @@ import { isValidRegistryPrefix } from "../is-valid-registry-prefix";
 import { Prefix } from "../types";
 import { useEffectEvent } from "helpers";
 
-export type AddressInputErrors = "INVALID_ADDRESS" | "INVALID_PREFIX";
+type AddressInputErrors = "INVALID_ADDRESS" | "INVALID_PREFIX";
 /**
  * This hook is used to facilitate address input handling and validation
  *

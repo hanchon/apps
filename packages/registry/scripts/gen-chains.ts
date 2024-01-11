@@ -7,7 +7,7 @@ import { lavaUrls } from "./lava-urls";
 import { readFiles } from "./readFiles";
 import { testnetConfigByChain, testnetTokensByIdentifiers } from "./testnets";
 
-export const readRegistryChain = async () =>
+const readRegistryChain = async () =>
   (
     await readFiles<ChainRegistry>(
       "node_modules/chain-token-registry/chainConfig/*.json"
@@ -30,7 +30,7 @@ export const readRegistryChain = async () =>
         : []
     );
 
-export const readRegistryToken = () =>
+const readRegistryToken = () =>
   readFiles<TokenRegistry>("node_modules/chain-token-registry/tokens/*.json");
 
 const normalizeNetworkUrls = (urls?: (string | undefined)[]) => {

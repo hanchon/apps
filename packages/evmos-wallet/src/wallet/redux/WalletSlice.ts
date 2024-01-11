@@ -35,7 +35,7 @@ const initialValue: WalletExtension = {
   accountName: null,
 };
 
-export const walletSlice = createSlice({
+const walletSlice = createSlice({
   name: "walletSlice",
   initialState: {
     value: initialValue,

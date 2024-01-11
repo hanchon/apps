@@ -4,7 +4,12 @@
   "private": true,
   "type": "module",
   "devDependencies": {
-    "@evmosapps/config": "workspace:*"
+    "@evmosapps/config": "workspace:*",
+    "accept-language": "^3.0.18",
+    "i18next": "^23.7.6",
+    "i18next-resources-to-backend": "^1.2.0",
+    "react": "18.2.0",
+    "react-i18next": "^14.0.0"
   },
   "dependencies": {
     "next": "14.0.4",
