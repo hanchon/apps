@@ -1,7 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import Image from "next/image";
 import {
   Badge,
   ButtonWithLink,
@@ -27,6 +26,7 @@ import { EcosystemCardGrid } from "../../landing/partials/ecosystem-card-grid";
 import { DescriptionLink } from "./description-link";
 import { CLICK_SEE_MORE_BUTTON, CLICK_SOCIAL_BUTTON } from "tracker";
 import { WIDGETS } from "./widgets-index";
+import { Image } from "@evmosapps/ui-helpers/src/Image";
 
 export const DescriptiondApp = async ({
   dapp,
@@ -55,9 +55,7 @@ export const DescriptiondApp = async ({
           )}
         >
           <Image
-            src={dapp.cover?.src ?? "/ecosystem/galaxy.png"}
-            blurDataURL={dapp.cover?.blurDataURL}
-            placeholder="blur"
+            src={dapp.cover ?? "/ecosystem/galaxy.png"}
             alt={dapp.name}
             fill={true}
             className="object-cover"
@@ -78,11 +76,10 @@ export const DescriptiondApp = async ({
           >
             {dapp.icon && (
               <Image
-                {...dapp.icon}
+                src={dapp.icon}
                 alt={dapp.name}
                 fill={true}
                 className="object-cover"
-                placeholder="blur"
                 sizes={"400w"}
               />
             )}

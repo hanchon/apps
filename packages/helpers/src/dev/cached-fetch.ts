@@ -18,6 +18,12 @@ const serializeHeaders = (headers: Headers) => {
   });
   return Object.fromEntries(obj);
 };
+
+const encodeBuffer = (buffer: ArrayBuffer) =>
+  Buffer.from(buffer).toString("base64");
+
+const decodeBuffer = (buffer: string) => Buffer.from(buffer, "base64");
+
 /**
  * Enhanced fetch function with caching for development and test environments.
  * Caches the results of HTTP requests to improve performance during development.
@@ -60,6 +66,7 @@ export const cachedFetch = async (
     headers: Record<string, string>;
     status: number;
     response: string;
+    storeFormat: "string" | "buffer";
   }>(cacheKey, init?.devCache?.revalidate);
 
   // Function to perform a fetch request and update cache
@@ -71,11 +78,21 @@ export const cachedFetch = async (
     if (!response.ok) {
       return response;
     }
+    const serializedHeaders = serializeHeaders(response.headers);
 
     // Convert response to text and handle any errors
-    const [err, responseAsString] = await tryCatch(() =>
-      response.clone().text()
-    );
+    const [err, serializedResponse] = await tryCatch(async () => {
+      if (serializedHeaders["content-type"]?.startsWith("image/")) {
+        return {
+          response: encodeBuffer(await response.clone().arrayBuffer()),
+          storeFormat: "buffer",
+        } as const;
+      }
+      return {
+        response: await response.clone().text(),
+        storeFormat: "string",
+      } as const;
+    });
 
     if (err) {
       return response;
@@ -90,7 +107,7 @@ export const cachedFetch = async (
         headers: serializeHeaders(response.headers),
         statusText: response.statusText,
         status: response.status,
-        response: responseAsString,
+        ...serializedResponse,
       },
       cacheTags
     );
@@ -103,11 +120,16 @@ export const cachedFetch = async (
   }
 
   // Create a response from the cached data
-  const response = new Response(cached.data.response, {
-    statusText: cached.data.statusText,
-    status: cached.data.status,
-    headers: cached.data.headers,
-  });
+  const response = new Response(
+    cached.data.storeFormat === "buffer"
+      ? decodeBuffer(cached.data.response)
+      : cached.data.response,
+    {
+      statusText: cached.data.statusText,
+      status: cached.data.status,
+      headers: cached.data.headers,
+    }
+  );
 
   // Handle stale cache by making a new request in the background
   if (cached.stale) {

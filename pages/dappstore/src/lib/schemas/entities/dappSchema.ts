@@ -55,6 +55,7 @@ export const dappSchema = z
   })
   .transform(({ id, properties, ...rest }) => {
     const slug = createSlug(properties.name);
+
     return {
       notionId: id,
       slug,
@@ -65,6 +66,7 @@ export const dappSchema = z
           description: string;
         }
       >,
+
       ...properties,
       ...rest,
     };
