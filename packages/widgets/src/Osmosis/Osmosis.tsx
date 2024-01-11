@@ -198,7 +198,9 @@ export default function Osmosis() {
               >
                 <div className="mr-1 h-[50px] w-[50px] shrink-0 rounded-full md:h-13 md:w-13">
                   <Image
-                    src={`/tokenIdentifier/${inputTokenData.tokenIdentifier}.png`}
+                    src={`/tokenIdentifier/${inputTokenData.tokenIdentifier
+                      .toLowerCase()
+                      .replace(/\s/g, "")}.png`}
                     width={50}
                     height={50}
                     alt="token icon"
@@ -337,7 +339,9 @@ export default function Osmosis() {
               >
                 <div className="mr-1 h-[50px] w-[50px] shrink-0 rounded-full md:h-13 md:w-13">
                   <Image
-                    src={`/tokenIdentifier/${outputTokenData.tokenIdentifier}.png`}
+                    src={`/tokenIdentifier/${outputTokenData.tokenIdentifier
+                      .toLowerCase()
+                      .replace(/\s/g, "")}.png`}
                     width={50}
                     height={50}
                     alt="token icon"
