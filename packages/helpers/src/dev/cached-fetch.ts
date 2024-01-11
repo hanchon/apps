@@ -74,7 +74,6 @@ export const cachedFetch = async (
     const response = await fetch(input, init);
 
     // Set custom header to indicate cache miss
-    response.headers.set(cacheHeader, "MISS");
     if (!response.ok) {
       return response;
     }
