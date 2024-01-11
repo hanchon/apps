@@ -15,7 +15,7 @@ const getImgProps = unstable_cache(
       return {
         src,
         blurDataURL: undefined,
-        placeholder: "empty",
+        placeholder: undefined,
       };
     }
     const buffer = await cachedFetch(src, {
