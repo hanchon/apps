@@ -113,7 +113,7 @@ export const DescriptiondApp = async ({
         </header>
       </div>
       <div className="flex flex-col lg:flex-row gap-y-12 lg:gap-y-24 gap-x-24 items-start">
-        <div className=" w-full grid lg:grid-rows-8 gap-y-8">
+        <div className=" w-full grid gap-y-8">
           {dapp.description && (
             <DescriptionItem
               title={t("instantdApp.description.title", {

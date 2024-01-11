@@ -358,12 +358,16 @@ export default function Osmosis() {
               <h5
                 className={`text-2xl font-semibold whitespace-nowrap text-right transition-opacity
                       ${
-                        number_min_received === 0 || swapAmount === ""
+                        number_min_received === 0 ||
+                        swapAmount === "" ||
+                        swapAmount === 0
                           ? "text-[#ffffff61]"
                           : "text-white-full"
                       }`}
               >
-                {swapAmount === "" ? "0" : formatNumber(number_min_received, 5)}
+                {swapAmount === "" || swapAmount === 0
+                  ? "0"
+                  : formatNumber(number_min_received, 5)}
               </h5>
               {showDollarsAmount(swapAmount) && (
                 <span className="md:caption text-base font-semibold text-osmoverse-300 opacity-100 transition-opacity">

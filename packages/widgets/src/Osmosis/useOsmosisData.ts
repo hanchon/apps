@@ -39,7 +39,7 @@ export function useOsmosisData() {
     chain: "Osmosis",
     balance: osmoBalance?.erc20Balance ?? "0",
     price: parseFloat(osmoBalance?.coingeckoPrice ?? "0"),
-    decimals: parseInt(osmoBalance?.decimals ?? "0"),
+    decimals: parseInt(osmoBalance?.decimals ?? "6"),
     osmosisDenom: "uosmo",
   };
 
@@ -51,7 +51,7 @@ export function useOsmosisData() {
     chain: "Evmos",
     balance: evmosBalance?.cosmosBalance ?? "0",
     price: parseFloat(evmosBalance?.coingeckoPrice ?? "0"),
-    decimals: parseInt(evmosBalance?.decimals ?? "0"),
+    decimals: parseInt(evmosBalance?.decimals ?? "18"),
     osmosisDenom:
       "ibc/6AE98883D4D5D5FF9E50D7130F1305DA2FFA0C652D1DD9C123657C6B4EB2DF8A",
   };
