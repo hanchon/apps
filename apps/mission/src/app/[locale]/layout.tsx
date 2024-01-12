@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Modals } from "../../components/modals";
 import { Container } from "@evmosapps/ui-helpers/src/Container";
-import { StatefulBanner } from "stateful-components/src/banner";
+import { StatefulBanner } from "stateful-components/src/banner/banner";
 
 export const dynamic = "error";
 

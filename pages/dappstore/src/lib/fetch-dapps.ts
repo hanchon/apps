@@ -4,7 +4,6 @@ import { ECOSYSTEM_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/w
 import { Log } from "helpers";
 import { notion } from "helpers/src/clients/notion";
 import { cache } from "react";
-import { handleDappImages } from "./schemas/dapp-images-handler/handleDappImages";
 
 const fetchNotionEcosystemDb = async () =>
   notion.databases.query({
@@ -25,16 +24,15 @@ export const fetchDapps = cache(async () => {
       }
       return result;
     })
-  )
-    .then((results) =>
-      results.flatMap((result) => {
-        if (!result.success || result.data.listed === false) {
-          return [];
-        }
-        return [result.data];
-      })
-    )
-    .then(handleDappImages);
+  ).then((results) =>
+    results.flatMap((result) => {
+      if (!result.success || result.data.listed === false) {
+        return [];
+      }
+      return [result.data];
+    })
+  );
+
   const dappsMap = new Map<string, (typeof parsedDapps)[number]>();
 
   for (const parsed of parsedDapps) {

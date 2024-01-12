@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 import { EVMOS_UTILS_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 import { Log } from "helpers";
 import { notion } from "helpers/src/clients/notion";
