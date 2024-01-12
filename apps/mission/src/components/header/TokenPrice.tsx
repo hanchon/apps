@@ -2,7 +2,7 @@
 import { EvmosRedIcon } from "@evmosapps/icons/EvmosRedIcon";
 import { PriceDownIcon } from "@evmosapps/icons/PriceDownIcon";
 import { PriceUpIcon } from "@evmosapps/icons/PriceUpIcon";
-import { fetchTokenPriceByDenom } from "@evmosapps/evmos-wallet/src/server/fetch-token-price-by-denom";
+import { fetchTokenPriceByDenom } from "@evmosapps/evmos-wallet/src/server/fetch-token-price-by-denom.server";
 
 import { cn, raise } from "helpers";
 import { useQuery } from "@tanstack/react-query";

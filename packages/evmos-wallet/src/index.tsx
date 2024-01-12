@@ -52,6 +52,5 @@ export type { ConvertMsg } from "./notification/transactionsTypes";
 
 export type { txStatusError } from "./notification/transactionsTypes";
 
-export { useEvmosBalance } from "./internal/wallet/functionality/hooks/useEvmosBalance";
 export { useAssets } from "./api/useAssets";
 export { useRewards } from "./hooks/rewards/useRewards";

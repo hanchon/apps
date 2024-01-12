@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { fetchToken } from "./fetch-token.server";
+import { fetchToken } from "../server/fetch-token.server";
 import { raise } from "helpers";
 
 export const TokenQueryOptions = (denom?: string) =>
