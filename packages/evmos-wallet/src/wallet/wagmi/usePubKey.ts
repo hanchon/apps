@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { useEffect } from "react";
 import { signatureToPubkey } from "@hanchon/signature-to-pubkey";
-import { assertIf, raise } from "helpers";
+import { assert, raise } from "helpers";
 
 import { getActiveProviderKey } from "../actions";
 import { getKeplrProvider, normalizeToEvmos } from "../utils";
@@ -23,7 +23,7 @@ const baseKey = "evmos/pubkey";
 const evmos = getEvmosChainInfo();
 const queryFn = async () => {
   const { address, connector } = getAccount(wagmiConfig);
-  assertIf(address, "WALLET_ACCOUNT_NOT_AVAILABLE");
+  assert(address, "WALLET_ACCOUNT_NOT_AVAILABLE");
   let pubkey = window.localStorage.getItem([baseKey, address].join("/"));
 
   if (pubkey) return pubkey;

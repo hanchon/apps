@@ -14,6 +14,12 @@ type CoingeckoResponse<T extends string, C extends string> = string extends T
       [K in T]: CoingeckoTokenPriceResponse<C>;
     };
 
+const formatFiat = (value: number) => {
+  return value.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+};
 const fetchCoinGeckoTokenPrices = async function <
   const T extends string,
   const C extends string,
@@ -63,6 +69,8 @@ export const fetchTokenPrices = async () => {
       usd: {
         price: number;
         priceChange: number;
+        formattedPrice: string;
+        formattedPriceChange: string;
       };
       lastUpdatedAt: string;
       coingeckoId: string;
@@ -81,6 +89,8 @@ export const fetchTokenPrices = async () => {
       usd: {
         price: usd,
         priceChange: usd_24h_change,
+        formattedPrice: formatFiat(usd),
+        formattedPriceChange: `${usd_24h_change.toFixed(2)}%`,
       },
       lastUpdatedAt: new Date(last_updated_at * 1000).toISOString(),
       coingeckoId,
