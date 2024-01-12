@@ -4,7 +4,7 @@
 
 import { cache, useEffect } from "react";
 import { useAccount } from "wagmi";
-import { assertIf, raise } from "helpers";
+import { assert, raise } from "helpers";
 import { get } from "lodash-es";
 import { useQuery } from "@tanstack/react-query";
 const CYPHERD_API_KEY = process.env.NEXT_PUBLIC_CYPHERD_KEY ?? "";
@@ -21,7 +21,7 @@ const getCypher = cache(async function getCypher(): Promise<Cypher> {
   let cypher = getCypherObject();
   if (cypher) return cypher;
 
-  assertIf(document.readyState !== "complete", "FAILED_TOLOAD");
+  assert(document.readyState !== "complete", "FAILED_TOLOAD");
 
   return new Promise((resolve) => {
     const documentStateChange = (event: Event) => {

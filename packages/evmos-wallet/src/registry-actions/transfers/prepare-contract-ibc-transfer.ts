@@ -1,5 +1,5 @@
 import { ics20Abi } from "@evmosapps/registry";
-import { assertIf } from "helpers";
+import { assert } from "helpers";
 
 import {
   Address,
@@ -22,7 +22,7 @@ export const prepareContractIBCTransfer = async <T extends Prefix>({
   receiver: Address<Exclude<Prefix, T>>; // Can't IBC transfer to the same network
   token: TokenAmount;
 }) => {
-  assertIf(
+  assert(
     isEvmosAddress(sender),
     "Sender must be an EVMOS address to transfer through ICS20 contract"
   );

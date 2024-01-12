@@ -1,7 +1,7 @@
 "use client";
 import { createTxRaw } from "@evmos/proto";
 import { getAccount, getChainId } from "wagmi/actions";
-import { assertIf } from "helpers";
+import { assert } from "helpers";
 import {
   signTypedDataMessage,
   signKeplrDirect,
@@ -20,7 +20,7 @@ async function signBackendTypedDataTransaction({
 }: ApiPresignTx) {
   const { address, connector } = getAccount(wagmiConfig);
   const chainId = getChainId(wagmiConfig);
-  assertIf(
+  assert(
     chainId && address && connector && typedData,
     "COULD_NOT_SIGN_TRANSACTION"
   );
@@ -43,9 +43,9 @@ async function signBackendTypedDataTransaction({
 async function signBackendDirectTransaction(transaction: ApiPresignTx) {
   const { address, connector } = getAccount(wagmiConfig);
 
-  assertIf(address && connector, "COULD_NOT_SIGN_TRANSACTION");
+  assert(address && connector, "COULD_NOT_SIGN_TRANSACTION");
 
-  assertIf(connector.name === "Keplr", "UNSUPPORTED_SIGN_METHOD");
+  assert(connector.name === "Keplr", "UNSUPPORTED_SIGN_METHOD");
 
   const response = await signKeplrDirect({
     chainId: transaction.chainId,
@@ -69,7 +69,7 @@ async function signBackendDirectTransaction(transaction: ApiPresignTx) {
 export async function signApiPresignTx(presignedTx: ApiPresignTx) {
   const { address, connector } = getAccount(wagmiConfig);
 
-  assertIf(address && connector, "COULD_NOT_SIGN_TRANSACTION");
+  assert(address && connector, "COULD_NOT_SIGN_TRANSACTION");
   /**
    * If the connector is keplr, we need to check if the key is a ledger key.
    * If it is, we need to sign the transaction as typed data

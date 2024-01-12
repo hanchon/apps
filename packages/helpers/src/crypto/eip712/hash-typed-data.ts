@@ -1,7 +1,7 @@
 import { type Hex, concat, encodeAbiParameters, keccak256, toHex } from "viem";
 import { get } from "lodash-es";
 import type { AbiParameter } from "abitype";
-import { assertIf, raise } from "helpers";
+import { assert, raise } from "helpers";
 import { EvmosTypedData } from "./types";
 
 function hashDomain({
@@ -72,8 +72,8 @@ function encodeData({
   for (const field of fields) {
     const name: unknown = get(field, "name");
     const type: unknown = get(field, "type");
-    assertIf(typeof name === "string", "Field name is not a string");
-    assertIf(typeof type === "string", "Field type is not a string");
+    assert(typeof name === "string", "Field name is not a string");
+    assert(typeof type === "string", "Field type is not a string");
     const [encodedType, encodedValue] = encodeField({
       types,
       name,
@@ -182,7 +182,7 @@ function encodeField({
   value: unknown;
 }): [type: AbiParameter, value: unknown] {
   if (types[type] !== undefined) {
-    assertIf(
+    assert(
       typeof value === "object" && value !== null,
       "Invalid value for type"
     );
@@ -199,13 +199,13 @@ function encodeField({
   }
 
   if (type === "bytes") {
-    assertIf(typeof value === "string", "Invalid bytes value");
+    assert(typeof value === "string", "Invalid bytes value");
     const prepend = value.length % 2 ? "0" : "";
     return [{ type: "bytes32" }, keccak256(`0x${prepend + value.slice(2)}`)];
   }
 
   if (type === "string") {
-    assertIf(typeof value === "string", "Invalid string value");
+    assert(typeof value === "string", "Invalid string value");
     return [{ type: "bytes32" }, keccak256(toHex(value))];
   }
 
