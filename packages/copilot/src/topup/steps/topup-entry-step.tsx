@@ -11,7 +11,7 @@ export const TopupEntryStep = () => {
       <Modal.Header>
         <h1 className="font-bold text-base">{t("introStep.title")}</h1>
       </Modal.Header>
-      <p className="text-gray1 text-sm mb-10">{t("introStep.body")}</p>
+      <p className="text-gray1 text-sm mb-5">{t("introStep.body")}</p>
 
       <OnboardOptionsMenu />
     </section>
