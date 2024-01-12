@@ -12,4 +12,12 @@ const fetchNotionEvmosUtils = async () =>
 
 export const fetchEvmosUtils = async () => {
   const evmosUtils = await fetchNotionEvmosUtils();
+
+  const parsed = evmosUtilsSchema.safeParse(evmosUtils);
+
+  if (!parsed.success) {
+    Log("notion").error(parsed.error.issues);
+    return {};
+  }
+  return parsed.data.results[0]?.properties;
 };
