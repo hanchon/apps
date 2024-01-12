@@ -12,7 +12,7 @@ export async function GET(
     };
   }
 ) {
-  const { chains } = await fetchChains();
+  const { chains, dt } = await fetchChains();
   const chain = chains.find((chain) => chain.identifier === chainId);
   if (!chain) {
     return new Response("Chain not found", { status: 404 });
@@ -26,5 +26,9 @@ export async function GET(
   const res = await fetch(url.toString());
   return new NextResponse(res.body, {
     status: res.status,
+    headers: {
+      "content-type": res.headers.get("content-type") ?? "",
+      "test-cache-time": dt,
+    },
   });
 }
