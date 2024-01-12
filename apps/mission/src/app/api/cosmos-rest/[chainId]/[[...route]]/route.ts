@@ -21,6 +21,7 @@ export async function GET(
   const url = new URL(chain.rest[0]);
 
   url.pathname = path.join(url.pathname, ...route);
+  url.search = new URL(request.url).search;
 
   const res = await fetch(url.toString());
   return new NextResponse(res.body, {
