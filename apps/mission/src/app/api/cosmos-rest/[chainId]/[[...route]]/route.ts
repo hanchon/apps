@@ -1,4 +1,4 @@
-import { fetchChains } from "@evmosapps/registry/src/fetch-chains";
+import { cachedFetchChains } from "@evmosapps/registry/src/fetch-chains";
 import { NextResponse } from "next/server";
 import path from "path";
 export async function GET(
@@ -12,7 +12,7 @@ export async function GET(
     };
   }
 ) {
-  const { chains, dt } = await fetchChains();
+  const { chains, dt } = await cachedFetchChains();
   const chain = chains.find((chain) => chain.identifier === chainId);
   if (!chain) {
     return new Response("Chain not found", { status: 404 });
