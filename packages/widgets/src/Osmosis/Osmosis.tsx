@@ -23,6 +23,7 @@ export default function Osmosis() {
     data: swapHash,
     isPending: swapIsLoading,
     reset: resetSwap,
+    error: swapError,
   } = useOsmosisPrecompile();
 
   const [detailsOpen, setDetailsOpen] = useState(false);
@@ -338,6 +339,14 @@ export default function Osmosis() {
             </div>
           </div>
         </div>
+        {swapError && (
+          <div
+            style={{ height: "50px" }}
+            className={`bg-osmoverse-900 text-sm text-red items-center flex-col justify-center relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 flex py-[10px]`}
+          >
+            Error generating transaction. Please try again later.
+          </div>
+        )}
         {swapHash && (
           <div
             style={{ height: "50px" }}

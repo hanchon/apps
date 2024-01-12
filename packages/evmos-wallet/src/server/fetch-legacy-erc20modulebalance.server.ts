@@ -2,7 +2,7 @@
 
 import { fetchTokens } from "@evmosapps/registry/src/fetch-tokens";
 import { fetchChains } from "@evmosapps/registry/src/fetch-chains";
-import { fetchTokenPrices } from "./fetch-token-prices";
+import { fetchTokenPrices } from "./fetch-token-prices.server";
 import { raise } from "helpers";
 import { ERC20BalanceResponse } from "../api/types";
 

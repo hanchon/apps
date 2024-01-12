@@ -1,5 +1,5 @@
 "use client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { StoreType, store } from "@evmosapps/evmos-wallet/src/redux/Store";
 import { WalletProvider } from "@evmosapps/evmos-wallet/src/wallet/components/WalletProvider";
 import { PropsWithChildren, useMemo, useState } from "react";
@@ -11,7 +11,7 @@ import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persist
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { GiveFeedback } from "./give-feedback";
 import { WagmiProvider } from "wagmi";
-
+import { queryClient } from "helpers/src/clients/query";
 function SnackbarsInternal() {
   const snackbars = useSelector(
     (state: StoreType) => state.snackbar.value.snackbars
@@ -32,15 +32,7 @@ function SnackbarsInternal() {
 }
 
 export const RootProviders = ({ children }: PropsWithChildren) => {
-  const [{ queryClient }] = useState(() => ({
-    queryClient: new QueryClient({
-      defaultOptions: {
-        queries: {
-          gcTime: 1000 * 60 * 60 * 24, // 24 hours
-        },
-      },
-    }),
-
+  const [{}] = useState(() => ({
     persister: createSyncStoragePersister({
       storage: typeof window === "undefined" ? undefined : window.localStorage,
     }),

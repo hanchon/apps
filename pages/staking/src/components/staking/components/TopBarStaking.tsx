@@ -10,13 +10,14 @@ import {
   ConfirmButton,
   Tooltip,
 } from "@evmosapps/ui-helpers";
-import { useEvmosBalance, useRewards } from "@evmosapps/evmos-wallet";
+import { useRewards } from "@evmosapps/evmos-wallet";
 import { StoreType } from "@evmosapps/evmos-wallet";
 import { convertFromAtto, displayTopBarTooltip } from "helpers";
 import { BigNumber } from "@ethersproject/bignumber";
 import { useStakingInfo } from "../../../utils/hooks/useStakingInfo";
 import { useAccount } from "wagmi";
 import { StatefulCountdown } from "./stateful-countdown";
+import { useEvmosBalance } from "../../../utils/hooks/useEvmosBalance";
 
 const TopBarStaking = () => {
   const wallet = useSelector((state: StoreType) => state.wallet.value);

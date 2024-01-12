@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { fetchTokenPrices } from "./fetch-token-prices";
+import { fetchTokenPrices } from "../server/fetch-token-prices.server";
 
 export const TokenPricesQueryOptions = () =>
   queryOptions({

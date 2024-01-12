@@ -4,7 +4,7 @@
 import { Hex } from "viem";
 import { EVMOS_BACKEND } from "../internal/wallet/functionality/networkConfig";
 import { getAccountBalances } from "../registry-actions";
-import { fetchLegacyERC20ModuleBalance } from "../server/fetch-legacy-erc20modulebalance";
+import { fetchLegacyERC20ModuleBalance } from "../server/fetch-legacy-erc20modulebalance.server";
 import { normalizeToCosmosAddress } from "../wallet";
 import {
   ERC20BalanceResponse,
