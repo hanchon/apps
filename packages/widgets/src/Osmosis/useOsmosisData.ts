@@ -2,7 +2,7 @@ import { useQueries } from "@tanstack/react-query";
 import { AccountBalancesQueryOptions } from "@evmosapps/evmos-wallet";
 import { useAccount } from "wagmi";
 import { TokenQueryOptions } from "@evmosapps/evmos-wallet/src/queries/token-query";
-import { AllTokenPricesQueryOptions } from "@evmosapps/evmos-wallet/src/queries/token-prices-query";
+import { AllTokenPricesQueryOptions } from "@evmosapps/evmos-wallet/src/queries/all-token-prices-query";
 export type SwapOption = {
   erc20Address: string;
   name: string;
