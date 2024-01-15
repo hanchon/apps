@@ -1,6 +1,6 @@
 "use server";
 import { TokenSymbol } from "@evmosapps/registry/autogen/registry";
-import { fetchTokenPrices } from "./fetch-token-prices";
+import { fetchTokenPrices } from "./fetch-token-prices.server";
 
 export const fetchTokenPriceByDenom = async (
   denom: TokenSymbol | (string & {})
