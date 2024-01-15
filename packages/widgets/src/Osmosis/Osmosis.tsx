@@ -90,19 +90,12 @@ export default function Osmosis() {
 
   function swapTokens() {
     try {
-      // TODO: this is for testnet testing. Rmove for mainnet
-      const input =
-        inputTokenDenom === "OSMO"
-          ? "0x5db67696C3c088DfBf588d3dd849f44266ff0ffa"
-          : "0xcc491f589b45d4a3c679016195b3fb87d7848210";
-      const output =
-        inputTokenDenom === "OSMO"
-          ? "0xcc491f589b45d4a3c679016195b3fb87d7848210"
-          : "0x5db67696C3c088DfBf588d3dd849f44266ff0ffa";
+      const input = inputTokenData?.erc20Address ?? ""
+      const output = outputTokenData?.erc20Address ?? ""
       swap({
         input: input,
         output: output,
-        amount: parseUnits(swapAmountInputValue.toString(), 1),
+        amount: parseUnits(swapAmountInputValue.toString(), inputTokenData?.exponent ?? 18),
         slippage_tolerance: currentSlippage,
       });
 
@@ -352,7 +345,7 @@ export default function Osmosis() {
                 rel="noopener noreferrer"
                 target="_blank"
                 className="text-wosmongton-300 text-xs hover:text-osmoverse-200 transition-colors"
-                href={`https://testnet.escan.live/tx/${swapHash}`}
+                href={`https://escan.live/tx/${swapHash}`}
               >
                 View on Escan
               </Link>

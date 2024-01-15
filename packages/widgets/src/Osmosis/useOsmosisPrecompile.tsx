@@ -11,10 +11,10 @@ import { switchToEvmosChain } from "@evmosapps/evmos-wallet/src/wallet/actions/s
 
 const OSMOSIS_PRECOMPILE_ADDRESS = "0x0000000000000000000000000000000000000901";
 
-const CHANNEL_ID = "channel-215";
+const CHANNEL_ID = "channel-0";
 const CXS_CONTRACT =
   // eslint-disable-next-line no-secrets/no-secrets
-  "osmo1a34wxsxjwvtz3ua4hnkh4lv3d4qrgry0fhkasppplphwu5k538tqcyms9x";
+  "osmo18rj46qcpr57m3qncrj9cuzm0gn3km08w5jxxlnw002c9y7xex5xsu74ytz";
 const TIMEOUT = 10;
 
 export function useOsmosisPrecompile() {
