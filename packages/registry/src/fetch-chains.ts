@@ -5,6 +5,30 @@ import { loadRegistryChainExtensions } from "./load-registry-chain-extensions";
 import { fetchChainRegistryDirJsonFiles } from "./fetch-chain-registry-dir-json-files";
 import { unstable_cache } from "next/cache";
 
+const EVMOS_OVERWRITES = {
+  web3: [
+    "https://evmos.lava.build",
+    "https://evmos-json-rpc.stakely.io",
+    "https://jsonrpc-evmos-ia.cosmosia.notional.ventures/",
+    "https://jsonrpc.evmos.nodestake.top",
+    "https://evmos-mainnet.public.blastapi.io",
+    "https://evmos-evm.publicnode.com",
+    "https://evmos-rpc.gateway.pokt.network",
+    "https://jsonrpc-evmos.mms.team:443",
+    "https://web3endpoints.com/evmos-mainnet",
+    "https://evmos-json.antrixy.org",
+  ],
+  rest: [
+    "https://rest.evmos.lava.build",
+    "https://evmos-lcd.stakely.io",
+    "https://api.evmos.nodestake.top",
+    "https://api.evmos.silknodes.io",
+    "https://evmos-rest.publicnode.com",
+    "https://api-evmos.mms.team:443",
+    "https://evmos-rest.antrixy.org",
+  ],
+};
+
 export async function fetchChains() {
   const fromRegistry =
     fetchChainRegistryDirJsonFiles<ChainEntity>("chainConfig");
@@ -17,6 +41,8 @@ export async function fetchChains() {
     configurations.map((configuration) => ({
       ...chain,
       ...configuration,
+
+      ...(configuration.identifier === "evmos" ? EVMOS_OVERWRITES : {}),
     }))
   );
 

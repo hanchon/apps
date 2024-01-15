@@ -1,15 +1,19 @@
 "use client";
 import { PriceDownIcon } from "@evmosapps/icons/PriceDownIcon";
 import { PriceUpIcon } from "@evmosapps/icons/PriceUpIcon";
-import { TokenPriceQueryOptions } from "@evmosapps/evmos-wallet/src/queries/token-price-query-options";
+import { TokenPriceQueryOptions } from "@evmosapps/evmos-wallet/src/queries/token-price-query";
 import { assert, raise } from "helpers";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 export const PriceDisplay = () => {
-  const { data = raise("Evmos Price not found") } = useSuspenseQuery(
-    TokenPriceQueryOptions("EVMOS")
-  );
-  assert(data, "Evmos Price not found");
+  const { data } = useQuery(TokenPriceQueryOptions("EVMOS"));
+
+  if (!data) {
+    return (
+      <div className="w-[13ch] h-[1lh] bg-gray2/20 rounded-md animate-pulse" />
+    );
+  }
+
   return (
     <>
       <span>{data.usd.formattedPrice}</span>

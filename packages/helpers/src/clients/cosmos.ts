@@ -1,7 +1,14 @@
 import createClient from "openapi-fetch";
-import { paths } from "../../autogen/cosmos-client";
+import { paths } from "./cosmos-client";
+export const ENV_URL =
+  process.env.NEXT_PUBLIC_VERCEL_URL ?? typeof window === "undefined"
+    ? `http://localhost:${process.env.PORT}`
+    : "";
 
 export const cosmos = (chain: string) =>
   createClient<paths>({
-    baseUrl: `/api/cosmos-rest/${chain}/`,
+    baseUrl: ENV_URL + `/api/cosmos-rest/${chain}/`,
+    fetch,
   });
+
+export type CosmosClientPaths = paths;

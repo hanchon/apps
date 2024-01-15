@@ -16,11 +16,11 @@
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
+    "@evmosapps/icons": "workspace:*",
     "@evmosapps/ui-helpers": "workspace:*",
     "@types/node": "18.11.14",
     "constants-helper": "workspace:*",
     "helpers": "workspace:*",
-    "@evmosapps/icons": "workspace:*",
     "tracker": "workspace:*",
     "typescript": "^5.3.3",
     "zod": "^3.22.1"
@@ -46,6 +46,7 @@
     "long": "^5.2.3",
     "openapi-fetch": "^0.8.1",
     "openapi-typescript": "^6.7.1",
+    "openapi-typescript-helpers": "^0.0.6",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.2",

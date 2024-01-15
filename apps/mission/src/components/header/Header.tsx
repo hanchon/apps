@@ -14,9 +14,8 @@ export const Header = () => {
     >
       <Branding />
       <div className="flex justify-stretch items-stretch space-x-3 text-xs sm:text-base leading-none">
-        <ErrorBoundary fallback={null}>
-          <EvmosPrice />
-        </ErrorBoundary>
+        <EvmosPrice />
+
         <LaunchPad />
         <WalletButton />
       </div>
