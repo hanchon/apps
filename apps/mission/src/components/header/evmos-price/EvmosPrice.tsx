@@ -1,6 +1,9 @@
+"use client";
 import { EvmosRedIcon } from "@evmosapps/icons/EvmosRedIcon";
 import { cn } from "helpers";
-import { LazyPriceDisplay } from "./LazyPriceDisplay";
+
+import { Suspense } from "react";
+import { PriceDisplay } from "./PriceDisplay";
 
 export const EvmosPrice = () => {
   return (
@@ -8,7 +11,9 @@ export const EvmosPrice = () => {
       <EvmosRedIcon width={"1em"} height={"1em"} />
 
       <div className={cn("flex gap-3 items-center")}>
-        <LazyPriceDisplay />
+        <Suspense>
+          <PriceDisplay />
+        </Suspense>
       </div>
     </div>
   );

@@ -423,6 +423,9 @@ importers:
       openapi-typescript:
         specifier: ^6.7.1
         version: 6.7.1
+      openapi-typescript-helpers:
+        specifier: ^0.0.6
+        version: 0.0.6
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -16929,6 +16932,10 @@ packages:
 
   /openapi-typescript-helpers@0.0.4:
     resolution: {integrity: sha512-Q0MTapapFAG993+dx8lNw33X6P/6EbFr31yNymJHq56fNc6dODyRm8tWyRnGxuC74lyl1iCRMV6nQCGQsfVNKg==}
+    dev: false
+
+  /openapi-typescript-helpers@0.0.6:
+    resolution: {integrity: sha512-2d0qCzTcD8aADUMHjG/XOgti8/m857Z0q/Ix4y2jTGIpq5OLcE/KfTagcik8qkKDTowbvNo91XVxeZcni1twuQ==}
     dev: false
 
   /openapi-typescript@6.7.1:

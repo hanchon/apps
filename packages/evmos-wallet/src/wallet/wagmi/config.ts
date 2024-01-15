@@ -1,5 +1,10 @@
 import { createConfig, http } from "wagmi";
-import { getEvmosChainInfo } from "./chains";
+import {
+  evmosLocalnet,
+  evmosMainet,
+  evmosTestnet,
+  getEvmosChainInfo,
+} from "./chains";
 import { injected, safe, walletConnect } from "wagmi/connectors";
 import { WALLET_CONNECT_PROJECT_ID } from "../../internal/wallet/functionality/networkConfig";
 import { keplr } from "./keplrConnector";
@@ -7,9 +12,12 @@ import { keplr } from "./keplrConnector";
 const evmos = getEvmosChainInfo();
 
 export const wagmiConfig = createConfig({
-  chains: [evmos],
+  chains: [evmosMainet, evmosTestnet, evmosLocalnet],
+
   transports: {
     [evmos.id]: http(),
+    [evmosTestnet.id]: http(),
+    [evmosLocalnet.id]: http(),
   },
   ssr: true,
   multiInjectedProviderDiscovery: false,
