@@ -10,7 +10,7 @@ import {
 } from "helpers";
 import { notion } from "helpers/src/clients/notion";
 
-const evmosUtilsPropertiesSchema = createNotionPropertiesSchema(
+const evmosStatusPropertiesSchema = createNotionPropertiesSchema(
   z.object({
     checkbox: checkboxSchema.default(() => ({ checkbox: false })),
     name: titleSchema.default({ title: [{ plain_text: "" }] }),
@@ -18,20 +18,20 @@ const evmosUtilsPropertiesSchema = createNotionPropertiesSchema(
   })
 );
 
-const evmosUtilsSchema = z.object({
-  properties: evmosUtilsPropertiesSchema,
+const evmosStatusSchema = z.object({
+  properties: evmosStatusPropertiesSchema,
 });
 
-const fetchNotionEvmosUtils = async () =>
+const fetchNotionEvmosStatus = async () =>
   await notion.databases.query({
     database_id: EVMOS_UTILS_PAGE_NOTION_ID,
   });
 
-const fetchEvmosUtils = async () => {
-  const evmosUtils = await fetchNotionEvmosUtils();
+const fetchEvmosStatus = async () => {
+  const evmosStatus = await fetchNotionEvmosStatus();
 
-  return evmosUtils.results.map((result) => {
-    const parsed = evmosUtilsSchema.safeParse(result);
+  return evmosStatus.results.map((result) => {
+    const parsed = evmosStatusSchema.safeParse(result);
 
     if (!parsed.success) {
       Log("notion").error(parsed.error.issues);
@@ -47,7 +47,7 @@ const fetchEvmosUtils = async () => {
 };
 
 export const getServiceDisruptionData = async () => {
-  const data = await fetchEvmosUtils();
+  const data = await fetchEvmosStatus();
   const serviceStatus = data.find(
     (item) =>
       item.name.toLocaleLowerCase() === "Service disruption".toLocaleLowerCase()

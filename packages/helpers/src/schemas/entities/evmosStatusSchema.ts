@@ -4,7 +4,7 @@ import { checkboxSchema } from "../partials/checkboxSchema";
 import { richTextSchema } from "../partials/richTextSchema";
 import { titleSchema } from "../partials/titleSchema";
 
-export const evmosUtilsSchema = z.object({
+export const evmosStatusSchema = z.object({
   results: z.array(
     z.object({
       properties: z.object({
