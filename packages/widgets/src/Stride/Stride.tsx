@@ -19,16 +19,15 @@ import { UpRightArrowIcon } from "@evmosapps/icons/UpRightArrowIcon";
 
 import { useEffect, useState } from "react";
 import useStrideData from "./useStrideData";
-import { useAssets } from "@evmosapps/evmos-wallet";
-import { convertFromAtto } from "helpers";
 import { useStridePrecompile } from "./useStridePrecompile";
-import { parseUnits } from "viem";
+import { formatUnits, parseUnits } from "viem";
 import Link from "next/link";
+import { useEvmosData } from "./query-evmos-values";
 
 const StrideWidget = () => {
   const { themeClass, setTheme } = useTheme();
 
-  const { evmosPrice, totalEvmosAsset } = useAssets();
+  const { balance, evmosPrice } = useEvmosData();
   const [loadingLiquidStake, setLoadingLiquidStake] = useState(false);
   const { redemptionRate, strideYield } = useStrideData();
   const [evmosOption, setEvmosOption] = useState({
@@ -55,7 +54,7 @@ const StrideWidget = () => {
       setLoadingLiquidStake(false);
       setShowBalanceLink(true);
     } catch (e) {
-      console.log(e)
+      console.log(e);
       setLoadingLiquidStake(false);
     }
   }
@@ -68,13 +67,13 @@ const StrideWidget = () => {
     setEvmosOption((prev) => {
       return {
         ...prev,
-        available: totalEvmosAsset
-          ? parseFloat(convertFromAtto(totalEvmosAsset))
+        available: balance
+          ? parseFloat(formatUnits(BigInt(balance ?? "0"), 18))
           : 0,
-        priceDisplayAmount: parseFloat(evmosPrice) ?? 0,
+        priceDisplayAmount: parseFloat(evmosPrice),
       };
     });
-  }, [totalEvmosAsset, evmosPrice]);
+  }, [balance, evmosPrice]);
 
   const [reward, setReward] = useState<LiquidStakingProps["reward"]>({
     imgSrc:
