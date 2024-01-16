@@ -1,7 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { EvmosCopilotIcon } from "@evmosapps/icons/EvmosCopilotIcon";
 import cx from "clsx";
 
 export const InfoPanel = ({
@@ -23,8 +22,7 @@ export const InfoPanel = ({
         }
       )}
     >
-      {/* by default we show the wizard icon */}
-      {icon ? icon : <EvmosCopilotIcon width={70} />}
+      {icon && icon}
       <div className="relative -top-[3px] cursor-default">{children}</div>
     </section>
   );

@@ -3,7 +3,6 @@
 
 import { ComponentProps, useEffect } from "react";
 
-import { EvmosCopilotIcon } from "@evmosapps/icons/EvmosCopilotIcon";
 import {
   CLICK_CONNECTED_WITH,
   CLICK_EVMOS_COPILOT_START_FLOW,
@@ -14,7 +13,7 @@ import {
 
 import { E, cn } from "helpers";
 
-import { Badge, Divider } from "@evmosapps/ui-helpers";
+import { Divider } from "@evmosapps/ui-helpers";
 import { useAccount, useConnect } from "wagmi";
 
 import {
@@ -132,13 +131,10 @@ export const ConnectModalContent = ({
               sendEvent(CLICK_EVMOS_COPILOT_START_FLOW);
             }}
           >
-            <EvmosCopilotIcon className="h-9 w-auto" />
             <div className="flex flex-col text-sm grow">
               <p className="">Evmos Copilot</p>
               <p className="font-normal">Recommended for first time users</p>
             </div>
-
-            <Badge variant="success">New</Badge>
           </ButtonWallet>
         </div>
         <Divider>or</Divider>

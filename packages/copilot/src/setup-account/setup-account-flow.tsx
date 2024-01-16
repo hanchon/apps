@@ -1,5 +1,4 @@
 "use client";
-import { EvmosCopilotIcon } from "@evmosapps/icons/EvmosCopilotIcon";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { TopupEntryStep, TopupFundStep } from "../topup/steps";
 import { SetupConnectStep } from "./steps/setup-connect-step";
@@ -75,7 +74,6 @@ export const SetupAccountFlow = ({
     >
       <Copilot.Header
         title={t("header.title")}
-        icon={<EvmosCopilotIcon height={50} />}
         description={t("header.description")}
       >
         <SetupSteps />
