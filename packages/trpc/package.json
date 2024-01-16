@@ -1,0 +1,33 @@
+{
+  "name": "@evmosapps/trpc",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "SEE LICENSE IN LICENSE",
+  "sideEffects": false,
+  "exports": {
+    "./*": {
+      "import": {
+        "types": "./src/*.ts",
+        "default": "./src/*"
+      }
+    }
+  },
+  "scripts": {},
+  "devDependencies": {
+    "@evmosapps/config": "workspace:*",
+    "@evmosapps/registry": "workspace:*",
+    "helpers": "workspace:*",
+    "typescript": "^5.3.3"
+  },
+  "browserslist": [
+    "last 3 chrome version",
+    "last 3 firefox version",
+    "last 3 safari version"
+  ],
+  "dependencies": {
+    "@trpc/client": "^10.45.0",
+    "@trpc/react-query": "^10.45.0",
+    "@trpc/server": "^10.45.0",
+    "zod": "^3.22.1"
+  }
+}

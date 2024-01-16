@@ -187,6 +187,9 @@ importers:
       '@evmosapps/test-utils':
         specifier: workspace:*
         version: link:../../packages/test-utils
+      '@evmosapps/trpc':
+        specifier: workspace:*
+        version: link:../../packages/trpc
       '@evmosapps/ui-helpers':
         specifier: workspace:*
         version: link:../../packages/ui-helpers
@@ -448,6 +451,9 @@ importers:
       '@evmosapps/icons':
         specifier: workspace:*
         version: link:../icons
+      '@evmosapps/trpc':
+        specifier: workspace:*
+        version: link:../trpc
       '@types/node':
         specifier: 18.11.14
         version: 18.11.14
@@ -801,6 +807,34 @@ importers:
       '@types/node':
         specifier: 18.11.14
         version: 18.11.14
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
+  packages/trpc:
+    dependencies:
+      '@trpc/client':
+        specifier: ^10.45.0
+        version: 10.45.0(@trpc/server@10.45.0)
+      '@trpc/react-query':
+        specifier: ^10.45.0
+        version: 10.45.0(@tanstack/react-query@4.36.1)(@trpc/client@10.45.0)(@trpc/server@10.45.0)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/server':
+        specifier: ^10.45.0
+        version: 10.45.0
+      zod:
+        specifier: ^3.22.1
+        version: 3.22.4
+    devDependencies:
+      '@evmosapps/config':
+        specifier: workspace:*
+        version: link:../config
+      '@evmosapps/registry':
+        specifier: workspace:*
+        version: link:../registry
+      helpers:
+        specifier: workspace:*
+        version: link:../helpers
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -8030,6 +8064,10 @@ packages:
       tailwindcss: 3.4.1
     dev: false
 
+  /@tanstack/query-core@4.36.1:
+    resolution: {integrity: sha512-DJSilV5+ytBP1FbFcEJovv4rnnm/CokuVvrBEtW/Va9DvuJ3HksbXUJEpI0aV1KtuL4ZoO9AVE6PyNLzF7tLeA==}
+    dev: false
+
   /@tanstack/query-core@5.17.9:
     resolution: {integrity: sha512-8xcvpWIPaRMDNLMvG9ugcUJMgFK316ZsqkPPbsI+TMZsb10N9jk0B6XgPk4/kgWC2ziHyWR7n7wUhxmD0pChQw==}
 
@@ -8060,6 +8098,25 @@ packages:
       '@tanstack/react-query': 5.17.9(react@18.2.0)
       react: 18.2.0
     dev: true
+
+  /@tanstack/react-query@4.36.1(react-dom@18.2.0)(react-native@0.73.2)(react@18.2.0):
+    resolution: {integrity: sha512-y7ySVHFyyQblPl3J3eQBWpXZkliroki3ARnBKsdJchlgt7yJLRDUcf4B8soufgiYt3pEQIkBWBx1N9/ZPIeUWw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 4.36.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-native: 0.73.2(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+      use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
 
   /@tanstack/react-query@5.17.9(react@18.2.0):
     resolution: {integrity: sha512-M5E9gwUq1Stby/pdlYjBlL24euIVuGbWKIFCbtnQxSdXI4PgzjTSdXdV3QE6fc+itF+TUvX/JPTKIwq8yuBXcg==}
@@ -8134,6 +8191,34 @@ packages:
   /@tootallnate/once@2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
+    dev: false
+
+  /@trpc/client@10.45.0(@trpc/server@10.45.0):
+    resolution: {integrity: sha512-m091R1qte9rvkvL8N1e/mzrbb8S4gb+Q4ZNJnEGDgd7kic/6a8DFgSciBTiCoSp0YwOTVhyQzSrrA/sZI6PhBg==}
+    peerDependencies:
+      '@trpc/server': 10.45.0
+    dependencies:
+      '@trpc/server': 10.45.0
+    dev: false
+
+  /@trpc/react-query@10.45.0(@tanstack/react-query@4.36.1)(@trpc/client@10.45.0)(@trpc/server@10.45.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-MMc2pLwoaLZVwvLQyzJv3uEmdG3lORhifhVzR/drtavwDYwt+OEvH0w3s1zC7RaDdFpc6Nj2kkpHmdoU7BlAAw==}
+    peerDependencies:
+      '@tanstack/react-query': ^4.18.0
+      '@trpc/client': 10.45.0
+      '@trpc/server': 10.45.0
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react-native@0.73.2)(react@18.2.0)
+      '@trpc/client': 10.45.0(@trpc/server@10.45.0)
+      '@trpc/server': 10.45.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@trpc/server@10.45.0:
+    resolution: {integrity: sha512-2Fwzv6nqpE0Ie/G7PeS0EVR89zLm+c1Mw7T+RAGtU807j4oaUx0zGkBXTu5u9AI+j+BYNN2GZxJcuDTAecbr1A==}
     dev: false
 
   /@types/aria-query@5.0.4:

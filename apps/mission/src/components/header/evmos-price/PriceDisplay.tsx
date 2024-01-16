@@ -6,13 +6,9 @@ import { assert, raise } from "helpers";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 export const PriceDisplay = () => {
-  const { data } = useQuery(TokenPriceQueryOptions("EVMOS"));
+  const { data } = useSuspenseQuery(TokenPriceQueryOptions("EVMOS"));
 
-  if (!data) {
-    return (
-      <div className="w-[13ch] h-[1lh] bg-gray2/20 rounded-md animate-pulse" />
-    );
-  }
+  assert(data, "Token not found");
 
   return (
     <>

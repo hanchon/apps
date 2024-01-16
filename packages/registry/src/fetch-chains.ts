@@ -4,6 +4,7 @@ import { ChainEntity } from "../autogen/chain-entity";
 import { loadRegistryChainExtensions } from "./load-registry-chain-extensions";
 import { fetchChainRegistryDirJsonFiles } from "./fetch-chain-registry-dir-json-files";
 import { unstable_cache } from "next/cache";
+import { omit } from "lodash-es";
 
 const EVMOS_OVERWRITES = {
   web3: [

@@ -1,3 +1,5 @@
+import { trpc } from "@evmosapps/trpc/client";
+
 export type ERC20Element = {
   name: string;
   cosmosBalance: string;
@@ -16,10 +18,6 @@ export type ERC20Element = {
   erc20Address: string;
   tokenIdentifier: string;
   price24HChange: string;
-};
-
-export type ERC20BalanceResponse = {
-  balance: ERC20Element[];
 };
 
 type delegationResponse = {

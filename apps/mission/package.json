@@ -19,6 +19,7 @@
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
     "@evmosapps/copilot": "workspace:*",
+    "@evmosapps/trpc": "workspace:*",
     "@evmosapps/dappstore-page": "workspace:*",
     "@evmosapps/governance-page": "workspace:*",
     "@evmosapps/i18n": "workspace:*",

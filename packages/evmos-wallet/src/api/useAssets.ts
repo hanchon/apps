@@ -3,7 +3,6 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { ERC20BalanceResponse } from "./types";
 
 import { BigNumber } from "@ethersproject/bignumber";
 import { useAccount } from "wagmi";
@@ -14,6 +13,7 @@ import {
   amountToDollars,
 } from "helpers/src/styles";
 import { getAssetsForAddress } from "./fetch";
+import { ERC20BalanceResponse } from "@evmosapps/trpc/procedures/legacy-erc20modules";
 
 const usdFormat = new Intl.NumberFormat("en-US", {
   style: "currency",

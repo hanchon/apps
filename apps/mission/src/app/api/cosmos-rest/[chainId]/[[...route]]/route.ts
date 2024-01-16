@@ -17,8 +17,11 @@ export async function GET(
   if (!chain) {
     return new Response("Chain not found", { status: 404 });
   }
-
-  const url = new URL(chain.rest[0]);
+  const urlString = chain.rest[0];
+  if (!urlString) {
+    return new Response("Chain not found", { status: 404 });
+  }
+  const url = new URL(urlString);
 
   url.pathname = path.join(url.pathname, ...route);
   url.search = new URL(request.url).search;
