@@ -8,8 +8,8 @@ type LogCategory = "notion" | "tracking" | "dev-cache-mode" | "general";
 
 export const Log = (category: LogCategory = "general") => {
   const isEnabled =
-    process.env.ENABLED_LOGS === "true" ||
-    process.env.ENABLED_LOGS?.split(",").includes(category);
+    process.env.NEXT_PUBLIC_ENABLED_LOGS === "true" ||
+    process.env.NEXT_PUBLIC_ENABLED_LOGS?.split(",").includes(category);
   return {
     info: (message: unknown, ...messages: unknown[]) => {
       if (!isEnabled) return;

@@ -14,6 +14,7 @@ import Image from "next/image";
 import { useOsmosisPrecompile } from "./useOsmosisPrecompile";
 import { parseUnits } from "viem";
 import { formatUnits } from "@evmosapps/evmos-wallet/src/registry-actions/utils";
+import { EXPLORER_URL } from "constants-helper";
 
 export default function Osmosis() {
   const { data } = useOsmosisData();
@@ -90,12 +91,15 @@ export default function Osmosis() {
 
   function swapTokens() {
     try {
-      const input = inputTokenData?.erc20Address ?? ""
-      const output = outputTokenData?.erc20Address ?? ""
+      const input = inputTokenData?.erc20Address ?? "";
+      const output = outputTokenData?.erc20Address ?? "";
       swap({
         input: input,
         output: output,
-        amount: parseUnits(swapAmountInputValue.toString(), inputTokenData?.exponent ?? 18),
+        amount: parseUnits(
+          swapAmountInputValue.toString(),
+          inputTokenData?.exponent ?? 18
+        ),
         slippage_tolerance: currentSlippage,
       });
 
@@ -345,7 +349,7 @@ export default function Osmosis() {
                 rel="noopener noreferrer"
                 target="_blank"
                 className="text-wosmongton-300 text-xs hover:text-osmoverse-200 transition-colors"
-                href={`https://escan.live/tx/${swapHash}`}
+                href={`${EXPLORER_URL}/tx/${swapHash}`}
               >
                 View on Escan
               </Link>
