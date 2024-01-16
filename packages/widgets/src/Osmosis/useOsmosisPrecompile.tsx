@@ -61,17 +61,27 @@ export function useOsmosisPrecompile() {
         gas: 1227440n,
       });
     },
+    onError: (e) => {
+      // eslint-disable-next-line no-console
+      console.error(e);
+    },
   });
+
+  const mappedError = () => {
+    if (!error) {
+      return null;
+    }
+    if (
+      E.match.byPattern(error, /(Request rejected|User rejected the request)/g)
+    ) {
+      return "Request rejected";
+    }
+    return "Error generating transaction, please try again";
+  };
 
   return {
     swap: mutate,
-    // TODO: add more errors while getting them
-    error: E.match.byPattern(
-      error,
-      /(Request rejected|User rejected the request)/g
-    )
-      ? "Request rejected"
-      : "Error generating transaction. Please try again later.",
+    error: mappedError(),
     ...rest,
   };
 }
