@@ -14,7 +14,7 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { omit } from "lodash-es";
-import { paths } from "../../../autogen/cosmos-client";
+import { paths } from "./cosmos-client";
 
 export const cosmosClient = (prefix: Prefixish) =>
   createClient<paths>({

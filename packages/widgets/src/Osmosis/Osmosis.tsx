@@ -90,19 +90,12 @@ export default function Osmosis() {
 
   function swapTokens() {
     try {
-      // TODO: this is for testnet testing. Rmove for mainnet
-      const input =
-        inputTokenDenom === "OSMO"
-          ? "0x5db67696C3c088DfBf588d3dd849f44266ff0ffa"
-          : "0xcc491f589b45d4a3c679016195b3fb87d7848210";
-      const output =
-        inputTokenDenom === "OSMO"
-          ? "0xcc491f589b45d4a3c679016195b3fb87d7848210"
-          : "0x5db67696C3c088DfBf588d3dd849f44266ff0ffa";
+      const input = inputTokenData?.erc20Address ?? ""
+      const output = outputTokenData?.erc20Address ?? ""
       swap({
         input: input,
         output: output,
-        amount: parseUnits(swapAmountInputValue.toString(), 1),
+        amount: parseUnits(swapAmountInputValue.toString(), inputTokenData?.exponent ?? 18),
         slippage_tolerance: currentSlippage,
       });
 
@@ -203,20 +196,14 @@ export default function Osmosis() {
               <input
                 value={swapAmountInputValue}
                 onKeyDown={(event) => {
-                  if (event.key === "-" || event.key === ".") {
+                  if (event.key === "-") {
                     event.preventDefault();
                   }
                 }}
                 onChange={(e) => {
                   setShowBalanceLink(false);
                   resetSwap();
-                  const _amount = parseFloat(e.target.value).toString();
-                  setSwapAmountInputValue(
-                    (typeof _amount === "number" && _amount === 0) ||
-                      _amount === "NaN"
-                      ? ""
-                      : _amount
-                  );
+                  setSwapAmountInputValue(e.target.value);
                 }}
                 placeholder="0"
                 type="number"
@@ -358,7 +345,7 @@ export default function Osmosis() {
                 rel="noopener noreferrer"
                 target="_blank"
                 className="text-wosmongton-300 text-xs hover:text-osmoverse-200 transition-colors"
-                href={`https://testnet.escan.live/tx/${swapHash}`}
+                href={`https://escan.live/tx/${swapHash}`}
               >
                 View on Escan
               </Link>
@@ -407,54 +394,55 @@ export default function Osmosis() {
               </div>
             )}
           </button>
-
-          <div className="absolute text-xs flex flex-col gap-4 pt-5 transition-opacity w-[358px] md:w-[94%]">
-            <div className="flex justify-between gap-1">
-              <span>Price Impact</span>
-              <span className="text-osmoverse-200">
-                {formatNumber(latestQuote?.price_impact, 4)}%
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span>Swap Fee (0.2%)</span>
-              {outputTokenData?.price && (
+          {enableDetails && (
+            <div className="absolute text-xs flex flex-col gap-4 pt-5 transition-opacity w-[358px] md:w-[94%]">
+              <div className="flex justify-between gap-1">
+                <span>Price Impact</span>
                 <span className="text-osmoverse-200">
-                  ≈ $
-                  {formatNumber(
-                    (number_min_received * outputTokenData.price * 0.2) / 100,
-                    4
-                  )}
+                  {formatNumber(latestQuote?.price_impact, 4)}%
                 </span>
-              )}
-            </div>
-            <hr className="text-white/20" />
-            <div className="flex justify-between gap-1">
-              <span className="max-w-[140px]">Expected Output</span>
-              <span className="whitespace-nowrap text-osmoverse-200">
-                ≈ {formatNumber(number_min_received, 5)}{" "}
-                {outputTokenData?.coinDenom}
-              </span>
-            </div>
-            <div className="flex justify-between gap-1">
-              <span className="max-w-[140px]">
-                Minimun received after slippage ({currentSlippage}%)
-              </span>
-              <div className="flex flex-col gap-0.5 text-right text-osmoverse-200">
-                <span className="whitespace-nowrap">
-                  {formatNumber(minReceivedAfterSlippage, 5)} OSMO
-                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Swap Fee (0.2%)</span>
                 {outputTokenData?.price && (
-                  <span>
+                  <span className="text-osmoverse-200">
                     ≈ $
                     {formatNumber(
-                      minReceivedAfterSlippage * outputTokenData.price,
-                      5
+                      (number_min_received * outputTokenData.price * 0.2) / 100,
+                      4
                     )}
                   </span>
                 )}
               </div>
+              <hr className="text-white/20" />
+              <div className="flex justify-between gap-1">
+                <span className="max-w-[140px]">Expected Output</span>
+                <span className="whitespace-nowrap text-osmoverse-200">
+                  ≈ {formatNumber(number_min_received, 5)}{" "}
+                  {outputTokenData?.coinDenom}
+                </span>
+              </div>
+              <div className="flex justify-between gap-1">
+                <span className="max-w-[140px]">
+                  Minimun received after slippage ({currentSlippage}%)
+                </span>
+                <div className="flex flex-col gap-0.5 text-right text-osmoverse-200">
+                  <span className="whitespace-nowrap">
+                    {formatNumber(minReceivedAfterSlippage, 5)} OSMO
+                  </span>
+                  {outputTokenData?.price && (
+                    <span>
+                      ≈ $
+                      {formatNumber(
+                        minReceivedAfterSlippage * outputTokenData.price,
+                        5
+                      )}
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <button
@@ -463,7 +451,8 @@ export default function Osmosis() {
             loading ||
             swapIsLoading ||
             number_min_received === 0 ||
-            enoughBalance === false
+            enoughBalance === false ||
+            swapAmount === 0
           }
           className={`${
             loading || swapIsLoading || number_min_received === 0
