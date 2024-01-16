@@ -17,9 +17,11 @@ export default withEvmosConfig({
       return [];
     }
     const suffix = process.env.VERCEL_ENV === "production" ? "" : "-staging";
-    return ["portfolio", "staking", "governance"].map((app) => ({
+    const redirects = ["portfolio", "staking", "governance"].map((app) => ({
       source: `/${app}/:path*`,
       destination: `https://evmos-${app + suffix}.vercel.app/portfolio/:path*`,
     }));
+    console.log("redirects", redirects);
+    return redirects;
   },
 });
