@@ -8,6 +8,7 @@ import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chai
 import { useMutation } from "@tanstack/react-query";
 import { writeContract } from "wagmi/actions";
 import { switchToEvmosChain } from "@evmosapps/evmos-wallet/src/wallet/actions/switchToEvmosChain";
+import { E } from "helpers";
 
 const OSMOSIS_PRECOMPILE_ADDRESS = "0x0000000000000000000000000000000000000901";
 
@@ -20,7 +21,7 @@ const TIMEOUT = 10;
 export function useOsmosisPrecompile() {
   const { address } = useAccount();
   const config = useConfig();
-  const { mutate, ...rest } = useMutation({
+  const { mutate, error, ...rest } = useMutation({
     mutationKey: ["osmosis-swap"],
     mutationFn: async function swap({
       input,
@@ -64,6 +65,13 @@ export function useOsmosisPrecompile() {
 
   return {
     swap: mutate,
+    // TODO: add more errors while getting them
+    error: E.match.byPattern(
+      error,
+      /(Request rejected|User rejected the request)/g
+    )
+      ? "Request rejected"
+      : "Error generating transaction. Please try again later.",
     ...rest,
   };
 }
