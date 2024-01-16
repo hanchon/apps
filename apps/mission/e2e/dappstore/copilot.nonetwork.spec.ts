@@ -25,7 +25,7 @@ describe("Mission Page - Copilot", () => {
 
       await page
         .getByRole("button", {
-          name: /Evmos Copilot Recommended for first time users New/i,
+          name: /Evmos Copilot Recommended for first time users /i,
         })
         .click();
       const switchNetworkPopup = pageListener(context);

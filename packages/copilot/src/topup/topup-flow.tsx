@@ -1,6 +1,5 @@
 import { TopupEntryStep, TopupFundStep } from "./steps";
 
-import { EvmosCopilotIcon } from "@evmosapps/icons/EvmosCopilotIcon";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { Copilot } from "../copilot";
 
@@ -11,7 +10,6 @@ export const TopupFlow = () => {
     <Copilot flowId="topup">
       <Copilot.Header
         title={t("header.title")}
-        icon={<EvmosCopilotIcon height={70} />}
         description={t("header.description")}
       />
       <Copilot.Steps>
