@@ -19,17 +19,16 @@ import { UpRightArrowIcon } from "@evmosapps/icons/UpRightArrowIcon";
 
 import { useEffect, useState } from "react";
 import useStrideData from "./useStrideData";
-import { useAssets } from "@evmosapps/evmos-wallet";
-import { convertFromAtto } from "helpers";
 import { useStridePrecompile } from "./useStridePrecompile";
-import { parseUnits } from "viem";
+import { formatUnits, parseUnits } from "viem";
 import Link from "next/link";
 import { EXPLORER_URL } from "constants-helper";
+import { useEvmosData } from "./query-evmos-values";
 
 const StrideWidget = () => {
   const { themeClass, setTheme } = useTheme();
 
-  const { evmosPrice, totalEvmosAsset } = useAssets();
+  const { balance, evmosPrice } = useEvmosData();
   const { redemptionRate, strideYield } = useStrideData();
   const [evmosOption, setEvmosOption] = useState({
     available: 0,
@@ -66,14 +65,14 @@ const StrideWidget = () => {
     setEvmosOption((prev) => {
       return {
         ...prev,
-        available: totalEvmosAsset
-          ? parseFloat(convertFromAtto(totalEvmosAsset))
+        available: balance
+          ? parseFloat(formatUnits(BigInt(balance ?? "0"), 18))
           : 0,
         priceDisplayAmount:
           parseFloat(evmosPrice === "--" ? "0" : evmosPrice) ?? 0,
       };
     });
-  }, [totalEvmosAsset, evmosPrice]);
+  }, [balance, evmosPrice]);
 
   const [reward, setReward] = useState<LiquidStakingProps["reward"]>({
     imgSrc:
