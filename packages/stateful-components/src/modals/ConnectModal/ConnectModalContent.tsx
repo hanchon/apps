@@ -24,6 +24,7 @@ import { useSetupCopilotModal } from "../SetupAccountModal/SetupAccountModal";
 import { ProvidersIcons } from "../../providerIcons";
 import { ComingSoonWallets } from "./coming-soon-wallets";
 import Image from "next/image";
+import { EvmosRedIcon } from "@evmosapps/icons/EvmosRedIcon";
 export const ButtonWallet = ({
   className,
   disabled,
@@ -131,6 +132,7 @@ export const ConnectModalContent = ({
               sendEvent(CLICK_EVMOS_COPILOT_START_FLOW);
             }}
           >
+            <EvmosRedIcon className="h-9 w-auto" />
             <div className="flex flex-col text-sm grow">
               <p className="">Evmos Copilot</p>
               <p className="font-normal">Recommended for first time users</p>
