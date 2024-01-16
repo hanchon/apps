@@ -7,6 +7,7 @@ import { HeroSection } from "./partials/hero-section";
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 import { CopilotCard } from "./partials/copilot-card/copilot-card";
 import { ButtonSeedApps } from "./partials/button-see-dapps";
+
 export const LandingPage = async () => {
   const { dApps } = await fetchExplorerData();
 
