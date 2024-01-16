@@ -5,7 +5,8 @@ import { writeContract } from "wagmi/actions";
 import { useAccount, useConfig } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
 import { switchToEvmosChain } from "@evmosapps/evmos-wallet/src/wallet/actions/switchToEvmosChain";
-import { E } from "helpers";
+import { E, Log } from "helpers";
+import { useMemo } from "react";
 
 const STRIDE_PRECOMPILE_ADDRESS = "0xeE44c15a354F72bb787FFfe2975872380E37afED";
 
@@ -30,12 +31,11 @@ export function useStridePrecompile() {
       });
     },
     onError: (e) => {
-      // eslint-disable-next-line no-console
-      console.error(e);
+      Log().error(e);
     },
   });
 
-  const mappedError = () => {
+  const mappedError = useMemo(() => {
     if (!error) {
       return null;
     }
@@ -45,10 +45,11 @@ export function useStridePrecompile() {
       return "Request rejected";
     }
     return "Error generating transaction, please try again";
-  };
+  }, [error]);
+
   return {
     liquidStake: mutate,
-    error: mappedError(),
+    errorMessage: mappedError,
     ...rest,
   };
 }

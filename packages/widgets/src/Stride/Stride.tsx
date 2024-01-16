@@ -45,7 +45,7 @@ const StrideWidget = () => {
     data: transactionHash,
     isPending: loadingLiquidStake,
     reset: resetLiquidStake,
-    error: liquidStakeError,
+    errorMessage: liquidStakeError,
   } = useStridePrecompile();
 
   function handleLiquidStake() {
