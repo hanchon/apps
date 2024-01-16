@@ -24,6 +24,7 @@ import { convertFromAtto } from "helpers";
 import { useStridePrecompile } from "./useStridePrecompile";
 import { parseUnits } from "viem";
 import Link from "next/link";
+import { EXPLORER_URL } from "constants-helper";
 
 const StrideWidget = () => {
   const { themeClass, setTheme } = useTheme();
@@ -68,7 +69,8 @@ const StrideWidget = () => {
         available: totalEvmosAsset
           ? parseFloat(convertFromAtto(totalEvmosAsset))
           : 0,
-        priceDisplayAmount: parseFloat(evmosPrice) ?? 0,
+        priceDisplayAmount:
+          parseFloat(evmosPrice === "--" ? "0" : evmosPrice) ?? 0,
       };
     });
   }, [totalEvmosAsset, evmosPrice]);
@@ -202,8 +204,8 @@ const StrideWidget = () => {
                     <Link
                       rel="noopener noreferrer"
                       target="_blank"
-                      className="text-[#d12e71] text-xs  transition-colors"
-                      href={`https://testnet.escan.live/tx/${transactionHash}`}
+                      className="text-[#d12e71] text-xs transition-colors"
+                      href={`${EXPLORER_URL}/tx/${transactionHash}`}
                     >
                       Track on Escan
                     </Link>
@@ -229,7 +231,7 @@ const StrideWidget = () => {
                 style={{ height: "50px" }}
                 className={`text-sm  border-2 border-[#262B30] text-red items-center flex-col justify-center relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 flex py-[10px]`}
               >
-                Error generating transaction. Please try again later.
+                {liquidStakeError}
               </div>
             )}
             <Button

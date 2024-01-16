@@ -36,7 +36,8 @@
     "react-icons": "^4.12.0",
     "react-input-autosize": "^3.0.0",
     "tracker": "workspace:*",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "constants-helper": "workspace:*"
   },
   "browserslist": [
     "last 3 chrome version",

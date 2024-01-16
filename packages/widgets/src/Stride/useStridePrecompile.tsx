@@ -1,11 +1,11 @@
 "use client";
-import StrideABI from "./abi/StridePrecompileABI.json";
-
+import StrideABI from "./abi/StrideTempABI.json";
 import { ethToBech32, ethToEvmos } from "@evmosapps/evmos-wallet";
 import { writeContract } from "wagmi/actions";
 import { useAccount, useConfig } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
 import { switchToEvmosChain } from "@evmosapps/evmos-wallet/src/wallet/actions/switchToEvmosChain";
+import { E } from "helpers";
 
 const STRIDE_PRECOMPILE_ADDRESS = "0xeE44c15a354F72bb787FFfe2975872380E37afED";
 
@@ -13,7 +13,7 @@ export function useStridePrecompile() {
   const { address } = useAccount();
 
   const config = useConfig();
-  const { mutate, ...rest } = useMutation({
+  const { mutate, error, ...rest } = useMutation({
     mutationKey: ["stride-swap"],
     mutationFn: async function liquidStake({ amount }: { amount: string }) {
       if (!address) throw new Error("Not connected");
@@ -26,7 +26,7 @@ export function useStridePrecompile() {
         functionName: "liquidStakeEvmos",
         account: address,
         args: [amount, ethToBech32(address, "stride"), ethToEvmos(address)],
-        gas: BigInt(1227440),
+        gas: 1227440n,
       });
     },
     onError: (e) => {
@@ -35,8 +35,20 @@ export function useStridePrecompile() {
     },
   });
 
+  const mappedError = () => {
+    if (!error) {
+      return null;
+    }
+    if (
+      E.match.byPattern(error, /(Request rejected|User rejected the request)/g)
+    ) {
+      return "Request rejected";
+    }
+    return "Error generating transaction, please try again";
+  };
   return {
     liquidStake: mutate,
+    error: mappedError(),
     ...rest,
   };
 }
