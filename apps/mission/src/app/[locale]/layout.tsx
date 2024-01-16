@@ -12,6 +12,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Modals } from "../../components/modals";
 import { Container } from "@evmosapps/ui-helpers/src/Container";
+import { StatefulBanner } from "stateful-components/src/banner/banner";
 
 export const dynamic = "error";
 
@@ -71,7 +72,11 @@ function RootLayout({
         <RootProviders>
           <main className="flex flex-col dark:text-white min-h-screen relative">
             <Header />
-            <Container className="grow">{children}</Container>
+
+            <Container className="grow">
+              <StatefulBanner />
+              {children}
+            </Container>
             <Footer />
           </main>
 

@@ -1,7 +1,6 @@
-import { dappSchema } from "./schemas/entities/dappSchema";
 import { inspect } from "util";
 import { ECOSYSTEM_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
-import { Log } from "helpers";
+import { Log, dappSchema } from "helpers";
 import { notion } from "helpers/src/clients/notion";
 import { cache } from "react";
 
