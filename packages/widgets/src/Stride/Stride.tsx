@@ -55,6 +55,7 @@ const StrideWidget = () => {
       setLoadingLiquidStake(false);
       setShowBalanceLink(true);
     } catch (e) {
+      console.log(e)
       setLoadingLiquidStake(false);
     }
   }
