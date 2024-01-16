@@ -23,7 +23,7 @@ export default function Osmosis() {
     data: swapHash,
     isPending: swapIsLoading,
     reset: resetSwap,
-    error: swapError,
+    errorMessage: swapError,
   } = useOsmosisPrecompile();
 
   const [detailsOpen, setDetailsOpen] = useState(false);

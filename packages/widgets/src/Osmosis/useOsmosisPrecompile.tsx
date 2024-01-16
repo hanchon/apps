@@ -8,7 +8,8 @@ import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chai
 import { useMutation } from "@tanstack/react-query";
 import { writeContract } from "wagmi/actions";
 import { switchToEvmosChain } from "@evmosapps/evmos-wallet/src/wallet/actions/switchToEvmosChain";
-import { E } from "helpers";
+import { E, Log } from "helpers";
+import { useMemo } from "react";
 
 const OSMOSIS_PRECOMPILE_ADDRESS = "0x0000000000000000000000000000000000000901";
 
@@ -62,12 +63,11 @@ export function useOsmosisPrecompile() {
       });
     },
     onError: (e) => {
-      // eslint-disable-next-line no-console
-      console.error(e);
+      Log().error(e);
     },
   });
 
-  const mappedError = () => {
+  const mappedError = useMemo(() => {
     if (!error) {
       return null;
     }
@@ -77,11 +77,11 @@ export function useOsmosisPrecompile() {
       return "Request rejected";
     }
     return "Error generating transaction, please try again";
-  };
+  }, [error]);
 
   return {
     swap: mutate,
-    error: mappedError(),
+    errorMessage: mappedError,
     ...rest,
   };
 }
