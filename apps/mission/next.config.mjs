@@ -8,11 +8,6 @@ export default withEvmosConfig({
   i18n: locale.i18n,
 
   async rewrites() {
-    console.log(
-      "building redirects",
-      process.env.VERCEL_ENV,
-      process.env.VERCEL
-    );
     if (process.env.VERCEL !== "1") {
       return {};
     }
@@ -30,7 +25,7 @@ export default withEvmosConfig({
         },
       ];
     });
-    console.log("redirects", redirects);
+
     return { beforeFiles: redirects };
   },
 });
