@@ -21,7 +21,7 @@ export async function fetchTokens() {
     const source = token.ibc?.source ?? raise("Token source not found");
 
     const chain = chainMap.get(source) ?? raise(`Chain ${source} not found`);
-    let networkType: ChainType = chain.configurationType;
+    const networkType: ChainType = chain.configurationType;
 
     return {
       ...token,
@@ -39,3 +39,7 @@ export async function fetchTokens() {
 
   return { tokens, dt: new Date().toISOString() };
 }
+
+export type TokenDetails = Awaited<
+  ReturnType<typeof fetchTokens>
+>["tokens"][number];

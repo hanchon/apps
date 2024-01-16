@@ -4,15 +4,13 @@
 import { Hex } from "viem";
 import { EVMOS_BACKEND } from "../internal/wallet/functionality/networkConfig";
 import { getAccountBalances } from "../registry-actions";
-import { fetchLegacyERC20ModuleBalance } from "../server/fetch-legacy-erc20modulebalance.server";
+
 import { normalizeToCosmosAddress } from "../wallet";
-import {
-  ERC20BalanceResponse,
-  ERC20Element,
-  StakingInfoResponse,
-} from "./types";
+import { ERC20Element, StakingInfoResponse } from "./types";
+import { trpc } from "@evmosapps/trpc/client";
+import { ERC20BalanceResponse } from "@evmosapps/trpc/procedures/legacy-erc20modules";
 const getAssets = async () => {
-  return await fetchLegacyERC20ModuleBalance();
+  return await trpc.fetchLegacyERC20ModuleBalance.query();
 };
 
 export const getAssetsForAddress = async (

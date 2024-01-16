@@ -24,4 +24,9 @@ export default withEvmosConfig({
       },
     ],
   },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
 });

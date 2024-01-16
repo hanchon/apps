@@ -1,9 +1,10 @@
 import { queryOptions } from "@tanstack/react-query";
-import { fetchTokenPrices } from "../server/fetch-token-prices.server";
+import { trpc } from "@evmosapps/trpc/client";
 
 export const AllTokenPricesQueryOptions = () =>
   queryOptions({
     refetchInterval: 5 * 60 * 1000,
+    staleTime: 5 * 60 * 1000,
     queryKey: ["tokenPrices"],
-    queryFn: () => fetchTokenPrices(),
+    queryFn: () => trpc.tokenPrices.query(),
   });

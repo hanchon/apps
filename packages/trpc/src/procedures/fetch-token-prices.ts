@@ -2,8 +2,10 @@
 import { fetchTokens } from "@evmosapps/registry/src/fetch-tokens";
 import { isUndefined } from "helpers";
 import { cachedFetch } from "helpers/src/dev/cached-fetch";
+import { formatFiat } from "helpers/src/format/format-fiat";
+import { z } from "zod";
 
-const revalidate = 5 * 60 * 1000; // 5 minutes
+const revalidate = 5 * 60; // 5 minutes
 
 type CoingeckoTokenPriceResponse<C extends string> = {
   [x in C | `${C}_24h_change` | "last_updated_at"]?: number;
@@ -14,12 +16,6 @@ type CoingeckoResponse<T extends string, C extends string> = string extends T
       [K in T]: CoingeckoTokenPriceResponse<C>;
     };
 
-const formatFiat = (value: number) => {
-  return value.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-};
 const fetchCoinGeckoTokenPrices = async function <
   const T extends string,
   const C extends string,
@@ -44,7 +40,25 @@ const fetchCoinGeckoTokenPrices = async function <
     .then((res) => res.json() as Promise<unknown>)
     .then((tokenPrices) => tokenPrices)) as Promise<CoingeckoResponse<T, C>>;
 };
-
+const fetchStevmosRedemptionRate = async () => {
+  const resp = await fetch(
+    "https://stride-api.polkachu.com/Stride-Labs/stride/stakeibc/host_zone/evmos_9001-2",
+    {
+      next: {
+        revalidate,
+        tags: ["stride-redemption-rate"],
+      },
+    }
+  ).then((res) => res.json());
+  return z
+    .object({
+      host_zone: z.object({
+        redemption_rate: z.coerce.number(),
+      }),
+    })
+    .transform((data) => data.host_zone.redemption_rate)
+    .parse(resp);
+};
 export const fetchTokenPrices = async () => {
   const url = new URL("https://api.coingecko.com/api/v3/simple/price");
   url.searchParams.set("include_24hr_change", "true");
@@ -64,7 +78,7 @@ export const fetchTokenPrices = async () => {
     "usd",
   ]);
 
-  return Object.entries(coingeckoPrices).reduce<
+  const prices = Object.entries(coingeckoPrices).reduce<
     {
       usd: {
         price: number;
@@ -98,6 +112,26 @@ export const fetchTokenPrices = async () => {
         .filter((token) => token.coingeckoId === coingeckoId)
         .map((token) => token.coinDenom),
     });
+
     return acc;
   }, []);
+
+  const evmos = prices.find((price) => price.coinDenoms.includes("EVMOS"));
+  if (evmos) {
+    const stevmosRedemptionRate = await fetchStevmosRedemptionRate();
+
+    prices.push({
+      ...evmos,
+
+      coinDenoms: ["stEVMOS"],
+      coingeckoId: "stride-staked-evmos",
+      usd: {
+        ...evmos.usd,
+        price: evmos.usd.price / stevmosRedemptionRate,
+        formattedPrice: formatFiat(evmos.usd.price / stevmosRedemptionRate),
+      },
+    });
+  }
+
+  return prices;
 };

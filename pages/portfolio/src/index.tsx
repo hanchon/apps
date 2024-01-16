@@ -5,11 +5,10 @@ import { PayModal } from "./modals/pay/Modal";
 import { Suspense } from "react";
 import { ReceiptModal } from "./modals/receipt/ReceiptModal";
 import { ConvertModal } from "./modals/convert/ConvertModal";
-import { PortfolioSummary } from "./PortfolioSummary";
+
 export const PortfolioPage = () => {
   return (
     <>
-      <PortfolioSummary />
       <AssetsTable />
       <Suspense>
         <TransferModal />
