@@ -29,7 +29,6 @@ const StrideWidget = () => {
   const { themeClass, setTheme } = useTheme();
 
   const { evmosPrice, totalEvmosAsset } = useAssets();
-  const [loadingLiquidStake, setLoadingLiquidStake] = useState(false);
   const { redemptionRate, strideYield } = useStrideData();
   const [evmosOption, setEvmosOption] = useState({
     available: 0,
@@ -39,24 +38,23 @@ const StrideWidget = () => {
     priceDisplayAmount: 0,
     symbol: "EVMOS",
   });
-  const [transactionHash, setTransactionHash] = useState<string | null>(null);
   const [showBalanceLink, setShowBalanceLink] = useState(false);
 
-  const { liquidStake } = useStridePrecompile();
+  const {
+    liquidStake,
+    data: transactionHash,
+    isPending: loadingLiquidStake,
+    reset: resetLiquidStake,
+    error: liquidStakeError,
+  } = useStridePrecompile();
 
-  async function handleLiquidStake() {
+  function handleLiquidStake() {
     try {
-      setShowBalanceLink(false);
-      setLoadingLiquidStake(true);
-      const res = await liquidStake({
+      liquidStake({
         amount: parseUnits(stakedAmount.toString(), 18).toString(),
       });
-      setTransactionHash(res);
-      setLoadingLiquidStake(false);
       setShowBalanceLink(true);
-    } catch (e) {
-      setLoadingLiquidStake(false);
-    }
+    } catch (e) {}
   }
 
   useEffect(() => {
@@ -85,7 +83,6 @@ const StrideWidget = () => {
   });
 
   const [stakedAmount, setStakedAmount] = useState<number>(0);
-
   return (
     <div id="" className={`${themeClass}`}>
       <LiquidStaking
@@ -124,9 +121,8 @@ const StrideWidget = () => {
           },
         ]}
         onChange={(payloadStakedAmount) => {
-          setTransactionHash(null);
           setShowBalanceLink(false);
-          setLoadingLiquidStake(false);
+          resetLiquidStake();
           if (isNaN(payloadStakedAmount)) {
             setStakedAmount(0);
             setReward((prevReward) => {
@@ -195,7 +191,7 @@ const StrideWidget = () => {
         )}
         renderSubmitButton={() => (
           <div className="flex flex-col gap-3">
-            {transactionHash !== null && (
+            {transactionHash && (
               <div
                 style={{ height: "50px" }}
                 className={`text-sm text-black border-2 border-[#262B30] items-center flex-col justify-center relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 flex py-[10px]`}
@@ -227,7 +223,17 @@ const StrideWidget = () => {
                 </div>
               </div>
             )}
+
+            {liquidStakeError && (
+              <div
+                style={{ height: "50px" }}
+                className={`text-sm  border-2 border-[#262B30] text-red items-center flex-col justify-center relative overflow-hidden rounded-lg  px-4 transition-all duration-300 ease-inOutBack md:px-3 flex py-[10px]`}
+              >
+                Error generating transaction. Please try again later.
+              </div>
+            )}
             <Button
+              disabled={loadingLiquidStake || stakedAmount === 0}
               onClick={handleLiquidStake}
               intent="tertiary"
               size="lg"
