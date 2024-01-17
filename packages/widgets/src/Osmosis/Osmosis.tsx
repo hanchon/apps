@@ -74,7 +74,7 @@ export default function Osmosis() {
     formatUnits(
       BigInt(inputTokenData?.balance ?? 0n),
       inputTokenData?.exponent ?? 0,
-      3
+      6
     )
   );
 
