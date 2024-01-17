@@ -71,12 +71,10 @@ function RootLayout({
       >
         <RootProviders>
           <main className="flex flex-col dark:text-white min-h-screen relative">
+            <StatefulBanner />
             <Header />
 
-            <Container className="grow">
-              <StatefulBanner />
-              {children}
-            </Container>
+            <Container className="grow">{children}</Container>
             <Footer />
           </main>
 
