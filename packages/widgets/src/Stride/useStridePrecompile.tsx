@@ -1,12 +1,14 @@
 "use client";
 import StrideABI from "./abi/StrideTempABI.json";
-import { ethToBech32, ethToEvmos } from "@evmosapps/evmos-wallet";
+
 import { writeContract } from "wagmi/actions";
 import { useAccount, useConfig } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
 import { switchToEvmosChain } from "@evmosapps/evmos-wallet/src/wallet/actions/switchToEvmosChain";
 import { E, Log } from "helpers";
 import { useMemo } from "react";
+import { ethToEvmos } from "helpers/src/crypto/addresses/eth-to-evmos";
+import { ethToBech32 } from "@evmosapps/evmos-wallet";
 
 const STRIDE_PRECOMPILE_ADDRESS = "0xeE44c15a354F72bb787FFfe2975872380E37afED";
 

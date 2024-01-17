@@ -1,24 +1,24 @@
-import { useTokenBalance } from "@evmosapps/evmos-wallet";
 import { useQuery } from "@tanstack/react-query";
 import { useAccount } from "wagmi";
-import { fetchTokenPriceByDenom } from "@evmosapps/evmos-wallet/src/server/fetch-token-price-by-denom.server";
-import { raise } from "helpers";
+
+import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
+import { AccountBalanceByDenomQueryOptions } from "@evmosapps/trpc/procedures/account/account-balance-by-denom/client";
 
 export function useEvmosData() {
   const { address } = useAccount();
-  const { balance } = useTokenBalance(address, "evmos:EVMOS");
 
+  const chainRef = useEvmosChainRef();
   // TODO: is used on Header for EvmosPrice component
-  const { data } = useQuery({
-    queryKey: ["apiFetchTokenPriceByDenom", "evmos"],
-    refetchOnWindowFocus: true,
-    queryFn: async () =>
-      (await fetchTokenPriceByDenom("EVMOS")) ?? raise("Token Price Not Found"),
-    refetchInterval: 1000 * 60 * 5,
-  });
+  const { data } = useQuery(
+    AccountBalanceByDenomQueryOptions({
+      address,
+      denom: "EVMOS",
+      chainRef,
+    })
+  );
 
   return {
-    balance: balance?.value.toString() ?? "0",
-    evmosPrice: data?.usd.price.toString() ?? "0",
+    balance: data?.balance?.erc20.toString() ?? "0",
+    evmosPrice: data?.price?.usd.price.toString() ?? "0",
   };
 }
