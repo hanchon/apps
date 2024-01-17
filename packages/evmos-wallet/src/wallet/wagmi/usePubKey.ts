@@ -10,10 +10,11 @@ import { signatureToPubkey } from "@hanchon/signature-to-pubkey";
 import { assert, raise } from "helpers";
 
 import { getActiveProviderKey } from "../actions";
-import { getKeplrProvider, normalizeToEvmos } from "../utils";
+import { getKeplrProvider } from "../utils";
 import { getAccount, signMessage } from "wagmi/actions";
 import { wagmiConfig } from "./config";
 import { getEvmosChainInfo } from "./chains";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 const recoveryMessage = "generate_pubkey";
 const hashedMessage = Buffer.from(
   fromHex(hashMessage(recoveryMessage), "bytes")
@@ -37,7 +38,7 @@ const queryFn = async () => {
 
   pubkey = await queryPubKey(
     EVMOS_GRPC_URL,
-    normalizeToEvmos(address ?? raise("WALLET_PROVIDER_NOT_AVAILABLE"))
+    normalizeToCosmos(address ?? raise("WALLET_PROVIDER_NOT_AVAILABLE"))
   );
 
   if (pubkey) return pubkey;

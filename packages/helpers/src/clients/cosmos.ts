@@ -5,10 +5,17 @@ export const ENV_URL =
     ? `http://localhost:${process.env.PORT}`
     : "";
 
-export const cosmos = (chain: string) =>
+export const cosmos = (
+  chain: string,
+  config: {
+    baseUrl?: string;
+    fetch?: typeof fetch;
+  } = {}
+) =>
   createClient<paths>({
     baseUrl: ENV_URL + `/api/cosmos-rest/${chain}/`,
     fetch,
+    ...config,
   });
 
 export type CosmosClientPaths = paths;

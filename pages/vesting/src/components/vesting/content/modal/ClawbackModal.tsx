@@ -10,7 +10,6 @@ import {
   SNACKBAR_TYPES,
   GENERATING_TX_NOTIFICATIONS,
   BROADCASTED_NOTIFICATIONS,
-  normalizeToEth,
 } from "@evmosapps/evmos-wallet";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
@@ -24,6 +23,7 @@ import { ModalTitle } from "../../../ModalTitle";
 import { useConfig } from "wagmi";
 import { getChainId, switchChain } from "wagmi/actions";
 import { useTranslation } from "@evmosapps/i18n/client";
+import { normalizeToEth } from "helpers/src/crypto/addresses/normalize-to-eth";
 
 const evmos = getEvmosChainInfo();
 

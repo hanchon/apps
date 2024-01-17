@@ -1,12 +1,12 @@
 "use client";
 import { PriceDownIcon } from "@evmosapps/icons/PriceDownIcon";
 import { PriceUpIcon } from "@evmosapps/icons/PriceUpIcon";
-import { TokenPriceQueryOptions } from "@evmosapps/evmos-wallet/src/queries/token-price-query";
-import { assert, raise } from "helpers";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
+import { assert } from "helpers";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { TokenPriceByDenomQueryOptions } from "@evmosapps/trpc/procedures/tokens/queries/token-price-by-denom/client";
 export const PriceDisplay = () => {
-  const { data } = useSuspenseQuery(TokenPriceQueryOptions("EVMOS"));
+  const { data } = useSuspenseQuery(TokenPriceByDenomQueryOptions("EVMOS"));
 
   assert(data, "Token not found");
 

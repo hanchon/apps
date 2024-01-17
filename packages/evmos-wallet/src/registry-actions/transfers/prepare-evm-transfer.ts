@@ -1,14 +1,17 @@
 import { estimateGas, sendTransaction } from "wagmi/actions";
-import { normalizeToEth, Address, wagmiConfig } from "../../wallet";
+
 import { TokenAmount } from "../types";
 import { buffGasEstimate } from "../utils/buff-gas-estimate";
 import { raise } from "helpers";
+import { Address } from "helpers/src/crypto/addresses/types";
+import { normalizeToEth } from "helpers/src/crypto/addresses/normalize-to-eth";
+import { wagmiConfig } from "../../wallet";
 
 export const prepareEvmTransfer = async ({
   receiver,
   amount,
 }: {
-  receiver: Address<"evmos">;
+  receiver: Address;
   amount: TokenAmount;
 }) => {
   const args = {
@@ -30,7 +33,7 @@ export const writeEvmTransfer = async ({
   receiver,
   amount,
 }: {
-  receiver: Address<"evmos">;
+  receiver: Address;
   amount: TokenAmount;
 }) => {
   const response = await prepareEvmTransfer({

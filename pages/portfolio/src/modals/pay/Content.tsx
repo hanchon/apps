@@ -18,7 +18,6 @@ import { useAccount } from "wagmi";
 import {
   getActiveProviderKey,
   getChain,
-  normalizeToCosmosAddress,
   useTokenBalance,
 } from "@evmosapps/evmos-wallet";
 
@@ -43,6 +42,7 @@ import { createPortal } from "react-dom";
 import { TransactionInspector } from "../shared/TransactionInspector";
 import { useWatch } from "helpers";
 import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 export const Content = ({
   requester,
@@ -59,7 +59,7 @@ export const Content = ({
   const { data: evmosData } = useWalletAccountByPrefix("evmos");
   const sender =
     connector?.id === "metaMask"
-      ? address && normalizeToCosmosAddress(address)
+      ? address && normalizeToCosmos(address)
       : data?.bech32Address;
 
   const receiptModal = useReceiptModal();

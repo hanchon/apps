@@ -17,11 +17,7 @@ import {
   MsgConvertERC20,
   MsgConvertCoin,
 } from "@buf/evmos_evmos.bufbuild_es/evmos/erc20/v1/tx_pb";
-import {
-  Address,
-  normalizeToCosmosAddress,
-  signTypedDataMessage,
-} from "@evmosapps/evmos-wallet";
+import { signTypedDataMessage } from "@evmosapps/evmos-wallet";
 import { getIBCDenom } from "@evmosapps/evmos-wallet/src/registry-actions/utils/get-ibc-denom";
 import type { Message } from "@bufbuild/protobuf";
 import {
@@ -29,12 +25,11 @@ import {
   createTypedMessage,
 } from "@evmosapps/evmos-wallet/src/registry-actions/transfers/prepare-typed-message";
 
-import {
-  Prefix,
-  TokenRef,
-} from "@evmosapps/evmos-wallet/src/registry-actions/types";
+import { TokenRef } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { Skeleton } from "./skeleton";
 import { MoneyInput } from "@evmosapps/ui-helpers/src/MoneyInput";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
+import { Address } from "helpers/src/crypto/addresses/types";
 
 const Card = ({ className, ...rest }: ComponentProps<"div">) => {
   return (
@@ -49,7 +44,7 @@ const Card = ({ className, ...rest }: ComponentProps<"div">) => {
 };
 
 export type TokenBalanceProps = {
-  address: Address<Prefix>;
+  address: Address;
   token: TokenRef;
   tokenType?: "ERC20" | "ICS20";
 };
@@ -179,7 +174,7 @@ export const ConvertModalContent = ({
               ? new MsgConvertERC20({
                   amount: amount.toString(),
                   contractAddress: tokenEntity.erc20Address,
-                  receiver: normalizeToCosmosAddress(address),
+                  receiver: normalizeToCosmos(address),
                   sender: address,
                 })
               : new MsgConvertCoin({
@@ -192,7 +187,7 @@ export const ConvertModalContent = ({
                     }),
                   },
                   receiver: address,
-                  sender: normalizeToCosmosAddress(address),
+                  sender: normalizeToCosmos(address),
                 }),
           ],
           gasLimit: GAS,

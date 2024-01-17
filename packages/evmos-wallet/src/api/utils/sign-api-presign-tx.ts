@@ -6,12 +6,12 @@ import {
   signTypedDataMessage,
   signKeplrDirect,
   getKeplrProvider,
-  ethToEvmos,
   wagmiConfig,
 } from "../../wallet";
 import { apiBroadcastEip712, apiBroadcastRawTx } from "../evmos-api/broadcast";
 import { ApiPresignTx } from "../../utils";
 import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
+import { ethToEvmos } from "helpers/src/crypto/addresses/eth-to-evmos";
 const evmosInfo = getEvmosChainInfo();
 
 async function signBackendTypedDataTransaction({

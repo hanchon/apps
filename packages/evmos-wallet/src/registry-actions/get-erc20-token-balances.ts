@@ -1,16 +1,15 @@
-import { Address, wagmiConfig } from "../wallet";
+import { wagmiConfig } from "../wallet";
 import { getTokens } from "./get-tokens";
-import { normalizeToEth, normalizeToEvmos } from "../wallet/utils/addresses";
+
 import { makeBalance } from "./utils/make-balance";
 import { Hex, erc20Abi } from "viem";
 import { FormattedBalance } from "./types";
 import { multicall } from "wagmi/actions";
+import { normalizeToEth } from "helpers/src/crypto/addresses/normalize-to-eth";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
+import { Address } from "helpers/src/crypto/addresses/types";
 
-export async function getERC20TokenBalances({
-  address,
-}: {
-  address: Address<"evmos">;
-}) {
+export async function getERC20TokenBalances({ address }: { address: Address }) {
   const tokens = getTokens().filter(({ erc20Address }) => erc20Address);
   const ethAddress = normalizeToEth(address);
 
@@ -23,7 +22,7 @@ export async function getERC20TokenBalances({
     })),
   });
 
-  const evmosAddress = normalizeToEvmos(address);
+  const evmosAddress = normalizeToCosmos(address);
   return response
     .reduce<FormattedBalance[]>((acc, response, index) => {
       if (response.status !== "success") return acc;

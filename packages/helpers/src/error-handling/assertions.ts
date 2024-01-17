@@ -1,4 +1,4 @@
-import { normalizeError } from "./normalizeError";
+import { ensureError } from "./normalizeError";
 
 /**
  * Throws an Error with the specified message
@@ -14,7 +14,7 @@ import { normalizeError } from "./normalizeError";
  */
 
 export const raise = (error: Error | string): never => {
-  throw normalizeError(error);
+  throw ensureError(error);
 };
 
 /**
@@ -36,6 +36,6 @@ export function assert(
   error: Error | string
 ): asserts condition {
   if (!condition) {
-    throw normalizeError(error);
+    throw ensureError(error);
   }
 }

@@ -4,7 +4,6 @@ import { LaunchPad } from "./LaunchPad";
 import { Container } from "@evmosapps/ui-helpers";
 import { EvmosPrice } from "./evmos-price/EvmosPrice";
 import { WalletButton } from "./WalletButton";
-import { ErrorBoundary } from "react-error-boundary";
 
 export const Header = () => {
   return (

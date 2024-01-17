@@ -1,4 +1,4 @@
-import { cachedFetchChains } from "@evmosapps/registry/src/fetch-chains";
+import { fetchPreferredCosmosRestUrl } from "@evmosapps/trpc/procedures/metrics/queries/preferred-cosmos-rest/server";
 import { NextResponse } from "next/server";
 import path from "path";
 export async function GET(
@@ -12,16 +12,8 @@ export async function GET(
     };
   }
 ) {
-  const { chains, dt } = await cachedFetchChains();
-  const chain = chains.find((chain) => chain.identifier === chainId);
-  if (!chain) {
-    return new Response("Chain not found", { status: 404 });
-  }
-  const urlString = chain.rest[0];
-  if (!urlString) {
-    return new Response("Chain not found", { status: 404 });
-  }
-  const url = new URL(urlString);
+  const { preferred } = await fetchPreferredCosmosRestUrl(chainId);
+  const url = new URL(preferred);
 
   url.pathname = path.join(url.pathname, ...route);
   url.search = new URL(request.url).search;
@@ -31,7 +23,6 @@ export async function GET(
     status: res.status,
     headers: {
       "content-type": res.headers.get("content-type") ?? "",
-      "test-cache-time": dt,
     },
   });
 }

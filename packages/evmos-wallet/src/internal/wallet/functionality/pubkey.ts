@@ -3,7 +3,7 @@
 
 import { generateEndpointAccount } from "@evmos/provider";
 import { fetchWithTimeout } from "./fetch";
-import { normalizeToEvmos } from "../../../wallet";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 declare type EndpointAccountResponse = {
   code_hash?: number;
@@ -33,7 +33,7 @@ type BaseAccount = {
 };
 
 const getBaseAccountData = async (evmosEndpoint: string, address: string) => {
-  const converted = normalizeToEvmos(address);
+  const converted = normalizeToCosmos(address);
   const get = {
     method: "GET",
     headers: { "Content-Type": "application/json" },

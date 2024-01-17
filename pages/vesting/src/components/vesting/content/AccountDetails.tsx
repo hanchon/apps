@@ -4,13 +4,14 @@ import { ClawbackModal } from "./modal/ClawbackModal";
 import { getVestingAccountNameLocalstorage } from "../helpers";
 import { useVestingAccounts } from "../../../internal/hooks/useVesting";
 import { AccountContent } from "./modal/AccountContent";
-import { normalizeToEvmos } from "@evmosapps/evmos-wallet";
+
 import { Modal } from "../../Modal";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 export const AccountDetails = ({ account = "" }: { account?: string }) => {
   const [showModal, setIsOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
-  const _account = normalizeToEvmos(account);
+  const _account = normalizeToCosmos(account);
   const { loading, error, vestingDetails } = useVestingAccounts(_account);
 
   const handleClawbackClick = useCallback(() => {

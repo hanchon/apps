@@ -1,10 +1,11 @@
 import { getChainByAddress } from "../get-chain-by-account";
-import { Prefix } from "../types";
-import { Address, getPubkey, normalizeToEvmos } from "../../wallet";
+import { getPubkey } from "../../wallet";
 import { apiCosmosAccountByAddress } from "../../api";
 import * as secp256k1 from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/crypto/secp256k1/keys_pb";
 import * as ethsecp256k1 from "@buf/evmos_evmos.bufbuild_es/ethermint/crypto/v1/ethsecp256k1/keys_pb";
 import { get } from "lodash-es";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
+import { Address } from "helpers/src/crypto/addresses/types";
 type BaseAccount = {
   address: string;
   sequence: string;
@@ -24,8 +25,8 @@ const isBaseAccount = (account: unknown): account is BaseAccount => {
     "pub_key" in account
   );
 };
-export const getChainAccountInfo = async (address: Address<Prefix>) => {
-  const cosmosAddress = normalizeToEvmos(address);
+export const getChainAccountInfo = async (address: Address) => {
+  const cosmosAddress = normalizeToCosmos(address);
 
   const chain = getChainByAddress(address);
 

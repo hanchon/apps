@@ -14,8 +14,9 @@ import { getStakingInfo } from "./fetch";
 
 import { convertStringFromAtto } from "helpers/src/styles";
 import { useAccount } from "wagmi";
-import { normalizeToCosmosAddress } from "../wallet";
+
 import { raise } from "helpers";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 export const useStake = () => {
   const { address } = useAccount();
@@ -24,9 +25,7 @@ export const useStake = () => {
     queryKey: ["stakingInfo", address],
     enabled: !!address,
     queryFn: () =>
-      getStakingInfo(
-        normalizeToCosmosAddress(address ?? raise("Address not found"))
-      ),
+      getStakingInfo(normalizeToCosmos(address ?? raise("Address not found"))),
     refetchInterval: 15_000,
   });
 

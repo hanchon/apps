@@ -3,13 +3,13 @@ import sharp from "sharp";
 
 import NextImage from "next/image";
 import { ComponentProps } from "react";
-import { unstable_cache } from "next/cache";
+import { nextCache } from "helpers/src/next/cache";
 import { cachedFetch } from "helpers/src/dev/cached-fetch";
 
 const bufferToBase64 = (buffer: Buffer) =>
   `data:image/png;base64,${buffer.toString("base64")}`;
 
-const getImgProps = unstable_cache(
+const getImgProps = nextCache(
   async (src: string) => {
     if (process.env.NODE_ENV === "development") {
       return {

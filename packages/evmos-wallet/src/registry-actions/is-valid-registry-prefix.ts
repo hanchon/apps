@@ -1,5 +1,4 @@
-import { Prefix } from "./types";
 import { prefixes } from "./get-prefixes";
 
-export const isValidRegistryPrefix = (prefix: unknown): prefix is Prefix =>
-  prefixes.has(prefix as Prefix);
+export const isValidRegistryPrefix = (prefix: unknown): prefix is string =>
+  prefixes.has(prefix as string);

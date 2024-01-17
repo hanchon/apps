@@ -1,8 +1,7 @@
 import { apiTendermintStatus } from "../../api";
 import { getChain } from "../get-chain";
-import { Prefixish } from "./normalize-to-prefix";
 
-export const getTxTimeout = async (prefix: Prefixish) => {
+export const getTxTimeout = async (prefix: string) => {
   const chain = getChain(prefix);
   const { result } = await apiTendermintStatus(chain.tendermintRest);
   return {

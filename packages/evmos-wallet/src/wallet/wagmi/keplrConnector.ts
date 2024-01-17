@@ -1,8 +1,4 @@
-import {
-  getKeplrProvider,
-  normalizeToCosmosAddress,
-  normalizeToEth,
-} from "../utils";
+import { getKeplrProvider } from "../utils";
 import { getEvmosChainInfo } from "./chains";
 import { isUndefined, raise } from "helpers";
 import {
@@ -17,6 +13,8 @@ import { fromHex, isHex, parseAccount, serializeTransaction } from "viem/utils";
 import { omit, uniqueId } from "lodash-es";
 import { estimateFeesPerGas, estimateGas } from "viem/actions";
 import { createConnector } from "wagmi";
+import { normalizeToEth } from "helpers/src/crypto/addresses/normalize-to-eth";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 const evmos = getEvmosChainInfo();
 type ByMethod<M extends string> = Extract<
@@ -68,7 +66,7 @@ const signTransaction = async (
   const keplr = await getKeplrProvider();
   const signature = await keplr.signEthereum(
     cosmosId,
-    normalizeToCosmosAddress(account),
+    normalizeToCosmos(account),
     parameters[0],
     signType
   );
@@ -83,7 +81,7 @@ const eth_signTypedData_v4 = async (
   const [account, message] = parameters;
   const signature = await keplr.signEthereum(
     cosmosId,
-    normalizeToCosmosAddress(account),
+    normalizeToCosmos(account),
     message,
     EthSignType.EIP712
   );

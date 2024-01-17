@@ -1,43 +1,62 @@
 "use client";
-import { useCosmosQuery } from "@evmosapps/evmos-wallet/src/api/cosmos-clients/client";
+
 import { useAccount } from "wagmi";
-import { normalizeToEvmos } from "@evmosapps/evmos-wallet";
-import { cn } from "helpers";
+
+import { cn, raise } from "helpers";
 import { ComponentProps } from "react";
 import { SetupAccountModalTrigger } from "stateful-components/src/modals/SetupAccountModal/SetupAccountModal";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import { CLICK_ON_COPILOT_BANNER, sendEvent } from "tracker";
 import { Frameline } from "@evmosapps/ui-helpers/src/container/FrameLine";
 import { TrackerEvent } from "@evmosapps/ui-helpers/src/TrackerEvent";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
+import { useQuery } from "@tanstack/react-query";
+import { cosmos } from "helpers/src/clients/cosmos";
+import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
 export const CopilotCard = () => {
   const { address, isConnected } = useAccount();
   const { t } = useTranslation("dappStore");
+  const chainRef = useEvmosChainRef();
 
-  const { data: balance = 0n } = useCosmosQuery("evmos", {
-    route: "/cosmos/bank/v1beta1/balances/{address}/by_denom",
-    path: {
-      address: address && normalizeToEvmos(address),
-    },
-    query: {
-      denom: "aevmos",
-    },
-    select(data) {
-      return BigInt(data.balance?.amount ?? "0");
+  const { data: balance = 0n } = useQuery({
+    queryKey: ["balance", address, chainRef],
+
+    queryFn: () =>
+      cosmos(chainRef).GET("/cosmos/bank/v1beta1/balances/{address}/by_denom", {
+        params: {
+          path: {
+            address: normalizeToCosmos(
+              address ?? raise("address is undefined")
+            ),
+          },
+          query: {
+            denom: "aevmos",
+          },
+        },
+      }),
+
+    select({ data }) {
+      return BigInt(data?.balance?.amount ?? "0");
     },
     enabled: !!address,
   });
 
-  const { data: sequence } = useCosmosQuery("evmos", {
-    route: "/cosmos/auth/v1beta1/account_info/{address}",
-    path: {
-      address: address && normalizeToEvmos(address),
-    },
-    select(data) {
-      return BigInt(data.info?.sequence ?? "0");
-    },
-    queryOptions: {
-      gcTime: Infinity,
-      staleTime: Infinity,
+  const { data: sequence } = useQuery({
+    queryKey: ["sequence", address, chainRef],
+
+    queryFn: () =>
+      cosmos(chainRef).GET("/cosmos/auth/v1beta1/account_info/{address}", {
+        params: {
+          path: {
+            address: normalizeToCosmos(
+              address ?? raise("address is undefined")
+            ),
+          },
+        },
+      }),
+
+    select({ data }) {
+      return BigInt(data?.info?.sequence ?? "0");
     },
     enabled: !!address,
   });

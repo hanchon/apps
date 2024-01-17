@@ -1,5 +1,5 @@
 import { Message } from "@bufbuild/protobuf";
-import { Address, normalizeToCosmosAddress } from "../../wallet";
+
 import { getChainAccountInfo } from "../utils/get-chain-account-info";
 import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
 import { Hex, fromHex, toHex } from "viem";
@@ -12,6 +12,8 @@ import { PubKey } from "@buf/evmos_evmos.bufbuild_es/ethermint/crypto/v1/ethsecp
 import { Tx } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/v1beta1/tx_pb";
 import { apiCosmosTxBroadcast } from "../../api/cosmos-rest/api-cosmos-tx-broadcast";
 import { recoverPubkeyFromTypedMessage } from "helpers/src/crypto/eip712/recover-pubkey-from-typed-message";
+import { Address } from "helpers/src/crypto/addresses/types";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 const evmos = getEvmosChainInfo();
 
@@ -28,7 +30,7 @@ export const createTypedMessage = async ({
   messages,
   gasLimit = 10500000n,
 }: {
-  sender: Address<"evmos">;
+  sender: Address;
   messages: Message[];
   gasLimit?: bigint;
 }) => {
@@ -64,7 +66,7 @@ export const createTypedMessage = async ({
               denom: evmos.registry.feeToken,
             },
           ],
-          // feePayer: normalizeToCosmosAddress(sender),
+          // feePayer: normalizeToCosmos(sender),
           gas: gasLimit.toString(),
         },
         memo: "",
@@ -100,7 +102,7 @@ export const broadcastTypedMessage = async ({
       fee: {
         amount: [...tx.message.fee.amount],
         gasLimit: BigInt(tx.message.fee.gas),
-        payer: normalizeToCosmosAddress(account.address),
+        payer: normalizeToCosmos(account.address),
       },
 
       signerInfos: [

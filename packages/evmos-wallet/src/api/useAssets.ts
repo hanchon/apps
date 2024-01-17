@@ -13,7 +13,7 @@ import {
   amountToDollars,
 } from "helpers/src/styles";
 import { getAssetsForAddress } from "./fetch";
-import { ERC20BalanceResponse } from "@evmosapps/trpc/procedures/legacy-erc20modules";
+import { ERC20BalanceResponse } from "@evmosapps/trpc/procedures/legacy/queries/legacy-erc20modules";
 
 const usdFormat = new Intl.NumberFormat("en-US", {
   style: "currency",

@@ -9,4 +9,4 @@ export const getEvmosConfig = () => {
   );
 };
 
-export const getEvmosIdentifier = () => getEvmosConfig().identifier;
+export const getEvmosIdentifier = () => getEvmosConfig().ref;
