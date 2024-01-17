@@ -20,7 +20,6 @@ import {
 } from "wagmi/actions";
 import { Hex, decodeFunctionData, formatUnits } from "viem";
 import {
-  Address,
   ICS20_ADDRESS,
   MsgTransfer,
   apiCosmosBlockByHeight,
@@ -28,15 +27,11 @@ import {
   getAbi,
   getChain,
   getTokens,
-  normalizeToCosmosAddress,
 } from "@evmosapps/evmos-wallet";
 import { FailTxIcon } from "@evmosapps/icons/FailTxIcon";
 import { ProcessingTxIcon } from "@evmosapps/icons/ProcessingTxIcon";
 import { SuccessTxIcon } from "@evmosapps/icons/SuccessTxIcon";
-import {
-  Prefix,
-  Token,
-} from "@evmosapps/evmos-wallet/src/registry-actions/types";
+import { Token } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { findToken } from "@evmosapps/evmos-wallet/src/registry-actions/utils";
 import { useQuery } from "@tanstack/react-query";
 import { SkeletonLoading } from "../shared/SkeletonLoading";
@@ -46,6 +41,7 @@ import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-
 import { useEffect, useState } from "react";
 import { getFormattedDate } from "helpers";
 import { useConfig } from "wagmi";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 const generateReceipt = ({
   sender,
   receiver,
@@ -59,8 +55,8 @@ const generateReceipt = ({
   token: Token;
   height: string | number | bigint;
 }) => ({
-  sender: normalizeToCosmosAddress(sender as Address<Prefix>),
-  receiver: normalizeToCosmosAddress(receiver as Address<Prefix>),
+  sender: normalizeToCosmos(sender),
+  receiver: normalizeToCosmos(receiver),
   formattedAmount: `${formatUnits(BigInt(amount), token.decimals)} ${
     token.denom
   }`,
@@ -136,7 +132,7 @@ const isIBCMsgTransfer = (message: unknown): message is MsgTransfer => {
   );
 };
 
-const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
+const useReceipt = (hash?: Hex, chainPrefix?: string) => {
   const config = useConfig();
   const { data, ...rest } = useQuery({
     queryKey: ["receipt", hash],
@@ -198,7 +194,7 @@ const useReceipt = (hash?: Hex, chainPrefix?: Prefix) => {
   };
 };
 
-const useBlock = (prefix?: Prefix, height?: bigint) => {
+const useBlock = (prefix?: string, height?: bigint) => {
   return useQuery({
     queryKey: ["block", prefix, height?.toString()],
 

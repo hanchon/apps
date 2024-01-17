@@ -1,4 +1,4 @@
-import { KEPLR_KEY, StoreType, normalizeToEth } from "@evmosapps/evmos-wallet";
+import { KEPLR_KEY, StoreType } from "@evmosapps/evmos-wallet";
 import { useSelector } from "react-redux";
 import { ConfirmButton } from "@evmosapps/ui-helpers";
 import { VestingAccountDetail } from "../../../../internal/types";
@@ -6,6 +6,7 @@ import { AmountItem } from "./AmountItem";
 import { AddresItem } from "./AddressItem";
 import { ethers } from "ethers";
 import { useTranslation } from "@evmosapps/i18n/client";
+import { normalizeToEth } from "helpers/src/crypto/addresses/normalize-to-eth";
 
 type AccountContentProps = {
   vestingDetails: VestingAccountDetail;

@@ -1,11 +1,8 @@
-import { Prefix } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { useAccount } from "wagmi";
 import {
-  CosmosAddress,
   getActiveProviderKey,
   getChain,
   getKeplrProvider,
-  normalizeToCosmosAddress,
   wagmiConfig,
 } from "@evmosapps/evmos-wallet";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -13,8 +10,10 @@ import { E } from "helpers";
 import { useId } from "react";
 import { getAccount } from "wagmi/actions";
 import { getSelectedNetworkMode } from "@evmosapps/ui-helpers/src/getSelectedNetworkMode";
+import { CosmosAddress } from "helpers/src/crypto/addresses/types";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
-const suggestChain = async (prefix: Prefix) => {
+const suggestChain = async (prefix: string) => {
   const keplr = await getKeplrProvider();
   if (prefix === "cre") {
     const chainInfo = await import(
@@ -70,7 +69,7 @@ const suggestChain = async (prefix: Prefix) => {
   // If not in this list, it's supported by keplr by default
 };
 
-export const useWalletAccountByPrefix = (prefix?: Prefix) => {
+export const useWalletAccountByPrefix = (prefix?: string) => {
   const { address, connector } = useAccount();
   const chain = prefix ? getChain(prefix) : undefined;
   return useQuery({
@@ -102,7 +101,7 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
         const { bech32Address, isNanoLedger, pubKey } = account;
         return {
           prefix: chain.prefix,
-          bech32Address: bech32Address as CosmosAddress<Prefix>,
+          bech32Address: bech32Address as CosmosAddress,
           isNanoLedger,
           pubKey,
         };
@@ -112,7 +111,7 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
       if (!address) throw new Error("NOT_CONNECTED");
       return {
         prefix: chain.prefix,
-        bech32Address: normalizeToCosmosAddress(address),
+        bech32Address: normalizeToCosmos(address),
         evmAddress: address,
       };
     },
@@ -121,7 +120,7 @@ export const useWalletAccountByPrefix = (prefix?: Prefix) => {
   });
 };
 
-const requestWalletAccount = async (prefix: Prefix) => {
+const requestWalletAccount = async (prefix: string) => {
   const activeProvider = getActiveProviderKey();
   if (!activeProvider) throw new Error("NO_ACTIVE_PROVIDER");
   const chain = getChain(prefix);
@@ -141,7 +140,7 @@ const requestWalletAccount = async (prefix: Prefix) => {
     const { bech32Address, isNanoLedger, pubKey } = account;
     return {
       prefix,
-      bech32Address: bech32Address as CosmosAddress<Prefix>,
+      bech32Address: bech32Address as CosmosAddress,
       isNanoLedger,
       pubKey,
     };
@@ -153,7 +152,7 @@ const requestWalletAccount = async (prefix: Prefix) => {
   if (!address) throw new Error("NOT_CONNECTED");
   return {
     prefix: prefix,
-    bech32Address: normalizeToCosmosAddress(address),
+    bech32Address: normalizeToCosmos(address),
     evmAddress: address,
   };
 };

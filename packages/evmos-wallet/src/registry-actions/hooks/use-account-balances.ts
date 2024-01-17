@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { Address } from "../../wallet";
+
 import { getAccountBalances } from "../get-account-balances";
-import { Prefix } from "../types";
 
 import { queryOptions } from "@tanstack/react-query";
+import { Address } from "helpers/src/crypto/addresses/types";
 
-export const AccountBalancesQueryOptions = (address?: Address<Prefix>) =>
+export const AccountBalancesQueryOptions = (address?: Address) =>
   queryOptions({
     queryKey: ["accountBalances", address],
     refetchInterval: 1000 * 60,
@@ -16,7 +16,7 @@ export const AccountBalancesQueryOptions = (address?: Address<Prefix>) =>
     },
     enabled: !!address,
   });
-export const useAccountBalances = (address?: Address<Prefix>) => {
+export const useAccountBalances = (address?: Address) => {
   // const { data: accountExists } = useAccountExists(address);
   return useQuery(AccountBalancesQueryOptions(address));
 };

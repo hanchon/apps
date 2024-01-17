@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CosmosAddress } from "../../wallet";
 
 import { apiCosmosFetch } from "./api-cosmos-fetch";
+import { CosmosAddress } from "helpers/src/crypto/addresses/types";
 
 export const apiCosmosAccountByAddress = (
   urls: Readonly<[string, ...string[]]>,

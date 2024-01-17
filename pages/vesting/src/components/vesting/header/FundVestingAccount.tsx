@@ -26,7 +26,6 @@ import {
   SNACKBAR_TYPES,
   GENERATING_TX_NOTIFICATIONS,
   BROADCASTED_NOTIFICATIONS,
-  normalizeToEvmos,
 } from "@evmosapps/evmos-wallet";
 import { useSelector, useDispatch } from "react-redux";
 import { generateVestingSchedule } from "../../../internal/helpers/generate-vesting-schedule";
@@ -51,6 +50,7 @@ import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chai
 import { ModalTitle } from "../../ModalTitle";
 import { useConfig } from "wagmi";
 import { useTranslation } from "@evmosapps/i18n/client";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 const evmos = getEvmosChainInfo();
 export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
@@ -100,7 +100,7 @@ export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
           if (!isEthereumAddressValid(vestingAddress)) {
             return;
           }
-          _vestingAddress = normalizeToEvmos(vestingAddress);
+          _vestingAddress = normalizeToCosmos(vestingAddress);
         } else if (vestingAddress.startsWith("evmos")) {
           if (!isEvmosAddressValid(vestingAddress)) {
             return;

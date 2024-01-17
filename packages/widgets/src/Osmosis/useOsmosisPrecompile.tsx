@@ -1,7 +1,6 @@
 "use client";
 import OmosisABI from "./abi/OsmosisPrecompileABI.json";
 
-import { normalizeToEvmos } from "@evmosapps/evmos-wallet";
 import { useAccount, useConfig } from "wagmi";
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 
@@ -10,6 +9,7 @@ import { writeContract } from "wagmi/actions";
 import { switchToEvmosChain } from "@evmosapps/evmos-wallet/src/wallet/actions/switchToEvmosChain";
 import { E, Log } from "helpers";
 import { useMemo } from "react";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 const OSMOSIS_PRECOMPILE_ADDRESS = "0x0000000000000000000000000000000000000901";
 
@@ -56,7 +56,7 @@ export function useOsmosisPrecompile() {
             amount,
             slippage_tolerance,
             TIMEOUT,
-            normalizeToEvmos(address),
+            normalizeToCosmos(address),
           ],
         ],
         gas: 1227440n,

@@ -6,13 +6,9 @@ import {
   CryptoSelectorBox,
   CryptoSelectorDropdownBox,
 } from "@evmosapps/ui-helpers";
-import {
-  Prefix,
-  TokenAmount,
-} from "@evmosapps/evmos-wallet/src/registry-actions/types";
+import { TokenAmount } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "@evmosapps/ui-helpers";
 import {
-  Address,
   getActiveProviderKey,
   getChain,
   useTokenBalance,
@@ -27,9 +23,10 @@ import { useAccount } from "wagmi";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { useEffectEvent } from "helpers";
 import { sortedTokens } from "../shared/sortedChains";
+import { Address } from "helpers/src/crypto/addresses/types";
 
 type Asset = {
-  networkPrefix: Prefix;
+  networkPrefix: string;
 } & TokenAmount;
 
 const tokenToUSD = (amount: bigint, price: number, decimals: number) => {
@@ -49,7 +46,7 @@ export const RequestAssetSelector = ({
 }: PropsWithChildren<{
   value: Asset;
   onChange: (value: Asset) => void;
-  address?: Address<Prefix>;
+  address?: Address;
 }>) => {
   const { t } = useTranslation("transfer-modal");
   const { sendEvent } = useTracker();
@@ -66,7 +63,7 @@ export const RequestAssetSelector = ({
   const tokenOptions = sortedTokens;
 
   const networkOptions = useMemo(() => {
-    return ["evmos"] as Prefix[];
+    return ["evmos"];
   }, []);
 
   /**

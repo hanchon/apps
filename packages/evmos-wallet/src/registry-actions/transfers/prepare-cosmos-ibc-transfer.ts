@@ -2,13 +2,9 @@ import { SignMode } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/signing/v
 import { MsgTransfer } from "@buf/cosmos_ibc.bufbuild_es/ibc/applications/transfer/v1/tx_pb";
 import { apiCosmosTxSimulate } from "../../api/cosmos-rest/api-cosmos-tx-simulate";
 
-import {
-  Address,
-  getKeplrProvider,
-  normalizeToCosmosAddress,
-} from "../../wallet";
+import { getKeplrProvider } from "../../wallet";
 import { getChainByAddress } from "../get-chain-by-account";
-import { Prefix, TokenAmount } from "../types";
+import { TokenAmount } from "../types";
 import { getIBCChannelId } from "../utils";
 import { assignGasEstimateToProtoTx } from "../utils/assign-gas-estimate-to-proto-tx";
 import { createProtobufTransaction } from "../utils/create-protobuf-transaction";
@@ -22,6 +18,8 @@ import { Tx } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/v1beta1/tx_pb";
 import { Keplr } from "@keplr-wallet/types";
 import { getTxTimeout } from "../utils/getTxTimeout";
 import { raise } from "helpers";
+import { Address } from "helpers/src/crypto/addresses/types";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 const createProtobufIBCTransferMsg = async ({
   sender,
@@ -32,8 +30,8 @@ const createProtobufIBCTransferMsg = async ({
   fee,
   ...rest
 }: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
   fee?: {
     gasLimit: bigint;
@@ -49,8 +47,8 @@ const createProtobufIBCTransferMsg = async ({
     token: transferredToken,
   });
   const message = new MsgTransfer({
-    sender: normalizeToCosmosAddress(sender),
-    receiver: normalizeToCosmosAddress(receiver),
+    sender: normalizeToCosmos(sender),
+    receiver: normalizeToCosmos(receiver),
     sourceChannel: getIBCChannelId({
       sender,
       receiver,
@@ -83,8 +81,8 @@ const createProtobufIBCTransferMsg = async ({
 };
 
 export const prepareCosmosIBCTransfer = async (params: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
   fee?: {
     gasLimit: bigint;
@@ -128,8 +126,8 @@ const signAmino = async (
 };
 
 export const executeCosmosIBCTransfer = async (params: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
   fee?: {
     gasLimit: bigint;

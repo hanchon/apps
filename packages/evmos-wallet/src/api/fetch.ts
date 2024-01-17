@@ -4,13 +4,14 @@
 import { Hex } from "viem";
 import { EVMOS_BACKEND } from "../internal/wallet/functionality/networkConfig";
 import { getAccountBalances } from "../registry-actions";
-
-import { normalizeToCosmosAddress } from "../wallet";
 import { ERC20Element, StakingInfoResponse } from "./types";
 import { trpc } from "@evmosapps/trpc/client";
-import { ERC20BalanceResponse } from "@evmosapps/trpc/procedures/legacy-erc20modules";
+
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
+import { ERC20BalanceResponse } from "@evmosapps/trpc/procedures/legacy/queries/legacy-erc20modules";
+
 const getAssets = async () => {
-  return await trpc.fetchLegacyERC20ModuleBalance.query();
+  return await trpc.legacyERC20ModuleBalance.query();
 };
 
 export const getAssetsForAddress = async (
@@ -22,7 +23,7 @@ export const getAssetsForAddress = async (
   }
   const [{ balance: assets }, balances] = await Promise.all([
     getAssets(),
-    getAccountBalances({ address: normalizeToCosmosAddress(address as Hex) }),
+    getAccountBalances({ address: normalizeToCosmos(address as Hex) }),
   ]);
 
   const balancesMap = Object.fromEntries(

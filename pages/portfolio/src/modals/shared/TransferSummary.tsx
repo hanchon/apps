@@ -2,39 +2,31 @@ import Image from "next/image";
 import React from "react";
 import { formatUnits } from "@evmosapps/evmos-wallet/src/registry-actions/utils";
 import { cn } from "helpers";
-import {
-  Prefix,
-  TokenAmount,
-} from "@evmosapps/evmos-wallet/src/registry-actions/types";
-import {
-  Address,
-  getChain,
-  getPrefix,
-  getToken,
-  normalizeToCosmosAddress,
-  useFee,
-} from "@evmosapps/evmos-wallet";
+import { TokenAmount } from "@evmosapps/evmos-wallet/src/registry-actions/types";
+import { getChain, getToken, useFee } from "@evmosapps/evmos-wallet";
 import { AddressDisplay, Arrow } from "@evmosapps/ui-helpers";
 
 import { useTranslation } from "@evmosapps/i18n/client";
 import { getChainByAddress } from "@evmosapps/evmos-wallet/src/registry-actions/get-chain-by-account";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
-
+import { Address } from "helpers/src/crypto/addresses/types";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
+import { getPrefix } from "helpers/src/crypto/addresses/get-prefix";
 export const TransferSummary = ({
   sender,
   receiver,
   token,
   disabled = false,
 }: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount & {
-    networkPrefix: Prefix;
+    networkPrefix: string;
   };
   disabled?: boolean;
 }) => {
-  const senderPrefix = getPrefix(normalizeToCosmosAddress(sender));
-  const receiverPrefix = getPrefix(normalizeToCosmosAddress(receiver));
+  const senderPrefix = getPrefix(normalizeToCosmos(sender));
+  const receiverPrefix = getPrefix(normalizeToCosmos(receiver));
   const senderChain = getChain(senderPrefix);
   const receiverChain = getChain(receiverPrefix);
 
@@ -43,7 +35,7 @@ export const TransferSummary = ({
   const { fee, isFetching } = useFee({
     sender,
     receiverChainPrefix: receiver
-      ? getPrefix(normalizeToCosmosAddress(receiver))
+      ? getPrefix(normalizeToCosmos(receiver))
       : "evmos",
     tokenRef: token.ref,
   });

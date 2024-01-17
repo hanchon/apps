@@ -1,14 +1,15 @@
 import { MsgSend } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/bank/v1beta1/tx_pb";
 import { SignMode } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/signing/v1beta1/signing_pb";
 
-import { Address, normalizeToCosmosAddress } from "../../wallet";
-import { Prefix, TokenAmount } from "../types";
+import { TokenAmount } from "../types";
 import { apiCosmosTxSimulate } from "../../api/cosmos-rest/api-cosmos-tx-simulate";
 import { getChainByAddress } from "../get-chain-by-account";
 import { assignGasEstimateToProtoTx } from "../utils/assign-gas-estimate-to-proto-tx";
 import { buffGasEstimate } from "../utils/buff-gas-estimate";
 import { createProtobufTransaction } from "../utils/create-protobuf-transaction";
 import { getTokenByRef } from "../get-token-by-ref";
+import { Address } from "helpers/src/crypto/addresses/types";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 export const createProtobufMsgSend = async ({
   sender,
@@ -16,15 +17,15 @@ export const createProtobufMsgSend = async ({
   token,
   mode,
 }: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
   mode?: keyof typeof SignMode;
 }) => {
   const transferredToken = getTokenByRef(token.ref);
   const message = new MsgSend({
-    fromAddress: normalizeToCosmosAddress(sender),
-    toAddress: normalizeToCosmosAddress(receiver),
+    fromAddress: normalizeToCosmos(sender),
+    toAddress: normalizeToCosmos(receiver),
     amount: [
       {
         amount: token.amount.toString(),
@@ -39,9 +40,9 @@ export const createProtobufMsgSend = async ({
   });
 };
 
-export const prepareCosmosTransfer = async <T extends Prefix>(params: {
-  sender: Address<T>;
-  receiver: Address<T>;
+export const prepareCosmosTransfer = async (params: {
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
 }) => {
   const tx = await createProtobufMsgSend(params);

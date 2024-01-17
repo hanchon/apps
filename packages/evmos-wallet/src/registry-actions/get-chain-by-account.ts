@@ -1,7 +1,6 @@
-import { Address } from "../wallet";
-import { Prefix } from "./types";
 import { getChain } from "./get-chain";
+import { Address } from "helpers/src/crypto/addresses/types";
 
-export const getChainByAddress = (address: Address<Prefix>) => {
+export const getChainByAddress = (address: Address) => {
   return getChain(address);
 };

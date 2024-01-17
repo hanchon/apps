@@ -1,5 +1,4 @@
-import { Address } from "../../wallet";
-import { Prefix, Token } from "../types";
+import { Token } from "../types";
 import { getIBCChannelId } from "./get-ibc-channel-id";
 import { toIBCDenom } from "helpers";
 import { normalizeToPrefix } from "./normalize-to-prefix";
@@ -10,8 +9,8 @@ export const getIBCDenom = ({
   receiver,
   token,
 }: {
-  sender: Address<Prefix> | Prefix;
-  receiver: Address<Prefix> | Prefix;
+  sender: string;
+  receiver: string;
   token: Token;
 }) => {
   const chain = getChain(token.sourcePrefix);

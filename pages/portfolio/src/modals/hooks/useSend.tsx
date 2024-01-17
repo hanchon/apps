@@ -1,32 +1,26 @@
 import { useMemo } from "react";
+import { TokenAmount } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import {
-  Prefix,
-  TokenAmount,
-} from "@evmosapps/evmos-wallet/src/registry-actions/types";
-import {
-  Address,
-  isValidCosmosAddress,
-  isValidHexAddress,
-  normalizeToCosmosAddress,
   useAccountExists,
   useFee,
   useTokenBalance,
   useTransfer,
 } from "@evmosapps/evmos-wallet";
-import {
-  Prefixish,
-  normalizeToPrefix,
-} from "@evmosapps/evmos-wallet/src/registry-actions/utils/normalize-to-prefix";
+import { normalizeToPrefix } from "@evmosapps/evmos-wallet/src/registry-actions/utils/normalize-to-prefix";
 import { getFeeToken } from "@evmosapps/evmos-wallet/src/registry-actions/getFeeToken";
 import { E } from "helpers";
+import { Address } from "helpers/src/crypto/addresses/types";
+import { isValidHexAddress } from "helpers/src/crypto/addresses/is-valid-hex-address";
+import { isValidCosmosAddress } from "helpers/src/crypto/addresses/is-valid-cosmos-address";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 export const useSend = ({
   sender,
   receiver,
   token,
 }: {
-  sender?: Address<Prefix>;
-  receiver?: Prefixish;
+  sender?: Address;
+  receiver?: string;
   token?: TokenAmount;
 }) => {
   const receiverPrefix = receiver ? normalizeToPrefix(receiver) : "evmos";
@@ -98,8 +92,7 @@ export const useSend = ({
   const hasValidReceiver =
     receiverAddress &&
     sender &&
-    normalizeToCosmosAddress(sender) !==
-      normalizeToCosmosAddress(receiverAddress);
+    normalizeToCosmos(sender) !== normalizeToCosmos(receiverAddress);
 
   const hasValidAmount = token?.amount !== undefined && token?.amount > 0n;
 

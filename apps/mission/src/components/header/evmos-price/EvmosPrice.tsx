@@ -1,8 +1,7 @@
+"use client";
 import { EvmosRedIcon } from "@evmosapps/icons/EvmosRedIcon";
 import { cn } from "helpers";
 
-import { Suspense } from "react";
-import { PriceDisplay } from "./PriceDisplay";
 import { LazyPriceDisplay } from "./LazyPriceDisplay";
 
 export const EvmosPrice = () => {

@@ -1,5 +1,3 @@
-import { trpc } from "@evmosapps/trpc/client";
-
 export type ERC20Element = {
   name: string;
   cosmosBalance: string;
