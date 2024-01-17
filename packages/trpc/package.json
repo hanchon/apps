@@ -14,7 +14,8 @@
   },
   "scripts": {
     "gen:registry-types": "NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./scripts/gen-registry-types.ts",
-    "gen": "pnpm run gen:registry-types"
+    "gen": "pnpm run gen:registry-types",
+    "postinstall": "pnpm run gen"
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
