@@ -6,11 +6,13 @@ const fileSchema = z
     type: z.literal("file"),
     file: z.object({
       url: z.string(),
+      expiry_time: z.string(),
     }),
   })
   .transform(({ type, file }) => ({
     type,
     url: file.url ?? null,
+    expiryTime: file.expiry_time,
   }));
 
 export const filesSchema = z
@@ -18,4 +20,12 @@ export const filesSchema = z
     type: z.literal("files"),
     files: z.array(z.union([fileSchema, externalSchema])),
   })
-  .transform(({ files }) => files[0]?.url ?? null);
+  .transform(({ files: [file] }) =>
+    file
+      ? {
+          type: file.type,
+          src: file.url,
+          expiryTime: "expiryTime" in file ? file.expiryTime : null,
+        }
+      : null
+  );

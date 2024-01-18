@@ -11,6 +11,7 @@ import { updatedAtSchema } from "../partials/updatedAtSchema";
 import { selectSchema } from "../partials/selectSchema";
 import { parseUrl } from "helpers/src/parse/urls";
 import { createSlug } from "../utils/createSlug";
+import { generateBlurImage } from "./generateBlurImage";
 
 const dappPropertiesSchema = createNotionPropertiesSchema(
   z.object({
@@ -53,9 +54,9 @@ export const dappSchema = z
     id: z.string(),
     properties: dappPropertiesSchema,
   })
-  .transform(({ id, properties, ...rest }) => {
+  .transform(async ({ id, properties, ...rest }) => {
     const slug = createSlug(properties.name);
-
+    const { icon, thumbnail, cover, ...otherProps } = properties;
     return {
       notionId: id,
       slug,
@@ -66,8 +67,33 @@ export const dappSchema = z
           description: string;
         }
       >,
+      icon: icon
+        ? {
+            ...icon,
+            src: `/api/dappimg/${slug}/icon`,
 
-      ...properties,
+            _originalSrc: icon.src,
+            blurDataURL: await generateBlurImage(icon.src),
+          }
+        : null,
+      thumbnail: thumbnail
+        ? {
+            ...thumbnail,
+            src: `/api/dappimg/${slug}/thumbnail`,
+            _originalSrc: thumbnail.src,
+            blurDataURL: await generateBlurImage(thumbnail.src),
+          }
+        : null,
+      cover: cover
+        ? {
+            ...cover,
+            src: `/api/dappimg/${slug}/cover`,
+            _originalSrc: cover.src,
+            blurDataURL: await generateBlurImage(cover.src),
+          }
+        : null,
+
+      ...otherProps,
       ...rest,
     };
   });

@@ -20,6 +20,7 @@ export async function generateMetadata({
   params: { dapp: string };
 }) {
   const { dApps } = await fetchExplorerData();
+
   const dapp =
     dApps.find((c) => c.slug === params.dapp) ?? raise("DApp not found");
 
