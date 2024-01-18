@@ -23,7 +23,7 @@ export const Description = ({
         alt={symbol}
         width={30}
         height={30}
-        className="rounded-full w-auto"
+        className="rounded-full w-[30px] h-[30px]"
       />
       <div className="flex flex-col items-start">
         <span className="font-bold text-base">{symbol}</span>

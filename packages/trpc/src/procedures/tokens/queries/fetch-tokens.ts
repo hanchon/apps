@@ -2,7 +2,7 @@
 
 import { raise } from "helpers";
 
-import { fetchChains } from "../../chains/queries/server";
+import { fetchChains } from "../../chains/queries/fetch-chains";
 import { TokenEntity } from "@evmosapps/registry/autogen/token-entity";
 import { fetchChainRegistryDir } from "../../utils/fetch-chain-registry-dir";
 import { loadRegistryTokenExtensions } from "../../utils/load-registry-token-extensions";

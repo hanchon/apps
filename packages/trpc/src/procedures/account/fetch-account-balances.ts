@@ -1,26 +1,26 @@
-import { serverCosmos } from "../../utils/cosmos-server-client";
+import { serverCosmos } from "../utils/cosmos-server-client";
 
-import { evmosServerClient } from "../../utils/evmos-server-client";
+import { evmosServerClient } from "../utils/evmos-server-client";
 import { Hex, erc20Abi } from "viem";
 import { normalizeToEth } from "helpers/src/crypto/addresses/normalize-to-eth";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 import { Address } from "helpers/src/crypto/addresses/types";
-import { fetchTokenPrices } from "../../tokens/queries/token-prices/server";
+import { fetchTokenPrices } from "../tokens/queries/price/fetch-token-prices";
 
-import { formatBalance } from "../utils/format-balance";
+import { formatBalance } from "./utils/format-balance";
 
-import { fetchTokens } from "../../tokens/queries/server";
+import { fetchTokens } from "../tokens/queries/fetch-tokens";
 
 export const fetchAccountBalances = async ({
-  chain,
+  chainRef,
   address,
 }: {
-  chain: string;
+  chainRef: string;
   address: Address;
 }) => {
   const [cosmosClient, evmosClient, tokens, tokenPrices] = await Promise.all([
-    serverCosmos(chain),
-    chain.startsWith("evmos") ? evmosServerClient(chain) : null,
+    serverCosmos(chainRef),
+    chainRef.startsWith("evmos") ? evmosServerClient(chainRef) : null,
     fetchTokens(),
     fetchTokenPrices(),
   ]);

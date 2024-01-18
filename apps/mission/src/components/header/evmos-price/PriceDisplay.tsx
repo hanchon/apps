@@ -3,10 +3,12 @@ import { PriceDownIcon } from "@evmosapps/icons/PriceDownIcon";
 import { PriceUpIcon } from "@evmosapps/icons/PriceUpIcon";
 
 import { assert } from "helpers";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { TokenPriceByDenomQueryOptions } from "@evmosapps/trpc/procedures/tokens/queries/token-price-by-denom/client";
+import { trpc } from "@evmosapps/trpc/client";
+import { ms } from "helpers/src/time";
 export const PriceDisplay = () => {
-  const { data } = useSuspenseQuery(TokenPriceByDenomQueryOptions("EVMOS"));
+  const [data] = trpc.token.price.byDenom.useSuspenseQuery("EVMOS", {
+    staleTime: ms("5m"),
+  });
 
   assert(data, "Token not found");
 

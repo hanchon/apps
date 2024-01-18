@@ -1,7 +1,7 @@
-import { fetchChainByRef } from "../../../chains/queries/chain-by-ref/server";
+import { fetchChainByRef } from "../../chains/queries/chain-by-ref/fetch-chain-by-ref";
 import { assert, raise } from "helpers";
 import { Hex, fromHex } from "viem";
-import { rankApis } from "../../../utils/rank-apis";
+import { rankApis } from "../../utils/rank-apis";
 import { nextCache } from "helpers/src/next/cache";
 import { seconds } from "helpers/src/time";
 export const fetchEVMJsonRpcMetrics = nextCache(

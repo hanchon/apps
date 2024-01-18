@@ -1,22 +1,22 @@
 import { Address } from "helpers/src/crypto/addresses/types";
 
-import { fetchTokenPrices } from "../../tokens/queries/token-prices/server";
-import { fetchAccountBalances } from "../account-balances/server";
+import { fetchTokenPrices } from "../tokens/queries/price/fetch-token-prices";
+import { fetchAccountBalances } from "./fetch-account-balances";
 
-import { formatBalance } from "../utils/format-balance";
+import { formatBalance } from "./utils/format-balance";
 
-import { fetchTokens } from "../../tokens/queries/server";
+import { fetchTokens } from "../tokens/queries/fetch-tokens";
 
 export const fetchAccountBalanceByDenom = async ({
-  chain,
+  chainRef,
   denom,
   address,
 }: {
-  chain: string;
+  chainRef: string;
   address: Address;
   denom: string;
 }) => {
-  const balances = await fetchAccountBalances({ chain, address });
+  const balances = await fetchAccountBalances({ chainRef: chainRef, address });
 
   const balance = balances.find((balance) => balance.denom === denom);
 

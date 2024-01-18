@@ -3,7 +3,7 @@
 import { nextCache } from "helpers/src/next/cache";
 import { seconds } from "helpers/src/time";
 import { TokenDenom } from "../../../../../autogen/registry";
-import { fetchTokens } from "../server";
+import { fetchTokens } from "../fetch-tokens";
 import { raise } from "helpers";
 
 export const fetchTokenByDenom = nextCache(

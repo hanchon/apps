@@ -1,4 +1,4 @@
-import { fetchPreferredCosmosRestUrl } from "@evmosapps/trpc/procedures/metrics/queries/preferred-cosmos-rest/server";
+import { fetchPreferredCosmosRestUrl } from "@evmosapps/trpc/procedures/metrics/queries/fetch-preferred-cosmos-rest-url";
 import { NextResponse } from "next/server";
 import path from "path";
 export async function GET(

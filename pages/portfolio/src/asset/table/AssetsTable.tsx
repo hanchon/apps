@@ -2,11 +2,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useQuery } from "@tanstack/react-query";
 import { Suspense, useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { StoreType } from "@evmosapps/evmos-wallet";
-import { ERC20BalanceResponse } from "./types";
 import { Modal, Switch } from "@evmosapps/ui-helpers";
 import { cn, getTotalAssets } from "helpers";
 import HeadAssets from "./components/HeadAssets";
@@ -21,26 +17,25 @@ import { useStakedEvmos } from "../../utils/hooks/useStakedEvmos";
 
 import ContentTable from "./ContentTable";
 import TopBar from "./topBar/TopBar";
-import { getAssetsForAddress } from "@evmosapps/evmos-wallet/src/api/fetch";
+
+import { useTrpcQuery } from "@evmosapps/trpc/client";
+import { useAccount } from "wagmi";
+import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
 
 const AssetsTable = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const value = useSelector((state: StoreType) => state.wallet.value);
-
+  const { address } = useAccount();
+  const chainRef = useEvmosChainRef();
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
 
   const { stakedData } = useStakedEvmos();
-
-  const { data, error, isLoading } = useQuery<ERC20BalanceResponse, Error>({
-    refetchInterval: 15_000,
-    queryKey: [
-      "assets",
-      value.evmosAddressCosmosFormat,
-      value.evmosAddressEthFormat,
-    ],
-    queryFn: () => getAssetsForAddress(value.evmosAddressCosmosFormat),
-  });
+  const { data, error, isLoading } = useTrpcQuery((t) =>
+    t.legacy.erc20ModuleBalance({
+      address,
+      chainRef,
+    })
+  );
 
   const [hideZeroBalance, setHideBalance] = useState(false);
   useEffect(() => {

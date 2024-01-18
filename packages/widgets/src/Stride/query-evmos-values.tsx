@@ -1,19 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
 import { useAccount } from "wagmi";
 
 import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
-import { AccountBalanceByDenomQueryOptions } from "@evmosapps/trpc/procedures/account/account-balance-by-denom/client";
-
+import { useTrpcQuery } from "@evmosapps/trpc/client";
+import { raise } from "helpers";
 export function useEvmosData() {
   const { address } = useAccount();
 
   const chainRef = useEvmosChainRef();
-  // TODO: is used on Header for EvmosPrice component
-  const { data } = useQuery(
-    AccountBalanceByDenomQueryOptions({
-      address,
+
+  const { data } = useTrpcQuery((t) =>
+    t.account.balance.byDenom({
+      address: address ?? raise("no address"),
       denom: "EVMOS",
-      chainRef,
+      chainRef: chainRef ?? raise("no chainRef"),
     })
   );
 

@@ -31,6 +31,7 @@ export const SubRowContent = ({
   let balance = item.erc20Balance;
   let symbol = item.symbol;
   let description = item.description;
+  let img = item.pngSrc;
 
   if (isIBCBalance) {
     balance = item.cosmosBalance;
@@ -38,6 +39,7 @@ export const SubRowContent = ({
     if (item.symbol === EVMOS_SYMBOL) {
       symbol = "WEVMOS";
       description = "Wrapped EVMOS";
+      img = "/tokens/wevmos.png";
     }
   }
 
@@ -143,9 +145,9 @@ export const SubRowContent = ({
   const createCoingeckoAlert = useCallback(() => {
     return (
       <Tooltip
-        className="w-24 text-xs normal-case"
+        className="w-28 text-xs normal-case"
         element={<QuestionMarkIcon width={16} height={16} />}
-        text="This value is calculated based on the price of Evmos"
+        text="This value is calculated based on the Stride redemption rate."
       />
     );
   }, []);
@@ -162,11 +164,21 @@ export const SubRowContent = ({
       <div className="md:w-[5%]"></div>
       {/* symbol - token name - description */}
       <div className="hidden w-[50%] lg:flex">
-        <Description symbol={symbol} description={description} subRow={true} />
+        <Description
+          symbol={symbol}
+          description={description}
+          imageSrc={img}
+          subRow={true}
+        />
       </div>
       {/* mobile view for description and convert */}
       <div className="flex items-center lg:hidden">
-        <Description symbol={symbol} description={description} subRow={true} />
+        <Description
+          symbol={symbol}
+          description={description}
+          imageSrc={img}
+          subRow={true}
+        />
         {item.symbol === EVMOS_SYMBOL && <EvmosConvertButton />}
         {displayConvertButton && <ConvertButton />}
       </div>
