@@ -92,7 +92,7 @@ const StrideWidget = () => {
         reward={reward}
         stakeToken={evmosOption}
         bottomLink={{
-          href: "https://cosmology.tech/",
+          href: "https://docs.stride.zone/docs/getting-started",
           label: "Learn more",
         }}
         // Not required if you use custom renderSubmitButton prop
