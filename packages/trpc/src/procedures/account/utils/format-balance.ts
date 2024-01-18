@@ -1,7 +1,7 @@
-import { fetchTokenPrices } from "../../tokens/queries/token-prices/server";
+import { fetchTokenPrices } from "../../tokens/queries/price/fetch-token-prices";
 import { omit } from "lodash-es";
 import { raise } from "helpers";
-import { fetchTokens } from "../../tokens/queries/server";
+import { fetchTokens } from "../../tokens/queries/fetch-tokens";
 
 export const formatBalance = ({
   token,

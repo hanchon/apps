@@ -1,5 +1,5 @@
 import { raise } from "helpers";
-import { fetchChains } from "../server";
+import { fetchChains } from "../fetch-chains";
 
 export const fetchChainByRef = async (chainRef: string) => {
   const chains = await fetchChains();

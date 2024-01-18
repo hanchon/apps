@@ -1,10 +1,10 @@
 import { ensureKeys } from "helpers/src/dotenv";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
-import { fetchChains } from "../src/procedures/chains/queries/server";
+import { fetchChains } from "../src/procedures/chains/queries/fetch-chains";
 
 import { fileURLToPath } from "node:url";
-import { fetchTokens } from "../src/procedures/tokens/queries/server";
+import { fetchTokens } from "../src/procedures/tokens/queries/fetch-tokens";
 
 ensureKeys(["GITHUB_TOKEN"]);
 

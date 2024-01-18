@@ -17,6 +17,7 @@ type accordionData = {
   icon: string;
   total: BigNumber;
   tokens: TableDataElement[];
+  img: string;
 };
 
 const createSubRow = (
@@ -71,17 +72,8 @@ const ContentTable = ({
           name: e.chainIdentifier,
           icon: e.chainIdentifier,
           total: e.erc20Balance,
-          tokens:
-            // TODO: remove this condition when stEvmos price is available on coingecko
-            e.symbol.toLowerCase() === "stevmos"
-              ? // it uses the evmos price for stEvmos
-                [
-                  {
-                    ...e,
-                    coingeckoPrice: tableData?.table?.[0]?.coingeckoPrice ?? 0,
-                  },
-                ]
-              : [e],
+          img: e.pngSrc,
+          tokens: [e],
         });
       } else if (map.has(e.tokenIdentifier) === true) {
         const temp = map.get(e.tokenIdentifier);
@@ -95,6 +87,7 @@ const ContentTable = ({
           name: e.tokenIdentifier,
           icon: e.tokenIdentifier,
           total: e.erc20Balance,
+          img: e.pngSrc,
           tokens: [e],
         });
       }
@@ -167,9 +160,12 @@ const ContentTable = ({
           title={
             <RowContent
               symbol={v.name}
-              imgSrc={`/tokenIdentifier/${v.icon
-                .toLowerCase()
-                .replace(/\s/g, "")}.png`}
+              imgSrc={
+                v.img ||
+                `/tokenIdentifier/${v.icon
+                  .toLowerCase()
+                  .replace(/\s/g, "")}.png`
+              }
               valueInTokens={formatNumber(valueInTokens, 6)}
               valueInDollars={valueInDollars.toFixed(2)}
             />

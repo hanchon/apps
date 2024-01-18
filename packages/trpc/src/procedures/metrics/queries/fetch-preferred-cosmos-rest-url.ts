@@ -1,11 +1,11 @@
 import { nextCache } from "helpers/src/next/cache";
 import { assert } from "helpers";
-import { fetchEVMJsonRpcMetrics } from "../evm-json-rpc-metrics/server";
+import { fetchChainCosmosRestMetrics } from "./fetch-cosmos-chain-rest-metrics";
 import { seconds } from "helpers/src/time";
 
-export const fetchPreferredEvmJsonRpcUrl = nextCache(
+export const fetchPreferredCosmosRestUrl = nextCache(
   async (chain: string) => {
-    const { results } = await fetchEVMJsonRpcMetrics(chain);
+    const { results } = await fetchChainCosmosRestMetrics(chain);
 
     const [best, ...others] = results.flatMap(({ url, error }) => {
       if (error || !url) {
@@ -19,7 +19,7 @@ export const fetchPreferredEvmJsonRpcUrl = nextCache(
       urls: [best, ...others] as [string, ...string[]],
     };
   },
-  ["fetchPreferredEvmJsonRpcUrl"],
+  ["fetchPreferredCosmosRestUrl"],
   {
     revalidate: seconds("10m"),
   }

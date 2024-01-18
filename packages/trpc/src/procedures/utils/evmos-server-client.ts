@@ -3,7 +3,7 @@ import { Chain, createPublicClient, http } from "viem";
 import { EVMOS_CONFIG_MAP } from "helpers/src/evmos-info";
 import { raise } from "helpers";
 import { get } from "lodash-es";
-import { fetchPreferredEvmJsonRpcUrl } from "../metrics/queries/preferred-evm-json-rpc/server";
+import { fetchPreferredEvmJsonRpcUrl } from "../metrics/queries/fetch-preferred-evm-json-rpc-url";
 export const evmosServerClient = async (chain: string) =>
   createPublicClient({
     chain:

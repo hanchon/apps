@@ -6,7 +6,7 @@ import { formatFiat } from "helpers/src/format/format-fiat";
 import { nextCache } from "helpers/src/next/cache";
 import { seconds } from "helpers/src/time";
 import { z } from "zod";
-import { fetchTokens } from "../server";
+import { fetchTokens } from "../fetch-tokens";
 
 const revalidate = seconds("5m");
 

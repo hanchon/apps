@@ -12,6 +12,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { GiveFeedback } from "./give-feedback";
 import { WagmiProvider } from "wagmi";
 import { queryClient } from "helpers/src/clients/query";
+import { trpc, createTrpcClient } from "@evmosapps/trpc/client";
+
 function SnackbarsInternal() {
   const snackbars = useSelector(
     (state: StoreType) => state.snackbar.value.snackbars
@@ -32,32 +34,35 @@ function SnackbarsInternal() {
 }
 
 export const RootProviders = ({ children }: PropsWithChildren) => {
-  const [{}] = useState(() => ({
+  const [{ trpcClient }] = useState(() => ({
     persister: createSyncStoragePersister({
       storage: typeof window === "undefined" ? undefined : window.localStorage,
     }),
+    trpcClient: createTrpcClient(),
   }));
   return (
     <Provider store={store}>
       <WagmiProvider config={wagmiConfig} reconnectOnMount={false}>
-        <QueryClientProvider client={queryClient}>
-          {/* <PersistQueryClientProvider
+        <trpc.Provider client={trpcClient} queryClient={queryClient}>
+          <QueryClientProvider client={queryClient}>
+            {/* <PersistQueryClientProvider
           client={queryClient}
           persistOptions={{ persister }}
         > */}
-          <WalletProvider>
-            {children}
+            <WalletProvider>
+              {children}
 
-            <SnackbarsInternal />
-            <MavaWidget />
-            <GiveFeedback />
-          </WalletProvider>
-          <ReactQueryDevtools
-            initialIsOpen={false}
-            buttonPosition="bottom-left"
-          />
-          {/* </PersistQueryClientProvider> */}
-        </QueryClientProvider>
+              <SnackbarsInternal />
+              <MavaWidget />
+              <GiveFeedback />
+            </WalletProvider>
+            <ReactQueryDevtools
+              initialIsOpen={false}
+              buttonPosition="bottom-left"
+            />
+            {/* </PersistQueryClientProvider> */}
+          </QueryClientProvider>
+        </trpc.Provider>
       </WagmiProvider>
     </Provider>
   );

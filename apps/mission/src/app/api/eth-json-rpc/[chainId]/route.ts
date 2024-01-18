@@ -1,4 +1,4 @@
-import { fetchPreferredEvmJsonRpcUrl } from "@evmosapps/trpc/procedures/metrics/queries/preferred-evm-json-rpc/server";
+import { fetchPreferredEvmJsonRpcUrl } from "@evmosapps/trpc/procedures/metrics/queries/fetch-preferred-evm-json-rpc-url";
 import { NextResponse } from "next/server";
 
 export async function POST(

@@ -1,5 +1,5 @@
-import { TokenDenom } from "../../../../../autogen/registry";
-import { fetchTokenPrices } from "../token-prices/server";
+import { TokenDenom } from "../../../../autogen/registry";
+import { fetchTokenPrices } from "./price/fetch-token-prices";
 
 export const fetchTokenPriceByDenom = async (
   denom: TokenDenom | (string & {})
