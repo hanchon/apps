@@ -26,7 +26,7 @@ import { EcosystemCardGrid } from "../../landing/partials/ecosystem-card-grid";
 import { DescriptionLink } from "./description-link";
 import { CLICK_SEE_MORE_BUTTON, CLICK_SOCIAL_BUTTON } from "tracker";
 import { WIDGETS } from "./widgets-index";
-import { Image } from "@evmosapps/ui-helpers/src/Image";
+import Image from "next/image";
 
 export const DescriptiondApp = async ({
   dapp,
@@ -43,7 +43,7 @@ export const DescriptiondApp = async ({
     const Widget = WIDGETS[dapp.slug];
     if (Widget) return <Widget />;
   };
-
+  const { cover } = dapp;
   return (
     <div className="space-y-8 md:space-y-12 mb-12 lg:mb-24">
       <div className="relative">
@@ -55,7 +55,15 @@ export const DescriptiondApp = async ({
           )}
         >
           <Image
-            src={dapp.cover ?? "/ecosystem/galaxy.png"}
+            {...(cover
+              ? ({
+                  src: cover.src,
+                  blurDataURL: cover.blurDataURL,
+                  placeholder: "blur",
+                } as const)
+              : {
+                  src: "/ecosystem/galaxy.png",
+                })}
             alt={dapp.name}
             fill={true}
             className="object-cover"
@@ -76,7 +84,9 @@ export const DescriptiondApp = async ({
           >
             {dapp.icon && (
               <Image
-                src={dapp.icon}
+                src={dapp.icon.src}
+                blurDataURL={dapp.icon.blurDataURL}
+                placeholder="blur"
                 alt={dapp.name}
                 fill={true}
                 className="object-cover"

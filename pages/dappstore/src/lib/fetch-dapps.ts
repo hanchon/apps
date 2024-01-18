@@ -1,10 +1,9 @@
-import { inspect } from "util";
 import { ECOSYSTEM_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 import { Log, dappSchema } from "helpers";
 import { notion } from "helpers/src/clients/notion";
 import { cache } from "react";
 
-const fetchNotionEcosystemDb = async () =>
+export const fetchNotionEcosystemDb = async () =>
   notion.databases.query({
     database_id: ECOSYSTEM_PAGE_NOTION_ID,
   });
@@ -16,10 +15,7 @@ export const fetchDapps = cache(async () => {
     dapps.results.map(async (value) => {
       const result = await dappSchema.safeParseAsync(value);
       if (!result.success) {
-        Log("notion").error(
-          result.error.issues,
-          inspect(value, true, 10, true)
-        );
+        Log("notion").error(result.error.issues);
       }
       return result;
     })
@@ -53,5 +49,6 @@ export const fetchDapps = cache(async () => {
     );
     dappsMap.set(parsed.notionId, parsed);
   }
-  return dappsMap;
+
+  return Object.fromEntries(dappsMap.entries());
 });
