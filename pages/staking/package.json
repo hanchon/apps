@@ -8,6 +8,7 @@
   "dependencies": {
     "@evmosapps/copilot": "workspace:*",
     "@evmosapps/evmos-wallet": "workspace:*",
+    "@evmosapps/trpc": "workspace:*",
     "@evmosapps/ui-helpers": "workspace:*",
     "constants-helper": "workspace:*",
     "helpers": "workspace:*",

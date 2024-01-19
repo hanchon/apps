@@ -88,7 +88,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ^1.1.3
-        version: 1.1.3(@types/node@20.11.4)(jsdom@23.2.0)
+        version: 1.1.3(@types/node@20.11.5)(jsdom@23.2.0)
       zod:
         specifier: ^3.22.1
         version: 3.22.4
@@ -110,7 +110,7 @@ importers:
         version: 8.0.3
       knip:
         specifier: 4.0.0-canary.8
-        version: 4.0.0-canary.8(@types/node@20.11.4)(typescript@5.3.3)
+        version: 4.0.0-canary.8(@types/node@20.11.5)(typescript@5.3.3)
       prettier:
         specifier: ^3.0.1
         version: 3.1.0
@@ -279,7 +279,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ^1.1.3
-        version: 1.1.3(@types/node@20.11.4)(jsdom@23.2.0)
+        version: 1.1.3(@types/node@20.11.5)(jsdom@23.2.0)
 
   packages/constants-helper:
     dependencies:
@@ -475,6 +475,18 @@ importers:
 
   packages/helpers:
     dependencies:
+      '@buf/cosmos_cosmos-sdk.bufbuild_es':
+        specifier: 1.3.0-20230822104619-a12828247088.1
+        version: 1.3.0-20230822104619-a12828247088.1(@bufbuild/protobuf@1.4.2)
+      '@buf/cosmos_ibc.bufbuild_es':
+        specifier: 1.6.0-20240117185529-062da0f6d260.1
+        version: 1.6.0-20240117185529-062da0f6d260.1(@bufbuild/protobuf@1.4.2)
+      '@buf/evmos_evmos.bufbuild_es':
+        specifier: 1.3.0-20230822152208-9101da12dca9.1
+        version: 1.3.0-20230822152208-9101da12dca9.1(@bufbuild/protobuf@1.4.2)
+      '@bufbuild/protobuf':
+        specifier: ^1.4.2
+        version: 1.4.2
       '@ethersproject/bignumber':
         specifier: ^5.7.0
         version: 5.7.0
@@ -515,8 +527,8 @@ importers:
         specifier: ^0.8.1
         version: 0.8.1
       openapi-typescript:
-        specifier: ^6.7.1
-        version: 6.7.1
+        specifier: ^6.7.3
+        version: 6.7.3
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -732,7 +744,7 @@ importers:
         version: 1.40.1
       '@tenkeylabs/dappwright':
         specifier: ^2.5.5
-        version: 2.5.5(playwright-core@1.40.1)
+        version: 2.5.5(playwright-core@1.41.0)
 
   packages/testnet:
     dependencies:
@@ -1048,6 +1060,12 @@ importers:
 
   pages/governance:
     dependencies:
+      '@buf/cosmos_cosmos-sdk.bufbuild_es':
+        specifier: 1.3.0-20230822104619-a12828247088.1
+        version: 1.3.0-20230822104619-a12828247088.1(@bufbuild/protobuf@1.4.2)
+      '@buf/evmos_evmos.bufbuild_es':
+        specifier: 1.3.0-20230822152208-9101da12dca9.1
+        version: 1.3.0-20230822152208-9101da12dca9.1(@bufbuild/protobuf@1.4.2)
       '@evmosapps/copilot':
         specifier: workspace:*
         version: link:../../packages/copilot
@@ -1203,6 +1221,9 @@ importers:
       '@evmosapps/icons':
         specifier: workspace:*
         version: link:../../packages/icons
+      '@evmosapps/trpc':
+        specifier: workspace:*
+        version: link:../../packages/trpc
       '@evmosapps/ui-helpers':
         specifier: workspace:*
         version: link:../../packages/ui-helpers
@@ -1444,6 +1465,20 @@ packages:
 
   /@babel/helper-define-polyfill-provider@0.4.4(@babel/core@7.23.7):
     resolution: {integrity: sha512-QcJMILQCu2jm5TFPGA3lCpJJTeEP+mqeXooG/NZbg/h5FTFi6V0+99ahlRsW8/kRLyb24LZVCCiclDedhLKcBA==}
+    peerDependencies:
+      '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
+    dependencies:
+      '@babel/core': 7.23.7
+      '@babel/helper-compilation-targets': 7.23.6
+      '@babel/helper-plugin-utils': 7.22.5
+      debug: 4.3.4(supports-color@5.5.0)
+      lodash.debounce: 4.0.8
+      resolve: 1.22.8
+    transitivePeerDependencies:
+      - supports-color
+
+  /@babel/helper-define-polyfill-provider@0.5.0(@babel/core@7.23.7):
+    resolution: {integrity: sha512-NovQquuQLAQ5HuyjCz7WQP9MjRj7dx++yspwiyUiGl9ZyadHRSql1HZh5ogRd8W8w6YM6EQ/NTB8rgjLt5W65Q==}
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
     dependencies:
@@ -2369,9 +2404,9 @@ packages:
       '@babel/core': 7.23.7
       '@babel/helper-module-imports': 7.22.15
       '@babel/helper-plugin-utils': 7.22.5
-      babel-plugin-polyfill-corejs2: 0.4.7(@babel/core@7.23.7)
+      babel-plugin-polyfill-corejs2: 0.4.8(@babel/core@7.23.7)
       babel-plugin-polyfill-corejs3: 0.8.7(@babel/core@7.23.7)
-      babel-plugin-polyfill-regenerator: 0.5.4(@babel/core@7.23.7)
+      babel-plugin-polyfill-regenerator: 0.5.5(@babel/core@7.23.7)
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
@@ -2555,9 +2590,9 @@ packages:
       '@babel/plugin-transform-unicode-regex': 7.23.3(@babel/core@7.23.7)
       '@babel/plugin-transform-unicode-sets-regex': 7.23.3(@babel/core@7.23.7)
       '@babel/preset-modules': 0.1.6-no-external-plugins(@babel/core@7.23.7)
-      babel-plugin-polyfill-corejs2: 0.4.7(@babel/core@7.23.7)
+      babel-plugin-polyfill-corejs2: 0.4.8(@babel/core@7.23.7)
       babel-plugin-polyfill-corejs3: 0.8.7(@babel/core@7.23.7)
-      babel-plugin-polyfill-regenerator: 0.5.4(@babel/core@7.23.7)
+      babel-plugin-polyfill-regenerator: 0.5.5(@babel/core@7.23.7)
       core-js-compat: 3.35.0
       semver: 6.3.1
     transitivePeerDependencies:
@@ -2673,6 +2708,14 @@ packages:
     dependencies:
       '@bufbuild/protobuf': 1.4.2
 
+  /@buf/cosmos_cosmos-proto.bufbuild_es@1.6.0-20211202220400-1935555c206d.1(@bufbuild/protobuf@1.4.2):
+    resolution: {tarball: https://buf.build/gen/npm/v1/@buf/cosmos_cosmos-proto.bufbuild_es/-/cosmos_cosmos-proto.bufbuild_es-1.6.0-20211202220400-1935555c206d.1.tgz}
+    peerDependencies:
+      '@bufbuild/protobuf': ^1.6.0
+    dependencies:
+      '@bufbuild/protobuf': 1.4.2
+    dev: false
+
   /@buf/cosmos_cosmos-sdk.bufbuild_es@1.3.0-20221115045553-508e19f5f375.1(@bufbuild/protobuf@1.4.2):
     resolution: {tarball: https://buf.build/gen/npm/v1/@buf/cosmos_cosmos-sdk.bufbuild_es/-/cosmos_cosmos-sdk.bufbuild_es-1.3.0-20221115045553-508e19f5f375.1.tgz}
     peerDependencies:
@@ -2705,6 +2748,17 @@ packages:
       '@bufbuild/protobuf': 1.4.2
     dev: false
 
+  /@buf/cosmos_cosmos-sdk.bufbuild_es@1.6.0-20230719110346-aa25660f4ff7.1(@bufbuild/protobuf@1.4.2):
+    resolution: {tarball: https://buf.build/gen/npm/v1/@buf/cosmos_cosmos-sdk.bufbuild_es/-/cosmos_cosmos-sdk.bufbuild_es-1.6.0-20230719110346-aa25660f4ff7.1.tgz}
+    peerDependencies:
+      '@bufbuild/protobuf': ^1.6.0
+    dependencies:
+      '@buf/cosmos_cosmos-proto.bufbuild_es': 1.6.0-20211202220400-1935555c206d.1(@bufbuild/protobuf@1.4.2)
+      '@buf/cosmos_gogo-proto.bufbuild_es': 1.6.0-20230509103710-5e5b9fdd0180.1(@bufbuild/protobuf@1.4.2)
+      '@buf/googleapis_googleapis.bufbuild_es': 1.6.0-20230502210827-cc916c318597.1(@bufbuild/protobuf@1.4.2)
+      '@bufbuild/protobuf': 1.4.2
+    dev: false
+
   /@buf/cosmos_gogo-proto.bufbuild_es@1.3.0-20221020125208-34d970b699f8.1(@bufbuild/protobuf@1.4.2):
     resolution: {tarball: https://buf.build/gen/npm/v1/@buf/cosmos_gogo-proto.bufbuild_es/-/cosmos_gogo-proto.bufbuild_es-1.3.0-20221020125208-34d970b699f8.1.tgz}
     peerDependencies:
@@ -2716,6 +2770,22 @@ packages:
     resolution: {tarball: https://buf.build/gen/npm/v1/@buf/cosmos_gogo-proto.bufbuild_es/-/cosmos_gogo-proto.bufbuild_es-1.3.0-20230509103710-5e5b9fdd0180.1.tgz}
     peerDependencies:
       '@bufbuild/protobuf': ^1.3.0
+    dependencies:
+      '@bufbuild/protobuf': 1.4.2
+    dev: false
+
+  /@buf/cosmos_gogo-proto.bufbuild_es@1.6.0-20221020125208-34d970b699f8.1(@bufbuild/protobuf@1.4.2):
+    resolution: {tarball: https://buf.build/gen/npm/v1/@buf/cosmos_gogo-proto.bufbuild_es/-/cosmos_gogo-proto.bufbuild_es-1.6.0-20221020125208-34d970b699f8.1.tgz}
+    peerDependencies:
+      '@bufbuild/protobuf': ^1.6.0
+    dependencies:
+      '@bufbuild/protobuf': 1.4.2
+    dev: false
+
+  /@buf/cosmos_gogo-proto.bufbuild_es@1.6.0-20230509103710-5e5b9fdd0180.1(@bufbuild/protobuf@1.4.2):
+    resolution: {tarball: https://buf.build/gen/npm/v1/@buf/cosmos_gogo-proto.bufbuild_es/-/cosmos_gogo-proto.bufbuild_es-1.6.0-20230509103710-5e5b9fdd0180.1.tgz}
+    peerDependencies:
+      '@bufbuild/protobuf': ^1.6.0
     dependencies:
       '@bufbuild/protobuf': 1.4.2
     dev: false
@@ -2733,10 +2803,31 @@ packages:
       '@bufbuild/protobuf': 1.4.2
     dev: false
 
+  /@buf/cosmos_ibc.bufbuild_es@1.6.0-20240117185529-062da0f6d260.1(@bufbuild/protobuf@1.4.2):
+    resolution: {tarball: https://buf.build/gen/npm/v1/@buf/cosmos_ibc.bufbuild_es/-/cosmos_ibc.bufbuild_es-1.6.0-20240117185529-062da0f6d260.1.tgz}
+    peerDependencies:
+      '@bufbuild/protobuf': ^1.6.0
+    dependencies:
+      '@buf/cosmos_cosmos-proto.bufbuild_es': 1.6.0-20211202220400-1935555c206d.1(@bufbuild/protobuf@1.4.2)
+      '@buf/cosmos_cosmos-sdk.bufbuild_es': 1.6.0-20230719110346-aa25660f4ff7.1(@bufbuild/protobuf@1.4.2)
+      '@buf/cosmos_gogo-proto.bufbuild_es': 1.6.0-20221020125208-34d970b699f8.1(@bufbuild/protobuf@1.4.2)
+      '@buf/cosmos_ics23.bufbuild_es': 1.6.0-20221207100654-55085f7c710a.1(@bufbuild/protobuf@1.4.2)
+      '@buf/googleapis_googleapis.bufbuild_es': 1.6.0-20220908150232-8d7204855ec1.1(@bufbuild/protobuf@1.4.2)
+      '@bufbuild/protobuf': 1.4.2
+    dev: false
+
   /@buf/cosmos_ics23.bufbuild_es@1.3.0-20221207100654-55085f7c710a.1(@bufbuild/protobuf@1.4.2):
     resolution: {tarball: https://buf.build/gen/npm/v1/@buf/cosmos_ics23.bufbuild_es/-/cosmos_ics23.bufbuild_es-1.3.0-20221207100654-55085f7c710a.1.tgz}
     peerDependencies:
       '@bufbuild/protobuf': ^1.3.0
+    dependencies:
+      '@bufbuild/protobuf': 1.4.2
+    dev: false
+
+  /@buf/cosmos_ics23.bufbuild_es@1.6.0-20221207100654-55085f7c710a.1(@bufbuild/protobuf@1.4.2):
+    resolution: {tarball: https://buf.build/gen/npm/v1/@buf/cosmos_ics23.bufbuild_es/-/cosmos_ics23.bufbuild_es-1.6.0-20221207100654-55085f7c710a.1.tgz}
+    peerDependencies:
+      '@bufbuild/protobuf': ^1.6.0
     dependencies:
       '@bufbuild/protobuf': 1.4.2
     dev: false
@@ -2779,6 +2870,22 @@ packages:
     resolution: {tarball: https://buf.build/gen/npm/v1/@buf/googleapis_googleapis.bufbuild_es/-/googleapis_googleapis.bufbuild_es-1.3.0-20230502210827-cc916c318597.1.tgz}
     peerDependencies:
       '@bufbuild/protobuf': ^1.3.0
+    dependencies:
+      '@bufbuild/protobuf': 1.4.2
+    dev: false
+
+  /@buf/googleapis_googleapis.bufbuild_es@1.6.0-20220908150232-8d7204855ec1.1(@bufbuild/protobuf@1.4.2):
+    resolution: {tarball: https://buf.build/gen/npm/v1/@buf/googleapis_googleapis.bufbuild_es/-/googleapis_googleapis.bufbuild_es-1.6.0-20220908150232-8d7204855ec1.1.tgz}
+    peerDependencies:
+      '@bufbuild/protobuf': ^1.6.0
+    dependencies:
+      '@bufbuild/protobuf': 1.4.2
+    dev: false
+
+  /@buf/googleapis_googleapis.bufbuild_es@1.6.0-20230502210827-cc916c318597.1(@bufbuild/protobuf@1.4.2):
+    resolution: {tarball: https://buf.build/gen/npm/v1/@buf/googleapis_googleapis.bufbuild_es/-/googleapis_googleapis.bufbuild_es-1.6.0-20230502210827-cc916c318597.1.tgz}
+    peerDependencies:
+      '@bufbuild/protobuf': ^1.6.0
     dependencies:
       '@bufbuild/protobuf': 1.4.2
     dev: false
@@ -4100,7 +4207,7 @@ packages:
     dependencies:
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       jest-mock: 29.7.0
 
   /@jest/fake-timers@29.7.0:
@@ -4109,7 +4216,7 @@ packages:
     dependencies:
       '@jest/types': 29.6.3
       '@sinonjs/fake-timers': 10.3.0
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       jest-message-util: 29.7.0
       jest-mock: 29.7.0
       jest-util: 29.7.0
@@ -4126,7 +4233,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       '@types/yargs': 15.0.19
       chalk: 4.1.2
 
@@ -4137,7 +4244,7 @@ packages:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       '@types/yargs': 17.0.32
       chalk: 4.1.2
 
@@ -6694,7 +6801,7 @@ packages:
       cosmiconfig: 5.2.1
       deepmerge: 4.3.1
       glob: 7.2.3
-      joi: 17.11.1
+      joi: 17.12.0
     transitivePeerDependencies:
       - encoding
 
@@ -6803,7 +6910,7 @@ packages:
   /@react-native-community/cli-types@12.3.0:
     resolution: {integrity: sha512-MgOkmrXH4zsGxhte4YqKL7d+N8ZNEd3w1wo56MZlhu5WabwCJh87wYpU5T8vyfujFLYOFuFK5jjlcbs8F4/WDw==}
     dependencies:
-      joi: 17.11.1
+      joi: 17.12.0
 
   /@react-native-community/cli@12.3.0:
     resolution: {integrity: sha512-XeQohi2E+S2+MMSz97QcEZ/bWpi8sfKiQg35XuYeJkc32Til2g0b97jRpn0/+fV0BInHoG1CQYWwHA7opMsrHg==}
@@ -8094,14 +8201,14 @@ packages:
       '@tanstack/query-core': 5.17.15
       react: 18.2.0
 
-  /@tenkeylabs/dappwright@2.5.5(playwright-core@1.40.1):
+  /@tenkeylabs/dappwright@2.5.5(playwright-core@1.41.0):
     resolution: {integrity: sha512-SctJOypoCrwFto+bnezjUpOh/M17bt3078F4OwewgY+j39o4aVB/4tADsJUxngLyrh7DNtsbND6AGc+4XlRdrA==}
     engines: {node: '>=16'}
     peerDependencies:
       playwright-core: '>1.0'
     dependencies:
       node-stream-zip: 1.15.0
-      playwright-core: 1.40.1
+      playwright-core: 1.41.0
     dev: true
 
   /@testing-library/dom@9.3.4:
@@ -8231,7 +8338,7 @@ packages:
   /@types/bn.js@5.1.5:
     resolution: {integrity: sha512-V46N0zwKRF5Q00AZ6hWtN0T8gGmDUaUzLWQvHFo5yThtVwK/VCenFY3wXVbOvNfajEpsTfQM4IN9k/d6gUVX3A==}
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
     dev: false
 
   /@types/btoa-lite@1.0.2:
@@ -8435,6 +8542,11 @@ packages:
     dependencies:
       undici-types: 5.26.5
 
+  /@types/node@20.11.5:
+    resolution: {integrity: sha512-g557vgQjUUfN76MZAN/dt1z3dzcUsimuysco0KeluHgrPdJXkP/XdAURgyO2W9fZWHRtRBiVKzKn8vyOAwlG+w==}
+    dependencies:
+      undici-types: 5.26.5
+
   /@types/node@20.4.1:
     resolution: {integrity: sha512-JIzsAvJeA/5iY6Y/OxZbv1lUcc8dNSE77lb2gnBH+/PJ3lFR1Ccvgwl5JWnHAkNHcRsT0TbpVOsiMKZ1F/yyJg==}
     dev: true
@@ -8481,7 +8593,7 @@ packages:
   /@types/readable-stream@2.3.15:
     resolution: {integrity: sha512-oM5JSKQCcICF1wvGgmecmHldZ48OZamtMxcGGVICOJA8o8cahXC1zEVAif8iwoc5j8etxFaRFnf095+CDsuoFQ==}
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       safe-buffer: 5.1.2
     dev: false
 
@@ -9097,7 +9209,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.23.7)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.0
-      vite: 5.0.11(@types/node@20.11.4)
+      vite: 5.0.11(@types/node@20.11.5)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -9118,7 +9230,7 @@ packages:
       std-env: 3.7.0
       test-exclude: 6.0.0
       v8-to-istanbul: 9.1.3
-      vitest: 1.1.3(@types/node@20.11.4)(jsdom@23.2.0)
+      vitest: 1.1.3(@types/node@20.11.5)(jsdom@23.2.0)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -10237,14 +10349,14 @@ packages:
       cosmiconfig: 7.1.0
       resolve: 1.22.8
 
-  /babel-plugin-polyfill-corejs2@0.4.7(@babel/core@7.23.7):
-    resolution: {integrity: sha512-LidDk/tEGDfuHW2DWh/Hgo4rmnw3cduK6ZkOI1NPFceSK3n/yAGeOsNT7FLnSGHkXj3RHGSEVkN3FsCTY6w2CQ==}
+  /babel-plugin-polyfill-corejs2@0.4.8(@babel/core@7.23.7):
+    resolution: {integrity: sha512-OtIuQfafSzpo/LhnJaykc0R/MMnuLSSVjVYy9mHArIZ9qTCSZ6TpWCuEKZYVoN//t8HqBNScHrOtCrIK5IaGLg==}
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
     dependencies:
       '@babel/compat-data': 7.23.5
       '@babel/core': 7.23.7
-      '@babel/helper-define-polyfill-provider': 0.4.4(@babel/core@7.23.7)
+      '@babel/helper-define-polyfill-provider': 0.5.0(@babel/core@7.23.7)
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
@@ -10260,13 +10372,13 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /babel-plugin-polyfill-regenerator@0.5.4(@babel/core@7.23.7):
-    resolution: {integrity: sha512-S/x2iOCvDaCASLYsOOgWOq4bCfKYVqvO/uxjkaYyZ3rVsVE3CeAI/c84NpyuBBymEgNvHgjEot3a9/Z/kXvqsg==}
+  /babel-plugin-polyfill-regenerator@0.5.5(@babel/core@7.23.7):
+    resolution: {integrity: sha512-OJGYZlhLqBh2DDHeqAxWB1XIvr49CxiJ2gIt61/PU55CQK4Z58OzMqjDe1zwQdQk+rBYsRc+1rJmdajM3gimHg==}
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
     dependencies:
       '@babel/core': 7.23.7
-      '@babel/helper-define-polyfill-provider': 0.4.4(@babel/core@7.23.7)
+      '@babel/helper-define-polyfill-provider': 0.5.0(@babel/core@7.23.7)
     transitivePeerDependencies:
       - supports-color
 
@@ -10771,7 +10883,7 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.4.2
@@ -10781,7 +10893,7 @@ packages:
   /chromium-edge-launcher@1.0.0:
     resolution: {integrity: sha512-pgtgjNKZ7i5U++1g1PWv75umkHvhVTDOQIZ+sjeUX9483S7Y6MUvO0lrd7ShGlQlFHMN4SwKTCq/X8hWrbv2KA==}
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.4.2
@@ -12463,7 +12575,7 @@ packages:
     dependencies:
       '@typescript-eslint/utils': 6.18.1(eslint@8.56.0)(typescript@5.3.3)
       eslint: 8.56.0
-      vitest: 1.1.3(@types/node@20.11.4)(jsdom@23.2.0)
+      vitest: 1.1.3(@types/node@20.11.5)(jsdom@23.2.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -14579,7 +14691,7 @@ packages:
       '@jest/environment': 29.7.0
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       jest-mock: 29.7.0
       jest-util: 29.7.0
 
@@ -14606,7 +14718,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       jest-util: 29.7.0
 
   /jest-util@29.7.0:
@@ -14614,7 +14726,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
@@ -14635,7 +14747,7 @@ packages:
     resolution: {integrity: sha512-eIz2msL/EzL9UFTFFx7jBTkeZfku0yUAyZZZmJ93H2TYEiroIx2PQjEXcwYtYl8zXCxb+PAmA2hLIt/6ZEkPHw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       jest-util: 29.7.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
@@ -14646,6 +14758,16 @@ packages:
 
   /joi@17.11.1:
     resolution: {integrity: sha512-671acnrx+w96PCcQOzvm0VYQVwNL2PVgZmDRaFuSsx8sIUmGzYElPw5lU8F3Cr0jOuPs1oM56p7W2a1cdDOwcw==}
+    dependencies:
+      '@hapi/hoek': 9.3.0
+      '@hapi/topo': 5.1.0
+      '@sideway/address': 4.1.4
+      '@sideway/formula': 3.0.1
+      '@sideway/pinpoint': 2.0.0
+    dev: true
+
+  /joi@17.12.0:
+    resolution: {integrity: sha512-HSLsmSmXz+PV9PYoi3p7cgIbj06WnEBNT28n+bbBNcPZXZFqCzzvGqpTBPujx/Z0nh1+KNQPDrNgdmQ8dq0qYw==}
     dependencies:
       '@hapi/hoek': 9.3.0
       '@hapi/topo': 5.1.0
@@ -15024,7 +15146,7 @@ packages:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
     engines: {node: '>=6'}
 
-  /knip@4.0.0-canary.8(@types/node@20.11.4)(typescript@5.3.3):
+  /knip@4.0.0-canary.8(@types/node@20.11.5)(typescript@5.3.3):
     resolution: {integrity: sha512-t6912DDMxvUjTBUpbhx7/S5eUgVXnhy0u1Ph5Yi1i+4Bo7f81IqebqkVATpbFMQXjvuZcW3McoWZs5R/asJPDQ==}
     engines: {node: '>=18.6.0'}
     hasBin: true
@@ -15039,7 +15161,7 @@ packages:
       '@pnpm/logger': 5.0.0
       '@pnpm/workspace.pkgs-graph': 2.0.13(@pnpm/logger@5.0.0)
       '@snyk/github-codeowners': 1.1.0
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       chalk: 5.3.0
       easy-table: 1.2.0
       fast-glob: 3.3.2
@@ -15828,7 +15950,7 @@ packages:
     resolution: {integrity: sha512-cuxfRZWDWGKjh+Z6t4KJkrvmV4JUKXfvQuAX7Pa7U0Mf1YJdLtoGQ5iVOu/6MkfYGXbppqGk2qmFECrRGRh0cA==}
     engines: {node: '>=18'}
     dependencies:
-      terser: 5.26.0
+      terser: 5.27.0
 
   /metro-resolver@0.80.4:
     resolution: {integrity: sha512-PCiVWN+d3gtWlobf8jPypwKx9T1QrZmhLJAyqIWLoOsZbpSfj1dn5h0ajCr8rYi9LNzIHm58GGYJK8VFHNn8Cw==}
@@ -17055,6 +17177,18 @@ packages:
       yargs-parser: 21.1.1
     dev: false
 
+  /openapi-typescript@6.7.3:
+    resolution: {integrity: sha512-es3mGcDXV6TKPo6n3aohzHm0qxhLyR39MhF6mkD1FwFGjhxnqMqfSIgM0eCpInZvqatve4CxmXcMZw3jnnsaXw==}
+    hasBin: true
+    dependencies:
+      ansi-colors: 4.1.3
+      fast-glob: 3.3.2
+      js-yaml: 4.1.0
+      supports-color: 9.4.0
+      undici: 5.28.2
+      yargs-parser: 21.1.1
+    dev: false
+
   /opener@1.5.2:
     resolution: {integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==}
     hasBin: true
@@ -17515,6 +17649,12 @@ packages:
     resolution: {integrity: sha512-+hkOycxPiV534c4HhpfX6yrlawqVUzITRKwHAmYfmsVreltEl6fAZJ3DPfLMOODw0H3s1Itd6MDCWmP1fl/QvQ==}
     engines: {node: '>=16'}
     hasBin: true
+
+  /playwright-core@1.41.0:
+    resolution: {integrity: sha512-UGKASUhXmvqm2Lxa1fNr8sFwAtqjpgBRr9jQ7XBI8Rn5uFiEowGUGwrruUQsVPIom4bk7Lt+oLGpXobnXzrBIw==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dev: true
 
   /playwright@1.40.1:
     resolution: {integrity: sha512-2eHI7IioIpQ0bS1Ovg/HszsN/XKNwEG1kbzSDDmADpclKc7CyqkHw7Mg2JCz/bbCxg25QUPcjksoMW7JcIFQmw==}
@@ -19886,8 +20026,8 @@ packages:
     dependencies:
       rimraf: 2.6.3
 
-  /terser@5.26.0:
-    resolution: {integrity: sha512-dytTGoE2oHgbNV9nTzgBEPaqAWvcJNl66VZ0BkJqlvp71IjO8CxdBx/ykCNb47cLnCmCvRZ6ZR0tLkqvZCdVBQ==}
+  /terser@5.27.0:
+    resolution: {integrity: sha512-bi1HRwVRskAjheeYl291n3JC4GgO/Ty4z1nVs5AAsmonJulGxpSektecnNedrwK9C7vpvVtcX3cw00VSLt7U2A==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
@@ -20789,7 +20929,7 @@ packages:
       - utf-8-validate
       - zod
 
-  /vite-node@1.1.3(@types/node@20.11.4):
+  /vite-node@1.1.3(@types/node@20.11.5):
     resolution: {integrity: sha512-BLSO72YAkIUuNrOx+8uznYICJfTEbvBAmWClY3hpath5+h1mbPS5OMn42lrTxXuyCazVyZoDkSRnju78GiVCqA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -20798,7 +20938,7 @@ packages:
       debug: 4.3.4(supports-color@5.5.0)
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.0.11(@types/node@20.11.4)
+      vite: 5.0.11(@types/node@20.11.5)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -20809,7 +20949,7 @@ packages:
       - supports-color
       - terser
 
-  /vite@5.0.11(@types/node@20.11.4):
+  /vite@5.0.11(@types/node@20.11.5):
     resolution: {integrity: sha512-XBMnDjZcNAw/G1gEiskiM1v6yzM4GE5aMGvhWTlHAYYhxb7S3/V1s3m2LDHa8Vh6yIWYYB0iJwsEaS523c4oYA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -20837,14 +20977,14 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       esbuild: 0.19.11
       postcss: 8.4.33
       rollup: 4.9.4
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitest@1.1.3(@types/node@20.11.4)(jsdom@23.2.0):
+  /vitest@1.1.3(@types/node@20.11.5)(jsdom@23.2.0):
     resolution: {integrity: sha512-2l8om1NOkiA90/Y207PsEvJLYygddsOyr81wLQ20Ra8IlLKbyQncWsGZjnbkyG2KwwuTXLQjEPOJuxGMG8qJBQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -20869,7 +21009,7 @@ packages:
       jsdom:
         optional: true
     dependencies:
-      '@types/node': 20.11.4
+      '@types/node': 20.11.5
       '@vitest/expect': 1.1.3
       '@vitest/runner': 1.1.3
       '@vitest/snapshot': 1.1.3
@@ -20889,8 +21029,8 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.8.1
-      vite: 5.0.11(@types/node@20.11.4)
-      vite-node: 1.1.3(@types/node@20.11.4)
+      vite: 5.0.11(@types/node@20.11.5)
+      vite-node: 1.1.3(@types/node@20.11.5)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less

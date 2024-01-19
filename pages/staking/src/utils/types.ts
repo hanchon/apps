@@ -27,7 +27,7 @@ type description = {
 
 export type ValidatorResponse = {
   commission: commission;
-  consensus_key: consensusPubKey;
+  consensus_pubkey: consensusPubKey;
   delegator_shares: string;
   description: description;
   jailed: boolean;
@@ -42,7 +42,7 @@ export type ValidatorResponse = {
 
 type delegationResponse = {
   delegator_address: string;
-  rank: number;
+  // rank: number;
   shares: string;
   validator: ValidatorResponse;
   validator_address: string;

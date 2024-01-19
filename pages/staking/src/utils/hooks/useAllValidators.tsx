@@ -1,40 +1,37 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { getAllValidators, ValidatorsResponse } from "../fetch";
-import { ValidatorResponse, ValidatorsList } from "../types";
-import { useStakingInfo } from "./useStakingInfo";
 
+import { useTrpcQuery } from "@evmosapps/trpc/client";
+import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
+import { useStakingInfo } from "@evmosapps/evmos-wallet/src/api/useStake";
 export const useAllValidators = () => {
-  const validators = useQuery<ValidatorsResponse, Error>({
-    queryKey: ["allValidators"],
-    queryFn: () => getAllValidators(),
-  });
+  const chainRef = useEvmosChainRef();
+
+  const validators = useTrpcQuery((t) => t.legacy.allValidators({ chainRef }));
   const { delegations } = useStakingInfo();
   const allValidators = useMemo(() => {
-    const validatorWithDelegations: ValidatorsList[] = [];
-    let values: ValidatorResponse[] = [];
-    if (validators.data !== undefined) {
-      values = validators.data.values;
-      values?.map((item) => {
-        validatorWithDelegations.push({
-          validator: item,
-          balance: { balance: { amount: "", denom: "" } },
-        });
-      });
-      delegations.map((item) => {
-        validatorWithDelegations.filter((i) => {
-          if (i.validator.rank === item.delegation.validator.rank) {
-            i.balance.balance.amount = item.balance.amount;
-          }
-        });
-      });
-    }
+    const delegationByRank = new Map(
+      delegations.map((delegation) => [
+        delegation.delegation.validator.rank,
+        delegation,
+      ])
+    );
+    const validatorWithDelegations =
+      validators.data?.map((validator) => {
+        const delegation = delegationByRank.get(validator.rank);
+        return {
+          validator,
+          balance: {
+            balance: delegation?.balance ?? { amount: "", denom: "" },
+          },
+        };
+      }) ?? [];
 
     return validatorWithDelegations;
   }, [validators, delegations]);
+  console.log("allValidators", allValidators);
 
   return { validators: allValidators };
 };

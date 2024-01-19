@@ -4,6 +4,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { BigNumber } from "@ethersproject/bignumber";
 import { useMemo } from "react";
+import { DeepRequired } from "helpers/src/types";
 import {
   E,
   formatAttoNumber,
@@ -15,6 +16,16 @@ import {
 } from "helpers";
 import { getProposals } from "../fetch";
 import { Proposal, ProposalDetailProps } from "../types";
+import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
+import { cosmos } from "helpers/src/clients/cosmos";
+import get from "lodash-es/get";
+import { Deposit } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/gov/v1beta1/gov_pb";
+import {
+  assertMessageType,
+  isMessageType,
+} from "helpers/src/crypto/protobuf/assert-message-type";
+import { MsgUpdateParams } from "@buf/evmos_evmos.bufbuild_es/evmos/inflation/v1/tx_pb";
+import { EthAccount } from "@buf/evmos_evmos.bufbuild_es/ethermint/types/v1/account_pb";
 const [, parsedProposals] = E.try(
   () =>
     JSON.parse(process.env.NEXT_PUBLIC_PROPOSALS_TO_REMOVE ?? "[]") as string[]
@@ -22,22 +33,64 @@ const [, parsedProposals] = E.try(
 
 const PROPOSALS_TO_REMOVE = parsedProposals ?? [];
 
-const removeProposals = (proposals: Proposal[], proposalToRemove: string[]) => {
-  return proposals?.filter(
+const removeProposals = <
+  T extends Array<{
+    id: string;
+  }>,
+>(
+  proposals: T,
+  proposalToRemove: string[]
+): T => {
+  return proposals.filter(
     (proposal) => !proposalToRemove.includes(proposal.id)
-  );
+  ) as T;
 };
-
+Deposit.typeName;
 export const useProposals = (pid?: string) => {
+  const test = {
+    "@type": "/ethermint.types.v1.EthAccount",
+    base_account: {
+      address: "evmos1gxykhk5uffcrc7mqppftfrcxumqm6gz0lh8t5k",
+      pub_key: {
+        "@type": "/ethermint.crypto.v1.ethsecp256k1.PubKey",
+        key: "AlfWj9NcMhGTB4419WnILQ77mLqfMBeJ1uCqkGT05Mk+",
+      },
+      account_number: "91471376",
+      sequence: "154",
+    },
+    code_hash:
+      "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+  } as unknown;
+  if (isMessageType(test, "cosmos.gov.v1.MsgExecLegacyContent")) {
+    console.log("test");
+    if (isMessageType(test.content, "cosmos.gov.v1beta1.TextProposal")) {
+    }
+  }
+
+  const chainRef = useEvmosChainRef();
   const proposalsResponse = useQuery({
-    queryKey: ["proposalss"],
-    queryFn: () => getProposals(),
+    // queryKey: ["proposalss"],
+    // queryFn: () => getProposals(),
+
+    queryKey: ["proposalss", chainRef],
+    queryFn: () =>
+      cosmos(chainRef)
+        .GET("/cosmos/gov/v1/proposals", {
+          params: {
+            query: {
+              "pagination.limit": "1000",
+              "pagination.reverse": true,
+            },
+          },
+        })
+        .then(({ data = {} }) => data as DeepRequired<typeof data>),
   });
 
   const proposals = useMemo(() => {
     if (!proposalsResponse.data) {
       return [];
     }
+    proposalsResponse.data.proposals;
     // if (proposalsResponse.data !== undefined) {
     const filtered = removeProposals(
       proposalsResponse.data.proposals,
@@ -52,7 +105,8 @@ export const useProposals = (pid?: string) => {
         item.final_tally_result.no_with_veto_count,
       ]);
 
-      const title = item.title || item.messages[0]?.content.title || "";
+      const title =
+        get(item, "title") || get(item, "messages.0.content.title") || "";
 
       return {
         id: item.id,

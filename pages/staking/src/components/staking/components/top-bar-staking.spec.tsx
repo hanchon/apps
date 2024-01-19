@@ -44,7 +44,7 @@ vi.mock("wagmi", async (importOriginal: () => Promise<{}>) => {
   };
 });
 
-vi.mock("../../../utils/hooks/useStakingInfo", () => ({
+vi.mock("@evmosapps/evmos-wallet/src/api/useStake", () => ({
   useStakingInfo: () => {
     return {
       totalDelegations: BigNumber.from(500000),

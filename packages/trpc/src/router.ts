@@ -3,7 +3,7 @@ import { z } from "zod";
 import { fetchTokenPrices } from "./procedures/tokens/queries/price/fetch-token-prices";
 import { publicProcedure, router } from "./server";
 
-import { legacyFetchERC20ModuleBalance } from "./procedures/legacy/queries/legacy-erc20modules";
+import { legacyFetchERC20ModuleBalance } from "./procedures/legacy/queries/legacy-fetch-erc20modules";
 
 import { fetchAccountBalances } from "./procedures/account/fetch-account-balances";
 import { AddressSchema } from "helpers/src/crypto/addresses/address-schema";
@@ -18,6 +18,10 @@ import { fetchChainByRef } from "./procedures/chains/queries/chain-by-ref/fetch-
 
 import { fetchAccountBalanceByDenom } from "./procedures/account/fetch-account-balance-by-denom";
 import { fetchTokenByDenom } from "./procedures/tokens/queries/price/fetch-token-by-denom";
+import {
+  legacyFetchAllValidators,
+  legacyFetchStakingInfo,
+} from "./procedures/legacy/queries/legacy-total-staked-by-address";
 
 export const appRouter = router({
   token: router({
@@ -88,6 +92,22 @@ export const appRouter = router({
         })
       )
       .query((opts) => legacyFetchERC20ModuleBalance(opts.input)),
+
+    stakingInfo: publicProcedure
+      .input(
+        z.object({
+          chainRef: z.string(),
+          address: AddressSchema,
+        })
+      )
+      .query((opts) => legacyFetchStakingInfo(opts.input)),
+    allValidators: publicProcedure
+      .input(
+        z.object({
+          chainRef: z.string(),
+        })
+      )
+      .query((opts) => legacyFetchAllValidators(opts.input)),
   }),
 });
 

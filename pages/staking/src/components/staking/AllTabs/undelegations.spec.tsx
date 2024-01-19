@@ -17,7 +17,7 @@ vi.mock("@tanstack/react-query-next-experimental", () => ({
   ReactQueryStreamedHydration: (props: PropsWithChildren<{}>) => props.children,
 }));
 
-vi.mock("../../../utils/hooks/useStakingInfo", () => ({
+vi.mock("@evmosapps/evmos-wallet/src/api/useStake", () => ({
   useStakingInfo: () => {
     return {
       undelegations: [

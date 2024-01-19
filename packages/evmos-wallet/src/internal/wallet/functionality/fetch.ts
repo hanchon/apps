@@ -24,13 +24,3 @@ export async function fetchWithTimeout(
   clearTimeout(id);
   return response;
 }
-
-export const getEvmosBalance = async (address: string) => {
-  if (address === "" || address == undefined || address == null) {
-    return { balance: { denom: "", amount: "" } };
-  }
-  const res = await fetch(
-    `${EVMOS_BACKEND}/BalanceByDenom/${EVMOS_SYMBOL}/${address}/${EVMOS_MINIMAL_COIN_DENOM}`
-  );
-  return res.json() as Promise<BalanceResponse | txStatusError>;
-};

@@ -14,7 +14,8 @@ import { convertFromAtto, getReservedForFeeText } from "helpers";
 import { FEE_VOTE } from "constants-helper";
 import { BigNumber } from "@ethersproject/bignumber";
 import { CLICK_VOTE_BUTTON, sendEvent } from "tracker";
-import { useEvmosBalance } from "./useEvmosBalance";
+import { useEvmosBalance } from "@evmosapps/evmos-wallet/src/api/useEvmosBalance";
+
 const VoteButton = ({ voteProps }: { voteProps: VoteProps }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("");

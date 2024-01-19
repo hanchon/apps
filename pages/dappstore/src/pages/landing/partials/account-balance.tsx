@@ -2,23 +2,25 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-// import { convertFromAtto } from "helpers";
-
 import { useTranslation } from "@evmosapps/i18n/client";
-// import { useAssets, useStake } from "@evmosapps/evmos-wallet";
+import { useStakingInfo } from "@evmosapps/evmos-wallet/src/api/useStake";
+
 import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, sendEvent } from "tracker";
 
 import { useAccount } from "wagmi";
 import { TopupModalTrigger } from "stateful-components/src/modals/TopupModal/TopupModal";
-import { useStake } from "@evmosapps/evmos-wallet/src/api/useStake";
+
 import { useAssets } from "@evmosapps/evmos-wallet/src/api/useAssets";
 import { convertFromAtto } from "helpers/src/styles";
 import { PrimaryButton } from "@evmosapps/ui-helpers";
-// import { ButtonWithoutLink } from "@evmosapps/ui-helpers";
+import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
+import { useTrpcQuery } from "@evmosapps/trpc/client";
+import { raise } from "helpers";
 
 export const AccountBalance = () => {
   const { isConnected } = useAccount();
-  const { totalDelegations, totalRewards } = useStake();
+  const { totalDelegations, totalRewards } = useStakingInfo();
+
   const { evmosPrice, totalEvmosAsset } = useAssets();
 
   const totalEvmos = totalEvmosAsset.add(totalDelegations);

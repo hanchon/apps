@@ -1,19 +1,43 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import { StoreType } from "@evmosapps/evmos-wallet";
 
-import { getTotalStaked, TotalStakedResponse } from "services";
+import { TotalStakedResponse } from "services";
+import { cosmos } from "helpers/src/clients/cosmos";
+import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
+import { useAccount } from "wagmi";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
+import { assert, raise } from "helpers";
 
 export const useStakedEvmos = () => {
-  const value = useSelector((state: StoreType) => state.wallet.value);
+  const { address } = useAccount();
+  const chainRef = useEvmosChainRef();
 
-  const totalStakedResults = useQuery<TotalStakedResponse, Error>({
-    queryKey: ["totalStaked", value.evmosAddressCosmosFormat],
-    queryFn: () => getTotalStaked(value.evmosAddressCosmosFormat),
+  return useQuery<TotalStakedResponse, Error>({
+    queryKey: ["totalStaked", chainRef, address],
+    enabled: !!address,
+    queryFn: async () => {
+      const { data: delegations } = await cosmos(chainRef).GET(
+        "/cosmos/staking/v1beta1/delegations/{delegator_addr}",
+        {
+          params: {
+            path: {
+              delegator_addr: normalizeToCosmos(address ?? raise("No address")),
+            },
+            query: {
+              "pagination.limit": "200",
+            },
+          },
+        }
+      );
+      assert(delegations?.delegation_responses, "delegations not found");
+      const totalStaked = delegations.delegation_responses.reduce(
+        (total, delegation) => total + BigInt(delegation.balance?.amount ?? 0),
+        0n
+      );
+
+      return { value: totalStaked.toString() };
+    },
   });
-
-  return { stakedData: totalStakedResults.data };
 };
