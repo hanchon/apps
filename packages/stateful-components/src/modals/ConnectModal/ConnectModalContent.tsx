@@ -13,7 +13,7 @@ import {
 
 import { E, cn } from "helpers";
 
-import { Divider } from "@evmosapps/ui-helpers";
+import { Divider, Modal } from "@evmosapps/ui-helpers";
 import { useAccount, useConnect } from "wagmi";
 
 import {
@@ -122,6 +122,7 @@ export const ConnectModalContent = ({
   }, [isConnected, setIsOpen]);
   return (
     <div className="space-y-3">
+      <Modal.Header className=""></Modal.Header>
       <>
         <div className="md:mt-5">
           <ButtonWallet
@@ -132,7 +133,7 @@ export const ConnectModalContent = ({
               sendEvent(CLICK_EVMOS_COPILOT_START_FLOW);
             }}
           >
-            <EvmosRedIcon className="h-9 w-auto" />
+            <EvmosRedIcon className="h-9 w-auto shrink-0" />
             <div className="flex flex-col text-sm grow">
               <p className="">Evmos Copilot</p>
               <p className="font-normal">Recommended for first time users</p>
