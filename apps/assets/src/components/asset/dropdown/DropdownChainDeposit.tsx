@@ -38,7 +38,7 @@ const DropdownChainDeposit = ({
       return (
         <div className="flex items-center space-x-3 font-bold">
           <Image
-            src={`/portfolio/chains/${selectedValue.elements[0].chainIdentifier}.png`}
+            src={`/portfolio/chains/${selectedValue.elements[0].chainIdentifier.toLowerCase()}.png`}
             alt={selectedValue.elements[0].chainIdentifier}
             width={25}
             height={25}
@@ -83,7 +83,7 @@ const DropdownChainDeposit = ({
                   >
                     <div className="flex items-center space-x-3">
                       <Image
-                        src={`/portfolio/chains/${option.chain}.png`}
+                        src={`/portfolio/chains/${option.chain.toLowerCase()}.png`}
                         alt={option.chain}
                         width={25}
                         height={25}
