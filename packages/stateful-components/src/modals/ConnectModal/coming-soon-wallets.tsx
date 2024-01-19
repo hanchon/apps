@@ -28,7 +28,7 @@ export const ComingSoonWallets = () => {
           >
             {wallet.icon}
             <span className="grow flex">{wallet.name}</span>
-            <Badge variant="danger">{t("messages.comingSoon")}</Badge>
+            <Badge variant="success">{t("messages.comingSoon")}</Badge>
           </ButtonWallet>
         );
       })}
