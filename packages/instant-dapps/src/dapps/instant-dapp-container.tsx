@@ -17,8 +17,8 @@ export const InstantDappContainer = ({
   dappName,
   widget,
 }: ContainerProps) => {
-  const { isDisconnected } = useAccount();
-  if (isDisconnected) {
+  const { isConnected } = useAccount();
+  if (!isConnected) {
     return (
       <ConnectionRequired bgUrl={image} dappName={dappName}>
         <ConnectButton />
