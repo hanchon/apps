@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { setupTestnet } from "../initializers";
 import { createCommand, program } from "@commander-js/extra-typings";
 import inquirer from "inquirer";
@@ -34,7 +37,7 @@ const logAccountsWarning = () => {
   Log().info(table.toString());
 };
 const accountsProgram = createCommand("accounts").description(
-  "Manage your testnet accounts"
+  "Manage your testnet accounts",
 );
 
 const startCommand = createCommand("start")
@@ -196,7 +199,7 @@ accountsProgram.command("delete").action(async () => {
   }
 
   const filteredAccounts = accounts.filter(
-    (account) => !answers.keys.includes(account.key)
+    (account) => !answers.keys.includes(account.key),
   );
 
   await writeAccounts(
@@ -206,7 +209,7 @@ accountsProgram.command("delete").action(async () => {
         mnemonic: account.mnemonic,
         initialBalance: account.initialBalance.toString(),
       };
-    })
+    }),
   );
 
   Log().info("\n\n", "Account deleted successfully 🎉");

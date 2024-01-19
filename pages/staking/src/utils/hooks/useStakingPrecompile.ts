@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { writeContract } from "wagmi/actions";
 import { useSelector } from "react-redux";
 import { StoreType, getAbi } from "@evmosapps/evmos-wallet";
@@ -14,7 +17,7 @@ export function useStakingPrecompile() {
   async function delegate(
     delegatorAddress: string,
     validatorAddress: string,
-    amount: BigNumber
+    amount: BigNumber,
   ) {
     return await writeContract(config, {
       address: STAKING_CONTRACT_ADDRESS,
@@ -28,7 +31,7 @@ export function useStakingPrecompile() {
   async function undelegate(
     delegatorAddress: string,
     validatorAddress: string,
-    amount: BigNumber
+    amount: BigNumber,
   ) {
     return await writeContract(config, {
       address: STAKING_CONTRACT_ADDRESS,
@@ -43,7 +46,7 @@ export function useStakingPrecompile() {
     delegatorAddress: string,
     validatorSrcAddress: string,
     validatorDstAddress: string,
-    amount: BigNumber
+    amount: BigNumber,
   ) {
     return await writeContract(config, {
       address: STAKING_CONTRACT_ADDRESS,
@@ -63,7 +66,7 @@ export function useStakingPrecompile() {
     delegatorAddress: string,
     validatorAddress: string,
     amount: BigNumber,
-    creationHeight: string
+    creationHeight: string,
   ) {
     return await writeContract(config, {
       address: STAKING_CONTRACT_ADDRESS,

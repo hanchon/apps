@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { Period } from "@evmos/transactions";
 import dayjs from "dayjs";
 import { BigNumber } from "@ethersproject/bignumber";
@@ -9,7 +12,7 @@ export const generatePeriods = (
   endDate: dayjs.Dayjs,
   interval: Intervals,
   fullAmount: BigNumber,
-  denom: string
+  denom: string,
 ): Period[] => {
   let periods: number[] = [];
 
@@ -24,11 +27,11 @@ export const generatePeriods = (
     periods = [date.diff(startDate, "seconds"), ...periods];
   }
   periods = periods.map((finalDate, i) =>
-    i === 0 ? finalDate : finalDate - periods[i - 1]!
+    i === 0 ? finalDate : finalDate - periods[i - 1]!,
   );
   const divisions = distributeCoinsEvenly(
     BigNumber.from(fullAmount),
-    periods.length
+    periods.length,
   );
   return periods.map((period, i) => ({
     amount: [

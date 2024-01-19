@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { getChainByAddress } from "../get-chain-by-account";
 import { getPubkey } from "../../wallet";
 import { apiCosmosAccountByAddress } from "../../api";
@@ -32,7 +35,7 @@ export const getChainAccountInfo = async (address: Address) => {
 
   const { account } = await apiCosmosAccountByAddress(
     chain.cosmosRest,
-    cosmosAddress
+    cosmosAddress,
   );
 
   let baseAccount: BaseAccount | undefined = undefined;

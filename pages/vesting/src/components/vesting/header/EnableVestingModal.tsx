@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { ErrorMessage, Label } from "@evmosapps/ui-helpers";
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -40,7 +43,7 @@ export const EnableVestingModal = ({ onClose }: { onClose: () => void }) => {
       const [err] = await E.try(() =>
         switchChain(config, {
           chainId: evmos.id,
-        })
+        }),
       );
       if (err) return;
     }
@@ -50,7 +53,7 @@ export const EnableVestingModal = ({ onClose }: { onClose: () => void }) => {
       const hash = await createClawbackVestingAccount(
         d.address as string,
         wallet.evmosAddressEthFormat,
-        false
+        false,
       );
 
       dispatch(
@@ -63,7 +66,7 @@ export const EnableVestingModal = ({ onClose }: { onClose: () => void }) => {
             explorerTxUrl: `${EXPLORER_URL}/tx`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        })
+        }),
       );
       setDisabled(false);
       onClose();
@@ -78,14 +81,14 @@ export const EnableVestingModal = ({ onClose }: { onClose: () => void }) => {
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        })
+        }),
       );
     }
 
     if (d.accountName !== "") {
       setVestingAccountNameLocalstorage(
         d.address as string,
-        d.accountName as string
+        d.accountName as string,
       );
     }
   };

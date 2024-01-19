@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { getKeplrProvider } from "../utils";
 import { getEvmosChainInfo } from "./chains";
 import { isUndefined, raise } from "helpers";
@@ -32,7 +35,7 @@ const eth_requestAccounts = async () => {
 };
 
 const wallet_requestPermissions = (
-  request: EIP1474Parameters<"wallet_requestPermissions">
+  request: EIP1474Parameters<"wallet_requestPermissions">,
 ): Promise<EIP1474ReturnType<"wallet_requestPermissions">> => {
   return Promise.all(
     request.map(async ({}) => ({
@@ -48,7 +51,7 @@ const wallet_requestPermissions = (
         },
       ],
       date: Date.now(),
-    }))
+    })),
   );
 };
 
@@ -58,7 +61,7 @@ const eth_chainId = () => {
 
 const signTransaction = async (
   parameters: [string],
-  signType: EthSignType
+  signType: EthSignType,
 ): Promise<EIP1474ReturnType<"personal_sign">> => {
   const cosmosId = evmos.cosmosId;
 
@@ -68,13 +71,13 @@ const signTransaction = async (
     cosmosId,
     normalizeToCosmos(account),
     parameters[0],
-    signType
+    signType,
   );
 
   return toHex(signature);
 };
 const eth_signTypedData_v4 = async (
-  parameters: EIP1474Parameters<"eth_signTypedData_v4">
+  parameters: EIP1474Parameters<"eth_signTypedData_v4">,
 ): Promise<EIP1474ReturnType<"eth_signTypedData_v4">> => {
   const keplr = await getKeplrProvider();
   const cosmosId = evmos.cosmosId;
@@ -83,7 +86,7 @@ const eth_signTypedData_v4 = async (
     cosmosId,
     normalizeToCosmos(account),
     message,
-    EthSignType.EIP712
+    EthSignType.EIP712,
   );
 
   return toHex(signature);
@@ -91,7 +94,7 @@ const eth_signTypedData_v4 = async (
 
 const prepareTransactionForKeplr = async (
   chainId: number,
-  request: EIP1474Parameters<"eth_sendTransaction">[0]
+  request: EIP1474Parameters<"eth_sendTransaction">[0],
 ) => {
   const client = createPublicClient({
     chain: evmos,
@@ -168,7 +171,7 @@ const eth_sendTransaction = async ([
   const transaction = await prepareTransactionForKeplr(evmos.id, request);
   const signature = await signTransaction(
     [JSON.stringify(transaction)],
-    EthSignType.TRANSACTION
+    EthSignType.TRANSACTION,
   );
 
   const message = serializeTransaction(
@@ -188,7 +191,7 @@ const eth_sendTransaction = async ([
       maxFeePerGas: fromHex(transaction.maxFeePerGas, "bigint"),
       maxPriorityFeePerGas: fromHex(transaction.maxPriorityFeePerGas, "bigint"),
     },
-    hexToSignature(signature)
+    hexToSignature(signature),
   );
   const client = createPublicClient({
     chain: evmos,

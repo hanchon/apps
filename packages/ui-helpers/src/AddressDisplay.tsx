@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { ComponentProps } from "react";
 
 export const AddressDisplay = ({
@@ -16,7 +19,7 @@ export const AddressDisplay = ({
     return (
       <span title={address} {...rest}>{`0x${address.slice(
         2,
-        6
+        6,
       )}…${address.slice(-tailLength)}`}</span>
     );
   }
@@ -25,7 +28,7 @@ export const AddressDisplay = ({
   const tailLength = maxLength - prefix.length - 3;
   return (
     <span title={address} {...rest}>{`${prefix}…${tail.slice(
-      -tailLength
+      -tailLength,
     )}`}</span>
   );
 };

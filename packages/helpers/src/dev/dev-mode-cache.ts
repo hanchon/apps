@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { hashString } from "../hash/hash-string";
 import { readDevCache, writeDevCache } from "./dev-cache-crud";
 
@@ -36,7 +39,7 @@ export const devCache = <T extends Function>(
      * Disabled in test mode because vitest stops the process when the test is done, so the revalidation doesn't happen.
      */
     staleWhileRevalidate?: boolean;
-  } = {}
+  } = {},
 ): T => {
   if (process.env.NODE_ENV !== "development" && process.env.NODE_ENV !== "test")
     return fn;

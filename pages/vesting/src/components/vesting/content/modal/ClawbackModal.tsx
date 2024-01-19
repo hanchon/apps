@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { ConfirmButton } from "@evmosapps/ui-helpers";
 import { ItemModal } from "./ItemModal";
 import { ExclamationIcon } from "@evmosapps/icons/ExclamationIcon";
@@ -43,7 +46,7 @@ export const ClawbackModal = ({
       const [err] = await E.try(() =>
         switchChain(config, {
           chainId: evmos.id,
-        })
+        }),
       );
       if (err) return;
     }
@@ -53,7 +56,7 @@ export const ClawbackModal = ({
       const hash = await clawback(
         normalizeToEth(vestingDetails?.funderAddress) ?? "",
         normalizeToEth(vestingDetails?.accountAddress) ?? "",
-        normalizeToEth(vestingDetails?.funderAddress) ?? ""
+        normalizeToEth(vestingDetails?.funderAddress) ?? "",
       );
       dispatch(
         addSnackbar({
@@ -65,7 +68,7 @@ export const ClawbackModal = ({
             explorerTxUrl: `${EXPLORER_URL}/tx`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        })
+        }),
       );
       setDisabled(false);
     } catch (e) {
@@ -78,7 +81,7 @@ export const ClawbackModal = ({
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        })
+        }),
       );
     }
   };
@@ -90,7 +93,7 @@ export const ClawbackModal = ({
   const availableClawback = () => {
     return formatNumber(
       convertFromAtto(vestingDetails.originalVestingAmount, 18),
-      6
+      6,
     );
   };
 

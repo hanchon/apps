@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { z } from "zod";
 
 import { fetchTokenPrices } from "./procedures/tokens/queries/price/fetch-token-prices";
@@ -48,7 +51,7 @@ export const appRouter = router({
           z.object({
             chainRef: z.string(),
             address: AddressSchema,
-          })
+          }),
         )
         .query((opts) => fetchAccountBalances(opts.input)),
       byDenom: publicProcedure
@@ -57,7 +60,7 @@ export const appRouter = router({
             chainRef: z.string(),
             address: AddressSchema,
             denom: z.string(),
-          })
+          }),
         )
         .query((opts) => fetchAccountBalanceByDenom(opts.input)),
     }),
@@ -85,7 +88,7 @@ export const appRouter = router({
         z.object({
           chainRef: z.string(),
           address: AddressSchema.optional(),
-        })
+        }),
       )
       .query((opts) => legacyFetchERC20ModuleBalance(opts.input)),
   }),

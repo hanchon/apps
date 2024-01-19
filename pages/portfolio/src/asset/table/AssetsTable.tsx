@@ -1,6 +1,7 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+"use client";
 
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { Modal, Switch } from "@evmosapps/ui-helpers";
@@ -34,7 +35,7 @@ const AssetsTable = () => {
     t.legacy.erc20ModuleBalance({
       address,
       chainRef,
-    })
+    }),
   );
 
   const [hideZeroBalance, setHideBalance] = useState(false);
@@ -105,7 +106,7 @@ const AssetsTable = () => {
         <div
           className={cn(
             "[&>*]:bg-darkGray2 gap-y-0.5 flex flex-col",
-            "first:[&>*]:rounded-t-2xl last:[&>*]:rounded-b-2xl "
+            "first:[&>*]:rounded-t-2xl last:[&>*]:rounded-b-2xl ",
           )}
         >
           {isLoading && (

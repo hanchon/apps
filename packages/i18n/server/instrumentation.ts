@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use server";
 import { createInstance } from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
@@ -18,7 +21,7 @@ const initI18next = async (locale: string, namespace: string) => {
           Log().warn(`Missing translation file: ${language}/${namespace}.json`);
           return {};
         }
-      })
+      }),
     )
     .init(getOptions(locale, namespace));
   return i18nInstance;
@@ -28,7 +31,7 @@ export async function translation(
   namespace: string = "common",
   options: {
     keyPrefix?: string;
-  } = {}
+  } = {},
 ) {
   const locale = getLocale();
   const i18nextInstance = await initI18next(locale, namespace);

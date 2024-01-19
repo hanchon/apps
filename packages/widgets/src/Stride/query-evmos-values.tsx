@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { useAccount } from "wagmi";
 
 import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
@@ -13,7 +16,7 @@ export function useEvmosData() {
       address: address ?? raise("no address"),
       denom: "EVMOS",
       chainRef: chainRef ?? raise("no chainRef"),
-    })
+    }),
   );
 
   return {

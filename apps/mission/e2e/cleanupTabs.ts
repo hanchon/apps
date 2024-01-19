@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { pageListener } from "@evmosapps/test-utils";
 import { E } from "helpers/src/error-handling";
 import { BrowserContext } from "playwright";
@@ -19,7 +22,7 @@ const getMMPopup = async (context: BrowserContext) => {
 };
 export const connectSwitchAndSignPubkey = async (
   context: BrowserContext,
-  trigger: () => Promise<void>
+  trigger: () => Promise<void>,
 ) => {
   const approveAllPopup = pageListener(context);
 
@@ -32,7 +35,7 @@ export const connectSwitchAndSignPubkey = async (
 
   while (true) {
     const [err] = await E.try(() =>
-      popupPage.getByRole("button", { name: /Sign/i }).click()
+      popupPage.getByRole("button", { name: /Sign/i }).click(),
     );
     if (err?.message.includes("Page closed")) {
       popupPage = await getMMPopup(context);

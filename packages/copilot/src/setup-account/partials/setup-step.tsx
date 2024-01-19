@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { CheckIcon } from "@evmosapps/icons/CheckIcon";
 import { ErrorIcon } from "@evmosapps/icons/ErrorIcon";
 import { ComponentProps } from "react";
@@ -20,7 +23,7 @@ export const SetupStep = ({
         {
           "before:bg-red-300": !completed,
           "before:bg-green1": completed,
-        }
+        },
       )}
     >
       <span
@@ -30,7 +33,7 @@ export const SetupStep = ({
             "ring-1 bg-white ring-red-300 disabled:brightness-90 before:bg-red-300":
               !completed,
             "bg-green1 before:bg-green1": completed,
-          }
+          },
         )}
       >
         <CheckIcon
@@ -48,7 +51,7 @@ export const SetupStep = ({
             {
               "bg-red-300 disabled:brightness-90": !completed,
               "bg-green1": completed,
-            }
+            },
           )}
           {...rest}
         />

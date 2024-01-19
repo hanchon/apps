@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import dynamic from "next/dynamic";
 
 export const WIDGETS: {
@@ -8,7 +11,7 @@ export const WIDGETS: {
     {
       loading: () => <p>Loading...</p>,
       ssr: false,
-    }
+    },
   ),
   squid: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Squid"), {
     loading: () => <p>Loading...</p>,
@@ -19,7 +22,7 @@ export const WIDGETS: {
     {
       loading: () => <p>Loading...</p>,
       ssr: false,
-    }
+    },
   ),
   c14: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/C14"), {
     loading: () => <p>Loading...</p>,
@@ -33,7 +36,7 @@ export const WIDGETS: {
     () => import("@evmosapps/instant-dapps/src/dapps/Wormhole"),
     {
       ssr: false,
-    }
+    },
   ),
   forge: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Forge"), {
     ssr: false,

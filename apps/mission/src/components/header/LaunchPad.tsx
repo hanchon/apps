@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import { Menu, Transition } from "@headlessui/react";
@@ -63,7 +66,7 @@ export function LaunchPad({}: { showPing?: boolean }) {
       >
         <Menu.Items
           className={cn(
-            " fixed shadow-custom md:absolute w-full px-8 top-32 md:top-9 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] py-8 drop-shadow-md drop-shadow-red1 border border-darkGray700 "
+            " fixed shadow-custom md:absolute w-full px-8 top-32 md:top-9 left-0 md:right-0 md:left-auto z-10 mt-2 md:w-96 origin-top-right rounded-md bg-[#262017] py-8 drop-shadow-md drop-shadow-red1 border border-darkGray700 ",
           )}
         >
           <div className="flex pb-6">
@@ -142,7 +145,7 @@ const LaunchPadItem = ({
           <div
             className={cn(
               "relative shrink-0 w-16 h-16 aspect-square overflow-hidden self-center transition-all duration-150 ease-in hover:scale-105",
-              "md:w-20 md:h-20"
+              "md:w-20 md:h-20",
             )}
           >
             <Image

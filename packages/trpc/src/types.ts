@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 /*  eslint-disable @typescript-eslint/no-explicit-any */
 /* copy from @trpc/react-query because it's not exported */
 import { UseQueryOptions } from "@tanstack/react-query";

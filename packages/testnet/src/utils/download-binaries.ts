@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import download from "download";
 import os from "os";
 import { binariesDir } from "./constants";
@@ -30,7 +33,7 @@ const REPO_MAP: Record<
 const getLatestReleases = async (binary: SupportedBinaries) => {
   const releases = await github.request(
     "GET /repos/{owner}/{repo}/releases/latest",
-    REPO_MAP[binary]
+    REPO_MAP[binary],
   );
 
   return releases.data;

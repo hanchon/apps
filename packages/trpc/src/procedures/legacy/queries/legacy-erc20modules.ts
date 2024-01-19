@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use server";
 
 import { raise } from "helpers";
@@ -22,14 +25,14 @@ export const legacyFetchERC20ModuleBalance = async ({
     address ? fetchAccountBalances({ address, chainRef }) : [],
   ]);
   const chainMap = Object.fromEntries(
-    chains.map((chain) => [chain.ref, chain])
+    chains.map((chain) => [chain.ref, chain]),
   );
   const tokenPriceMap = Object.fromEntries(
-    tokenPrices.map((tokenPrice) => [tokenPrice.coingeckoId, tokenPrice])
+    tokenPrices.map((tokenPrice) => [tokenPrice.coingeckoId, tokenPrice]),
   );
 
   const balancesMap = Object.fromEntries(
-    balances.map((balance) => [balance.denom, balance])
+    balances.map((balance) => [balance.denom, balance]),
   );
   const balance = registryToken
     .filter((token) => token.networkType === "mainnet")

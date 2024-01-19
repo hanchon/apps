@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { z } from "zod";
 
 import { CATEGORIES_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
@@ -36,7 +39,7 @@ export const fetchCategories = async () => {
             description: subItem?.description,
           },
         ];
-      })
+      }),
     );
     acc.set(parsed.data.notionId, parsed.data);
 

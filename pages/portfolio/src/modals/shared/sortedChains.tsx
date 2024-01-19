@@ -1,9 +1,12 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { getChains, getTokens } from "@evmosapps/evmos-wallet";
 import { REGISTRY_NETWORK_BLOCK_LIST } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 
 export const sortedChains = getChains()
   .filter(
-    ({ prefix }) => REGISTRY_NETWORK_BLOCK_LIST.includes(prefix) === false
+    ({ prefix }) => REGISTRY_NETWORK_BLOCK_LIST.includes(prefix) === false,
   )
   .map(({ prefix }) => prefix)
   .sort((a, b) => {
@@ -16,7 +19,7 @@ export const sortedChains = getChains()
 export const sortedTokens = getTokens()
   .filter(
     ({ sourcePrefix, listed }) =>
-      listed && REGISTRY_NETWORK_BLOCK_LIST.includes(sourcePrefix) === false
+      listed && REGISTRY_NETWORK_BLOCK_LIST.includes(sourcePrefix) === false,
   )
   .sort(({ symbol: a }, { symbol: b }) => {
     if (a === "EVMOS") return -1;

@@ -1,10 +1,13 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import download from "download";
 import path from "path";
 import { stat } from "fs/promises";
 import { tmpdir } from "os";
 
 export const downloadRelease = async (
-  tag: `v${number}.${number}.${number}`
+  tag: `v${number}.${number}.${number}`,
 ) => {
   const workerIndex = process.env.TEST_WORKER_INDEX || "0";
 

@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import { createTxRaw } from "@evmos/proto";
 import { getAccount, getChainId } from "wagmi/actions";
@@ -22,7 +25,7 @@ async function signBackendTypedDataTransaction({
   const chainId = getChainId(wagmiConfig);
   assert(
     chainId && address && connector && typedData,
-    "COULD_NOT_SIGN_TRANSACTION"
+    "COULD_NOT_SIGN_TRANSACTION",
   );
 
   const signature = await signTypedDataMessage(typedData);
@@ -60,7 +63,7 @@ async function signBackendDirectTransaction(transaction: ApiPresignTx) {
         rawTx: createTxRaw(
           response.signed.bodyBytes,
           response.signed.authInfoBytes,
-          [new Uint8Array(Buffer.from(response.signature.signature, "base64"))]
+          [new Uint8Array(Buffer.from(response.signature.signature, "base64"))],
         ),
       }),
   } as const;

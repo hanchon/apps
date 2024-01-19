@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { fetchChainByRef } from "../../chains/queries/chain-by-ref/fetch-chain-by-ref";
 import { assert, raise } from "helpers";
 import { Hex, fromHex } from "viem";
@@ -25,7 +28,7 @@ export const fetchEVMJsonRpcMetrics = nextCache(
             id: 1,
           }),
           signal,
-        })
+        }),
       );
       if (resp.status < 200 && resp.status >= 300) {
         throw new Error("Invalid status code");
@@ -37,7 +40,7 @@ export const fetchEVMJsonRpcMetrics = nextCache(
       return {
         height: fromHex(
           (json.result as Hex) ?? raise("Height not set"),
-          "number"
+          "number",
         ),
       };
     });
@@ -50,5 +53,5 @@ export const fetchEVMJsonRpcMetrics = nextCache(
   {
     revalidate: seconds("10m"),
     tags: ["api-metrics", "evm-json-rpc-metrics"],
-  }
+  },
 );

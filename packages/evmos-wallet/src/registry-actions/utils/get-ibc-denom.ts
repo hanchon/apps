@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { Token } from "../types";
 import { getIBCChannelId } from "./get-ibc-channel-id";
 import { toIBCDenom } from "helpers";
@@ -24,6 +27,6 @@ export const getIBCDenom = ({
       sender,
       receiver,
     }),
-    token.sourceDenom
+    token.sourceDenom,
   );
 };

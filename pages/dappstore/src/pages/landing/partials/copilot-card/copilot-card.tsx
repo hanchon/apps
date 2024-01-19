@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 
 import { useAccount } from "wagmi";
@@ -26,7 +29,7 @@ export const CopilotCard = () => {
         params: {
           path: {
             address: normalizeToCosmos(
-              address ?? raise("address is undefined")
+              address ?? raise("address is undefined"),
             ),
           },
           query: {
@@ -49,7 +52,7 @@ export const CopilotCard = () => {
         params: {
           path: {
             address: normalizeToCosmos(
-              address ?? raise("address is undefined")
+              address ?? raise("address is undefined"),
             ),
           },
         },
@@ -154,7 +157,7 @@ export const CopilotCard = () => {
               <Link
                 className={cn(
                   linkCn,
-                  "text-sm py-3 rounded-lg bg-pearl/10 text-pearl"
+                  "text-sm py-3 rounded-lg bg-pearl/10 text-pearl",
                 )}
                 href={"/dapps/instant-dapps"}
               >
@@ -184,7 +187,7 @@ const Step = ({
         "before:bg-transparent before:border before:border-[#A4A189] before:outline before:outline-[#A4A189] before:outline-1 before:outline-offset-1  text-[#A4A189]":
           !completed && !active,
       },
-      className
+      className,
     )}
     {...rest}
   />

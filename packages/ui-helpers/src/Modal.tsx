@@ -1,6 +1,7 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+"use client";
 
 import {
   ComponentProps,
@@ -95,7 +96,7 @@ const ModalBody = forwardRef<
       ref={ref}
       className={cn(
         "text-sm flex bg-pearl1 m-auto rounded-lg flex-col p-6 max-w-md w-full",
-        className as string
+        className as string,
       )}
       {...rest}
     >
@@ -124,7 +125,7 @@ const ModalHeader = ({
       >
         <CloseIcon
           className={cn(
-            "h-6 w-auto absolute m-2 top-0 right-0 text-current focus:outline-none focus-visible:outline-none"
+            "h-6 w-auto absolute m-2 top-0 right-0 text-current focus:outline-none focus-visible:outline-none",
           )}
           aria-hidden="true"
         />

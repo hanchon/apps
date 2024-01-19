@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { z } from "zod";
 import { TypedDataSchema } from "./typed-data-schema";
 import Long from "long";
@@ -19,9 +22,9 @@ export const ApiPresignTxSchema = z
       .transform((data) =>
         data
           ? (JSON.parse(
-              Buffer.from(data, "base64").toString("utf-8")
+              Buffer.from(data, "base64").toString("utf-8"),
             ) as unknown)
-          : null
+          : null,
       )
       .pipe(z.union([z.null(), TypedDataSchema])),
     legacyAmino: SignBodySchema,

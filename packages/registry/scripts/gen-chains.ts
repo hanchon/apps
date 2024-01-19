@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { mkdir, writeFile } from "fs/promises";
 import { ChainRegistry } from "./types/chain";
 import { TokenRegistry } from "./types/token";
@@ -10,7 +13,7 @@ import { testnetConfigByChain, testnetTokensByIdentifiers } from "./testnets";
 const readRegistryChain = async () =>
   (
     await readFiles<ChainRegistry>(
-      "node_modules/chain-token-registry/chainConfig/*.json"
+      "node_modules/chain-token-registry/chainConfig/*.json",
     )
   )
     .map((chain) => {
@@ -27,7 +30,7 @@ const readRegistryChain = async () =>
             ...rest,
             configuration,
           }))
-        : []
+        : [],
     );
 
 const readRegistryToken = () =>
@@ -44,7 +47,7 @@ const normalizeNetworkUrls = (urls?: (string | undefined)[]) => {
   return http;
 };
 const normalizeIdentifier = (
-  configuration: (ChainRegistry["configurations"] & {})[number]
+  configuration: (ChainRegistry["configurations"] & {})[number],
 ) => {
   let identifier = configuration.identifier.toLowerCase();
   if (configuration.identifier === "gravity") {
@@ -68,7 +71,7 @@ const tokenByIdentifier = groupBy(
     }
 
     return normalizeIdentifier(chain.configuration);
-  }
+  },
 );
 Object.entries(testnetTokensByIdentifiers).forEach(([identifier, tokens]) => {
   tokenByIdentifier[identifier] = [
@@ -117,7 +120,7 @@ for (const chainRegistry of chains) {
     (token) =>
       token.minCoinDenom === feeTokenFromChainConfig.coinMinDenom ||
       // @ts-expect-error TODO: Injective coinMinDenom key is wrong in our registry, we should fix that there
-      token.minCoinDenom === feeTokenFromChainConfig.coinMinimalDenom
+      token.minCoinDenom === feeTokenFromChainConfig.coinMinimalDenom,
   );
   if (!feeToken) {
     feeToken = {
@@ -198,8 +201,8 @@ await writeFile("src/chains/index.ts", [
     .map(
       ({ configuration }) =>
         `export { default as ${normalizeIdentifier(
-          configuration
-        )} } from "./${normalizeIdentifier(configuration)}";`
+          configuration,
+        )} } from "./${normalizeIdentifier(configuration)}";`,
     )
     .join("\n"),
 ]);

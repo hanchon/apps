@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import VestingABI from "./abis/VestingABI.json";
 import { Period } from "@evmos/transactions";
 import { writeContract } from "wagmi/actions";
@@ -14,7 +17,7 @@ export function useVestingPrecompile() {
   async function createClawbackVestingAccount(
     funderAddress: string,
     vestingAddress: string,
-    enableGovClawback: boolean
+    enableGovClawback: boolean,
   ) {
     return await writeContract(config, {
       address: VESTING_CONTRACT_ADDRESS,
@@ -31,7 +34,7 @@ export function useVestingPrecompile() {
     vestingAddress: string,
     startTime: number,
     lockupPeriods: Period[],
-    vestingPeriods: Period[]
+    vestingPeriods: Period[],
   ) {
     return await writeContract(config, {
       address: VESTING_CONTRACT_ADDRESS,
@@ -63,7 +66,7 @@ export function useVestingPrecompile() {
   async function clawback(
     founderAddress: string,
     accountAddress: string,
-    destinationAddress: string
+    destinationAddress: string,
   ) {
     return await writeContract(config, {
       address: VESTING_CONTRACT_ADDRESS,

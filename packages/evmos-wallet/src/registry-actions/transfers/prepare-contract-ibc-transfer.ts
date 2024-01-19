@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { ics20Abi } from "@evmosapps/registry";
 import { assert } from "helpers";
 
@@ -21,7 +24,7 @@ export const prepareContractIBCTransfer = async ({
 }) => {
   assert(
     isEvmosAddress(sender),
-    "Sender must be an EVMOS address to transfer through ICS20 contract"
+    "Sender must be an EVMOS address to transfer through ICS20 contract",
   );
   const transferredToken = getTokenByRef(token.ref);
 

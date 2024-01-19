@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 type UrlMatches = {
   discord?: RegExpMatchArray | null;
   github?: RegExpMatchArray | null;
@@ -22,7 +25,7 @@ export const parseUrl = (url: string) => {
   };
 
   const matchedKey = Object.keys(matches).find(
-    (key) => matches[key as keyof UrlMatches]
+    (key) => matches[key as keyof UrlMatches],
   );
 
   return matchedKey ? matches[matchedKey as keyof UrlMatches]?.[1] : url;

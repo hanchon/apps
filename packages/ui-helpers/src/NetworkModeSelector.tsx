@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import { cn } from "helpers";
 import { useConfig, useSwitchChain } from "wagmi";
@@ -29,7 +32,7 @@ export const NetworkModeSelector = () => {
               "text-white py-2 px-3 uppercase text-xxs font-bold grow ",
               {
                 "bg-red-300": chain.id === getChainId(config),
-              }
+              },
             )}
           >
             {networkType}

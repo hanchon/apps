@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use server";
 
 import { isUndefined } from "helpers";
@@ -52,7 +55,7 @@ const fetchStevmosRedemptionRate = async () => {
         revalidate,
         tags: ["stride-redemption-rate"],
       },
-    }
+    },
   ).then((res) => res.json() as Promise<unknown>);
   return z
     .object({
@@ -144,5 +147,5 @@ export const fetchTokenPrices = nextCache(
   ["fetchTokenPrices"],
   {
     revalidate,
-  }
+  },
 );

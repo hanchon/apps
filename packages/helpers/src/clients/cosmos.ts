@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import createClient from "openapi-fetch";
 import { paths } from "./cosmos-client";
 export const ENV_URL =
@@ -10,7 +13,7 @@ export const cosmos = (
   config: {
     baseUrl?: string;
     fetch?: typeof fetch;
-  } = {}
+  } = {},
 ) =>
   createClient<paths>({
     baseUrl: ENV_URL + `/api/cosmos-rest/${chain}/`,
