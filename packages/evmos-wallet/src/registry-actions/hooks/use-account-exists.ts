@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { Address } from "../../wallet";
-import { Prefix } from "../types";
+
 import { E } from "helpers";
 import { getAccountInfo } from "../get-account-info";
+import { Address } from "helpers/src/crypto/addresses/types";
 
-export const useAccountExists = (address?: Address<Prefix>) => {
+export const useAccountExists = (address?: Address) => {
   return useQuery({
     queryKey: ["accountExists", address],
     retry: false,

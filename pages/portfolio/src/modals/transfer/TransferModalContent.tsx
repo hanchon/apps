@@ -15,10 +15,7 @@ import {
   Modal,
 } from "@evmosapps/ui-helpers";
 import { Trans } from "next-i18next";
-import {
-  Prefix,
-  TokenAmount,
-} from "@evmosapps/evmos-wallet/src/registry-actions/types";
+import { TokenAmount } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { AssetSelector } from "../shared/AssetSelector";
 import { useAccount } from "wagmi";
 import {
@@ -116,7 +113,7 @@ export const TransferModalContent = ({
   const senderChain = sender ? getChainByAddress(sender) : getChain("evmos");
 
   const destinationNetworkOptions = useMemo(
-    (): Prefix[] => //
+    (): string[] => //
       getTokenValidDestinations(tokenAmount.ref, senderChain.prefix),
     [tokenAmount.ref, senderChain.prefix]
   );

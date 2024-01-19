@@ -1,5 +1,5 @@
 import { chains } from "@evmosapps/registry";
-import { Prefixish, normalizeToPrefix } from "./utils/normalize-to-prefix";
+import { normalizeToPrefix } from "./utils/normalize-to-prefix";
 import { getSelectedNetworkMode } from "@evmosapps/ui-helpers/src/getSelectedNetworkMode";
 import type { Chain } from "./types";
 import { E } from "helpers";
@@ -37,7 +37,7 @@ export const getChains = (): Chain[] => {
   }
   return Object.values(CHAIN_BY_PREFIX);
 };
-export const getChain = (prefixish: Prefixish) => {
+export const getChain = (prefixish: string) => {
   const prefix = normalizeToPrefix(prefixish);
   return (
     getChains().find((chain) => chain.prefix === prefix) ??

@@ -1,13 +1,11 @@
-import { Address } from "../../wallet";
-import { Prefix } from "../types";
 import { getChain } from "../get-chain";
 
 export const getIBCChannelId = ({
   sender,
   receiver,
 }: {
-  sender: Address<Prefix> | Prefix;
-  receiver: Address<Prefix> | Prefix;
+  sender: string;
+  receiver: string;
 }) => {
   const senderChain = getChain(sender);
   const receiverChain = getChain(receiver);

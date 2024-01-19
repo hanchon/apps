@@ -1,5 +1,5 @@
 import { Log } from "../logger";
-import { normalizeError } from "./normalizeError";
+import { ensureError } from "./normalizeError";
 
 export function tryCatch<T extends Promise<unknown>>(
   fn: () => T
@@ -11,11 +11,11 @@ export function tryCatch<T>(fn: () => T) {
     if (result instanceof Promise) {
       return result
         .then((value) => [null, value] as const)
-        .catch((error) => [normalizeError(error), null] as const);
+        .catch((error) => [ensureError(error), null] as const);
     }
     return [null, fn()] as const;
   } catch (error) {
     Log().error(error);
-    return [normalizeError(error), null] as const;
+    return [ensureError(error), null] as const;
   }
 }

@@ -1,11 +1,12 @@
 import { getChainId, switchChain } from "wagmi/actions";
-import { Address } from "../../wallet";
+
 import { transfer } from "../transfers/prepare-transfer";
-import { Prefix, TokenAmount } from "../types";
+import { TokenAmount } from "../types";
 import { useMutation } from "@tanstack/react-query";
 import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
 
 import { useConfig } from "wagmi";
+import { Address } from "helpers/src/crypto/addresses/types";
 
 const evmos = getEvmosChainInfo();
 export const useTransfer = ({
@@ -14,8 +15,8 @@ export const useTransfer = ({
   token,
   fee,
 }: {
-  sender?: Address<Prefix>;
-  receiver?: Address<Prefix>;
+  sender?: Address;
+  receiver?: Address;
   token?: TokenAmount;
   fee?: {
     gasLimit: bigint;

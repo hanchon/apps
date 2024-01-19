@@ -1,11 +1,11 @@
-import { Address } from "../../wallet";
 import { getChainByAddress } from "../get-chain-by-account";
 import { Tx } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/v1beta1/tx_pb";
-import { Prefix } from "../types";
+import { Address } from "helpers/src/crypto/addresses/types";
+
 import { set } from "lodash-es";
 
 export const assignGasEstimateToProtoTx = (
-  sender: Address<Prefix>,
+  sender: Address,
   tx: Tx,
   estimatedGas: bigint
 ) => {

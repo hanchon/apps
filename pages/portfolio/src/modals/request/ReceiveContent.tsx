@@ -16,16 +16,12 @@ import { Trans } from "next-i18next";
 import { CryptoSelector } from "@evmosapps/ui-helpers";
 import QRCode from "react-qr-code";
 
-import {
-  getActiveProviderKey,
-  getChain,
-  normalizeToEvmos,
-} from "@evmosapps/evmos-wallet";
+import { getActiveProviderKey, getChain } from "@evmosapps/evmos-wallet";
 import { ReceiveIcon } from "@evmosapps/icons/ReceiveIcon";
 import { ShareIcon } from "@evmosapps/icons/ShareIcon";
 import { CryptoSelectorDropdownBox } from "@evmosapps/ui-helpers";
 import { CryptoSelectorTitle } from "@evmosapps/ui-helpers";
-import { Prefix } from "@evmosapps/evmos-wallet/src/registry-actions/types";
+
 import { RequestModalProps } from "./RequestModal";
 import {
   CLICK_ON_COPY_ICON_RECEIVE_FLOW,
@@ -40,6 +36,7 @@ import { useAccount } from "wagmi";
 import { sortedChains } from "../shared/sortedChains";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 export const ReceiveContent = ({
   setState,
@@ -51,22 +48,23 @@ export const ReceiveContent = ({
   const [walletFormat, setWalletFormat] = useState("0x");
 
   const { address } = useAccount();
-  const [selectedNetworkPrefix, setSelectedNetworkPrefix] =
-    useState<Prefix>("evmos");
+  const [selectedNetworkPrefix, setSelectedNetworkPrefix] = useState("evmos");
   const selectedChain = getChain(selectedNetworkPrefix);
+
 
   const sender = address
     ? walletFormat === "0x"
       ? address
-      : normalizeToEvmos(address)
+      : normalizeToCosmos(address)
     : undefined;
+
 
   const shareEnabled = navigator.share !== undefined;
 
   const activeProviderKey = getActiveProviderKey();
   const networkOptions = useMemo(() => {
     if (activeProviderKey === "MetaMask") {
-      return ["evmos"] as Prefix[];
+      return ["evmos"];
     }
     return sortedChains;
   }, [activeProviderKey]);

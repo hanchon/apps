@@ -1,28 +1,25 @@
 import { ics20Abi } from "@evmosapps/registry";
-import { assertIf } from "helpers";
+import { assert } from "helpers";
 
-import {
-  Address,
-  isEvmosAddress,
-  normalizeToEth,
-  wagmiConfig,
-} from "../../wallet";
-import { Prefix, TokenAmount } from "../types";
+import { wagmiConfig } from "../../wallet";
+import { TokenAmount } from "../types";
 import { getIBCChannelId, getTimeoutTimestamp } from "../utils";
 import { simulateContract, writeContract } from "wagmi/actions";
 import { getIBCDenom } from "../utils/get-ibc-denom";
 import { getTokenByRef } from "../get-token-by-ref";
-
-export const prepareContractIBCTransfer = async <T extends Prefix>({
+import { Address } from "helpers/src/crypto/addresses/types";
+import { normalizeToEth } from "helpers/src/crypto/addresses/normalize-to-eth";
+import { isEvmosAddress } from "helpers/src/crypto/addresses/is-evmos-address";
+export const prepareContractIBCTransfer = async ({
   sender,
   receiver,
   token,
 }: {
-  sender: Address<T>;
-  receiver: Address<Exclude<Prefix, T>>; // Can't IBC transfer to the same network
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
 }) => {
-  assertIf(
+  assert(
     isEvmosAddress(sender),
     "Sender must be an EVMOS address to transfer through ICS20 contract"
   );
@@ -79,13 +76,13 @@ export const prepareContractIBCTransfer = async <T extends Prefix>({
   };
 };
 
-export const writeContractIBCTransfer = async <T extends Prefix>({
+export const writeContractIBCTransfer = async ({
   sender,
   receiver,
   token,
 }: {
-  sender: Address<T>;
-  receiver: Address<Exclude<Prefix, T>>; // Can't IBC transfer to the same network
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
 }) => {
   const prepared = await prepareContractIBCTransfer({

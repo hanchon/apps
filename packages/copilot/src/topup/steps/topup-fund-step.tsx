@@ -5,7 +5,7 @@ import ProviderDropwdown from "../partials/provider-dropdown";
 import { useEffect, useRef, useState } from "react";
 import Transak from "@evmosapps/widgets/src/transak";
 import { useAccount } from "wagmi";
-import { getCosmosBalances, normalizeToEvmos } from "@evmosapps/evmos-wallet";
+import { getCosmosBalances } from "@evmosapps/evmos-wallet";
 import { useQuery } from "@tanstack/react-query";
 import { isBigInt, useEffectEvent } from "helpers";
 import { TopupSuccessMessage } from "../partials/topup-success-message";
@@ -18,6 +18,7 @@ import { useCopilot } from "../../copilot";
 import { providerOptions } from "../utils";
 import { useClosePrompt } from "../../partials/close-prompt";
 import { CLICK_ON_TOP_UP_YOUR_ACCOUNT_COPILOT, sendEvent } from "tracker";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 const useWatchEvmosBalance = ({
   onBalanceChange,
@@ -33,7 +34,7 @@ const useWatchEvmosBalance = ({
     queryFn: async () => {
       if (!address) throw new Error("No address");
       const balances = await getCosmosBalances({
-        address: normalizeToEvmos(address),
+        address: normalizeToCosmos(address),
       });
 
       return balances.find(({ denom }) => denom === "EVMOS")?.value ?? 0n;

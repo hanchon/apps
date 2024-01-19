@@ -1,14 +1,11 @@
-import {
-  Prefix,
-  TokenRef,
-} from "@evmosapps/evmos-wallet/src/registry-actions/types";
+import { TokenRef } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { sortedChains } from "./sortedChains";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 
 export const getTokenValidDestinations = (
   tokenRef: TokenRef,
-  network: Prefix
-): Prefix[] => {
+  network: string
+): string[] => {
   // If asset is being held on an EVMOS ACCOUNT
   if (network === "evmos") {
     // if it's an EVMOS NATIVE TOKEN it can go anywhere

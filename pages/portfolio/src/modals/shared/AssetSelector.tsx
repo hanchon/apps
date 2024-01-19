@@ -7,13 +7,9 @@ import {
   CryptoSelectorDropdownBox,
   ErrorMessage,
 } from "@evmosapps/ui-helpers";
-import {
-  Prefix,
-  TokenAmount,
-} from "@evmosapps/evmos-wallet/src/registry-actions/types";
+import { TokenAmount } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { CryptoSelector } from "@evmosapps/ui-helpers";
 import {
-  Address,
   getActiveProviderKey,
   getChain,
   useTokenBalance,
@@ -28,9 +24,10 @@ import { SELECT_FROM_NETWORK_SEND_FLOW, SELECT_TOKEN_SEND_FLOW } from "tracker";
 import { useAccount } from "wagmi";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 import { sortedChains, sortedTokens } from "./sortedChains";
+import { Address } from "helpers/src/crypto/addresses/types";
 
 type Asset = {
-  networkPrefix: Prefix;
+  networkPrefix: string;
 } & TokenAmount;
 
 const tokenToUSD = (amount: bigint, price: number, decimals: number) => {
@@ -53,7 +50,7 @@ export const AssetSelector = ({
 }: PropsWithChildren<{
   value: Asset;
   onChange: (value: Asset) => void;
-  address?: Address<Prefix>;
+  address?: Address;
   fee?: TokenAmount;
 }>) => {
   const { t } = useTranslation("transfer-modal");
@@ -71,7 +68,7 @@ export const AssetSelector = ({
       return [];
     }
     if (selectedToken.sourcePrefix === "evmos") return sortedChains;
-    return [selectedToken.sourcePrefix, "evmos"] as Prefix[];
+    return [selectedToken.sourcePrefix, "evmos"] as string[];
   }, [selectedToken]);
 
   /**

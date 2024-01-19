@@ -1,5 +1,5 @@
 import { chains } from "@evmosapps/registry";
-import { CosmosAddress } from "../wallet";
+import { CosmosAddress } from "helpers/src/crypto/addresses/types";
 
 export type Chain = (typeof chains)[keyof typeof chains];
 export type Prefix = Chain["prefix"];
@@ -45,7 +45,7 @@ export type FormattedBalance = {
   symbol: Token["symbol"];
   tokenRef: TokenRef;
   denom: TokenDenom;
-  tokenSourcePrefix: Prefix;
+  tokenSourcePrefix: string;
   minDenom: string;
   /**
    * @description The balance value in bigint format at the minimum denomination

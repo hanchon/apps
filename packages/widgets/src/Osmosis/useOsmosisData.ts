@@ -1,8 +1,9 @@
-import { useQueries } from "@tanstack/react-query";
-import { AccountBalancesQueryOptions } from "@evmosapps/evmos-wallet";
 import { useAccount } from "wagmi";
-import { TokenQueryOptions } from "@evmosapps/evmos-wallet/src/queries/token-query";
-import { TokenPricesQueryOptions } from "@evmosapps/evmos-wallet/src/queries/token-prices-query";
+
+import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
+import { raise } from "helpers";
+import { useTrpcQuery } from "@evmosapps/trpc/client";
+import { useMemo } from "react";
 export type SwapOption = {
   erc20Address: string;
   name: string;
@@ -18,101 +19,55 @@ export type SwapOption = {
 export function useOsmosisData() {
   const { address } = useAccount();
 
-  return useQueries({
-    queries: [
-      AccountBalancesQueryOptions(address),
-      TokenQueryOptions("EVMOS"),
-      TokenQueryOptions("OSMO"),
-      TokenPricesQueryOptions(),
-    ],
+  const chainRef = useEvmosChainRef();
+  const { data: evmosToken } = useTrpcQuery((t) => t.token.byDenom("EVMOS"));
+  const { data: osmoToken } = useTrpcQuery((t) => t.token.byDenom("OSMO"));
+  const { data: evmosBalance } = useTrpcQuery((t) =>
+    t.account.balance.byDenom({
+      chainRef: chainRef ?? raise("chainRef not found"),
+      address: address ?? raise("address not found"),
+      denom: "EVMOS",
+    })
+  );
+  const { data: osmoBalance } = useTrpcQuery((t) =>
+    t.account.balance.byDenom({
+      chainRef: chainRef ?? raise("chainRef not found"),
+      address: address ?? raise("address not found"),
+      denom: "OSMO",
+    })
+  );
 
-    combine: ([
-      { data: balances },
-      { data: evmosToken },
-      { data: osmoToken },
-      { data: tokenPrices },
-    ]) => {
-      if (!osmoToken || !evmosToken || !balances) {
-        return {
-          pending: true,
-          data: null,
-        } as const;
-      }
-
-      const osmoBalance =
-        balances
-          ?.find(
-            (balance) => balance.symbol === "OSMO" && balance.type === "ERC20"
-          )
-          ?.value.toString() ?? "0";
-
-      const evmosBalance =
-        balances
-          ?.find(
-            (balance) => balance.symbol === "EVMOS" && balance.type === "ICS20"
-          )
-          ?.value.toString() ?? "0";
-
-      const osmosis = {
-        ...osmoToken,
-        chain: "Osmosis",
-        balance: osmoBalance,
-        price:
-          tokenPrices?.find((token) =>
-            token.coinDenoms.includes(osmoToken.coinDenom)
-          )?.usd.price ?? null,
-        osmosisDenom: osmoToken.minCoinDenom,
-      } as const;
-
-      const evmos = {
-        ...evmosToken,
-        chain: "Evmos",
-        balance: evmosBalance,
-        price:
-          tokenPrices?.find((token) =>
-            token.coinDenoms.includes(evmosToken.coinDenom)
-          )?.usd.price ?? null,
-        osmosisDenom:
-          "ibc/6AE98883D4D5D5FF9E50D7130F1305DA2FFA0C652D1DD9C123657C6B4EB2DF8A",
-      } as const;
-
+  return useMemo(() => {
+    if (!evmosToken || !osmoToken || !evmosBalance || !osmoBalance) {
       return {
-        pending: false,
-        data: {
-          osmosis,
-          evmos,
-        },
+        pending: true,
+        data: null,
       } as const;
-    },
-  });
+    }
+    const osmosis = {
+      ...osmoToken,
+      chain: "Osmosis",
+      balance: osmoBalance.balance.erc20,
+      price: osmoBalance.price?.usd.price ?? raise("osmo price not found"),
+      osmosisDenom: osmoToken.minCoinDenom,
+    } as const;
 
-  // const osmosis: SwapOption = {
-  //   erc20Address: osmoToken.erc20Address,
-  //   name: osmoBalance?.name ?? "Osmo",
-  //   symbol: osmoBalance?.symbol ?? "OSMO",
-  //   tokenIdentifier: osmoBalance?.tokenIdentifier ?? "",
-  //   chain: "Osmosis",
-  //   balance: osmoBalance?.erc20Balance ?? "0",
-  //   price: parseFloat(osmoBalance?.coingeckoPrice ?? "0"),
-  //   decimals: parseInt(osmoBalance?.decimals ?? "6"),
-  //   osmosisDenom: "uosmo",
-  // };
+    const evmos = {
+      ...evmosToken,
+      chain: "Evmos",
+      balance: evmosBalance.balance.cosmos,
+      price: evmosBalance.price?.usd.price ?? raise("evmos price not found"),
 
-  // const evmos: SwapOption = {
-  //   erc20Address: evmosBalance?.erc20Address ?? "",
-  //   name: evmosBalance?.name ?? "Evmos",
-  //   symbol: evmosBalance?.symbol ?? "EVMOS",
-  //   tokenIdentifier: evmosBalance?.tokenIdentifier ?? "",
-  //   chain: "Evmos",
-  //   balance: evmosBalance?.cosmosBalance ?? "0",
-  //   price: parseFloat(evmosBalance?.coingeckoPrice ?? "0"),
-  //   decimals: parseInt(evmosBalance?.decimals ?? "18"),
-  //   osmosisDenom:
-  //     "ibc/6AE98883D4D5D5FF9E50D7130F1305DA2FFA0C652D1DD9C123657C6B4EB2DF8A",
-  // };
+      osmosisDenom:
+        "ibc/6AE98883D4D5D5FF9E50D7130F1305DA2FFA0C652D1DD9C123657C6B4EB2DF8A",
+    } as const;
 
-  // return {
-  //   osmosis,
-  //   evmos,
-  // };
+    return {
+      pending: false,
+      data: {
+        osmosis,
+        evmos,
+      },
+    } as const;
+  }, [evmosToken, osmoToken, evmosBalance, osmoBalance]);
 }

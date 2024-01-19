@@ -18,10 +18,6 @@ export type ERC20Element = {
   price24HChange: string;
 };
 
-export type ERC20BalanceResponse = {
-  balance: ERC20Element[];
-};
-
 type delegationResponse = {
   delegator_address: string;
   rank: number;

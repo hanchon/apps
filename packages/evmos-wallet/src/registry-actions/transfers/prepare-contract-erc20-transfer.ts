@@ -1,17 +1,19 @@
-import { normalizeToEth, Address, wagmiConfig } from "../../wallet";
+import { wagmiConfig } from "../../wallet";
 import { TokenAmount } from "../types";
 import { estimateGas, writeContract } from "wagmi/actions";
 import { buffGasEstimate } from "../utils/buff-gas-estimate";
 import { getTokenByRef } from "../get-token-by-ref";
 import { getAbi } from "../precompiles";
+import { Address } from "helpers/src/crypto/addresses/types";
+import { normalizeToEth } from "helpers/src/crypto/addresses/normalize-to-eth";
 
 export const prepareContractERC20Transfer = async ({
   sender,
   receiver,
   token,
 }: {
-  sender: Address<"evmos">;
-  receiver: Address<"evmos">;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
 }) => {
   const { erc20Address } = getTokenByRef(token.ref);
@@ -39,8 +41,8 @@ export const writeContractERC20Transfer = async ({
   receiver,
   token,
 }: {
-  sender: Address<"evmos">;
-  receiver: Address<"evmos">;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
 }) => {
   const prepared = await prepareContractERC20Transfer({

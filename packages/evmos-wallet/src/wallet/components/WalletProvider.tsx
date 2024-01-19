@@ -21,18 +21,14 @@ import {
   notifySuccess,
 } from "../../internal/wallet/functionality/errors";
 import { truncateAddress } from "../../internal/wallet/style/format";
-import {
-  getActiveProviderKey,
-  normalizeToCosmosAddress,
-  normalizeToEvmos,
-  store,
-} from "../..";
+import { getActiveProviderKey, store } from "../..";
 import { resetWallet, setWallet } from "../redux/WalletSlice";
 import {
   RemoveWalletFromLocalStorage,
   SaveProviderToLocalStorate,
 } from "../../internal/wallet/functionality/localstorage";
 import { useEffectEvent, useWatch } from "helpers";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 type WalletProviderProps = PropsWithChildren<{}>;
 
@@ -58,9 +54,7 @@ export const useWallet = () => {
   const account = useAccount();
   return {
     ...account,
-    bech32Address: account.address
-      ? normalizeToCosmosAddress(account.address)
-      : null,
+    bech32Address: account.address ? normalizeToCosmos(account.address) : null,
     isHydrating: !isWalletHydrated,
   };
 };
@@ -130,7 +124,7 @@ function Provider({ children }: WalletProviderProps) {
         active: true,
         extensionName: connectorId,
         evmosAddressEthFormat: address,
-        evmosAddressCosmosFormat: normalizeToEvmos(address),
+        evmosAddressCosmosFormat: normalizeToCosmos(address),
         evmosPubkey: pubkey ?? "",
         osmosisPubkey: null,
         accountName: null,

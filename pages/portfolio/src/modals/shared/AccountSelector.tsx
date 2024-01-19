@@ -1,6 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import {
-  Address,
   getActiveProviderKey,
   getChain,
   useAddressInput,
@@ -11,13 +10,14 @@ import {
   Tabs,
   TextInput,
 } from "@evmosapps/ui-helpers";
-import { Prefix } from "@evmosapps/evmos-wallet/src/registry-actions/types";
+
 import { useRequestWalletAccount } from "../hooks/useAccountByPrefix";
 import { Trans } from "next-i18next";
 import { SELECT_TO_NETWORK_SEND_FLOW, useTracker } from "tracker";
 import { useEffectEvent } from "helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { useAccount } from "wagmi";
+import { Address } from "helpers/src/crypto/addresses/types";
 
 type WalletTabKey = "WALLET" | "OTHER";
 export const AccountSelector = ({
@@ -27,17 +27,17 @@ export const AccountSelector = ({
 
   senderPrefix,
 }: PropsWithChildren<{
-  value?: Address<Prefix>;
-  onChange: (value?: Address<Prefix>) => void;
+  value?: Address;
+  onChange: (value?: Address) => void;
 
-  networkOptions: Prefix[];
-  senderPrefix: Prefix;
+  networkOptions: string[];
+  senderPrefix: string;
 }>) => {
   const { t } = useTranslation("transfer-modal");
   const { sendEvent } = useTracker();
   const { address: addressConnected } = useAccount();
   const { address, inputProps, errors, setValue } = useAddressInput(value);
-  const [selectedNetwork, setSelectedNetwork] = useState<Prefix>("evmos");
+  const [selectedNetwork, setSelectedNetwork] = useState("evmos");
   const [selectedWalletTab, setSelectedWalletTab] =
     useState<WalletTabKey>("WALLET");
   const activeProviderKey = getActiveProviderKey();
@@ -49,7 +49,7 @@ export const AccountSelector = ({
   /**
    * Syncs internal address state with outside state
    */
-  const syncOutsideState = useEffectEvent((address?: Address<Prefix>) => {
+  const syncOutsideState = useEffectEvent((address?: Address) => {
     if (address !== value) {
       onChange?.(address);
     }
@@ -202,9 +202,9 @@ const NetworkSelector = ({
   onChange,
   options,
 }: {
-  value: Prefix;
-  onChange: (prefix: Prefix) => void;
-  options: Prefix[];
+  value: string;
+  onChange: (prefix: string) => void;
+  options: string[];
 }) => {
   const { t } = useTranslation("transfer-modal");
   const selectedChain = getChain(value);

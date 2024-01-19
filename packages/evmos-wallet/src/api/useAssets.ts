@@ -1,9 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { ERC20BalanceResponse } from "./types";
 
 import { BigNumber } from "@ethersproject/bignumber";
 import { useAccount } from "wagmi";
@@ -13,20 +11,25 @@ import {
   addDollarAssets,
   amountToDollars,
 } from "helpers/src/styles";
-import { getAssetsForAddress } from "./fetch";
+
+import { useTrpcQuery } from "@evmosapps/trpc/client";
+import { useEvmosChainRef } from "../registry-actions/hooks/use-evmos-chain-ref";
 
 const usdFormat = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 });
 export const useAssets = () => {
-  const { address = "" } = useAccount();
+  const { address } = useAccount();
 
-  const assets = useQuery<ERC20BalanceResponse, Error>({
-    queryKey: ["commonAssets", address],
-    staleTime: 1000 * 60 * 5,
-    queryFn: () => getAssetsForAddress(address),
-  });
+  const chainRef = useEvmosChainRef();
+
+  const assets = useTrpcQuery((t) =>
+    t.legacy.erc20ModuleBalance({
+      address,
+      chainRef,
+    })
+  );
   const balance = useMemo(
     () => assets.data?.balance ?? [],
     [assets.data?.balance]

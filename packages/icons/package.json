@@ -5,7 +5,7 @@
     "./*": {
       "import": {
         "types": "./src/*.tsx",
-        "default": "./src/*.tsx"
+        "default": "./src/*"
       }
     }
   },

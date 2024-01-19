@@ -3,12 +3,13 @@ import { cn, modalLink, useModal } from "helpers";
 import { AddressDisplay, Modal, Tooltip } from "@evmosapps/ui-helpers";
 import { ProvidersIcons } from "../../providerIcons";
 import { useAccount, useDisconnect } from "wagmi";
-import { normalizeToEvmos } from "@evmosapps/evmos-wallet";
+
 import { EXPLORER_URL } from "constants-helper";
 import { CopyIcon } from "@evmosapps/icons/CopyIcon";
 import { ExternalLinkIcon } from "@evmosapps/icons/ExternalLinkIcon";
 import { useEffect, useState } from "react";
 import { CLICK_DISCONNECT_WALLET_BUTTON, useTracker } from "tracker";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 const useProfileModal = () => useModal("profile");
 export const ProfileModalTrigger = modalLink("profile");
@@ -55,7 +56,7 @@ export const ProfileModal = () => {
   if (!connector || !address) {
     return null;
   }
-  const evmosAddress = normalizeToEvmos(address);
+  const evmosAddress = normalizeToCosmos(address);
 
   const Icon = ProvidersIcons[connector.name];
   return (

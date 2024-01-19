@@ -1,11 +1,6 @@
 import { SignMode } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/signing/v1beta1/signing_pb";
-import {
-  Address,
-  getActiveProviderKey,
-  getKeplrProvider,
-  isEvmosAddress,
-} from "../../wallet";
-import { Prefix, TokenAmount } from "../types";
+import { getActiveProviderKey, getKeplrProvider } from "../../wallet";
+import { TokenAmount } from "../types";
 import {
   prepareContractERC20Transfer,
   writeContractERC20Transfer,
@@ -20,14 +15,16 @@ import {
 } from "./prepare-cosmos-ibc-transfer";
 import { prepareEvmTransfer, writeEvmTransfer } from "./prepare-evm-transfer";
 import { getChainByAddress } from "../get-chain-by-account";
+import { Address } from "helpers/src/crypto/addresses/types";
+import { isEvmosAddress } from "helpers/src/crypto/addresses/is-evmos-address";
 
 export const simulateTransfer = async ({
   sender,
   receiver,
   token,
 }: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
 }) => {
   const senderIsEvmos = isEvmosAddress(sender);
@@ -107,8 +104,8 @@ export const transfer = async ({
   token,
   fee,
 }: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
   fee?: {
     gasLimit: bigint;

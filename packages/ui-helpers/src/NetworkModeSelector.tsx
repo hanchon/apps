@@ -1,42 +1,41 @@
 "use client";
 import { cn } from "helpers";
-import { useEffect, useState } from "react";
-import {
-  getSelectedNetworkMode,
-  setSelectedNetworkMode,
-} from "./getSelectedNetworkMode";
-
-const modes = ["mainnet", "testnet", "localtestnet"];
+import { useConfig, useSwitchChain } from "wagmi";
+import { getChainId } from "wagmi/actions";
+import { Chain } from "viem";
 
 export const NetworkModeSelector = () => {
-  const [mode, setMode] = useState<null | string>(null);
+  const { switchChain } = useSwitchChain();
 
-  useEffect(() => {
-    setMode(getSelectedNetworkMode());
-  }, [setMode]);
+  const config = useConfig();
 
-  if (!mode) return null;
   return (
     <div className="border-2 border-red-300 rounded-md m-4 flex">
-      {modes.map((net) => (
-        <button
-          data-testid={`network-mode-selector-${net}`}
-          key={net}
-          onClick={() => {
-            setMode(net);
-            setSelectedNetworkMode(net);
-            window.location.reload();
-          }}
-          className={cn(
-            "text-white py-2 px-3 uppercase text-xxs font-bold grow ",
-            {
-              "bg-red-300": net === mode,
-            }
-          )}
-        >
-          {net}
-        </button>
-      ))}
+      {config.chains.map((chain) => {
+        const networkType = (
+          chain as Chain & {
+            networkType: string;
+          }
+        ).networkType;
+
+        return (
+          <button
+            data-testid={`network-mode-selector-${networkType}`}
+            key={networkType}
+            onClick={() => {
+              switchChain({ chainId: chain.id });
+            }}
+            className={cn(
+              "text-white py-2 px-3 uppercase text-xxs font-bold grow ",
+              {
+                "bg-red-300": chain.id === getChainId(config),
+              }
+            )}
+          >
+            {networkType}
+          </button>
+        );
+      })}
     </div>
   );
 };

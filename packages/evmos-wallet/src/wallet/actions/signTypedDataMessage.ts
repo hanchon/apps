@@ -1,5 +1,5 @@
 import { getAccount, getWalletClient, switchChain } from "wagmi/actions";
-import { assertIf, raise } from "helpers";
+import { assert, raise } from "helpers";
 import { TypedData } from "../../utils";
 import { Hex, fromHex } from "viem";
 
@@ -19,6 +19,6 @@ export async function signTypedDataMessage(transaction: TypedData) {
     params: [address, JSON.stringify(transaction)],
   });
 
-  assertIf(typeof signature === "string", "COULD_NOT_SIGN_TRANSACTION");
+  assert(typeof signature === "string", "COULD_NOT_SIGN_TRANSACTION");
   return signature;
 }

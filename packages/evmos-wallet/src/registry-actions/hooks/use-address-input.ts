@@ -7,12 +7,15 @@ import {
   ComponentProps,
   useRef,
 } from "react";
-import { Address, getPrefix, isValidHexAddress } from "../../wallet";
-import { isValidCosmosAddress } from "../../wallet/utils/addresses/is-valid-cosmos-address";
+
 import { getPrefixes } from "../get-prefixes";
 import { isValidRegistryPrefix } from "../is-valid-registry-prefix";
-import { Prefix } from "../types";
+
 import { useEffectEvent } from "helpers";
+import { Address } from "helpers/src/crypto/addresses/types";
+import { isValidHexAddress } from "helpers/src/crypto/addresses/is-valid-hex-address";
+import { getPrefix } from "helpers/src/crypto/addresses/get-prefix";
+import { isValidCosmosAddress } from "helpers/src/crypto/addresses/is-valid-cosmos-address";
 
 type AddressInputErrors = "INVALID_ADDRESS" | "INVALID_PREFIX";
 /**
@@ -59,13 +62,13 @@ type AddressInputErrors = "INVALID_ADDRESS" | "INVALID_PREFIX";
  * );
  * ```
  */
-export const useAddressInput = <TPrefix extends Prefix>(
+export const useAddressInput = (
   initialAddress: string = "",
   config: {
-    allowedPrefixes?: TPrefix[];
+    allowedPrefixes?: string[];
   } = {}
 ) => {
-  const { allowedPrefixes = [...getPrefixes()] as TPrefix[] } = config;
+  const { allowedPrefixes = [...getPrefixes()] as string[] } = config;
   const [value, setValue] = useState(initialAddress);
   /**
    * This is for when the initial address takes some time to load
@@ -96,7 +99,7 @@ export const useAddressInput = <TPrefix extends Prefix>(
    * It also normalizes hex addresses as being evmos prefixed
    */
   const prefix = useMemo(() => {
-    const prefix = getPrefix(value as Address<Prefix>);
+    const prefix = getPrefix(value as Address);
     if (isValidRegistryPrefix(prefix)) {
       return prefix;
     }
@@ -108,7 +111,7 @@ export const useAddressInput = <TPrefix extends Prefix>(
    */
   const isAllowedPrefix = useMemo(() => {
     if (!prefix) return false;
-    return allowedPrefixes.includes(prefix as TPrefix);
+    return allowedPrefixes.includes(prefix);
   }, [prefix, allowedPrefixes]);
 
   const errors = useMemo(() => {
@@ -152,15 +155,15 @@ export const useAddressInput = <TPrefix extends Prefix>(
       address: undefined,
       setValue,
       inputProps,
-      prefix: isAllowedPrefix ? (prefix as TPrefix) : undefined,
+      prefix: isAllowedPrefix ? (prefix as string) : undefined,
     } as const;
   }
   return {
     value,
     errors,
-    address: value as Address<TPrefix>,
+    address: value as Address,
     setValue,
     inputProps,
-    prefix: prefix as TPrefix,
+    prefix: prefix,
   } as const;
 };
