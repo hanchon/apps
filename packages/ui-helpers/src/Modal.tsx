@@ -124,7 +124,7 @@ const ModalHeader = ({
       >
         <CloseIcon
           className={cn(
-            "h-6 w-auto text-current focus:outline-none focus-visible:outline-none"
+            "h-6 w-auto absolute m-2 top-0 right-0 text-current focus:outline-none focus-visible:outline-none"
           )}
           aria-hidden="true"
         />
