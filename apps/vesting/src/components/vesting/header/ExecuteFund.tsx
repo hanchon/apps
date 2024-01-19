@@ -49,7 +49,7 @@ export default function ExecuteFund({
       const [err] = await E.try(() =>
         switchNetwork({
           chainId: evmos.id,
-        }),
+        })
       );
       if (err) return;
     }
@@ -67,7 +67,7 @@ export default function ExecuteFund({
             vestingCliff:
               vestingData.vestingCliff as VestingSchedule["vestingCliff"],
             lockingPeriod: vestingData.lockupDuration as TimeWindow,
-          },
+          }
         );
 
       const res = await fundVestingAccount(
@@ -75,7 +75,7 @@ export default function ExecuteFund({
         vestingData.address as string,
         startTime,
         lockupPeriods,
-        vestingPeriods,
+        vestingPeriods
       );
 
       dispatch(
@@ -85,10 +85,10 @@ export default function ExecuteFund({
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
             hash: res.hash,
-            explorerTxUrl: `${EXPLORER_URL}/tx/`,
+            explorerTxUrl: `${EXPLORER_URL}/tx`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        }),
+        })
       );
       setloading(false);
       onClose();
@@ -102,14 +102,14 @@ export default function ExecuteFund({
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        }),
+        })
       );
     }
 
     if (vestingData.accountName !== "") {
       setVestingAccountNameLocalstorage(
         vestingData.address as string,
-        vestingData.accountName as string,
+        vestingData.accountName as string
       );
     }
   };

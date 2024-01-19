@@ -36,7 +36,9 @@
     "PORT",
     "NODE_ENV",
     "GITHUB_TOKEN",
-    "TEST_WORKER_INDEX"
+    "TEST_WORKER_INDEX",
+    "VERCEL",
+    "VERCEL_ENV"
   ],
   "pipeline": {
     "build": {

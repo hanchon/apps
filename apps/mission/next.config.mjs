@@ -3,6 +3,29 @@
 
 import { withEvmosConfig } from "@evmosapps/config/next/with-config.js";
 import locale from "./next-i18next.config.js";
+
 export default withEvmosConfig({
   i18n: locale.i18n,
+
+  async rewrites() {
+    if (process.env.VERCEL !== "1") {
+      return {};
+    }
+    const suffix = process.env.VERCEL_ENV === "production" ? "" : "-staging";
+    const redirects = ["portfolio", "staking", "governance"].flatMap((app) => {
+      const destination = `https://evmos-${app + suffix}.vercel.app/${app}`;
+      return [
+        {
+          source: `/${app}`,
+          destination,
+        },
+        {
+          source: `/${app}/:path*`,
+          destination: `${destination}/:path*`,
+        },
+      ];
+    });
+
+    return { beforeFiles: redirects };
+  },
 });

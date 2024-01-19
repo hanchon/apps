@@ -150,7 +150,7 @@ export const AssetSelector = ({
             }}
           >
             <CryptoSelector.Button
-              src={`/portfolio/tokens/${selectedToken?.denom}.png`}
+              src={`/portfolio/tokens/${selectedToken?.denom.toLowerCase()}.png`}
               variant="black"
               data-testid="asset-selector-token-selector-button"
             >
@@ -164,7 +164,7 @@ export const AssetSelector = ({
               {tokenOptions.map((token) => {
                 return (
                   <CryptoSelector.Option
-                    src={`/portfolio/tokens/${token.denom}.png`}
+                    src={`/portfolio/tokens/${token.denom.toLowerCase()}.png`}
                     key={`${token.sourcePrefix}-${token.minCoinDenom}`}
                     value={token}
                     data-testid={`asset-selector-token-selector-option-${token.denom}`}
@@ -209,7 +209,7 @@ export const AssetSelector = ({
                 const chain = getChain(value);
                 return (
                   <CryptoSelector.Option
-                    src={`/portfolio/chains/${value}.png`}
+                    src={`/portfolio/chains/${value.toLowerCase()}.png`}
                     key={value}
                     value={value}
                     data-testid={`asset-selector-network-selector-option-${chain.identifier}`}
