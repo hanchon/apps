@@ -12,7 +12,7 @@ type StrideOutpostMemo = {
 };
 
 // GenerateStrideMemo validates sender, receiver and action (NOTE: throws on error)
-export function GenerateStrideMemo(
+export function generateStrideMemo(
   // Evmos wallet that will get the staked evmos
   sender: string,
   // Stride wallet in case of failure
