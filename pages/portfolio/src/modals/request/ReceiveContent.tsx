@@ -176,7 +176,7 @@ export const ReceiveContent = ({
                     }}
                   >
                     <CryptoSelector.Button
-                      src={`/chains/${selectedNetworkPrefix}.png`}
+                      src={`/chain/${selectedNetworkPrefix}.png`}
                     >
                       {selectedChain.name}
                     </CryptoSelector.Button>
@@ -188,7 +188,7 @@ export const ReceiveContent = ({
                         const chain = getChain(value);
                         return (
                           <CryptoSelector.Option
-                            src={`/chains/${value.toLowerCase()}.png`}
+                            src={`/chain/${value.toLowerCase()}.png`}
                             key={value}
                             value={value}
                           >

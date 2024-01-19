@@ -52,7 +52,7 @@ export const TransferSummary = ({
         <div className="flex flex-col space-y-2 items-center">
           <Image
             className="h-10 w-10 md:h-12 md:w-12 bg-white rounded-full"
-            src={`/chains/${senderChain.prefix}.png`}
+            src={`/chain/${senderChain.prefix}.png`}
             width={48}
             height={48}
             alt={senderChain.name}
@@ -94,7 +94,7 @@ export const TransferSummary = ({
         <div className="flex flex-col space-y-2 items-center">
           <Image
             className="h-10 w-10 md:h-12 md:w-12 bg-white rounded-full"
-            src={`/chains/${receiverChain.prefix}.png`}
+            src={`/chain/${receiverChain.prefix}.png`}
             width={48}
             height={48}
             alt={receiverChain.name}

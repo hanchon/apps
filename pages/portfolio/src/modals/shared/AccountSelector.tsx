@@ -214,7 +214,7 @@ const NetworkSelector = ({
   return (
     <CryptoSelector value={value} onChange={onChange}>
       <CryptoSelector.Button
-        src={`/chains/${selectedChain.prefix}.png`}
+        src={`/chain/${selectedChain.prefix}.png`}
         data-testid="account-selector-network-selector-button"
       >
         {selectedChain.name}
@@ -227,7 +227,7 @@ const NetworkSelector = ({
           const chain = getChain(value);
           return (
             <CryptoSelector.Option
-              src={`/chains/${value.toLowerCase()}.png`}
+              src={`/chain/${value.toLowerCase()}.png`}
               key={value}
               value={value}
               data-testid={`account-selector-network-selector-option-${chain.identifier}`}
