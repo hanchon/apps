@@ -102,9 +102,17 @@ export function LaunchPad({}: { showPing?: boolean }) {
             event={CLICK_ON_VIEW_ALL_DAPPS}
             properties={{ Location: "App Launcher" }}
           >
-            <ButtonWithLink href="/dapps" className="w-full mt-2">
-              {t("launchPad.button")}
-            </ButtonWithLink>
+            <Menu.Item>
+              {({ close }) => (
+                <ButtonWithLink
+                  href="/dapps"
+                  className="w-full mt-2"
+                  onClick={close}
+                >
+                  {t("launchPad.button")}
+                </ButtonWithLink>
+              )}
+            </Menu.Item>
           </TrackerEvent>
         </Menu.Items>
       </Transition>
