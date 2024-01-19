@@ -36,6 +36,10 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 1.3.14 - 2024-01-19
+
+- (chore) add redirect from /assets to /portfolio
+
 ## 1.3.13 - 2024-01-18
 
 - (chore) remove extra / on tx link
