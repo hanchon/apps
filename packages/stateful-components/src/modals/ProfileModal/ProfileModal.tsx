@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import { cn, modalLink, useModal } from "helpers";
 import { AddressDisplay, Modal, Tooltip } from "@evmosapps/ui-helpers";
@@ -95,7 +98,7 @@ export const ProfileModal = () => {
 
           <button
             className={cn(
-              "border-darkPearl text-base hover:bg-grayOpacity mt-3 w-full rounded border p-3 font-bold uppercase"
+              "border-darkPearl text-base hover:bg-grayOpacity mt-3 w-full rounded border p-3 font-bold uppercase",
             )}
             onClick={() => {
               disconnect();

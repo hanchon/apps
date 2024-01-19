@@ -51,13 +51,11 @@ export const ReceiveContent = ({
   const [selectedNetworkPrefix, setSelectedNetworkPrefix] = useState("evmos");
   const selectedChain = getChain(selectedNetworkPrefix);
 
-
   const sender = address
     ? walletFormat === "0x"
       ? address
       : normalizeToCosmos(address)
     : undefined;
-
 
   const shareEnabled = navigator.share !== undefined;
 
@@ -178,7 +176,7 @@ export const ReceiveContent = ({
                     }}
                   >
                     <CryptoSelector.Button
-                      src={`/chains/${selectedNetworkPrefix}.png`}
+                      src={`/chain/${selectedNetworkPrefix}.png`}
                     >
                       {selectedChain.name}
                     </CryptoSelector.Button>
@@ -190,7 +188,7 @@ export const ReceiveContent = ({
                         const chain = getChain(value);
                         return (
                           <CryptoSelector.Option
-                            src={`/chains/${value}.png`}
+                            src={`/chain/${value.toLowerCase()}.png`}
                             key={value}
                             value={value}
                           >

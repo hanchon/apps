@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use server";
 
 import { nextCache } from "helpers/src/next/cache";
@@ -16,5 +19,5 @@ export const fetchTokenByDenom = nextCache(
   ["fetchTokens"],
   {
     revalidate: seconds("1d"),
-  }
+  },
 );

@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { StoreType, store } from "@evmosapps/evmos-wallet/src/redux/Store";
@@ -16,7 +19,7 @@ import { trpc, createTrpcClient } from "@evmosapps/trpc/client";
 
 function SnackbarsInternal() {
   const snackbars = useSelector(
-    (state: StoreType) => state.snackbar.value.snackbars
+    (state: StoreType) => state.snackbar.value.snackbars,
   );
 
   useMemo(() => {

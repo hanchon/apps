@@ -1,8 +1,11 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { Log } from "../logger";
 import { ensureError } from "./normalizeError";
 
 export function tryCatch<T extends Promise<unknown>>(
-  fn: () => T
+  fn: () => T,
 ): Promise<[null, Awaited<T>] | [Error, null]>;
 export function tryCatch<T>(fn: () => T): [null, T] | [Error, null];
 export function tryCatch<T>(fn: () => T) {

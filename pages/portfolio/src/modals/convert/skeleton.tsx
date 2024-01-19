@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import { cn } from "helpers";
 
@@ -17,7 +20,7 @@ export const Skeleton = ({ lines = 1, dark = false }) => {
             {
               "bg-black/10": !dark,
               "bg-white/5": dark,
-            }
+            },
           )}
         />
       ))}

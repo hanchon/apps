@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { tryCatch } from "../error-handling";
 import { readDevCache, writeDevCache } from "./dev-cache-crud";
 import { snakeCase } from "lodash-es";
@@ -39,7 +42,7 @@ export const cachedFetch = async (
       revalidate?: number;
       tags?: string[];
     };
-  }
+  },
 ) => {
   // Bypass caching in non-development environments
   if (process.env.NODE_ENV !== "development" && process.env.NODE_ENV !== "test")
@@ -108,7 +111,7 @@ export const cachedFetch = async (
         status: response.status,
         ...serializedResponse,
       },
-      cacheTags
+      cacheTags,
     );
     return response;
   };
@@ -127,7 +130,7 @@ export const cachedFetch = async (
       statusText: cached.data.statusText,
       status: cached.data.status,
       headers: cached.data.headers,
-    }
+    },
   );
 
   // Handle stale cache by making a new request in the background

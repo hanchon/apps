@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { ComponentProps } from "react";
 
 import { Badge, TrackerEvent } from "@evmosapps/ui-helpers";
@@ -68,7 +71,7 @@ const Button = ({ className, ...rest }: ComponentProps<typeof Link>) => {
     <Link
       className={cn(
         "border-gray300 flex cursor-pointer flex-col items-center space-y-2 rounded-lg border px-4 py-5 shadow transition-all duration-300 hover:shadow-md",
-        className
+        className,
       )}
       {...rest}
     />

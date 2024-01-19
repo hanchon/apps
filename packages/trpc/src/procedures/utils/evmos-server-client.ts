@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { Chain, createPublicClient, http } from "viem";
 
 import { EVMOS_CONFIG_MAP } from "helpers/src/evmos-info";

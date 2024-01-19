@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { SignMode } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/signing/v1beta1/signing_pb";
 import { MsgTransfer } from "@buf/cosmos_ibc.bufbuild_es/ibc/applications/transfer/v1/tx_pb";
 import { apiCosmosTxSimulate } from "../../api/cosmos-rest/api-cosmos-tx-simulate";
@@ -156,7 +159,7 @@ export const executeCosmosIBCTransfer = async (params: {
       },
       {
         preferNoSetFee: true,
-      }
+      },
     );
   } else if (mode === "LEGACY_AMINO_JSON") {
     const fee = tx.authInfo?.fee;
@@ -173,7 +176,7 @@ export const executeCosmosIBCTransfer = async (params: {
         {
           type: "cosmos-sdk/MsgTransfer",
           value: MsgTransfer.fromBinary(
-            msgs[0]?.value ?? raise("No message")
+            msgs[0]?.value ?? raise("No message"),
           ).toJson({
             useProtoFieldName: true,
           }),

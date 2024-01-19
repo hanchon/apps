@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { z } from "zod";
 import { richTextSchema } from "../partials/richTextSchema";
 import { relationSchema } from "../partials/relationSchema";
@@ -46,7 +49,7 @@ const dappPropertiesSchema = createNotionPropertiesSchema(
     createdAt: createdAtSchema,
     language: selectSchema,
     categories: relationSchema,
-  })
+  }),
 );
 
 export const dappSchema = z

@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { ECOSYSTEM_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
 import { Log, dappSchema } from "helpers";
 import { notion } from "helpers/src/clients/notion";
@@ -18,14 +21,14 @@ export const fetchDapps = cache(async () => {
         Log("notion").error(result.error.issues);
       }
       return result;
-    })
+    }),
   ).then((results) =>
     results.flatMap((result) => {
       if (!result.success || result.data.listed === false) {
         return [];
       }
       return [result.data];
-    })
+    }),
   );
 
   const dappsMap = new Map<string, (typeof parsedDapps)[number]>();
@@ -45,7 +48,7 @@ export const fetchDapps = cache(async () => {
             description: subItem?.description,
           },
         ];
-      })
+      }),
     );
     dappsMap.set(parsed.notionId, parsed);
   }

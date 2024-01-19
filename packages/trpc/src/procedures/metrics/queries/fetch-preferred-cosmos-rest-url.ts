@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { nextCache } from "helpers/src/next/cache";
 import { assert } from "helpers";
 import { fetchChainCosmosRestMetrics } from "./fetch-cosmos-chain-rest-metrics";
@@ -22,5 +25,5 @@ export const fetchPreferredCosmosRestUrl = nextCache(
   ["fetchPreferredCosmosRestUrl"],
   {
     revalidate: seconds("10m"),
-  }
+  },
 );

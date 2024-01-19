@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { bech32 } from "bech32";
 import { CosmosAddress, HexAddress } from "./types";
 import { getAddress } from "viem";
@@ -15,6 +18,6 @@ export const evmosToEth = (address: CosmosAddress): HexAddress => {
   }
   const { words } = bech32.decode(address);
   return getAddress(
-    `0x${Buffer.from(bech32.fromWords(words)).toString("hex")}`
+    `0x${Buffer.from(bech32.fromWords(words)).toString("hex")}`,
   );
 };

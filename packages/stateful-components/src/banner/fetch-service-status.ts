@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use server";
 import { z } from "zod";
 import { EVMOS_UTILS_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/networkConfig";
@@ -15,7 +18,7 @@ const evmosStatusPropertiesSchema = createNotionPropertiesSchema(
     checkbox: checkboxSchema.default(() => ({ checkbox: false })),
     name: titleSchema.default({ title: [{ plain_text: "" }] }),
     description: richTextSchema.default({ rich_text: [{ plain_text: "" }] }),
-  })
+  }),
 );
 
 const evmosStatusSchema = z.object({
@@ -50,7 +53,8 @@ export const getServiceDisruptionData = async () => {
   const data = await fetchEvmosStatus();
   const serviceStatus = data.find(
     (item) =>
-      item.name.toLocaleLowerCase() === "Service disruption".toLocaleLowerCase()
+      item.name.toLocaleLowerCase() ===
+      "Service disruption".toLocaleLowerCase(),
   );
   if (serviceStatus === undefined || !serviceStatus?.checkbox) return null;
   return serviceStatus.description;

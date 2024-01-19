@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import { useAccount } from "wagmi";
 import { hashMessage, fromHex } from "viem";
@@ -17,7 +20,7 @@ import { getEvmosChainInfo } from "./chains";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 const recoveryMessage = "generate_pubkey";
 const hashedMessage = Buffer.from(
-  fromHex(hashMessage(recoveryMessage), "bytes")
+  fromHex(hashMessage(recoveryMessage), "bytes"),
 );
 
 const baseKey = "evmos/pubkey";
@@ -38,7 +41,7 @@ const queryFn = async () => {
 
   pubkey = await queryPubKey(
     EVMOS_GRPC_URL,
-    normalizeToCosmos(address ?? raise("WALLET_PROVIDER_NOT_AVAILABLE"))
+    normalizeToCosmos(address ?? raise("WALLET_PROVIDER_NOT_AVAILABLE")),
   );
 
   if (pubkey) return pubkey;
@@ -69,7 +72,7 @@ export const usePubKey = () => {
     initialData() {
       if (typeof window === "undefined") return;
       const cachedKey = window.localStorage.getItem(
-        [baseKey, address].join("/")
+        [baseKey, address].join("/"),
       );
       if (cachedKey) return cachedKey;
     },

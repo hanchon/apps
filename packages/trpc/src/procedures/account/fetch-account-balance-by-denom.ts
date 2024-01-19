@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { Address } from "helpers/src/crypto/addresses/types";
 
 import { fetchTokenPrices } from "../tokens/queries/price/fetch-token-prices";
@@ -35,7 +38,7 @@ export const fetchAccountBalanceByDenom = async ({
     cosmos: 0n,
     erc20: 0n,
     tokenPrice: tokenPrices.find(
-      (tokenPrice) => tokenPrice.coingeckoId === token.coingeckoId
+      (tokenPrice) => tokenPrice.coingeckoId === token.coingeckoId,
     ),
   });
 };

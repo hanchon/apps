@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { getChainByAddress } from "../get-chain-by-account";
 import { simulateTransfer } from "../transfers/prepare-transfer";
 import { TokenAmount, TokenRef } from "../types";
@@ -52,7 +55,7 @@ export const useFee = ({
             ...token,
             amount: 1n,
           },
-        })
+        }),
       );
 
       if (err) {

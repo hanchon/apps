@@ -1,10 +1,13 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { get } from "lodash-es";
 import { readFiles } from "./readFiles";
 import { ChainRegistry } from "./types/chain";
 import { Log } from "helpers";
 
 const chains = await readFiles<ChainRegistry>(
-  "node_modules/chain-token-registry/chainConfig/*.json"
+  "node_modules/chain-token-registry/chainConfig/*.json",
 );
 const url =
   "https://g.w.lavanet.xyz:443/gateway/evmos/rest/ef1ad852a77275e1eeef6c7972370118";
@@ -23,7 +26,7 @@ for (const chainRegistry of chains) {
     rest,
   } of chainRegistry.configurations) {
     const clientStatus = await fetch(
-      `${url}/ibc/core/client/v1/client_status/${clientId}`
+      `${url}/ibc/core/client/v1/client_status/${clientId}`,
     );
     const json = (await clientStatus.json()) as unknown;
     Log().info(identifier);
@@ -33,7 +36,7 @@ for (const chainRegistry of chains) {
       continue;
     }
     const channelInfo = await fetch(
-      `${rest[0]}/ibc/core/channel/v1/channels/${source.sourceChannel}/ports/transfer`
+      `${rest[0]}/ibc/core/channel/v1/channels/${source.sourceChannel}/ports/transfer`,
     );
     const channelJson = (await channelInfo.json()) as unknown;
     const connectionId = get(channelJson, "channel.connection_hops[0]") as
@@ -46,12 +49,12 @@ for (const chainRegistry of chains) {
       continue;
     }
     const connectionInfo = await fetch(
-      `${rest[0]}/ibc/core/connection/v1/connections/${connectionId}/client_state`
+      `${rest[0]}/ibc/core/connection/v1/connections/${connectionId}/client_state`,
     );
     const connectionInfoJson = (await connectionInfo.json()) as unknown;
     const counterpartyClientId = get(
       connectionInfoJson,
-      "identified_client_state.client_id"
+      "identified_client_state.client_id",
     ) as string | undefined;
 
     if (!counterpartyClientId) {
@@ -62,14 +65,14 @@ for (const chainRegistry of chains) {
     }
     Log().info("Counterparty");
     const counterpartyClientStatus = await fetch(
-      `${rest[0]}/ibc/core/client/v1/client_status/${counterpartyClientId}`
+      `${rest[0]}/ibc/core/client/v1/client_status/${counterpartyClientId}`,
     );
     const counterpartyClientStatusJson =
       (await counterpartyClientStatus.json()) as unknown;
 
     Log().info(
       counterpartyClientId,
-      get(counterpartyClientStatusJson, "status")
+      get(counterpartyClientStatusJson, "status"),
     );
     Log().info("------------------");
   }

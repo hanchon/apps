@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { readFile, writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 
@@ -12,7 +15,7 @@ export const writeJson = async (path: string, data: {}) => {
 
 export const updateJson = async <T extends {}>(
   path: string,
-  updater: (json: T) => T
+  updater: (json: T) => T,
 ) => {
   const json = (await readJson(path)) as T;
 

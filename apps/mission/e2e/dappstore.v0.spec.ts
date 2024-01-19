@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { mmFixture, pageListener } from "@evmosapps/test-utils";
 const { test, beforeEach, describe, expect } = mmFixture;
 
@@ -34,7 +37,7 @@ describe("Dapp store", () => {
       })
       .click();
     await expect(page).toHaveURL(
-      "http://localhost:3000/dapps/bridge-and-swap/cypher-wallet"
+      "http://localhost:3000/dapps/bridge-and-swap/cypher-wallet",
     );
 
     const cypherWidget = page.getByTestId("cypher-onboading-sdk");

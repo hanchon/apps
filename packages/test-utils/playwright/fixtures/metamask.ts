@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { BrowserContext, test } from "@playwright/test";
 import dappwright, { Dappwright, MetaMaskWallet } from "@tenkeylabs/dappwright";
 import { launch } from "./metamask-utils";
@@ -7,7 +10,7 @@ const E2E_TEST_EVMOS_CHAIN_NAME =
 const E2E_TEST_EVMOS_RPC_URL =
   process.env.E2E_TEST_EVMOS_RPC_URL ?? "https://evmos.lava.build/";
 const E2E_TEST_EVMOS_CHAIN_ID = parseInt(
-  process.env.E2E_TEST_EVMOS_CHAIN_ID ?? "9001"
+  process.env.E2E_TEST_EVMOS_CHAIN_ID ?? "9001",
 );
 const E2E_TEST_EVMOS_SYMBOL = process.env.E2E_TEST_EVMOS_SYMBOL ?? "EVMOS";
 

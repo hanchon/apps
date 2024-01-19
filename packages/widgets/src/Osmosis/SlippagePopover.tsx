@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { Popover } from "@headlessui/react";
 import { cn } from "helpers";
 import { OsmosisCloseIcon } from "@evmosapps/icons/osmosis/OsmosisCloseIcon";
@@ -74,7 +77,7 @@ export const SlippagePopover = ({
                         {
                           "border-2 border-wosmongton-200":
                             currentSlippage === slippage,
-                        }
+                        },
                       )}
                       onClick={(e) => {
                         e.preventDefault();
@@ -95,7 +98,7 @@ export const SlippagePopover = ({
                       ? manualSlippageError
                         ? "bg-red"
                         : "bg-osmoverse-900"
-                      : "bg-osmoverse-900"
+                      : "bg-osmoverse-900",
                   )}
                   onClick={(e) => {
                     e.preventDefault();

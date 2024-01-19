@@ -1,6 +1,7 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+"use client";
 
 import { useEffect, useMemo } from "react";
 import {
@@ -115,7 +116,7 @@ export const TransferModalContent = ({
   const destinationNetworkOptions = useMemo(
     (): string[] => //
       getTokenValidDestinations(tokenAmount.ref, senderChain.prefix),
-    [tokenAmount.ref, senderChain.prefix]
+    [tokenAmount.ref, senderChain.prefix],
   );
 
   const activeProviderKey = getActiveProviderKey();
@@ -123,7 +124,7 @@ export const TransferModalContent = ({
   const senderValidation = {
     userRejectedEnablingNetwork: E.match.byPattern(
       walletRequestError,
-      /USER_REJECTED_REQUEST/
+      /USER_REJECTED_REQUEST/,
     ),
     networkNotSupportedByConnectedWallet:
       activeProviderKey &&

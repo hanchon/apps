@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import NextLink from "next/link";
 import { forwardRef } from "react";
@@ -7,7 +10,7 @@ import { getLocaleFromPath } from "../..";
 
 export const Link: typeof NextLink = forwardRef(function Link(
   { href, ...props },
-  ref
+  ref,
 ) {
   let url = String(href);
   let locale = getLocaleFromPath(url);

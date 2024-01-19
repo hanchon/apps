@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { SignMode } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/signing/v1beta1/signing_pb";
 import { Tx } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/v1beta1/tx_pb";
 import { Message, Any } from "@bufbuild/protobuf";
@@ -39,7 +42,7 @@ export const createProtobufTransaction = async ({
           new Any({
             typeUrl: `/${msg.getType().typeName}`,
             value: msg.toBinary(),
-          })
+          }),
       ),
     },
     authInfo: {

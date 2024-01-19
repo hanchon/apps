@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { getChainByAddress } from "../get-chain-by-account";
 import { Tx } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/v1beta1/tx_pb";
 import { Address } from "helpers/src/crypto/addresses/types";
@@ -7,7 +10,7 @@ import { set } from "lodash-es";
 export const assignGasEstimateToProtoTx = (
   sender: Address,
   tx: Tx,
-  estimatedGas: bigint
+  estimatedGas: bigint,
 ) => {
   tx = tx.clone();
 

@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import { useRef, useInsertionEffect, useCallback } from "react";
 
@@ -8,7 +11,7 @@ import { useRef, useInsertionEffect, useCallback } from "react";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function useEffectEvent<T extends (...args: any[]) => unknown>(
-  fn: T
+  fn: T,
 ): T {
   const ref = useRef(fn);
   useInsertionEffect(() => {

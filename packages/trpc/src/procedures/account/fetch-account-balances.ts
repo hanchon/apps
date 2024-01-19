@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { serverCosmos } from "../utils/cosmos-server-client";
 
 import { evmosServerClient } from "../utils/evmos-server-client";
@@ -37,7 +40,7 @@ export const fetchAccountBalances = async ({
         [token.cosmosDenom, token],
         [token.coinDenom, token],
       ];
-    })
+    }),
   );
 
   const balanceMap = new Map<
@@ -108,7 +111,7 @@ export const fetchAccountBalances = async ({
   await Promise.all([cosmosBalancePromise, evmosBalancePromise]);
 
   const tokenPriceMap = new Map(
-    tokenPrices.map((token) => [token.coingeckoId, token])
+    tokenPrices.map((token) => [token.coingeckoId, token]),
   );
   return [...balanceMap.entries()].flatMap(([denom, { cosmos, erc20 }]) => {
     const token = tokenMap[denom];

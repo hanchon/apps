@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { useOsmosisData } from "./useOsmosisData";
 import { useQuery } from "@tanstack/react-query";
 import { parseUnits } from "viem";
@@ -52,7 +55,7 @@ export function useOsmosisQuote({
       url.searchParams.append("token1", tokenBInfo.osmosisDenom);
       url.searchParams.append(
         "amount",
-        parseUnits(amount || "1", tokenAInfo.exponent).toString()
+        parseUnits(amount || "1", tokenAInfo.exponent).toString(),
       );
       url.searchParams.append("exchange_specific_results", "true");
 

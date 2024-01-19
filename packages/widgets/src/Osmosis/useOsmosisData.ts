@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { useAccount } from "wagmi";
 
 import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
@@ -27,14 +30,14 @@ export function useOsmosisData() {
       chainRef: chainRef ?? raise("chainRef not found"),
       address: address ?? raise("address not found"),
       denom: "EVMOS",
-    })
+    }),
   );
   const { data: osmoBalance } = useTrpcQuery((t) =>
     t.account.balance.byDenom({
       chainRef: chainRef ?? raise("chainRef not found"),
       address: address ?? raise("address not found"),
       denom: "OSMO",
-    })
+    }),
   );
 
   return useMemo(() => {

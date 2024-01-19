@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { wagmiConfig } from "../wallet";
 import { getTokens } from "./get-tokens";
 
@@ -34,8 +37,8 @@ export async function getERC20TokenBalances({ address }: { address: Address }) {
           token,
           evmosAddress,
           BigInt(response.result ?? "0"),
-          "ERC20"
-        )
+          "ERC20",
+        ),
       );
       return acc;
     }, [])
