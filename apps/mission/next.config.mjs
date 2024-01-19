@@ -6,7 +6,15 @@ import locale from "./next-i18next.config.js";
 
 export default withEvmosConfig({
   i18n: locale.i18n,
-
+  redirects: async () => {
+    return [
+      {
+        source: "/assets",
+        destination: "/portfolio",
+        permanent: false,
+      },
+    ];
+  },
   async rewrites() {
     if (process.env.VERCEL !== "1") {
       return {};
