@@ -55,7 +55,11 @@ export const ReceiveContent = ({
     useState<Prefix>("evmos");
   const selectedChain = getChain(selectedNetworkPrefix);
 
-  const sender = address ? normalizeToEvmos(address) : null;
+  const sender = address
+    ? walletFormat === "0x"
+      ? address
+      : normalizeToEvmos(address)
+    : undefined;
 
   const shareEnabled = navigator.share !== undefined;
 
