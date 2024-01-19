@@ -186,7 +186,7 @@ export const ReceiveContent = ({
                         const chain = getChain(value);
                         return (
                           <CryptoSelector.Option
-                            src={`/portfolio/chains/${value}.png`}
+                            src={`/portfolio/chains/${value.toLowerCase()}.png`}
                             key={value}
                             value={value}
                           >
