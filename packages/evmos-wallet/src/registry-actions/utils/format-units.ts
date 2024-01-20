@@ -1,7 +1,10 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 export function formatUnits(
   value: bigint,
   tokenDecimals: number,
-  mode: "short" | "long" | number = "short"
+  mode: "short" | "long" | number = "short",
 ) {
   let display = value.toString();
 

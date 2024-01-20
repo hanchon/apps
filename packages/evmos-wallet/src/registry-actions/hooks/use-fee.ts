@@ -52,7 +52,7 @@ export const useFee = ({
             ...token,
             amount: 1n,
           },
-        })
+        }),
       );
 
       if (err) {

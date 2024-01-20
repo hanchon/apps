@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import path from "path";
 import { TEST_ACCOUNTS } from "../utils/test-accounts";
 import { Config } from "./cosmos-config";
@@ -40,9 +43,9 @@ export const initializeChain = async (config: Config) => {
       }
 
       return JSON.parse(
-        JSON.stringify(genesis, null, 2).replace(/"stake"/g, `"${baseDenom}"`)
+        JSON.stringify(genesis, null, 2).replace(/"stake"/g, `"${baseDenom}"`),
       ) as Genesis;
-    }
+    },
   );
 
   logger.info(`Updating configuration files`);

@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { test as base, chromium, type BrowserContext } from "@playwright/test";
 import { Keplr } from "../utils/keplr/keplr-controller";
 import { downloadRelease } from "../utils/keplr/download-release";
@@ -12,12 +15,7 @@ const makeKeplr = async (context: BrowserContext, extensionId: string) => {
 };
 const workerIndex = process.env.TEST_WORKER_INDEX || "0";
 
-const sessionPath = path.resolve(
-  tmpdir(),
-  "keplr",
-  "session",
-  workerIndex
-);
+const sessionPath = path.resolve(tmpdir(), "keplr", "session", workerIndex);
 
 const loadContext = async () => {
   const pathToExtension = await downloadRelease("v0.12.35");

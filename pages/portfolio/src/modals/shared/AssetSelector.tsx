@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import {
   AmountInput,
@@ -33,7 +36,10 @@ type Asset = {
 const tokenToUSD = (amount: bigint, price: number, decimals: number) => {
   try {
     const unformmatedUsd = Number(
-      formatUnits((amount * BigInt(~~(1000 * Number(price)))) / 1000n, decimals)
+      formatUnits(
+        (amount * BigInt(~~(1000 * Number(price)))) / 1000n,
+        decimals,
+      ),
     );
     return unformmatedUsd.toLocaleString("en-US", {
       style: "currency",
@@ -93,7 +99,7 @@ export const AssetSelector = ({
 
   const { balance, isLoading: isFetchingBalance } = useTokenBalance(
     address,
-    value.ref
+    value.ref,
   );
 
   const amountInUsd = price
@@ -161,7 +167,7 @@ export const AssetSelector = ({
             }}
           >
             <CryptoSelector.Button
-              src={`/tokens/${selectedToken?.denom}.png`}
+              src={`/tokens/${selectedToken?.denom.toLowerCase()}.png`}
               variant="black"
               data-testid="asset-selector-token-selector-button"
             >
@@ -175,7 +181,7 @@ export const AssetSelector = ({
               {tokenOptions.map((token) => {
                 return (
                   <CryptoSelector.Option
-                    src={`/tokens/${token.denom}.png`}
+                    src={`/tokens/${token.denom.toLowerCase()}.png`}
                     key={`${token.sourcePrefix}-${token.minCoinDenom}`}
                     value={token}
                     data-testid={`asset-selector-token-selector-option-${token.denom}`}
@@ -209,7 +215,7 @@ export const AssetSelector = ({
             }}
           >
             <CryptoSelector.Button
-              src={`/chains/${value.networkPrefix}.png`}
+              src={`/chain/${value.networkPrefix}.png`}
               data-testid="asset-selector-network-selector-button"
             >
               {selectedChain.name}
@@ -222,7 +228,7 @@ export const AssetSelector = ({
                 const chain = getChain(value);
                 return (
                   <CryptoSelector.Option
-                    src={`/chains/${value}.png`}
+                    src={`/chain/${value.toLowerCase()}.png`}
                     key={value}
                     value={value}
                     data-testid={`asset-selector-network-selector-option-${chain.identifier}`}

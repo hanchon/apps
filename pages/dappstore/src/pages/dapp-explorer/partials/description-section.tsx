@@ -26,7 +26,7 @@ import { EcosystemCardGrid } from "../../landing/partials/ecosystem-card-grid";
 import { DescriptionLink } from "./description-link";
 import { CLICK_SEE_MORE_BUTTON, CLICK_SOCIAL_BUTTON } from "tracker";
 import { WIDGETS } from "./widgets-index";
-import { Image } from "@evmosapps/ui-helpers/src/Image";
+import Image from "next/image";
 
 export const DescriptiondApp = async ({
   dapp,
@@ -43,7 +43,7 @@ export const DescriptiondApp = async ({
     const Widget = WIDGETS[dapp.slug];
     if (Widget) return <Widget />;
   };
-
+  const { cover } = dapp;
   return (
     <div className="space-y-8 md:space-y-12 mb-12 lg:mb-24">
       <div className="relative">
@@ -51,11 +51,19 @@ export const DescriptiondApp = async ({
           className={cn(
             "relative h-[250px] w-screen ml-[49%] -translate-x-1/2",
             // gradient overlay
-            " after:bg-gradient-to-t after:from-black/70 after:to-transparent after:absolute after:w-full after:h-full after:bottom-0"
+            " after:bg-gradient-to-t after:from-black/70 after:to-transparent after:absolute after:w-full after:h-full after:bottom-0",
           )}
         >
           <Image
-            src={dapp.cover ?? "/ecosystem/galaxy.png"}
+            {...(cover
+              ? ({
+                  src: cover.src,
+                  blurDataURL: cover.blurDataURL,
+                  placeholder: "blur",
+                } as const)
+              : {
+                  src: "/ecosystem/galaxy.png",
+                })}
             alt={dapp.name}
             fill={true}
             className="object-cover"
@@ -65,18 +73,20 @@ export const DescriptiondApp = async ({
         <header
           className={cn(
             "flex flex-col items-center -mt-24 gap-4",
-            "md:flex-row md:items-stretch lg:gap-x-8"
+            "md:flex-row md:items-stretch lg:gap-x-8",
           )}
         >
           <div
             className={cn(
               "relative shrink-0 w-32 h-32 aspect-square rounded-[2rem] overflow-hidden",
-              "md:w-36 md:h-36"
+              "md:w-36 md:h-36",
             )}
           >
             {dapp.icon && (
               <Image
-                src={dapp.icon}
+                src={dapp.icon.src}
+                blurDataURL={dapp.icon.blurDataURL}
+                placeholder="blur"
                 alt={dapp.name}
                 fill={true}
                 className="object-cover"
@@ -87,7 +97,7 @@ export const DescriptiondApp = async ({
           <div
             className={cn(
               "relative text-center gap-8 flex flex-col w-full justify-between",
-              "md:text-left"
+              "md:text-left",
             )}
           >
             <div className="flex flex-col md:flex-row items-center md:items-end space-y-2 md:space-y-0">

@@ -1,9 +1,12 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { readFile, writeFile } from "fs/promises";
 import { get } from "lodash-es";
 
 export const updateToml = async (
   tomlPath: string,
-  updates: Record<string, {}>
+  updates: Record<string, {}>,
 ) => {
   const toml = await readFile(tomlPath, "utf8");
   let path: string[] = [];

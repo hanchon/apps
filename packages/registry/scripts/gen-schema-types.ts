@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { compile } from "json-schema-to-typescript";
 import { writeFile, rm, mkdir } from "fs/promises";
 
@@ -11,13 +14,13 @@ await mkdir(autogenDir, { recursive: true });
 const genTypes = async (
   schemaUrl: string,
   entityName: string,
-  mapSchema = (schema: Record<string, unknown>) => schema
+  mapSchema = (schema: Record<string, unknown>) => schema,
 ) => {
   const schema = mapSchema(
     (await fetch(schemaUrl).then((res) => res.json())) as Record<
       string,
       unknown
-    >
+    >,
   );
   // delete $id to force the type to be named as entityName
   delete schema.$id;
@@ -35,7 +38,7 @@ await mkdir(autogenDir, { recursive: true });
 await Promise.all([
   genTypes(
     "https://raw.githubusercontent.com/evmos/chain-token-registry/main/schema.token.json",
-    "TokenEntity"
+    "TokenEntity",
   ),
   genTypes(
     "https://raw.githubusercontent.com/evmos/chain-token-registry/main/schema.chain.json",
@@ -46,12 +49,12 @@ await Promise.all([
       // So we inject this option before generating the types
       const configurationTypes = get(
         schema,
-        "properties.configurations.items.properties.configurationType.enum"
+        "properties.configurations.items.properties.configurationType.enum",
       ) as string[];
 
       configurationTypes.push("localnet");
 
       return schema;
-    }
+    },
   ),
 ]);

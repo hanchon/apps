@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import type { AppRouter } from "./router";
 import { httpBatchLink } from "@trpc/client";
 import { transformer } from "./transformer";
@@ -9,7 +12,7 @@ import { GetOptions, TRPCBaseOptions } from "./types";
 export const trpc = createTRPCReact<AppRouter>();
 
 export const useTrpcQuery = <T extends TRPCBaseOptions>(
-  cb: (t: UseQueriesProcedureRecord<AppRouter>) => GetOptions<T>
+  cb: (t: UseQueriesProcedureRecord<AppRouter>) => GetOptions<T>,
 ) => {
   return trpc.useQueries((t) => {
     try {
@@ -27,7 +30,7 @@ export const useTrpcQuery = <T extends TRPCBaseOptions>(
 };
 
 export const useTrpcSuspenseQuery = <T extends TRPCBaseOptions>(
-  cb: (t: UseQueriesProcedureRecord<AppRouter>) => GetOptions<T>
+  cb: (t: UseQueriesProcedureRecord<AppRouter>) => GetOptions<T>,
 ) => {
   return trpc.useSuspenseQueries((t) => {
     try {

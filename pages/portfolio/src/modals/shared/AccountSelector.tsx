@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import {
   getActiveProviderKey,
@@ -211,7 +214,7 @@ const NetworkSelector = ({
   return (
     <CryptoSelector value={value} onChange={onChange}>
       <CryptoSelector.Button
-        src={`/chains/${selectedChain.prefix}.png`}
+        src={`/chain/${selectedChain.prefix}.png`}
         data-testid="account-selector-network-selector-button"
       >
         {selectedChain.name}
@@ -224,7 +227,7 @@ const NetworkSelector = ({
           const chain = getChain(value);
           return (
             <CryptoSelector.Option
-              src={`/chains/${value}.png`}
+              src={`/chain/${value.toLowerCase()}.png`}
               key={value}
               value={value}
               data-testid={`account-selector-network-selector-option-${chain.identifier}`}

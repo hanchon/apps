@@ -1,6 +1,7 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+"use client";
 
 import { useAccount } from "wagmi";
 import { ConnectionRequired } from "@evmosapps/ui-helpers";
@@ -17,8 +18,8 @@ export const InstantDappContainer = ({
   dappName,
   widget,
 }: ContainerProps) => {
-  const { isDisconnected } = useAccount();
-  if (isDisconnected) {
+  const { isConnected } = useAccount();
+  if (!isConnected) {
     return (
       <ConnectionRequired bgUrl={image} dappName={dappName}>
         <ConnectButton />

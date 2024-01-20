@@ -18,7 +18,7 @@ export const IntroductionModal = ({
 }) => {
   return (
     <section className="flex flex-col space-y-3 text-gray1 h-full">
-      {icon ? icon : <EvmosRedIcon height={70} />}
+      {icon ? icon : <EvmosRedIcon className="shrink-0" />}
       <Title>{title}</Title>
       <Description>{description}</Description>
       <div className="flex flex-col space-y-2 text-xxs h-full justify-end">

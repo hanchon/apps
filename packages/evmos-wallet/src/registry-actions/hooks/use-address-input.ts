@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import {
   useState,
@@ -66,7 +69,7 @@ export const useAddressInput = (
   initialAddress: string = "",
   config: {
     allowedPrefixes?: string[];
-  } = {}
+  } = {},
 ) => {
   const { allowedPrefixes = [...getPrefixes()] as string[] } = config;
   const [value, setValue] = useState(initialAddress);

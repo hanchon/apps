@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import {
   useEffect,
@@ -92,7 +95,7 @@ function Provider({ children }: WalletProviderProps) {
         {
           walletName: connector?.name ?? "",
           address: truncateAddress(address) ?? "",
-        }
+        },
       );
     },
 
@@ -128,7 +131,7 @@ function Provider({ children }: WalletProviderProps) {
         evmosPubkey: pubkey ?? "",
         osmosisPubkey: null,
         accountName: null,
-      })
+      }),
     );
   }, [isConnected, connector, pubkey, address]);
 
@@ -142,7 +145,7 @@ function Provider({ children }: WalletProviderProps) {
     notifyError(
       WALLET_NOTIFICATIONS.ErrorTitle,
       WALLET_NOTIFICATIONS.PubkeySubtext,
-      { walletName: variables?.connector?.name ?? "" }
+      { walletName: variables?.connector?.name ?? "" },
     );
   }, [isFetching]);
   return (

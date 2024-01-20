@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import Image from "next/image";
 import React from "react";
 import { formatUnits } from "@evmosapps/evmos-wallet/src/registry-actions/utils";
@@ -49,7 +52,7 @@ export const TransferSummary = ({
         <div className="flex flex-col space-y-2 items-center">
           <Image
             className="h-10 w-10 md:h-12 md:w-12 bg-white rounded-full"
-            src={`/chains/${senderChain.prefix}.png`}
+            src={`/chain/${senderChain.prefix}.png`}
             width={48}
             height={48}
             alt={senderChain.name}
@@ -63,7 +66,7 @@ export const TransferSummary = ({
         <h3 className="text-xxs md:text-xs flex justify-center items-center gap-x-2 text-white">
           <Image
             className="h-4 w-4 md:h-6 md:w-6 rounded-full"
-            src={`/tokens/${denom}.png`}
+            src={`/tokens/${denom.toLowerCase()}.png`}
             width={18}
             height={18}
             alt={name}
@@ -91,7 +94,7 @@ export const TransferSummary = ({
         <div className="flex flex-col space-y-2 items-center">
           <Image
             className="h-10 w-10 md:h-12 md:w-12 bg-white rounded-full"
-            src={`/chains/${receiverChain.prefix}.png`}
+            src={`/chain/${receiverChain.prefix}.png`}
             width={48}
             height={48}
             alt={receiverChain.name}

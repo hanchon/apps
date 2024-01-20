@@ -28,11 +28,11 @@ export const useAssets = () => {
     t.legacy.erc20ModuleBalance({
       address,
       chainRef,
-    })
+    }),
   );
   const balance = useMemo(
     () => assets.data?.balance ?? [],
-    [assets.data?.balance]
+    [assets.data?.balance],
   );
 
   const getAssetsForMissionControl = useMemo(() => {
@@ -76,15 +76,15 @@ export const useAssets = () => {
             amountToDollars(
               BigNumber.from(item.cosmosBalance),
               Number(item.decimals),
-              Number(item.coingeckoPrice)
-            )
+              Number(item.coingeckoPrice),
+            ),
           ) +
           parseFloat(
             amountToDollars(
               BigNumber.from(item.erc20Balance),
               Number(item.decimals),
-              Number(item.coingeckoPrice)
-            )
+              Number(item.coingeckoPrice),
+            ),
           );
       }
     });
@@ -122,7 +122,7 @@ export const useAssets = () => {
     const evmosData = balance.filter((i) => i.symbol.toLowerCase() === "evmos");
 
     total = BigNumber.from(evmosData[0]?.cosmosBalance).add(
-      BigNumber.from(evmosData[0]?.erc20Balance)
+      BigNumber.from(evmosData[0]?.erc20Balance),
     );
 
     return total;

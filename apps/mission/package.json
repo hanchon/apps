@@ -48,6 +48,7 @@
   ],
   "dependencies": {
     "@evmosapps/evmos-wallet": "workspace:*",
+    "@google-cloud/storage": "^7.7.0",
     "@playwright/test": "^1.40.1",
     "@trpc/react-query": "11.0.0-next-beta.204",
     "accept-language": "^3.0.18",

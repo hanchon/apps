@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import { modalLink, useModal } from "helpers";
 import { Modal } from "@evmosapps/ui-helpers";
@@ -14,7 +17,7 @@ export const useSetupCopilotModal = () =>
 
 export const SetupAccountModalTrigger = modalLink(
   "setup-copilot",
-  setupAccountModalSchema
+  setupAccountModalSchema,
 );
 
 const SetupAccountModalContent = withClosePrompt(
@@ -22,7 +25,7 @@ const SetupAccountModalContent = withClosePrompt(
     props: ModalProps & {
       onStepChange: (step: string) => void;
       initialStepId?: string;
-    }
+    },
   ) => {
     const { isOpen, initialStepId, onStepChange, ...rest } = props;
     return (
@@ -37,7 +40,7 @@ const SetupAccountModalContent = withClosePrompt(
         </Modal.Body>
       </Modal>
     );
-  }
+  },
 );
 export const SetupAccountModal = () => {
   const { isOpen, setIsOpen, modalProps } = useSetupCopilotModal();

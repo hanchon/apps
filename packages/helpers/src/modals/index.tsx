@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import qs, { ParsedUrlQueryInput } from "querystring";
 import { useMemo, SetStateAction, useEffect, useRef } from "react";
@@ -41,7 +44,7 @@ const usePrevious = <T,>(value: T) => {
  */
 export const useModal = <T extends z.AnyZodObject>(
   id: string,
-  schema: T = z.object({}) as T
+  schema: T = z.object({}) as T,
 ) => {
   const safeParse: T["safeParse"] = useEffectEvent(schema.safeParse);
   const { push, replace } = useRouter();
@@ -83,7 +86,7 @@ export const useModal = <T extends z.AnyZodObject>(
     (
       open: SetStateAction<boolean>,
       initialState: z.output<T> = {},
-      redirectBack = false
+      redirectBack = false,
     ) => {
       const nextOpenState = typeof open === "function" ? open(isOpen) : open;
       if (nextOpenState === isOpen) return;
@@ -112,7 +115,7 @@ export const useModal = <T extends z.AnyZodObject>(
         return;
       }
       push(url.toString(), { scroll: false });
-    }
+    },
   );
 
   if (query.action !== id || !state) {
@@ -146,7 +149,7 @@ type ModalLinkProps<T extends z.AnyZodObject> = {
 };
 export const modalLink = <T extends z.AnyZodObject>(
   id: string,
-  schema: T = z.object({}) as T
+  schema: T = z.object({}) as T,
 ) =>
   function ModalLink({ initialState, children }: ModalLinkProps<T>) {
     const { push } = useRouter();

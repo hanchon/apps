@@ -1,10 +1,13 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { TokenRef } from "@evmosapps/evmos-wallet/src/registry-actions/types";
 import { sortedChains } from "./sortedChains";
 import { getTokenByRef } from "@evmosapps/evmos-wallet/src/registry-actions/get-token-by-ref";
 
 export const getTokenValidDestinations = (
   tokenRef: TokenRef,
-  network: string
+  network: string,
 ): string[] => {
   // If asset is being held on an EVMOS ACCOUNT
   if (network === "evmos") {

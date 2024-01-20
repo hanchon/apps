@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { getChainClient } from "../utils/get-chain-client";
 import { Config } from "./cosmos-config";
 
@@ -7,7 +10,7 @@ export const addGenesisAccountsFromList = async (
     key: string;
     initialBalance: bigint;
     mnemonic: string;
-  }[]
+  }[],
 ) => {
   const client = await getChainClient(config);
 
@@ -32,7 +35,7 @@ export const addGenesisAccountsFromList = async (
         "--home",
         config.homeDir,
       ],
-      account.mnemonic
+      account.mnemonic,
     ).exited;
     const parsedAccount = JSON.parse(registeredAccount) as {
       address: string;

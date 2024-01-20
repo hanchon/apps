@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import { ConvertModalProps } from "./ConvertModal";
 import { RxArrowDown } from "react-icons/rx";
@@ -36,7 +39,7 @@ const Card = ({ className, ...rest }: ComponentProps<"div">) => {
     <div
       className={cn(
         "bg-white flex-col flex items-start rounded-lg p-3 shadow",
-        className
+        className,
       )}
       {...rest}
     />
@@ -58,7 +61,7 @@ const ERC20Balance = ({
   hideSymbol?: boolean;
 } & ComponentProps<"span">) => {
   const { data } = useSuspenseQuery(
-    tokenBalanceQueryOptions({ address, token, tokenType })
+    tokenBalanceQueryOptions({ address, token, tokenType }),
   );
   return (
     <span {...rest}>
@@ -83,7 +86,7 @@ const TokenAmountInput = ({
       address,
       token,
       tokenType,
-    })
+    }),
   );
   return (
     <>
@@ -153,7 +156,7 @@ export const ConvertModalContent = ({
       address,
       token: "evmos:EVMOS",
       tokenType: "ICS20",
-    })
+    }),
   );
 
   const hasFundsForFees = feeBalance && feeBalance?.value >= GAS;

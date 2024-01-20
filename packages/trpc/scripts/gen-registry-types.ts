@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { ensureKeys } from "helpers/src/dotenv";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
@@ -10,7 +13,7 @@ ensureKeys(["GITHUB_TOKEN"]);
 
 export const autogenDir = path.join(
   fileURLToPath(import.meta.url),
-  "../../autogen"
+  "../../autogen",
 );
 
 const types: string[] = [`/* eslint-disable */`];
@@ -19,7 +22,7 @@ const genUnion = (name: string, union: string[]) => {
   types.push(
     `export type ${name} = ${union
       .map((value) => JSON.stringify(value))
-      .join("\n  | ")};\n`
+      .join("\n  | ")};\n`,
   );
 };
 

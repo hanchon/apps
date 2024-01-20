@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { unstable_cache } from "next/cache";
 import { serialize, deserialize } from "superjson";
 
@@ -10,7 +13,7 @@ const cacheBypass: typeof unstable_cache = (fn) => {
 };
 
 const isNext = ["development", "test", "production"].includes(
-  process.env.NODE_ENV
+  process.env.NODE_ENV,
 );
 
 type Callback = (...args: any[]) => Promise<unknown>;
@@ -21,7 +24,7 @@ export function _cache<T extends Callback>(
   options?: {
     revalidate?: number | false;
     tags?: string[];
-  }
+  },
 ): T {
   const cachedFn = unstable_cache(
     async (...args: unknown[]) => {
@@ -29,7 +32,7 @@ export function _cache<T extends Callback>(
       return serialize(res);
     },
     [cb.toString(), ...keyParts],
-    options
+    options,
   );
 
   return (async (...args: unknown[]) => {

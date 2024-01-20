@@ -1,6 +1,9 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+"use client";
+
+// import { convertFromAtto } from "helpers";
 
 import { useTranslation } from "@evmosapps/i18n/client";
 import { useStakingInfo } from "@evmosapps/evmos-wallet/src/api/useStake";

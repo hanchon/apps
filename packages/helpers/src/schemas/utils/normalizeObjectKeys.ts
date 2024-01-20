@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { camelCase } from "lodash-es";
 
 type CamelCase<S extends string> =
@@ -14,8 +17,8 @@ const { entries, fromEntries } = Object;
 const normalizeKey = <T extends string>(key: T) =>
   camelCase(key.toLowerCase()) as CamelCase<T>;
 export const normalizeObjectKeys = <T extends Record<string, unknown>>(
-  obj: T
+  obj: T,
 ) =>
   fromEntries(
-    entries(obj).map(([key, value]) => [normalizeKey(key), value])
+    entries(obj).map(([key, value]) => [normalizeKey(key), value]),
   ) as KeysToCamelCase<T>;

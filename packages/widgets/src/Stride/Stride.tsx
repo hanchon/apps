@@ -1,6 +1,7 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+"use client";
 
 import {
   Button,
@@ -39,6 +40,7 @@ const StrideWidget = () => {
     symbol: "EVMOS",
   });
   const [showBalanceLink, setShowBalanceLink] = useState(false);
+  const [stakedAmount, setStakedAmount] = useState<number>(0);
 
   const {
     liquidStake,
@@ -69,10 +71,11 @@ const StrideWidget = () => {
           ? parseFloat(formatUnits(BigInt(balance ?? "0"), 18))
           : 0,
         priceDisplayAmount:
-          parseFloat(evmosPrice === "--" ? "0" : evmosPrice) ?? 0,
+          parseFloat(evmosPrice === "--" ? "0" : evmosPrice) * stakedAmount ??
+          0,
       };
     });
-  }, [balance, evmosPrice]);
+  }, [balance, evmosPrice, stakedAmount]);
 
   const [reward, setReward] = useState<LiquidStakingProps["reward"]>({
     imgSrc:
@@ -83,7 +86,6 @@ const StrideWidget = () => {
     symbol: "stEVMOS",
   });
 
-  const [stakedAmount, setStakedAmount] = useState<number>(0);
   return (
     <div id="" className={`${themeClass}`}>
       <LiquidStaking
@@ -92,7 +94,7 @@ const StrideWidget = () => {
         reward={reward}
         stakeToken={evmosOption}
         bottomLink={{
-          href: "https://cosmology.tech/",
+          href: "https://docs.stride.zone/docs/getting-started",
           label: "Learn more",
         }}
         // Not required if you use custom renderSubmitButton prop
@@ -137,14 +139,12 @@ const StrideWidget = () => {
           }
           setStakedAmount(payloadStakedAmount);
           setReward((prevReward) => {
-            // This is just mock reward calculation
-
             const ra = payloadStakedAmount / redemptionRate;
             const pda = parseFloat(evmosPrice ?? 0) * redemptionRate;
             return {
               ...prevReward,
               rewardAmount: ra,
-              priceDisplayAmount: pda,
+              priceDisplayAmount: ra * pda,
             };
           });
         }}

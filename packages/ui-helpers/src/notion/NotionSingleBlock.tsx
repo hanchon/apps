@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { get } from "lodash-es";
 import type {
   BlockObjectResponse,
@@ -22,14 +25,14 @@ export const NotionSingleBlock = ({
   const richText = get(
     block,
     `${block.type}.rich_text`,
-    []
+    [],
   ) as Array<RichTextItemResponse>;
   const tag = BlockTypeToTagMap[block.type as keyof typeof BlockTypeToTagMap];
   if (tag)
     return React.createElement(
       tag,
       {},
-      richText.map((richText, i) => <RichText key={i} {...richText} />)
+      richText.map((richText, i) => <RichText key={i} {...richText} />),
     );
 
   if (block.type === "image") {

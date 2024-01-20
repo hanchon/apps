@@ -52,7 +52,7 @@ export const SubRowContent = ({
         setIsOpen={setIsOpen}
         isIBCBalance={isIBCBalance}
         feeBalance={feeBalance}
-      />
+      />,
     );
   };
 
@@ -69,7 +69,7 @@ export const SubRowContent = ({
           feeBalance={feeBalance}
           address={wallet?.evmosAddressCosmosFormat}
           setIsOpen={setIsOpen}
-        />
+        />,
       );
     } else {
       dispatch(snackWarningLedger());

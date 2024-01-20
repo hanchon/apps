@@ -18,7 +18,7 @@ export const useStakingInfo = () => {
     t.legacy.stakingInfo({
       address: address ?? raise("Address not found"),
       chainRef,
-    })
+    }),
   );
 
   const totalDelegations = useMemo(() => {

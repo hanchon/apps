@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import path from "path";
 import { rm } from "fs/promises";
 
@@ -20,7 +23,7 @@ const killPreviousProcess = async (config: Config) => {
 export const createNetwork = async (
   configParameters: Omit<Parameters<typeof createConfig>[0], "executable"> & {
     customizeGenesis?: (genesis: Genesis) => Genesis;
-  }
+  },
 ) => {
   const { overwrite, customizeGenesis, chainName } = configParameters;
 
@@ -45,7 +48,7 @@ export const createNetwork = async (
     if (customizeGenesis) {
       await updateJson<Genesis>(
         path.join(config.homeDir, "config/genesis.json"),
-        customizeGenesis
+        customizeGenesis,
       );
     }
   }

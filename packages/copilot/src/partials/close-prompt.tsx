@@ -1,6 +1,7 @@
-"use client";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+"use client";
 
 import { AlertIcon } from "@evmosapps/icons/AlertIcon";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -22,7 +23,7 @@ export const useClosePrompt = () => {
   );
 };
 export const withClosePrompt = <T extends ModalProps>(
-  Component: (props: T) => React.ReactElement
+  Component: (props: T) => React.ReactElement,
 ) => {
   return function ClosePrompt(props: T) {
     const { t } = useTranslation("copilot");

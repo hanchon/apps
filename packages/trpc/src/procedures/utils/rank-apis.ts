@@ -1,11 +1,14 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { ensureError } from "helpers/src/error-handling/normalizeError";
 
 export const rankApis = async <T>(
   urls: string[],
   runTest: (
     url: string,
-    time: <B>(cb: () => Promise<B>) => Promise<B>
-  ) => Promise<T>
+    time: <B>(cb: () => Promise<B>) => Promise<B>,
+  ) => Promise<T>,
 ) => {
   const results = await Promise.all(
     urls.map(async (url) => {
@@ -35,7 +38,7 @@ export const rankApis = async <T>(
           response: null,
         };
       }
-    })
+    }),
   );
   return results.sort((a, b) => {
     if (a.responseTime === null) {

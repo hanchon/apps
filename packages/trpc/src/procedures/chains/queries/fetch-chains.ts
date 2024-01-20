@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use server";
 
 import { fetchChainRegistryDirJsonFiles } from "@evmosapps/registry/src/fetch-chain-registry-dir-json-files";
@@ -37,7 +40,7 @@ export const fetchChains = nextCache(
     const fromExtensions = loadRegistryChainExtensions();
 
     const all = (await Promise.all([fromRegistry, fromExtensions])).flatMap(
-      (x) => x
+      (x) => x,
     );
     const flattened = all.flatMap(({ configurations, ...chain }) =>
       configurations.map(({ identifier, ...configuration }) => ({
@@ -45,7 +48,7 @@ export const fetchChains = nextCache(
         ...configuration,
         ref: identifier,
         ...(identifier === "evmos" ? EVMOS_OVERWRITES : {}),
-      }))
+      })),
     );
 
     //  sanity check
@@ -57,5 +60,5 @@ export const fetchChains = nextCache(
   ["fetchChains"],
   {
     revalidate: seconds("1d"),
-  }
+  },
 );

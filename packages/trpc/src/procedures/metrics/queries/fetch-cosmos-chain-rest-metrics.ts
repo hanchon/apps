@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { fetchChainByRef } from "../../chains/queries/chain-by-ref/fetch-chain-by-ref";
 import { cosmos } from "helpers/src/clients/cosmos";
 import { assert } from "helpers";
@@ -20,7 +23,7 @@ export const fetchChainCosmosRestMetrics = nextCache(
             baseUrl: url,
           }).GET("/cosmos/bank/v1beta1/supply", {
             signal,
-          })
+          }),
         );
         if (resp.response.status >= 200 && resp.response.status < 300) {
           return { height: Infinity };
@@ -31,7 +34,7 @@ export const fetchChainCosmosRestMetrics = nextCache(
           baseUrl: url,
         }).GET("/cosmos/base/tendermint/v1beta1/blocks/latest", {
           signal,
-        })
+        }),
       );
       const height = resp.data?.block?.header?.height ?? null;
       if (height === null) {
@@ -48,5 +51,5 @@ export const fetchChainCosmosRestMetrics = nextCache(
   {
     revalidate: seconds("10m"),
     tags: ["api-metrics", "cosmos-rest-metrics"],
-  }
+  },
 );

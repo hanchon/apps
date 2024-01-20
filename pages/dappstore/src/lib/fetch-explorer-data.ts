@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { cache } from "react";
 
 import { fetchDapps } from "./fetch-dapps";
@@ -8,7 +11,7 @@ export const fetchExplorerData = cache(async () => {
   const categoriesMap = await fetchCategories();
   const dappsMap = await fetchDapps();
 
-  const dApps = [...dappsMap.values()].map((projectEntry) => {
+  const dApps = Object.values(dappsMap).map((projectEntry) => {
     const { name, slug, categories, ...rest } = projectEntry;
     const dappCategories = categories.flatMap((categoryId) => {
       const category = categoriesMap.get(categoryId);
@@ -34,7 +37,7 @@ export const fetchExplorerData = cache(async () => {
       const { projects, ...rest } = category;
       return {
         categoryDapps: projects.flatMap((projectId) => {
-          const projectEntry = dappsMap.get(projectId);
+          const projectEntry = dappsMap[projectId];
           if (!projectEntry) return [];
           return [projectEntry.slug];
         }),

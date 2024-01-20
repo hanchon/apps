@@ -4,6 +4,15 @@
 import { withEvmosConfig } from "@evmosapps/config/next/with-config.js";
 
 export default withEvmosConfig({
+  redirects: async () => {
+    return [
+      {
+        source: "/assets",
+        destination: "/portfolio",
+        permanent: false,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

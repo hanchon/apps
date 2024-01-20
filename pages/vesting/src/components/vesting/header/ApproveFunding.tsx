@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { useState } from "react";
 import { useVestingPrecompile } from "../../../internal/useVestingPrecompile";
 import { useDispatch } from "react-redux";
@@ -33,10 +36,10 @@ export default function ApproveFunding({ onClose }: { onClose: () => void }) {
             type: SNACKBAR_CONTENT_TYPES.LINK,
             title: BROADCASTED_NOTIFICATIONS.SuccessTitle,
             hash,
-            explorerTxUrl: `${EXPLORER_URL}/tx/`,
+            explorerTxUrl: `${EXPLORER_URL}/tx`,
           },
           type: SNACKBAR_TYPES.SUCCESS,
-        })
+        }),
       );
       setIsLoading(false);
       onClose();
@@ -50,7 +53,7 @@ export default function ApproveFunding({ onClose }: { onClose: () => void }) {
             title: GENERATING_TX_NOTIFICATIONS.ErrorGeneratingTx,
           },
           type: SNACKBAR_TYPES.ERROR,
-        })
+        }),
       );
     }
   }

@@ -1,6 +1,7 @@
-"use server";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+"use server";
 
 import { Badge, TrackerEvent } from "@evmosapps/ui-helpers";
 
@@ -10,7 +11,8 @@ import { Link } from "@evmosapps/i18n/client";
 import { UpRightArrowIcon } from "@evmosapps/icons/UpRightArrowIcon";
 import { DApp } from "../../../lib/fetch-explorer-data";
 
-import { Image } from "@evmosapps/ui-helpers/src/Image";
+import Image from "next/image";
+
 export const EcosystemCard = ({ data }: { data: DApp }) => {
   const img = data.thumbnail;
 
@@ -32,7 +34,9 @@ export const EcosystemCard = ({ data }: { data: DApp }) => {
         <div className="relative aspect-[3/2] w-full bg-white/5 overflow-hidden">
           {img && (
             <Image
-              src={img}
+              src={img.src}
+              blurDataURL={img.blurDataURL}
+              placeholder="blur"
               className="object-cover"
               alt={data.name}
               fill={true}

@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { evmosConfig } from "../initializers";
 import { createCommand } from "@commander-js/extra-typings";
 import { readAccounts } from "../utils/add-account";
@@ -9,7 +12,7 @@ import { getChainClient } from "../utils/get-chain-client";
 const fundEvmosAccount = async (
   config: Config,
   accountKeyOrAddress: string,
-  amount: string
+  amount: string,
 ) => {
   const accounts = await readAccounts();
   const address = accountKeyOrAddress.startsWith("evmos1")
@@ -39,7 +42,7 @@ const fundEvmosAccount = async (
   Log().info(response);
 };
 export const fundProgram = createCommand("fund").description(
-  "Fund an account with tokens"
+  "Fund an account with tokens",
 );
 fundProgram
   .command("evmos <accountKeyOrAddress> <amount>")
@@ -47,6 +50,6 @@ fundProgram
     await fundEvmosAccount(
       createConfig(evmosConfig),
       accountKeyOrAddress,
-      amount
+      amount,
     );
   });

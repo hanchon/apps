@@ -12,7 +12,7 @@ import { BalanceResponse } from "./types";
 
 export async function fetchWithTimeout(
   resource: string,
-  options: RequestInit & { timeout?: number } = {}
+  options: RequestInit & { timeout?: number } = {},
 ) {
   const { timeout = 6 * 1000 } = options;
   const abortController = new AbortController();

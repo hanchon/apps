@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { BannerMessages } from "@evmosapps/ui-helpers";
 import { useCallback, useState } from "react";
 import { ClawbackModal } from "./modal/ClawbackModal";
@@ -32,7 +35,7 @@ export const AccountDetails = ({ account = "" }: { account?: string }) => {
       return <BannerMessages text={vestingDetails} />;
     }
     const accountName = getVestingAccountNameLocalstorage(
-      vestingDetails.accountAddress
+      vestingDetails.accountAddress,
     );
 
     return (

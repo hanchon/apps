@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { useTranslation } from "@evmosapps/i18n/client";
 import { IconContainer, Modal, PrimaryButton } from "@evmosapps/ui-helpers";
 import useWindowSize from "react-use/lib/useWindowSize";
@@ -29,7 +32,7 @@ export const SetupAccountSuccesStep = () => {
             h: 3000,
           }}
         />,
-        document.body
+        document.body,
       )}
       <div className="flex items-center justify-center ">
         <IconContainer type="BIG_CONFETTI" />

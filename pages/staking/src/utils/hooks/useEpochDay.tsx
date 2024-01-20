@@ -15,7 +15,7 @@ export const useEpochDay = () => {
         .then(({ data }) => {
           return Date.parse(
             data?.epochs?.find(({ identifier }) => identifier === "day")
-              ?.current_epoch_start_time ?? ""
+              ?.current_epoch_start_time ?? "",
           );
         }),
   });

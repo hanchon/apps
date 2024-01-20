@@ -10,7 +10,7 @@ export async function GET(
       chainId: string;
       route: string[];
     };
-  }
+  },
 ) {
   const { preferred } = await fetchPreferredCosmosRestUrl(chainId);
   const url = new URL(preferred);

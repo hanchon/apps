@@ -1,6 +1,7 @@
-"use server";
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+"use server";
 
 import { fetchExplorerData } from "../../lib/fetch-explorer-data";
 import { sortApps } from "../../lib/sort/sort-dapps";
@@ -57,8 +58,8 @@ export const DappExplorerPage = async ({
           ...categories.map((category) =>
             pick(
               category,
-              keys(instantDappCategory) as (keyof typeof instantDappCategory)[]
-            )
+              keys(instantDappCategory) as (keyof typeof instantDappCategory)[],
+            ),
           ),
         ]}
         params={params}

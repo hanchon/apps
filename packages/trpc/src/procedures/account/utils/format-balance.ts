@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { fetchTokenPrices } from "../../tokens/queries/price/fetch-token-prices";
 import { omit } from "lodash-es";
 import { raise } from "helpers";

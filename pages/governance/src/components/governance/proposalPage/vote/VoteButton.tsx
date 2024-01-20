@@ -63,7 +63,7 @@ const VoteButton = ({ voteProps }: { voteProps: VoteProps }) => {
               {getReservedForFeeText(
                 BigNumber.from(FEE_VOTE),
                 EVMOS_SYMBOL,
-                EVMOS_SYMBOL
+                EVMOS_SYMBOL,
               )}
             </p>
             {isSmallBalance && (

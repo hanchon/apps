@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 export function max(a: bigint, b: bigint): bigint;
 export function max(a: number, b: number): number;
 export function max(a: number | bigint, b: number | bigint): number | bigint {
@@ -15,7 +18,7 @@ export function clamp(value: number, min: number, max: number): number;
 export function clamp(
   value: number | bigint,
   start: number | bigint,
-  end: number | bigint | null = Infinity
+  end: number | bigint | null = Infinity,
 ): number | bigint {
   if (end === null || end === Infinity || typeof end === "undefined")
     return max(value as never, start as never);
@@ -33,7 +36,7 @@ export function clamp(
 export function multiply(
   a: bigint,
   b: bigint | number | string,
-  precision = 18
+  precision = 18,
 ) {
   try {
     return a * BigInt(b);

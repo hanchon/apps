@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { fetchExplorerData } from "@evmosapps/dappstore-page/src/lib/fetch-explorer-data";
 import { raise } from "helpers";
 
@@ -20,6 +23,7 @@ export async function generateMetadata({
   params: { dapp: string };
 }) {
   const { dApps } = await fetchExplorerData();
+
   const dapp =
     dApps.find((c) => c.slug === params.dapp) ?? raise("DApp not found");
 

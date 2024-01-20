@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 "use client";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { TopupEntryStep, TopupFundStep } from "../topup/steps";
@@ -36,7 +39,7 @@ const SetupSteps = () => {
               "text-lightGrey flex items-center gap-x-2 text-sm font-medium",
               {
                 "text-red-300 ": active,
-              }
+              },
             )}
             key={label}
           >

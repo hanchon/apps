@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import "../../globals.css";
 import { dir } from "i18next";
 import { type PropsWithChildren } from "react";
@@ -66,17 +69,15 @@ function RootLayout({
           evmos.variable,
           poppins.variable,
           inter.variable,
-          "h-full"
+          "h-full",
         )}
       >
         <RootProviders>
           <main className="flex flex-col dark:text-white min-h-screen relative">
+            <StatefulBanner />
             <Header />
 
-            <Container className="grow">
-              <StatefulBanner />
-              {children}
-            </Container>
+            <Container className="grow">{children}</Container>
             <Footer />
           </main>
 
