@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { Page } from "@playwright/test";
 
 export const acceptTOS = async (page: Page) => {
@@ -10,18 +13,8 @@ export const acceptTOS = async (page: Page) => {
     return;
   }
 
-  await page
-    .locator("div")
-    .filter({ hasText: /^I acknowledge to the Terms of Service\.$/ })
-    .getByRole("checkbox")
-    .check();
-  await page
-    .locator("div")
-    .filter({
-      hasText: /^I want to share usage data\. More information\.$/,
-    })
-    .getByRole("checkbox")
-    .check();
-  await page.getByRole("button", { name: "Accept", exact: true }).click();
-  await page.getByRole("button", { name: /accept and proceed/i }).click();
+  await page.waitForURL(/.+\?action=tos/g);
+  await page.getByTestId("accept-tos-checkbox").check();
+  await page.getByTestId("consent-checkbox").check();
+  await page.getByTestId("accept-tos-button").click();
 };

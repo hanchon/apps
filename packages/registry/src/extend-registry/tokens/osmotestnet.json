@@ -1,0 +1,26 @@
+{
+  "$schema": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/schema.token.json",
+  "coinDenom": "testOSMO",
+  "minCoinDenom": "uosmo",
+  "type": "IBC",
+  "exponent": "6",
+  "cosmosDenom": "ibc/2FBDAF744D3750564479C8E014CCD9522D59A264288E79644D139AE3203A9A71",
+  "description": "The native token of Osmosis",
+  "name": "Osmosis",
+  "tokenRepresentation": "OSMO",
+  "channel": "channel-0",
+  "isEnabled": true,
+  "erc20Address": "0x3452e23F9c4cC62c70B7ADAd699B264AF3549C19",
+  "ibc": {
+    "sourceDenom": "uosmo",
+    "source": "osmosistestnet"
+  },
+  "hideFromTestnet": false,
+  "coingeckoId": "osmosis",
+  "category": "cosmos",
+  "coinSourcePrefix": "osmo",
+  "img": {
+    "png": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/assets/tokens/OSMO.png",
+    "svg": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/assets/tokens/OSMO.svg"
+  }
+}

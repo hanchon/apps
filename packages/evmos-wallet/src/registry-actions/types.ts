@@ -1,23 +1,18 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { chains } from "@evmosapps/registry";
-import { CosmosAddress } from "../wallet";
+import { CosmosAddress } from "helpers/src/crypto/addresses/types";
 
 export type Chain = (typeof chains)[keyof typeof chains];
 export type Prefix = Chain["prefix"];
 export type Token = Chain["tokens"][number];
-export type TokenDenom = Token["denom"];
+type TokenDenom = Token["denom"];
 export type TokenMinDenom = Token["minCoinDenom"];
 
 export type TokenRef = Token["ref"];
 export type TokenByRef = Readonly<{
   [K in TokenRef]: Readonly<Extract<Token, { ref: K }>>;
-}>;
-
-export type TokenByDenom = Readonly<{
-  [K in TokenDenom]: Readonly<Extract<Token, { denom: K }>>;
-}>;
-
-export type TokenByMinDenom = Readonly<{
-  [K in TokenMinDenom]: Readonly<Extract<Token, { minCoinDenom: K }>>;
 }>;
 
 export type TokenAmount = {
@@ -53,7 +48,7 @@ export type FormattedBalance = {
   symbol: Token["symbol"];
   tokenRef: TokenRef;
   denom: TokenDenom;
-  tokenSourcePrefix: Prefix;
+  tokenSourcePrefix: string;
   minDenom: string;
   /**
    * @description The balance value in bigint format at the minimum denomination

@@ -1,5 +1,7 @@
-import { Address } from "../../wallet";
-import { Prefix, Token } from "../types";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+import { Token } from "../types";
 import { getIBCChannelId } from "./get-ibc-channel-id";
 import { toIBCDenom } from "helpers";
 import { normalizeToPrefix } from "./normalize-to-prefix";
@@ -10,8 +12,8 @@ export const getIBCDenom = ({
   receiver,
   token,
 }: {
-  sender: Address<Prefix> | Prefix;
-  receiver: Address<Prefix> | Prefix;
+  sender: string;
+  receiver: string;
   token: Token;
 }) => {
   const chain = getChain(token.sourcePrefix);
@@ -25,6 +27,6 @@ export const getIBCDenom = ({
       sender,
       receiver,
     }),
-    token.sourceDenom
+    token.sourceDenom,
   );
 };

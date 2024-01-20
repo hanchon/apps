@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import path from "path";
 import { get } from "lodash-es";
 import chalk from "chalk";
@@ -57,7 +60,7 @@ export const setupRelayer = async (
     enableLogging,
   }: {
     enableLogging?: boolean;
-  } = {}
+  } = {},
 ) => {
   const hermes = await createHermes();
   const logger = createLogger({
@@ -73,7 +76,7 @@ export const setupRelayer = async (
   } catch (e) {}
 
   logger.info(
-    `Setting up relayer between ${chainA.chainName} and ${chainB.chainName}...`
+    `Setting up relayer between ${chainA.chainName} and ${chainB.chainName}...`,
   );
   if (enableLogging) logger.info(`Checking existing connections...`);
   const existingConnections = await getChannelsInfo(chainA.chainId);
@@ -84,7 +87,7 @@ export const setupRelayer = async (
         (connection.chain_id_a === chainA.chainId &&
           connection.chain_id_b === chainB.chainId) ||
         (connection.chain_id_a === chainB.chainId &&
-          connection.chain_id_b === chainA.chainId)
+          connection.chain_id_b === chainA.chainId),
     );
 
     if (enableLogging) logger.info(`Found existing connection`);
@@ -93,7 +96,7 @@ export const setupRelayer = async (
 
   logger.info(`No existing connection found. Creating a new one...`);
   logger.info(
-    `This usually takes up to 2 minutes. If it takes longer, please, restart this script.`
+    `This usually takes up to 2 minutes. If it takes longer, please, restart this script.`,
   );
 
   try {
@@ -143,7 +146,7 @@ export const setupRelayer = async (
       (connection.chain_id_a === chainA.chainId &&
         connection.chain_id_b === chainB.chainId) ||
       (connection.chain_id_a === chainB.chainId &&
-        connection.chain_id_b === chainA.chainId)
+        connection.chain_id_b === chainA.chainId),
   );
   if (!connection) {
     throw new Error(`Failed to setup relayer`);

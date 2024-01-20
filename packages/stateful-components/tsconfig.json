@@ -1,5 +1,5 @@
 {
   "extends": "@evmosapps/config/ts/react-library.json",
-  "include": [".", "../config/**/*"],
+  "include": [".", "../config/**/*", "../ui-helpers/src/Copilot.tsx"],
   "exclude": ["dist", "build", "node_modules", "../config/node_modules"]
 }

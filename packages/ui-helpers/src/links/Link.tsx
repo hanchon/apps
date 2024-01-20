@@ -21,9 +21,9 @@ export const PrimaryLink = ({
       rel="noopener noreferrer"
       className={cn(
         variant === "primary"
-          ? "text-red transition-all duration-200 ease-in-out hover:text-[#f26850] active:text-[#f0735d]"
+          ? "text-red-300 transition-all duration-200 ease-in-out hover:text-[#f26850] active:text-[#f0735d]"
           : "",
-        className
+        className,
       )}
       target="_blank"
       onClick={onClick}

@@ -1,9 +1,15 @@
-import { getNetwork, switchNetwork } from "wagmi/actions";
-import { Address } from "../../wallet";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+import { getChainId, switchChain } from "wagmi/actions";
+
 import { transfer } from "../transfers/prepare-transfer";
-import { Prefix, TokenAmount } from "../types";
+import { TokenAmount } from "../types";
 import { useMutation } from "@tanstack/react-query";
 import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
+
+import { useConfig } from "wagmi";
+import { Address } from "helpers/src/crypto/addresses/types";
 
 const evmos = getEvmosChainInfo();
 export const useTransfer = ({
@@ -12,8 +18,8 @@ export const useTransfer = ({
   token,
   fee,
 }: {
-  sender?: Address<Prefix>;
-  receiver?: Address<Prefix>;
+  sender?: Address;
+  receiver?: Address;
   token?: TokenAmount;
   fee?: {
     gasLimit: bigint;
@@ -21,15 +27,15 @@ export const useTransfer = ({
   };
 }) => {
   const isReady = sender && receiver && token && fee && token.amount > 0n;
+  const config = useConfig();
   const { mutate, ...rest } = useMutation({
     mutationFn: async () => {
       if (!isReady) {
         throw new Error("NOT_READY_TO_TRANSFER");
       }
 
-      const connectedNetwork = getNetwork();
-      if (connectedNetwork.chain?.id !== evmos.id)
-        await switchNetwork({
+      if (getChainId(config) !== evmos.id)
+        await switchChain(config, {
           chainId: evmos.id,
         });
 

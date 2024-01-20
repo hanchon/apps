@@ -1,7 +1,9 @@
-import { ZodRawShape, z } from "zod";
-import { isValidCosmosAddress } from "../../wallet/utils/addresses/is-valid-cosmos-address";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-export const PaginatedCosmosSchema = z.object({
+import { ZodRawShape, z } from "zod";
+
+const PaginatedCosmosSchema = z.object({
   pagination: z.object({
     next_key: z.string().nullable(),
     total: z.string(),
@@ -17,9 +19,3 @@ export const AmountSchema = z.object({
   denom: z.string(),
   amount: BigIntSchema,
 });
-
-export const BufferSchema = z
-  .string()
-  .transform((x) => Buffer.from(x, "base64"));
-
-export const CosmosAddressSchema = z.string().refine(isValidCosmosAddress);

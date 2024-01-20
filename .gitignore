@@ -46,4 +46,10 @@ dist/
 
 # Testnet cli files
 .testnet
+.notion-cache
+prefetched-images
 
+autogen
+.vercel
+**/autogen/**
+.vite-node

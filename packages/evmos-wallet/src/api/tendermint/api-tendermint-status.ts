@@ -1,9 +1,12 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { z } from "zod";
 import { apiTendermintFetch } from "./api-tendermint-fetch";
 import { makeJSONRPCResponseSchema } from "./validation";
 import { BigIntSchema } from "../cosmos-rest";
 
-export const TendermintStatusResponse = makeJSONRPCResponseSchema({
+const TendermintStatusResponse = makeJSONRPCResponseSchema({
   result: z.object({
     node_info: z.object({
       protocol_version: z.object({

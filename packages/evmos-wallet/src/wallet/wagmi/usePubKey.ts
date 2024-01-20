@@ -1,45 +1,55 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+"use client";
 import { useAccount } from "wagmi";
 import { hashMessage, fromHex } from "viem";
 import { EVMOS_GRPC_URL } from "../../internal/wallet/functionality/networkConfig";
 import { queryPubKey } from "../../internal/wallet/functionality/pubkey";
-import { QueryClient, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { useEffect } from "react";
 import { signatureToPubkey } from "@hanchon/signature-to-pubkey";
-import { assertIf, raise } from "helpers";
-import { keplrConnector } from "./connectors";
+import { assert, raise } from "helpers";
+
 import { getActiveProviderKey } from "../actions";
-import { normalizeToEvmos } from "../utils";
+import { getKeplrProvider } from "../utils";
 import { getAccount, signMessage } from "wagmi/actions";
+import { wagmiConfig } from "./config";
+import { getEvmosChainInfo } from "./chains";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 const recoveryMessage = "generate_pubkey";
 const hashedMessage = Buffer.from(
-  fromHex(hashMessage(recoveryMessage), "bytes")
+  fromHex(hashMessage(recoveryMessage), "bytes"),
 );
-const baseKey = "evmos/pubkey";
 
+const baseKey = "evmos/pubkey";
+const evmos = getEvmosChainInfo();
 const queryFn = async () => {
-  const { address, connector } = getAccount();
-  assertIf(address, "WALLET_ACCOUNT_NOT_AVAILABLE");
+  const { address, connector } = getAccount(wagmiConfig);
+  assert(address, "WALLET_ACCOUNT_NOT_AVAILABLE");
   let pubkey = window.localStorage.getItem([baseKey, address].join("/"));
 
   if (pubkey) return pubkey;
 
-  if (connector === keplrConnector) {
-    const pubkey = await keplrConnector.getPubkey();
-    return Buffer.from(pubkey).toString("base64");
+  if (connector?.name === "Keplr") {
+    const keplr = await getKeplrProvider();
+    const account = await keplr.getKey(evmos.cosmosId);
+
+    return Buffer.from(account.pubKey).toString("base64");
   }
 
   pubkey = await queryPubKey(
     EVMOS_GRPC_URL,
-    normalizeToEvmos(address ?? raise("WALLET_PROVIDER_NOT_AVAILABLE"))
+    normalizeToCosmos(address ?? raise("WALLET_PROVIDER_NOT_AVAILABLE")),
   );
 
   if (pubkey) return pubkey;
-  const signature = await signMessage({
+  const signature = await signMessage(wagmiConfig, {
     message: recoveryMessage,
   });
 
-  if (getActiveProviderKey() === "safe") {
+  if (getActiveProviderKey() === "Safe") {
     return "";
   }
 
@@ -49,16 +59,12 @@ const queryFn = async () => {
   raise("WALLET_DID_NOT_SIGN_PUBKEY_MESSAGE");
 };
 
-export const prefetchPubkey = async (queryClient: QueryClient) => {
-  const { address } = getAccount();
-  return queryClient.fetchQuery([baseKey, address], queryFn);
-};
 export const usePubKey = () => {
   const { address, isConnected } = useAccount();
 
   const { data, ...rest } = useQuery({
     queryKey: [baseKey, address],
-    cacheTime: Infinity,
+    gcTime: Infinity,
     staleTime: Infinity,
     retry: false,
     refetchOnWindowFocus: false,
@@ -66,7 +72,7 @@ export const usePubKey = () => {
     initialData() {
       if (typeof window === "undefined") return;
       const cachedKey = window.localStorage.getItem(
-        [baseKey, address].join("/")
+        [baseKey, address].join("/"),
       );
       if (cachedKey) return cachedKey;
     },

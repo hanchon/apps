@@ -1,11 +1,9 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { SignMode } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/signing/v1beta1/signing_pb";
-import {
-  Address,
-  getActiveProviderKey,
-  getKeplrProvider,
-  isEvmosAddress,
-} from "../../wallet";
-import { Prefix, TokenAmount } from "../types";
+import { getActiveProviderKey, getKeplrProvider } from "../../wallet";
+import { TokenAmount } from "../types";
 import {
   prepareContractERC20Transfer,
   writeContractERC20Transfer,
@@ -20,14 +18,16 @@ import {
 } from "./prepare-cosmos-ibc-transfer";
 import { prepareEvmTransfer, writeEvmTransfer } from "./prepare-evm-transfer";
 import { getChainByAddress } from "../get-chain-by-account";
+import { Address } from "helpers/src/crypto/addresses/types";
+import { isEvmosAddress } from "helpers/src/crypto/addresses/is-evmos-address";
 
 export const simulateTransfer = async ({
   sender,
   receiver,
   token,
 }: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
 }) => {
   const senderIsEvmos = isEvmosAddress(sender);
@@ -107,8 +107,8 @@ export const transfer = async ({
   token,
   fee,
 }: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
   fee?: {
     gasLimit: bigint;
@@ -143,7 +143,7 @@ export const transfer = async ({
      * Nano Ledger on keplr doesn't support sign direct mode, so we have to use legacy amino json
      */
     let mode: keyof typeof SignMode = "DIRECT";
-    if (getActiveProviderKey() === "keplr") {
+    if (getActiveProviderKey() === "Keplr") {
       const keplr = await getKeplrProvider();
       const chain = getChainByAddress(sender);
       const { isNanoLedger } = await keplr.getKey(chain.cosmosId);
@@ -151,13 +151,14 @@ export const transfer = async ({
         mode = "LEGACY_AMINO_JSON";
       }
     }
-    return await executeCosmosIBCTransfer({
+    const result = await executeCosmosIBCTransfer({
       sender,
       receiver,
       token,
       fee,
       mode,
     });
+    return result.hash;
   }
 
   throw new Error("UNSUPPORTED_TRANSFER_METHOD");

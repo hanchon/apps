@@ -1,65 +1,64 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+"use client";
+
 import { useDispatch } from "react-redux";
 import { executeRewards } from "./rewards";
 import { useCallback } from "react";
 import {
-  CLICK_CLAIM_REWARDS_TOPBAR,
-  useTracker,
+  CLICK_CLAIM_REWARDS_BUTTON,
   SUCCESSFUL_TX_CLAIM_REWARDS,
   UNSUCCESSFUL_TX_CLAIM_REWARDS,
+  sendEvent,
 } from "tracker";
 import { WalletExtension } from "../../internal/wallet/functionality/wallet";
 import { snackExecuteIBCTransfer } from "../../notification/helpers";
-import { getNetwork, switchNetwork } from "wagmi/actions";
+import { getChainId, switchChain } from "wagmi/actions";
 import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
 import { E } from "helpers";
+import { wagmiConfig } from "../../wallet";
 
+type RewardsProps = {
+  wallet: WalletExtension;
+  setConfirmClicked: (value: boolean) => void;
+};
 const evmos = getEvmosChainInfo();
 
-export const useRewards = (value: WalletExtension, totalRewards: number) => {
+export const useRewards = (rewardsProps: RewardsProps) => {
   const dispatch = useDispatch();
-  const { handlePreClickAction } = useTracker(CLICK_CLAIM_REWARDS_TOPBAR, {
-    amount: totalRewards,
-  });
-  const { handlePreClickAction: successfulTx } = useTracker(
-    SUCCESSFUL_TX_CLAIM_REWARDS
-  );
-  const { handlePreClickAction: unsuccessfulTx } = useTracker(
-    UNSUCCESSFUL_TX_CLAIM_REWARDS
-  );
+  const { wallet: value, setConfirmClicked } = rewardsProps;
   const handleConfirmButton = useCallback(async () => {
-    const connectedNetwork = getNetwork();
-    if (connectedNetwork.chain?.id !== evmos.id) {
+    if (getChainId(wagmiConfig) !== evmos.id) {
       const [err] = await E.try(() =>
-        switchNetwork({
+        switchChain(wagmiConfig, {
           chainId: evmos.id,
-        })
+        }),
       );
       if (err) return;
     }
-    handlePreClickAction({
-      wallet: value?.evmosAddressEthFormat,
-      provider: value?.extensionName,
+
+    sendEvent(CLICK_CLAIM_REWARDS_BUTTON, {
+      "User Wallet Address": value?.evmosAddressEthFormat,
+      "Wallet Provider": value?.extensionName,
     });
+
+    setConfirmClicked(true);
     const res = await executeRewards(value);
     if (res.error === true) {
-      unsuccessfulTx({
-        errorMessage: res.message,
-        wallet: value?.evmosAddressEthFormat,
-        provider: value?.extensionName,
-        transaction: "unsuccessful",
+      sendEvent(UNSUCCESSFUL_TX_CLAIM_REWARDS, {
+        "User Wallet Address": value?.evmosAddressEthFormat,
+        "Wallet Provider": value?.extensionName,
+        "Error Message": res.message,
       });
     } else {
-      successfulTx({
-        txHash: res.txHash,
-        wallet: value?.evmosAddressEthFormat,
-        provider: value?.extensionName,
-        transaction: "successful",
+      sendEvent(SUCCESSFUL_TX_CLAIM_REWARDS, {
+        "User Wallet Address": value?.evmosAddressEthFormat,
+        "Wallet Provider": value?.extensionName,
       });
     }
+    setConfirmClicked(false);
     dispatch(snackExecuteIBCTransfer(res));
-  }, [dispatch, value, handlePreClickAction, unsuccessfulTx, successfulTx]);
+  }, [dispatch, value, setConfirmClicked]);
   return { handleConfirmButton };
 };

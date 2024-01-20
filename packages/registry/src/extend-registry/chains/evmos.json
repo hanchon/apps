@@ -1,0 +1,94 @@
+{
+  "$schema": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/schema.chain.json",
+  "prefix": "evmos",
+  "gasPriceStep": {
+    "low": "10000000000",
+    "average": "25000000000",
+    "high": "40000000000"
+  },
+  "feeMarket": {
+    "gas": "350000",
+    "amount": "50000",
+    "convert": "10500000"
+  },
+  "bip44": {
+    "coinType": "60"
+  },
+  "configurations": [
+    {
+      "chainId": "evmos_9000-4",
+      "chainName": "Evmos Testnet",
+      "identifier": "evmostestnet",
+      "clientId": "",
+      "rest": [
+        "https://rest.evmos-testnet.lava.build",
+        "https://api-t.evmos.nodestake.top"
+      ],
+      "jrpc": [
+        "https://tm.evmos-testnet.lava.build",
+        "https://evmos-testnet-rpc.polkachu.com/"
+      ],
+      "web3": ["https://evmos-testnet.lava.build"],
+      "rpc": ["https://grpc.evmos-testnet.lava.build"],
+      "currencies": [
+        {
+          "coinDenom": "EVMOS",
+          "coinMinDenom": "atevmos",
+          "coinDecimals": "18"
+        }
+      ],
+      "source": {
+        "sourceChannel": "",
+        "sourceIBCDenomToEvmos": "",
+        "destinationChannel": "",
+        "jsonRPC": [""]
+      },
+      "explorer": [
+        {
+          "link": "https://mintscan.io/evmos",
+          "type": "cosmos"
+        },
+        {
+          "link": "https://evm.evmos.org",
+          "type": "evm"
+        }
+      ],
+      "configurationType": "testnet",
+      "explorerTxUrl": "https://testnet.escan.live/tx",
+      "img": {
+        "svg": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/assets/chainConfig/evmos.svg",
+        "png": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/assets/chainConfig/evmos.png"
+      }
+    },
+    {
+      "chainId": "evmoslocal_9000-10",
+      "chainName": "Evmos Local",
+      "clientId": "",
+      "configurationType": "localnet",
+      "currencies": [
+        {
+          "coinDecimals": "18",
+          "coinDenom": "aevmos",
+          "coinMinDenom": "aevmos"
+        }
+      ],
+
+      "identifier": "evmoslocalnet",
+      "rpc": ["http://localhost:26657"],
+      "rest": ["http://localhost:1317"],
+      "web3": ["http://localhost:8545"],
+
+      "source": {
+        "sourceChannel": "",
+        "sourceIBCDenomToEvmos": "",
+        "destinationChannel": "",
+        "jsonRPC": [""]
+      },
+      "explorerTxUrl": "",
+      "img": {
+        "svg": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/assets/chainConfig/evmos.svg",
+        "png": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/assets/chainConfig/evmos.png"
+      }
+    }
+  ]
+}

@@ -1,6 +1,10 @@
-import { Address, normalizeToCosmosAddress } from "../../wallet";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 import { FormattedBalance, Token } from "../types";
 import { formatUnits } from "./format-units";
+import { Address } from "helpers/src/crypto/addresses/types";
 
 export const makeBalance = (
   token: Token,
@@ -11,7 +15,7 @@ export const makeBalance = (
   const amount = BigInt(value);
 
   return {
-    address: normalizeToCosmosAddress(address),
+    address: normalizeToCosmos(address),
     decimals: token.decimals,
     formatted: formatUnits(amount, token.decimals, "short"),
     formattedLong: formatUnits(amount, token.decimals, "long"),

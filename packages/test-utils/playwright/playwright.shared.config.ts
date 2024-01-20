@@ -1,8 +1,11 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { PlaywrightTestConfig, devices } from "@playwright/test";
 
 export const createPlaywrightConfig = (
   port = 3000,
-  enableTestnet = false
+  enableTestnet = false,
 ): PlaywrightTestConfig => ({
   testDir: "./e2e",
   /* Run tests in files in parallel */

@@ -1,10 +1,11 @@
-import {
-  CheckIcon,
-  CloseBorderIcon,
-  KeplrIcon,
-  MetamaskIcon,
-  WalletConnectIcon,
-} from "icons";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+import { CheckIcon } from "@evmosapps/icons/CheckIcon";
+import { CloseBorderIcon } from "@evmosapps/icons/CloseBorderIcon";
+import { KeplrIcon } from "@evmosapps/icons/KeplrIcon";
+import { MetamaskIcon } from "@evmosapps/icons/MetamaskIcon";
+import { WalletConnectIcon } from "@evmosapps/icons/WalletConnectIcon";
 import { ComponentProps } from "react";
 import { EMOJIS, ICONS_TYPES } from "constants-helper";
 
@@ -13,7 +14,7 @@ const BIG_ICONS_STYLE =
 
 const ICONS_STYLES = {
   [ICONS_TYPES.CHECK]: {
-    style: "bg-red text-pearl flex h-4 w-4",
+    style: "bg-red-300 text-pearl flex h-4 w-4",
     icon: <CheckIcon width={"14px"} height={"14px"} color="#fff" />,
   },
   [ICONS_TYPES.CANCEL]: {
@@ -69,10 +70,10 @@ export const IconContainer = ({
 }: { type: string } & ComponentProps<"div">) => {
   return (
     <div
-      className={`${ICONS_STYLES[type].style} flex items-center justify-center rounded-full`}
+      className={`${ICONS_STYLES[type]?.style} flex items-center justify-center rounded-full`}
       {...rest}
     >
-      {ICONS_STYLES[type].icon}
+      {ICONS_STYLES[type]?.icon}
     </div>
   );
 };

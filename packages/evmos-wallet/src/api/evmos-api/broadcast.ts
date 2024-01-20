@@ -1,7 +1,9 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { z } from "zod";
 import type { createTxRaw } from "@evmos/proto";
 
-import { StdSignDoc, StdSignature } from "@keplr-wallet/types";
 import { raise } from "helpers";
 import { EVMOS_NETWORK_FOR_BACKEND } from "../../internal/wallet/functionality/networkConfig";
 import { makeApiRequester } from "../utils/makeApiRequester";
@@ -36,7 +38,7 @@ export const apiBroadcastEip712 = makeApiRequester(
       raise("BROADCAST_EIP712_FAILED");
     }
     return tx_hash;
-  })
+  }),
 );
 
 export const apiBroadcastRawTx = makeApiRequester(
@@ -50,7 +52,7 @@ export const apiBroadcastRawTx = makeApiRequester(
   }) => {
     const message = rawTx.message.serializeBinary().toString();
     return JSON.parse(
-      `{ "tx_bytes": [${message}], "network": "${network}" }`
+      `{ "tx_bytes": [${message}], "network": "${network}" }`,
     ) as {
       tx_bytes: number[];
       network: string;
@@ -61,19 +63,5 @@ export const apiBroadcastRawTx = makeApiRequester(
       raise("BROADCAST_BYTES_FAILED");
     }
     return data.tx_hash;
-  })
-);
-
-export const apiBroadcastAmino = makeApiRequester(
-  "/v2/tx/amino/broadcast",
-  (args: { signature: StdSignature; signed: StdSignDoc; network: string }) => ({
-    ...args,
-    network: args.network.toUpperCase(),
   }),
-  BroadcastResponseSchema.transform((data) => {
-    if (data.error) {
-      raise("BROADCAST_AMINO_FAILED");
-    }
-    return data.tx_hash;
-  })
 );

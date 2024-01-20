@@ -3,7 +3,7 @@
 
 import { generateEndpointAccount } from "@evmos/provider";
 import { fetchWithTimeout } from "./fetch";
-import { normalizeToEvmos } from "../../../wallet";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 declare type EndpointAccountResponse = {
   code_hash?: number;
@@ -33,7 +33,7 @@ type BaseAccount = {
 };
 
 const getBaseAccountData = async (evmosEndpoint: string, address: string) => {
-  const converted = normalizeToEvmos(address);
+  const converted = normalizeToCosmos(address);
   const get = {
     method: "GET",
     headers: { "Content-Type": "application/json" },
@@ -42,7 +42,7 @@ const getBaseAccountData = async (evmosEndpoint: string, address: string) => {
   try {
     const addr = await fetchWithTimeout(
       `${evmosEndpoint}${generateEndpointAccount(converted)}`,
-      get
+      get,
     );
     // If error 400 wallet doesn't exists
     const resp = (await addr.json()) as EndpointAccountResponse;
@@ -76,15 +76,3 @@ export async function queryPubKey(evmosEndpoint: string, address: string) {
 
   return null;
 }
-
-export const getSequence = async (evmosEndpoint: string, address: string) => {
-  if (address === "") {
-    return null;
-  }
-  const base = await getBaseAccountData(evmosEndpoint, address);
-  if (base != null) {
-    return base.sequence;
-  }
-
-  return null;
-};

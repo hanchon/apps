@@ -1,85 +1,157 @@
-import {
-  EthSignType,
-  Keplr,
-  OfflineAminoSigner,
-  OfflineDirectSigner,
-} from "@keplr-wallet/types";
-import { getPublicClient } from "wagmi/actions";
-import { Chain, Connector } from "wagmi";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { getKeplrProvider } from "../utils/keplr";
-
+import { getKeplrProvider } from "../utils";
 import { getEvmosChainInfo } from "./chains";
-import { assertIf, raise } from "helpers";
-
-import { serialize, UnsignedTransaction } from "@ethersproject/transactions";
-
+import { isUndefined, raise } from "helpers";
 import {
-  Hex,
-  TransactionRequest,
-  createWalletClient,
-  custom,
+  EIP1474Methods,
+  createPublicClient,
+  hexToSignature,
   http,
   toHex,
 } from "viem";
+import { EthSignType } from "@keplr-wallet/types";
+import { fromHex, isHex, parseAccount, serializeTransaction } from "viem/utils";
+import { omit, uniqueId } from "lodash-es";
+import { estimateFeesPerGas, estimateGas } from "viem/actions";
+import { createConnector } from "wagmi";
+import { normalizeToEth } from "helpers/src/crypto/addresses/normalize-to-eth";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
-import { isHex, parseAccount } from "viem/utils";
-import { isString } from "helpers/src/assertions";
-import { z } from "zod";
-import { evmos } from "@evmosapps/registry";
-import { normalizeToEth, normalizeToEvmos } from "../utils";
+const evmos = getEvmosChainInfo();
+type ByMethod<M extends string> = Extract<
+  EIP1474Methods[number],
+  { Method: M }
+>;
+type EIP1474ReturnType<M extends string> = ByMethod<M>["ReturnType"];
+type EIP1474Parameters<M extends string> = ByMethod<M>["Parameters"];
 
-const evmosInfo = getEvmosChainInfo();
+const eth_requestAccounts = async () => {
+  const provider = await getKeplrProvider();
+  const signer = provider.getOfflineSigner(evmos.cosmosId);
+  const [account = raise("Account not found")] = await signer.getAccounts();
+  return [normalizeToEth(account.address)] as const;
+};
 
-const TransactionRequestSchema = z
-  .object({
-    from: z.custom<Hex>(isHex),
-    to: z.custom<Hex>(isHex),
-  })
-  .passthrough();
+const wallet_requestPermissions = (
+  request: EIP1474Parameters<"wallet_requestPermissions">,
+): Promise<EIP1474ReturnType<"wallet_requestPermissions">> => {
+  return Promise.all(
+    request.map(async ({}) => ({
+      id: uniqueId("keplr"),
+      parentCapability: "eth_accounts",
 
-const prepareTransaction = async (
+      invoker: "https://wallet.keplr.app",
+
+      caveats: [
+        {
+          type: "restrictReturnedAccounts",
+          value: await eth_requestAccounts(),
+        },
+      ],
+      date: Date.now(),
+    })),
+  );
+};
+
+const eth_chainId = () => {
+  return evmos.id;
+};
+
+const signTransaction = async (
+  parameters: [string],
+  signType: EthSignType,
+): Promise<EIP1474ReturnType<"personal_sign">> => {
+  const cosmosId = evmos.cosmosId;
+
+  const [account] = await eth_requestAccounts();
+  const keplr = await getKeplrProvider();
+  const signature = await keplr.signEthereum(
+    cosmosId,
+    normalizeToCosmos(account),
+    parameters[0],
+    signType,
+  );
+
+  return toHex(signature);
+};
+const eth_signTypedData_v4 = async (
+  parameters: EIP1474Parameters<"eth_signTypedData_v4">,
+): Promise<EIP1474ReturnType<"eth_signTypedData_v4">> => {
+  const keplr = await getKeplrProvider();
+  const cosmosId = evmos.cosmosId;
+  const [account, message] = parameters;
+  const signature = await keplr.signEthereum(
+    cosmosId,
+    normalizeToCosmos(account),
+    message,
+    EthSignType.EIP712,
+  );
+
+  return toHex(signature);
+};
+
+const prepareTransactionForKeplr = async (
   chainId: number,
-  request: TransactionRequest
-): Promise<UnsignedTransaction> => {
-  const client = getPublicClient({
-    chainId,
+  request: EIP1474Parameters<"eth_sendTransaction">[0],
+) => {
+  const client = createPublicClient({
+    chain: evmos,
+    transport: http(),
   });
   const account = parseAccount(request.from);
-  const { baseFeePerGas } = await client.getBlock({
-    blockTag: "latest",
-  });
+
   const nonce =
     request.nonce ??
     (await client.getTransactionCount({
       address: account.address,
       blockTag: "pending",
     }));
-  const transaction: UnsignedTransaction = {
+
+  const transaction = {
+    from: request.from,
     data: request.data,
     to: request.to ?? undefined,
     value: request.value,
-    nonce,
+    nonce: isHex(nonce) ? fromHex(nonce, "number") : nonce,
     chainId,
   };
 
-  if (!baseFeePerGas) {
-    return transaction;
+  let maxFeePerGas = isHex(request.maxFeePerGas)
+    ? fromHex(request.maxFeePerGas, "bigint")
+    : undefined;
+  let maxPriorityFeePerGas = isHex(request.maxPriorityFeePerGas)
+    ? fromHex(request.maxPriorityFeePerGas, "bigint")
+    : undefined;
+  if (isUndefined(maxFeePerGas) || isUndefined(maxPriorityFeePerGas)) {
+    const estimate = await estimateFeesPerGas(client);
+    maxFeePerGas = estimate.maxFeePerGas;
+    maxPriorityFeePerGas = estimate.maxPriorityFeePerGas;
   }
-  // EIP-1559 fees
-  // const estimatedMaxPriorityFeePerGas =
-  //   await client.estimateMaxPriorityFeePerGas();
-  const maxPriorityFeePerGas =
-    request.maxPriorityFeePerGas ??
-    (await client.estimateMaxPriorityFeePerGas());
 
-  const maxFeePerGas = (baseFeePerGas * 120n) / 100n + maxPriorityFeePerGas;
-
+  const eip1559Request = omit(request, "gasPrice");
   const gas =
     request.gas ??
-    (await client.estimateGas({
-      ...request,
+    (await estimateGas(client, {
+      type: "eip1559",
       account: { address: account.address, type: "json-rpc" },
+      data: request.data,
+      to: request.to,
+      value: isHex(request.value)
+        ? fromHex(request.value, "bigint")
+        : undefined,
+
+      nonce: isHex(request.nonce)
+        ? fromHex(request.nonce, "number")
+        : undefined,
+
+      accessList: request.accessList,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      gas: isHex(eip1559Request.gas)
+        ? fromHex(eip1559Request.gas, "bigint")
+        : undefined,
     }));
 
   return {
@@ -91,250 +163,149 @@ const prepareTransaction = async (
   };
 };
 
-export class KeplrConnector extends Connector<Keplr, {}> {
-  readonly id = "keplr";
-  readonly name = "Keplr";
-  readonly ready = true;
-  provider: Keplr | null = null;
-  offlineSigner: (OfflineAminoSigner & OfflineDirectSigner) | null = null;
+const eth_sendTransaction = async ([
+  request,
+]: EIP1474Parameters<"eth_sendTransaction">): Promise<
+  EIP1474ReturnType<"eth_sendTransaction">
+> => {
+  const transaction = await prepareTransactionForKeplr(evmos.id, request);
+  const signature = await signTransaction(
+    [JSON.stringify(transaction)],
+    EthSignType.TRANSACTION,
+  );
 
-  /**
-   * Keplr deals with networks differently
-   * In a way you're always connected
-   * to all networks at once with your keystore wallet
-   * so we handle the active chain here, and use that to know which
-   * chain user actions should be applied to.
-   */
-  chainId: number = -1;
+  const message = serializeTransaction(
+    {
+      value: isHex(transaction.value)
+        ? fromHex(transaction.value, "bigint")
+        : undefined,
+      nonce: transaction.nonce,
+      to: transaction.to,
 
-  constructor(config: { chains?: Chain[] }) {
-    super({
-      ...config,
-      options: {},
-    });
-    this.onAccountsChanged = this.onAccountsChanged.bind(this);
+      chainId: transaction.chainId,
+      data: transaction.data,
+      type: "eip1559",
+
+      gas: fromHex(transaction.gasLimit, "bigint"),
+
+      maxFeePerGas: fromHex(transaction.maxFeePerGas, "bigint"),
+      maxPriorityFeePerGas: fromHex(transaction.maxPriorityFeePerGas, "bigint"),
+    },
+    hexToSignature(signature),
+  );
+  const client = createPublicClient({
+    chain: evmos,
+    transport: http(),
+  });
+
+  return client.request({
+    method: "eth_sendRawTransaction",
+    params: [message],
+  });
+};
+
+export const keplr = createConnector<
+  unknown,
+  {},
+  {
+    keplrConnectorStatus: "authorized";
   }
-
-  async getPubkey({ cosmosChainId }: { cosmosChainId?: string } = {}) {
-    const provider = await this.getProvider();
-    const { pubKey } = await provider.getKey(
-      cosmosChainId ?? (await this.getCosmosId())
-    );
-    return pubKey;
-  }
-  async getProvider() {
-    if (this.provider) return this.provider;
-    const provider = await getKeplrProvider();
-    provider.defaultOptions = {
-      sign: {
-        preferNoSetFee: true,
-      },
-    };
-    this.provider = provider;
-
-    return provider;
-  }
-  async getSigner() {
-    if (this.offlineSigner) return this.offlineSigner;
-    const provider = await this.getProvider();
-
-    const cosmosId = evmosInfo.cosmosId;
-
-    if (cosmosId !== evmos.cosmosId) {
-      const config =
-        (await Promise.all([
-          import("@evmosapps/registry/src/keplr/evmoslocal.json"),
-          import("@evmosapps/registry/src/keplr/evmostestnet.json"),
-        ]).then((configs) =>
-          configs.find((x) => x.default.chainId === cosmosId)
-        )) ?? raise("UNSUPPORTED_NETWORK");
-
-      await provider.experimentalSuggestChain(config.default);
-    }
-    assertIf(cosmosId, "UNSUPPORTED_NETWORK");
-
-    const signer = provider.getOfflineSigner(cosmosId);
-    this.offlineSigner = signer;
-    return signer;
-  }
-
-  getAccount = async () => {
-    const signer = await this.getSigner();
-    const [account] = await signer.getAccounts();
-    assertIf(account, "ACCOUNT_NOT_FOUND");
-    return normalizeToEth(account.address);
-  };
-  // This has to be a promise to conform to the interface
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async getChainId(): Promise<number> {
-    return this.chainId;
-  }
-
-  async connect(config?: { chainId?: number }) {
-    // TODO: Add event listeners here
-
-    const account = await this.getAccount();
-    const chainId = config?.chainId ?? evmosInfo.id;
-
-    this.chainId = chainId;
-    window.addEventListener("keplr_keystorechange", this.onAccountsChanged);
-    return {
-      account,
-      chain: {
-        id: chainId,
-        unsupported: chainId !== evmosInfo.id,
-      },
-    };
-  }
-  // This has to be a promise to conform to the interface
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async disconnect() {
-    window.removeEventListener("keplr_keystorechange", this.onAccountsChanged);
-  }
-  async isAuthorized() {
-    if (this.storage?.getItem("wallet") !== this.id) return false;
-    try {
-      const account = await this.getAccount();
-      return !!account;
-    } catch {
-      return false;
-    }
-  }
-  protected isChainUnsupported(chainId: number) {
-    return chainId === evmosInfo.id;
-  }
-  async getCosmosId(chainId?: number) {
-    chainId ??= await this.getChainId();
-
-    assertIf(this.isChainUnsupported(chainId), "UNSUPPORTED_NETWORK");
-
-    return evmosInfo.cosmosId;
-  }
-  async getWalletClient({ chainId }: { chainId?: number } = {}) {
-    chainId ??= await this.getChainId();
-
-    assertIf(this.isChainUnsupported(chainId), "UNSUPPORTED_NETWORK");
-
-    const [provider, account] = await Promise.all([
-      this.getProvider(),
-      this.getAccount(),
-    ]);
-    const chain =
-      this.chains.find((x) => x.id === chainId) ?? raise("UNSUPPORTED_NETWORK");
-
-    if (!provider) throw new Error("provider is required.");
-    // const self = this;
-    const httpTransport = http(undefined);
-    const transport = httpTransport({
-      chain,
-    });
-
-    const request = async (args: {
-      method: string;
-      params: string[];
-    }): Promise<unknown> => {
-      const response = await this.request(args);
-      if (response !== null) {
-        return response;
-      }
-
-      return await transport.request(args);
-    };
-    return createWalletClient({
-      account,
-      chain,
-      transport: custom({
-        request,
-      }),
+>(({ emitter, storage }) => {
+  if (typeof window !== "undefined") {
+    window.addEventListener("keplr_keystorechange", async () => {
+      const accounts = await eth_requestAccounts();
+      emitter.emit("change", {
+        accounts,
+        chainId: eth_chainId(),
+      });
     });
   }
-  request = async ({
-    method,
-    params,
-  }: {
-    method: string;
-    params: unknown[];
-  }) => {
-    const [provider, account, chainId] = await Promise.all([
-      this.getProvider(),
-      this.getAccount(),
-      this.getChainId(),
-    ]);
 
-    const cosmosId = await this.getCosmosId(chainId);
-    const bech32Address = normalizeToEvmos(account);
+  const listeners = new Map<string, Set<(...args: any[]) => void>>();
 
-    switch (method) {
-      case "eth_sendTransaction": {
-        const tx = TransactionRequestSchema.parse(params[0]);
-
-        const request = await prepareTransaction(chainId, tx);
-
-        const signature = await this.request({
-          method: "account_signTransaction",
-          params: [JSON.stringify(request)],
-        });
-        assertIf(isHex(signature), "FAILED_TO_SIGN_TRANSACTION");
-        const message = serialize(request, signature);
-        assertIf(isHex(message), "FAILED_TO_SERIALIZE_TRANSACTION");
-        const walletClient = await this.getWalletClient();
-        return await walletClient.request({
-          method: "eth_sendRawTransaction",
-          params: [message],
-        });
+  const provider = {
+    request({ method, params }: { method: string; params?: unknown[] }) {
+      if (method === "eth_requestAccounts" || method === "eth_accounts") {
+        return eth_requestAccounts();
       }
 
-      case "eth_chainId": {
-        return chainId;
+      if (method === "wallet_requestPermissions") {
+        return wallet_requestPermissions(params as never) as never;
       }
-      case "account_signTransaction":
-      case "personal_sign": {
-        assertIf(isString(params[0]), "INVALID_MESSAGE");
-
-        const signature = await provider.signEthereum(
-          cosmosId,
-          bech32Address,
-          params[0],
-          method === "account_signTransaction"
-            ? EthSignType.TRANSACTION
-            : EthSignType.MESSAGE
-        );
-
-        return toHex(signature);
+      if (method === "eth_chainId") {
+        return eth_chainId() as never;
+      }
+      if (method === "personal_sign") {
+        return signTransaction(params as never, EthSignType.MESSAGE) as never;
+      }
+      if (method === "eth_sendTransaction") {
+        return eth_sendTransaction(params as never) as never;
+      }
+      if (method === "eth_signTypedData_v4") {
+        return eth_signTypedData_v4(params as never) as never;
       }
 
-      case "eth_signTypedData_v4": {
-        assertIf(isString(params[1]), "INVALID_MESSAGE");
-        const signature = await provider.signEthereum(
-          cosmosId,
-          bech32Address,
-          params[1],
-          EthSignType.EIP712
-        );
-        return toHex(signature);
+      throw new Error(`${method} Method not implemented.`);
+    },
+    _state: {
+      accounts: [],
+      isConnected: false,
+      chainId: "",
+    },
+
+    on(event: string, listener: (...args: unknown[]) => void) {
+      const listenersForEvent = listeners.get(event);
+      if (listenersForEvent) {
+        listenersForEvent.add(listener);
+      } else {
+        listeners.set(event, new Set([listener]));
       }
-    }
-    return null;
+    },
+
+    removeListener(event: string, listener: (...args: unknown[]) => void) {
+      const listenersForEvent = listeners.get(event);
+      if (listenersForEvent) {
+        listenersForEvent.delete(listener);
+      }
+    },
   };
 
-  protected onAccountsChanged = async () => {
-    this.emit("change", {
-      account: await this.getAccount(),
-    });
-    // throw new Error("Method not implemented.");
+  return {
+    id: "keplr",
+    name: "Keplr",
+    type: "injected",
+
+    async connect({ chainId } = {}) {
+      const accounts = await eth_requestAccounts();
+      await storage?.setItem("keplrConnectorStatus", "authorized");
+      return {
+        accounts,
+        chainId: chainId ?? eth_chainId(),
+      };
+    },
+    async disconnect() {
+      await storage?.removeItem("keplrConnectorStatus");
+    },
+    async getAccounts() {
+      const status = await storage?.getItem("keplrConnectorStatus");
+      if (status !== "authorized") {
+        return [];
+      }
+      return await eth_requestAccounts();
+    },
+    async getChainId() {
+      return Promise.resolve(eth_chainId());
+    },
+    getProvider() {
+      return Promise.resolve(provider);
+    },
+
+    async isAuthorized() {
+      return (await storage?.getItem("keplrConnectorStatus")) === "authorized";
+    },
+
+    onAccountsChanged() {},
+    onChainChanged() {},
+    onDisconnect() {},
   };
-  protected onChainChanged(): void {
-    throw new Error("Method not implemented.");
-  }
-  protected onDisconnect(): void {}
-  // This has to be a promise to conform to the interface
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async switchChain(chainId: number): Promise<Chain> {
-    const chain = this.chains.find(({ id }) => id === chainId);
-    assertIf(chain, "UNSUPPORTED_NETWORK");
-    if (chainId === this.chainId) return chain;
-    this.chainId = chainId;
-    this.offlineSigner = null;
-    return chain;
-  }
-}
+});

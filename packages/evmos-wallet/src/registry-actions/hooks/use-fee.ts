@@ -1,13 +1,20 @@
-import { Address, CosmosAddress, HexAddress } from "../../wallet";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { getChainByAddress } from "../get-chain-by-account";
 import { simulateTransfer } from "../transfers/prepare-transfer";
-import { Prefix, TokenAmount, TokenRef } from "../types";
+import { TokenAmount, TokenRef } from "../types";
 import { useQuery } from "@tanstack/react-query";
 import { E, multiply } from "helpers";
 import { bech32 } from "bech32";
 import { useAccountExists } from "./use-account-exists";
 import { getTokenByRef } from "../get-token-by-ref";
 import { getFeeToken } from "../getFeeToken";
+import {
+  Address,
+  CosmosAddress,
+  HexAddress,
+} from "helpers/src/crypto/addresses/types";
 
 /**
  * this is used to simulate a transfer before the user has entered the receiver address
@@ -15,9 +22,9 @@ import { getFeeToken } from "../getFeeToken";
  */
 const fakeWalletAddress = "0x0000000000000000000000000000000000000001";
 
-const ethToBech32 = <T extends Prefix>(address: HexAddress, prefix: T) => {
+export const ethToBech32 = (address: HexAddress, prefix: string) => {
   const words = bech32.toWords(Buffer.from(address.slice(2), "hex"));
-  return bech32.encode(prefix, words) as CosmosAddress<T>;
+  return bech32.encode(prefix, words) as CosmosAddress;
 };
 
 export const useFee = ({
@@ -25,8 +32,8 @@ export const useFee = ({
   receiverChainPrefix,
   tokenRef,
 }: {
-  sender?: Address<Prefix>;
-  receiverChainPrefix?: Prefix;
+  sender?: Address;
+  receiverChainPrefix?: string;
   tokenRef?: TokenRef;
 }) => {
   const { data: accountExists } = useAccountExists(sender);
@@ -48,7 +55,7 @@ export const useFee = ({
             ...token,
             amount: 1n,
           },
-        })
+        }),
       );
 
       if (err) {

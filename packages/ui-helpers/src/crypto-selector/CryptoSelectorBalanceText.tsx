@@ -5,5 +5,5 @@ import { ComponentProps } from "react";
 export function CryptoSelectorBalanceText({
   ...rest
 }: ComponentProps<"span"> & {}) {
-  return <span className="text-gray-400 font-medium" {...rest} />;
+  return <span className="text-gray-400 text-sm font-medium" {...rest} />;
 }

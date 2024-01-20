@@ -1,0 +1,26 @@
+{
+  "$schema": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/schema.token.json",
+  "coinDenom": "localATOM",
+  "minCoinDenom": "uatom",
+  "type": "IBC",
+  "exponent": "6",
+  "cosmosDenom": "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2",
+  "description": "The native token of Cosmos Hub",
+  "name": "Cosmos Hub",
+  "tokenRepresentation": "ATOM",
+  "channel": "channel-0",
+  "isEnabled": true,
+  "erc20Address": "0x80b5a32E4F032B2a058b4F29EC95EEfEEB87aDcd",
+  "ibc": {
+    "sourceDenom": "uatom",
+    "source": "cosmoshublocalnet"
+  },
+  "hideFromTestnet": false,
+  "coingeckoId": "cosmos",
+  "category": "cosmos",
+  "coinSourcePrefix": "cosmos",
+  "img": {
+    "png": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/assets/tokens/ATOM.png",
+    "svg": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/assets/tokens/ATOM.svg"
+  }
+}

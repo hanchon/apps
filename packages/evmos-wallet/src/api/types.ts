@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 export type ERC20Element = {
   name: string;
   cosmosBalance: string;
@@ -16,10 +19,6 @@ export type ERC20Element = {
   erc20Address: string;
   tokenIdentifier: string;
   price24HChange: string;
-};
-
-export type ERC20BalanceResponse = {
-  balance: ERC20Element[];
 };
 
 type delegationResponse = {
@@ -70,7 +69,7 @@ type description = {
   website: string;
 };
 
-export type ValidatorResponse = {
+type ValidatorResponse = {
   commission: commission;
   consensus_key: consensusPubKey;
   delegator_shares: string;
@@ -107,7 +106,7 @@ type Rewards = {
   validator_address: string;
 };
 
-export type rewardsResponse = {
+type rewardsResponse = {
   rewards: Rewards[];
   total: totalRewards[];
 };

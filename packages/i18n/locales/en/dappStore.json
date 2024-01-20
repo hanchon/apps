@@ -1,0 +1,78 @@
+{
+  "account": {
+    "balance": {
+      "title": "Total Balance",
+      "topUp": "Top Up Account"
+    }
+  },
+
+  "copilotCard": {
+    "title": "Get started",
+    "subtitle": "with Evmos in 5 minutes",
+    "setupYourAccount": "Set up your account",
+    "topUpYourAccount": "Top up your account",
+    "nextSteps": "Next steps",
+    "letsGo": "Let's go",
+    "topUp": "Top up",
+    "staking": "Staking",
+    "useADapp": "Use a dApp"
+  },
+  "ecosystem": {
+    "title": {
+      "word": "Add",
+      "word2": "your",
+      "word3": "dApp",
+      "word4": "to",
+      "word5": "the",
+      "word6": "Store"
+    },
+    "description": "Interested in adding your dApp to our dApp Store and earning revenue?",
+    "addAppButton": "Add your dApp",
+    "buildButton": "Build with Us",
+    "button": {
+      "text": "See all ",
+      "text2": "dApps"
+    },
+    "explore": "Explore all <div>{{count}} dApps</div>",
+    "instantdApps": {
+      "title": "Instant dApps",
+      "description": "Discover the power of cross-chain apps - instantly, in one place",
+      "button": {
+        "text": "See More"
+      }
+    }
+  },
+  "categories": {
+    "title": "Explore the <b>{{count}} {{name}}</b> on Evmos",
+    "description": "Explore the Evmos Ecosystem - dApps, tools, exchanges, infrastructure, and more.",
+    "instantdApps": {
+      "name": "Instant dApps",
+      "description": "Discover the power of cross-chain apps - instantly, in one place."
+    }
+  },
+  "instantdApp": {
+    "badge": "Instant dApp",
+    "howTo": {
+      "title": "How to use {{name}} Instant dApp"
+    },
+    "description": {
+      "title": "Description"
+    },
+    "social": "Social",
+    "information": {
+      "title": "Technical Information",
+      "options": {
+        "github": "Github"
+      }
+    },
+    "website": {
+      "title": "Website"
+    },
+    "relatedApps": {
+      "title": "Related dApps",
+      "button": {
+        "text": "See More"
+      }
+    }
+  }
+}

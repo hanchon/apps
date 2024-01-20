@@ -10,23 +10,19 @@
     "test:watch": "vitest",
     "build:registry": "NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./scripts/gen-chains.ts",
     "check-clients": "NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./scripts/check-clients.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "gen:schema-types": "NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./scripts/gen-schema-types.ts",
+    "gen:types": "pnpm run gen:schema-types",
+    "postinstall": "dotenv -e ../../.env -c -- pnpm run gen:types"
   },
   "devDependencies": {
-    "@evmosapps/config": "workspace:helpers",
-    "@types/lodash": "^4.14.197",
-    "@types/lodash-es": "^4.17.8",
+    "@evmosapps/config": "workspace:*",
     "@types/node": "18.11.14",
-    "@types/react": "^18.0.26",
-    "ajv": "^8.12.0",
     "chain-token-registry": "github:evmos/chain-token-registry#main",
-    "chalk": "^5.3.0",
-    "helpers": "workspace:helpers",
+    "helpers": "workspace:*",
     "lodash-es": "^4.17.21",
-    "sharp": "^0.32.5",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2",
-    "vitest": "^0.34.6"
+    "next": "14.0.4",
+    "typescript": "^5.3.3"
   },
   "browserslist": [
     "last 3 chrome version",
@@ -35,6 +31,7 @@
   ],
   "dependencies": {
     "glob": "^10.3.4",
-    "tsx": "^3.13.0"
+    "json-schema-to-typescript": "^13.1.1",
+    "tsx": "^4.7.0"
   }
 }

@@ -1,49 +1,44 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+"use client";
 import { cn } from "helpers";
+import { useConfig, useSwitchChain } from "wagmi";
+import { getChainId } from "wagmi/actions";
+import { Chain } from "viem";
 
-import { useEffect, useState } from "react";
-
-export const getSelectedNetworkMode = () => {
-  if (typeof window === "undefined") return "mainnet";
-  return localStorage.getItem("networkMode") || "mainnet";
-};
-
-export const setSelectedNetworkMode = (mode: string) => {
-  if (typeof window === "undefined") return;
-  localStorage.setItem("networkMode", mode);
-};
-
-const modes = ["mainnet", "testnet", "localtestnet"];
-
-export const isMainnet = () => getSelectedNetworkMode() === "mainnet";
 export const NetworkModeSelector = () => {
-  const [mode, setMode] = useState<null | string>(null);
+  const { switchChain } = useSwitchChain();
 
-  useEffect(() => {
-    setMode(getSelectedNetworkMode());
-  }, [setMode]);
+  const config = useConfig();
 
-  if (!mode) return null;
   return (
-    <div className="border-2 border-red rounded-md m-4 flex">
-      {modes.map((net) => (
-        <button
-          data-testid={`network-mode-selector-${net}`}
-          key={net}
-          onClick={() => {
-            setMode(net);
-            setSelectedNetworkMode(net);
-            window.location.reload();
-          }}
-          className={cn(
-            "text-white py-2 px-3 uppercase text-xxs font-bold grow ",
-            {
-              "bg-red": net === mode,
-            }
-          )}
-        >
-          {net}
-        </button>
-      ))}
+    <div className="border-2 border-red-300 rounded-md m-4 flex">
+      {config.chains.map((chain) => {
+        const networkType = (
+          chain as Chain & {
+            networkType: string;
+          }
+        ).networkType;
+
+        return (
+          <button
+            data-testid={`network-mode-selector-${networkType}`}
+            key={networkType}
+            onClick={() => {
+              switchChain({ chainId: chain.id });
+            }}
+            className={cn(
+              "text-white py-2 px-3 uppercase text-xxs font-bold grow ",
+              {
+                "bg-red-300": chain.id === getChainId(config),
+              },
+            )}
+          >
+            {networkType}
+          </button>
+        );
+      })}
     </div>
   );
 };

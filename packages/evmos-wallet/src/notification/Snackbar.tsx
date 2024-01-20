@@ -5,7 +5,7 @@ import { Dispatch } from "react";
 import { AnyAction } from "redux";
 import { SimpleSnackbar } from "./content/SimpleSnackbar";
 import { ViewExplorerSnackbar } from "./content/ViexExplorerSnackbar";
-import { ExclamationIcon } from "icons";
+import { ExclamationIcon } from "@evmosapps/icons/ExclamationIcon";
 import SuccessIcon from "./icons/SuccessIcon";
 import TriangleHazardIcon from "./icons/TriangleHazardIcon";
 import { removeSnackbar } from "./redux/notificationSlice";
@@ -49,7 +49,7 @@ const Snackbar = ({
       <div
         className={`
         ${type === SNACKBAR_TYPES.SUCCESS ? "bg-green text-white" : ""}
-        ${type === SNACKBAR_TYPES.ERROR ? "bg-red text-white" : ""}
+        ${type === SNACKBAR_TYPES.ERROR ? "bg-red-300 text-white" : ""}
         ${type === SNACKBAR_TYPES.DEFAULT ? "bg-darkPearl text-darkGray2" : ""}
         shadow-[0px 4px 8px rgba(0, 0, 0, 0.5)] pointer-events-auto relative inline-flex min-w-[280px] max-w-[360px] overflow-hidden rounded-lg p-2`}
       >

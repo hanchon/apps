@@ -4,29 +4,35 @@
 import { useQuery } from "@tanstack/react-query";
 import { BigNumber } from "@ethersproject/bignumber";
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
-import { convertStringFromAtto } from "helpers";
+
 import {
   DelegationsResponse,
   StakingInfoResponse,
   UndelegationsResponse,
 } from "./types";
 import { getStakingInfo } from "./fetch";
-import { StoreType } from "../redux/Store";
+
+import { convertStringFromAtto } from "helpers/src/styles";
+import { useAccount } from "wagmi";
+
+import { raise } from "helpers";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 export const useStake = () => {
-  const value = useSelector((state: StoreType) => state.wallet.value);
+  const { address } = useAccount();
 
   const stakingInfo = useQuery<StakingInfoResponse, Error>({
-    queryKey: ["stakingInfo", value.evmosAddressCosmosFormat],
-    queryFn: () => getStakingInfo(value.evmosAddressCosmosFormat),
+    queryKey: ["stakingInfo", address],
+    enabled: !!address,
+    queryFn: () =>
+      getStakingInfo(normalizeToCosmos(address ?? raise("Address not found"))),
     refetchInterval: 15_000,
   });
 
   const totalDelegations = useMemo(() => {
     let total = BigNumber.from(0);
     if (stakingInfo.data !== undefined) {
-      const sum = stakingInfo.data.delegations.reduce((prev, curr) => {
+      const sum = stakingInfo.data?.delegations?.reduce((prev, curr) => {
         return prev.add(BigNumber.from(curr?.balance.amount));
       }, total);
       total = sum ? sum : BigNumber.from(0);
@@ -42,7 +48,7 @@ export const useStake = () => {
     if (stakingInfo.data !== undefined) {
       // for each validator, get the undelegations balances
       // that are in the entries array
-      stakingInfo.data.undelegations.forEach((validator) => {
+      stakingInfo.data?.undelegations?.forEach((validator) => {
         const sum = validator.entries.reduce((prev, curr) => {
           return prev.add(BigNumber.from(curr?.balance));
         }, total);
@@ -62,7 +68,7 @@ export const useStake = () => {
       stakingInfo.data.rewards.total.length !== 0
     ) {
       // the sum is already done in the backend
-      total = stakingInfo.data.rewards.total[0].amount;
+      total = stakingInfo.data.rewards.total[0]?.amount ?? "0";
     }
 
     return convertStringFromAtto(total);
@@ -71,7 +77,7 @@ export const useStake = () => {
   const delegations = useMemo(() => {
     let delegations: DelegationsResponse[] = [];
     if (stakingInfo.data !== undefined) {
-      delegations = stakingInfo.data?.delegations;
+      delegations = stakingInfo.data?.delegations ?? [];
       delegations.sort((a, b) => {
         return a.delegation.validator.rank > b.delegation.validator.rank
           ? 1
@@ -84,7 +90,7 @@ export const useStake = () => {
   const undelegations = useMemo(() => {
     let undelegations: UndelegationsResponse[] = [];
     if (stakingInfo.data !== undefined) {
-      undelegations = stakingInfo.data?.undelegations;
+      undelegations = stakingInfo.data?.undelegations ?? [];
       undelegations.sort((a, b) => {
         return a.validator.rank > b.validator.rank ? 1 : -1;
       });

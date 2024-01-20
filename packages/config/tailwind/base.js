@@ -1,13 +1,21 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
-import tailwindForms from "@tailwindcss/forms";
+
+import typography from "@tailwindcss/typography";
+import path from "path";
+
+const cwd = process.cwd();
+const rootDir =
+  cwd?.split("/")?.at?.(-2) === "apps" ? path.join(cwd, "../../") : cwd;
+
+/** @type {import('tailwindcss').Config} */
 const config = {
+  darkMode: "class",
+
   content: [
-    // app content
-    "src/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{ts,tsx}",
-    "./public/**/*.html",
-    "../../packages/*/src/**/*.{js,ts,jsx,tsx}",
+    "src/**/*.tsx",
+    path.join(rootDir, "packages/*/src/**/*.tsx"),
+    path.join(rootDir, "pages/*/src/**/*.tsx"),
   ],
   theme: {
     extend: {
@@ -15,14 +23,39 @@ const config = {
         body: ["var(--font-body)"],
         display: ["var(--font-display)"],
         brand: ["var(--font-brand)"],
+        evmos: ["var(--font-evmos)"],
+        poppins: ["var(--font-poppins)"],
+        inter: ["var(--font-inter)"],
       },
       boxShadow: {
-        custom: "0px 4px 30px 0px #62575599",
+        custom: "0px 1px 8px 0px #9C848199",
         "custom-sm": "0px 4px 15px 0px #9C848199",
         "custom-pink": "4px 4px 8px 2px #CE250040 inset",
       },
       colors: {
-        pearl: "#faf1e4",
+        wosmongton: {
+          100: "#D3D1FF",
+          200: "#B3B1FD",
+          300: "#8C8AF9",
+          400: "#6A67EA",
+          500: "#5B57FA",
+          700: "#462ADF",
+        },
+        osmoverse: {
+          100: "#E4E1FB",
+          200: "#CEC8F3",
+          300: "#B0AADC",
+          400: "#958FC0",
+          500: "#736CA3",
+          600: "#565081",
+          700: "#3C356D",
+          800: "#282750",
+          825: "#232047",
+          850: "#201B43",
+          900: "#140F34",
+          1000: "#090524",
+        },
+        pearl: "#FFF4E1",
         pearl1: "#FAF8F8",
         pearl2: "#FEF2F2",
         darkPearl: "#dad2c7",
@@ -40,7 +73,7 @@ const config = {
         red: "#ed4e33",
         red1: "#AA2912",
         red2: "#6b1c0e",
-        "red-300": "#FF6565",
+        "red-300": "#FE5F05",
         "red-900": "#F83E3E",
         green: "#97ad11",
         "green-200": "#70FF7E",
@@ -74,6 +107,10 @@ const config = {
         brown: "#854D0E",
         lightBlue: "#EFF6FF",
         blue: "#1E429F",
+        "black-100": "#656159",
+        "black-200": "#5b5448",
+        "black-300": "#44413c",
+        "black-500": "#2d271d",
         "black-900": "#121212",
         "pink-200": "#FFE6E2",
         "pink-300": "#FF745D",
@@ -83,6 +120,7 @@ const config = {
         "pink-700": "#FFC1C1",
         "purple-200": "#F8E3FF",
         "purple-300": "#BD89FF",
+        "purple-400": "#AE00FF",
       },
       fontSize: {
         h5: "1.36rem",
@@ -91,6 +129,7 @@ const config = {
       },
     },
   },
-  plugins: [tailwindForms],
+  plugins: [typography],
 };
+
 export default config;

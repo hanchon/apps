@@ -1,14 +1,14 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { useMemo } from "react";
-import { Address } from "../../wallet";
-import { Prefix, TokenRef } from "../types";
+import { TokenRef } from "../types";
 import { useAccountBalances } from "./use-account-balances";
 import { makeBalance } from "../utils";
 import { getTokenByRef } from "../get-token-by-ref";
+import { Address } from "helpers/src/crypto/addresses/types";
 
-export const useTokenBalance = (
-  address?: Address<Prefix>,
-  tokenRef?: TokenRef
-) => {
+export const useTokenBalance = (address?: Address, tokenRef?: TokenRef) => {
   const { data, ...rest } = useAccountBalances(address);
 
   const balance = useMemo(() => {
