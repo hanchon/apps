@@ -7,7 +7,7 @@ export const FULL_DAY_MINUS_ONE_SECOND = 86399000;
 export const FEE_STAKING_ACTIONS = "8049999999999999";
 export const FEE_VOTE = "6250000000000000";
 export const EVMOS_TOS_VERSION = "evmos-TOS-v2";
-export const FEEDBACK_URL = "https://evmos.canny.io/feedback";
+export const FEEDBACK_URL = "https://tally.so/r/w7xMOR";
 export const DOCS_EVMOS_REVENUE =
   "https://docs.evmos.org/protocol/modules/revenue#abstract";
 export const DOCS_EVMOS_URL = "https://docs.evmos.org/";
