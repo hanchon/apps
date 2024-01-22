@@ -12,3 +12,4 @@ export * from "./get-account-info";
 export * from "./precompiles";
 export * from "./get-token";
 export * from "./get-chain";
+export * from "./transfers/prepare-contract-ibc-transfer";
