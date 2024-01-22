@@ -126,7 +126,7 @@ export const CopilotCard = () => {
                     "Copilot Actions": "Top up account",
                   });
                 }}
-                className={linkCn}
+                className={`${linkCn} bg-red-300`}
               >
                 {t("copilotCard.topUp")}
               </button>
@@ -135,19 +135,6 @@ export const CopilotCard = () => {
         )}
         {nextStepsActive && (
           <div className="space-x-4">
-            <TrackerEvent
-              event={CLICK_ON_COPILOT_BANNER}
-              properties={{
-                "Copilot Actions": "Stake",
-              }}
-            >
-              <Link
-                className={cn(linkCn, "text-sm py-3 rounded-lg bg-pearl/20")}
-                href={"/staking"}
-              >
-                {t("copilotCard.staking")}
-              </Link>
-            </TrackerEvent>
             <TrackerEvent
               event={CLICK_ON_COPILOT_BANNER}
               properties={{

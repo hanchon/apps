@@ -4,7 +4,7 @@
 type VotingDetail = {
   bgColor: string;
   type: string;
-  percent: string;
+  percent: number;
 };
 
 // Not sure why this error occured so I disabled it for now
@@ -19,7 +19,7 @@ export const VotingDetail = ({
       <div className={`${votingProps.bgColor} h-4 w-4 rounded-lg`}></div>
       <div className="text-pearl font-bold opacity-80">
         <p>{votingProps.type}</p>
-        <p>{Number(votingProps.percent).toFixed(2)}%</p>
+        <p>{Number(votingProps.percent * 100).toFixed(2)}%</p>
       </div>
     </div>
   );

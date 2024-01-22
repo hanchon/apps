@@ -12,12 +12,19 @@ import BannerBlack from "../common/banners/BannerBlack";
 
 import { cosmos } from "helpers/src/clients/cosmos";
 import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+  QueryErrorResetBoundary,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { Suspense } from "react";
 import { get } from "lodash-es";
 import { safeBigInt } from "helpers/src/bigint/safe-bigint";
 import { divide } from "helpers/src/bigint";
-import ContainerProposals from "./proposals/ContainerProposals";
+
+import { BannerMessages } from "@evmosapps/ui-helpers";
+
+import { ErrorBoundary } from "react-error-boundary";
+import { ContainerProposals } from "./proposals/ContainerProposals";
 
 const Proposals = () => {
   const chainRef = useEvmosChainRef();
@@ -111,37 +118,43 @@ const Proposals = () => {
 };
 
 const Content = () => {
-  const searchParams = useSearchParams();
-  const id = searchParams?.get("id");
+  // const searchParams = useSearchParams();
+  // const id = searchParams?.get("id");
 
-  const { proposals, loading, error, proposalDetail } = useProposals(
-    id ?? undefined,
-  );
+  // const { proposals, loading, error, proposalDetail } = useProposals(
+  //   id ?? undefined,
+  // );
   return (
     <div>
-      {(id === null || id === undefined) && (
-        <BannerBlack
-          text="Have you ever wondered where proposals come from? Join us in our open
+      {/* {(id === null || id === undefined) && ( */}
+      <BannerBlack
+        text="Have you ever wondered where proposals come from? Join us in our open
           and lively discussions over at Commonwealth"
-          href={COMMONWEALTH_URL}
-        />
-      )}
+        href={COMMONWEALTH_URL}
+      />
+      {/* )} */}
 
       <div className="mt-5 w-full text-pearl">
-        {!id && (
-          <ContainerProposals
-            proposals={proposals}
-            loading={loading}
-            error={error}
-          />
-        )}
-        {id && (
+        <ErrorBoundary
+          fallbackRender={(e) => {
+            console.log(e);
+            return <BannerMessages text={"No results"} />;
+          }}
+        >
+          <Suspense
+            fallback={<BannerMessages text="Loading..." spinner={true} />}
+          >
+            <ContainerProposals />
+          </Suspense>
+        </ErrorBoundary>
+
+        {/* {id && (
           <ContentProposal
             proposalDetail={proposalDetail}
             loading={loading}
             error={error}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

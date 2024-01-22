@@ -10,27 +10,41 @@ import { Link } from "@evmosapps/i18n/client";
 import { ProposalProps } from "../../../utils/types";
 import { useAccount } from "wagmi";
 import { getActiveProviderKey } from "@evmosapps/evmos-wallet";
+import { useProposals } from "../../../utils/hooks/useProposals";
 
-const ContainerProposals = ({
-  proposals,
-  loading,
-  error,
-}: {
-  proposals: ProposalProps[];
-  loading: boolean;
-  error: unknown;
-}) => {
+export const ContainerProposals = ({}) => {
   const { address } = useAccount();
   const activeProviderKey = getActiveProviderKey();
-  const drawProposals = useCallback(() => {
-    if (loading) {
-      return <BannerMessages text="Loading..." spinner={true} />;
-    }
-    if (error) {
-      return <BannerMessages text="No results" />;
-    }
-    return proposals.map((proposal) => {
-      return (
+  const { data } = useProposals();
+  // const drawProposals = useCallback(() => {
+  //   if (loading) {
+  //     return <BannerMessages text="Loading..." spinner={true} />;
+  //   }
+  //   if (error) {
+  //     return <BannerMessages text="No results" />;
+  //   }
+  //   return proposals.map((proposal) => {
+  //     return (
+  // <TrackerEvent
+  //   key={proposal.id}
+  //   event={CLICK_GOVERNANCE_PROPOSAL}
+  //   properties={{
+  //     "User Wallet Address": address,
+  //     "Wallet Provider": activeProviderKey,
+  //     "Governance Proposal": proposal.id,
+  //   }}
+  // >
+  //   <Link href={`/governance?id=${proposal.id}`} data-testid="proposal">
+  //     <ProposalCard proposalProps={proposal} />
+  //   </Link>
+  // </TrackerEvent>
+  //     );
+  //   });
+  // }, [proposals, loading, error, address, activeProviderKey]);
+
+  return (
+    <section className="grid grid-flow-row grid-cols-1 gap-4 px-4 md:px-0 lg:grid-cols-2">
+      {data.map((proposal) => (
         <TrackerEvent
           key={proposal.id}
           event={CLICK_GOVERNANCE_PROPOSAL}
@@ -41,18 +55,10 @@ const ContainerProposals = ({
           }}
         >
           <Link href={`/governance?id=${proposal.id}`} data-testid="proposal">
-            <ProposalCard proposalProps={proposal} />
+            <ProposalCard {...proposal} />
           </Link>
         </TrackerEvent>
-      );
-    });
-  }, [proposals, loading, error, address, activeProviderKey]);
-
-  return (
-    <section className="grid grid-flow-row grid-cols-1 gap-4 px-4 md:px-0 lg:grid-cols-2">
-      {drawProposals()}
+      ))}
     </section>
   );
 };
-
-export default ContainerProposals;
