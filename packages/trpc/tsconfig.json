@@ -1,5 +1,5 @@
 {
   "extends": "@evmosapps/config/ts/react-library.json",
-  "include": [".", "../config/**/*"],
+  "include": [".", "../config/**/*", "../helpers/src/bigint/safeBigInt.ts"],
   "exclude": ["dist", "build", "node_modules", "../config/node_modules"]
 }

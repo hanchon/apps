@@ -4,10 +4,9 @@
 "use client";
 
 import { BigNumber } from "@ethersproject/bignumber";
-import { useCallback, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
+import { useMemo, useState } from "react";
 
-import { StoreType, EVMOS_DECIMALS } from "@evmosapps/evmos-wallet";
+import { EVMOS_DECIMALS } from "@evmosapps/evmos-wallet";
 import { Table } from "../../common/table/Table";
 import {
   tableStyle,
@@ -29,36 +28,19 @@ import {
 import { Button, MessageTable, Modal } from "@evmosapps/ui-helpers";
 import { SearchContext, useSearchContext } from "../../context/SearchContext";
 import { useAllValidators } from "../../../utils/hooks/useAllValidators";
-import { ValidatorsList } from "../../../utils/types";
 import {
   ValidatorStateContext,
   useValidatorContext,
 } from "../../context/ValidatorStateContext";
+import { useAccount } from "wagmi";
 
 const dataHead = ["Rank", "Name", "Voting Power", "Staked", "Commission", ""];
 
 const Validators = () => {
   const { validators } = useAllValidators();
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
+  const { address } = useAccount();
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
-  const handleOnClick = useCallback((item: ValidatorsList) => {
-    setIsOpen(true);
-    setModalContent(
-      <Staking
-        item={{
-          moniker: item.validator.description.moniker,
-          commissionRate: item.validator.commission.commission_rates.rate,
-          balance: item.balance.balance.amount,
-          details: item.validator.description.details,
-          website: item.validator.description.website,
-          validatorAddress: item.validator.operator_address,
-        }}
-        setIsOpen={setIsOpen}
-      />,
-    );
-  }, []);
-
   const isLoading = false;
   const error = false;
   const { value } = useSearchContext() as SearchContext;
@@ -198,9 +180,23 @@ const Validators = () => {
           <td className={`${tdBodyStyle}`}>
             <div className="flex md:justify-end">
               <Button
-                disabled={!wallet.active}
+                disabled={!address}
                 onClick={() => {
-                  handleOnClick(item);
+                  setIsOpen(true);
+                  setModalContent(
+                    <Staking
+                      item={{
+                        moniker: item.validator.description.moniker,
+                        commissionRate:
+                          item.validator.commission.commission_rates.rate,
+                        balance: item.balance.balance.amount,
+                        details: item.validator.description.details,
+                        website: item.validator.description.website,
+                        validatorAddress: item.validator.operator_address,
+                      }}
+                      setIsOpen={setIsOpen}
+                    />,
+                  );
                 }}
               >
                 <span className="px-2">Manage</span>
@@ -210,7 +206,7 @@ const Validators = () => {
         </tr>
       );
     });
-  }, [filtered, wallet.active, handleOnClick, sorting]);
+  }, [filtered, address, sorting]);
 
   const dataForBody = () => {
     if (isLoading) {

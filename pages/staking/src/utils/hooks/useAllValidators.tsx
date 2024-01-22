@@ -16,7 +16,7 @@ export const useAllValidators = () => {
       delegations.map((delegation) => [
         delegation.delegation.validator.rank,
         delegation,
-      ])
+      ]),
     );
     const validatorWithDelegations =
       validators.data?.map((validator) => {

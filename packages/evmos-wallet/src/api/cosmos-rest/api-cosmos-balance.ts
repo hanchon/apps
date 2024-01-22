@@ -9,12 +9,12 @@ import { CosmosAddress } from "helpers/src/crypto/addresses/types";
 
 export const apiCosmosBalance = (
   urls: Readonly<[string, ...string[]]>,
-  address: CosmosAddress
+  address: CosmosAddress,
 ) =>
   apiCosmosFetch(
     paginateCosmosSchema({
       balances: z.array(AmountSchema),
     }),
     urls,
-    `/cosmos/bank/v1beta1/balances/${address}`
+    `/cosmos/bank/v1beta1/balances/${address}`,
   );

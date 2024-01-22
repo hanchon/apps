@@ -23,6 +23,9 @@ export function formatUnits(
       fraction ? `.${fraction}` : ""
     }`;
   }
+  if (mode === 0) {
+    return `${negative ? "-" : ""}${integer || "0"}`;
+  }
   fraction = fraction.slice(0, typeof mode === "number" ? mode : 7);
   return `${negative ? "-" : ""}${integer || "0"}.${fraction}`;
 }

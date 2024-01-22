@@ -1,44 +1,12 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { Address } from "helpers/src/crypto/addresses/types";
 import { serverCosmos } from "../../utils/cosmos-server-client";
 import { ChainRef } from "../../../../autogen/registry";
 import { assert } from "helpers";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
-// @buf/cosmos_cosmos-sdk.bufbuild_es
-// @bufbuild/protobuf
-// func TotalStakingByAddress(ctx *fasthttp.RequestCtx) {
-// 	address := paramToString("address", ctx)
 
-// 	addressSplitted := strings.Split(address, "evmos")
-// 	if len(addressSplitted) < 2 && addressSplitted[0] != "evmos" {
-// 		sendResponse("", fmt.Errorf("invalid wallet format"), ctx)
-// 		return
-// 	}
-
-// 	endpoint := buildThreeParamEndpoint("/cosmos/staking/v1beta1/delegations/", address, "?pagination.limit=200")
-// 	val, err := getRequestRest("EVMOS", endpoint)
-// 	if err != nil {
-// 		sendResponse("", err, ctx)
-// 		return
-// 	}
-
-// 	var stakingResponse blockchain.DelegationResponses
-// 	_ = json.Unmarshal([]byte(val), &stakingResponse)
-
-// 	totalStaked := blockchain.GetTotalStake(stakingResponse)
-
-// 	stringRes, err := json.Marshal(
-// 		&ValueResponse{
-// 			Value: totalStaked,
-// 		},
-// 	)
-// 	if err != nil {
-// 		sendResponse("", err, ctx)
-// 		return
-// 	}
-
-// 	res := string(stringRes)
-// 	sendResponse(res, err, ctx)
-// }
 export const legacyFetchTotalStakedByAddress = async ({
   chainRef,
   address,
@@ -58,12 +26,12 @@ export const legacyFetchTotalStakedByAddress = async ({
           "pagination.limit": "200",
         },
       },
-    }
+    },
   );
   assert(delegations?.delegation_responses, "delegations not found");
   const totalStaked = delegations.delegation_responses.reduce(
     (total, delegation) => total + BigInt(delegation.balance?.amount ?? 0),
-    0n
+    0n,
   );
 
   return {
@@ -180,7 +148,7 @@ const fetchDelegations = async ({
           "pagination.limit": "150",
         },
       },
-    }
+    },
   );
   return data as DeepRequired<typeof data>;
 };
@@ -201,7 +169,7 @@ const fetchUnbondingResponses = async ({
           delegator_addr: normalizeToCosmos(address),
         },
       },
-    }
+    },
   );
   return data as DeepRequired<typeof data>;
 };
@@ -222,7 +190,7 @@ const fetchRewards = async ({
           delegator_address: normalizeToCosmos(address),
         },
       },
-    }
+    },
   );
   return data as DeepRequired<typeof data>;
 };
@@ -275,7 +243,7 @@ export const legacyFetchStakingInfo = async ({
       legacyFetchAllValidators({ chainRef }),
     ]);
   const validatorsMap = Object.fromEntries(
-    validators.map((value) => [value.operator_address, value])
+    validators.map((value) => [value.operator_address, value]),
   );
 
   const delegationData = delegations.delegation_responses.flatMap(
@@ -293,7 +261,7 @@ export const legacyFetchStakingInfo = async ({
           balance,
         },
       ];
-    }
+    },
   );
 
   const undelegationsData =

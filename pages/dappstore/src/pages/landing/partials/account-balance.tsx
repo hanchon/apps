@@ -6,51 +6,63 @@
 // import { convertFromAtto } from "helpers";
 
 import { useTranslation } from "@evmosapps/i18n/client";
-import { useStakingInfo } from "@evmosapps/evmos-wallet/src/api/useStake";
 
 import { CLICK_ON_TOP_UP_ACCOUNT_DAPP, sendEvent } from "tracker";
 
 import { useAccount } from "wagmi";
 import { TopupModalTrigger } from "stateful-components/src/modals/TopupModal/TopupModal";
 
-import { useAssets } from "@evmosapps/evmos-wallet/src/api/useAssets";
-import { convertFromAtto } from "helpers/src/styles";
 import { PrimaryButton } from "@evmosapps/ui-helpers";
 import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
-import { useTrpcQuery } from "@evmosapps/trpc/client";
-import { raise } from "helpers";
+import { trpc } from "@evmosapps/trpc/client";
+
+import { Address } from "helpers/src/crypto/addresses/types";
+import { Suspense } from "react";
+import { fromAtto } from "helpers/src/crypto/numbers/from-atto";
+import { formatFiat } from "helpers/src/format/format-fiat";
+import { formatUnits } from "@evmosapps/evmos-wallet/src/registry-actions/utils";
+
+const useTotalBalance = (address: Address) => {
+  const chainRef = useEvmosChainRef();
+
+  const [[balance, rewards, staked]] = trpc.useSuspenseQueries((t) => [
+    t.account.balance.byDenom({
+      address,
+      denom: "EVMOS",
+      chainRef,
+    }),
+
+    t.account.balance.rewards.evmos({
+      address,
+      chainRef,
+    }),
+
+    t.account.balance.staked.evmos({
+      address,
+      chainRef,
+    }),
+  ]);
+
+  const total = balance.balance.total + rewards.total + staked.total;
+
+  return {
+    totalUsd:
+      fromAtto(total, balance.decimals) * (balance.price?.usd.price ?? 0),
+    total: formatUnits(total, balance.decimals, 0),
+  };
+};
+
+const TotalUsd = ({ address }: { address: Address }) => {
+  const { totalUsd } = useTotalBalance(address);
+  return formatFiat(totalUsd);
+};
+const TotalEvmos = ({ address }: { address: Address }) => {
+  const { total } = useTotalBalance(address);
+  return total;
+};
 
 export const AccountBalance = () => {
-  const { isConnected } = useAccount();
-  const { totalDelegations, totalRewards } = useStakingInfo();
-
-  const { evmosPrice, totalEvmosAsset } = useAssets();
-
-  const totalEvmos = totalEvmosAsset.add(totalDelegations);
-  // staked + evmos + rewards
-  const totalBalance = Number(convertFromAtto(totalEvmos)) + totalRewards;
-
-  const totalBalanceInDollars = totalBalance * Number(evmosPrice);
-
-  const drawTotalBalance = () => {
-    if (totalBalance === 0) {
-      return 0;
-    }
-    if (totalBalance < 1) {
-      return totalBalance.toFixed(2);
-    }
-    return totalBalance.toFixed(0);
-  };
-
-  const drawTotalBalanceInDollars = () => {
-    if (isNaN(totalBalanceInDollars)) {
-      return 0;
-    }
-    if (totalBalanceInDollars < 1) {
-      return totalBalanceInDollars.toFixed(2);
-    }
-    return totalBalanceInDollars.toFixed(0);
-  };
+  const { isConnected, address } = useAccount();
 
   const { t } = useTranslation("dappStore");
 
@@ -61,16 +73,35 @@ export const AccountBalance = () => {
       </p>
       <div className="flex flex-col space-y-3 md:flex-row md:space-x-3 md:space-y-0 ">
         <div>
-          <h6 className="text-3xl font-bold text-white md:text-5xl">
-            {isConnected ? drawTotalBalance() : "- "}
+          <h6 className="text-3xl font-bold text-white md:text-5xl flex items-center ">
+            <Suspense
+              fallback={
+                <span className="bg-white/5 w-16 h-[0.8lh] animate-pulse rounded-lg "></span>
+              }
+            >
+              {address && (
+                <>
+                  <TotalEvmos address={address} />
+                </>
+              )}
+            </Suspense>
+            {!address && "-"}
             <span className="ml-2 text-3xl font-bold uppercase text-white opacity-50 md:text-5xl">
               EVMOS
             </span>
           </h6>
-          <p className="mt-4 text-lg text-white opacity-50">
-            ${isConnected ? drawTotalBalanceInDollars() : "-"}
+          <p className="mt-4 text-lg flex text-white opacity-50">
+            {!address && "-"}
+            <Suspense
+              fallback={
+                <span className="bg-white/5 w-16 h-[0.8lh] animate-pulse rounded-lg "></span>
+              }
+            >
+              {address && <TotalUsd address={address} />}
+            </Suspense>
           </p>
         </div>
+
         {isConnected && (
           <div className="md:relative md:left-[16px] md:top-[1px] ">
             <TopupModalTrigger>

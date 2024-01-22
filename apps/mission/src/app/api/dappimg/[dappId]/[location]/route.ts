@@ -2,7 +2,9 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { fetchDapps } from "@evmosapps/dappstore-page/src/lib/fetch-dapps";
+import { cachedFetch } from "helpers/src/dev/cached-fetch";
 import { Log } from "helpers/src/logger";
+import { unstable_cache } from "next/cache";
 export async function generateStaticParams() {
   const notionDapps = Object.values(await fetchDapps());
 
@@ -63,7 +65,17 @@ export async function GET(
       status: 404,
     });
   }
-  const data = await fetch(imgProps._originalSrc);
+  const data = await cachedFetch(imgProps._originalSrc, {
+    devCache: {
+      revalidate: 60 * 60 * 24 * 7,
+      tags: ["image", dappId, location],
+    },
+    next: {
+      revalidate: 60 * 60 * 24 * 7,
+      tags: ["image", dappId, location],
+    },
+  });
+
   const contentType = data.headers.get("Content-Type");
 
   return new Response(data.body, {

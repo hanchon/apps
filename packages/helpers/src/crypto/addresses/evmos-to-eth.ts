@@ -18,6 +18,6 @@ export const evmosToEth = (address: CosmosAddress): HexAddress => {
   }
   const { words } = bech32.decode(address);
   return getAddress(
-    `0x${Buffer.from(bech32.fromWords(words)).toString("hex")}`
+    `0x${Buffer.from(bech32.fromWords(words)).toString("hex")}`,
   );
 };

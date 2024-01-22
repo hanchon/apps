@@ -5,6 +5,7 @@ import { tryCatch } from "../error-handling";
 import { readDevCache, writeDevCache } from "./dev-cache-crud";
 import { snakeCase } from "lodash-es";
 import { hashString } from "../hash/hash-string";
+import { Log } from "..";
 
 // Custom header used for identifying cache status in the response
 const cacheHeader = "evmos-dev-cache";
@@ -74,16 +75,18 @@ export const cachedFetch = async (
 
   // Function to perform a fetch request and update cache
   const req = async () => {
+    Log("dev-cache-mode").info("Dev Cache MISS:", url.toString());
     const response = await fetch(input, init);
 
     // Set custom header to indicate cache miss
-    if (!response.ok) {
+    if (!response.ok || response.status < 200 || response.status >= 300) {
       return response;
     }
     const serializedHeaders = serializeHeaders(response.headers);
 
     // Convert response to text and handle any errors
     const [err, serializedResponse] = await tryCatch(async () => {
+      console.log(serializedHeaders["content-type"], url.toString());
       if (serializedHeaders["content-type"]?.startsWith("image/")) {
         return {
           response: encodeBuffer(await response.clone().arrayBuffer()),
@@ -140,6 +143,7 @@ export const cachedFetch = async (
   } else {
     // Indicate a cache hit with a custom header
     response.headers.set(cacheHeader, "HIT");
+    Log("dev-cache-mode").info("Dev Cache HIT:", url.toString());
   }
 
   return response;

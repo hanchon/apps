@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Log, formatNumber } from "helpers";
+import { Log, formatNumber, raise } from "helpers";
 import {
   DEFAULT_FORM_VALUES,
   PlansType,
@@ -21,6 +21,7 @@ import {
   setVestingAccountNameLocalstorage,
   vestingSettingsConfig,
 } from "../helpers";
+import { useEvmosBalance } from "@evmosapps/evmos-wallet/src/api/useEvmosBalance";
 
 import {
   StoreType,
@@ -44,46 +45,31 @@ import { BigNumber } from "@ethersproject/bignumber";
 
 import { getVesting } from "../../../internal/fetch";
 import { VestingResponse } from "../../../internal/types";
-import { getEvmosBalance } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/fetch";
+
 import { ethers } from "ethers";
 import { EXPLORER_URL } from "constants-helper";
 import { switchChain, getChainId } from "wagmi/actions";
 import { E } from "helpers";
 import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { ModalTitle } from "../../ModalTitle";
-import { useConfig } from "wagmi";
+import { useAccount, useConfig } from "wagmi";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 const evmos = getEvmosChainInfo();
 export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
   const [disabled, setDisabled] = useState(false);
-  const wallet = useSelector((state: StoreType) => state.wallet.value);
+  const { address } = useAccount();
   const dispatch = useDispatch();
   const [vestingAddress, setVestingAddress] = useState("");
   const [vestingAddressError, setVestingAddressError] = useState(false);
   const [vestingAddressData, setVestingAddressData] =
     useState<VestingResponse | null>(null);
   const { fundVestingAccount } = useVestingPrecompile();
-  const [funderBalance, setFunderBalance] = useState(BigNumber.from(0));
+
   const [fundAmount, setAmount] = useState("0");
   const config = useConfig();
-
-  useEffect(() => {
-    getEvmosBalance(wallet.evmosAddressCosmosFormat)
-      .then((response) => {
-        if ("code" in response) {
-          setFunderBalance(BigNumber.from(0));
-        } else {
-          setFunderBalance(
-            BigNumber.from(
-              response?.balance.amount ? response.balance.amount : 0,
-            ),
-          );
-        }
-      })
-      .catch(() => {});
-  }, [wallet.evmosAddressCosmosFormat]);
+  const { evmosBalance: funderBalance } = useEvmosBalance();
 
   useEffect(() => {
     const _amount = BigNumber.from(ethers.parseEther(fundAmount));
@@ -159,7 +145,7 @@ export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
         );
 
       const hash = await fundVestingAccount(
-        wallet.evmosAddressEthFormat,
+        address ?? raise("No address"),
         d.address as string,
         startTime,
         lockupPeriods,
@@ -355,8 +341,9 @@ export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
 
           {!vestingAddressError &&
             vestingAddressData?.account?.funder_address &&
+            address &&
             vestingAddressData?.account?.funder_address?.toLowerCase() !==
-              wallet?.evmosAddressCosmosFormat?.toLocaleLowerCase() && (
+              normalizeToCosmos(address) && (
               <ErrorContainer description={t("fund.create.error")} />
             )}
 

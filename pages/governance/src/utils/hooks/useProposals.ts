@@ -26,6 +26,7 @@ import {
 } from "helpers/src/crypto/protobuf/assert-message-type";
 import { MsgUpdateParams } from "@buf/evmos_evmos.bufbuild_es/evmos/inflation/v1/tx_pb";
 import { EthAccount } from "@buf/evmos_evmos.bufbuild_es/ethermint/types/v1/account_pb";
+
 const [, parsedProposals] = E.try(
   () =>
     JSON.parse(process.env.NEXT_PUBLIC_PROPOSALS_TO_REMOVE ?? "[]") as string[],
@@ -45,45 +46,45 @@ const removeProposals = <
     (proposal) => !proposalToRemove.includes(proposal.id),
   ) as T;
 };
-Deposit.typeName;
-export const useProposals = (pid?: string) => {
-  const test = {
-    "@type": "/ethermint.types.v1.EthAccount",
-    base_account: {
-      address: "evmos1gxykhk5uffcrc7mqppftfrcxumqm6gz0lh8t5k",
-      pub_key: {
-        "@type": "/ethermint.crypto.v1.ethsecp256k1.PubKey",
-        key: "AlfWj9NcMhGTB4419WnILQ77mLqfMBeJ1uCqkGT05Mk+",
-      },
-      account_number: "91471376",
-      sequence: "154",
-    },
-    code_hash:
-      "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
-  } as unknown;
-  if (isMessageType(test, "cosmos.gov.v1.MsgExecLegacyContent")) {
-    console.log("test");
-    if (isMessageType(test.content, "cosmos.gov.v1beta1.TextProposal")) {
-    }
-  }
 
+export const useProposals = (pid?: string) => {
   const chainRef = useEvmosChainRef();
   const proposalsResponse = useQuery({
-    // queryKey: ["proposalss"],
-    // queryFn: () => getProposals(),
-
-    queryKey: ["proposalss", chainRef],
-    queryFn: () =>
-      cosmos(chainRef)
-        .GET("/cosmos/gov/v1/proposals", {
-          params: {
-            query: {
-              "pagination.limit": "1000",
-              "pagination.reverse": true,
+    queryKey: ["proposals", chainRef],
+    queryFn: async () => {
+      const proposals =
+        (await cosmos(chainRef)
+          .GET("/cosmos/gov/v1/proposals", {
+            params: {
+              query: {
+                "pagination.limit": "50",
+                "pagination.reverse": true,
+              },
             },
+          })
+          .then(
+            ({ data = {} }) =>
+              data?.proposals?.filter(
+                ({ id }) => id && parsedProposals?.includes(id) === false,
+              ),
+          )) ?? [];
+
+      return proposals.flatMap(({ id, title, summary, messages, status }) => {
+        if (!id && status) return [];
+        return [
+          {
+            id,
+            title:
+              title || get(messages, "0.content.title") || `Proposal ${id}`,
+
+            description:
+              summary || get(messages, "0.content.description") || "",
+
+            status,
           },
-        })
-        .then(({ data = {} }) => data as DeepRequired<typeof data>),
+        ];
+      });
+    },
   });
 
   const proposals = useMemo(() => {
@@ -91,7 +92,7 @@ export const useProposals = (pid?: string) => {
       return [];
     }
     proposalsResponse.data.proposals;
-    // if (proposalsResponse.data !== undefined) {
+
     const filtered = removeProposals(
       proposalsResponse.data.proposals,
       PROPOSALS_TO_REMOVE,
@@ -166,27 +167,29 @@ export const useProposals = (pid?: string) => {
       ]);
 
       const tallyingData = {
-        quorum: (
-          Number(proposalsResponse.data.tally_params.quorum) * 100
-        ).toFixed(2),
-        threshold: (
-          Number(proposalsResponse.data.tally_params.threshold) * 100
-        ).toFixed(2),
-        veto_threshold: (
-          Number(proposalsResponse.data.tally_params.veto_threshold) * 100
-        ).toFixed(2),
+        // quorum: (
+        //   Number(proposalsResponse.data.tally_params.quorum) * 100
+        // ).toFixed(2),
+        // threshold: (
+        //   Number(proposalsResponse.data.tally_params.threshold) * 100
+        // ).toFixed(2),
+        // veto_threshold: (
+        //   Number(proposalsResponse.data.tally_params.veto_threshold) * 100
+        // ).toFixed(2),
+        quorum: "0",
+        threshold: "0",
+        veto_threshold: "0",
       };
 
       const description =
-        proposalFiltered.summary ||
-        proposalFiltered.messages?.[0]?.content.description ||
+        get(proposalFiltered, "summary") ||
+        get(proposalFiltered, "messages.0.content.description") ||
         "";
 
       const title =
-        proposalFiltered.title ||
-        proposalFiltered.messages?.[0]?.content.title ||
+        get(proposalFiltered, "title") ||
+        get(proposalFiltered, "messages.0.content.title") ||
         "";
-
       temp = {
         id: proposalFiltered.id,
         title,
@@ -212,7 +215,7 @@ export const useProposals = (pid?: string) => {
         type:
           proposalFiltered.messages.length > 0
             ? splitString(
-                proposalFiltered.messages?.[0]?.content["@type"] ?? "",
+                get(proposalFiltered, "messages.0.content.@type") ?? "",
               )
             : "",
         totalDeposit:

@@ -1,6 +1,8 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+import { safeBigInt } from "./safe-bigint";
+
 export function max(a: bigint, b: bigint): bigint;
 export function max(a: number, b: number): number;
 export function max(a: number | bigint, b: number | bigint): number | bigint {
@@ -48,4 +50,11 @@ export function multiply(
       BigInt(precisionMultiplier)
     );
   }
+}
+
+export function divide(a: bigint, b: bigint, precision = 8) {
+  const precisionMultiplier = 10 ** precision;
+  const divided = (a * BigInt(precisionMultiplier)) / b;
+
+  return Number(divided) / Number(precisionMultiplier);
 }

@@ -4,7 +4,9 @@
 import createClient from "openapi-fetch";
 import { paths } from "./cosmos-client";
 export const ENV_URL =
-  process.env.NEXT_PUBLIC_VERCEL_URL ?? typeof window === "undefined"
+  process.env.VERCEL_URL ||
+  process.env.NEXT_PUBLIC_VERCEL_URL ||
+  typeof window === "undefined"
     ? `http://localhost:${process.env.PORT}`
     : "";
 

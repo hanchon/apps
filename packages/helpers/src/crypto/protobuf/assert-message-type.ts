@@ -1,5 +1,6 @@
-// @buf/cosmos_cosmos-sdk.bufbuild_es
-// @bufbuild/protobuf
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import {
   AnyMessage,
   Message,
@@ -36,7 +37,7 @@ type ProtoTypeMap = {
 
 export const isMessageType = <T extends keyof ProtoTypeMap>(
   msg: unknown,
-  msgTypeName: T
+  msgTypeName: T,
 ): msg is PlainMessage<
   InstanceType<ProtoTypeMap[T]> extends Message<any>
     ? InstanceType<ProtoTypeMap[T]>
@@ -55,7 +56,7 @@ export const isMessageType = <T extends keyof ProtoTypeMap>(
 
 export const assertMessageType = <T extends MessageType>(
   msg: unknown,
-  msgProto: T
+  msgProto: T,
 ): msg is PlainMessage<
   InstanceType<T> extends Message<any> ? InstanceType<T> : never
 > => {

@@ -21,6 +21,12 @@ import { fetchChainByRef } from "./procedures/chains/queries/chain-by-ref/fetch-
 
 import { fetchAccountBalanceByDenom } from "./procedures/account/fetch-account-balance-by-denom";
 import { fetchTokenByDenom } from "./procedures/tokens/queries/price/fetch-token-by-denom";
+import {
+  legacyFetchAllValidators,
+  legacyFetchStakingInfo,
+} from "./procedures/legacy/queries/legacy-total-staked-by-address";
+import { fetchAccountEvmosRewards } from "./procedures/account/fetch-account-evmos-rewards";
+import { fetchAccountStakedEvmos } from "./procedures/account/fetch-account-staked-evmos";
 
 export const appRouter = router({
   token: router({
@@ -63,6 +69,26 @@ export const appRouter = router({
           }),
         )
         .query((opts) => fetchAccountBalanceByDenom(opts.input)),
+      rewards: router({
+        evmos: publicProcedure
+          .input(
+            z.object({
+              chainRef: z.string(),
+              address: AddressSchema,
+            }),
+          )
+          .query((opts) => fetchAccountEvmosRewards(opts.input)),
+      }),
+      staked: router({
+        evmos: publicProcedure
+          .input(
+            z.object({
+              chainRef: z.string(),
+              address: AddressSchema,
+            }),
+          )
+          .query((opts) => fetchAccountStakedEvmos(opts.input)),
+      }),
     }),
   }),
 
@@ -91,6 +117,22 @@ export const appRouter = router({
         }),
       )
       .query((opts) => legacyFetchERC20ModuleBalance(opts.input)),
+
+    stakingInfo: publicProcedure
+      .input(
+        z.object({
+          chainRef: z.string(),
+          address: AddressSchema,
+        }),
+      )
+      .query((opts) => legacyFetchStakingInfo(opts.input)),
+    allValidators: publicProcedure
+      .input(
+        z.object({
+          chainRef: z.string(),
+        }),
+      )
+      .query((opts) => legacyFetchAllValidators(opts.input)),
   }),
 });
 

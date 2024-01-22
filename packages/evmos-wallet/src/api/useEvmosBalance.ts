@@ -17,7 +17,7 @@ export const useEvmosBalance = () => {
       chainRef,
       address: address ?? raise("Address not found"),
       denom: "EVMOS",
-    })
+    }),
   );
 
   return { evmosBalance: BigNumber.from(data?.balance.cosmos ?? 0) };

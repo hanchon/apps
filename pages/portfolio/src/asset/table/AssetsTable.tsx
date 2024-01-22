@@ -30,7 +30,7 @@ const AssetsTable = () => {
   const chainRef = useEvmosChainRef();
   const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
 
-  const { stakedData } = useStakedEvmos();
+  const staked = useStakedEvmos();
   const { data, error, isLoading } = useTrpcQuery((t) =>
     t.legacy.erc20ModuleBalance({
       address,
@@ -74,7 +74,7 @@ const AssetsTable = () => {
   const topProps = {
     evmosPrice: normalizedAssetsData?.table[0]?.coingeckoPrice ?? 0,
     totalAssets: getTotalAssets(normalizedAssetsData, {
-      total: stakedData ? stakedData?.value : "0",
+      total: staked.data?.toString() ?? "0",
       decimals: normalizedAssetsData?.table[0]?.decimals ?? 0,
       coingeckoPrice: normalizedAssetsData.table[0]?.coingeckoPrice ?? 0,
     }),
