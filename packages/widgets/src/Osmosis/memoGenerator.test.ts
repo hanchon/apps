@@ -3,17 +3,17 @@
 import { expect, test } from "vitest";
 
 import {
-  AEVMOS_DENOM,
+  AEVMOS_DENOM_IN_OSMOSIS,
   GenerateOsmosisMemo,
   NO_OSMOSIS_FALLBACK,
   OSMOSIS_OUTPOST_CONTRACT,
   OsmosisMemoParams,
-  UOSMO_DENOM,
+  UOSMO_DENOM_IN_OSMOSIS,
 } from "./memoGenerator";
 
 test("valid no fallback address", () => {
   const params: OsmosisMemoParams = {
-    outputDenom: UOSMO_DENOM,
+    outputDenom: UOSMO_DENOM_IN_OSMOSIS,
     slippagePercentage: "5",
     windowSeconds: 20,
     receiver: "evmos1hp2525adxv83t2sqtts6nd0w6dtrrzx56j9mqw",
@@ -27,7 +27,7 @@ test("valid no fallback address", () => {
 
 test("valid with fallback address", () => {
   const params: OsmosisMemoParams = {
-    outputDenom: AEVMOS_DENOM,
+    outputDenom: AEVMOS_DENOM_IN_OSMOSIS,
     slippagePercentage: "5",
     windowSeconds: 20,
     receiver: "evmos1hp2525adxv83t2sqtts6nd0w6dtrrzx56j9mqw",
@@ -40,7 +40,7 @@ test("valid with fallback address", () => {
 
 test("invalid slippage (less than 0)", () => {
   const params: OsmosisMemoParams = {
-    outputDenom: UOSMO_DENOM,
+    outputDenom: UOSMO_DENOM_IN_OSMOSIS,
     slippagePercentage: "-1",
     windowSeconds: 20,
     receiver: "evmos1hp2525adxv83t2sqtts6nd0w6dtrrzx56j9mqw",
@@ -54,7 +54,7 @@ test("invalid slippage (less than 0)", () => {
 
 test("invalid slippage (more than 20)", () => {
   const params: OsmosisMemoParams = {
-    outputDenom: UOSMO_DENOM,
+    outputDenom: UOSMO_DENOM_IN_OSMOSIS,
     slippagePercentage: "21",
     windowSeconds: 20,
     receiver: "evmos1hp2525adxv83t2sqtts6nd0w6dtrrzx56j9mqw",
@@ -68,7 +68,7 @@ test("invalid slippage (more than 20)", () => {
 
 test("invalid windowSeconds (less than 0)", () => {
   const params: OsmosisMemoParams = {
-    outputDenom: UOSMO_DENOM,
+    outputDenom: UOSMO_DENOM_IN_OSMOSIS,
     slippagePercentage: "5",
     windowSeconds: -1,
     receiver: "evmos1hp2525adxv83t2sqtts6nd0w6dtrrzx56j9mqw",
@@ -82,7 +82,7 @@ test("invalid windowSeconds (less than 0)", () => {
 
 test("invalid windowSeconds (more than 60)", () => {
   const params: OsmosisMemoParams = {
-    outputDenom: UOSMO_DENOM,
+    outputDenom: UOSMO_DENOM_IN_OSMOSIS,
     slippagePercentage: "5",
     windowSeconds: 61,
     receiver: "evmos1hp2525adxv83t2sqtts6nd0w6dtrrzx56j9mqw",
@@ -110,7 +110,7 @@ test("invalid denom (aevmos)", () => {
 
 test("invalid fallbackAddress (empty)", () => {
   const params: OsmosisMemoParams = {
-    outputDenom: UOSMO_DENOM,
+    outputDenom: UOSMO_DENOM_IN_OSMOSIS,
     slippagePercentage: "5",
     windowSeconds: 20,
     receiver: "evmos1hp2525adxv83t2sqtts6nd0w6dtrrzx56j9mqw",
@@ -124,7 +124,7 @@ test("invalid fallbackAddress (empty)", () => {
 
 test("invalid fallbackAddress (evmos wallet)", () => {
   const params: OsmosisMemoParams = {
-    outputDenom: UOSMO_DENOM,
+    outputDenom: UOSMO_DENOM_IN_OSMOSIS,
     slippagePercentage: "5",
     windowSeconds: 20,
     receiver: "evmos1hp2525adxv83t2sqtts6nd0w6dtrrzx56j9mqw",
@@ -138,7 +138,7 @@ test("invalid fallbackAddress (evmos wallet)", () => {
 
 test("invalid fallbackAddress (incomplete osmos wallet -> 1 char less)", () => {
   const params: OsmosisMemoParams = {
-    outputDenom: UOSMO_DENOM,
+    outputDenom: UOSMO_DENOM_IN_OSMOSIS,
     slippagePercentage: "5",
     windowSeconds: 20,
     receiver: "evmos1hp2525adxv83t2sqtts6nd0w6dtrrzx56j9mqw",

@@ -14,8 +14,8 @@ import { Address } from "helpers/src/crypto/addresses/types";
 import { normalizeToEth } from "helpers/src/crypto/addresses/normalize-to-eth";
 import { isEvmosAddress } from "helpers/src/crypto/addresses/is-evmos-address";
 
-export const DEFAULT_MEMO_IBC = "";
-export const DEFAULT_GAS_IBC = 72000n;
+const DEFAULT_MEMO_IBC = "";
+const DEFAULT_GAS_IBC = 72000n;
 
 const createIBCArgs = (
   sender: string,
@@ -56,7 +56,7 @@ const createIBCArgs = (
 
 const prepareContractIBCTransferInternal = async (
   sender: Address,
-  receiver: Address,
+  receiver: string,
   tokenAmount: bigint,
   ibcDenom: string,
   memo: string,
@@ -153,7 +153,7 @@ export const writeContractIBCOutpost = async ({
   estimatedGas = DEFAULT_GAS_IBC,
 }: {
   sender: Address;
-  receiver: Address;
+  receiver: string;
   tokenAmount: bigint;
   tokenDenom: string;
   memo: string;

@@ -6,11 +6,21 @@ export const OSMOSIS_OUTPOST_CONTRACT =
 
 export const NO_OSMOSIS_FALLBACK = "do_nothing";
 
-export const UOSMO_DENOM = "uosmo";
-export const AEVMOS_DENOM =
+export const UOSMO_DENOM_IN_OSMOSIS = "uosmo";
+export const AEVMOS_DENOM_IN_OSMOSIS =
   "ibc/6AE98883D4D5D5FF9E50D7130F1305DA2FFA0C652D1DD9C123657C6B4EB2DF8A";
 
+export const UOSMO_DENOM_ERC20_IN_EVMOS =
+  "0xFA3C22C069B9556A4B2f7EcE1Ee3B467909f4864";
+
+export const UOSMO_DENOM_IBC_IN_EVMOS =
+  "ibc/ED07A3391A112B175915CD8FAF43A2DA8E4790EDE12566649D0C2F97716B8518";
+
+export const EVMOS_ERC20_IN_EVMOS =
+  "0xD4949664cD82660AaE99bEdc034a0deA8A0bd517";
+
 // Types
+type onFailedDelivery = string | { local_recovery_addr: string };
 type OsmosisOutpostMemo = {
   wasm: {
     contract: string;
@@ -24,7 +34,7 @@ type OsmosisOutpostMemo = {
           };
         };
         receiver: string;
-        on_failed_delivery: string;
+        on_failed_delivery: onFailedDelivery;
       };
     };
   };
@@ -60,9 +70,12 @@ export function GenerateOsmosisMemo(
   }
 
   // NOTE: the outpost only support base denom and the denom must be the one on osmosis
-  if (params.outputDenom != UOSMO_DENOM && params.outputDenom != AEVMOS_DENOM) {
+  if (
+    params.outputDenom != UOSMO_DENOM_IN_OSMOSIS &&
+    params.outputDenom != AEVMOS_DENOM_IN_OSMOSIS
+  ) {
     throw new TypeError(
-      `only ${UOSMO_DENOM} and ${AEVMOS_DENOM} are supported as denominations`,
+      `only ${UOSMO_DENOM_IN_OSMOSIS} and ${AEVMOS_DENOM_IN_OSMOSIS} are supported as denominations`,
     );
   }
 
@@ -72,6 +85,14 @@ export function GenerateOsmosisMemo(
 
   if (params.fallbackAddress != NO_OSMOSIS_FALLBACK && !validWallet) {
     throw new TypeError("invalid fallback address");
+  }
+
+  let onFailedDelivery: onFailedDelivery = params.fallbackAddress;
+
+  if (validWallet) {
+    onFailedDelivery = {
+      local_recovery_addr: params.fallbackAddress,
+    };
   }
 
   // Create message
@@ -88,7 +109,7 @@ export function GenerateOsmosisMemo(
             },
           },
           receiver: params.receiver,
-          on_failed_delivery: params.fallbackAddress,
+          on_failed_delivery: onFailedDelivery,
         },
       },
     },

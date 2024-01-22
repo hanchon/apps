@@ -12,8 +12,8 @@ import { ethToBech32 } from "@evmosapps/evmos-wallet";
 import { writeContractIBCOutpost } from "@evmosapps/evmos-wallet";
 import { generateStrideMemo } from "./memoGenerator";
 
-// TODO: add the team fallback address here
-const strideFallbackAddress = "";
+// eslint-disable-next-line no-secrets/no-secrets
+const strideFallbackAddress = "stride1yzw585gd8ajymcaqt9e98k5tt66qpzspc93ghf";
 
 export function useStridePrecompile() {
   const { address } = useAccount();
@@ -32,10 +32,7 @@ export function useStridePrecompile() {
         tokenDenom: "aevmos",
         memo: generateStrideMemo(
           ethToBech32(address, "evmos"),
-          // TODO: just keep the fallback address when it's set
-          strideFallbackAddress != ""
-            ? strideFallbackAddress
-            : ethToBech32(address, "stride"),
+          strideFallbackAddress,
         ),
         estimatedGas: 1227440n,
       });
