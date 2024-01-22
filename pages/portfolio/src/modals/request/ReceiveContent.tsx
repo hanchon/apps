@@ -181,7 +181,7 @@ export const ReceiveContent = ({
                       {selectedChain.name}
                     </CryptoSelector.Button>
                     <CryptoSelector.Options
-                      label={t("transfer.section.networkPickerTitle")}
+                      label={t("transfer.section.network.label")}
                       className="right-0"
                     >
                       {networkOptions.map((value) => {
