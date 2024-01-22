@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) | packages/widgets 1.0.1 packages/evmos-wallet 1.0.25 | migrate osmosis and stride outpost to ICS20 precompile
+
 ## 1.3.14 - 2024-01-19
 
 - (chore) add redirect from /assets to /portfolio

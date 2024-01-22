@@ -53,7 +53,7 @@ const StrideWidget = () => {
   function handleLiquidStake() {
     try {
       liquidStake({
-        amount: parseUnits(stakedAmount.toString(), 18).toString(),
+        amount: parseUnits(stakedAmount.toString(), 18),
       });
       setShowBalanceLink(true);
     } catch (e) {}
