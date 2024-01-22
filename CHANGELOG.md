@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) | packages/helpers 1.0.11 |Read proxy URL correctly for WAGMI
 - (chore) | packages/widgets 1.0.1 packages/evmos-wallet 1.0.25 | migrate osmosis and stride outpost to ICS20 precompile
 - (fix) fse-950 | packages/i18n 1.0.1 pages/dappstore 1.1.4 | Copilot Get Started Edits
 - (fix) fse-949 | pages/portfolio 1.1.4 | Fix title in Receive Modal

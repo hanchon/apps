@@ -3,7 +3,7 @@
 
 import { evmos as wagmiEvmos } from "wagmi/chains";
 import { Chain, Hex } from "viem";
-import { ENV_URL } from "./clients/cosmos";
+import { getPubUrl } from "./clients/get-pub-url";
 
 export const evmosmainnet = {
   ...wagmiEvmos,
@@ -13,8 +13,8 @@ export const evmosmainnet = {
     },
   },
   rpcUrls: {
-    default: { http: [`${ENV_URL}/api/eth-json-rpc/evmos`] },
-    public: { http: [`${ENV_URL}/api/eth-json-rpc/evmos`] },
+    default: { http: [`${getPubUrl()}/api/eth-json-rpc/evmos`] },
+    public: { http: [`${getPubUrl()}/api/eth-json-rpc/evmos`] },
   },
 
   networkType: "mainnet",
@@ -30,8 +30,8 @@ export const evmostestnet = {
     },
   },
   rpcUrls: {
-    default: { http: [`${ENV_URL}/api/eth-json-rpc/evmostestnet`] },
-    public: { http: [`${ENV_URL}/api/eth-json-rpc/evmostestnet`] },
+    default: { http: [`${getPubUrl()}/api/eth-json-rpc/evmostestnet`] },
+    public: { http: [`${getPubUrl()}/api/eth-json-rpc/evmostestnet`] },
   },
 
   networkType: "testnet",
@@ -48,8 +48,8 @@ export const evmoslocalnet = {
     },
   },
   rpcUrls: {
-    default: { http: [`${ENV_URL}/api/eth-json-rpc/evmoslocalnet`] },
-    public: { http: [`${ENV_URL}/api/eth-json-rpc/evmoslocalnet`] },
+    default: { http: [`${getPubUrl()}/api/eth-json-rpc/evmoslocalnet`] },
+    public: { http: [`${getPubUrl()}/api/eth-json-rpc/evmoslocalnet`] },
   },
 
   networkType: "localnet",

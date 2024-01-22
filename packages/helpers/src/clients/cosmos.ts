@@ -3,10 +3,7 @@
 
 import createClient from "openapi-fetch";
 import { paths } from "./cosmos-client";
-export const ENV_URL =
-  process.env.NEXT_PUBLIC_VERCEL_URL ?? typeof window === "undefined"
-    ? `http://localhost:${process.env.PORT}`
-    : "";
+import { getPubUrl } from "./get-pub-url";
 
 export const cosmos = (
   chain: string,
@@ -16,7 +13,7 @@ export const cosmos = (
   } = {},
 ) =>
   createClient<paths>({
-    baseUrl: ENV_URL + `/api/cosmos-rest/${chain}/`,
+    baseUrl: getPubUrl() + `/api/cosmos-rest/${chain}/`,
     fetch,
     ...config,
   });
