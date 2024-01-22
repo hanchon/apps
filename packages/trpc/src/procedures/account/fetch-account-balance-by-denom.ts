@@ -28,7 +28,8 @@ export const fetchAccountBalanceByDenom = async ({
     fetchTokens(),
     fetchTokenPrices(),
   ]);
-  const token = tokens.find((token) => token.cosmosDenom === denom);
+
+  const token = tokens.find((token) => token.coinDenom === denom);
   if (!token) {
     throw new Error(`Token ${denom} not found`);
   }
