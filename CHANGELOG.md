@@ -37,6 +37,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 ## Unreleased
 
 - (chore) | packages/widgets 1.0.1 packages/evmos-wallet 1.0.25 | migrate osmosis and stride outpost to ICS20 precompile
+- (fix) fse-950 | packages/i18n 1.0.1 pages/dappstore 1.0.4 | Copilot Get Started Edits
 
 ## 1.3.14 - 2024-01-19
 
