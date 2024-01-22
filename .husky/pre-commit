@@ -2,4 +2,3 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 pnpm lint
-git push --set-upstream origin julia/merge2
