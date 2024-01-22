@@ -34,7 +34,7 @@ test("valid with fallback address", () => {
     fallbackAddress: "osmo1044qatzg4a0wm63jchrfdnn2u8nwdgxxt6e524",
   };
 
-  const expected = `{"wasm":{"contract":"${OSMOSIS_OUTPOST_CONTRACT}","msg":{"osmosis_swap":{"output_denom":"${params.outputDenom}","slippage":{"twap":{"slippage_percentage":"${params.slippagePercentage}","window_seconds":${params.windowSeconds}}},"receiver":"${params.receiver}","on_failed_delivery":"${params.fallbackAddress}"}}}}`;
+  const expected = `{"wasm":{"contract":"${OSMOSIS_OUTPOST_CONTRACT}","msg":{"osmosis_swap":{"output_denom":"${params.outputDenom}","slippage":{"twap":{"slippage_percentage":"${params.slippagePercentage}","window_seconds":${params.windowSeconds}}},"receiver":"${params.receiver}","on_failed_delivery":{"local_recovery_addr":"${params.fallbackAddress}"}}}}}`;
   expect(GenerateOsmosisMemo(params)).toEqual(expected);
 });
 
