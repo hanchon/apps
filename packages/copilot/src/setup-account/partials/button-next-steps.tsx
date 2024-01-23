@@ -39,7 +39,7 @@ export const ButtonsNextSteps = () => {
             "Completed Copilot Onboarding": "Stake your Evmos",
           }}
         >
-          <Button href="/staking">
+          <Button href="/dapps/staking">
             <TitleButton text={t("nextsteps.stakeEvmos.title")} />
             <Badge variant="warning">{t("nextsteps.stakeEvmos.badge")}</Badge>
           </Button>
