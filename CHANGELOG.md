@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (fix) fse-954 | packages/portfolio 1.1.6 | Update mixpanel props
 - (fix) | pages/portfolio 1.1.5 apps/mission 1.0.28 | Fix images in Receive Modal
 - (chore) | packages/constants-helper 1.0.11 | Change Feedback URL
 - (chore) | packages/helpers 1.0.11 | Read proxy URL correctly for WAGMI

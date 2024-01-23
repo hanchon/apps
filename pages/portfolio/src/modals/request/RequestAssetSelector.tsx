@@ -114,7 +114,8 @@ export const RequestAssetSelector = ({
                 "Wallet Provider": activeProvider,
               });
               sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
-                Network: token.sourcePrefix,
+                // TODO: when we add more networks, we should use token.sourcePrefix
+                Network: networkOptions[0],
                 "User Wallet Address": addressConnected,
                 "Wallet Provider": activeProvider,
               });
