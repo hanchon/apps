@@ -1,8 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 "use client";
-import { COMMONWEALTH_URL } from "constants-helper";
-import BannerBlack from "./components/common/banners/BannerBlack";
+
 import { Suspense } from "react";
 import { BannerMessages } from "@evmosapps/ui-helpers";
 import { ErrorBoundary } from "react-error-boundary";
@@ -24,12 +23,6 @@ export const ProposalPage = ({
 
   return (
     <div>
-      <BannerBlack
-        text="Have you ever wondered where proposals come from? Join us in our open
-          and lively discussions over at Commonwealth"
-        href={COMMONWEALTH_URL}
-      />
-
       <div className="mt-5 w-full text-pearl">
         <ErrorBoundary
           fallbackRender={() => {

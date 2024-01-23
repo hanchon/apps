@@ -70,7 +70,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
 
         const hash = await deposit(amount, wallet.evmosAddressEthFormat);
 
-        dispatch(snackBroadcastSuccessful(hash, `${EXPLORER_URL}/tx/`));
+        dispatch(snackBroadcastSuccessful(hash, `${EXPLORER_URL}/tx`));
         sendEvent(SUCCESSFUL_WRAP_TX, {
           "User Wallet Address": wallet?.evmosAddressEthFormat,
           "Wallet Provider": wallet?.extensionName,
@@ -91,7 +91,7 @@ export const useConvert = (useConvertProps: ConvertProps) => {
 
         const hash = await withdraw(amount, wallet.evmosAddressEthFormat);
 
-        dispatch(snackBroadcastSuccessful(hash, `${EXPLORER_URL}/tx/`));
+        dispatch(snackBroadcastSuccessful(hash, `${EXPLORER_URL}/tx`));
         sendEvent(SUCCESSFUL_WRAP_TX, {
           "User Wallet Address": wallet?.evmosAddressEthFormat,
           "Wallet Provider": wallet?.extensionName,
