@@ -12,12 +12,12 @@ import {
 } from "@evmosapps/evmos-wallet";
 import { Button, Tooltip } from "@evmosapps/ui-helpers";
 import { QuestionMarkIcon } from "@evmosapps/icons/QuestionMarkIcon";
-import Convert from "../../modals/transactions/Convert";
 import { ConvertSTR } from "../../modals/transactions/ConvertSTR";
 import { Description } from "./Description";
 import { SubRowProps } from "./types";
 import { useCallback, useMemo } from "react";
 import { CLICK_BUTTON_CONVERT, sendEvent } from "tracker";
+import { useConvertModal } from "../../../modals/convert/ConvertModal";
 export const SubRowContent = ({
   item,
   setIsOpen,
@@ -55,22 +55,18 @@ export const SubRowContent = ({
       />,
     );
   };
-
+  const convertModal = useConvertModal();
   const openModalConvert = () => {
     sendEvent(CLICK_BUTTON_CONVERT, {
       Token: item.tokenName,
     });
 
     if (wallet?.evmosAddressCosmosFormat !== "") {
-      setIsOpen(true);
-      setModalContent(
-        <Convert
-          item={item}
-          feeBalance={feeBalance}
-          address={wallet?.evmosAddressCosmosFormat}
-          setIsOpen={setIsOpen}
-        />,
-      );
+      convertModal.setIsOpen(true, {
+        token: item.symbol,
+        amount: 0n,
+        type: "ICS20",
+      });
     } else {
       dispatch(snackWarningLedger());
     }

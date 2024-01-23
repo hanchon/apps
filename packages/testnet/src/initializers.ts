@@ -15,7 +15,7 @@ export const evmosConfig = {
   chainName: "evmos",
   prefix: "evmos",
   moniker: "evmos-testnode",
-  chainId: "evmoslocal_9000-10",
+  chainId: "evmoslocal_9002-10",
   baseDenom: "aevmos",
 } as const;
 export const setupTestnet = async (

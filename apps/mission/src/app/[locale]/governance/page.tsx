@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { Metadata } from "next";
-export { GovernancePage as default } from "@evmosapps/governance-page";
+export { ProposalsListPage as default } from "@evmosapps/governance-page/src/ProposalsListPage";
 
 export const metadata: Metadata = {
   description:

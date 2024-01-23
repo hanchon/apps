@@ -24,7 +24,7 @@ import {
   ConfirmButton,
 } from "@evmosapps/ui-helpers";
 import { ModalDelegate } from "../../../../utils/types";
-import { useEvmosBalance } from "../../../../utils/hooks/useEvmosBalance";
+import { useEvmosBalance } from "@evmosapps/evmos-wallet/src/api/useEvmosBalance";
 
 export const Redelegate = ({
   item,

@@ -1,25 +1,24 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
 import { useQuery } from "@tanstack/react-query";
-import { EpochsResponse, getEpochs } from "services";
+import { cosmos } from "helpers/src/clients/cosmos";
 
 export const useEpochDay = () => {
-  const epochs = useQuery<EpochsResponse, Error>({
-    queryKey: ["epochs"],
-    queryFn: () => getEpochs(),
+  const chainRef = useEvmosChainRef();
+  const { data, error } = useQuery({
+    queryKey: ["epochs", chainRef],
+    queryFn: () =>
+      cosmos(chainRef)
+        .GET("/evmos/epochs/v1/epochs")
+        .then(({ data }) => {
+          return Date.parse(
+            data?.epochs?.find(({ identifier }) => identifier === "day")
+              ?.current_epoch_start_time ?? "",
+          );
+        }),
   });
 
-  const epoch = epochs?.data?.epochs?.filter(
-    (e: { identifier: string }) => e.identifier === "day",
-  );
-
-  let convertedEpochStart = 0;
-  if (epoch?.length === 1) {
-    convertedEpochStart = Date.parse(
-      epoch?.[0]?.current_epoch_start_time ?? "",
-    );
-  }
-
-  return { epochs: convertedEpochStart, error: epochs.error };
+  return { epochs: data ?? 0, error: error };
 };

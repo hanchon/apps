@@ -17,8 +17,6 @@ import { Modals } from "../../components/modals";
 import { Container } from "@evmosapps/ui-helpers/src/Container";
 import { StatefulBanner } from "stateful-components/src/banner/banner";
 
-export const dynamic = "error";
-
 export function generateStaticParams() {
   return languages.map((locale) => ({ locale }));
 }

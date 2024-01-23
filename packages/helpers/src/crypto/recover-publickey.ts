@@ -7,9 +7,11 @@ import { secp256k1 } from "@noble/curves/secp256k1";
 export const recoverPublicKey = ({
   signature,
   hash,
+  isCompressed = false,
 }: {
   signature: Hex;
   hash: Hex;
+  isCompressed?: boolean;
 }): Hex => {
   // Derive v = recoveryId + 27 from end of the signature (27 is added when signing the message)
   // The recoveryId represents the y-coordinate on the secp256k1 elliptic curve and can have a value [0, 1].
@@ -19,6 +21,7 @@ export const recoverPublicKey = ({
   const publicKey = secp256k1.Signature.fromCompact(signature.substring(2, 130))
     .addRecoveryBit(v - 27)
     .recoverPublicKey(hash.substring(2))
-    .toHex(false);
+    .toHex(isCompressed);
+
   return `0x${publicKey}`;
 };

@@ -3,6 +3,8 @@
 
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits, parseEther } from "@ethersproject/units";
+import { safeBigInt } from "./bigint/safe-bigint";
+import { divide } from "./bigint";
 
 type addAssetsType = {
   cosmosBalance: BigNumber;
@@ -179,7 +181,7 @@ export function addDollarAssets(assets: addDolarsAssetsType) {
   );
 }
 
-export function formatDate(date: string) {
+export function formatDate(date: string | number | Date) {
   return new Intl.DateTimeFormat("default", {
     year: "numeric",
     month: "long",
@@ -241,24 +243,29 @@ export const sumBigNumber = (value: string[]) => {
   return total;
 };
 
-export const getPercentage = (value: string[]) => {
-  // given an array of strings,
-  // returns an array with the percents
-  let total = 0;
-  const sum = value.reduce((prev, curr) => {
-    return prev + Number(curr);
-  }, total);
-  total = sum ? sum : 0;
-
-  // avoid div by 0
-  if (total === 0) {
-    total = 1;
+export const getPercentage = (counts: {
+  yes: string;
+  no: string;
+  abstain: string;
+  noWithVeto: string;
+}) => {
+  const total = Object.values(counts).reduce((prev, curr) => {
+    return prev + safeBigInt(curr);
+  }, 0n);
+  if (total === 0n) {
+    return {
+      yes: 0,
+      no: 0,
+      abstain: 0,
+      noWithVeto: 0,
+    };
   }
-
-  const percents = value.map((item) => {
-    return (Number(item) * 100) / total;
-  });
-  return percents;
+  return {
+    yes: divide(safeBigInt(counts.yes), total),
+    no: divide(safeBigInt(counts.no), total),
+    abstain: divide(safeBigInt(counts.abstain), total),
+    noWithVeto: divide(safeBigInt(counts.noWithVeto), total),
+  };
 };
 
 export function formatAttoNumber(

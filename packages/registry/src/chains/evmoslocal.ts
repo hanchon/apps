@@ -12,7 +12,7 @@
 export default {
   prefix: "evmos",
   name: "Evmos Local",
-  cosmosId: "evmoslocal_9000-10",
+  cosmosId: "evmoslocal_9003-10",
   identifier: "evmoslocal",
   gasPriceStep: {
     low: "10000000000",

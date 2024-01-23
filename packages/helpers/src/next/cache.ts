@@ -18,7 +18,7 @@ const isNext = ["development", "test", "production"].includes(
 
 type Callback = (...args: any[]) => Promise<unknown>;
 
-export function _cache<T extends Callback>(
+function _cache<T extends Callback>(
   cb: T,
   keyParts: string[] = [],
   options?: {

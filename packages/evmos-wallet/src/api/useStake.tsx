@@ -1,27 +1,25 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useSelector } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
-import { getStakingInfo } from "../fetch";
-import { StoreType } from "@evmosapps/evmos-wallet";
-import {
-  DelegationsResponse,
-  StakingInfoResponse,
-  UndelegationsResponse,
-} from "../types";
 import { useMemo } from "react";
 import { BigNumber } from "@ethersproject/bignumber";
-import { convertStringFromAtto } from "helpers";
+import { convertStringFromAtto, raise } from "helpers";
+
+import { useTrpcQuery } from "@evmosapps/trpc/client";
+import { useAccount } from "wagmi";
+import { useEvmosChainRef } from "../registry-actions/hooks/use-evmos-chain-ref";
 
 export const useStakingInfo = () => {
-  const value = useSelector((state: StoreType) => state.wallet.value);
+  const { address } = useAccount();
 
-  const stakingInfo = useQuery<StakingInfoResponse, Error>({
-    queryKey: ["stakingInfo", value?.evmosAddressCosmosFormat],
-    queryFn: () => getStakingInfo(value?.evmosAddressCosmosFormat),
-    refetchInterval: 15_000,
-  });
+  const chainRef = useEvmosChainRef();
+
+  const stakingInfo = useTrpcQuery((t) =>
+    t.legacy.stakingInfo({
+      address: address ?? raise("Address not found"),
+      chainRef,
+    }),
+  );
 
   const totalDelegations = useMemo(() => {
     let total = BigNumber.from(0);
@@ -60,9 +58,8 @@ export const useStakingInfo = () => {
   }, [stakingInfo]);
 
   const delegations = useMemo(() => {
-    let delegations: DelegationsResponse[] = [];
+    const delegations = [...(stakingInfo.data?.delegations ?? [])];
     if (stakingInfo.data !== undefined) {
-      delegations = stakingInfo.data?.delegations;
       delegations.sort((a, b) => {
         return a.delegation.validator.rank > b.delegation.validator.rank
           ? 1
@@ -73,9 +70,8 @@ export const useStakingInfo = () => {
   }, [stakingInfo]);
 
   const undelegations = useMemo(() => {
-    let undelegations: UndelegationsResponse[] = [];
+    const undelegations = [...(stakingInfo.data?.undelegations ?? [])];
     if (stakingInfo.data !== undefined) {
-      undelegations = stakingInfo.data?.undelegations;
       undelegations.sort((a, b) => {
         return a.validator.rank > b.validator.rank ? 1 : -1;
       });

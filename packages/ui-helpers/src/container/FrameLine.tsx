@@ -9,7 +9,6 @@ export const Frameline = ({
   variant = "primary",
   className,
 }: ComponentProps<"div"> & {
-  children: JSX.Element;
   variant?: "primary" | "secondary";
 }) => {
   return (

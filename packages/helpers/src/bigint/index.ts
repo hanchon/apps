@@ -49,3 +49,10 @@ export function multiply(
     );
   }
 }
+
+export function divide(a: bigint, b: bigint, precision = 8) {
+  const precisionMultiplier = 10 ** precision;
+  const divided = (a * BigInt(precisionMultiplier)) / b;
+
+  return Number(divided) / Number(precisionMultiplier);
+}

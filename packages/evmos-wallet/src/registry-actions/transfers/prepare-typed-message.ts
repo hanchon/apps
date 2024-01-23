@@ -17,16 +17,10 @@ import { apiCosmosTxBroadcast } from "../../api/cosmos-rest/api-cosmos-tx-broadc
 import { recoverPubkeyFromTypedMessage } from "helpers/src/crypto/eip712/recover-pubkey-from-typed-message";
 import { Address } from "helpers/src/crypto/addresses/types";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
+import { wagmiConfig } from "../..";
+import { getChainId } from "wagmi/actions";
 
 const evmos = getEvmosChainInfo();
-
-const domain = {
-  name: "Cosmos Web3",
-  version: "1.0.0",
-  chainId: toHex(evmos.id),
-  verifyingContract: "cosmos",
-  salt: "0",
-};
 
 export const createTypedMessage = async ({
   sender,
@@ -55,7 +49,13 @@ export const createTypedMessage = async ({
       types: encodeEvmosEIP712Types(serializedMsgs),
       primaryType: "Tx",
 
-      domain,
+      domain: {
+        name: "Cosmos Web3",
+        version: "1.0.0",
+        chainId: toHex(getChainId(wagmiConfig)),
+        verifyingContract: "cosmos",
+        salt: "0",
+      },
       message: {
         account_number: account.accountNumber,
         chain_id: evmos.cosmosId,
@@ -90,6 +90,7 @@ export const broadcastTypedMessage = async ({
   signature,
 }: PreparedTypedTx & { signature: string }) => {
   const pubkey = recoverPubkeyFromTypedMessage(signature as Hex, tx);
+
   const protoTx = new Tx({
     body: {
       memo: tx.message.memo,

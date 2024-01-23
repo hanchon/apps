@@ -12,7 +12,7 @@ import React, {
 } from "react";
 
 import { DropdownArrowIcon } from "@evmosapps/icons/DropdownArrowIcon";
-import { ValidatorsList } from "../../../utils/types";
+
 import { useAllValidators } from "../../../utils/hooks/useAllValidators";
 
 const ValidatorsDropdown = ({
@@ -50,16 +50,6 @@ const ValidatorsDropdown = ({
     return "";
   };
 
-  const onItemClick = useCallback(
-    (option: ValidatorsList) => {
-      setSelectedValue(option.validator.description.moniker);
-      setValidator(option.validator.operator_address);
-      setIsValidatorSelected(true);
-      setIsOpenMenu(!showMenu);
-    },
-    [setValidator, setIsValidatorSelected, showMenu],
-  );
-
   const handleOnChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       setSelectedValue(e.target.value);
@@ -92,7 +82,12 @@ const ValidatorsDropdown = ({
       if (option.validator.description.moniker.toLowerCase() !== validatorName)
         return (
           <div
-            onClick={() => onItemClick(option)}
+            onClick={() => {
+              setSelectedValue(option.validator.description.moniker);
+              setValidator(option.validator.operator_address);
+              setIsValidatorSelected(true);
+              setIsOpenMenu(!showMenu);
+            }}
             key={option.validator.rank}
             className={`flex cursor-pointer justify-between px-6 py-3 font-semibold hover:bg-gray
               `}
@@ -103,7 +98,7 @@ const ValidatorsDropdown = ({
           </div>
         );
     });
-  }, [onItemClick, filtered, validatorName]);
+  }, [filtered, setIsValidatorSelected, setValidator, showMenu, validatorName]);
 
   return (
     <div

@@ -3,8 +3,9 @@
 
 import { Hex } from "viem";
 import { EvmosTypedData } from "./types";
-import { hashTypedData } from "./hash-typed-data";
+
 import { recoverPublicKey } from "../recover-publickey";
+import { hashTypedData } from "viem";
 
 export const recoverPubkeyFromTypedMessage = (
   signature: Hex,
@@ -12,6 +13,7 @@ export const recoverPubkeyFromTypedMessage = (
 ) => {
   return recoverPublicKey({
     signature,
-    hash: hashTypedData(typedMessage),
+    hash: hashTypedData(typedMessage as never),
+    isCompressed: true,
   });
 };

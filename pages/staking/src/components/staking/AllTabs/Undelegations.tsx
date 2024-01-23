@@ -22,7 +22,7 @@ import { MessageTable, Modal } from "@evmosapps/ui-helpers";
 import { CancelUndelegation } from "../modals/transactions/CancelUndelegation";
 import { CloseIcon } from "@evmosapps/icons/CloseIcon";
 import { CLICK_CANCEL_UNDELEGATION_BUTTON, sendEvent } from "tracker";
-import { useStakingInfo } from "../../../utils/hooks/useStakingInfo";
+import { useStakingInfo } from "@evmosapps/evmos-wallet/src/api/useStake";
 import { useSearchContext, SearchContext } from "../../context/SearchContext";
 const dataHead = [
   "Name",

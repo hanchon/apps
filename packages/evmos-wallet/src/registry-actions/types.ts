@@ -5,10 +5,9 @@ import { chains } from "@evmosapps/registry";
 import { CosmosAddress } from "helpers/src/crypto/addresses/types";
 
 export type Chain = (typeof chains)[keyof typeof chains];
-export type Prefix = Chain["prefix"];
+
 export type Token = Chain["tokens"][number];
 type TokenDenom = Token["denom"];
-export type TokenMinDenom = Token["minCoinDenom"];
 
 export type TokenRef = Token["ref"];
 export type TokenByRef = Readonly<{

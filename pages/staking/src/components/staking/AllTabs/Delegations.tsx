@@ -27,8 +27,8 @@ import {
 } from "helpers";
 
 import { Button, MessageTable, Modal } from "@evmosapps/ui-helpers";
-import { DelegationsResponse } from "@evmosapps/evmos-wallet/src/api/types";
-import { useStakingInfo } from "../../../utils/hooks/useStakingInfo";
+
+import { useStakingInfo } from "@evmosapps/evmos-wallet/src/api/useStake";
 import { useSearchContext, SearchContext } from "../../context/SearchContext";
 
 const dataHead = ["Rank", "Name", "Voting Power", "Staked", "Commission", ""];
@@ -55,7 +55,7 @@ const Delegations = () => {
     }
   }, [delegations, value]);
 
-  const handleOnClick = useCallback((item: DelegationsResponse) => {
+  const handleOnClick = useCallback((item: (typeof delegations)[number]) => {
     setIsOpen(true);
     setModalContent(
       <Staking

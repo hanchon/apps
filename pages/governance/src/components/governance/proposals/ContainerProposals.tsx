@@ -1,36 +1,23 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useCallback } from "react";
-
-import { BannerMessages, TrackerEvent } from "@evmosapps/ui-helpers";
+import { TrackerEvent } from "@evmosapps/ui-helpers";
 import ProposalCard from "./ProposalCard";
 import { CLICK_GOVERNANCE_PROPOSAL } from "tracker";
 import { Link } from "@evmosapps/i18n/client";
-import { ProposalProps } from "../../../utils/types";
 import { useAccount } from "wagmi";
 import { getActiveProviderKey } from "@evmosapps/evmos-wallet";
+import { useProposals } from "../../../utils/hooks/useProposals";
+import { createSlug } from "helpers";
 
-const ContainerProposals = ({
-  proposals,
-  loading,
-  error,
-}: {
-  proposals: ProposalProps[];
-  loading: boolean;
-  error: unknown;
-}) => {
+export const ContainerProposals = ({}) => {
   const { address } = useAccount();
   const activeProviderKey = getActiveProviderKey();
-  const drawProposals = useCallback(() => {
-    if (loading) {
-      return <BannerMessages text="Loading..." spinner={true} />;
-    }
-    if (error) {
-      return <BannerMessages text="No results" />;
-    }
-    return proposals.map((proposal) => {
-      return (
+  const { data } = useProposals();
+
+  return (
+    <section className="grid grid-flow-row grid-cols-1 gap-4 px-4 md:px-0 lg:grid-cols-2">
+      {data.map((proposal) => (
         <TrackerEvent
           key={proposal.id}
           event={CLICK_GOVERNANCE_PROPOSAL}
@@ -40,19 +27,16 @@ const ContainerProposals = ({
             "Governance Proposal": proposal.id,
           }}
         >
-          <Link href={`/governance?id=${proposal.id}`} data-testid="proposal">
-            <ProposalCard proposalProps={proposal} />
+          <Link
+            href={`/governance/${`${proposal.id}-${createSlug(
+              proposal.title,
+            )}`}`}
+            data-testid="proposal"
+          >
+            <ProposalCard {...proposal} />
           </Link>
         </TrackerEvent>
-      );
-    });
-  }, [proposals, loading, error, address, activeProviderKey]);
-
-  return (
-    <section className="grid grid-flow-row grid-cols-1 gap-4 px-4 md:px-0 lg:grid-cols-2">
-      {drawProposals()}
+      ))}
     </section>
   );
 };
-
-export default ContainerProposals;

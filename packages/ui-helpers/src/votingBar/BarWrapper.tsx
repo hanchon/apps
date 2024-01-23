@@ -3,24 +3,34 @@
 
 import { BAR_COLORS } from "./styles";
 
-export const BarWrapper = ({ percents }: { percents: string[] }) => {
+export const BarWrapper = ({
+  yes,
+  no,
+  abstain,
+  noWithVeto,
+}: {
+  yes: number;
+  no: number;
+  abstain: number;
+  noWithVeto: number;
+}) => {
   return (
     <div className="text-md bg-darkGray1 flex h-4 w-full overflow-hidden rounded-lg">
       <div
         className={`${BAR_COLORS.yes}`}
-        style={{ width: `${percents[0]}%` }}
+        style={{ width: `${yes * 100}%` }}
       ></div>
       <div
         className={`${BAR_COLORS.no}`}
-        style={{ width: `${percents[1]}%` }}
+        style={{ width: `${no * 100}%` }}
       ></div>
       <div
         className={`${BAR_COLORS.abstain}`}
-        style={{ width: `${percents[2]}%` }}
+        style={{ width: `${abstain * 100}%` }}
       ></div>
       <div
         className={`${BAR_COLORS.noWithVeto}`}
-        style={{ width: `${percents[3]}%` }}
+        style={{ width: `${noWithVeto * 100}%` }}
       ></div>
     </div>
   );

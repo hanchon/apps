@@ -5,13 +5,15 @@
 
 import sharp from "sharp";
 import { unstable_cache } from "next/cache";
+import { cachedFetch } from "../../dev/cached-fetch";
 const bufferToBase64 = (buffer: Buffer) =>
   `data:image/png;base64,${buffer.toString("base64")}`;
 export const generateBlurImage = unstable_cache(
   async (src: string) => {
-    // if (process.env.NODE_ENV === "development") {
-    // }
-    const buffer = await fetch(src, {
+    if (process.env.NODE_ENV === "development") {
+      return bufferToBase64(Buffer.from([]));
+    }
+    const buffer = await cachedFetch(src, {
       next: {
         revalidate: 60 * 60 * 24 * 7,
       },

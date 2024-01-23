@@ -23,7 +23,7 @@ import {
 } from "@evmosapps/ui-helpers";
 import { useCancelUndelegations } from "../hooks/useCancelUndelegations";
 import { undelegationData } from "../../AllTabs/Undelegations";
-import { useEvmosBalance } from "../../../../utils/hooks/useEvmosBalance";
+import { useEvmosBalance } from "@evmosapps/evmos-wallet/src/api/useEvmosBalance";
 
 export const CancelUndelegation = ({
   item,

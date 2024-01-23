@@ -2,19 +2,23 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { formatAttoNumber } from "helpers";
-import { VotingDetail } from "./types";
 
-const VotingDetail = ({ votingProps }: { votingProps: VotingDetail }) => {
+type VotingDetailProps = {
+  bgColor: string;
+  type: string;
+  percent: number;
+  value?: string;
+};
+
+const VotingDetail = ({ percent, value, type, bgColor }: VotingDetailProps) => {
   return (
     <div className="flex items-center space-x-2 text-xs">
-      <div
-        className={`${votingProps.bgColor} h-4 w-4 flex-shrink-0 rounded-[50%]`}
-      ></div>
+      <div className={`${bgColor} h-4 w-4 flex-shrink-0 rounded-[50%]`}></div>
       <div className="font-bold text-pearl opacity-80">
-        <p>{votingProps.type}</p>
-        <span>{Number(votingProps.percent).toFixed(3)}% </span>
-        {votingProps.value !== undefined && (
-          <span>({formatAttoNumber(votingProps.value)})</span>
+        <p>{type}</p>
+        <span>{Number(percent).toFixed(3)}% </span>
+        {value !== undefined && (
+          <span>({formatAttoNumber(value.toString())})</span>
         )}
       </div>
     </div>

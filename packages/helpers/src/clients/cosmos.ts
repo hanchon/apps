@@ -3,6 +3,7 @@
 
 import createClient from "openapi-fetch";
 import { paths } from "./cosmos-client";
+
 import { getPubUrl } from "./get-pub-url";
 
 export const cosmos = (

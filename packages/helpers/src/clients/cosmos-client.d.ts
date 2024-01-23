@@ -8,22 +8,6 @@
  */
 
 export interface paths {
-  "/evmos/claims/v1/claims_records": {
-    /** ClaimsRecords returns all claims records */
-    get: operations["ClaimsRecords"];
-  };
-  "/evmos/claims/v1/claims_records/{address}": {
-    /** ClaimsRecord returns the claims record for a given address */
-    get: operations["ClaimsRecord"];
-  };
-  "/evmos/claims/v1/params": {
-    /** Params returns the claims module parameters */
-    get: operations["ClaimsParams"];
-  };
-  "/evmos/claims/v1/total_unclaimed": {
-    /** TotalUnclaimed queries the total unclaimed tokens from the airdrop */
-    get: operations["TotalUnclaimed"];
-  };
   "/evmos/epochs/v1/current_epoch": {
     /** CurrentEpoch provide current epoch of specified identifier */
     get: operations["CurrentEpoch"];
@@ -43,37 +27,6 @@ export interface paths {
   "/evmos/erc20/v1/token_pairs/{token}": {
     /** TokenPair retrieves a registered token pair */
     get: operations["TokenPair"];
-  };
-  "/evmos/incentives/v1/allocation_meters": {
-    /**
-     * AllocationMeters retrieves active allocation meters for a given
-     * denomination
-     */
-    get: operations["AllocationMeters"];
-  };
-  "/evmos/incentives/v1/allocation_meters/{denom}": {
-    /** AllocationMeter retrieves a active gas meter */
-    get: operations["AllocationMeter"];
-  };
-  "/evmos/incentives/v1/gas_meters/{contract}": {
-    /** GasMeters retrieves active gas meters for a given contract */
-    get: operations["GasMeters"];
-  };
-  "/evmos/incentives/v1/gas_meters/{contract}/{participant}": {
-    /** GasMeter retrieves a active gas meter */
-    get: operations["GasMeter"];
-  };
-  "/evmos/incentives/v1/incentives": {
-    /** Incentives retrieves registered incentives */
-    get: operations["Incentives"];
-  };
-  "/evmos/incentives/v1/incentives/{contract}": {
-    /** Incentive retrieves a registered incentive */
-    get: operations["Incentive"];
-  };
-  "/evmos/incentives/v1/params": {
-    /** Params retrieves the incentives module params */
-    get: operations["IncentivesParams"];
   };
   "/evmos/inflation/v1/circulating_supply": {
     /**
@@ -102,13 +55,9 @@ export interface paths {
     /** SkippedEpochs retrieves the total number of skipped epochs. */
     get: operations["SkippedEpochs"];
   };
-  "/evmos/vesting/v1/balances/{address}": {
+  "/evmos/vesting/v2/balances/{address}": {
     /** Balances retrieves the unvested, vested and locked tokens for a vesting account */
     get: operations["Balances"];
-  };
-  "/evmos/recovery/v1/params": {
-    /** Params retrieves the total set of recovery parameters. */
-    get: operations["RecoveryParams"];
   };
   "/evmos/revenue/v1/params": {
     /** Params retrieves the revenue module params */
@@ -330,10 +279,6 @@ export interface paths {
     /** NextSequenceReceive returns the next receive sequence for a given channel. */
     get: operations["NextSequenceReceive"];
   };
-  "/ibc/core/channel/v1/channels/{channel_id}/ports/{port_id}/next_sequence_send": {
-    /** NextSequenceSend returns the next send sequence for a given channel. */
-    get: operations["NextSequenceSend"];
-  };
   "/ibc/core/channel/v1/channels/{channel_id}/ports/{port_id}/packet_acknowledgements": {
     /**
      * PacketAcknowledgements returns all the packet acknowledgements associated
@@ -500,10 +445,6 @@ export interface paths {
     /** DenomsMetadata queries the client metadata of a given coin denomination. */
     get: operations["DenomMetadata"];
   };
-  "/cosmos/bank/v1beta1/denoms_metadata_by_query_string": {
-    /** DenomsMetadata queries the client metadata of a given coin denomination. */
-    get: operations["DenomMetadataByQueryString"];
-  };
   "/cosmos/bank/v1beta1/params": {
     /** Params queries the parameters of x/bank module. */
     get: operations["BankParams"];
@@ -563,7 +504,7 @@ export interface paths {
   };
   "/cosmos/distribution/v1beta1/delegators/{delegator_address}/rewards": {
     /**
-     * DelegationTotalRewards queries the total rewards accrued by each
+     * DelegationTotalRewards queries the total rewards accrued by a each
      * validator.
      */
     get: operations["DelegationTotalRewards"];
@@ -601,11 +542,11 @@ export interface paths {
     get: operations["ValidatorSlashes"];
   };
   "/cosmos/feegrant/v1beta1/allowance/{granter}/{grantee}": {
-    /** Allowance returns granted allwance to the grantee by the granter. */
+    /** Allowance returns fee granted to the grantee by the granter. */
     get: operations["Allowance"];
   };
   "/cosmos/feegrant/v1beta1/allowances/{grantee}": {
-    /** Allowances returns all the grants for the given grantee address. */
+    /** Allowances returns all the grants for address. */
     get: operations["Allowances"];
   };
   "/cosmos/feegrant/v1beta1/issued/{granter}": {
@@ -640,7 +581,7 @@ export interface paths {
     get: operations["Deposits"];
   };
   "/cosmos/gov/v1beta1/proposals/{proposal_id}/deposits/{depositor}": {
-    /** Deposit queries single deposit information based on proposalID, depositor address. */
+    /** Deposit queries single deposit information based proposalID, depositAddr. */
     get: operations["Deposit"];
   };
   "/cosmos/gov/v1beta1/proposals/{proposal_id}/tally": {
@@ -652,15 +593,8 @@ export interface paths {
     get: operations["Votes"];
   };
   "/cosmos/gov/v1beta1/proposals/{proposal_id}/votes/{voter}": {
-    /**
-     * Vote queries voted information based on proposalID, voterAddr.
-     * Due to how we handle state, this query would error for proposals that has already been finished.
-     */
+    /** Vote queries voted information based on proposalID, voterAddr. */
     get: operations["Vote"];
-  };
-  "/cosmos/gov/v1/constitution": {
-    /** Constitution queries the chain's constitution. */
-    get: operations["Constitution"];
   };
   "/cosmos/gov/v1/params/{params_type}": {
     /** Params queries all parameters of the gov module. */
@@ -672,15 +606,15 @@ export interface paths {
   };
   "/cosmos/gov/v1/proposals/{proposal_id}": {
     /** Proposal queries proposal details based on ProposalID. */
-    get: operations["GovV1Proposal"];
+    get: operations["GovV1ProposalsProposalIdGet"];
   };
   "/cosmos/gov/v1/proposals/{proposal_id}/deposits": {
     /** Deposits queries all deposits of a single proposal. */
     get: operations["GovV1Deposit"];
   };
   "/cosmos/gov/v1/proposals/{proposal_id}/deposits/{depositor}": {
-    /** Deposit queries single deposit information based on proposalID, depositAddr. */
-    get: operations["GovV1Deposit"];
+    /** Deposit queries single deposit information based proposalID, depositAddr. */
+    get: operations["GovV1DepositIdGet"];
   };
   "/cosmos/gov/v1/proposals/{proposal_id}/tally": {
     /** TallyResult queries the tally of a proposal vote. */
@@ -954,143 +888,83 @@ export interface components {
       total?: string;
     };
     /**
-     * @description Coin defines a token with a denomination and an amount.
-     *
-     * NOTE: The amount field is an Int which implements the custom method
-     * signatures required by gogoproto.
+     * @description EpochInfo defines the message interface containing the relevant informations about
+     * an epoch.
      */
-    "cosmos.base.v1beta1.Coin": {
-      denom?: string;
-      amount?: string;
-    };
-    /**
-     * @description Action defines the list of available actions to claim the airdrop tokens.
-     *
-     *  - ACTION_UNSPECIFIED: ACTION_UNSPECIFIED defines an invalid action.
-     *  - ACTION_VOTE: ACTION_VOTE defines a proposal vote.
-     *  - ACTION_DELEGATE: ACTION_DELEGATE defines an staking delegation.
-     *  - ACTION_EVM: ACTION_EVM defines an EVM transaction.
-     *  - ACTION_IBC_TRANSFER: ACTION_IBC_TRANSFER defines a fungible token transfer transaction via IBC.
-     * @default ACTION_UNSPECIFIED
-     * @enum {string}
-     */
-    "evmos.claims.v1.Action":
-      | "ACTION_UNSPECIFIED"
-      | "ACTION_VOTE"
-      | "ACTION_DELEGATE"
-      | "ACTION_EVM"
-      | "ACTION_IBC_TRANSFER";
-    /**
-     * @description Claim defines the action, completed flag and the remaining claimable amount
-     * for a given user. This is only used during client queries.
-     */
-    "evmos.claims.v1.Claim": {
+    "evmos.epochs.v1.EpochInfo": {
+      /** identifier of the epoch */
+      identifier?: string;
       /**
-       * action enum
-       * @description Action defines the list of available actions to claim the airdrop tokens.
-       *
-       *  - ACTION_UNSPECIFIED: ACTION_UNSPECIFIED defines an invalid action.
-       *  - ACTION_VOTE: ACTION_VOTE defines a proposal vote.
-       *  - ACTION_DELEGATE: ACTION_DELEGATE defines an staking delegation.
-       *  - ACTION_EVM: ACTION_EVM defines an EVM transaction.
-       *  - ACTION_IBC_TRANSFER: ACTION_IBC_TRANSFER defines a fungible token transfer transaction via IBC.
-       * @default ACTION_UNSPECIFIED
-       * @enum {string}
-       */
-      action?:
-        | "ACTION_UNSPECIFIED"
-        | "ACTION_VOTE"
-        | "ACTION_DELEGATE"
-        | "ACTION_EVM"
-        | "ACTION_IBC_TRANSFER";
-      /** completed is true if the action has been completed */
-      completed?: boolean;
-      /** claimable_amount of tokens for the action. Zero if completed */
-      claimable_amount?: string;
-    };
-    /**
-     * @description ClaimsRecordAddress is the claims metadata per address that is used at
-     * Genesis.
-     */
-    "evmos.claims.v1.ClaimsRecordAddress": {
-      /** address of claiming user in either bech32 or hex format */
-      address?: string;
-      /** initial_claimable_amount for the user */
-      initial_claimable_amount?: string;
-      /** actions_completed is a slice that describes which actions were completed */
-      actions_completed?: boolean[];
-    };
-    /** @description Params defines the claims module's parameters. */
-    "evmos.claims.v1.Params": {
-      /** enable_claims is the parameter to enable the claiming process */
-      enable_claims?: boolean;
-      /**
-       * airdrop_start_time defines the timestamp of the airdrop start
+       * start_time of the epoch
        * Format: date-time
        */
-      airdrop_start_time?: string;
-      /** duration_until_decay of claimable tokens begin */
-      duration_until_decay?: string;
-      /** duration_of_decay for token claim decay period */
-      duration_of_decay?: string;
-      /** claims_denom is the denomination of the claimable coin */
-      claims_denom?: string;
+      start_time?: string;
+      /** duration of the epoch */
+      duration?: string;
       /**
-       * @description authorized_channels is the list of authorized channel identifiers that can perform address
-       * attestations via IBC.
+       * current_epoch is the integer identifier of the epoch
+       * Format: int64
        */
-      authorized_channels?: string[];
-      /** evm_channels is the list of channel identifiers from EVM compatible chains */
-      evm_channels?: string[];
+      current_epoch?: string;
+      /**
+       * current_epoch_start_time defines the timestamp of the start of the epoch
+       * Format: date-time
+       */
+      current_epoch_start_time?: string;
+      /** epoch_counting_started reflects if the counting for the epoch has started */
+      epoch_counting_started?: boolean;
+      /**
+       * current_epoch_start_height of the epoch
+       * Format: int64
+       */
+      current_epoch_start_height?: string;
     };
     /**
-     * @description QueryClaimsRecordResponse is the response type for the Query/ClaimsRecord RPC
+     * @description QueryCurrentEpochResponse is the response type for the Query/EpochInfos RPC
      * method.
      */
-    "evmos.claims.v1.QueryClaimsRecordResponse": {
-      /** initial_claimable_amount of the user */
-      initial_claimable_amount?: string;
-      /** claims of the user */
-      claims?: {
-        /**
-         * action enum
-         * @description Action defines the list of available actions to claim the airdrop tokens.
-         *
-         *  - ACTION_UNSPECIFIED: ACTION_UNSPECIFIED defines an invalid action.
-         *  - ACTION_VOTE: ACTION_VOTE defines a proposal vote.
-         *  - ACTION_DELEGATE: ACTION_DELEGATE defines an staking delegation.
-         *  - ACTION_EVM: ACTION_EVM defines an EVM transaction.
-         *  - ACTION_IBC_TRANSFER: ACTION_IBC_TRANSFER defines a fungible token transfer transaction via IBC.
-         * @default ACTION_UNSPECIFIED
-         * @enum {string}
-         */
-        action?:
-          | "ACTION_UNSPECIFIED"
-          | "ACTION_VOTE"
-          | "ACTION_DELEGATE"
-          | "ACTION_EVM"
-          | "ACTION_IBC_TRANSFER";
-        /** completed is true if the action has been completed */
-        completed?: boolean;
-        /** claimable_amount of tokens for the action. Zero if completed */
-        claimable_amount?: string;
-      }[];
+    "evmos.epochs.v1.QueryCurrentEpochResponse": {
+      /**
+       * current_epoch is the number of the current epoch
+       * Format: int64
+       */
+      current_epoch?: string;
     };
     /**
-     * @description QueryClaimsRecordsResponse is the response type for the Query/ClaimsRecords
-     * RPC method.
+     * @description QueryEpochsInfoResponse is the response type for the Query/EpochInfos RPC
+     * method.
      */
-    "evmos.claims.v1.QueryClaimsRecordsResponse": {
-      /** claims defines all claims records */
-      claims?: {
-        /** address of claiming user in either bech32 or hex format */
-        address?: string;
-        /** initial_claimable_amount for the user */
-        initial_claimable_amount?: string;
-        /** actions_completed is a slice that describes which actions were completed */
-        actions_completed?: boolean[];
+    "evmos.epochs.v1.QueryEpochsInfoResponse": {
+      /** epochs is a slice of all EpochInfos */
+      epochs?: {
+        /** identifier of the epoch */
+        identifier?: string;
+        /**
+         * start_time of the epoch
+         * Format: date-time
+         */
+        start_time?: string;
+        /** duration of the epoch */
+        duration?: string;
+        /**
+         * current_epoch is the integer identifier of the epoch
+         * Format: int64
+         */
+        current_epoch?: string;
+        /**
+         * current_epoch_start_time defines the timestamp of the start of the epoch
+         * Format: date-time
+         */
+        current_epoch_start_time?: string;
+        /** epoch_counting_started reflects if the counting for the epoch has started */
+        epoch_counting_started?: boolean;
+        /**
+         * current_epoch_start_height of the epoch
+         * Format: int64
+         */
+        current_epoch_start_height?: string;
       }[];
-      /** @description pagination defines the pagination in the response. */
+      /** @description pagination defines an optional pagination for the request. */
       pagination?: {
         /**
          * Format: byte
@@ -1106,43 +980,6 @@ export interface components {
          */
         total?: string;
       };
-    };
-    /** @description QueryParamsResponse is the response type for the Query/Params RPC method. */
-    "evmos.claims.v1.QueryParamsResponse": {
-      /** @description params defines the parameters of the module. */
-      params?: {
-        /** enable_claims is the parameter to enable the claiming process */
-        enable_claims?: boolean;
-        /**
-         * airdrop_start_time defines the timestamp of the airdrop start
-         * Format: date-time
-         */
-        airdrop_start_time?: string;
-        /** duration_until_decay of claimable tokens begin */
-        duration_until_decay?: string;
-        /** duration_of_decay for token claim decay period */
-        duration_of_decay?: string;
-        /** claims_denom is the denomination of the claimable coin */
-        claims_denom?: string;
-        /**
-         * @description authorized_channels is the list of authorized channel identifiers that can perform address
-         * attestations via IBC.
-         */
-        authorized_channels?: string[];
-        /** evm_channels is the list of channel identifiers from EVM compatible chains */
-        evm_channels?: string[];
-      };
-    };
-    /**
-     * @description QueryTotalUnclaimedResponse is the response type for the Query/TotalUnclaimed
-     * RPC method.
-     */
-    "evmos.claims.v1.QueryTotalUnclaimedResponse": {
-      /** coins defines the unclaimed coins */
-      coins?: {
-        denom?: string;
-        amount?: string;
-      }[];
     };
     /**
      * @description `Any` contains an arbitrary serialized protocol buffer message along with a
@@ -1309,100 +1146,6 @@ export interface components {
       }[];
     };
     /**
-     * @description EpochInfo defines the message interface containing the relevant informations about
-     * an epoch.
-     */
-    "evmos.epochs.v1.EpochInfo": {
-      /** identifier of the epoch */
-      identifier?: string;
-      /**
-       * start_time of the epoch
-       * Format: date-time
-       */
-      start_time?: string;
-      /** duration of the epoch */
-      duration?: string;
-      /**
-       * current_epoch is the integer identifier of the epoch
-       * Format: int64
-       */
-      current_epoch?: string;
-      /**
-       * current_epoch_start_time defines the timestamp of the start of the epoch
-       * Format: date-time
-       */
-      current_epoch_start_time?: string;
-      /** epoch_counting_started reflects if the counting for the epoch has started */
-      epoch_counting_started?: boolean;
-      /**
-       * current_epoch_start_height of the epoch
-       * Format: int64
-       */
-      current_epoch_start_height?: string;
-    };
-    /**
-     * @description QueryCurrentEpochResponse is the response type for the Query/EpochInfos RPC
-     * method.
-     */
-    "evmos.epochs.v1.QueryCurrentEpochResponse": {
-      /**
-       * current_epoch is the number of the current epoch
-       * Format: int64
-       */
-      current_epoch?: string;
-    };
-    /**
-     * @description QueryEpochsInfoResponse is the response type for the Query/EpochInfos RPC
-     * method.
-     */
-    "evmos.epochs.v1.QueryEpochsInfoResponse": {
-      /** epochs is a slice of all EpochInfos */
-      epochs?: {
-        /** identifier of the epoch */
-        identifier?: string;
-        /**
-         * start_time of the epoch
-         * Format: date-time
-         */
-        start_time?: string;
-        /** duration of the epoch */
-        duration?: string;
-        /**
-         * current_epoch is the integer identifier of the epoch
-         * Format: int64
-         */
-        current_epoch?: string;
-        /**
-         * current_epoch_start_time defines the timestamp of the start of the epoch
-         * Format: date-time
-         */
-        current_epoch_start_time?: string;
-        /** epoch_counting_started reflects if the counting for the epoch has started */
-        epoch_counting_started?: boolean;
-        /**
-         * current_epoch_start_height of the epoch
-         * Format: int64
-         */
-        current_epoch_start_height?: string;
-      }[];
-      /** @description pagination defines an optional pagination for the request. */
-      pagination?: {
-        /**
-         * Format: byte
-         * @description next_key is the key to be passed to PageRequest.key to
-         * query the next page most efficiently. It will be empty if
-         * there are no more results.
-         */
-        next_key?: string;
-        /**
-         * total is total number of results available if PageRequest.count_total
-         * was set, its value is undefined otherwise
-         * Format: uint64
-         */
-        total?: string;
-      };
-    };
-    /**
      * @description Owner enumerates the ownership of a ERC20 contract.
      *
      *  - OWNER_UNSPECIFIED: OWNER_UNSPECIFIED defines an invalid/undefined owner.
@@ -1449,7 +1192,7 @@ export interface components {
       /**
        * token_pairs returns the info about a registered token pair for the erc20 module
        * @description TokenPair defines an instance that records a pairing consisting of a native
-       *  Cosmos Coin and an ERC20 token address.
+       * Cosmos Coin and an ERC20 token address.
        */
       token_pair?: {
         /** erc20_address is the hex address of ERC20 contract token */
@@ -1521,7 +1264,7 @@ export interface components {
     };
     /**
      * @description TokenPair defines an instance that records a pairing consisting of a native
-     *  Cosmos Coin and an ERC20 token address.
+     * Cosmos Coin and an ERC20 token address.
      */
     "evmos.erc20.v1.TokenPair": {
       /** erc20_address is the hex address of ERC20 contract token */
@@ -1551,244 +1294,6 @@ export interface components {
     "cosmos.base.v1beta1.DecCoin": {
       denom?: string;
       amount?: string;
-    };
-    /** GasMeter tracks the cumulative gas spent per participant in one epoch */
-    "evmos.incentives.v1.GasMeter": {
-      /** contract is the hex address of the incentivized smart contract */
-      contract?: string;
-      /** participant address that interacts with the incentive */
-      participant?: string;
-      /**
-       * cumulative_gas spent during the epoch
-       * Format: uint64
-       */
-      cumulative_gas?: string;
-    };
-    /**
-     * Incentive defines an instance that organizes distribution conditions for a
-     * given smart contract
-     */
-    "evmos.incentives.v1.Incentive": {
-      /** contract address of the smart contract to be incentivized */
-      contract?: string;
-      /** allocations is a slice of denoms and percentages of rewards to be allocated */
-      allocations?: {
-        denom?: string;
-        amount?: string;
-      }[];
-      /**
-       * epochs defines the number of remaining epochs for the incentive
-       * Format: int64
-       */
-      epochs?: number;
-      /**
-       * start_time of the incentive distribution
-       * Format: date-time
-       */
-      start_time?: string;
-      /**
-       * total_gas is the cumulative gas spent by all gas meters of the incentive during the epoch
-       * Format: uint64
-       */
-      total_gas?: string;
-    };
-    /** Params defines the incentives module params */
-    "evmos.incentives.v1.Params": {
-      /** enable_incentives is the parameter to enable incentives */
-      enable_incentives?: boolean;
-      /** allocation_limit is the maximum percentage an incentive can allocate per denomination */
-      allocation_limit?: string;
-      /** incentives_epoch_identifier for the epochs module hooks */
-      incentives_epoch_identifier?: string;
-      /** reward_scaler is the scaling factor for capping rewards */
-      reward_scaler?: string;
-    };
-    /**
-     * @description QueryAllocationMeterResponse is the response type for the
-     * Query/AllocationMeter RPC method.
-     */
-    "evmos.incentives.v1.QueryAllocationMeterResponse": {
-      /**
-       * allocation_meter defines the allocation of the queried denom
-       * @description DecCoin defines a token with a denomination and a decimal amount.
-       *
-       * NOTE: The amount field is an Dec which implements the custom method
-       * signatures required by gogoproto.
-       */
-      allocation_meter?: {
-        denom?: string;
-        amount?: string;
-      };
-    };
-    /**
-     * @description QueryAllocationMetersResponse is the response type for the
-     * Query/AllocationMeters RPC method.
-     */
-    "evmos.incentives.v1.QueryAllocationMetersResponse": {
-      /** allocation_meters is a slice of all allocations */
-      allocation_meters?: {
-        denom?: string;
-        amount?: string;
-      }[];
-      /** @description pagination defines the pagination in the response. */
-      pagination?: {
-        /**
-         * Format: byte
-         * @description next_key is the key to be passed to PageRequest.key to
-         * query the next page most efficiently. It will be empty if
-         * there are no more results.
-         */
-        next_key?: string;
-        /**
-         * total is total number of results available if PageRequest.count_total
-         * was set, its value is undefined otherwise
-         * Format: uint64
-         */
-        total?: string;
-      };
-    };
-    /**
-     * @description QueryGasMeterResponse is the response type for the Query/Incentive RPC
-     * method.
-     */
-    "evmos.incentives.v1.QueryGasMeterResponse": {
-      /**
-       * gas_meter is a gas meter for one participant on an incentivized smart contract
-       * Format: uint64
-       */
-      gas_meter?: string;
-    };
-    /**
-     * @description QueryGasMetersResponse is the response type for the Query/Incentives RPC
-     * method.
-     */
-    "evmos.incentives.v1.QueryGasMetersResponse": {
-      /** gas_meters is a slice of the gas meters for an incentivized smart contract */
-      gas_meters?: {
-        /** contract is the hex address of the incentivized smart contract */
-        contract?: string;
-        /** participant address that interacts with the incentive */
-        participant?: string;
-        /**
-         * cumulative_gas spent during the epoch
-         * Format: uint64
-         */
-        cumulative_gas?: string;
-      }[];
-      /** @description pagination defines the pagination in the response. */
-      pagination?: {
-        /**
-         * Format: byte
-         * @description next_key is the key to be passed to PageRequest.key to
-         * query the next page most efficiently. It will be empty if
-         * there are no more results.
-         */
-        next_key?: string;
-        /**
-         * total is total number of results available if PageRequest.count_total
-         * was set, its value is undefined otherwise
-         * Format: uint64
-         */
-        total?: string;
-      };
-    };
-    /**
-     * @description QueryIncentiveResponse is the response type for the Query/Incentive RPC
-     * method.
-     */
-    "evmos.incentives.v1.QueryIncentiveResponse": {
-      /**
-       * Incentive defines an instance that organizes distribution conditions for a
-       * given smart contract
-       */
-      incentive?: {
-        /** contract address of the smart contract to be incentivized */
-        contract?: string;
-        /** allocations is a slice of denoms and percentages of rewards to be allocated */
-        allocations?: {
-          denom?: string;
-          amount?: string;
-        }[];
-        /**
-         * epochs defines the number of remaining epochs for the incentive
-         * Format: int64
-         */
-        epochs?: number;
-        /**
-         * start_time of the incentive distribution
-         * Format: date-time
-         */
-        start_time?: string;
-        /**
-         * total_gas is the cumulative gas spent by all gas meters of the incentive during the epoch
-         * Format: uint64
-         */
-        total_gas?: string;
-      };
-    };
-    /**
-     * @description QueryIncentivesResponse is the response type for the Query/Incentives RPC
-     * method.
-     */
-    "evmos.incentives.v1.QueryIncentivesResponse": {
-      /** incentives is a slice of all incentives */
-      incentives?: {
-        /** contract address of the smart contract to be incentivized */
-        contract?: string;
-        /** allocations is a slice of denoms and percentages of rewards to be allocated */
-        allocations?: {
-          denom?: string;
-          amount?: string;
-        }[];
-        /**
-         * epochs defines the number of remaining epochs for the incentive
-         * Format: int64
-         */
-        epochs?: number;
-        /**
-         * start_time of the incentive distribution
-         * Format: date-time
-         */
-        start_time?: string;
-        /**
-         * total_gas is the cumulative gas spent by all gas meters of the incentive during the epoch
-         * Format: uint64
-         */
-        total_gas?: string;
-      }[];
-      /** @description pagination defines the pagination in the response. */
-      pagination?: {
-        /**
-         * Format: byte
-         * @description next_key is the key to be passed to PageRequest.key to
-         * query the next page most efficiently. It will be empty if
-         * there are no more results.
-         */
-        next_key?: string;
-        /**
-         * total is total number of results available if PageRequest.count_total
-         * was set, its value is undefined otherwise
-         * Format: uint64
-         */
-        total?: string;
-      };
-    };
-    /**
-     * @description QueryParamsResponse is the response type for the Query/Params RPC
-     * method.
-     */
-    "evmos.incentives.v1.QueryParamsResponse": {
-      /** params are the incentives module parameters */
-      params?: {
-        /** enable_incentives is the parameter to enable incentives */
-        enable_incentives?: boolean;
-        /** allocation_limit is the maximum percentage an incentive can allocate per denomination */
-        allocation_limit?: string;
-        /** incentives_epoch_identifier for the epochs module hooks */
-        incentives_epoch_identifier?: string;
-        /** reward_scaler is the scaling factor for capping rewards */
-        reward_scaler?: string;
-      };
     };
     /**
      * ExponentialCalculation holds factors to calculate exponential inflation on
@@ -1825,7 +1330,7 @@ export interface components {
        */
       staking_rewards?: string;
       /**
-       * usage_incentives defines the proportion of the minted minted_denom that is
+       * Deprecated: usage_incentives defines the proportion of the minted minted_denom that is
        * to be allocated to the incentives module address
        */
       usage_incentives?: string;
@@ -1860,7 +1365,7 @@ export interface components {
          */
         staking_rewards?: string;
         /**
-         * usage_incentives defines the proportion of the minted minted_denom that is
+         * Deprecated: usage_incentives defines the proportion of the minted minted_denom that is
          * to be allocated to the incentives module address
          */
         usage_incentives?: string;
@@ -1936,7 +1441,7 @@ export interface components {
            */
           staking_rewards?: string;
           /**
-           * usage_incentives defines the proportion of the minted minted_denom that is
+           * Deprecated: usage_incentives defines the proportion of the minted minted_denom that is
            * to be allocated to the incentives module address
            */
           usage_incentives?: string;
@@ -1970,10 +1475,20 @@ export interface components {
       skipped_epochs?: string;
     };
     /**
+     * @description Coin defines a token with a denomination and an amount.
+     *
+     * NOTE: The amount field is an Int which implements the custom method
+     * signatures required by gogoproto.
+     */
+    "cosmos.base.v1beta1.Coin": {
+      denom?: string;
+      amount?: string;
+    };
+    /**
      * @description QueryBalancesResponse is the response type for the Query/Balances RPC
      * method.
      */
-    "evmos.vesting.v1.QueryBalancesResponse": {
+    "evmos.vesting.v2.QueryBalancesResponse": {
       /** locked defines the current amount of locked tokens */
       locked?: {
         denom?: string;
@@ -1989,26 +1504,6 @@ export interface components {
         denom?: string;
         amount?: string;
       }[];
-    };
-    /** Params holds parameters for the recovery module */
-    "evmos.recovery.v1.Params": {
-      /** enable_recovery IBC middleware */
-      enable_recovery?: boolean;
-      /** packet_timeout_duration is the duration added to timeout timestamp for balances recovered via IBC packets */
-      packet_timeout_duration?: string;
-    };
-    /** @description QueryParamsResponse is the response type for the Query/Params RPC method. */
-    "evmos.recovery.v1.QueryParamsResponse": {
-      /**
-       * Params holds parameters for the recovery module
-       * @description params defines the parameters of the module.
-       */
-      params?: {
-        /** enable_recovery IBC middleware */
-        enable_recovery?: boolean;
-        /** packet_timeout_duration is the duration added to timeout timestamp for balances recovered via IBC packets */
-        packet_timeout_duration?: string;
-      };
     };
     /** Params defines the revenue module params */
     "evmos.revenue.v1.Params": {
@@ -2536,6 +2031,8 @@ export interface components {
        * contracts that are active
        */
       active_precompiles?: string[];
+      /** evm_channels is the list of channel identifiers from EVM compatible chains */
+      evm_channels?: string[];
     };
     /** @description QueryAccountResponse is the response type for the Query/Account RPC method. */
     "ethermint.evm.v1.QueryAccountResponse": {
@@ -2664,6 +2161,8 @@ export interface components {
          * contracts that are active
          */
         active_precompiles?: string[];
+        /** evm_channels is the list of channel identifiers from EVM compatible chains */
+        evm_channels?: string[];
       };
     };
     /**
@@ -5832,43 +5331,6 @@ export interface components {
       };
     };
     /**
-     * QueryNextSequenceSendResponse is the request type for the
-     * Query/QueryNextSequenceSend RPC method
-     */
-    "ibc.core.channel.v1.QueryNextSequenceSendResponse": {
-      /**
-       * next sequence send number
-       * Format: uint64
-       */
-      next_sequence_send?: string;
-      /**
-       * merkle proof of existence
-       * Format: byte
-       */
-      proof?: string;
-      /**
-       * height at which the proof was retrieved
-       * @description Normally the RevisionHeight is incremented at each height while keeping
-       * RevisionNumber the same. However some consensus algorithms may choose to
-       * reset the height in certain conditions e.g. hard forks, state-machine
-       * breaking changes In these cases, the RevisionNumber is incremented so that
-       * height continues to be monitonically increasing even as the RevisionHeight
-       * gets reset
-       */
-      proof_height?: {
-        /**
-         * the revision that the client is currently on
-         * Format: uint64
-         */
-        revision_number?: string;
-        /**
-         * the height within the given revision
-         * Format: uint64
-         */
-        revision_height?: string;
-      };
-    };
-    /**
      * QueryPacketAcknowledgementResponse defines the client query response for a
      * packet which also includes a proof and the height from which the
      * proof was retrieved
@@ -7736,67 +7198,6 @@ export interface components {
       };
     };
     /**
-     * @description QueryDenomMetadataByQueryStringResponse is the response type for the Query/DenomMetadata RPC
-     * method. Identical with QueryDenomMetadataResponse but receives denom as query string in request.
-     */
-    "cosmos.bank.v1beta1.QueryDenomMetadataByQueryStringResponse": {
-      /**
-       * @description Metadata represents a struct that describes
-       * a basic token.
-       */
-      metadata?: {
-        description?: string;
-        /** denom_units represents the list of DenomUnit's for a given coin */
-        denom_units?: {
-          /** @description denom represents the string name of the given denom unit (e.g uatom). */
-          denom?: string;
-          /**
-           * Format: int64
-           * @description exponent represents power of 10 exponent that one must
-           * raise the base_denom to in order to equal the given DenomUnit's denom
-           * 1 denom = 10^exponent base_denom
-           * (e.g. with a base_denom of uatom, one can create a DenomUnit of 'atom' with
-           * exponent = 6, thus: 1 atom = 10^6 uatom).
-           */
-          exponent?: number;
-          /** aliases is a list of string aliases for the given denom */
-          aliases?: string[];
-        }[];
-        /** @description base represents the base denom (should be the DenomUnit with exponent = 0). */
-        base?: string;
-        /**
-         * @description display indicates the suggested denom that should be
-         * displayed in clients.
-         */
-        display?: string;
-        /**
-         * name defines the name of the token (eg: Cosmos Atom)
-         * @description Since: cosmos-sdk 0.43
-         */
-        name?: string;
-        /**
-         * @description symbol is the token symbol usually shown on exchanges (eg: ATOM). This can
-         * be the same as the display.
-         *
-         * Since: cosmos-sdk 0.43
-         */
-        symbol?: string;
-        /**
-         * @description URI to a document (on or off-chain) that contains additional information. Optional.
-         *
-         * Since: cosmos-sdk 0.46
-         */
-        uri?: string;
-        /**
-         * @description URIHash is a sha256 hash of a document pointed by URI. It's used to verify that
-         * the document didn't change. Optional.
-         *
-         * Since: cosmos-sdk 0.46
-         */
-        uri_hash?: string;
-      };
-    };
-    /**
      * @description QueryDenomMetadataResponse is the response type for the Query/DenomMetadata RPC
      * method.
      */
@@ -7970,7 +7371,7 @@ export interface components {
     };
     /** @description QueryParamsResponse defines the response type for querying x/bank parameters. */
     "cosmos.bank.v1beta1.QueryParamsResponse": {
-      /** @description params provides the parameters of the bank module. */
+      /** @description Params defines the parameters for the bank module. */
       params?: {
         /**
          * @description Deprecated: Use of SendEnabled in params is deprecated.
@@ -9757,36 +9158,6 @@ export interface components {
       veto_threshold?: string;
       /** @description The ratio representing the proportion of the deposit value that must be paid at proposal submission. */
       min_initial_deposit_ratio?: string;
-      /**
-       * @description The cancel ratio which will not be returned back to the depositors when a proposal is cancelled.
-       *
-       * Since: cosmos-sdk 0.50
-       */
-      proposal_cancel_ratio?: string;
-      /**
-       * @description The address which will receive (proposal_cancel_ratio * deposit) proposal deposits.
-       * If empty, the (proposal_cancel_ratio * deposit) proposal deposits will be burned.
-       *
-       * Since: cosmos-sdk 0.50
-       */
-      proposal_cancel_dest?: string;
-      /**
-       * @description Duration of the voting period of an expedited proposal.
-       *
-       * Since: cosmos-sdk 0.50
-       */
-      expedited_voting_period?: string;
-      /**
-       * @description Minimum proportion of Yes votes for proposal to pass. Default value: 0.67.
-       *
-       * Since: cosmos-sdk 0.50
-       */
-      expedited_threshold?: string;
-      /** @description Minimum expedited deposit for a proposal to enter voting period. */
-      expedited_min_deposit?: {
-        denom?: string;
-        amount?: string;
-      }[];
       /** burn deposits if a proposal does not meet quorum */
       burn_vote_quorum?: boolean;
       /** burn deposits if the proposal does not enter voting period */
@@ -9891,11 +9262,7 @@ export interface components {
        * @description voting_end_time is the end time of voting on a proposal.
        */
       voting_end_time?: string;
-      /**
-       * metadata is any arbitrary metadata attached to the proposal.
-       * the recommended format of the metadata is to be found here:
-       * https://docs.cosmos.network/v0.47/modules/gov#proposal-3
-       */
+      /** @description metadata is any arbitrary metadata attached to the proposal. */
       metadata?: string;
       /**
        * title is the title of the proposal
@@ -9908,20 +9275,10 @@ export interface components {
        */
       summary?: string;
       /**
-       * proposer is the address of the proposal sumbitter
+       * Proposer is the address of the proposal sumbitter
        * @description Since: cosmos-sdk 0.47
        */
       proposer?: string;
-      /**
-       * expedited defines if the proposal is expedited
-       * @description Since: cosmos-sdk 0.50
-       */
-      expedited?: boolean;
-      /**
-       * failed_reason defines the reason why the proposal failed
-       * @description Since: cosmos-sdk 0.50
-       */
-      failed_reason?: string;
     };
     /**
      * @description ProposalStatus enumerates the valid statuses of a proposal.
@@ -9947,10 +9304,6 @@ export interface components {
       | "PROPOSAL_STATUS_PASSED"
       | "PROPOSAL_STATUS_REJECTED"
       | "PROPOSAL_STATUS_FAILED";
-    /** QueryConstitutionResponse is the response type for the Query/Constitution RPC method */
-    "cosmos.gov.v1.QueryConstitutionResponse": {
-      constitution?: string;
-    };
     /** @description QueryDepositResponse is the response type for the Query/Deposit RPC method. */
     "cosmos.gov.v1.QueryDepositResponse": {
       /**
@@ -10082,36 +9435,6 @@ export interface components {
         veto_threshold?: string;
         /** @description The ratio representing the proportion of the deposit value that must be paid at proposal submission. */
         min_initial_deposit_ratio?: string;
-        /**
-         * @description The cancel ratio which will not be returned back to the depositors when a proposal is cancelled.
-         *
-         * Since: cosmos-sdk 0.50
-         */
-        proposal_cancel_ratio?: string;
-        /**
-         * @description The address which will receive (proposal_cancel_ratio * deposit) proposal deposits.
-         * If empty, the (proposal_cancel_ratio * deposit) proposal deposits will be burned.
-         *
-         * Since: cosmos-sdk 0.50
-         */
-        proposal_cancel_dest?: string;
-        /**
-         * @description Duration of the voting period of an expedited proposal.
-         *
-         * Since: cosmos-sdk 0.50
-         */
-        expedited_voting_period?: string;
-        /**
-         * @description Minimum proportion of Yes votes for proposal to pass. Default value: 0.67.
-         *
-         * Since: cosmos-sdk 0.50
-         */
-        expedited_threshold?: string;
-        /** @description Minimum expedited deposit for a proposal to enter voting period. */
-        expedited_min_deposit?: {
-          denom?: string;
-          amount?: string;
-        }[];
         /** burn deposits if a proposal does not meet quorum */
         burn_vote_quorum?: boolean;
         /** burn deposits if the proposal does not enter voting period */
@@ -10219,11 +9542,7 @@ export interface components {
          * @description voting_end_time is the end time of voting on a proposal.
          */
         voting_end_time?: string;
-        /**
-         * metadata is any arbitrary metadata attached to the proposal.
-         * the recommended format of the metadata is to be found here:
-         * https://docs.cosmos.network/v0.47/modules/gov#proposal-3
-         */
+        /** @description metadata is any arbitrary metadata attached to the proposal. */
         metadata?: string;
         /**
          * title is the title of the proposal
@@ -10236,20 +9555,10 @@ export interface components {
          */
         summary?: string;
         /**
-         * proposer is the address of the proposal sumbitter
+         * Proposer is the address of the proposal sumbitter
          * @description Since: cosmos-sdk 0.47
          */
         proposer?: string;
-        /**
-         * expedited defines if the proposal is expedited
-         * @description Since: cosmos-sdk 0.50
-         */
-        expedited?: boolean;
-        /**
-         * failed_reason defines the reason why the proposal failed
-         * @description Since: cosmos-sdk 0.50
-         */
-        failed_reason?: string;
       };
     };
     /**
@@ -10354,11 +9663,7 @@ export interface components {
          * @description voting_end_time is the end time of voting on a proposal.
          */
         voting_end_time?: string;
-        /**
-         * metadata is any arbitrary metadata attached to the proposal.
-         * the recommended format of the metadata is to be found here:
-         * https://docs.cosmos.network/v0.47/modules/gov#proposal-3
-         */
+        /** @description metadata is any arbitrary metadata attached to the proposal. */
         metadata?: string;
         /**
          * title is the title of the proposal
@@ -10371,20 +9676,10 @@ export interface components {
          */
         summary?: string;
         /**
-         * proposer is the address of the proposal sumbitter
+         * Proposer is the address of the proposal sumbitter
          * @description Since: cosmos-sdk 0.47
          */
         proposer?: string;
-        /**
-         * expedited defines if the proposal is expedited
-         * @description Since: cosmos-sdk 0.50
-         */
-        expedited?: boolean;
-        /**
-         * failed_reason defines the reason why the proposal failed
-         * @description Since: cosmos-sdk 0.50
-         */
-        failed_reason?: string;
       }[];
       /** @description pagination defines the pagination in the response. */
       pagination?: {
@@ -10447,10 +9742,7 @@ export interface components {
           /** @description weight is the vote weight associated with the vote option. */
           weight?: string;
         }[];
-        /**
-         * metadata is any arbitrary metadata attached to the vote.
-         * the recommended format of the metadata is to be found here: https://docs.cosmos.network/v0.47/modules/gov#vote-5
-         */
+        /** @description metadata is any  arbitrary metadata to attached to the vote. */
         metadata?: string;
       };
     };
@@ -10481,10 +9773,7 @@ export interface components {
           /** @description weight is the vote weight associated with the vote option. */
           weight?: string;
         }[];
-        /**
-         * metadata is any arbitrary metadata attached to the vote.
-         * the recommended format of the metadata is to be found here: https://docs.cosmos.network/v0.47/modules/gov#vote-5
-         */
+        /** @description metadata is any  arbitrary metadata to attached to the vote. */
         metadata?: string;
       }[];
       /** @description pagination defines the pagination in the response. */
@@ -10558,10 +9847,7 @@ export interface components {
         /** @description weight is the vote weight associated with the vote option. */
         weight?: string;
       }[];
-      /**
-       * metadata is any arbitrary metadata attached to the vote.
-       * the recommended format of the metadata is to be found here: https://docs.cosmos.network/v0.47/modules/gov#vote-5
-       */
+      /** @description metadata is any  arbitrary metadata to attached to the vote. */
       metadata?: string;
     };
     /**
@@ -10642,15 +9928,15 @@ export interface components {
       val_signing_info?: {
         address?: string;
         /**
-         * Height at which validator was first a candidate OR was un-jailed
+         * Height at which validator was first a candidate OR was unjailed
          * Format: int64
          */
         start_height?: string;
         /**
          * Format: int64
-         * @description Index which is incremented every time a validator is bonded in a block and
-         * _may_ have signed a pre-commit or not. This in conjunction with the
-         * signed_blocks_window param determines the index in the missed block bitmap.
+         * @description Index which is incremented each time the validator was a bonded
+         * in a block and may have signed a precommit or not. This in conjunction with the
+         * `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
          */
         index_offset?: string;
         /**
@@ -10659,15 +9945,14 @@ export interface components {
          */
         jailed_until?: string;
         /**
-         * @description Whether or not a validator has been tombstoned (killed out of validator
-         * set). It is set once the validator commits an equivocation or for any other
-         * configured misbehavior.
+         * @description Whether or not a validator has been tombstoned (killed out of validator set). It is set
+         * once the validator commits an equivocation or for any other configured misbehiavor.
          */
         tombstoned?: boolean;
         /**
          * Format: int64
-         * @description A counter of missed (unsigned) blocks. It is used to avoid unnecessary
-         * reads in the missed block bitmap.
+         * @description A counter kept to avoid unnecessary array reads.
+         * Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
          */
         missed_blocks_counter?: string;
       };
@@ -10681,15 +9966,15 @@ export interface components {
       info?: {
         address?: string;
         /**
-         * Height at which validator was first a candidate OR was un-jailed
+         * Height at which validator was first a candidate OR was unjailed
          * Format: int64
          */
         start_height?: string;
         /**
          * Format: int64
-         * @description Index which is incremented every time a validator is bonded in a block and
-         * _may_ have signed a pre-commit or not. This in conjunction with the
-         * signed_blocks_window param determines the index in the missed block bitmap.
+         * @description Index which is incremented each time the validator was a bonded
+         * in a block and may have signed a precommit or not. This in conjunction with the
+         * `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
          */
         index_offset?: string;
         /**
@@ -10698,15 +9983,14 @@ export interface components {
          */
         jailed_until?: string;
         /**
-         * @description Whether or not a validator has been tombstoned (killed out of validator
-         * set). It is set once the validator commits an equivocation or for any other
-         * configured misbehavior.
+         * @description Whether or not a validator has been tombstoned (killed out of validator set). It is set
+         * once the validator commits an equivocation or for any other configured misbehiavor.
          */
         tombstoned?: boolean;
         /**
          * Format: int64
-         * @description A counter of missed (unsigned) blocks. It is used to avoid unnecessary
-         * reads in the missed block bitmap.
+         * @description A counter kept to avoid unnecessary array reads.
+         * Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
          */
         missed_blocks_counter?: string;
       }[];
@@ -10742,15 +10026,15 @@ export interface components {
     "cosmos.slashing.v1beta1.ValidatorSigningInfo": {
       address?: string;
       /**
-       * Height at which validator was first a candidate OR was un-jailed
+       * Height at which validator was first a candidate OR was unjailed
        * Format: int64
        */
       start_height?: string;
       /**
        * Format: int64
-       * @description Index which is incremented every time a validator is bonded in a block and
-       * _may_ have signed a pre-commit or not. This in conjunction with the
-       * signed_blocks_window param determines the index in the missed block bitmap.
+       * @description Index which is incremented each time the validator was a bonded
+       * in a block and may have signed a precommit or not. This in conjunction with the
+       * `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
        */
       index_offset?: string;
       /**
@@ -10759,15 +10043,14 @@ export interface components {
        */
       jailed_until?: string;
       /**
-       * @description Whether or not a validator has been tombstoned (killed out of validator
-       * set). It is set once the validator commits an equivocation or for any other
-       * configured misbehavior.
+       * @description Whether or not a validator has been tombstoned (killed out of validator set). It is set
+       * once the validator commits an equivocation or for any other configured misbehiavor.
        */
       tombstoned?: boolean;
       /**
        * Format: int64
-       * @description A counter of missed (unsigned) blocks. It is used to avoid unnecessary
-       * reads in the missed block bitmap.
+       * @description A counter kept to avoid unnecessary array reads.
+       * Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
        */
       missed_blocks_counter?: string;
     };
@@ -10821,9 +10104,9 @@ export interface components {
      * validator.
      */
     "cosmos.staking.v1beta1.Delegation": {
-      /** @description delegator_address is the encoded address of the delegator. */
+      /** @description delegator_address is the bech32-encoded address of the delegator. */
       delegator_address?: string;
-      /** @description validator_address is the encoded address of the validator. */
+      /** @description validator_address is the bech32-encoded address of the validator. */
       validator_address?: string;
       /** @description shares define the delegation shares received. */
       shares?: string;
@@ -10839,9 +10122,9 @@ export interface components {
        * validator.
        */
       delegation?: {
-        /** @description delegator_address is the encoded address of the delegator. */
+        /** @description delegator_address is the bech32-encoded address of the delegator. */
         delegator_address?: string;
-        /** @description validator_address is the encoded address of the validator. */
+        /** @description validator_address is the bech32-encoded address of the validator. */
         validator_address?: string;
         /** @description shares define the delegation shares received. */
         shares?: string;
@@ -11176,9 +10459,9 @@ export interface components {
          * validator.
          */
         delegation?: {
-          /** @description delegator_address is the encoded address of the delegator. */
+          /** @description delegator_address is the bech32-encoded address of the delegator. */
           delegator_address?: string;
-          /** @description validator_address is the encoded address of the validator. */
+          /** @description validator_address is the bech32-encoded address of the validator. */
           validator_address?: string;
           /** @description shares define the delegation shares received. */
           shares?: string;
@@ -11208,9 +10491,9 @@ export interface components {
          * validator.
          */
         delegation?: {
-          /** @description delegator_address is the encoded address of the delegator. */
+          /** @description delegator_address is the bech32-encoded address of the delegator. */
           delegator_address?: string;
-          /** @description validator_address is the encoded address of the validator. */
+          /** @description validator_address is the bech32-encoded address of the validator. */
           validator_address?: string;
           /** @description shares define the delegation shares received. */
           shares?: string;
@@ -11249,9 +10532,9 @@ export interface components {
      */
     "cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsResponse": {
       unbonding_responses?: {
-        /** @description delegator_address is the encoded address of the delegator. */
+        /** @description delegator_address is the bech32-encoded address of the delegator. */
         delegator_address?: string;
-        /** @description validator_address is the encoded address of the validator. */
+        /** @description validator_address is the bech32-encoded address of the validator. */
         validator_address?: string;
         /** @description entries are the unbonding delegation entries. */
         entries?: {
@@ -12125,9 +11408,9 @@ export interface components {
        * for a single validator in an time-ordered list.
        */
       unbond?: {
-        /** @description delegator_address is the encoded address of the delegator. */
+        /** @description delegator_address is the bech32-encoded address of the delegator. */
         delegator_address?: string;
-        /** @description validator_address is the encoded address of the validator. */
+        /** @description validator_address is the bech32-encoded address of the validator. */
         validator_address?: string;
         /** @description entries are the unbonding delegation entries. */
         entries?: {
@@ -12170,9 +11453,9 @@ export interface components {
          * validator.
          */
         delegation?: {
-          /** @description delegator_address is the encoded address of the delegator. */
+          /** @description delegator_address is the bech32-encoded address of the delegator. */
           delegator_address?: string;
-          /** @description validator_address is the encoded address of the validator. */
+          /** @description validator_address is the bech32-encoded address of the validator. */
           validator_address?: string;
           /** @description shares define the delegation shares received. */
           shares?: string;
@@ -12418,9 +11701,9 @@ export interface components {
      */
     "cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsResponse": {
       unbonding_responses?: {
-        /** @description delegator_address is the encoded address of the delegator. */
+        /** @description delegator_address is the bech32-encoded address of the delegator. */
         delegator_address?: string;
-        /** @description validator_address is the encoded address of the validator. */
+        /** @description validator_address is the bech32-encoded address of the validator. */
         validator_address?: string;
         /** @description entries are the unbonding delegation entries. */
         entries?: {
@@ -12863,9 +12146,9 @@ export interface components {
      * for a single validator in an time-ordered list.
      */
     "cosmos.staking.v1beta1.UnbondingDelegation": {
-      /** @description delegator_address is the encoded address of the delegator. */
+      /** @description delegator_address is the bech32-encoded address of the delegator. */
       delegator_address?: string;
-      /** @description validator_address is the encoded address of the validator. */
+      /** @description validator_address is the bech32-encoded address of the validator. */
       validator_address?: string;
       /** @description entries are the unbonding delegation entries. */
       entries?: {
@@ -13558,9 +12841,7 @@ export interface components {
      * verified with raw bytes from Tx.
      *  - SIGN_MODE_TEXTUAL: SIGN_MODE_TEXTUAL is a future signing mode that will verify some
      * human-readable textual representation on top of the binary representation
-     * from SIGN_MODE_DIRECT. It is currently experimental, and should be used
-     * for testing purposes only, until Textual is fully released. Please follow
-     * the tracking issue https://github.com/cosmos/cosmos-sdk/issues/11970.
+     * from SIGN_MODE_DIRECT. It is currently not supported.
      *  - SIGN_MODE_DIRECT_AUX: SIGN_MODE_DIRECT_AUX specifies a signing mode which uses
      * SignDocDirectAux. As opposed to SIGN_MODE_DIRECT, this sign mode does not
      * require signers signing over other signers' `signer_info`. It also allows
@@ -13651,16 +12932,15 @@ export interface components {
       };
     };
     /**
-     * @description BroadcastMode specifies the broadcast mode for the TxService.Broadcast RPC
-     * method.
+     * @description BroadcastMode specifies the broadcast mode for the TxService.Broadcast RPC method.
      *
      *  - BROADCAST_MODE_UNSPECIFIED: zero-value for mode ordering
      *  - BROADCAST_MODE_BLOCK: DEPRECATED: use BROADCAST_MODE_SYNC instead,
      * BROADCAST_MODE_BLOCK is not supported by the SDK from v0.47.x onwards.
-     *  - BROADCAST_MODE_SYNC: BROADCAST_MODE_SYNC defines a tx broadcasting mode where the client waits
-     * for a CheckTx execution response only.
-     *  - BROADCAST_MODE_ASYNC: BROADCAST_MODE_ASYNC defines a tx broadcasting mode where the client
-     * returns immediately.
+     *  - BROADCAST_MODE_SYNC: BROADCAST_MODE_SYNC defines a tx broadcasting mode where the client waits for
+     * a CheckTx execution response only.
+     *  - BROADCAST_MODE_ASYNC: BROADCAST_MODE_ASYNC defines a tx broadcasting mode where the client returns
+     * immediately.
      * @default BROADCAST_MODE_UNSPECIFIED
      * @enum {string}
      */
@@ -13680,16 +12960,15 @@ export interface components {
        */
       tx_bytes?: string;
       /**
-       * @description BroadcastMode specifies the broadcast mode for the TxService.Broadcast RPC
-       * method.
+       * @description BroadcastMode specifies the broadcast mode for the TxService.Broadcast RPC method.
        *
        *  - BROADCAST_MODE_UNSPECIFIED: zero-value for mode ordering
        *  - BROADCAST_MODE_BLOCK: DEPRECATED: use BROADCAST_MODE_SYNC instead,
        * BROADCAST_MODE_BLOCK is not supported by the SDK from v0.47.x onwards.
-       *  - BROADCAST_MODE_SYNC: BROADCAST_MODE_SYNC defines a tx broadcasting mode where the client waits
-       * for a CheckTx execution response only.
-       *  - BROADCAST_MODE_ASYNC: BROADCAST_MODE_ASYNC defines a tx broadcasting mode where the client
-       * returns immediately.
+       *  - BROADCAST_MODE_SYNC: BROADCAST_MODE_SYNC defines a tx broadcasting mode where the client waits for
+       * a CheckTx execution response only.
+       *  - BROADCAST_MODE_ASYNC: BROADCAST_MODE_ASYNC defines a tx broadcasting mode where the client returns
+       * immediately.
        * @default BROADCAST_MODE_UNSPECIFIED
        * @enum {string}
        */
@@ -13935,8 +13214,7 @@ export interface components {
       granter?: string;
     };
     /**
-     * @description GetBlockWithTxsResponse is the response type for the Service.GetBlockWithTxs
-     * method.
+     * @description GetBlockWithTxsResponse is the response type for the Service.GetBlockWithTxs method.
      *
      * Since: cosmos-sdk 0.45.2
      */
@@ -14029,7 +13307,7 @@ export interface components {
             /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
             duplicate_vote_evidence?: {
               /**
-               * @description Vote represents a prevote or precommit vote from validators for
+               * @description Vote represents a prevote, precommit, or commit vote from validators for
                * consensus.
                */
               vote_a?: {
@@ -14068,28 +13346,11 @@ export interface components {
                 validator_address?: string;
                 /** Format: int32 */
                 validator_index?: number;
-                /**
-                 * Format: byte
-                 * @description Vote signature by the validator if they participated in consensus for the
-                 * associated block.
-                 */
+                /** Format: byte */
                 signature?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension provided by the application. Only valid for precommit
-                 * messages.
-                 */
-                extension?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension signature by the validator if they participated in
-                 * consensus for the associated block.
-                 * Only valid for precommit messages.
-                 */
-                extension_signature?: string;
               };
               /**
-               * @description Vote represents a prevote or precommit vote from validators for
+               * @description Vote represents a prevote, precommit, or commit vote from validators for
                * consensus.
                */
               vote_b?: {
@@ -14128,25 +13389,8 @@ export interface components {
                 validator_address?: string;
                 /** Format: int32 */
                 validator_index?: number;
-                /**
-                 * Format: byte
-                 * @description Vote signature by the validator if they participated in consensus for the
-                 * associated block.
-                 */
+                /** Format: byte */
                 signature?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension provided by the application. Only valid for precommit
-                 * messages.
-                 */
-                extension?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension signature by the validator if they participated in
-                 * consensus for the associated block.
-                 * Only valid for precommit messages.
-                 */
-                extension_signature?: string;
               };
               /** Format: int64 */
               total_voting_power?: string;
@@ -14238,7 +13482,7 @@ export interface components {
                     };
                     signatures?: {
                       /**
-                       * BlockIdFlag indicates which BlockID the signature is for
+                       * BlockIdFlag indicates which BlcokID the signature is for
                        * @default BLOCK_ID_FLAG_UNKNOWN
                        * @enum {string}
                        */
@@ -14335,7 +13579,7 @@ export interface components {
           };
           signatures?: {
             /**
-             * BlockIdFlag indicates which BlockID the signature is for
+             * BlockIdFlag indicates which BlcokID the signature is for
              * @default BLOCK_ID_FLAG_UNKNOWN
              * @enum {string}
              */
@@ -14822,9 +14066,7 @@ export interface components {
          * verified with raw bytes from Tx.
          *  - SIGN_MODE_TEXTUAL: SIGN_MODE_TEXTUAL is a future signing mode that will verify some
          * human-readable textual representation on top of the binary representation
-         * from SIGN_MODE_DIRECT. It is currently experimental, and should be used
-         * for testing purposes only, until Textual is fully released. Please follow
-         * the tracking issue https://github.com/cosmos/cosmos-sdk/issues/11970.
+         * from SIGN_MODE_DIRECT. It is currently not supported.
          *  - SIGN_MODE_DIRECT_AUX: SIGN_MODE_DIRECT_AUX specifies a signing mode which uses
          * SignDocDirectAux. As opposed to SIGN_MODE_DIRECT, this sign mode does not
          * require signers signing over other signers' `signer_info`. It also allows
@@ -14900,9 +14142,7 @@ export interface components {
        * verified with raw bytes from Tx.
        *  - SIGN_MODE_TEXTUAL: SIGN_MODE_TEXTUAL is a future signing mode that will verify some
        * human-readable textual representation on top of the binary representation
-       * from SIGN_MODE_DIRECT. It is currently experimental, and should be used
-       * for testing purposes only, until Textual is fully released. Please follow
-       * the tracking issue https://github.com/cosmos/cosmos-sdk/issues/11970.
+       * from SIGN_MODE_DIRECT. It is currently not supported.
        *  - SIGN_MODE_DIRECT_AUX: SIGN_MODE_DIRECT_AUX specifies a signing mode which uses
        * SignDocDirectAux. As opposed to SIGN_MODE_DIRECT, this sign mode does not
        * require signers signing over other signers' `signer_info`. It also allows
@@ -14934,8 +14174,7 @@ export interface components {
     };
     /**
      * OrderBy defines the sorting order
-     * @description - ORDER_BY_UNSPECIFIED: ORDER_BY_UNSPECIFIED specifies an unknown sorting order. OrderBy defaults
-     * to ASC in this case.
+     * @description - ORDER_BY_UNSPECIFIED: ORDER_BY_UNSPECIFIED specifies an unknown sorting order. OrderBy defaults to ASC in this case.
      *  - ORDER_BY_ASC: ORDER_BY_ASC defines ascending order
      *  - ORDER_BY_DESC: ORDER_BY_DESC defines descending order
      * @default ORDER_BY_UNSPECIFIED
@@ -15581,7 +14820,7 @@ export interface components {
     };
     /**
      * @description Event allows application developers to attach additional information to
-     * ResponseFinalizeBlock and ResponseCheckTx.
+     * ResponseBeginBlock, ResponseEndBlock, ResponseCheckTx and ResponseDeliverTx.
      * Later, transactions may be queried using these events.
      */
     "tendermint.abci.Event": {
@@ -15679,7 +14918,7 @@ export interface components {
           /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
           duplicate_vote_evidence?: {
             /**
-             * @description Vote represents a prevote or precommit vote from validators for
+             * @description Vote represents a prevote, precommit, or commit vote from validators for
              * consensus.
              */
             vote_a?: {
@@ -15718,28 +14957,11 @@ export interface components {
               validator_address?: string;
               /** Format: int32 */
               validator_index?: number;
-              /**
-               * Format: byte
-               * @description Vote signature by the validator if they participated in consensus for the
-               * associated block.
-               */
+              /** Format: byte */
               signature?: string;
-              /**
-               * Format: byte
-               * @description Vote extension provided by the application. Only valid for precommit
-               * messages.
-               */
-              extension?: string;
-              /**
-               * Format: byte
-               * @description Vote extension signature by the validator if they participated in
-               * consensus for the associated block.
-               * Only valid for precommit messages.
-               */
-              extension_signature?: string;
             };
             /**
-             * @description Vote represents a prevote or precommit vote from validators for
+             * @description Vote represents a prevote, precommit, or commit vote from validators for
              * consensus.
              */
             vote_b?: {
@@ -15778,25 +15000,8 @@ export interface components {
               validator_address?: string;
               /** Format: int32 */
               validator_index?: number;
-              /**
-               * Format: byte
-               * @description Vote signature by the validator if they participated in consensus for the
-               * associated block.
-               */
+              /** Format: byte */
               signature?: string;
-              /**
-               * Format: byte
-               * @description Vote extension provided by the application. Only valid for precommit
-               * messages.
-               */
-              extension?: string;
-              /**
-               * Format: byte
-               * @description Vote extension signature by the validator if they participated in
-               * consensus for the associated block.
-               * Only valid for precommit messages.
-               */
-              extension_signature?: string;
             };
             /** Format: int64 */
             total_voting_power?: string;
@@ -15888,7 +15093,7 @@ export interface components {
                   };
                   signatures?: {
                     /**
-                     * BlockIdFlag indicates which BlockID the signature is for
+                     * BlockIdFlag indicates which BlcokID the signature is for
                      * @default BLOCK_ID_FLAG_UNKNOWN
                      * @enum {string}
                      */
@@ -15985,7 +15190,7 @@ export interface components {
         };
         signatures?: {
           /**
-           * BlockIdFlag indicates which BlockID the signature is for
+           * BlockIdFlag indicates which BlcokID the signature is for
            * @default BLOCK_ID_FLAG_UNKNOWN
            * @enum {string}
            */
@@ -16004,7 +15209,7 @@ export interface components {
       };
     };
     /**
-     * BlockIdFlag indicates which BlockID the signature is for
+     * BlockIdFlag indicates which BlcokID the signature is for
      * @default BLOCK_ID_FLAG_UNKNOWN
      * @enum {string}
      */
@@ -16033,7 +15238,7 @@ export interface components {
       };
       signatures?: {
         /**
-         * BlockIdFlag indicates which BlockID the signature is for
+         * BlockIdFlag indicates which BlcokID the signature is for
          * @default BLOCK_ID_FLAG_UNKNOWN
          * @enum {string}
          */
@@ -16053,7 +15258,7 @@ export interface components {
     /** @description CommitSig is a part of the Vote included in a Commit. */
     "tendermint.types.CommitSig": {
       /**
-       * BlockIdFlag indicates which BlockID the signature is for
+       * BlockIdFlag indicates which BlcokID the signature is for
        * @default BLOCK_ID_FLAG_UNKNOWN
        * @enum {string}
        */
@@ -16081,7 +15286,7 @@ export interface components {
     /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
     "tendermint.types.DuplicateVoteEvidence": {
       /**
-       * @description Vote represents a prevote or precommit vote from validators for
+       * @description Vote represents a prevote, precommit, or commit vote from validators for
        * consensus.
        */
       vote_a?: {
@@ -16120,28 +15325,11 @@ export interface components {
         validator_address?: string;
         /** Format: int32 */
         validator_index?: number;
-        /**
-         * Format: byte
-         * @description Vote signature by the validator if they participated in consensus for the
-         * associated block.
-         */
+        /** Format: byte */
         signature?: string;
-        /**
-         * Format: byte
-         * @description Vote extension provided by the application. Only valid for precommit
-         * messages.
-         */
-        extension?: string;
-        /**
-         * Format: byte
-         * @description Vote extension signature by the validator if they participated in
-         * consensus for the associated block.
-         * Only valid for precommit messages.
-         */
-        extension_signature?: string;
       };
       /**
-       * @description Vote represents a prevote or precommit vote from validators for
+       * @description Vote represents a prevote, precommit, or commit vote from validators for
        * consensus.
        */
       vote_b?: {
@@ -16180,25 +15368,8 @@ export interface components {
         validator_address?: string;
         /** Format: int32 */
         validator_index?: number;
-        /**
-         * Format: byte
-         * @description Vote signature by the validator if they participated in consensus for the
-         * associated block.
-         */
+        /** Format: byte */
         signature?: string;
-        /**
-         * Format: byte
-         * @description Vote extension provided by the application. Only valid for precommit
-         * messages.
-         */
-        extension?: string;
-        /**
-         * Format: byte
-         * @description Vote extension signature by the validator if they participated in
-         * consensus for the associated block.
-         * Only valid for precommit messages.
-         */
-        extension_signature?: string;
       };
       /** Format: int64 */
       total_voting_power?: string;
@@ -16211,7 +15382,7 @@ export interface components {
       /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
       duplicate_vote_evidence?: {
         /**
-         * @description Vote represents a prevote or precommit vote from validators for
+         * @description Vote represents a prevote, precommit, or commit vote from validators for
          * consensus.
          */
         vote_a?: {
@@ -16250,28 +15421,11 @@ export interface components {
           validator_address?: string;
           /** Format: int32 */
           validator_index?: number;
-          /**
-           * Format: byte
-           * @description Vote signature by the validator if they participated in consensus for the
-           * associated block.
-           */
+          /** Format: byte */
           signature?: string;
-          /**
-           * Format: byte
-           * @description Vote extension provided by the application. Only valid for precommit
-           * messages.
-           */
-          extension?: string;
-          /**
-           * Format: byte
-           * @description Vote extension signature by the validator if they participated in
-           * consensus for the associated block.
-           * Only valid for precommit messages.
-           */
-          extension_signature?: string;
         };
         /**
-         * @description Vote represents a prevote or precommit vote from validators for
+         * @description Vote represents a prevote, precommit, or commit vote from validators for
          * consensus.
          */
         vote_b?: {
@@ -16310,25 +15464,8 @@ export interface components {
           validator_address?: string;
           /** Format: int32 */
           validator_index?: number;
-          /**
-           * Format: byte
-           * @description Vote signature by the validator if they participated in consensus for the
-           * associated block.
-           */
+          /** Format: byte */
           signature?: string;
-          /**
-           * Format: byte
-           * @description Vote extension provided by the application. Only valid for precommit
-           * messages.
-           */
-          extension?: string;
-          /**
-           * Format: byte
-           * @description Vote extension signature by the validator if they participated in
-           * consensus for the associated block.
-           * Only valid for precommit messages.
-           */
-          extension_signature?: string;
         };
         /** Format: int64 */
         total_voting_power?: string;
@@ -16420,7 +15557,7 @@ export interface components {
               };
               signatures?: {
                 /**
-                 * BlockIdFlag indicates which BlockID the signature is for
+                 * BlockIdFlag indicates which BlcokID the signature is for
                  * @default BLOCK_ID_FLAG_UNKNOWN
                  * @enum {string}
                  */
@@ -16501,7 +15638,7 @@ export interface components {
         /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
         duplicate_vote_evidence?: {
           /**
-           * @description Vote represents a prevote or precommit vote from validators for
+           * @description Vote represents a prevote, precommit, or commit vote from validators for
            * consensus.
            */
           vote_a?: {
@@ -16540,28 +15677,11 @@ export interface components {
             validator_address?: string;
             /** Format: int32 */
             validator_index?: number;
-            /**
-             * Format: byte
-             * @description Vote signature by the validator if they participated in consensus for the
-             * associated block.
-             */
+            /** Format: byte */
             signature?: string;
-            /**
-             * Format: byte
-             * @description Vote extension provided by the application. Only valid for precommit
-             * messages.
-             */
-            extension?: string;
-            /**
-             * Format: byte
-             * @description Vote extension signature by the validator if they participated in
-             * consensus for the associated block.
-             * Only valid for precommit messages.
-             */
-            extension_signature?: string;
           };
           /**
-           * @description Vote represents a prevote or precommit vote from validators for
+           * @description Vote represents a prevote, precommit, or commit vote from validators for
            * consensus.
            */
           vote_b?: {
@@ -16600,25 +15720,8 @@ export interface components {
             validator_address?: string;
             /** Format: int32 */
             validator_index?: number;
-            /**
-             * Format: byte
-             * @description Vote signature by the validator if they participated in consensus for the
-             * associated block.
-             */
+            /** Format: byte */
             signature?: string;
-            /**
-             * Format: byte
-             * @description Vote extension provided by the application. Only valid for precommit
-             * messages.
-             */
-            extension?: string;
-            /**
-             * Format: byte
-             * @description Vote extension signature by the validator if they participated in
-             * consensus for the associated block.
-             * Only valid for precommit messages.
-             */
-            extension_signature?: string;
           };
           /** Format: int64 */
           total_voting_power?: string;
@@ -16710,7 +15813,7 @@ export interface components {
                 };
                 signatures?: {
                   /**
-                   * BlockIdFlag indicates which BlockID the signature is for
+                   * BlockIdFlag indicates which BlcokID the signature is for
                    * @default BLOCK_ID_FLAG_UNKNOWN
                    * @enum {string}
                    */
@@ -16868,7 +15971,7 @@ export interface components {
           };
           signatures?: {
             /**
-             * BlockIdFlag indicates which BlockID the signature is for
+             * BlockIdFlag indicates which BlcokID the signature is for
              * @default BLOCK_ID_FLAG_UNKNOWN
              * @enum {string}
              */
@@ -17004,7 +16107,7 @@ export interface components {
             };
             signatures?: {
               /**
-               * BlockIdFlag indicates which BlockID the signature is for
+               * BlockIdFlag indicates which BlcokID the signature is for
                * @default BLOCK_ID_FLAG_UNKNOWN
                * @enum {string}
                */
@@ -17159,7 +16262,7 @@ export interface components {
         };
         signatures?: {
           /**
-           * BlockIdFlag indicates which BlockID the signature is for
+           * BlockIdFlag indicates which BlcokID the signature is for
            * @default BLOCK_ID_FLAG_UNKNOWN
            * @enum {string}
            */
@@ -17240,7 +16343,7 @@ export interface components {
       total_voting_power?: string;
     };
     /**
-     * @description Vote represents a prevote or precommit vote from validators for
+     * @description Vote represents a prevote, precommit, or commit vote from validators for
      * consensus.
      */
     "tendermint.types.Vote": {
@@ -17279,25 +16382,8 @@ export interface components {
       validator_address?: string;
       /** Format: int32 */
       validator_index?: number;
-      /**
-       * Format: byte
-       * @description Vote signature by the validator if they participated in consensus for the
-       * associated block.
-       */
+      /** Format: byte */
       signature?: string;
-      /**
-       * Format: byte
-       * @description Vote extension provided by the application. Only valid for precommit
-       * messages.
-       */
-      extension?: string;
-      /**
-       * Format: byte
-       * @description Vote extension signature by the validator if they participated in
-       * consensus for the associated block.
-       * Only valid for precommit messages.
-       */
-      extension_signature?: string;
     };
     /**
      * @description ABCIQueryResponse defines the response structure for the ABCIQuery gRPC query.
@@ -17416,7 +16502,7 @@ export interface components {
           /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
           duplicate_vote_evidence?: {
             /**
-             * @description Vote represents a prevote or precommit vote from validators for
+             * @description Vote represents a prevote, precommit, or commit vote from validators for
              * consensus.
              */
             vote_a?: {
@@ -17455,28 +16541,11 @@ export interface components {
               validator_address?: string;
               /** Format: int32 */
               validator_index?: number;
-              /**
-               * Format: byte
-               * @description Vote signature by the validator if they participated in consensus for the
-               * associated block.
-               */
+              /** Format: byte */
               signature?: string;
-              /**
-               * Format: byte
-               * @description Vote extension provided by the application. Only valid for precommit
-               * messages.
-               */
-              extension?: string;
-              /**
-               * Format: byte
-               * @description Vote extension signature by the validator if they participated in
-               * consensus for the associated block.
-               * Only valid for precommit messages.
-               */
-              extension_signature?: string;
             };
             /**
-             * @description Vote represents a prevote or precommit vote from validators for
+             * @description Vote represents a prevote, precommit, or commit vote from validators for
              * consensus.
              */
             vote_b?: {
@@ -17515,25 +16584,8 @@ export interface components {
               validator_address?: string;
               /** Format: int32 */
               validator_index?: number;
-              /**
-               * Format: byte
-               * @description Vote signature by the validator if they participated in consensus for the
-               * associated block.
-               */
+              /** Format: byte */
               signature?: string;
-              /**
-               * Format: byte
-               * @description Vote extension provided by the application. Only valid for precommit
-               * messages.
-               */
-              extension?: string;
-              /**
-               * Format: byte
-               * @description Vote extension signature by the validator if they participated in
-               * consensus for the associated block.
-               * Only valid for precommit messages.
-               */
-              extension_signature?: string;
             };
             /** Format: int64 */
             total_voting_power?: string;
@@ -17625,7 +16677,7 @@ export interface components {
                   };
                   signatures?: {
                     /**
-                     * BlockIdFlag indicates which BlockID the signature is for
+                     * BlockIdFlag indicates which BlcokID the signature is for
                      * @default BLOCK_ID_FLAG_UNKNOWN
                      * @enum {string}
                      */
@@ -17722,7 +16774,7 @@ export interface components {
         };
         signatures?: {
           /**
-           * BlockIdFlag indicates which BlockID the signature is for
+           * BlockIdFlag indicates which BlcokID the signature is for
            * @default BLOCK_ID_FLAG_UNKNOWN
            * @enum {string}
            */
@@ -17829,7 +16881,7 @@ export interface components {
             /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
             duplicate_vote_evidence?: {
               /**
-               * @description Vote represents a prevote or precommit vote from validators for
+               * @description Vote represents a prevote, precommit, or commit vote from validators for
                * consensus.
                */
               vote_a?: {
@@ -17868,28 +16920,11 @@ export interface components {
                 validator_address?: string;
                 /** Format: int32 */
                 validator_index?: number;
-                /**
-                 * Format: byte
-                 * @description Vote signature by the validator if they participated in consensus for the
-                 * associated block.
-                 */
+                /** Format: byte */
                 signature?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension provided by the application. Only valid for precommit
-                 * messages.
-                 */
-                extension?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension signature by the validator if they participated in
-                 * consensus for the associated block.
-                 * Only valid for precommit messages.
-                 */
-                extension_signature?: string;
               };
               /**
-               * @description Vote represents a prevote or precommit vote from validators for
+               * @description Vote represents a prevote, precommit, or commit vote from validators for
                * consensus.
                */
               vote_b?: {
@@ -17928,25 +16963,8 @@ export interface components {
                 validator_address?: string;
                 /** Format: int32 */
                 validator_index?: number;
-                /**
-                 * Format: byte
-                 * @description Vote signature by the validator if they participated in consensus for the
-                 * associated block.
-                 */
+                /** Format: byte */
                 signature?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension provided by the application. Only valid for precommit
-                 * messages.
-                 */
-                extension?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension signature by the validator if they participated in
-                 * consensus for the associated block.
-                 * Only valid for precommit messages.
-                 */
-                extension_signature?: string;
               };
               /** Format: int64 */
               total_voting_power?: string;
@@ -18038,7 +17056,7 @@ export interface components {
                     };
                     signatures?: {
                       /**
-                       * BlockIdFlag indicates which BlockID the signature is for
+                       * BlockIdFlag indicates which BlcokID the signature is for
                        * @default BLOCK_ID_FLAG_UNKNOWN
                        * @enum {string}
                        */
@@ -18135,7 +17153,7 @@ export interface components {
           };
           signatures?: {
             /**
-             * BlockIdFlag indicates which BlockID the signature is for
+             * BlockIdFlag indicates which BlcokID the signature is for
              * @default BLOCK_ID_FLAG_UNKNOWN
              * @enum {string}
              */
@@ -18236,7 +17254,7 @@ export interface components {
             /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
             duplicate_vote_evidence?: {
               /**
-               * @description Vote represents a prevote or precommit vote from validators for
+               * @description Vote represents a prevote, precommit, or commit vote from validators for
                * consensus.
                */
               vote_a?: {
@@ -18275,28 +17293,11 @@ export interface components {
                 validator_address?: string;
                 /** Format: int32 */
                 validator_index?: number;
-                /**
-                 * Format: byte
-                 * @description Vote signature by the validator if they participated in consensus for the
-                 * associated block.
-                 */
+                /** Format: byte */
                 signature?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension provided by the application. Only valid for precommit
-                 * messages.
-                 */
-                extension?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension signature by the validator if they participated in
-                 * consensus for the associated block.
-                 * Only valid for precommit messages.
-                 */
-                extension_signature?: string;
               };
               /**
-               * @description Vote represents a prevote or precommit vote from validators for
+               * @description Vote represents a prevote, precommit, or commit vote from validators for
                * consensus.
                */
               vote_b?: {
@@ -18335,25 +17336,8 @@ export interface components {
                 validator_address?: string;
                 /** Format: int32 */
                 validator_index?: number;
-                /**
-                 * Format: byte
-                 * @description Vote signature by the validator if they participated in consensus for the
-                 * associated block.
-                 */
+                /** Format: byte */
                 signature?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension provided by the application. Only valid for precommit
-                 * messages.
-                 */
-                extension?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension signature by the validator if they participated in
-                 * consensus for the associated block.
-                 * Only valid for precommit messages.
-                 */
-                extension_signature?: string;
               };
               /** Format: int64 */
               total_voting_power?: string;
@@ -18445,7 +17429,7 @@ export interface components {
                     };
                     signatures?: {
                       /**
-                       * BlockIdFlag indicates which BlockID the signature is for
+                       * BlockIdFlag indicates which BlcokID the signature is for
                        * @default BLOCK_ID_FLAG_UNKNOWN
                        * @enum {string}
                        */
@@ -18542,7 +17526,7 @@ export interface components {
           };
           signatures?: {
             /**
-             * BlockIdFlag indicates which BlockID the signature is for
+             * BlockIdFlag indicates which BlcokID the signature is for
              * @default BLOCK_ID_FLAG_UNKNOWN
              * @enum {string}
              */
@@ -18650,7 +17634,7 @@ export interface components {
             /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
             duplicate_vote_evidence?: {
               /**
-               * @description Vote represents a prevote or precommit vote from validators for
+               * @description Vote represents a prevote, precommit, or commit vote from validators for
                * consensus.
                */
               vote_a?: {
@@ -18689,28 +17673,11 @@ export interface components {
                 validator_address?: string;
                 /** Format: int32 */
                 validator_index?: number;
-                /**
-                 * Format: byte
-                 * @description Vote signature by the validator if they participated in consensus for the
-                 * associated block.
-                 */
+                /** Format: byte */
                 signature?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension provided by the application. Only valid for precommit
-                 * messages.
-                 */
-                extension?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension signature by the validator if they participated in
-                 * consensus for the associated block.
-                 * Only valid for precommit messages.
-                 */
-                extension_signature?: string;
               };
               /**
-               * @description Vote represents a prevote or precommit vote from validators for
+               * @description Vote represents a prevote, precommit, or commit vote from validators for
                * consensus.
                */
               vote_b?: {
@@ -18749,25 +17716,8 @@ export interface components {
                 validator_address?: string;
                 /** Format: int32 */
                 validator_index?: number;
-                /**
-                 * Format: byte
-                 * @description Vote signature by the validator if they participated in consensus for the
-                 * associated block.
-                 */
+                /** Format: byte */
                 signature?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension provided by the application. Only valid for precommit
-                 * messages.
-                 */
-                extension?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension signature by the validator if they participated in
-                 * consensus for the associated block.
-                 * Only valid for precommit messages.
-                 */
-                extension_signature?: string;
               };
               /** Format: int64 */
               total_voting_power?: string;
@@ -18859,7 +17809,7 @@ export interface components {
                     };
                     signatures?: {
                       /**
-                       * BlockIdFlag indicates which BlockID the signature is for
+                       * BlockIdFlag indicates which BlcokID the signature is for
                        * @default BLOCK_ID_FLAG_UNKNOWN
                        * @enum {string}
                        */
@@ -18956,7 +17906,7 @@ export interface components {
           };
           signatures?: {
             /**
-             * BlockIdFlag indicates which BlockID the signature is for
+             * BlockIdFlag indicates which BlcokID the signature is for
              * @default BLOCK_ID_FLAG_UNKNOWN
              * @enum {string}
              */
@@ -19057,7 +18007,7 @@ export interface components {
             /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
             duplicate_vote_evidence?: {
               /**
-               * @description Vote represents a prevote or precommit vote from validators for
+               * @description Vote represents a prevote, precommit, or commit vote from validators for
                * consensus.
                */
               vote_a?: {
@@ -19096,28 +18046,11 @@ export interface components {
                 validator_address?: string;
                 /** Format: int32 */
                 validator_index?: number;
-                /**
-                 * Format: byte
-                 * @description Vote signature by the validator if they participated in consensus for the
-                 * associated block.
-                 */
+                /** Format: byte */
                 signature?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension provided by the application. Only valid for precommit
-                 * messages.
-                 */
-                extension?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension signature by the validator if they participated in
-                 * consensus for the associated block.
-                 * Only valid for precommit messages.
-                 */
-                extension_signature?: string;
               };
               /**
-               * @description Vote represents a prevote or precommit vote from validators for
+               * @description Vote represents a prevote, precommit, or commit vote from validators for
                * consensus.
                */
               vote_b?: {
@@ -19156,25 +18089,8 @@ export interface components {
                 validator_address?: string;
                 /** Format: int32 */
                 validator_index?: number;
-                /**
-                 * Format: byte
-                 * @description Vote signature by the validator if they participated in consensus for the
-                 * associated block.
-                 */
+                /** Format: byte */
                 signature?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension provided by the application. Only valid for precommit
-                 * messages.
-                 */
-                extension?: string;
-                /**
-                 * Format: byte
-                 * @description Vote extension signature by the validator if they participated in
-                 * consensus for the associated block.
-                 * Only valid for precommit messages.
-                 */
-                extension_signature?: string;
               };
               /** Format: int64 */
               total_voting_power?: string;
@@ -19266,7 +18182,7 @@ export interface components {
                     };
                     signatures?: {
                       /**
-                       * BlockIdFlag indicates which BlockID the signature is for
+                       * BlockIdFlag indicates which BlcokID the signature is for
                        * @default BLOCK_ID_FLAG_UNKNOWN
                        * @enum {string}
                        */
@@ -19363,7 +18279,7 @@ export interface components {
           };
           signatures?: {
             /**
-             * BlockIdFlag indicates which BlockID the signature is for
+             * BlockIdFlag indicates which BlcokID the signature is for
              * @default BLOCK_ID_FLAG_UNKNOWN
              * @enum {string}
              */
@@ -20021,238 +18937,6 @@ export type $defs = Record<string, never>;
 export type external = Record<string, never>;
 
 export interface operations {
-  /** ClaimsRecords returns all claims records */
-  ClaimsRecords: {
-    parameters: {
-      query?: {
-        /**
-         * @description key is a value returned in PageResponse.next_key to begin
-         * querying the next page most efficiently. Only one of offset or key
-         * should be set.
-         */
-        "pagination.key"?: string;
-        /**
-         * @description offset is a numeric offset that can be used when key is unavailable.
-         * It is less efficient than using key. Only one of offset or key should
-         * be set.
-         */
-        "pagination.offset"?: string;
-        /**
-         * @description limit is the total number of results to be returned in the result page.
-         * If left empty it will default to a value to be set by each app.
-         */
-        "pagination.limit"?: string;
-        /**
-         * @description count_total is set to true  to indicate that the result set should include
-         * a count of the total number of items available for pagination in UIs.
-         * count_total is only respected when offset is used. It is ignored when key
-         * is set.
-         */
-        "pagination.count_total"?: boolean;
-        /**
-         * @description reverse is set to true if results are to be returned in the descending order.
-         *
-         * Since: cosmos-sdk 0.43
-         */
-        "pagination.reverse"?: boolean;
-      };
-    };
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /** claims defines all claims records */
-            claims?: {
-              /** address of claiming user in either bech32 or hex format */
-              address?: string;
-              /** initial_claimable_amount for the user */
-              initial_claimable_amount?: string;
-              /** actions_completed is a slice that describes which actions were completed */
-              actions_completed?: boolean[];
-            }[];
-            /** @description pagination defines the pagination in the response. */
-            pagination?: {
-              /**
-               * Format: byte
-               * @description next_key is the key to be passed to PageRequest.key to
-               * query the next page most efficiently. It will be empty if
-               * there are no more results.
-               */
-              next_key?: string;
-              /**
-               * total is total number of results available if PageRequest.count_total
-               * was set, its value is undefined otherwise
-               * Format: uint64
-               */
-              total?: string;
-            };
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
-  /** ClaimsRecord returns the claims record for a given address */
-  ClaimsRecord: {
-    parameters: {
-      path: {
-        /** @description address defines the user to query claims record for */
-        address: string;
-      };
-    };
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /** initial_claimable_amount of the user */
-            initial_claimable_amount?: string;
-            /** claims of the user */
-            claims?: {
-              /**
-               * action enum
-               * @description Action defines the list of available actions to claim the airdrop tokens.
-               *
-               *  - ACTION_UNSPECIFIED: ACTION_UNSPECIFIED defines an invalid action.
-               *  - ACTION_VOTE: ACTION_VOTE defines a proposal vote.
-               *  - ACTION_DELEGATE: ACTION_DELEGATE defines an staking delegation.
-               *  - ACTION_EVM: ACTION_EVM defines an EVM transaction.
-               *  - ACTION_IBC_TRANSFER: ACTION_IBC_TRANSFER defines a fungible token transfer transaction via IBC.
-               * @default ACTION_UNSPECIFIED
-               * @enum {string}
-               */
-              action?:
-                | "ACTION_UNSPECIFIED"
-                | "ACTION_VOTE"
-                | "ACTION_DELEGATE"
-                | "ACTION_EVM"
-                | "ACTION_IBC_TRANSFER";
-              /** completed is true if the action has been completed */
-              completed?: boolean;
-              /** claimable_amount of tokens for the action. Zero if completed */
-              claimable_amount?: string;
-            }[];
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
-  /** Params returns the claims module parameters */
-  ClaimsParams: {
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /** @description params defines the parameters of the module. */
-            params?: {
-              /** enable_claims is the parameter to enable the claiming process */
-              enable_claims?: boolean;
-              /**
-               * airdrop_start_time defines the timestamp of the airdrop start
-               * Format: date-time
-               */
-              airdrop_start_time?: string;
-              /** duration_until_decay of claimable tokens begin */
-              duration_until_decay?: string;
-              /** duration_of_decay for token claim decay period */
-              duration_of_decay?: string;
-              /** claims_denom is the denomination of the claimable coin */
-              claims_denom?: string;
-              /**
-               * @description authorized_channels is the list of authorized channel identifiers that can perform address
-               * attestations via IBC.
-               */
-              authorized_channels?: string[];
-              /** evm_channels is the list of channel identifiers from EVM compatible chains */
-              evm_channels?: string[];
-            };
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
-  /** TotalUnclaimed queries the total unclaimed tokens from the airdrop */
-  TotalUnclaimed: {
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /** coins defines the unclaimed coins */
-            coins?: {
-              denom?: string;
-              amount?: string;
-            }[];
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
   /** CurrentEpoch provide current epoch of specified identifier */
   CurrentEpoch: {
     parameters: {
@@ -20557,7 +19241,7 @@ export interface operations {
             /**
              * token_pairs returns the info about a registered token pair for the erc20 module
              * @description TokenPair defines an instance that records a pairing consisting of a native
-             *  Cosmos Coin and an ERC20 token address.
+             * Cosmos Coin and an ERC20 token address.
              */
             token_pair?: {
               /** erc20_address is the hex address of ERC20 contract token */
@@ -20580,476 +19264,6 @@ export interface operations {
                 | "OWNER_UNSPECIFIED"
                 | "OWNER_MODULE"
                 | "OWNER_EXTERNAL";
-            };
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
-  /**
-   * AllocationMeters retrieves active allocation meters for a given
-   * denomination
-   */
-  AllocationMeters: {
-    parameters: {
-      query?: {
-        /**
-         * @description key is a value returned in PageResponse.next_key to begin
-         * querying the next page most efficiently. Only one of offset or key
-         * should be set.
-         */
-        "pagination.key"?: string;
-        /**
-         * @description offset is a numeric offset that can be used when key is unavailable.
-         * It is less efficient than using key. Only one of offset or key should
-         * be set.
-         */
-        "pagination.offset"?: string;
-        /**
-         * @description limit is the total number of results to be returned in the result page.
-         * If left empty it will default to a value to be set by each app.
-         */
-        "pagination.limit"?: string;
-        /**
-         * @description count_total is set to true  to indicate that the result set should include
-         * a count of the total number of items available for pagination in UIs.
-         * count_total is only respected when offset is used. It is ignored when key
-         * is set.
-         */
-        "pagination.count_total"?: boolean;
-        /**
-         * @description reverse is set to true if results are to be returned in the descending order.
-         *
-         * Since: cosmos-sdk 0.43
-         */
-        "pagination.reverse"?: boolean;
-      };
-    };
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /** allocation_meters is a slice of all allocations */
-            allocation_meters?: {
-              denom?: string;
-              amount?: string;
-            }[];
-            /** @description pagination defines the pagination in the response. */
-            pagination?: {
-              /**
-               * Format: byte
-               * @description next_key is the key to be passed to PageRequest.key to
-               * query the next page most efficiently. It will be empty if
-               * there are no more results.
-               */
-              next_key?: string;
-              /**
-               * total is total number of results available if PageRequest.count_total
-               * was set, its value is undefined otherwise
-               * Format: uint64
-               */
-              total?: string;
-            };
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
-  /** AllocationMeter retrieves a active gas meter */
-  AllocationMeter: {
-    parameters: {
-      path: {
-        /** @description denom is the coin denom to query an allocation meter for. */
-        denom: string;
-      };
-    };
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /**
-             * allocation_meter defines the allocation of the queried denom
-             * @description DecCoin defines a token with a denomination and a decimal amount.
-             *
-             * NOTE: The amount field is an Dec which implements the custom method
-             * signatures required by gogoproto.
-             */
-            allocation_meter?: {
-              denom?: string;
-              amount?: string;
-            };
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
-  /** GasMeters retrieves active gas meters for a given contract */
-  GasMeters: {
-    parameters: {
-      query?: {
-        /**
-         * @description key is a value returned in PageResponse.next_key to begin
-         * querying the next page most efficiently. Only one of offset or key
-         * should be set.
-         */
-        "pagination.key"?: string;
-        /**
-         * @description offset is a numeric offset that can be used when key is unavailable.
-         * It is less efficient than using key. Only one of offset or key should
-         * be set.
-         */
-        "pagination.offset"?: string;
-        /**
-         * @description limit is the total number of results to be returned in the result page.
-         * If left empty it will default to a value to be set by each app.
-         */
-        "pagination.limit"?: string;
-        /**
-         * @description count_total is set to true  to indicate that the result set should include
-         * a count of the total number of items available for pagination in UIs.
-         * count_total is only respected when offset is used. It is ignored when key
-         * is set.
-         */
-        "pagination.count_total"?: boolean;
-        /**
-         * @description reverse is set to true if results are to be returned in the descending order.
-         *
-         * Since: cosmos-sdk 0.43
-         */
-        "pagination.reverse"?: boolean;
-      };
-      path: {
-        /** @description contract is the hex contract address of a incentivized smart contract */
-        contract: string;
-      };
-    };
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /** gas_meters is a slice of the gas meters for an incentivized smart contract */
-            gas_meters?: {
-              /** contract is the hex address of the incentivized smart contract */
-              contract?: string;
-              /** participant address that interacts with the incentive */
-              participant?: string;
-              /**
-               * cumulative_gas spent during the epoch
-               * Format: uint64
-               */
-              cumulative_gas?: string;
-            }[];
-            /** @description pagination defines the pagination in the response. */
-            pagination?: {
-              /**
-               * Format: byte
-               * @description next_key is the key to be passed to PageRequest.key to
-               * query the next page most efficiently. It will be empty if
-               * there are no more results.
-               */
-              next_key?: string;
-              /**
-               * total is total number of results available if PageRequest.count_total
-               * was set, its value is undefined otherwise
-               * Format: uint64
-               */
-              total?: string;
-            };
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
-  /** GasMeter retrieves a active gas meter */
-  GasMeter: {
-    parameters: {
-      path: {
-        /** @description contract is the hex contract address of a contract */
-        contract: string;
-        /** @description participant is the hex address of a user */
-        participant: string;
-      };
-    };
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /**
-             * gas_meter is a gas meter for one participant on an incentivized smart contract
-             * Format: uint64
-             */
-            gas_meter?: string;
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
-  /** Incentives retrieves registered incentives */
-  Incentives: {
-    parameters: {
-      query?: {
-        /**
-         * @description key is a value returned in PageResponse.next_key to begin
-         * querying the next page most efficiently. Only one of offset or key
-         * should be set.
-         */
-        "pagination.key"?: string;
-        /**
-         * @description offset is a numeric offset that can be used when key is unavailable.
-         * It is less efficient than using key. Only one of offset or key should
-         * be set.
-         */
-        "pagination.offset"?: string;
-        /**
-         * @description limit is the total number of results to be returned in the result page.
-         * If left empty it will default to a value to be set by each app.
-         */
-        "pagination.limit"?: string;
-        /**
-         * @description count_total is set to true  to indicate that the result set should include
-         * a count of the total number of items available for pagination in UIs.
-         * count_total is only respected when offset is used. It is ignored when key
-         * is set.
-         */
-        "pagination.count_total"?: boolean;
-        /**
-         * @description reverse is set to true if results are to be returned in the descending order.
-         *
-         * Since: cosmos-sdk 0.43
-         */
-        "pagination.reverse"?: boolean;
-      };
-    };
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /** incentives is a slice of all incentives */
-            incentives?: {
-              /** contract address of the smart contract to be incentivized */
-              contract?: string;
-              /** allocations is a slice of denoms and percentages of rewards to be allocated */
-              allocations?: {
-                denom?: string;
-                amount?: string;
-              }[];
-              /**
-               * epochs defines the number of remaining epochs for the incentive
-               * Format: int64
-               */
-              epochs?: number;
-              /**
-               * start_time of the incentive distribution
-               * Format: date-time
-               */
-              start_time?: string;
-              /**
-               * total_gas is the cumulative gas spent by all gas meters of the incentive during the epoch
-               * Format: uint64
-               */
-              total_gas?: string;
-            }[];
-            /** @description pagination defines the pagination in the response. */
-            pagination?: {
-              /**
-               * Format: byte
-               * @description next_key is the key to be passed to PageRequest.key to
-               * query the next page most efficiently. It will be empty if
-               * there are no more results.
-               */
-              next_key?: string;
-              /**
-               * total is total number of results available if PageRequest.count_total
-               * was set, its value is undefined otherwise
-               * Format: uint64
-               */
-              total?: string;
-            };
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
-  /** Incentive retrieves a registered incentive */
-  Incentive: {
-    parameters: {
-      path: {
-        /** @description contract is the hex contract address of a incentivized smart contract */
-        contract: string;
-      };
-    };
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /**
-             * Incentive defines an instance that organizes distribution conditions for a
-             * given smart contract
-             */
-            incentive?: {
-              /** contract address of the smart contract to be incentivized */
-              contract?: string;
-              /** allocations is a slice of denoms and percentages of rewards to be allocated */
-              allocations?: {
-                denom?: string;
-                amount?: string;
-              }[];
-              /**
-               * epochs defines the number of remaining epochs for the incentive
-               * Format: int64
-               */
-              epochs?: number;
-              /**
-               * start_time of the incentive distribution
-               * Format: date-time
-               */
-              start_time?: string;
-              /**
-               * total_gas is the cumulative gas spent by all gas meters of the incentive during the epoch
-               * Format: uint64
-               */
-              total_gas?: string;
-            };
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
-  /** Params retrieves the incentives module params */
-  IncentivesParams: {
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /** params are the incentives module parameters */
-            params?: {
-              /** enable_incentives is the parameter to enable incentives */
-              enable_incentives?: boolean;
-              /** allocation_limit is the maximum percentage an incentive can allocate per denomination */
-              allocation_limit?: string;
-              /** incentives_epoch_identifier for the epochs module hooks */
-              incentives_epoch_identifier?: string;
-              /** reward_scaler is the scaling factor for capping rewards */
-              reward_scaler?: string;
             };
           };
         };
@@ -21209,7 +19423,7 @@ export interface operations {
                  */
                 staking_rewards?: string;
                 /**
-                 * usage_incentives defines the proportion of the minted minted_denom that is
+                 * Deprecated: usage_incentives defines the proportion of the minted minted_denom that is
                  * to be allocated to the incentives module address
                  */
                 usage_incentives?: string;
@@ -21337,44 +19551,6 @@ export interface operations {
               denom?: string;
               amount?: string;
             }[];
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
-  /** Params retrieves the total set of recovery parameters. */
-  RecoveryParams: {
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /**
-             * Params holds parameters for the recovery module
-             * @description params defines the parameters of the module.
-             */
-            params?: {
-              /** enable_recovery IBC middleware */
-              enable_recovery?: boolean;
-              /** packet_timeout_duration is the duration added to timeout timestamp for balances recovered via IBC packets */
-              packet_timeout_duration?: string;
-            };
           };
         };
       };
@@ -22408,6 +20584,8 @@ export interface operations {
                * contracts that are active
                */
               active_precompiles?: string[];
+              /** evm_channels is the list of channel identifiers from EVM compatible chains */
+              evm_channels?: string[];
             };
           };
         };
@@ -26820,105 +24998,6 @@ export interface operations {
       };
     };
   };
-  /** NextSequenceSend returns the next send sequence for a given channel. */
-  NextSequenceSend: {
-    parameters: {
-      path: {
-        /** @description channel unique identifier */
-        channel_id: string;
-        /** @description port unique identifier */
-        port_id: string;
-      };
-    };
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /**
-             * next sequence send number
-             * Format: uint64
-             */
-            next_sequence_send?: string;
-            /**
-             * merkle proof of existence
-             * Format: byte
-             */
-            proof?: string;
-            /**
-             * height at which the proof was retrieved
-             * @description Normally the RevisionHeight is incremented at each height while keeping
-             * RevisionNumber the same. However some consensus algorithms may choose to
-             * reset the height in certain conditions e.g. hard forks, state-machine
-             * breaking changes In these cases, the RevisionNumber is incremented so that
-             * height continues to be monitonically increasing even as the RevisionHeight
-             * gets reset
-             */
-            proof_height?: {
-              /**
-               * the revision that the client is currently on
-               * Format: uint64
-               */
-              revision_number?: string;
-              /**
-               * the height within the given revision
-               * Format: uint64
-               */
-              revision_height?: string;
-            };
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              /**
-               * @description A URL/resource name that uniquely identifies the type of the serialized
-               * protocol buffer message. This string must contain at least
-               * one "/" character. The last segment of the URL's path must represent
-               * the fully qualified name of the type (as in
-               * `path/google.protobuf.Duration`). The name should be in a canonical form
-               * (e.g., leading "." is not accepted).
-               *
-               * In practice, teams usually precompile into the binary all types that they
-               * expect it to use in the context of Any. However, for URLs which use the
-               * scheme `http`, `https`, or no scheme, one can optionally set up a type
-               * server that maps type URLs to message definitions as follows:
-               *
-               * * If no scheme is provided, `https` is assumed.
-               * * An HTTP GET on the URL must yield a [google.protobuf.Type][]
-               *   value in binary format, or produce an error.
-               * * Applications are allowed to cache lookup results based on the
-               *   URL, or have them precompiled into a binary to avoid any
-               *   lookup. Therefore, binary compatibility needs to be preserved
-               *   on changes to types. (Use versioned type names to manage
-               *   breaking changes.)
-               *
-               * Note: this functionality is not currently available in the official
-               * protobuf release, and it is not used for type URLs beginning with
-               * type.googleapis.com.
-               *
-               * Schemes other than `http`, `https` (or the empty scheme) might be
-               * used with implementation specific semantics.
-               */
-              type_url?: string;
-              /**
-               * Format: byte
-               * @description Must be a valid serialized protocol buffer of the above specified type.
-               */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
   /**
    * PacketAcknowledgements returns all the packet acknowledgements associated
    * with a channel.
@@ -29904,12 +27983,6 @@ export interface operations {
          * Since: cosmos-sdk 0.43
          */
         "pagination.reverse"?: boolean;
-        /**
-         * @description resolve_denom is the flag to resolve the denom into a human-readable form from the metadata.
-         *
-         * Since: cosmos-sdk 0.50
-         */
-        resolve_denom?: boolean;
       };
       path: {
         /** @description address is the address to query balances for. */
@@ -30336,95 +28409,6 @@ export interface operations {
       };
     };
   };
-  /** DenomsMetadata queries the client metadata of a given coin denomination. */
-  DenomMetadataByQueryString: {
-    parameters: {
-      query?: {
-        /** @description denom is the coin denom to query the metadata for. */
-        denom?: string;
-      };
-    };
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            /**
-             * @description Metadata represents a struct that describes
-             * a basic token.
-             */
-            metadata?: {
-              description?: string;
-              /** denom_units represents the list of DenomUnit's for a given coin */
-              denom_units?: {
-                /** @description denom represents the string name of the given denom unit (e.g uatom). */
-                denom?: string;
-                /**
-                 * Format: int64
-                 * @description exponent represents power of 10 exponent that one must
-                 * raise the base_denom to in order to equal the given DenomUnit's denom
-                 * 1 denom = 10^exponent base_denom
-                 * (e.g. with a base_denom of uatom, one can create a DenomUnit of 'atom' with
-                 * exponent = 6, thus: 1 atom = 10^6 uatom).
-                 */
-                exponent?: number;
-                /** aliases is a list of string aliases for the given denom */
-                aliases?: string[];
-              }[];
-              /** @description base represents the base denom (should be the DenomUnit with exponent = 0). */
-              base?: string;
-              /**
-               * @description display indicates the suggested denom that should be
-               * displayed in clients.
-               */
-              display?: string;
-              /**
-               * name defines the name of the token (eg: Cosmos Atom)
-               * @description Since: cosmos-sdk 0.43
-               */
-              name?: string;
-              /**
-               * @description symbol is the token symbol usually shown on exchanges (eg: ATOM). This can
-               * be the same as the display.
-               *
-               * Since: cosmos-sdk 0.43
-               */
-              symbol?: string;
-              /**
-               * @description URI to a document (on or off-chain) that contains additional information. Optional.
-               *
-               * Since: cosmos-sdk 0.46
-               */
-              uri?: string;
-              /**
-               * @description URIHash is a sha256 hash of a document pointed by URI. It's used to verify that
-               * the document didn't change. Optional.
-               *
-               * Since: cosmos-sdk 0.46
-               */
-              uri_hash?: string;
-            };
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              type_url?: string;
-              /** Format: byte */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
   /** Params queries the parameters of x/bank module. */
   BankParams: {
     responses: {
@@ -30432,7 +28416,7 @@ export interface operations {
       200: {
         content: {
           "*/*": {
-            /** @description params provides the parameters of the bank module. */
+            /** @description Params defines the parameters for the bank module. */
             params?: {
               /**
                * @description Deprecated: Use of SendEnabled in params is deprecated.
@@ -30884,7 +28868,7 @@ export interface operations {
     };
   };
   /**
-   * DelegationTotalRewards queries the total rewards accrued by each
+   * DelegationTotalRewards queries the total rewards accrued by a each
    * validator.
    */
   DelegationTotalRewards: {
@@ -31312,7 +29296,7 @@ export interface operations {
       };
     };
   };
-  /** Allowance returns granted allwance to the grantee by the granter. */
+  /** Allowance returns fee granted to the grantee by the granter. */
   Allowance: {
     parameters: {
       path: {
@@ -31428,7 +29412,7 @@ export interface operations {
       };
     };
   };
-  /** Allowances returns all the grants for the given grantee address. */
+  /** Allowances returns all the grants for address. */
   Allowances: {
     parameters: {
       query?: {
@@ -32893,7 +30877,7 @@ export interface operations {
       };
     };
   };
-  /** Deposit queries single deposit information based on proposalID, depositor address. */
+  /** Deposit queries single deposit information based proposalID, depositAddr. */
   Deposit: {
     parameters: {
       path: {
@@ -33213,10 +31197,7 @@ export interface operations {
       };
     };
   };
-  /**
-   * Vote queries voted information based on proposalID, voterAddr.
-   * Due to how we handle state, this query would error for proposals that has already been finished.
-   */
+  /** Vote queries voted information based on proposalID, voterAddr. */
   Vote: {
     parameters: {
       path: {
@@ -33277,67 +31258,6 @@ export interface operations {
                 weight?: string;
               }[];
             };
-          };
-        };
-      };
-      /** @description An unexpected error response. */
-      default: {
-        content: {
-          "*/*": {
-            error?: string;
-            /** Format: int32 */
-            code?: number;
-            message?: string;
-            details?: {
-              /**
-               * @description A URL/resource name that uniquely identifies the type of the serialized
-               * protocol buffer message. This string must contain at least
-               * one "/" character. The last segment of the URL's path must represent
-               * the fully qualified name of the type (as in
-               * `path/google.protobuf.Duration`). The name should be in a canonical form
-               * (e.g., leading "." is not accepted).
-               *
-               * In practice, teams usually precompile into the binary all types that they
-               * expect it to use in the context of Any. However, for URLs which use the
-               * scheme `http`, `https`, or no scheme, one can optionally set up a type
-               * server that maps type URLs to message definitions as follows:
-               *
-               * * If no scheme is provided, `https` is assumed.
-               * * An HTTP GET on the URL must yield a [google.protobuf.Type][]
-               *   value in binary format, or produce an error.
-               * * Applications are allowed to cache lookup results based on the
-               *   URL, or have them precompiled into a binary to avoid any
-               *   lookup. Therefore, binary compatibility needs to be preserved
-               *   on changes to types. (Use versioned type names to manage
-               *   breaking changes.)
-               *
-               * Note: this functionality is not currently available in the official
-               * protobuf release, and it is not used for type URLs beginning with
-               * type.googleapis.com.
-               *
-               * Schemes other than `http`, `https` (or the empty scheme) might be
-               * used with implementation specific semantics.
-               */
-              type_url?: string;
-              /**
-               * Format: byte
-               * @description Must be a valid serialized protocol buffer of the above specified type.
-               */
-              value?: string;
-            }[];
-          };
-        };
-      };
-    };
-  };
-  /** Constitution queries the chain's constitution. */
-  Constitution: {
-    responses: {
-      /** @description A successful response. */
-      200: {
-        content: {
-          "*/*": {
-            constitution?: string;
           };
         };
       };
@@ -33481,36 +31401,6 @@ export interface operations {
               veto_threshold?: string;
               /** @description The ratio representing the proportion of the deposit value that must be paid at proposal submission. */
               min_initial_deposit_ratio?: string;
-              /**
-               * @description The cancel ratio which will not be returned back to the depositors when a proposal is cancelled.
-               *
-               * Since: cosmos-sdk 0.50
-               */
-              proposal_cancel_ratio?: string;
-              /**
-               * @description The address which will receive (proposal_cancel_ratio * deposit) proposal deposits.
-               * If empty, the (proposal_cancel_ratio * deposit) proposal deposits will be burned.
-               *
-               * Since: cosmos-sdk 0.50
-               */
-              proposal_cancel_dest?: string;
-              /**
-               * @description Duration of the voting period of an expedited proposal.
-               *
-               * Since: cosmos-sdk 0.50
-               */
-              expedited_voting_period?: string;
-              /**
-               * @description Minimum proportion of Yes votes for proposal to pass. Default value: 0.67.
-               *
-               * Since: cosmos-sdk 0.50
-               */
-              expedited_threshold?: string;
-              /** @description Minimum expedited deposit for a proposal to enter voting period. */
-              expedited_min_deposit?: {
-                denom?: string;
-                amount?: string;
-              }[];
               /** burn deposits if a proposal does not meet quorum */
               burn_vote_quorum?: boolean;
               /** burn deposits if the proposal does not enter voting period */
@@ -33571,8 +31461,259 @@ export interface operations {
       };
     };
   };
-  /** Proposal queries proposal details based on ProposalID. */
+  /** Proposals queries all proposals based on given status. */
   GovV1Proposal: {
+    parameters: {
+      query?: {
+        /**
+         * @description proposal_status defines the status of the proposals.
+         *
+         *  - PROPOSAL_STATUS_UNSPECIFIED: PROPOSAL_STATUS_UNSPECIFIED defines the default proposal status.
+         *  - PROPOSAL_STATUS_DEPOSIT_PERIOD: PROPOSAL_STATUS_DEPOSIT_PERIOD defines a proposal status during the deposit
+         * period.
+         *  - PROPOSAL_STATUS_VOTING_PERIOD: PROPOSAL_STATUS_VOTING_PERIOD defines a proposal status during the voting
+         * period.
+         *  - PROPOSAL_STATUS_PASSED: PROPOSAL_STATUS_PASSED defines a proposal status of a proposal that has
+         * passed.
+         *  - PROPOSAL_STATUS_REJECTED: PROPOSAL_STATUS_REJECTED defines a proposal status of a proposal that has
+         * been rejected.
+         *  - PROPOSAL_STATUS_FAILED: PROPOSAL_STATUS_FAILED defines a proposal status of a proposal that has
+         * failed.
+         */
+        proposal_status?:
+          | "PROPOSAL_STATUS_UNSPECIFIED"
+          | "PROPOSAL_STATUS_DEPOSIT_PERIOD"
+          | "PROPOSAL_STATUS_VOTING_PERIOD"
+          | "PROPOSAL_STATUS_PASSED"
+          | "PROPOSAL_STATUS_REJECTED"
+          | "PROPOSAL_STATUS_FAILED";
+        /** @description voter defines the voter address for the proposals. */
+        voter?: string;
+        /** @description depositor defines the deposit addresses from the proposals. */
+        depositor?: string;
+        /**
+         * @description key is a value returned in PageResponse.next_key to begin
+         * querying the next page most efficiently. Only one of offset or key
+         * should be set.
+         */
+        "pagination.key"?: string;
+        /**
+         * @description offset is a numeric offset that can be used when key is unavailable.
+         * It is less efficient than using key. Only one of offset or key should
+         * be set.
+         */
+        "pagination.offset"?: string;
+        /**
+         * @description limit is the total number of results to be returned in the result page.
+         * If left empty it will default to a value to be set by each app.
+         */
+        "pagination.limit"?: string;
+        /**
+         * @description count_total is set to true  to indicate that the result set should include
+         * a count of the total number of items available for pagination in UIs.
+         * count_total is only respected when offset is used. It is ignored when key
+         * is set.
+         */
+        "pagination.count_total"?: boolean;
+        /**
+         * @description reverse is set to true if results are to be returned in the descending order.
+         *
+         * Since: cosmos-sdk 0.43
+         */
+        "pagination.reverse"?: boolean;
+      };
+    };
+    responses: {
+      /** @description A successful response. */
+      200: {
+        content: {
+          "*/*": {
+            /** @description proposals defines all the requested governance proposals. */
+            proposals?: {
+              /**
+               * Format: uint64
+               * @description id defines the unique id of the proposal.
+               */
+              id?: string;
+              /** @description messages are the arbitrary messages to be executed if the proposal passes. */
+              messages?: {
+                /**
+                 * @description A URL/resource name that uniquely identifies the type of the serialized
+                 * protocol buffer message. This string must contain at least
+                 * one "/" character. The last segment of the URL's path must represent
+                 * the fully qualified name of the type (as in
+                 * `path/google.protobuf.Duration`). The name should be in a canonical form
+                 * (e.g., leading "." is not accepted).
+                 *
+                 * In practice, teams usually precompile into the binary all types that they
+                 * expect it to use in the context of Any. However, for URLs which use the
+                 * scheme `http`, `https`, or no scheme, one can optionally set up a type
+                 * server that maps type URLs to message definitions as follows:
+                 *
+                 * * If no scheme is provided, `https` is assumed.
+                 * * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+                 *   value in binary format, or produce an error.
+                 * * Applications are allowed to cache lookup results based on the
+                 *   URL, or have them precompiled into a binary to avoid any
+                 *   lookup. Therefore, binary compatibility needs to be preserved
+                 *   on changes to types. (Use versioned type names to manage
+                 *   breaking changes.)
+                 *
+                 * Note: this functionality is not currently available in the official
+                 * protobuf release, and it is not used for type URLs beginning with
+                 * type.googleapis.com.
+                 *
+                 * Schemes other than `http`, `https` (or the empty scheme) might be
+                 * used with implementation specific semantics.
+                 */
+                type_url?: string;
+                /**
+                 * Format: byte
+                 * @description Must be a valid serialized protocol buffer of the above specified type.
+                 */
+                value?: string;
+              }[];
+              /**
+               * @description status defines the proposal status.
+               * @default PROPOSAL_STATUS_UNSPECIFIED
+               * @enum {string}
+               */
+              status?:
+                | "PROPOSAL_STATUS_UNSPECIFIED"
+                | "PROPOSAL_STATUS_DEPOSIT_PERIOD"
+                | "PROPOSAL_STATUS_VOTING_PERIOD"
+                | "PROPOSAL_STATUS_PASSED"
+                | "PROPOSAL_STATUS_REJECTED"
+                | "PROPOSAL_STATUS_FAILED";
+              /**
+               * @description final_tally_result is the final tally result of the proposal. When
+               * querying a proposal via gRPC, this field is not populated until the
+               * proposal's voting period has ended.
+               */
+              final_tally_result?: {
+                /** @description yes_count is the number of yes votes on a proposal. */
+                yes_count?: string;
+                /** @description abstain_count is the number of abstain votes on a proposal. */
+                abstain_count?: string;
+                /** @description no_count is the number of no votes on a proposal. */
+                no_count?: string;
+                /** @description no_with_veto_count is the number of no with veto votes on a proposal. */
+                no_with_veto_count?: string;
+              };
+              /**
+               * Format: date-time
+               * @description submit_time is the time of proposal submission.
+               */
+              submit_time?: string;
+              /**
+               * Format: date-time
+               * @description deposit_end_time is the end time for deposition.
+               */
+              deposit_end_time?: string;
+              /** @description total_deposit is the total deposit on the proposal. */
+              total_deposit?: {
+                denom?: string;
+                amount?: string;
+              }[];
+              /**
+               * Format: date-time
+               * @description voting_start_time is the starting time to vote on a proposal.
+               */
+              voting_start_time?: string;
+              /**
+               * Format: date-time
+               * @description voting_end_time is the end time of voting on a proposal.
+               */
+              voting_end_time?: string;
+              /** @description metadata is any arbitrary metadata attached to the proposal. */
+              metadata?: string;
+              /**
+               * title is the title of the proposal
+               * @description Since: cosmos-sdk 0.47
+               */
+              title?: string;
+              /**
+               * summary is a short summary of the proposal
+               * @description Since: cosmos-sdk 0.47
+               */
+              summary?: string;
+              /**
+               * Proposer is the address of the proposal sumbitter
+               * @description Since: cosmos-sdk 0.47
+               */
+              proposer?: string;
+            }[];
+            /** @description pagination defines the pagination in the response. */
+            pagination?: {
+              /**
+               * Format: byte
+               * @description next_key is the key to be passed to PageRequest.key to
+               * query the next page most efficiently. It will be empty if
+               * there are no more results.
+               */
+              next_key?: string;
+              /**
+               * total is total number of results available if PageRequest.count_total
+               * was set, its value is undefined otherwise
+               * Format: uint64
+               */
+              total?: string;
+            };
+          };
+        };
+      };
+      /** @description An unexpected error response. */
+      default: {
+        content: {
+          "*/*": {
+            error?: string;
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            details?: {
+              /**
+               * @description A URL/resource name that uniquely identifies the type of the serialized
+               * protocol buffer message. This string must contain at least
+               * one "/" character. The last segment of the URL's path must represent
+               * the fully qualified name of the type (as in
+               * `path/google.protobuf.Duration`). The name should be in a canonical form
+               * (e.g., leading "." is not accepted).
+               *
+               * In practice, teams usually precompile into the binary all types that they
+               * expect it to use in the context of Any. However, for URLs which use the
+               * scheme `http`, `https`, or no scheme, one can optionally set up a type
+               * server that maps type URLs to message definitions as follows:
+               *
+               * * If no scheme is provided, `https` is assumed.
+               * * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+               *   value in binary format, or produce an error.
+               * * Applications are allowed to cache lookup results based on the
+               *   URL, or have them precompiled into a binary to avoid any
+               *   lookup. Therefore, binary compatibility needs to be preserved
+               *   on changes to types. (Use versioned type names to manage
+               *   breaking changes.)
+               *
+               * Note: this functionality is not currently available in the official
+               * protobuf release, and it is not used for type URLs beginning with
+               * type.googleapis.com.
+               *
+               * Schemes other than `http`, `https` (or the empty scheme) might be
+               * used with implementation specific semantics.
+               */
+              type_url?: string;
+              /**
+               * Format: byte
+               * @description Must be a valid serialized protocol buffer of the above specified type.
+               */
+              value?: string;
+            }[];
+          };
+        };
+      };
+    };
+  };
+  /** Proposal queries proposal details based on ProposalID. */
+  GovV1ProposalsProposalIdGet: {
     parameters: {
       path: {
         /** @description proposal_id defines the unique id of the proposal. */
@@ -33681,11 +31822,7 @@ export interface operations {
                * @description voting_end_time is the end time of voting on a proposal.
                */
               voting_end_time?: string;
-              /**
-               * metadata is any arbitrary metadata attached to the proposal.
-               * the recommended format of the metadata is to be found here:
-               * https://docs.cosmos.network/v0.47/modules/gov#proposal-3
-               */
+              /** @description metadata is any arbitrary metadata attached to the proposal. */
               metadata?: string;
               /**
                * title is the title of the proposal
@@ -33698,20 +31835,10 @@ export interface operations {
                */
               summary?: string;
               /**
-               * proposer is the address of the proposal sumbitter
+               * Proposer is the address of the proposal sumbitter
                * @description Since: cosmos-sdk 0.47
                */
               proposer?: string;
-              /**
-               * expedited defines if the proposal is expedited
-               * @description Since: cosmos-sdk 0.50
-               */
-              expedited?: boolean;
-              /**
-               * failed_reason defines the reason why the proposal failed
-               * @description Since: cosmos-sdk 0.50
-               */
-              failed_reason?: string;
             };
           };
         };
@@ -33766,8 +31893,137 @@ export interface operations {
       };
     };
   };
-  /** Deposit queries single deposit information based on proposalID, depositAddr. */
+  /** Deposits queries all deposits of a single proposal. */
   GovV1Deposit: {
+    parameters: {
+      query?: {
+        /**
+         * @description key is a value returned in PageResponse.next_key to begin
+         * querying the next page most efficiently. Only one of offset or key
+         * should be set.
+         */
+        "pagination.key"?: string;
+        /**
+         * @description offset is a numeric offset that can be used when key is unavailable.
+         * It is less efficient than using key. Only one of offset or key should
+         * be set.
+         */
+        "pagination.offset"?: string;
+        /**
+         * @description limit is the total number of results to be returned in the result page.
+         * If left empty it will default to a value to be set by each app.
+         */
+        "pagination.limit"?: string;
+        /**
+         * @description count_total is set to true  to indicate that the result set should include
+         * a count of the total number of items available for pagination in UIs.
+         * count_total is only respected when offset is used. It is ignored when key
+         * is set.
+         */
+        "pagination.count_total"?: boolean;
+        /**
+         * @description reverse is set to true if results are to be returned in the descending order.
+         *
+         * Since: cosmos-sdk 0.43
+         */
+        "pagination.reverse"?: boolean;
+      };
+      path: {
+        /** @description proposal_id defines the unique id of the proposal. */
+        proposal_id: string;
+      };
+    };
+    responses: {
+      /** @description A successful response. */
+      200: {
+        content: {
+          "*/*": {
+            /** @description deposits defines the requested deposits. */
+            deposits?: {
+              /**
+               * Format: uint64
+               * @description proposal_id defines the unique id of the proposal.
+               */
+              proposal_id?: string;
+              /** @description depositor defines the deposit addresses from the proposals. */
+              depositor?: string;
+              /** @description amount to be deposited by depositor. */
+              amount?: {
+                denom?: string;
+                amount?: string;
+              }[];
+            }[];
+            /** @description pagination defines the pagination in the response. */
+            pagination?: {
+              /**
+               * Format: byte
+               * @description next_key is the key to be passed to PageRequest.key to
+               * query the next page most efficiently. It will be empty if
+               * there are no more results.
+               */
+              next_key?: string;
+              /**
+               * total is total number of results available if PageRequest.count_total
+               * was set, its value is undefined otherwise
+               * Format: uint64
+               */
+              total?: string;
+            };
+          };
+        };
+      };
+      /** @description An unexpected error response. */
+      default: {
+        content: {
+          "*/*": {
+            error?: string;
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            details?: {
+              /**
+               * @description A URL/resource name that uniquely identifies the type of the serialized
+               * protocol buffer message. This string must contain at least
+               * one "/" character. The last segment of the URL's path must represent
+               * the fully qualified name of the type (as in
+               * `path/google.protobuf.Duration`). The name should be in a canonical form
+               * (e.g., leading "." is not accepted).
+               *
+               * In practice, teams usually precompile into the binary all types that they
+               * expect it to use in the context of Any. However, for URLs which use the
+               * scheme `http`, `https`, or no scheme, one can optionally set up a type
+               * server that maps type URLs to message definitions as follows:
+               *
+               * * If no scheme is provided, `https` is assumed.
+               * * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+               *   value in binary format, or produce an error.
+               * * Applications are allowed to cache lookup results based on the
+               *   URL, or have them precompiled into a binary to avoid any
+               *   lookup. Therefore, binary compatibility needs to be preserved
+               *   on changes to types. (Use versioned type names to manage
+               *   breaking changes.)
+               *
+               * Note: this functionality is not currently available in the official
+               * protobuf release, and it is not used for type URLs beginning with
+               * type.googleapis.com.
+               *
+               * Schemes other than `http`, `https` (or the empty scheme) might be
+               * used with implementation specific semantics.
+               */
+              type_url?: string;
+              /**
+               * Format: byte
+               * @description Must be a valid serialized protocol buffer of the above specified type.
+               */
+              value?: string;
+            }[];
+          };
+        };
+      };
+    };
+  };
+  /** Deposit queries single deposit information based proposalID, depositAddr. */
+  GovV1DepositIdGet: {
     parameters: {
       path: {
         /** @description proposal_id defines the unique id of the proposal. */
@@ -33999,10 +32255,7 @@ export interface operations {
                 /** @description weight is the vote weight associated with the vote option. */
                 weight?: string;
               }[];
-              /**
-               * metadata is any arbitrary metadata attached to the vote.
-               * the recommended format of the metadata is to be found here: https://docs.cosmos.network/v0.47/modules/gov#vote-5
-               */
+              /** @description metadata is any  arbitrary metadata to attached to the vote. */
               metadata?: string;
             }[];
             /** @description pagination defines the pagination in the response. */
@@ -34117,10 +32370,7 @@ export interface operations {
                 /** @description weight is the vote weight associated with the vote option. */
                 weight?: string;
               }[];
-              /**
-               * metadata is any arbitrary metadata attached to the vote.
-               * the recommended format of the metadata is to be found here: https://docs.cosmos.network/v0.47/modules/gov#vote-5
-               */
+              /** @description metadata is any  arbitrary metadata to attached to the vote. */
               metadata?: string;
             };
           };
@@ -34261,15 +32511,15 @@ export interface operations {
             info?: {
               address?: string;
               /**
-               * Height at which validator was first a candidate OR was un-jailed
+               * Height at which validator was first a candidate OR was unjailed
                * Format: int64
                */
               start_height?: string;
               /**
                * Format: int64
-               * @description Index which is incremented every time a validator is bonded in a block and
-               * _may_ have signed a pre-commit or not. This in conjunction with the
-               * signed_blocks_window param determines the index in the missed block bitmap.
+               * @description Index which is incremented each time the validator was a bonded
+               * in a block and may have signed a precommit or not. This in conjunction with the
+               * `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
                */
               index_offset?: string;
               /**
@@ -34278,15 +32528,14 @@ export interface operations {
                */
               jailed_until?: string;
               /**
-               * @description Whether or not a validator has been tombstoned (killed out of validator
-               * set). It is set once the validator commits an equivocation or for any other
-               * configured misbehavior.
+               * @description Whether or not a validator has been tombstoned (killed out of validator set). It is set
+               * once the validator commits an equivocation or for any other configured misbehiavor.
                */
               tombstoned?: boolean;
               /**
                * Format: int64
-               * @description A counter of missed (unsigned) blocks. It is used to avoid unnecessary
-               * reads in the missed block bitmap.
+               * @description A counter kept to avoid unnecessary array reads.
+               * Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
                */
               missed_blocks_counter?: string;
             }[];
@@ -34356,15 +32605,15 @@ export interface operations {
             val_signing_info?: {
               address?: string;
               /**
-               * Height at which validator was first a candidate OR was un-jailed
+               * Height at which validator was first a candidate OR was unjailed
                * Format: int64
                */
               start_height?: string;
               /**
                * Format: int64
-               * @description Index which is incremented every time a validator is bonded in a block and
-               * _may_ have signed a pre-commit or not. This in conjunction with the
-               * signed_blocks_window param determines the index in the missed block bitmap.
+               * @description Index which is incremented each time the validator was a bonded
+               * in a block and may have signed a precommit or not. This in conjunction with the
+               * `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
                */
               index_offset?: string;
               /**
@@ -34373,15 +32622,14 @@ export interface operations {
                */
               jailed_until?: string;
               /**
-               * @description Whether or not a validator has been tombstoned (killed out of validator
-               * set). It is set once the validator commits an equivocation or for any other
-               * configured misbehavior.
+               * @description Whether or not a validator has been tombstoned (killed out of validator set). It is set
+               * once the validator commits an equivocation or for any other configured misbehiavor.
                */
               tombstoned?: boolean;
               /**
                * Format: int64
-               * @description A counter of missed (unsigned) blocks. It is used to avoid unnecessary
-               * reads in the missed block bitmap.
+               * @description A counter kept to avoid unnecessary array reads.
+               * Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
                */
               missed_blocks_counter?: string;
             };
@@ -34463,9 +32711,9 @@ export interface operations {
                * validator.
                */
               delegation?: {
-                /** @description delegator_address is the encoded address of the delegator. */
+                /** @description delegator_address is the bech32-encoded address of the delegator. */
                 delegator_address?: string;
-                /** @description validator_address is the encoded address of the validator. */
+                /** @description validator_address is the bech32-encoded address of the validator. */
                 validator_address?: string;
                 /** @description shares define the delegation shares received. */
                 shares?: string;
@@ -34794,9 +33042,9 @@ export interface operations {
         content: {
           "*/*": {
             unbonding_responses?: {
-              /** @description delegator_address is the encoded address of the delegator. */
+              /** @description delegator_address is the bech32-encoded address of the delegator. */
               delegator_address?: string;
-              /** @description validator_address is the encoded address of the validator. */
+              /** @description validator_address is the bech32-encoded address of the validator. */
               validator_address?: string;
               /** @description entries are the unbonding delegation entries. */
               entries?: {
@@ -36592,9 +34840,9 @@ export interface operations {
                * validator.
                */
               delegation?: {
-                /** @description delegator_address is the encoded address of the delegator. */
+                /** @description delegator_address is the bech32-encoded address of the delegator. */
                 delegator_address?: string;
-                /** @description validator_address is the encoded address of the validator. */
+                /** @description validator_address is the bech32-encoded address of the validator. */
                 validator_address?: string;
                 /** @description shares define the delegation shares received. */
                 shares?: string;
@@ -36705,9 +34953,9 @@ export interface operations {
                * validator.
                */
               delegation?: {
-                /** @description delegator_address is the encoded address of the delegator. */
+                /** @description delegator_address is the bech32-encoded address of the delegator. */
                 delegator_address?: string;
-                /** @description validator_address is the encoded address of the validator. */
+                /** @description validator_address is the bech32-encoded address of the validator. */
                 validator_address?: string;
                 /** @description shares define the delegation shares received. */
                 shares?: string;
@@ -36799,9 +35047,9 @@ export interface operations {
              * for a single validator in an time-ordered list.
              */
             unbond?: {
-              /** @description delegator_address is the encoded address of the delegator. */
+              /** @description delegator_address is the bech32-encoded address of the delegator. */
               delegator_address?: string;
-              /** @description validator_address is the encoded address of the validator. */
+              /** @description validator_address is the bech32-encoded address of the validator. */
               validator_address?: string;
               /** @description entries are the unbonding delegation entries. */
               entries?: {
@@ -36934,9 +35182,9 @@ export interface operations {
         content: {
           "*/*": {
             unbonding_responses?: {
-              /** @description delegator_address is the encoded address of the delegator. */
+              /** @description delegator_address is the bech32-encoded address of the delegator. */
               delegator_address?: string;
-              /** @description validator_address is the encoded address of the validator. */
+              /** @description validator_address is the bech32-encoded address of the validator. */
               validator_address?: string;
               /** @description entries are the unbonding delegation entries. */
               entries?: {
@@ -37474,11 +35722,7 @@ export interface operations {
   GetTxsEvent: {
     parameters: {
       query?: {
-        /**
-         * @description events is the list of transaction event type.
-         * Deprecated post v0.47.x: use query instead, which should contain a valid
-         * events query.
-         */
+        /** @description events is the list of transaction event type. */
         events?: string[];
         /**
          * @description key is a value returned in PageResponse.next_key to begin
@@ -37511,29 +35755,18 @@ export interface operations {
          */
         "pagination.reverse"?: boolean;
         /**
-         * @description  - ORDER_BY_UNSPECIFIED: ORDER_BY_UNSPECIFIED specifies an unknown sorting order. OrderBy defaults
-         * to ASC in this case.
+         * @description  - ORDER_BY_UNSPECIFIED: ORDER_BY_UNSPECIFIED specifies an unknown sorting order. OrderBy defaults to ASC in this case.
          *  - ORDER_BY_ASC: ORDER_BY_ASC defines ascending order
          *  - ORDER_BY_DESC: ORDER_BY_DESC defines descending order
          */
         order_by?: "ORDER_BY_UNSPECIFIED" | "ORDER_BY_ASC" | "ORDER_BY_DESC";
-        /**
-         * @description page is the page number to query, starts at 1. If not provided, will
-         * default to first page.
-         */
+        /** @description page is the page number to query, starts at 1. If not provided, will default to first page. */
         page?: string;
         /**
          * @description limit is the total number of results to be returned in the result page.
          * If left empty it will default to a value to be set by each app.
          */
         limit?: string;
-        /**
-         * @description query defines the transaction event query that is proxied to Tendermint's
-         * TxSearch RPC method. The query must be valid.
-         *
-         * Since cosmos-sdk 0.50
-         */
-        query?: string;
       };
     };
     responses: {
@@ -37604,16 +35837,15 @@ export interface operations {
            */
           tx_bytes?: string;
           /**
-           * @description BroadcastMode specifies the broadcast mode for the TxService.Broadcast RPC
-           * method.
+           * @description BroadcastMode specifies the broadcast mode for the TxService.Broadcast RPC method.
            *
            *  - BROADCAST_MODE_UNSPECIFIED: zero-value for mode ordering
            *  - BROADCAST_MODE_BLOCK: DEPRECATED: use BROADCAST_MODE_SYNC instead,
            * BROADCAST_MODE_BLOCK is not supported by the SDK from v0.47.x onwards.
-           *  - BROADCAST_MODE_SYNC: BROADCAST_MODE_SYNC defines a tx broadcasting mode where the client waits
-           * for a CheckTx execution response only.
-           *  - BROADCAST_MODE_ASYNC: BROADCAST_MODE_ASYNC defines a tx broadcasting mode where the client
-           * returns immediately.
+           *  - BROADCAST_MODE_SYNC: BROADCAST_MODE_SYNC defines a tx broadcasting mode where the client waits for
+           * a CheckTx execution response only.
+           *  - BROADCAST_MODE_ASYNC: BROADCAST_MODE_ASYNC defines a tx broadcasting mode where the client returns
+           * immediately.
            * @default BROADCAST_MODE_UNSPECIFIED
            * @enum {string}
            */
@@ -38241,7 +36473,7 @@ export interface operations {
                   /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
                   duplicate_vote_evidence?: {
                     /**
-                     * @description Vote represents a prevote or precommit vote from validators for
+                     * @description Vote represents a prevote, precommit, or commit vote from validators for
                      * consensus.
                      */
                     vote_a?: {
@@ -38280,28 +36512,11 @@ export interface operations {
                       validator_address?: string;
                       /** Format: int32 */
                       validator_index?: number;
-                      /**
-                       * Format: byte
-                       * @description Vote signature by the validator if they participated in consensus for the
-                       * associated block.
-                       */
+                      /** Format: byte */
                       signature?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension provided by the application. Only valid for precommit
-                       * messages.
-                       */
-                      extension?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension signature by the validator if they participated in
-                       * consensus for the associated block.
-                       * Only valid for precommit messages.
-                       */
-                      extension_signature?: string;
                     };
                     /**
-                     * @description Vote represents a prevote or precommit vote from validators for
+                     * @description Vote represents a prevote, precommit, or commit vote from validators for
                      * consensus.
                      */
                     vote_b?: {
@@ -38340,25 +36555,8 @@ export interface operations {
                       validator_address?: string;
                       /** Format: int32 */
                       validator_index?: number;
-                      /**
-                       * Format: byte
-                       * @description Vote signature by the validator if they participated in consensus for the
-                       * associated block.
-                       */
+                      /** Format: byte */
                       signature?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension provided by the application. Only valid for precommit
-                       * messages.
-                       */
-                      extension?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension signature by the validator if they participated in
-                       * consensus for the associated block.
-                       * Only valid for precommit messages.
-                       */
-                      extension_signature?: string;
                     };
                     /** Format: int64 */
                     total_voting_power?: string;
@@ -38450,7 +36648,7 @@ export interface operations {
                           };
                           signatures?: {
                             /**
-                             * BlockIdFlag indicates which BlockID the signature is for
+                             * BlockIdFlag indicates which BlcokID the signature is for
                              * @default BLOCK_ID_FLAG_UNKNOWN
                              * @enum {string}
                              */
@@ -38547,7 +36745,7 @@ export interface operations {
                 };
                 signatures?: {
                   /**
-                   * BlockIdFlag indicates which BlockID the signature is for
+                   * BlockIdFlag indicates which BlcokID the signature is for
                    * @default BLOCK_ID_FLAG_UNKNOWN
                    * @enum {string}
                    */
@@ -38648,7 +36846,7 @@ export interface operations {
                   /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
                   duplicate_vote_evidence?: {
                     /**
-                     * @description Vote represents a prevote or precommit vote from validators for
+                     * @description Vote represents a prevote, precommit, or commit vote from validators for
                      * consensus.
                      */
                     vote_a?: {
@@ -38687,28 +36885,11 @@ export interface operations {
                       validator_address?: string;
                       /** Format: int32 */
                       validator_index?: number;
-                      /**
-                       * Format: byte
-                       * @description Vote signature by the validator if they participated in consensus for the
-                       * associated block.
-                       */
+                      /** Format: byte */
                       signature?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension provided by the application. Only valid for precommit
-                       * messages.
-                       */
-                      extension?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension signature by the validator if they participated in
-                       * consensus for the associated block.
-                       * Only valid for precommit messages.
-                       */
-                      extension_signature?: string;
                     };
                     /**
-                     * @description Vote represents a prevote or precommit vote from validators for
+                     * @description Vote represents a prevote, precommit, or commit vote from validators for
                      * consensus.
                      */
                     vote_b?: {
@@ -38747,25 +36928,8 @@ export interface operations {
                       validator_address?: string;
                       /** Format: int32 */
                       validator_index?: number;
-                      /**
-                       * Format: byte
-                       * @description Vote signature by the validator if they participated in consensus for the
-                       * associated block.
-                       */
+                      /** Format: byte */
                       signature?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension provided by the application. Only valid for precommit
-                       * messages.
-                       */
-                      extension?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension signature by the validator if they participated in
-                       * consensus for the associated block.
-                       * Only valid for precommit messages.
-                       */
-                      extension_signature?: string;
                     };
                     /** Format: int64 */
                     total_voting_power?: string;
@@ -38857,7 +37021,7 @@ export interface operations {
                           };
                           signatures?: {
                             /**
-                             * BlockIdFlag indicates which BlockID the signature is for
+                             * BlockIdFlag indicates which BlcokID the signature is for
                              * @default BLOCK_ID_FLAG_UNKNOWN
                              * @enum {string}
                              */
@@ -38954,7 +37118,7 @@ export interface operations {
                 };
                 signatures?: {
                   /**
-                   * BlockIdFlag indicates which BlockID the signature is for
+                   * BlockIdFlag indicates which BlcokID the signature is for
                    * @default BLOCK_ID_FLAG_UNKNOWN
                    * @enum {string}
                    */
@@ -39124,7 +37288,7 @@ export interface operations {
                   /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
                   duplicate_vote_evidence?: {
                     /**
-                     * @description Vote represents a prevote or precommit vote from validators for
+                     * @description Vote represents a prevote, precommit, or commit vote from validators for
                      * consensus.
                      */
                     vote_a?: {
@@ -39163,28 +37327,11 @@ export interface operations {
                       validator_address?: string;
                       /** Format: int32 */
                       validator_index?: number;
-                      /**
-                       * Format: byte
-                       * @description Vote signature by the validator if they participated in consensus for the
-                       * associated block.
-                       */
+                      /** Format: byte */
                       signature?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension provided by the application. Only valid for precommit
-                       * messages.
-                       */
-                      extension?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension signature by the validator if they participated in
-                       * consensus for the associated block.
-                       * Only valid for precommit messages.
-                       */
-                      extension_signature?: string;
                     };
                     /**
-                     * @description Vote represents a prevote or precommit vote from validators for
+                     * @description Vote represents a prevote, precommit, or commit vote from validators for
                      * consensus.
                      */
                     vote_b?: {
@@ -39223,25 +37370,8 @@ export interface operations {
                       validator_address?: string;
                       /** Format: int32 */
                       validator_index?: number;
-                      /**
-                       * Format: byte
-                       * @description Vote signature by the validator if they participated in consensus for the
-                       * associated block.
-                       */
+                      /** Format: byte */
                       signature?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension provided by the application. Only valid for precommit
-                       * messages.
-                       */
-                      extension?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension signature by the validator if they participated in
-                       * consensus for the associated block.
-                       * Only valid for precommit messages.
-                       */
-                      extension_signature?: string;
                     };
                     /** Format: int64 */
                     total_voting_power?: string;
@@ -39333,7 +37463,7 @@ export interface operations {
                           };
                           signatures?: {
                             /**
-                             * BlockIdFlag indicates which BlockID the signature is for
+                             * BlockIdFlag indicates which BlcokID the signature is for
                              * @default BLOCK_ID_FLAG_UNKNOWN
                              * @enum {string}
                              */
@@ -39430,7 +37560,7 @@ export interface operations {
                 };
                 signatures?: {
                   /**
-                   * BlockIdFlag indicates which BlockID the signature is for
+                   * BlockIdFlag indicates which BlcokID the signature is for
                    * @default BLOCK_ID_FLAG_UNKNOWN
                    * @enum {string}
                    */
@@ -39531,7 +37661,7 @@ export interface operations {
                   /** @description DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
                   duplicate_vote_evidence?: {
                     /**
-                     * @description Vote represents a prevote or precommit vote from validators for
+                     * @description Vote represents a prevote, precommit, or commit vote from validators for
                      * consensus.
                      */
                     vote_a?: {
@@ -39570,28 +37700,11 @@ export interface operations {
                       validator_address?: string;
                       /** Format: int32 */
                       validator_index?: number;
-                      /**
-                       * Format: byte
-                       * @description Vote signature by the validator if they participated in consensus for the
-                       * associated block.
-                       */
+                      /** Format: byte */
                       signature?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension provided by the application. Only valid for precommit
-                       * messages.
-                       */
-                      extension?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension signature by the validator if they participated in
-                       * consensus for the associated block.
-                       * Only valid for precommit messages.
-                       */
-                      extension_signature?: string;
                     };
                     /**
-                     * @description Vote represents a prevote or precommit vote from validators for
+                     * @description Vote represents a prevote, precommit, or commit vote from validators for
                      * consensus.
                      */
                     vote_b?: {
@@ -39630,25 +37743,8 @@ export interface operations {
                       validator_address?: string;
                       /** Format: int32 */
                       validator_index?: number;
-                      /**
-                       * Format: byte
-                       * @description Vote signature by the validator if they participated in consensus for the
-                       * associated block.
-                       */
+                      /** Format: byte */
                       signature?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension provided by the application. Only valid for precommit
-                       * messages.
-                       */
-                      extension?: string;
-                      /**
-                       * Format: byte
-                       * @description Vote extension signature by the validator if they participated in
-                       * consensus for the associated block.
-                       * Only valid for precommit messages.
-                       */
-                      extension_signature?: string;
                     };
                     /** Format: int64 */
                     total_voting_power?: string;
@@ -39740,7 +37836,7 @@ export interface operations {
                           };
                           signatures?: {
                             /**
-                             * BlockIdFlag indicates which BlockID the signature is for
+                             * BlockIdFlag indicates which BlcokID the signature is for
                              * @default BLOCK_ID_FLAG_UNKNOWN
                              * @enum {string}
                              */
@@ -39837,7 +37933,7 @@ export interface operations {
                 };
                 signatures?: {
                   /**
-                   * BlockIdFlag indicates which BlockID the signature is for
+                   * BlockIdFlag indicates which BlcokID the signature is for
                    * @default BLOCK_ID_FLAG_UNKNOWN
                    * @enum {string}
                    */

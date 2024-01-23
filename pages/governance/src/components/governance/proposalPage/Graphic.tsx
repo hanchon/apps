@@ -1,133 +1,104 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useCallback, useMemo } from "react";
-import { formatAttoNumber, indexOfMax } from "helpers";
-import {
-  lookupProposalEndStatus,
-  ProposalDetailProps,
-  PROPOSAL_DISPLAY_MAPPING,
-} from "../../../utils/types";
-import { EVMOS_SYMBOL } from "@evmosapps/evmos-wallet";
+import { useMemo } from "react";
+import { cn, formatAttoNumber } from "helpers";
+import { lookupProposalEndStatus } from "../../../utils/types";
 import Arc from "../../common/arc/Arc";
 import { CheckIcon } from "@evmosapps/icons/CheckIcon";
 import { CloseIcon } from "@evmosapps/icons/CloseIcon";
-import { BAR_COLORS } from "../bar/styles";
-import VotingDetails from "../common/VotingDetails";
+import { BAR_COLORS, VOTE_TYPES } from "../bar/styles";
 import VoteButton from "./vote/VoteButton";
-import { BigNumber } from "@ethersproject/bignumber";
-const Graphic = ({
-  data,
-  loading,
-  error,
-  userVote,
-}: {
-  data: ProposalDetailProps;
-  loading: boolean;
-  error: unknown;
-  userVote: null | JSX.Element;
-}) => {
-  const isNotInDepositPeriod =
-    PROPOSAL_DISPLAY_MAPPING[data.status] !== "Deposit";
+import { useProposalById } from "../../../utils/hooks/useProposals";
+
+import { UserVote } from "./UserVote";
+import VotingDetail from "../bar/VotingDetail";
+
+const Graphic = ({ proposalId }: { proposalId: string }) => {
+  const { data } = useProposalById(proposalId);
+
   const largestWinningBlock = useMemo(() => {
-    return indexOfMax(data.tallyPercents);
-  }, [data.tallyPercents]);
+    if (!data.tally) return null;
+    const [largest] = Object.entries(data.tally ?? {}).sort(
+      ([, a], [, b]) => b - a,
+    );
+    return (largest?.[0] as keyof typeof data.tally) ?? null;
+  }, [data]);
 
-  const drawContentCircle = useCallback(() => {
-    if (loading) {
-      return <div>Loading</div>;
-    }
-    if (error) {
-      return <div>No results</div>;
-    }
-    if (data.isVotingTimeWithinRange && isNotInDepositPeriod) {
-      return null;
-    }
-
-    // avoid showing circle with data if total is 0
-    if (data.total.eq(BigNumber.from(0))) {
-      return null;
-    }
-    // 1 indicates that the majority of the votes were NO
-    // 3 indicates that the majority of the votes were NO with veto
-    if (largestWinningBlock === 1 || largestWinningBlock === 3) {
-      return (
-        <div
-          className={`text-sm absolute inset-0 m-auto flex h-1/2 w-1/2 max-w-[50%] flex-col items-center justify-center rounded-[50%] px-2 py-1 text-center font-bold text-pearl
-    ${BAR_COLORS.no}
-    `}
-        >
-          <CloseIcon width={30} height={30} />
-          {lookupProposalEndStatus[largestWinningBlock]}
-        </div>
-      );
-    } else {
-      return (
-        <div
-          className={`text-sm absolute inset-0 m-auto flex h-1/2 w-1/2 max-w-[50%] flex-col items-center justify-center rounded-[50%] px-2 py-1 text-center font-bold text-pearl
-      ${BAR_COLORS.yes}
-      `}
-        >
-          <CheckIcon width={30} height={30} />
-          {lookupProposalEndStatus[0]}
-        </div>
-      );
-    }
-  }, [
-    error,
-    loading,
-    largestWinningBlock,
-    data.isVotingTimeWithinRange,
-    isNotInDepositPeriod,
-    data.total,
-  ]);
+  const isNotInDepositPeriod = data.status !== "PROPOSAL_STATUS_DEPOSIT_PERIOD";
   return (
     <section className="text-sm mx-5 mb-5 h-fit space-y-5 rounded-2xl bg-darkGray2 p-5 lg:mx-0">
       {isNotInDepositPeriod && (
         <div className="font-bold flex justify-between text-pearl">
           <p>Total</p>
-          <p>
-            {formatAttoNumber(data.total)} {EVMOS_SYMBOL}
-          </p>
+          <p>{formatAttoNumber(data.totalVotes)} EVMOS</p>
         </div>
       )}
       {/* graphic */}
       <div className="relative">
-        {drawContentCircle()}
-
-        {!data.total.eq(BigNumber.from(0)) && (
+        {largestWinningBlock &&
+          data.totalVotes > 0n &&
+          data.status !== "PROPOSAL_STATUS_VOTING_PERIOD" && (
+            <div
+              className={cn(
+                "text-sm absolute inset-0 m-auto flex h-1/2 w-1/2 max-w-[50%]",
+                " flex-col items-center justify-center rounded-[50%] px-2 py-1 text-center font-bold text-pearl",
+                BAR_COLORS[largestWinningBlock],
+              )}
+            >
+              {largestWinningBlock === "yes" && (
+                <CheckIcon width={30} height={30} />
+              )}
+              {(largestWinningBlock === "no" ||
+                largestWinningBlock === "noWithVeto") && (
+                <CloseIcon width={30} height={30} />
+              )}
+              {lookupProposalEndStatus[largestWinningBlock]}
+            </div>
+          )}
+        {data.totalVotes > 0n && (
           <Arc
             range={360}
             items={[
               {
                 color: "#97AD11",
-                percentage: Number(data?.tallyPercents[0]),
+                percentage: data.tally.yes * 100,
               },
               {
                 color: "#ed4e33",
-                percentage: Number(data.tallyPercents[1]),
+                percentage: data.tally.no * 100,
               },
               {
                 color: "#918378",
-                percentage: Number(data.tallyPercents[2]),
+                percentage: data.tally.abstain * 100,
               },
               {
                 color: "#edcd5b",
-                percentage: Number(data.tallyPercents[3]),
+                percentage: data.tally.noWithVeto * 100,
               },
             ]}
           ></Arc>
         )}
       </div>
-      <VotingDetails percents={data.tallyPercents} values={data.tallyResults} />
-      {userVote !== null && userVote}
-      <VoteButton
-        voteProps={{
-          id: data.id,
-          title: data.title,
-          isVotingTimeWithinRange: data.isVotingTimeWithinRange,
-        }}
-      />
+      <div className="grid grid-cols-2 gap-1">
+        {(
+          Object.entries(data.tally) as [keyof typeof data.tally, number][]
+        ).map(([key, percent]) => {
+          return (
+            <VotingDetail
+              key={key}
+              bgColor={BAR_COLORS[key]}
+              type={VOTE_TYPES[key]}
+              percent={percent * 100}
+              value={data.tallyAbsolute[key].toString()}
+            />
+          );
+        })}
+      </div>
+
+      <UserVote proposalId={proposalId} />
+
+      <VoteButton proposalId={proposalId} />
     </section>
   );
 };
