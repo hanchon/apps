@@ -12,4 +12,4 @@ export const getEvmosConfig = () => {
   );
 };
 
-export const getEvmosIdentifier = () => getEvmosConfig().ref;
+export const getEvmosChainRef = () => getEvmosConfig().ref;

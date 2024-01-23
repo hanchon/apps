@@ -12,8 +12,8 @@ import { ConvertModalContent } from "./ConvertModalContent";
 
 const ConvertModalSchema = z.object({
   token: z.string().catch("EVMOS"),
-  type: z.union([z.literal("ERC20"), z.literal("ICS20")]).default("ICS20"),
-  amount: z.coerce.bigint().default(0n),
+  type: z.union([z.literal("ERC20"), z.literal("ICS20")]).catch("ICS20"),
+  amount: z.coerce.bigint().catch(0n),
 });
 
 export type ConvertModalProps = ModalProps<typeof ConvertModalSchema>;

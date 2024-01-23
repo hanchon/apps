@@ -79,11 +79,7 @@ export const AccountBalance = () => {
                 <span className="bg-white/5 w-16 h-[0.8lh] animate-pulse rounded-lg "></span>
               }
             >
-              {address && (
-                <>
-                  <TotalEvmos address={address} />
-                </>
-              )}
+              {address && <TotalEvmos address={address} />}
             </Suspense>
             {!address && "-"}
             <span className="ml-2 text-3xl font-bold uppercase text-white opacity-50 md:text-5xl">

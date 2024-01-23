@@ -12,7 +12,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint .",
-    "gen:cosmos-types": "openapi-typescript https://api.evmos.dev/openapi.json -o ./autogen/cosmos-client.d.ts --exclude-deprecated"
+    "gen:cosmos-types": "tsx ./gen-cosmos-types.ts"
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",

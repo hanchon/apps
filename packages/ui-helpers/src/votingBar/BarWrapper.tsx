@@ -30,7 +30,7 @@ export const BarWrapper = ({
       ></div>
       <div
         className={`${BAR_COLORS.noWithVeto}`}
-        style={{ width: `${noWithVeto}%` }}
+        style={{ width: `${noWithVeto * 100}%` }}
       ></div>
     </div>
   );

@@ -3,7 +3,6 @@
 "use client";
 import { useAccount } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
-// import { signTypedDataMessage } from "@evmosapps/evmos-wallet";
 import type { Message } from "@bufbuild/protobuf";
 import {
   broadcastTypedMessage,
