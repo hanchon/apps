@@ -19,6 +19,7 @@ export const evmosmainnet = {
 
   networkType: "mainnet",
   ref: "evmos" as const,
+  cosmosChainId: "evmos_9001-2",
 } satisfies Chain & Record<string, unknown>;
 export const evmostestnet = {
   ...wagmiEvmos,
@@ -36,6 +37,7 @@ export const evmostestnet = {
 
   networkType: "testnet",
   ref: "evmostestnet" as const,
+  cosmosChainId: "evmos_9000-4",
 } satisfies Chain & Record<string, unknown>;
 
 export const evmoslocalnet = {
@@ -54,6 +56,7 @@ export const evmoslocalnet = {
 
   networkType: "localnet",
   ref: "evmoslocalnet" as const,
+  cosmosChainId: "evmoslocal_9002-10",
 } satisfies Chain & Record<string, unknown>;
 
 export const EVMOS_CONFIG_MAP = {

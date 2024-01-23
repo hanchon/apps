@@ -47,6 +47,7 @@ function hashStruct({
     primaryType,
     types,
   });
+
   return keccak256(encoded);
 }
 
@@ -83,10 +84,12 @@ function encodeData({
       type,
       value: data[name],
     });
+
     encodedTypes.push(encodedType);
     encodedValues.push(encodedValue);
   }
 
+  encodeAbiParameters(encodedTypes, encodedValues);
   return encodeAbiParameters(encodedTypes, encodedValues);
 }
 
@@ -260,5 +263,6 @@ export const hashTypedData = ({
       }),
     );
   }
+
   return keccak256(concat(parts));
 };

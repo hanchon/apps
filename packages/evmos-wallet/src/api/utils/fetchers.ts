@@ -5,7 +5,6 @@ import { z } from "zod";
 
 export const apiBalancedFetch = async <TSuccess extends z.ZodType<unknown>>(
   successSchema: TSuccess,
-
   hosts: Readonly<[string, ...string[]]>,
   pathname: string,
   init?: RequestInit & {

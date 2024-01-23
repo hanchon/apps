@@ -31,7 +31,6 @@ export const useAllValidators = () => {
 
     return validatorWithDelegations;
   }, [validators, delegations]);
-  console.log("allValidators", allValidators);
 
   return { validators: allValidators };
 };

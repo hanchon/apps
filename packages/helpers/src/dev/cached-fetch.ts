@@ -86,7 +86,6 @@ export const cachedFetch = async (
 
     // Convert response to text and handle any errors
     const [err, serializedResponse] = await tryCatch(async () => {
-      console.log(serializedHeaders["content-type"], url.toString());
       if (serializedHeaders["content-type"]?.startsWith("image/")) {
         return {
           response: encodeBuffer(await response.clone().arrayBuffer()),

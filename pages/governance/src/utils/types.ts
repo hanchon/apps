@@ -98,11 +98,11 @@ export type ProposalDetailProps = {
   isVotingTimeWithinRange: boolean;
 };
 
-export const lookupProposalEndStatus: { [key: string]: string } = {
-  0: "Passed",
-  2: "Abstain",
-  1: "No",
-  3: "No With Veto",
+export const lookupProposalEndStatus = {
+  yes: "Passed",
+  abstain: "Abstain",
+  no: "No",
+  noWithVeto: "No With Veto",
 };
 
 export const optionVoteSelected: { [key: string]: number } = {

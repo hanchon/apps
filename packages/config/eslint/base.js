@@ -38,14 +38,13 @@ const tsLintConfig = {
       {
         types: {
           "{}": false,
-          "Function": false,
-
+          Function: false,
         },
         extendDefaults: true,
       },
     ],
     "@typescript-eslint/unbound-method": "off",
-    "@typescript-eslint/no-explicit-any": ["error", { ignoreRestArgs: true,  }],
+    "@typescript-eslint/no-explicit-any": ["error", { ignoreRestArgs: true }],
     "no-html-link-for-pages": "off",
   },
   languageOptions: {
@@ -105,6 +104,7 @@ const lintConfig = [
       "**/.turbo/**/*",
       "**/test-results/**/*",
       "**/autogen/**",
+      "**/.vercel/**/*",
     ],
   },
   ...configCompat({

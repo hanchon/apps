@@ -19,7 +19,8 @@
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.12",
     "stateful-components": "workspace:*",
-    "tracker": "workspace:*"
+    "tracker": "workspace:*",
+    "@evmosapps/trpc": "workspace:*"
   },
   "devDependencies": {
     "@ethersproject/bignumber": "^5.7.0",

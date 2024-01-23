@@ -1,17 +1,13 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import { StoreType } from "@evmosapps/evmos-wallet";
 
-import { TotalStakedResponse } from "services";
 import { cosmos } from "helpers/src/clients/cosmos";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 import { assert, raise } from "helpers";
 import { useAccount } from "wagmi";
 import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
-import { BigNumber } from "@ethersproject/bignumber";
 
 export const useStakedEvmos = () => {
   const { address } = useAccount();

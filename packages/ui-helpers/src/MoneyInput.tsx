@@ -187,7 +187,7 @@ MoneyInput.Input = function Input({
       autoComplete="off"
       autoCorrect="off"
       className={cn(
-        "text-right w-full font-bold font-display text-2xl bg-transparent outline-none",
+        "w-full font-bold font-display bg-transparent outline-none",
         className,
       )}
       onFocus={(e) => {

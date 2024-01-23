@@ -7,7 +7,7 @@ import {
   SelectMenu,
   WizardHelper,
 } from "@evmosapps/ui-helpers";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Log, formatNumber, raise } from "helpers";
@@ -24,14 +24,13 @@ import {
 import { useEvmosBalance } from "@evmosapps/evmos-wallet/src/api/useEvmosBalance";
 
 import {
-  StoreType,
   addSnackbar,
   SNACKBAR_CONTENT_TYPES,
   SNACKBAR_TYPES,
   GENERATING_TX_NOTIFICATIONS,
   BROADCASTED_NOTIFICATIONS,
 } from "@evmosapps/evmos-wallet";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { generateVestingSchedule } from "../../../internal/helpers/generate-vesting-schedule";
 import {
   Intervals,

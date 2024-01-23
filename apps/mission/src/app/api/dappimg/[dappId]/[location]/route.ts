@@ -4,7 +4,7 @@
 import { fetchDapps } from "@evmosapps/dappstore-page/src/lib/fetch-dapps";
 import { cachedFetch } from "helpers/src/dev/cached-fetch";
 import { Log } from "helpers/src/logger";
-import { unstable_cache } from "next/cache";
+
 export async function generateStaticParams() {
   const notionDapps = Object.values(await fetchDapps());
 

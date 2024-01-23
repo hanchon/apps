@@ -1,36 +1,19 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import {
-  queryOptions,
-  useQuery,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { E, getPercentage, raise } from "helpers";
 import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
 import { cosmos } from "helpers/src/clients/cosmos";
 import get from "lodash-es/get";
-import { Infer } from "next/dist/compiled/superstruct";
+import { formatUnits } from "@evmosapps/evmos-wallet/src/registry-actions/utils";
+import { safeBigInt } from "helpers/src/bigint/safe-bigint";
 
 const [, parsedProposals] = E.try(
   () =>
     JSON.parse(process.env.NEXT_PUBLIC_PROPOSALS_TO_REMOVE ?? "[]") as string[],
 );
 
-const PROPOSALS_TO_REMOVE = parsedProposals ?? [];
-
-const removeProposals = <
-  T extends Array<{
-    id: string;
-  }>,
->(
-  proposals: T,
-  proposalToRemove: string[],
-): T => {
-  return proposals.filter(
-    (proposal) => !proposalToRemove.includes(proposal.id),
-  ) as T;
-};
 const fetchProposalTally = async ({
   chainRef,
   proposalId,
@@ -49,6 +32,7 @@ const fetchProposalTally = async ({
 const ProposalsQueryOptions = (chainRef: string) =>
   queryOptions({
     queryKey: ["proposals", chainRef],
+
     queryFn: async () => {
       const proposals =
         (await cosmos(chainRef)
@@ -80,6 +64,9 @@ const ProposalsQueryOptions = (chainRef: string) =>
             final_tally_result,
             voting_start_time,
             voting_end_time,
+            deposit_end_time = "",
+            total_deposit,
+            submit_time = "",
           }) => {
             if (!id || !status || !voting_start_time || !voting_end_time)
               return [];
@@ -107,8 +94,25 @@ const ProposalsQueryOptions = (chainRef: string) =>
                   abstain: tally?.abstain_count ?? "0",
                   noWithVeto: tally?.no_with_veto_count ?? "0",
                 }),
+                tallyAbsolute: {
+                  yes: safeBigInt(tally?.yes_count ?? "0"),
+                  no: safeBigInt(tally?.no_count ?? "0"),
+                  abstain: safeBigInt(tally?.abstain_count ?? "0"),
+                  noWithVeto: safeBigInt(tally?.no_with_veto_count ?? "0"),
+                },
                 votingStart: new Date(voting_start_time),
                 votingEnd: new Date(voting_end_time),
+                depositEnd: new Date(deposit_end_time),
+                submitTime: new Date(submit_time),
+                totalVotes: Object.values(tally ?? {}).reduce(
+                  (acc, curr) => acc + safeBigInt(curr),
+                  0n,
+                ),
+                totalDeposit: formatUnits(
+                  safeBigInt(total_deposit?.[0]?.amount ?? "0"),
+                  18,
+                ),
+                type: get(messages, "0.content.@type") ?? "",
               },
             ];
           },
@@ -134,7 +138,7 @@ export const useProposals = () => {
 
 export const useProposalById = (proposalId: string) => {
   const chainRef = useEvmosChainRef();
-  return useQuery({
+  return useSuspenseQuery({
     ...ProposalsQueryOptions(chainRef),
     select: (data) =>
       data.find(({ id }) => id === proposalId) ?? raise("Proposal not found"),

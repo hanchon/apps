@@ -58,7 +58,7 @@ export const testnetConfigByChain: Record<
       explorerTxUrl: "https://testnet.escan.live/tx",
     },
     {
-      chainId: "evmoslocal_9000-10",
+      chainId: "evmoslocal_9002-10",
       chainName: "Evmos Local",
       clientId: "",
       configurationType: "localtestnet",

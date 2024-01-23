@@ -1087,6 +1087,9 @@ importers:
       '@evmosapps/icons':
         specifier: workspace:*
         version: link:../../packages/icons
+      '@evmosapps/trpc':
+        specifier: workspace:*
+        version: link:../../packages/trpc
       '@evmosapps/ui-helpers':
         specifier: workspace:*
         version: link:../../packages/ui-helpers

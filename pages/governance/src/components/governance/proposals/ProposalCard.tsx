@@ -5,15 +5,16 @@ import { BarContainer } from "@evmosapps/ui-helpers";
 import ProposalStatus from "./ProposalStatus";
 import IdContainer from "../common/IdContainer";
 import TitleContainer from "../common/TitleContainer";
-import { ProposalProps } from "../../../utils/types";
+
 import { ProposalsQueryResponse } from "../../../utils/hooks/useProposals";
+import { formatDate } from "helpers";
 
 const ProposalCard = ({
   id,
   title,
-  description,
-  votingStartTime,
-  votingEndTime,
+  status,
+  votingStart,
+  votingEnd,
   tally,
 }: ProposalsQueryResponse[number]) => {
   return (
@@ -25,11 +26,15 @@ const ProposalCard = ({
       <TitleContainer title={title} data-testid="proposal-card-title" />
       <div className="flex text-pearl">
         <div className="space-y-1 pr-5 uppercase">
-          <p className="text-sm font-bold opacity-80">{votingStartTime}</p>
+          <p className="text-sm font-bold opacity-80">
+            {formatDate(votingStart)}
+          </p>
           <p className="text-xs">VOTING START</p>
         </div>
         <div className="space-y-1 border-l border-darkGray5 px-5 uppercase">
-          <p className="text-sm font-bold opacity-80">{votingEndTime}</p>
+          <p className="text-sm font-bold opacity-80">
+            {formatDate(votingEnd)}
+          </p>
           <p className="text-xs">VOTING END</p>
         </div>
       </div>
