@@ -8,7 +8,7 @@ import { raise } from "helpers";
 export function connectWith(provider: ConnetorId) {
   return connect(wagmiConfig, {
     connector:
-      wagmiConfig.connectors.find((c) => c.id === provider) ??
+      wagmiConfig.connectors.find((c) => c.name === provider) ??
       raise("Invalid provider"),
   });
 }
