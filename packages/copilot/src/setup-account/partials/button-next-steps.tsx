@@ -8,12 +8,12 @@ import { Badge, TrackerEvent } from "@evmosapps/ui-helpers";
 import { CLICK_ON_VIEW_ALL_DAPPS, COMPLETED_COPILOT_ONBOARDING } from "tracker";
 import { Link, useTranslation } from "@evmosapps/i18n/client";
 import { cn } from "helpers";
-import { useModal } from "@evmosapps/ui-helpers/src/Modal";
 import { TitleButton } from "../../partials/title-button";
+import { usePathname } from "next/navigation";
 
 export const ButtonsNextSteps = () => {
   const { t } = useTranslation("copilot-setup-account");
-  const { setIsOpen } = useModal();
+  const pathname = usePathname();
 
   return (
     <>
@@ -51,16 +51,15 @@ export const ButtonsNextSteps = () => {
           "Completed Copilot Onboarding": "Learn More",
         }}
       >
-        <a
+        <Link
           className="border-gray300 w-full cursor-pointer rounded-lg border py-3 shadow transition-all duration-300 hover:shadow-md"
-          href="https://academy.evmos.org/faq"
-          target="_blank"
+          href={pathname}
           onClick={() => {
-            setIsOpen(false);
+            window.open("https://academy.evmos.org/faq", "_blank");
           }}
         >
           <TitleButton text={t("nextsteps.learnMore.title")} />
-        </a>
+        </Link>
       </TrackerEvent>
     </>
   );
