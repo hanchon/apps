@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (fix) fse-955 | packages/evmos-wallet 1.0.26 pages/portfolio 1.1.7 | Fix connect with Keplr on Send Modal
 - (fix) fse-958 | packages/copilot 1.0.12 | Close copilot modal after clicking on Learn More
 - (fix) fse-957 | packages/ui-helpers 1.0.21 | Avoid reloading the page after clicking on breadcrumbs
 - (fix) fse-956 | packages/copilot 1.0.11 packages/i18n 1.0.2 | Update Stake URL
