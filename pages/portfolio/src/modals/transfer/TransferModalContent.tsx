@@ -368,7 +368,8 @@ export const TransferModalContent = ({
                     }
                     className="font-normal w-full py-2"
                     // TODO: If the user rejects the connection, it's connecting with MetaMask. Check why.
-                    onClick={async () => {
+                    onClick={async (e) => {
+                      e.preventDefault();
                       if (getGlobalKeplrProvider() === null) {
                         connectKeplr();
                         sendEvent(PROMPTED_TO, {
