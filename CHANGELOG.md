@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (fix) fse-957 | packages/ui-helpers 1.0.21 | Avoid reloading the page after clicking on breadcrumbs
 - (chore) | packages/constants-helper 1.0.11 | Change Feedback URL
 - (chore) | packages/helpers 1.0.11 | Read proxy URL correctly for WAGMI
 - (chore) | packages/widgets 1.0.1 packages/evmos-wallet 1.0.25 | migrate osmosis and stride outpost to ICS20 precompile

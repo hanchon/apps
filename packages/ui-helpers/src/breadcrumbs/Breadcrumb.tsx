@@ -4,6 +4,7 @@
 import { RightArrow } from "@evmosapps/icons/RightArrow";
 import { CLICK_ON_BREADCRUMB } from "tracker";
 import { TrackerEvent } from "../TrackerEvent";
+import Link from "next/link";
 
 export const Breadcrumb = ({
   pages,
@@ -29,7 +30,7 @@ export const Breadcrumb = ({
                 event={CLICK_ON_BREADCRUMB}
                 properties={{ Breadcrumb: page.name }}
               >
-                <a
+                <Link
                   href={page.href}
                   className={`pl-1 transition-all duration-200 ${
                     index === pages.length - 1
@@ -39,7 +40,7 @@ export const Breadcrumb = ({
                   aria-current={index === pages.length - 1 ? "page" : undefined}
                 >
                   {page.name}
-                </a>
+                </Link>
               </TrackerEvent>
             </div>
           </li>
