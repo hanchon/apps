@@ -114,14 +114,15 @@ export const RequestAssetSelector = ({
                 "Wallet Provider": activeProvider,
               });
               sendEvent(SELECT_FROM_NETWORK_SEND_FLOW, {
-                Network: token.sourcePrefix,
+                // TODO: when we add more networks, we should use token.sourcePrefix
+                Network: networkOptions[0],
                 "User Wallet Address": addressConnected,
                 "Wallet Provider": activeProvider,
               });
             }}
           >
             <CryptoSelector.Button
-              src={`/tokens/${selectedToken?.denom}.png`}
+              src={`/tokens/${selectedToken?.denom.toLowerCase()}.png`}
               variant="black"
               data-testid="request-asset-selector-token-button"
             >
@@ -135,7 +136,7 @@ export const RequestAssetSelector = ({
               {tokenOptions.map((token) => {
                 return (
                   <CryptoSelector.Option
-                    src={`/tokens/${token.denom}.png`}
+                    src={`/tokens/${token.denom.toLowerCase()}.png`}
                     key={`${token.sourcePrefix}-${token.minCoinDenom}`}
                     value={token}
                     data-testid={`request-asset-selector-token-option-${token.denom}`}
