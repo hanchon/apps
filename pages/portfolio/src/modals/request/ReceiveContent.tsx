@@ -167,7 +167,7 @@ export const ReceiveContent = ({
                   </CryptoSelectorTitle>
                   <CryptoSelector
                     value={selectedNetworkPrefix}
-                    onChange={(prefix) => {
+                    onChange={(prefix: string) => {
                       setSelectedNetworkPrefix(prefix);
                       sendEvent(SELECT_NETWORK_RECEIVE_FLOW, {
                         "Wallet Provider": activeProviderKey,
