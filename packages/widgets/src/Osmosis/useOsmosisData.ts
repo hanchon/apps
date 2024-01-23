@@ -7,17 +7,6 @@ import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/h
 import { raise } from "helpers";
 import { useTrpcQuery } from "@evmosapps/trpc/client";
 import { useMemo } from "react";
-export type SwapOption = {
-  erc20Address: string;
-  name: string;
-  symbol: string;
-  tokenIdentifier: string;
-  chain: string;
-  balance: string;
-  price: number | null;
-  decimals: number;
-  osmosisDenom: string;
-};
 
 export function useOsmosisData() {
   const { address } = useAccount();

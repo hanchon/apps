@@ -4,44 +4,9 @@
 import { Address } from "helpers/src/crypto/addresses/types";
 import { serverCosmos } from "../../utils/cosmos-server-client";
 import { ChainRef } from "../../../../autogen/registry";
-import { assert } from "helpers";
+import { DeepRequired } from "helpers/src/types";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
-export const legacyFetchTotalStakedByAddress = async ({
-  chainRef,
-  address,
-}: {
-  chainRef: ChainRef | (string & {});
-  address: Address;
-}) => {
-  const cosmos = await serverCosmos(chainRef);
-  const { data: delegations } = await cosmos.GET(
-    "/cosmos/staking/v1beta1/delegations/{delegator_addr}",
-    {
-      params: {
-        path: {
-          delegator_addr: address,
-        },
-        query: {
-          "pagination.limit": "200",
-        },
-      },
-    },
-  );
-  assert(delegations?.delegation_responses, "delegations not found");
-  const totalStaked = delegations.delegation_responses.reduce(
-    (total, delegation) => total + BigInt(delegation.balance?.amount ?? 0),
-    0n,
-  );
-
-  return {
-    value: totalStaked.toString(),
-  };
-};
-
-export type DeepRequired<T> = {
-  [K in keyof T]-?: Required<DeepRequired<T[K]>>;
-} & {};
 const fetchDelegations = async ({
   chainRef,
   address,

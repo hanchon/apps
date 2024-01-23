@@ -76,7 +76,3 @@ export const legacyFetchERC20ModuleBalance = async ({
 
   return { balance };
 };
-
-export type ERC20BalanceResponse = Awaited<
-  ReturnType<typeof legacyFetchERC20ModuleBalance>
->;

@@ -7,7 +7,7 @@ import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cos
 import { cosmos } from "helpers/src/clients/cosmos";
 import { useEvmosChainRef } from "@evmosapps/evmos-wallet/src/registry-actions/hooks/use-evmos-chain-ref";
 import { raise } from "helpers";
-export const VOTING_LOOKUP = {
+const VOTING_LOOKUP = {
   VOTE_OPTION_UNSPECIFIED: "Not Voted",
   VOTE_OPTION_YES: "Yes",
   VOTE_OPTION_ABSTAIN: "Abstain",

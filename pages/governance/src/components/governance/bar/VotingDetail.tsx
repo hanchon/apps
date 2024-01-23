@@ -3,7 +3,7 @@
 
 import { formatAttoNumber } from "helpers";
 
-export type VotingDetailProps = {
+type VotingDetailProps = {
   bgColor: string;
   type: string;
   percent: number;
