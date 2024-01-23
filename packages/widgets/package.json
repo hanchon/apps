@@ -19,7 +19,7 @@
     "@evmosapps/config": "workspace:*",
     "@evmosapps/evmos-wallet": "workspace:*",
     "@evmosapps/trpc": "workspace:*",
-    "@interchain-ui/react": "^1.19.3",
+    "@interchain-ui/react": "^1.21.1",
     "lodash-es": "^4.17.21",
     "react-redux": "^8.1.2",
     "utility-types": "^3.10.0"
