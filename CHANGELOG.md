@@ -36,6 +36,9 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+
+## 1.3.14 - 2024-01-19
+
 - (fix) fse-959 | packages/evmos-wallet 1.0.27 | Disconnect after switching connection on Send Modal
 - (fix) fse-955 | packages/evmos-wallet 1.0.26 pages/portfolio 1.1.7 | Fix connect with Keplr on Send Modal
 - (fix) fse-958 | packages/copilot 1.0.12 | Close copilot modal after clicking on Learn More
