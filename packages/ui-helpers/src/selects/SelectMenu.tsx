@@ -1,6 +1,11 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+"use client";
 import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, DropdownArrow } from "icons";
+import { CheckIcon } from "@evmosapps/icons/CheckIcon";
+import { DropdownArrowIcon } from "@evmosapps/icons/DropdownArrowIcon";
 
 import { Label } from "./Label";
 
@@ -43,7 +48,7 @@ export const SelectMenu = ({
             >
               <span>{selected}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                <DropdownArrow className="h-5 w-5" aria-hidden="true" />
+                <DropdownArrowIcon className="h-5 w-5" aria-hidden="true" />
               </span>
             </Listbox.Button>
 
@@ -61,7 +66,7 @@ export const SelectMenu = ({
                     className={({ active }) =>
                       classNames(
                         active ? "bg-gray text-black" : "text-black",
-                        "relative cursor-default select-none py-2 pl-3 pr-9"
+                        "relative cursor-default select-none py-2 pl-3 pr-9",
                       )
                     }
                     value={option}
@@ -70,7 +75,7 @@ export const SelectMenu = ({
                       <>
                         <span
                           className={classNames(
-                            selected ? "font-semibold" : "font-normal"
+                            selected ? "font-semibold" : "font-normal",
                           )}
                         >
                           {option}
@@ -80,7 +85,7 @@ export const SelectMenu = ({
                           <span
                             className={classNames(
                               active ? "text-black" : "text-black",
-                              "absolute inset-y-0 right-0 flex items-center pr-4"
+                              "absolute inset-y-0 right-0 flex items-center pr-4",
                             )}
                           >
                             <CheckIcon className="h-5 w-5" aria-hidden="true" />

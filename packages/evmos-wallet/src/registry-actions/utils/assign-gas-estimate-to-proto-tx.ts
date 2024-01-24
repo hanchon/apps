@@ -1,10 +1,14 @@
-import { Address } from "../../wallet";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { getChainByAddress } from "../get-chain-by-account";
 import { Tx } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/v1beta1/tx_pb";
-import { Prefix } from "../types";
+import { Address } from "helpers/src/crypto/addresses/types";
+
+import { set } from "lodash-es";
 
 export const assignGasEstimateToProtoTx = (
-  sender: Address<Prefix>,
+  sender: Address,
   tx: Tx,
   estimatedGas: bigint,
 ) => {
@@ -23,7 +27,7 @@ export const assignGasEstimateToProtoTx = (
         (estimatedGas * BigInt(~~(parseFloat(average) * 1000))) / 1000n;
     }
 
-    tx.authInfo.fee.amount[0].amount = feeAmount.toString();
+    set(tx, "authInfo.fee.amount[0].amount", feeAmount.toString());
   }
   return tx;
 };

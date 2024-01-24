@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { Block } from "../types/block";
 import { Config } from "./cosmos-config";
 import WebSocket from "ws";
@@ -17,7 +20,7 @@ export const listenToBlocks = async (config: Config) => {
             method: "subscribe",
             params: ["tm.event='NewBlock'"],
             id: 1,
-          })
+          }),
         );
       });
     } catch (e) {

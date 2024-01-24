@@ -1,17 +1,26 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { getAccount, getWalletClient } from "wagmi/actions";
-import { assertIf, raise } from "helpers";
+import { assert, raise } from "helpers";
 import { TypedData } from "../../utils";
 
-export async function signTypedDataMessage(transaction: TypedData) {
-  const { address = raise("WALLET_NOT_CONNECTED") } = getAccount();
+import { wagmiConfig } from "../wagmi";
+import { switchToEvmosChain } from "./switchToEvmosChain";
 
-  const client = (await getWalletClient()) ?? raise("PROVIDER_NOT_AVAILABLE");
+export async function signTypedDataMessage(transaction: TypedData) {
+  const { address = raise("WALLET_NOT_CONNECTED") } = getAccount(wagmiConfig);
+
+  await switchToEvmosChain();
+
+  const client =
+    (await getWalletClient(wagmiConfig)) ?? raise("PROVIDER_NOT_AVAILABLE");
 
   const signature = await client.request({
     method: "eth_signTypedData_v4",
     params: [address, JSON.stringify(transaction)],
   });
 
-  assertIf(typeof signature === "string", "COULD_NOT_SIGN_TRANSACTION");
+  assert(typeof signature === "string", "COULD_NOT_SIGN_TRANSACTION");
   return signature;
 }

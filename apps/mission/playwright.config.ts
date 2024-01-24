@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { defineConfig } from "@playwright/test";
 import { createPlaywrightConfig } from "@evmosapps/test-utils";
 import { config } from "dotenv";
@@ -8,7 +11,7 @@ import { config } from "dotenv";
  */
 config();
 
-const PORT = Number(process.env.PORT || 3004);
+const PORT = Number(process.env.PORT || 3000);
 
 /**
  * See https://playwright.dev/docs/test-configuration.

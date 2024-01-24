@@ -1,4 +1,7 @@
-import { InformationIcon } from "icons";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+import { InformationIcon } from "@evmosapps/icons/InformationIcon";
 import { Tooltip } from "../Tooltip";
 
 type LabelProps = {

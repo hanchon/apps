@@ -1,5 +1,8 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { pageListener } from "@evmosapps/test-utils";
-import { E } from "helpers";
+import { E } from "helpers/src/error-handling";
 import { BrowserContext } from "playwright";
 
 export const cleanupTabs = async (context: BrowserContext) => {
@@ -10,7 +13,7 @@ export const cleanupTabs = async (context: BrowserContext) => {
     }
   }
 };
-export const getMMPopup = async (context: BrowserContext) => {
+const getMMPopup = async (context: BrowserContext) => {
   const pages = context.pages();
   return (
     pages.find((page) => page.url().startsWith("chrome-extension://")) ||
@@ -19,7 +22,7 @@ export const getMMPopup = async (context: BrowserContext) => {
 };
 export const connectSwitchAndSignPubkey = async (
   context: BrowserContext,
-  trigger: () => Promise<void>
+  trigger: () => Promise<void>,
 ) => {
   const approveAllPopup = pageListener(context);
 
@@ -32,7 +35,7 @@ export const connectSwitchAndSignPubkey = async (
 
   while (true) {
     const [err] = await E.try(() =>
-      popupPage.getByRole("button", { name: /Sign/i }).click()
+      popupPage.getByRole("button", { name: /Sign/i }).click(),
     );
     if (err?.message.includes("Page closed")) {
       popupPage = await getMMPopup(context);

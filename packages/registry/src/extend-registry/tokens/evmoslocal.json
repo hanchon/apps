@@ -1,0 +1,26 @@
+{
+  "$schema": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/schema.token.json",
+  "coinDenom": "EVMOS",
+  "minCoinDenom": "aevmos",
+  "type": "IBC",
+  "exponent": "18",
+  "cosmosDenom": "aevmos",
+  "description": "EVMOS",
+  "name": "EVMOS",
+  "tokenRepresentation": "EVMOS",
+  "channel": "",
+  "isEnabled": true,
+  "erc20Address": "0xD4949664cD82660AaE99bEdc034a0deA8A0bd517",
+  "ibc": {
+    "sourceDenom": "aevmos",
+    "source": "evmoslocalnet"
+  },
+  "hideFromTestnet": false,
+  "coingeckoId": "evmos",
+  "category": "cosmos",
+  "coinSourcePrefix": "evmos",
+  "img": {
+    "png": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/assets/tokens/EVMOS.png",
+    "svg": "https://raw.githubusercontent.com/evmos/chain-token-registry/main/assets/tokens/EVMOS.svg"
+  }
+}

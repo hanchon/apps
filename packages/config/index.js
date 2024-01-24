@@ -1,3 +1,4 @@
-export * as tailwind from "./tailwind/index.js";
-export * as eslint from "./eslint/index.js";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 export * as next from "./next/index.js";

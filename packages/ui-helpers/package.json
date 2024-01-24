@@ -1,5 +1,5 @@
 {
-  "name": "ui-helpers",
+  "name": "@evmosapps/ui-helpers",
   "version": "1.0.21",
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
@@ -15,32 +15,24 @@
   },
   "peerDependencies": {
     "constants-helper": "workspace:*",
-    "icons": "workspace:*",
     "tracker": "workspace:*"
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
+    "@evmosapps/icons": "workspace:*",
     "@types/node": "18.11.14",
-    "@types/react": "^18.2.21",
-    "@types/react-dom": "18.0.9",
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.20",
-    "prettier": "^3.0.1",
-    "tailwind-config": "workspace:*",
-    "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "api-endpoints": "link:@notionhq/client/build/src/api-endpoints",
+    "lodash-es": "^4.17.21",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@tanstack/react-query": "^4.32.6",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
-    "@types/mixpanel-browser": "2.47.1",
+    "@notionhq/client": "^2.2.14",
     "clsx": "^2.0.0",
     "mixpanel-browser": "^2.47.0",
-    "next": "^14.0.1",
-    "react": "^18.2.0",
+    "next": "14.1.0",
+    "react": "18.2.0",
     "react-dom": "^18.2.0",
-    "vitest": "^0.34.6"
+    "sharp": "^0.32.6"
   },
   "browserslist": [
     "last 3 chrome version",

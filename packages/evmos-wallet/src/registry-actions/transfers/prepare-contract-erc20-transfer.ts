@@ -1,18 +1,22 @@
-import { erc20ABI } from "wagmi";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { normalizeToEth, evmosClient, Address } from "../../wallet";
+import { wagmiConfig } from "../../wallet";
 import { TokenAmount } from "../types";
-import { writeContract } from "wagmi/actions";
+import { estimateGas, writeContract } from "wagmi/actions";
 import { buffGasEstimate } from "../utils/buff-gas-estimate";
 import { getTokenByRef } from "../get-token-by-ref";
+import { getAbi } from "../precompiles";
+import { Address } from "helpers/src/crypto/addresses/types";
+import { normalizeToEth } from "helpers/src/crypto/addresses/normalize-to-eth";
 
 export const prepareContractERC20Transfer = async ({
   sender,
   receiver,
   token,
 }: {
-  sender: Address<"evmos">;
-  receiver: Address<"evmos">;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
 }) => {
   const { erc20Address } = getTokenByRef(token.ref);
@@ -20,21 +24,17 @@ export const prepareContractERC20Transfer = async ({
     throw new Error("Token is not an ERC20 token");
   }
   const args = {
-    abi: erc20ABI,
+    abi: getAbi("erc20"),
     functionName: "transfer",
     address: erc20Address,
     args: [normalizeToEth(receiver), token.amount],
     account: normalizeToEth(sender),
   } as const;
-  const estimatedGas = buffGasEstimate(
-    await evmosClient.estimateContractGas(args)
-  );
-  const { request } = await evmosClient.simulateContract({
-    ...args,
-    gas: estimatedGas,
-  });
+
+  const estimatedGas = buffGasEstimate(await estimateGas(wagmiConfig, args));
+
   return {
-    tx: request,
+    tx: args,
     estimatedGas,
   };
 };
@@ -44,8 +44,8 @@ export const writeContractERC20Transfer = async ({
   receiver,
   token,
 }: {
-  sender: Address<"evmos">;
-  receiver: Address<"evmos">;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
 }) => {
   const prepared = await prepareContractERC20Transfer({
@@ -53,5 +53,5 @@ export const writeContractERC20Transfer = async ({
     receiver,
     token,
   });
-  return writeContract(prepared.tx);
+  return writeContract(wagmiConfig, prepared.tx);
 };

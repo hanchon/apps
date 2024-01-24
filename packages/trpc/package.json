@@ -1,0 +1,46 @@
+{
+  "name": "@evmosapps/trpc",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "SEE LICENSE IN LICENSE",
+  "sideEffects": false,
+  "exports": {
+    "./*": {
+      "import": {
+        "types": "./src/*.ts",
+        "default": "./src/*"
+      }
+    }
+  },
+  "scripts": {
+    "gen:registry-types": "NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./scripts/gen-registry-types.ts",
+    "gen": "pnpm run gen:registry-types",
+    "postinstall": "pnpm run gen"
+  },
+  "devDependencies": {
+    "@evmosapps/config": "workspace:*",
+    "@evmosapps/registry": "workspace:*",
+    "helpers": "workspace:*",
+    "next": "14.1.0",
+    "typescript": "^5.3.3"
+  },
+  "browserslist": [
+    "last 3 chrome version",
+    "last 3 firefox version",
+    "last 3 safari version"
+  ],
+  "dependencies": {
+    "@tanstack/react-query": "^5.17.19",
+    "@trpc/client": "11.0.0-next-beta.221",
+    "@trpc/react-query": "11.0.0-next-beta.221",
+    "@trpc/server": "11.0.0-next-beta.221",
+    "@types/lodash": "^4.14.202",
+    "@types/lodash-es": "^4.17.12",
+    "add": "^2.0.6",
+    "dotenv": "^16.3.1",
+    "pnpm": "^8.14.1",
+    "superjson": "^2.2.1",
+    "viem": "^2.0.6",
+    "zod": "^3.22.1"
+  }
+}

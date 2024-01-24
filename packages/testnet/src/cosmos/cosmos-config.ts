@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import path from "path";
 
 import chalk from "chalk";
@@ -29,7 +32,8 @@ export const createConfig = ({
   index?: number;
 }) => {
   const portOffset = (rest.index ?? 0) * 10;
-  const color = chainColors[rest.index ?? 0 % chainColors.length];
+  const color =
+    chainColors[rest.index ?? 0 % chainColors.length] ?? chalk.white;
   return {
     ...rest,
     chainId,

@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { z } from "zod";
 import { apiCosmosFetch } from "./api-cosmos-fetch";
 
@@ -42,7 +45,7 @@ const TxSchema = z.object({
   signatures: z.array(z.unknown()),
 });
 
-export const TxResponseSchema = z.object({
+const TxResponseSchema = z.object({
   tx: TxSchema,
   tx_response: z.object({
     height: z.string(),

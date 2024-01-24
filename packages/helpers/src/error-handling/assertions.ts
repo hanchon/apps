@@ -1,4 +1,7 @@
-import { normalizeError } from "./normalizeError";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+import { ensureError } from "./normalizeError";
 
 /**
  * Throws an Error with the specified message
@@ -14,7 +17,7 @@ import { normalizeError } from "./normalizeError";
  */
 
 export const raise = (error: Error | string): never => {
-  throw normalizeError(error);
+  throw ensureError(error);
 };
 
 /**
@@ -31,11 +34,11 @@ export const raise = (error: Error | string): never => {
  * ```
  */
 
-export function assertIf(
+export function assert(
   condition: unknown,
   error: Error | string,
 ): asserts condition {
   if (!condition) {
-    throw normalizeError(error);
+    throw ensureError(error);
   }
 }

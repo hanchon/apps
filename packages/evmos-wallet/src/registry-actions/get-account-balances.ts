@@ -1,15 +1,17 @@
-import { FormattedBalance, Prefix } from "./types";
-import { Address, isEvmosAddress, normalizeToEvmos } from "../wallet/utils";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+import { FormattedBalance } from "./types";
+
 import { isHex } from "viem";
 import { getERC20TokenBalances } from "./get-erc20-token-balances";
 import { getCosmosBalances } from "./get-cosmos-balances";
+import { isEvmosAddress } from "helpers/src/crypto/addresses/is-evmos-address";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
+import { Address } from "helpers/src/crypto/addresses/types";
 
-export const getAccountBalances = async ({
-  address,
-}: {
-  address: Address<Prefix>;
-}) => {
-  const addressAsCosmos = isHex(address) ? normalizeToEvmos(address) : address;
+export const getAccountBalances = async ({ address }: { address: Address }) => {
+  const addressAsCosmos = isHex(address) ? normalizeToCosmos(address) : address;
   const balances = await getCosmosBalances({ address: addressAsCosmos });
   if (!isEvmosAddress(address)) {
     return balances;
@@ -18,7 +20,7 @@ export const getAccountBalances = async ({
   return sortEmptyBalanceLast([
     ...balances,
     ...(await getERC20TokenBalances({
-      address: normalizeToEvmos(address),
+      address: normalizeToCosmos(address),
     })),
   ]);
 };

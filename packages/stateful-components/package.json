@@ -14,35 +14,27 @@
     "lint": "eslint ."
   },
   "peerDependencies": {
-    "copilot": "workspace:*",
-    "evmos-wallet": "workspace:*",
-    "icons": "workspace:*",
-    "tracker": "workspace:*",
-    "ui-helpers": "workspace:*"
+    "@evmosapps/copilot": "workspace:*",
+    "@evmosapps/evmos-wallet": "workspace:*",
+    "@evmosapps/icons": "workspace:*",
+    "@evmosapps/ui-helpers": "workspace:*",
+    "tracker": "workspace:*"
   },
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
+    "@evmosapps/trpc": "workspace:*",
+    "@tanstack/query-sync-storage-persister": "^5.17.15",
+    "@tanstack/react-query-devtools": "^5.17.15",
     "@types/node": "18.11.14",
-    "@types/react": "^18.2.21",
-    "@types/react-dom": "18.0.9",
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.20",
-    "prettier": "^3.0.1",
+    "constants-helper": "workspace:*",
+    "next": "14.1.0",
+    "react-i18next": "^14.0.1",
     "react-redux": "^8.1.2",
     "redux": "^4.2.1",
-    "schummar-translate": "^1.18.0",
-    "tailwind-config": "workspace:*",
-    "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.9.5",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
-    "@types/mixpanel-browser": "2.47.1",
-    "clsx": "^2.0.0",
-    "mixpanel-browser": "^2.47.0",
-    "vitest": "^0.34.6"
+    "mixpanel-browser": "^2.47.0"
   },
   "browserslist": [
     "last 3 chrome version",

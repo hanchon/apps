@@ -1,7 +1,10 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 export function formatUnits(
   value: bigint,
   tokenDecimals: number,
-  mode: "short" | "long" = "short",
+  mode: "short" | "long" | number = "short",
 ) {
   let display = value.toString();
 
@@ -20,6 +23,9 @@ export function formatUnits(
       fraction ? `.${fraction}` : ""
     }`;
   }
-  fraction = fraction.slice(0, 7);
+  if (mode === 0) {
+    return `${negative ? "-" : ""}${integer || "0"}`;
+  }
+  fraction = fraction.slice(0, typeof mode === "number" ? mode : 7);
   return `${negative ? "-" : ""}${integer || "0"}.${fraction}`;
 }

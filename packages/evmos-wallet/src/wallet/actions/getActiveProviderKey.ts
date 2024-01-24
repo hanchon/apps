@@ -1,11 +1,16 @@
-import { getAccount } from "wagmi/actions";
-import { CONNECTOR_MAP } from "../wagmi";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-export function getActiveProviderKey() {
-  const { connector } = getAccount();
-  const id = connector?.id ?? null;
-  if (id && id in CONNECTOR_MAP) {
-    return id as keyof typeof CONNECTOR_MAP;
+import { ConnetorId, wagmiConfig } from "../wagmi";
+
+export function getActiveProviderKey(): ConnetorId | null {
+  const connectionUuid = wagmiConfig.state.current;
+  if (!connectionUuid) {
+    return null;
   }
-  return null;
+  const connection = wagmiConfig.state.connections.get(connectionUuid);
+  if (!connection) {
+    return null;
+  }
+  return connection.connector.name as ConnetorId;
 }

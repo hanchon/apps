@@ -1,14 +1,13 @@
-import { Octokit } from "octokit";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import download from "download";
 import os from "os";
 import { binariesDir } from "./constants";
 import path from "path";
 import { stat, chmod } from "fs/promises";
 import { memoize } from "lodash-es";
-
-const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN,
-});
+import { github } from "helpers/src/clients/github";
 
 export type SupportedBinaries = "evmos" | "cosmos" | "hermes";
 const REPO_MAP: Record<
@@ -32,9 +31,9 @@ const REPO_MAP: Record<
   },
 };
 const getLatestReleases = async (binary: SupportedBinaries) => {
-  const releases = await octokit.request(
+  const releases = await github.request(
     "GET /repos/{owner}/{repo}/releases/latest",
-    REPO_MAP[binary]
+    REPO_MAP[binary],
   );
 
   return releases.data;

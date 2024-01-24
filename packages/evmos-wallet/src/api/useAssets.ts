@@ -1,49 +1,65 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { ERC20BalanceResponse } from "./types";
-import { getAssetsForAddress } from "./fetch";
-import { addAssets, addDollarAssets, amountToDollars } from "helpers";
+
 import { BigNumber } from "@ethersproject/bignumber";
 import { useAccount } from "wagmi";
-import { normalizeToEvmos } from "../wallet";
-export const useAssets = () => {
-  const { address = "" } = useAccount();
+import { isNaN } from "lodash-es";
+import {
+  addAssets,
+  addDollarAssets,
+  amountToDollars,
+} from "helpers/src/styles";
 
-  const assets = useQuery<ERC20BalanceResponse, Error>({
-    queryKey: ["commonAssets", address],
-    queryFn: () =>
-      getAssetsForAddress(
-        address ? normalizeToEvmos(address) : address,
-        address
-      ),
-  });
+import { useTrpcQuery } from "@evmosapps/trpc/client";
+import { useEvmosChainRef } from "../registry-actions/hooks/use-evmos-chain-ref";
+
+const usdFormat = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
+export const useAssets = () => {
+  const { address } = useAccount();
+
+  const chainRef = useEvmosChainRef();
+
+  const assets = useTrpcQuery((t) =>
+    t.legacy.erc20ModuleBalance({
+      address,
+      chainRef,
+    }),
+  );
+  const balance = useMemo(
+    () => assets.data?.balance ?? [],
+    [assets.data?.balance],
+  );
 
   const getAssetsForMissionControl = useMemo(() => {
     if (assets.data === undefined) {
       return [];
     }
 
-    return assets.data.balance.slice(0, 3).map((item) => {
-      return {
-        symbol: item.symbol,
-        description: item.description,
-        valueInTokens: addAssets({
-          erc20Balance: BigNumber.from(item.erc20Balance),
-          decimals: Number(item.decimals),
-          cosmosBalance: BigNumber.from(item.cosmosBalance),
-        }).toFixed(2),
-        valueInDollars: addDollarAssets({
-          erc20Balance: BigNumber.from(item.erc20Balance),
-          decimals: Number(item.decimals),
-          coingeckoPrice: Number(item.coingeckoPrice),
-          cosmosBalance: BigNumber.from(item.cosmosBalance),
-        }).toFixed(2),
-      };
-    });
-  }, [assets.data]);
+    return (
+      balance.slice(0, 3).map((item) => {
+        return {
+          symbol: item.symbol,
+          description: item.description,
+          valueInTokens: addAssets({
+            erc20Balance: BigNumber.from(item.erc20Balance),
+            decimals: Number(item.decimals),
+            cosmosBalance: BigNumber.from(item.cosmosBalance),
+          }).toFixed(2),
+          valueInDollars: addDollarAssets({
+            erc20Balance: BigNumber.from(item.erc20Balance),
+            decimals: Number(item.decimals),
+            coingeckoPrice: Number(item.coingeckoPrice),
+            cosmosBalance: BigNumber.from(item.cosmosBalance),
+          }).toFixed(2),
+        };
+      }) ?? []
+    );
+  }, [assets.data, balance]);
 
   const getTotalAssetsForMissionControl = useMemo(() => {
     let total = 0;
@@ -52,7 +68,7 @@ export const useAssets = () => {
       return total;
     }
 
-    assets.data.balance.forEach((item) => {
+    balance.forEach((item) => {
       if (item.erc20Balance !== undefined && item.cosmosBalance !== undefined) {
         total =
           total +
@@ -60,64 +76,70 @@ export const useAssets = () => {
             amountToDollars(
               BigNumber.from(item.cosmosBalance),
               Number(item.decimals),
-              Number(item.coingeckoPrice)
-            )
+              Number(item.coingeckoPrice),
+            ),
           ) +
           parseFloat(
             amountToDollars(
               BigNumber.from(item.erc20Balance),
               Number(item.decimals),
-              Number(item.coingeckoPrice)
-            )
+              Number(item.coingeckoPrice),
+            ),
           );
       }
     });
 
     return total;
-  }, [assets.data]);
+  }, [assets.data, balance]);
 
   const getEvmosPrice = useMemo(() => {
-    if (assets.data === undefined || assets.data.balance.length === 0) {
+    if (assets.data === undefined || balance.length === 0) {
       return "--";
     }
-
-    return assets.data.balance[0].coingeckoPrice;
-  }, [assets.data]);
+    return balance[0]?.coingeckoPrice ?? "--";
+  }, [assets.data, balance]);
 
   const getEvmosPriceChange = useMemo(() => {
-    if (assets.data === undefined || assets.data.balance.length === 0) {
-      return "0";
+    const priceChangeStr = balance[0]?.price24HChange;
+    if (!priceChangeStr) {
+      return null;
     }
-
-    return assets.data.balance[0].price24HChange;
-  }, [assets.data]);
+    const priceChange = parseFloat(priceChangeStr);
+    if (isNaN(priceChange)) {
+      return null;
+    }
+    return priceChange;
+  }, [balance]);
 
   const getTotalEvmos = useMemo(() => {
     // returns the amount of evmos and wrap evmos
     let total = BigNumber.from(0);
 
-    if (assets.data === undefined || assets.data.balance.length === 0) {
+    if (assets.data === undefined || balance.length === 0) {
       return total;
     }
 
-    const evmosData = assets.data.balance.filter(
-      (i) => i.symbol.toLowerCase() === "evmos"
-    );
+    const evmosData = balance.filter((i) => i.symbol.toLowerCase() === "evmos");
 
-    total = BigNumber.from(evmosData[0].cosmosBalance).add(
-      BigNumber.from(evmosData[0].erc20Balance)
+    total = BigNumber.from(evmosData[0]?.cosmosBalance).add(
+      BigNumber.from(evmosData[0]?.erc20Balance),
     );
 
     return total;
-  }, [assets.data]);
+  }, [assets.data, balance]);
 
   const evmosPriceFixed = useMemo(() => {
-    if (assets.data === undefined || assets.data.balance.length === 0) {
-      return "-";
+    const priceStr = balance[0]?.coingeckoPrice;
+    if (!priceStr) {
+      return null;
+    }
+    const price = parseFloat(priceStr);
+    if (isNaN(price)) {
+      return null;
     }
 
-    return `$${Number(assets.data.balance[0].coingeckoPrice).toFixed(2)}`;
-  }, [assets.data]);
+    return usdFormat.format(price);
+  }, [balance]);
   return {
     sourceData: assets.data,
     assets: getAssetsForMissionControl,

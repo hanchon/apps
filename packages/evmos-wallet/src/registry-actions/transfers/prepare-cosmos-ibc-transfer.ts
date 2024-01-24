@@ -1,14 +1,13 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { SignMode } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/signing/v1beta1/signing_pb";
 import { MsgTransfer } from "@buf/cosmos_ibc.bufbuild_es/ibc/applications/transfer/v1/tx_pb";
 import { apiCosmosTxSimulate } from "../../api/cosmos-rest/api-cosmos-tx-simulate";
 
-import {
-  Address,
-  getKeplrProvider,
-  normalizeToCosmosAddress,
-} from "../../wallet";
+import { getKeplrProvider } from "../../wallet";
 import { getChainByAddress } from "../get-chain-by-account";
-import { Prefix, TokenAmount } from "../types";
+import { TokenAmount } from "../types";
 import { getIBCChannelId } from "../utils";
 import { assignGasEstimateToProtoTx } from "../utils/assign-gas-estimate-to-proto-tx";
 import { createProtobufTransaction } from "../utils/create-protobuf-transaction";
@@ -21,8 +20,11 @@ import { getTokenByRef } from "../get-token-by-ref";
 import { Tx } from "@buf/cosmos_cosmos-sdk.bufbuild_es/cosmos/tx/v1beta1/tx_pb";
 import { Keplr } from "@keplr-wallet/types";
 import { getTxTimeout } from "../utils/getTxTimeout";
+import { raise } from "helpers";
+import { Address } from "helpers/src/crypto/addresses/types";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
-export const createProtobufIBCTransferMsg = async ({
+const createProtobufIBCTransferMsg = async ({
   sender,
   receiver,
   token,
@@ -31,8 +33,8 @@ export const createProtobufIBCTransferMsg = async ({
   fee,
   ...rest
 }: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
   fee?: {
     gasLimit: bigint;
@@ -48,8 +50,8 @@ export const createProtobufIBCTransferMsg = async ({
     token: transferredToken,
   });
   const message = new MsgTransfer({
-    sender: normalizeToCosmosAddress(sender),
-    receiver: normalizeToCosmosAddress(receiver),
+    sender: normalizeToCosmos(sender),
+    receiver: normalizeToCosmos(receiver),
     sourceChannel: getIBCChannelId({
       sender,
       receiver,
@@ -82,8 +84,8 @@ export const createProtobufIBCTransferMsg = async ({
 };
 
 export const prepareCosmosIBCTransfer = async (params: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
   fee?: {
     gasLimit: bigint;
@@ -127,8 +129,8 @@ const signAmino = async (
 };
 
 export const executeCosmosIBCTransfer = async (params: {
-  sender: Address<Prefix>;
-  receiver: Address<Prefix>;
+  sender: Address;
+  receiver: Address;
   token: TokenAmount;
   fee?: {
     gasLimit: bigint;
@@ -157,7 +159,7 @@ export const executeCosmosIBCTransfer = async (params: {
       },
       {
         preferNoSetFee: true,
-      }
+      },
     );
   } else if (mode === "LEGACY_AMINO_JSON") {
     const fee = tx.authInfo?.fee;
@@ -173,13 +175,15 @@ export const executeCosmosIBCTransfer = async (params: {
       msgs: [
         {
           type: "cosmos-sdk/MsgTransfer",
-          value: MsgTransfer.fromBinary(msgs[0].value).toJson({
+          value: MsgTransfer.fromBinary(
+            msgs[0]?.value ?? raise("No message"),
+          ).toJson({
             useProtoFieldName: true,
           }),
         },
       ],
 
-      sequence: tx.authInfo!.signerInfos[0].sequence.toString(),
+      sequence: tx.authInfo!.signerInfos[0]?.sequence.toString() ?? "0",
     });
   } else {
     throw new Error("UNSUPPORTED_SIGN_MODE");

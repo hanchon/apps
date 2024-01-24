@@ -1,8 +1,22 @@
 {
   "extends": "@evmosapps/config/ts/nextjs.json",
   "compilerOptions": {
-    "plugins": [{ "name": "next" }]
+    "moduleResolution": "Bundler",
+    "noUncheckedIndexedAccess": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true,
+    "strict": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "../../packages/i18n/utils/getLocaleFromPath.ts"
+  ],
   "exclude": ["node_modules"]
 }

@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { BrowserContext, Page } from "@playwright/test";
 
 /**
@@ -32,7 +35,9 @@ import { BrowserContext, Page } from "@playwright/test";
  * @throws An error if the page has not been loaded yet.
  */
 export const pageListener = (context: BrowserContext) => {
-  const promise = context.waitForEvent("page");
+  const promise = context.waitForEvent("page", {
+    timeout: 10000,
+  });
   let page: Page | null = null;
 
   void promise.then((p) => {

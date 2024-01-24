@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { Token } from "../types";
 import { getIBCDenom } from "./get-ibc-denom";
 import { getTokens } from "../get-tokens";
@@ -35,17 +38,6 @@ for (const chain of Object.values(others)) {
   }
 }
 
-export const normalizeToMinDenom = (denom: string) => {
-  if (denom.startsWith("ibc/")) {
-    return IBC_DENOMS_MAP[denom].minCoinDenom ?? null;
-  }
-  const token = getTokens().find(
-    ({ minCoinDenom, denom: tokenDenom }) =>
-      minCoinDenom === denom || tokenDenom === denom
-  );
-  return token?.minCoinDenom ?? null;
-};
-
 export const findToken = ({
   prefix,
   denom,
@@ -62,7 +54,7 @@ export const findToken = ({
       return (
         minCoinDenom === denom || tokenDenom === denom || sourceDenom === denom
       );
-    }
+    },
   );
   return token ?? null;
 };

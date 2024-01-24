@@ -1,6 +1,9 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { z } from "zod";
 
-export const EIP712DomainSchema = z.object({
+const EIP712DomainSchema = z.object({
   name: z.string(),
   version: z.string(),
   chainId: z.string(),

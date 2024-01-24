@@ -1,9 +1,12 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { ApiPresignTx } from "../../utils";
 import { signApiPresignTx } from "./sign-api-presign-tx";
 
 import { E } from "helpers";
 
-export type ExecuteResponse = {
+type ExecuteResponse = {
   error: boolean;
   message: string;
   title: string;

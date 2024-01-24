@@ -1,26 +1,39 @@
-import { configureChains, createConfig } from "wagmi";
-import { publicProvider } from "wagmi/providers/public";
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
+import { createConfig, http } from "wagmi";
+
+import { injected, safe, walletConnect } from "wagmi/connectors";
+import { WALLET_CONNECT_PROJECT_ID } from "../../internal/wallet/functionality/networkConfig";
+import { keplr } from "./keplrConnector";
 import {
-  keplrConnector,
-  metamaskConnector,
-  safeConnector,
-  walletConnectConnector,
-} from "./connectors";
-import { getEvmosChainInfo } from "./chains";
-const evmos = getEvmosChainInfo();
-const { publicClient } = configureChains(
-  [getEvmosChainInfo()],
-  [publicProvider()]
-);
-export const evmosClient = publicClient({
-  chainId: evmos.id,
-});
+  evmoslocalnet,
+  evmosmainnet,
+  evmostestnet,
+} from "helpers/src/evmos-info";
+
 export const wagmiConfig = createConfig({
-  autoConnect: false,
+  chains: [evmosmainnet, evmostestnet, evmoslocalnet],
+
+  transports: {
+    [evmosmainnet.id]: http(),
+    [evmostestnet.id]: http(),
+    [evmoslocalnet.id]: http(),
+  },
+  ssr: true,
+  multiInjectedProviderDiscovery: false,
+
   connectors: [
-    ...(safeConnector.ready
-      ? [safeConnector]
-      : [metamaskConnector, walletConnectConnector, keplrConnector]),
+    injected({ target: "metaMask" }),
+    keplr,
+    walletConnect({
+      showQrModal: process.env.NODE_ENV !== "test",
+      projectId: WALLET_CONNECT_PROJECT_ID,
+    }),
+    safe({
+      debug: false,
+    }),
   ],
-  publicClient,
 });
+
+export type ConnetorId = "MetaMask" | "WalletConnect" | "Keplr" | "Safe";

@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { ChainRegistry } from "./types/chain";
 import { TokenRegistry } from "./types/token";
 
@@ -55,7 +58,7 @@ export const testnetConfigByChain: Record<
       explorerTxUrl: "https://testnet.escan.live/tx",
     },
     {
-      chainId: "evmoslocal_9000-10",
+      chainId: "evmoslocal_9002-10",
       chainName: "Evmos Local",
       clientId: "",
       configurationType: "localtestnet",

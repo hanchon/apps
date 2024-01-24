@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { readFile } from "fs/promises";
 import bundleAnalyzer from "@next/bundle-analyzer";
 /**
@@ -83,7 +86,7 @@ export function withEvmosConfig(config = {}) {
             {
               key: "Content-Security-Policy",
               value:
-                "font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self' safe.evmos.dev safe.evmos.org;",
+                "font-src 'self' fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self' safe.evmos.dev safe.evmos.org;",
             },
             {
               key: "Permissions-Policy",

@@ -1,8 +1,11 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
+"use client";
+
 import { useState } from "react";
-import { DownArrowIcon, UpArrowIcon } from "icons";
+import { DownArrowIcon } from "@evmosapps/icons/DownArrowIcon";
+import { UpArrowIcon } from "@evmosapps/icons/UpArrowIcon";
 
 export const Accordion = ({
   title,
@@ -14,8 +17,8 @@ export const Accordion = ({
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div className="accordion">
-      <div className="accordion-item bg-darkGray2 border-b-2 border-b-black py-5">
+    <div className="accordion w-full text-base">
+      <div className="accordion-item py-3">
         <div
           className={`flex items-center ${
             content !== null ? "cursor-pointer" : "cursor-default"
@@ -25,9 +28,9 @@ export const Accordion = ({
           <div className="mx-4 flex w-[5%] justify-center lg:mx-0">
             {content !== null ? (
               isActive ? (
-                <UpArrowIcon />
+                <UpArrowIcon width={15} height={15} />
               ) : (
-                <DownArrowIcon />
+                <DownArrowIcon width={15} height={15} />
               )
             ) : (
               ""

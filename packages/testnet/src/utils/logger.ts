@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import { ChalkInstance } from "chalk";
 import { Log } from "helpers";
 import pino from "pino";
@@ -14,7 +17,7 @@ export const createLogger = (options: {
   return {
     raw: (message: string) => {
       if (enabled) {
-        Log.info(message);
+        Log().info(message);
       }
     },
     info: (message: string) => {
