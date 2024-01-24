@@ -36,6 +36,9 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 2.0.1 - 2024-01-24
+
+- (fix) packages/helpers 1.0.12 | Adds absolute url to rpcs on wagmi config
 
 ## 2.0.0 - 2024-01-24
 
