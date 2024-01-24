@@ -16,5 +16,5 @@ export const getPubUrl = () => {
       "https://staging-app.evmos.org"
     );
   }
-  return "";
+  return window.location.origin;
 };
