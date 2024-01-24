@@ -52,6 +52,10 @@ Ref: https://keepachangelog.com/en/1.0.0/
 - (fix) fse-950 | packages/i18n 1.0.1 pages/dappstore 1.1.4 | Copilot Get Started Edits
 - (fix) fse-949 | pages/portfolio 1.1.4 | Fix title in Receive Modal
 
+## 1.3.15 - 2024-01-22
+
+- (chore) | apps/mission 1.0.28 packages/stateful-components 1.0.4 packages/ui-helpers 1.0.21 | Updates preparing dappstore
+
 ## 1.3.14 - 2024-01-19
 
 - (chore) add redirect from /assets to /portfolio
