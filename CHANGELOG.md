@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) packages/widgets 1.0.2 | Upgrade Foprge widget to 1.2.8
+
 ## 2.0.1 - 2024-01-24
 
 - (fix) packages/helpers 1.0.12 | Adds absolute url to rpcs on wagmi config
