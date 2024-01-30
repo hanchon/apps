@@ -22,7 +22,7 @@ export function AmountBox({
       <div className="flex items-center gap-2">
         <Image
           className="h-8 w-8 md:h-10 md:w-10 rounded-full"
-          src={`/tokens/${token.denom}.png`}
+          src={`/tokens/${token.denom.toLowerCase()}.png`}
           alt={token.denom}
           width={38}
           height={38}
