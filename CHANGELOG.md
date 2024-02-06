@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) fse-966 | pages/portfolio 1.1.10 packages/i18n 1.0.3 | Add error message on send modal
 - (chore) fse-892 | pages/portfolio 1.1.9 | Allow sending axl based assets between evmos accounts
 - (fix) fse-960 | pages/portfolio 1.1.8 | Fix pay modal images
 
