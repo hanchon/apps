@@ -248,7 +248,7 @@ export const Content = ({
                             src={`/tokens/${
                               b?.type === "ERC20"
                                 ? "evmos"
-                                : selectedBalance?.denom
+                                : selectedBalance?.denom.toLowerCase()
                             }.png`}
                             key={b?.address}
                             value={b?.type ?? ""}
