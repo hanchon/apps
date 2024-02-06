@@ -1,7 +1,13 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import {
+  Dispatch,
+  PropsWithChildren,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import {
   getActiveProviderKey,
   getChain,
@@ -27,12 +33,12 @@ export const AccountSelector = ({
   value,
   onChange,
   networkOptions,
-
+  setNetworkState,
   senderPrefix,
 }: PropsWithChildren<{
   value?: Address;
   onChange: (value?: Address) => void;
-
+  setNetworkState: Dispatch<SetStateAction<string>>;
   networkOptions: string[];
   senderPrefix: string;
 }>) => {
@@ -96,6 +102,7 @@ export const AccountSelector = ({
   const selectAvailableNetwork = useEffectEvent(() => {
     if (!networkOptions.includes(selectedNetwork) && networkOptions[0]) {
       setSelectedNetwork(networkOptions[0]);
+      setNetworkState?.(networkOptions[0]);
     }
   });
   useEffect(() => {
@@ -120,6 +127,7 @@ export const AccountSelector = ({
             options={networkOptions}
             onChange={(value) => {
               setSelectedNetwork?.(value);
+              setNetworkState?.(value);
               sendEvent(SELECT_TO_NETWORK_SEND_FLOW, {
                 Network: value,
                 "User Wallet Address": addressConnected,

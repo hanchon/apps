@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) fse-892 | pages/portfolio 1.1.9 | Allow sending axl based assets between evmos accounts
 - (fix) fse-960 | pages/portfolio 1.1.8 | Fix pay modal images
 
 ## 2.0.2 - 2024-01-29

@@ -3,7 +3,7 @@
 
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ErrorMessage,
   IconContainer,
@@ -112,7 +112,10 @@ export const TransferModalContent = ({
 
   const token = getTokenByRef(tokenRef);
   const senderChain = sender ? getChainByAddress(sender) : getChain("evmos");
-
+  const [receiverNetworkPrefix, setReceiverNetworkPrefix] = useState("evmos");
+  const receiverChain = receiver
+    ? getChainByAddress(receiver)
+    : getChain("evmos");
   const destinationNetworkOptions = useMemo(
     (): string[] => //
       getTokenValidDestinations(tokenAmount.ref, senderChain.prefix),
@@ -198,6 +201,14 @@ export const TransferModalContent = ({
     )
       return "TOPUP";
 
+    if (
+      token.sourcePrefix === "axelar" &&
+      token.handledByExternalUI !== null &&
+      networkPrefix === "evmos" &&
+      receiverNetworkPrefix === "evmos" &&
+      receiverChain.name === "Evmos"
+    )
+      return "TRANSFER";
     if (token.handledByExternalUI !== null) return "BRIDGE";
 
     return "TRANSFER";
@@ -209,8 +220,11 @@ export const TransferModalContent = ({
     validation.hasSufficientBalanceForFee,
     isPreparing,
     fee,
+    networkPrefix,
+    receiverNetworkPrefix,
+    token.sourcePrefix,
+    receiverChain.name,
   ]);
-
   useEffect(() => {
     if (!validation.hasSufficientBalanceForFee && !isPreparing)
       sendEvent(ERROR_IN_SEND, {
@@ -404,6 +418,7 @@ export const TransferModalContent = ({
               }
               networkOptions={destinationNetworkOptions}
               senderPrefix={senderChain.prefix}
+              setNetworkState={setReceiverNetworkPrefix}
             />
             {sender && receiver && amount !== 0n && (
               <div className="space-y-3 mt-8">
