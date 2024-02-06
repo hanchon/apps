@@ -96,7 +96,7 @@
     "failedToGetBalance": "Error getting balance.",
     "transactionFailed": "Error generating transaction. Please try again later.",
     "checkWalletConnection": "Please make sure <strong> your account is connected</strong>.",
-    "duplicatedAddress": "You are trying to send to the same address",
+    "duplicatedAddress": "You are trying to send to the same address.",
     "unsupported": {
       "title": "Unfortunately, with Metamask we currently only support sending from <strong>Evmos Network</strong>.",
       "subtitle": "Please use <strong>Keplr</strong> or <strong>choose Evmos</strong>.",
