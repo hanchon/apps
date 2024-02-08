@@ -40,6 +40,7 @@
   "vesting.executioner.address.title": "SAFE ADDRESS",
   "vesting.approve.button": "Approve",
   "vesting.executioner.address.body": "Your address is going to be the executioner for the fund transaction. This means that you will have to execute the transaction after all the other multisign owners have signed.",
+  "vesting.executioner.placeholder": "Enter safe address",
   "vesting.fund.account.name.title": "ACCOUNT NAME",
   "vesting.finish.fund.title": "Finish Funding Vesting Account",
   "vesting.finish.fund.button": "Execute",
