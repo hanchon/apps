@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 2.0.3 - 2024-02-08
+
 - (fix) fse-967 | apps/mission 1.0.29 | Fix version
 - (chore) fse-966 | pages/portfolio 1.1.10 packages/i18n 1.0.4 | Add error message on send modal
 - (fix) fse-965 | packages/i18n 1.0.3 pages/vesting 1.0.1 | Fix vesting page translations
