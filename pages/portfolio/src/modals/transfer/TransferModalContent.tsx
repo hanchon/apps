@@ -56,6 +56,7 @@ import { getTokenValidDestinations } from "../shared/getTokenValidDestinations";
 import { TransactionInspector } from "../shared/TransactionInspector";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { ConnectToWalletWarning } from "../shared/ConnectToWalletWarning";
+import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 
 export const TransferModalContent = ({
   receiver,
@@ -447,6 +448,13 @@ export const TransferModalContent = ({
                 {feeToken?.symbol}
               </ErrorMessage>
             )}
+
+            {receiver !== undefined &&
+              sender === normalizeToCosmos(receiver) && (
+                <ErrorMessage className="justify-center pl-0">
+                  {t("error.duplicatedAddress")}
+                </ErrorMessage>
+              )}
 
             {action === "TOPUP" && (
               <PrimaryButton

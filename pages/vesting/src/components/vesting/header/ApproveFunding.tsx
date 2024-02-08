@@ -64,13 +64,13 @@ export default function ApproveFunding({ onClose }: { onClose: () => void }) {
       <div className="flex flex-col space-y-3">
         <span>{t("vesting.executioner.address.body")}</span>
         <label htmlFor="address" className="text-xs font-bold">
-          {t("vesting.safe.address.title")}
+          {t("vesting.executioner.address.title")}
         </label>
         <input
           id="address"
           onChange={(e) => setSafeAddress(e.target.value)}
           className="textBoxStyle"
-          placeholder="Enter safe address"
+          placeholder={t("vesting.executioner.placeholder")}
         />
         <button
           onClick={handleApprove}
