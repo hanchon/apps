@@ -55,11 +55,24 @@ export const cachedFetch = async (
   const url = new URL(request.url);
 
   // Generate cache tags based on URL, HTTP method, and additional provided tags
+  const bodyStream = request.clone().body;
+  let body = "";
+  if (bodyStream) {
+    const reader = bodyStream.getReader();
+    const decoder = new TextDecoder("utf-8", {});
+
+    let done = false;
+    while (!done) {
+      const { value, done: doneValue } = await reader.read();
+      body += decoder.decode(value, { stream: true });
+      done = doneValue;
+    }
+  }
 
   const cacheTags = [
     snakeCase(url.host),
     request.method.toUpperCase(),
-    init?.body ?? "",
+    body,
     ...(devCache?.tags ?? []),
   ];
 
