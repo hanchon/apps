@@ -5,19 +5,27 @@ import { ECOSYSTEM_PAGE_NOTION_ID } from "@evmosapps/evmos-wallet/src/internal/w
 import { Log, dappSchema } from "helpers";
 import { notion } from "helpers/src/clients/notion";
 import { cache } from "react";
+import { fetchNotionPaginated } from "./fetch-notion-paginated";
 
-export const fetchNotionEcosystemDb = async () =>
-  notion.databases.query({
-    database_id: ECOSYSTEM_PAGE_NOTION_ID,
-  });
+export const fetchNotionEcosystemDb = async () => {
+  return fetchNotionPaginated((cursor) =>
+    notion.databases.query({
+      database_id: ECOSYSTEM_PAGE_NOTION_ID,
+      start_cursor: cursor,
+      page_size: 150,
+    }),
+  );
+};
 
 export const fetchDapps = cache(async () => {
   const dapps = await fetchNotionEcosystemDb();
 
   const parsedDapps = await Promise.all(
-    dapps.results.map(async (value) => {
+    dapps.map(async (value) => {
       const result = await dappSchema.safeParseAsync(value);
+
       if (!result.success) {
+        debugger;
         Log("notion").error(result.error.issues);
       }
       return result;

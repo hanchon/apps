@@ -27,7 +27,8 @@ const encodeBuffer = (buffer: ArrayBuffer) =>
   Buffer.from(buffer).toString("base64");
 
 const decodeBuffer = (buffer: string) => Buffer.from(buffer, "base64");
-
+const normalizeFetchParams = (input: RequestInfo | URL, init?: RequestInit) =>
+  new Request(input, init);
 /**
  * Enhanced fetch function with caching for development and test environments.
  * Caches the results of HTTP requests to improve performance during development.
@@ -48,14 +49,18 @@ export const cachedFetch = async (
   // Bypass caching in non-development environments
   if (process.env.NODE_ENV !== "development" && process.env.NODE_ENV !== "test")
     return fetch(input, init);
+  const devCache = init?.devCache;
+  const request = normalizeFetchParams(input, init);
 
-  const url = new URL(input instanceof Request ? input.url : input);
+  const url = new URL(request.url);
 
   // Generate cache tags based on URL, HTTP method, and additional provided tags
+
   const cacheTags = [
     snakeCase(url.host),
-    init?.method?.toUpperCase() ?? "GET",
-    ...(init?.devCache?.tags ?? []),
+    request.method.toUpperCase(),
+    init?.body ?? "",
+    ...(devCache?.tags ?? []),
   ];
 
   // Add a hash of the URL to the cache tags for uniqueness
@@ -71,12 +76,12 @@ export const cachedFetch = async (
     status: number;
     response: string;
     storeFormat: "string" | "buffer";
-  }>(cacheKey, init?.devCache?.revalidate);
+  }>(cacheKey, devCache?.revalidate);
 
   // Function to perform a fetch request and update cache
   const req = async () => {
     Log("dev-cache-mode").info("Dev Cache MISS:", url.toString());
-    const response = await fetch(input, init);
+    const response = await fetch(request);
 
     // Set custom header to indicate cache miss
     if (!response.ok || response.status < 200 || response.status >= 300) {
@@ -107,7 +112,7 @@ export const cachedFetch = async (
       cacheKey,
       {
         url: url.toString(),
-        method: init?.method ?? "GET",
+        method: request.method,
         headers: serializeHeaders(response.headers),
         statusText: response.statusText,
         status: response.status,
