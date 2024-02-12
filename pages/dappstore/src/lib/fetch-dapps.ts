@@ -25,7 +25,6 @@ export const fetchDapps = cache(async () => {
       const result = await dappSchema.safeParseAsync(value);
 
       if (!result.success) {
-        debugger;
         Log("notion").error(result.error.issues);
       }
       return result;
