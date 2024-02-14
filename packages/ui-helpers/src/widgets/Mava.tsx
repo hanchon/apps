@@ -10,6 +10,7 @@ export const MavaWidget = () => {
       defer
       src={MAVA_WIDGET_URL}
       id="MavaWebChat"
+      widget-version="v2"
       data-token={process.env.NEXT_PUBLIC_MAVA_TOKEN}
     />
   );

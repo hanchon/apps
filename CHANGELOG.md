@@ -36,6 +36,16 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 2.0.3 - 2024-02-08
+
+- (chore) fse-971 | packages/ui-helpers 1.0.22 | Update Mava chat
+- (fix) | Fix forge
+- (fix) fse-967 | apps/mission 1.0.29 | Fix version
+- (chore) fse-966 | pages/portfolio 1.1.10 packages/i18n 1.0.4 | Add error message on send modal
+- (fix) fse-965 | packages/i18n 1.0.3 pages/vesting 1.0.1 | Fix vesting page translations
+- (chore) fse-892 | pages/portfolio 1.1.9 | Allow sending axl based assets between evmos accounts
+- (fix) fse-960 | pages/portfolio 1.1.8 | Fix pay modal images
+
 ## 2.0.2 - 2024-01-29
 
 - (chore) packages/widgets 1.0.2 | Upgrade Foprge widget to 1.2.8
