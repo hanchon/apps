@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) | packages/widgets 1.0.3 packages/tracker 1.0.10 | Track widget transactions
+
 ## 2.0.3 - 2024-02-08
 
 - (chore) fse-971 | packages/ui-helpers 1.0.22 | Update Mava chat

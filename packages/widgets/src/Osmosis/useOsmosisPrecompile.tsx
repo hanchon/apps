@@ -18,7 +18,12 @@ import {
   UOSMO_DENOM_IBC_IN_EVMOS,
   UOSMO_DENOM_IN_OSMOSIS,
 } from "./memoGenerator";
-import { ethToBech32, writeContractIBCOutpost } from "@evmosapps/evmos-wallet";
+import {
+  ethToBech32,
+  getActiveProviderKey,
+  writeContractIBCOutpost,
+} from "@evmosapps/evmos-wallet";
+import { sendEvent, SUCCESSFUL_SWAP_TX, UNSUCCESSFUL_SWAP_TX } from "tracker";
 
 // eslint-disable-next-line no-secrets/no-secrets
 const osmosisFallbackAddress = "osmo1yzw585gd8ajymcaqt9e98k5tt66qpzspn4zy4h";
@@ -81,8 +86,27 @@ export function useOsmosisPrecompile() {
 
       return writeContractIBCOutpost(params);
     },
-    onError: (e) => {
+    onSuccess(_, variables) {
+      const isInputOsmosis = variables.input === UOSMO_DENOM_ERC20_IN_EVMOS;
+      sendEvent(SUCCESSFUL_SWAP_TX, {
+        Token: isInputOsmosis ? "OSMO" : "EVMOS",
+        Network: "Evmos",
+        "User Wallet Address": address,
+        "Wallet Provider": getActiveProviderKey(),
+        "dApp Name": "Osmosis",
+      });
+    },
+    onError: (e, variables) => {
+      const isInputOsmosis = variables.input === UOSMO_DENOM_ERC20_IN_EVMOS;
       Log().error(e);
+      sendEvent(UNSUCCESSFUL_SWAP_TX, {
+        Token: isInputOsmosis ? "OSMO" : "EVMOS",
+        Network: "Evmos",
+        "User Wallet Address": address,
+        "Wallet Provider": getActiveProviderKey(),
+        "Error Message": e.message,
+        "dApp Name": "Osmosis",
+      });
     },
   });
 
