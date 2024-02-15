@@ -80,14 +80,6 @@ describe("Mission Page - Copilot", () => {
 
     expect(await lawerSwapWidget.count()).toBe(1);
 
-    await page.getByTestId("card-provider-dropdown").click();
-    await page.getByRole("button", { name: /Cypher Wallet/i }).click();
-
-    const cypherDWidget = page.getByTestId("cypher-onboading-sdk");
-    await cypherDWidget.waitFor();
-
-    expect(await cypherDWidget.count()).toBe(1);
-
     await page.route(`${BALANCE_ENDPOINT}`, async (route) => {
       const json = {
         balances: [

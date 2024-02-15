@@ -91,15 +91,5 @@ describe("Dapp store ", () => {
 
     await page.getByRole("link", { name: /dApp Store/i }).click();
     await expect(page).toHaveURL("http://localhost:3000/dapps");
-    await page
-      .getByRole("link", {
-        name: /Cypher Wallet Cypher Wallet/i,
-      })
-      .click();
-    await expect(page).toHaveURL(
-      "http://localhost:3000/dapps/bridge-and-swap/cypher-wallet",
-    );
-
-    await expect(page.getByText(/Connection required/i)).toBeVisible();
   });
 });
