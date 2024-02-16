@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (chore) onb-3 | packages/evmos-wallet 1.0.28 packages/stateful-components 1.0.5 pages/staking 1.1.4 pages/vesting 1.0.2 | Add Rabby Wallet
+
 ## 2.0.3 - 2024-02-08
 
 - (chore) fse-971 | packages/ui-helpers 1.0.22 | Update Mava chat
