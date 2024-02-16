@@ -97,3 +97,8 @@ export const CLICK_ON_GIVE_FEEDBACK = "ClickedGiveFeedback";
 export const CLICK_BUTTON_CONVERT = "ClickedConvert";
 export const CLICK_HIDE_ZERO_BALANCE = "HideZeroBalance";
 export const CLICK_CTA_LINKS_REGISTER_TOKEN = "ClickedRegisterToken";
+
+export const SUCCESSFUL_SWAP_TX = "SuccessfulSwap";
+export const UNSUCCESSFUL_SWAP_TX = "UnsuccessfulSwap";
+export const SUCCESSFUL_STAKE_TX = "SuccessfulStake";
+export const UNSUCESSFUL_STAKE_TX = "UnsuccessfulStake";

@@ -7,10 +7,11 @@ import { useMutation } from "@tanstack/react-query";
 import { switchToEvmosChain } from "@evmosapps/evmos-wallet/src/wallet/actions/switchToEvmosChain";
 import { E, Log } from "helpers";
 import { useMemo } from "react";
-import { ethToBech32 } from "@evmosapps/evmos-wallet";
+import { ethToBech32, getActiveProviderKey } from "@evmosapps/evmos-wallet";
 
 import { writeContractIBCOutpost } from "@evmosapps/evmos-wallet";
 import { generateStrideMemo } from "./memoGenerator";
+import { SUCCESSFUL_STAKE_TX, UNSUCESSFUL_STAKE_TX, sendEvent } from "tracker";
 
 // eslint-disable-next-line no-secrets/no-secrets
 const strideFallbackAddress = "stride1yzw585gd8ajymcaqt9e98k5tt66qpzspc93ghf";
@@ -37,7 +38,26 @@ export function useStridePrecompile() {
         estimatedGas: 1227440n,
       });
     },
+    onSuccess: () => {
+      sendEvent(SUCCESSFUL_STAKE_TX, {
+        "User Wallet Address": address,
+        "Wallet Provider": getActiveProviderKey(),
+        "dApp Name": "Stride",
+        FromNetwork: "Evmos",
+        ToNetwork: "Evmos",
+        FromToken: "EVMOS",
+      });
+    },
     onError: (e) => {
+      sendEvent(UNSUCESSFUL_STAKE_TX, {
+        "User Wallet Address": address,
+        "Wallet Provider": getActiveProviderKey(),
+        "Error Message": e.message,
+        FromNetwork: "Evmos",
+        ToNetwork: "Evmos",
+        FromToken: "EVMOS",
+        "dApp Name": "Stride",
+      });
       Log().error(e);
     },
   });
