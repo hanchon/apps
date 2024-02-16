@@ -89,8 +89,10 @@ export function useOsmosisPrecompile() {
     onSuccess(_, variables) {
       const isInputOsmosis = variables.input === UOSMO_DENOM_ERC20_IN_EVMOS;
       sendEvent(SUCCESSFUL_SWAP_TX, {
-        Token: isInputOsmosis ? "OSMO" : "EVMOS",
-        Network: "Evmos",
+        FromNetwork: "Evmos",
+        ToNetwork: "Evmos",
+        FromToken: isInputOsmosis ? "OSMO" : "EVMOS",
+        ToToken: isInputOsmosis ? "EVMOS" : "OSMO",
         "User Wallet Address": address,
         "Wallet Provider": getActiveProviderKey(),
         "dApp Name": "Osmosis",
@@ -98,15 +100,17 @@ export function useOsmosisPrecompile() {
     },
     onError: (e, variables) => {
       const isInputOsmosis = variables.input === UOSMO_DENOM_ERC20_IN_EVMOS;
-      Log().error(e);
       sendEvent(UNSUCCESSFUL_SWAP_TX, {
-        Token: isInputOsmosis ? "OSMO" : "EVMOS",
-        Network: "Evmos",
+        FromNetwork: "Evmos",
+        ToNetwork: "Evmos",
+        FromToken: isInputOsmosis ? "OSMO" : "EVMOS",
+        ToToken: isInputOsmosis ? "EVMOS" : "OSMO",
         "User Wallet Address": address,
         "Wallet Provider": getActiveProviderKey(),
         "Error Message": e.message,
         "dApp Name": "Osmosis",
       });
+      Log().error(e);
     },
   });
 

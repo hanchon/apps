@@ -43,8 +43,9 @@ export function useStridePrecompile() {
         "User Wallet Address": address,
         "Wallet Provider": getActiveProviderKey(),
         "dApp Name": "Stride",
-        Network: "Evmos",
-        Token: "Evmos",
+        FromNetwork: "Evmos",
+        ToNetwork: "Evmos",
+        FromToken: "EVMOS",
       });
     },
     onError: (e) => {
@@ -52,8 +53,9 @@ export function useStridePrecompile() {
         "User Wallet Address": address,
         "Wallet Provider": getActiveProviderKey(),
         "Error Message": e.message,
-        Network: "Evmos",
-        Token: "Evmos",
+        FromNetwork: "Evmos",
+        ToNetwork: "Evmos",
+        FromToken: "EVMOS",
         "dApp Name": "Stride",
       });
       Log().error(e);
