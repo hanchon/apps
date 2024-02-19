@@ -12,7 +12,6 @@ import { GoogleAnalytics } from "../../components/GoogleAnalytics";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Modals } from "../../components/modals";
 import { Container } from "@evmosapps/ui-helpers/src/Container";
 import { StatefulBanner } from "stateful-components/src/banner/banner";
@@ -82,7 +81,6 @@ function RootLayout({
           <Modals />
 
           <GoogleAnalytics />
-          <Script src="https://public.cypherd.io/sdk/cypher-sdk.js" />
         </RootProviders>
       </body>
     </html>

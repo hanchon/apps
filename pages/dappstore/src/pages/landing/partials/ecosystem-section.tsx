@@ -17,7 +17,6 @@ const landingdAppsOrder = [
   "forge",
   "squid",
   "layerswap",
-  "cypher-wallet",
   "wormhole",
   "transak",
 ];
