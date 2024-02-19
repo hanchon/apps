@@ -26,9 +26,27 @@ export const fetchTokens = nextCache(
 
       const chain = chainMap.get(source) ?? raise(`Chain ${source} not found`);
       const networkType: ChainType = chain.configurationType;
-
+      if (process.env.CHAIN_REGISTRY_REF !== "main") {
+        token = {
+          ...token,
+          img: token.img
+            ? {
+                png: token.img.png.replace(
+                  "/main/",
+                  `/${process.env.CHAIN_REGISTRY_REF}/`,
+                ),
+                svg:
+                  token.img.svg?.replace(
+                    "/main/",
+                    `/${process.env.CHAIN_REGISTRY_REF}/`,
+                  ) ?? token.img.svg,
+              }
+            : undefined,
+        };
+      }
       return {
         ...token,
+
         source,
         networkType,
         isMainnet: networkType === "mainnet",

@@ -18,7 +18,7 @@
   "devDependencies": {
     "@evmosapps/config": "workspace:*",
     "@types/node": "18.11.14",
-    "chain-token-registry": "github:evmos/chain-token-registry#main",
+    "chain-token-registry": "github:evmos/chain-token-registry#8d6f7aef2ca1632c774847044a35d9370a6d54ac",
     "helpers": "workspace:*",
     "lodash-es": "^4.17.21",
     "next": "14.1.0",
