@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+## 2.0.4 - 2024-02-19
+
 - (fix) xap-125 | apps 1.0.30 packages/copilot 1.0.13 packages/icons 1.0.12 packages/instantdapps 1.0.1 packages/widgets 1.0.3 pages/dappsstore 1.1.5 | Remove Cypher from instant dapps
 - (chore) | packages/widgets 1.0.3 packages/tracker 1.0.10 | Track widget transactions
 
