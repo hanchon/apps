@@ -26,6 +26,7 @@ export const wagmiConfig = createConfig({
   connectors: [
     injected({ target: "metaMask" }),
     keplr,
+    leap,
     walletConnect({
       showQrModal: process.env.NODE_ENV !== "test",
       projectId: WALLET_CONNECT_PROJECT_ID,
