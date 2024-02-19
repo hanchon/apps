@@ -79,6 +79,7 @@ export const ConnectModalContent = ({
         }
         if (
           E.match.byCode(e, -32002) || // metamask
+          // same message for Leap ?
           E.match.byMessage(e, "PROVIDER_NOT_AVAILABLE") // keplr
         ) {
           notifyError(

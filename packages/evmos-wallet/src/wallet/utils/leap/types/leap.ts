@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
+
 import Long from "long";
 import { Key } from "./key";
 //  should it use the one that is defined on Leap? Reference: https://github.com/leapwallet/cosmos-extension/blob/main/packages/wallet-provider/src/provider/types/chain-info.ts
@@ -70,6 +73,7 @@ export interface Leap {
     data: string | Uint8Array,
     type: EthSignType,
   ): Promise<Uint8Array>;
+  defaultOptions: LeapIntereactionOptions;
 }
 
 export type LeapMode = "core" | "extension" | "mobile-web" | "walletconnect";

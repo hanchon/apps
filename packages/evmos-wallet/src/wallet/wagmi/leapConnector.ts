@@ -1,7 +1,6 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { getKeplrProvider } from "../utils";
 import { getEvmosChainInfo } from "./chains";
 import { isUndefined, raise } from "helpers";
 import {
@@ -59,10 +58,10 @@ const signTransaction = async (
 const eth_signTypedData_v4 = async (
   parameters: EIP1474Parameters<"eth_signTypedData_v4">,
 ): Promise<EIP1474ReturnType<"eth_signTypedData_v4">> => {
-  const keplr = await getKeplrProvider();
+  const leap = await getLeapProvider();
   const cosmosId = evmos.cosmosId;
   const [account, message] = parameters;
-  const signature = await keplr.signEthereum(
+  const signature = await leap.signEthereum(
     cosmosId,
     normalizeToCosmos(account),
     message,
@@ -72,7 +71,7 @@ const eth_signTypedData_v4 = async (
   return toHex(signature);
 };
 
-const prepareTransactionForKeplr = async (
+const prepareTransactionForLeap = async (
   chainId: number,
   request: EIP1474Parameters<"eth_sendTransaction">[0],
 ) => {
@@ -148,7 +147,7 @@ const eth_sendTransaction = async ([
 ]: EIP1474Parameters<"eth_sendTransaction">): Promise<
   EIP1474ReturnType<"eth_sendTransaction">
 > => {
-  const transaction = await prepareTransactionForKeplr(evmos.id, request);
+  const transaction = await prepareTransactionForLeap(evmos.id, request);
   const signature = await signTransaction(
     [JSON.stringify(transaction)],
     EthSignType.TRANSACTION,
@@ -184,15 +183,15 @@ const eth_sendTransaction = async ([
   });
 };
 
-export const keplr = createConnector<
+export const leap = createConnector<
   unknown,
   {},
   {
-    keplrConnectorStatus: "authorized";
+    leapConnectorStatus: "authorized";
   }
 >(({ emitter, storage }) => {
   if (typeof window !== "undefined") {
-    window.addEventListener("keplr_keystorechange", async () => {
+    window.addEventListener("leap_keystorechange", async () => {
       const accounts = await eth_requestAccounts();
       emitter.emit("change", {
         accounts,
@@ -248,23 +247,23 @@ export const keplr = createConnector<
   };
 
   return {
-    id: "keplr",
-    name: "Keplr",
+    id: "leap",
+    name: "Leap",
     type: "injected",
 
     async connect({ chainId } = {}) {
       const accounts = await eth_requestAccounts();
-      await storage?.setItem("keplrConnectorStatus", "authorized");
+      await storage?.setItem("leapConnectorStatus", "authorized");
       return {
         accounts,
         chainId: chainId ?? eth_chainId(),
       };
     },
     async disconnect() {
-      await storage?.removeItem("keplrConnectorStatus");
+      await storage?.removeItem("leapConnectorStatus");
     },
     async getAccounts() {
-      const status = await storage?.getItem("keplrConnectorStatus");
+      const status = await storage?.getItem("leapConnectorStatus");
       if (status !== "authorized") {
         return [];
       }
@@ -278,7 +277,7 @@ export const keplr = createConnector<
     },
 
     async isAuthorized() {
-      return (await storage?.getItem("keplrConnectorStatus")) === "authorized";
+      return (await storage?.getItem("leapConnectorStatus")) === "authorized";
     },
 
     onAccountsChanged() {},

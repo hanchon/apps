@@ -15,60 +15,65 @@ import { getAccount } from "wagmi/actions";
 import { getSelectedNetworkMode } from "@evmosapps/ui-helpers/src/getSelectedNetworkMode";
 import { CosmosAddress } from "helpers/src/crypto/addresses/types";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
+import { getLeapProvider } from "@evmosapps/evmos-wallet/src/wallet/utils/leap/getLeapProvider";
 
 const suggestChain = async (prefix: string) => {
-  const keplr = await getKeplrProvider();
+  let connector;
+  if (getActiveProviderKey() === "Leap") {
+    connector = await getLeapProvider();
+  }
+  connector = await getKeplrProvider();
   if (prefix === "cre") {
     const chainInfo = await import(
       "chainapsis-suggest-chain/cosmos/crescent.json"
     );
-    await keplr.experimentalSuggestChain(chainInfo);
+    await connector.experimentalSuggestChain(chainInfo);
   }
   if (prefix === "emoney") {
     const chainInfo = await import(
       "chainapsis-suggest-chain/cosmos/emoney.json"
     );
-    await keplr.experimentalSuggestChain(chainInfo);
+    await connector.experimentalSuggestChain(chainInfo);
   }
   if (prefix === "tori") {
     const chainInfo = await import(
       "chainapsis-suggest-chain/cosmos/teritori.json"
     );
-    await keplr.experimentalSuggestChain(chainInfo);
+    await connector.experimentalSuggestChain(chainInfo);
   }
   if (prefix === "comdex") {
     const chainInfo = await import(
       "chainapsis-suggest-chain/cosmos/comdex.json"
     );
-    await keplr.experimentalSuggestChain(chainInfo);
+    await connector.experimentalSuggestChain(chainInfo);
   }
 
   if (prefix === "osmo" && getSelectedNetworkMode() === "testnet") {
     const chainInfo = await import(
       "chainapsis-suggest-chain/cosmos/osmo-test.json"
     );
-    await keplr.experimentalSuggestChain(chainInfo);
+    await connector.experimentalSuggestChain(chainInfo);
   }
 
   if (prefix === "evmos" && getSelectedNetworkMode() === "testnet") {
-    await keplr.experimentalSuggestChain(
+    await connector.experimentalSuggestChain(
       await import("@evmosapps/registry/src/keplr/evmostestnet.json"),
     );
   }
 
   if (getSelectedNetworkMode() === "localtestnet") {
     if (prefix === "evmos") {
-      await keplr.experimentalSuggestChain(
+      await connector.experimentalSuggestChain(
         await import("@evmosapps/registry/src/keplr/evmoslocal.json"),
       );
     }
     if (prefix === "cosmos") {
-      await keplr.experimentalSuggestChain(
+      await connector.experimentalSuggestChain(
         await import("@evmosapps/registry/src/keplr/cosmoshublocal.json"),
       );
     }
   }
-
+  // is the same case for Leap ??????? How did you know that these ones were not supported by default ?
   // If not in this list, it's supported by keplr by default
 };
 
@@ -109,6 +114,29 @@ export const useWalletAccountByPrefix = (prefix?: string) => {
           pubKey,
         };
       }
+      if (activeProvider === "Leap") {
+        const leap = await getLeapProvider();
+
+        const [suggestChainErr] = await E.try(() => suggestChain(chain.prefix));
+
+        if (suggestChainErr) {
+          throw new Error("USER_REJECTED_REQUEST", { cause: suggestChainErr });
+        }
+
+        const [err, account] = await E.try(() => leap.getKey(chain.cosmosId));
+
+        if (err) {
+          throw new Error("USER_REJECTED_REQUEST", { cause: err });
+        }
+
+        const { bech32Address, isNanoLedger, pubKey } = account;
+        return {
+          prefix: chain.prefix,
+          bech32Address: bech32Address as CosmosAddress,
+          isNanoLedger,
+          pubKey,
+        };
+      }
       if (prefix !== "evmos")
         throw new Error("NETWORK_NOT_SUPPORTED_BY_WALLET");
       if (!address) throw new Error("NOT_CONNECTED");
@@ -135,6 +163,28 @@ const requestWalletAccount = async (prefix: string) => {
     }
 
     const [err, account] = await E.try(() => keplr.getKey(chain.cosmosId));
+
+    if (err) {
+      throw new Error("USER_REJECTED_REQUEST", { cause: err });
+    }
+
+    const { bech32Address, isNanoLedger, pubKey } = account;
+    return {
+      prefix,
+      bech32Address: bech32Address as CosmosAddress,
+      isNanoLedger,
+      pubKey,
+    };
+  }
+
+  if (activeProvider === "Leap") {
+    const leap = await getLeapProvider();
+    const [suggestChainErr] = await E.try(() => suggestChain(prefix));
+    if (suggestChainErr) {
+      throw new Error("USER_REJECTED_REQUEST", { cause: suggestChainErr });
+    }
+
+    const [err, account] = await E.try(() => leap.getKey(chain.cosmosId));
 
     if (err) {
       throw new Error("USER_REJECTED_REQUEST", { cause: err });

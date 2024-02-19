@@ -15,6 +15,14 @@ import { apiBroadcastEip712, apiBroadcastRawTx } from "../evmos-api/broadcast";
 import { ApiPresignTx } from "../../utils";
 import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
 import { ethToEvmos } from "helpers/src/crypto/addresses/eth-to-evmos";
+import {
+  COSMOS_BASED_WALLETS,
+  isCosmosBasedWallet,
+} from "helpers/src/crypto/wallets/is-cosmos-wallet";
+import { DirectSignResponse } from "@keplr-wallet/types";
+import { signLeapDirect } from "../../wallet/utils/leap/signLeapDirect";
+import { DirectSignResponse as DirectSignResponseCosmjs } from "@cosmjs/proto-signing";
+import { getLeapProvider } from "../../wallet/utils/leap/getLeapProvider";
 const evmosInfo = getEvmosChainInfo();
 
 async function signBackendTypedDataTransaction({
@@ -48,9 +56,19 @@ async function signBackendDirectTransaction(transaction: ApiPresignTx) {
 
   assert(address && connector, "COULD_NOT_SIGN_TRANSACTION");
 
-  assert(connector.name === "Keplr", "UNSUPPORTED_SIGN_METHOD");
-
-  const response = await signKeplrDirect({
+  assert(
+    isCosmosBasedWallet(connector.name as COSMOS_BASED_WALLETS),
+    "UNSUPPORTED_SIGN_METHOD",
+  );
+  let response: DirectSignResponse | DirectSignResponseCosmjs;
+  if (connector.name === "Leap") {
+    response = await signLeapDirect({
+      chainId: transaction.chainId,
+      sender: ethToEvmos(address),
+      body: transaction.directSignDoc,
+    });
+  }
+  response = await signKeplrDirect({
     chainId: transaction.chainId,
     sender: ethToEvmos(address),
     body: transaction.directSignDoc,
@@ -86,6 +104,22 @@ export async function signApiPresignTx(presignedTx: ApiPresignTx) {
       },
     };
     const key = await keplr.getKey(presignedTx.chainId);
+    if (!key.isNanoLedger) return signBackendDirectTransaction(presignedTx);
+  }
+
+  /**
+   * If the connector is leap, we need to check if the key is a ledger key.
+   * If it is, we need to sign the transaction as typed data
+   */
+  if (connector.name === "Leap") {
+    const leap = await getLeapProvider();
+
+    leap.defaultOptions = {
+      sign: {
+        preferNoSetFee: presignedTx.chainId === evmosInfo.cosmosId,
+      },
+    };
+    const key = await leap.getKey(presignedTx.chainId);
     if (!key.isNanoLedger) return signBackendDirectTransaction(presignedTx);
   }
   return signBackendTypedDataTransaction(presignedTx);

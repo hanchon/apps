@@ -18,6 +18,7 @@ import { getAccount, signMessage } from "wagmi/actions";
 import { wagmiConfig } from "./config";
 import { getEvmosChainInfo } from "./chains";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
+import { getLeapProvider } from "../utils/leap/getLeapProvider";
 const recoveryMessage = "generate_pubkey";
 const hashedMessage = Buffer.from(
   fromHex(hashMessage(recoveryMessage), "bytes"),
@@ -35,6 +36,13 @@ const queryFn = async () => {
   if (connector?.name === "Keplr") {
     const keplr = await getKeplrProvider();
     const account = await keplr.getKey(evmos.cosmosId);
+
+    return Buffer.from(account.pubKey).toString("base64");
+  }
+
+  if (connector?.name === "Leap") {
+    const leap = await getLeapProvider();
+    const account = await leap.getKey(evmos.cosmosId);
 
     return Buffer.from(account.pubKey).toString("base64");
   }

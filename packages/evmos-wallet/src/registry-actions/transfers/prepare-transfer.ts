@@ -20,6 +20,7 @@ import { prepareEvmTransfer, writeEvmTransfer } from "./prepare-evm-transfer";
 import { getChainByAddress } from "../get-chain-by-account";
 import { Address } from "helpers/src/crypto/addresses/types";
 import { isEvmosAddress } from "helpers/src/crypto/addresses/is-evmos-address";
+import { getLeapProvider } from "../../wallet/utils/leap/getLeapProvider";
 
 export const simulateTransfer = async ({
   sender,
@@ -140,13 +141,22 @@ export const transfer = async ({
   }
   if (!senderIsEvmos && receiverIsEvmos) {
     /**
-     * Nano Ledger on keplr doesn't support sign direct mode, so we have to use legacy amino json
+     * Nano Ledger on keplr / leap doesn't support sign direct mode, so we have to use legacy amino json
      */
     let mode: keyof typeof SignMode = "DIRECT";
     if (getActiveProviderKey() === "Keplr") {
       const keplr = await getKeplrProvider();
       const chain = getChainByAddress(sender);
       const { isNanoLedger } = await keplr.getKey(chain.cosmosId);
+      if (isNanoLedger) {
+        mode = "LEGACY_AMINO_JSON";
+      }
+    }
+
+    if (getActiveProviderKey() === "Leap") {
+      const leap = await getLeapProvider();
+      const chain = getChainByAddress(sender);
+      const { isNanoLedger } = await leap.getKey(chain.cosmosId);
       if (isNanoLedger) {
         mode = "LEGACY_AMINO_JSON";
       }

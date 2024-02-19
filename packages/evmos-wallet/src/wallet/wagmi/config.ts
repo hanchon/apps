@@ -11,6 +11,7 @@ import {
   evmosmainnet,
   evmostestnet,
 } from "helpers/src/evmos-info";
+import { leap } from "./leapConnector";
 
 export const wagmiConfig = createConfig({
   chains: [evmosmainnet, evmostestnet, evmoslocalnet],
@@ -37,4 +38,9 @@ export const wagmiConfig = createConfig({
   ],
 });
 
-export type ConnetorId = "MetaMask" | "WalletConnect" | "Keplr" | "Safe";
+export type ConnetorId =
+  | "MetaMask"
+  | "WalletConnect"
+  | "Keplr"
+  | "Safe"
+  | "Leap";
