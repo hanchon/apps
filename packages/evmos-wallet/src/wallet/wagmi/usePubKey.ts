@@ -13,12 +13,12 @@ import { signatureToPubkey } from "@hanchon/signature-to-pubkey";
 import { assert, raise } from "helpers";
 
 import { getActiveProviderKey } from "../actions";
-import { getKeplrProvider } from "../utils";
 import { getAccount, signMessage } from "wagmi/actions";
 import { wagmiConfig } from "./config";
 import { getEvmosChainInfo } from "./chains";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
-import { getLeapProvider } from "../utils/leap/getLeapProvider";
+import { providers } from "../../api/utils/cosmos-based";
+import { COSMOS_BASED_WALLETS } from "helpers/src/crypto/wallets/is-cosmos-wallet";
 const recoveryMessage = "generate_pubkey";
 const hashedMessage = Buffer.from(
   fromHex(hashMessage(recoveryMessage), "bytes"),
@@ -33,16 +33,11 @@ const queryFn = async () => {
 
   if (pubkey) return pubkey;
 
-  if (connector?.name === "Keplr") {
-    const keplr = await getKeplrProvider();
-    const account = await keplr.getKey(evmos.cosmosId);
+  const connectorCosmosBased =
+    await providers[connector?.name as COSMOS_BASED_WALLETS]();
 
-    return Buffer.from(account.pubKey).toString("base64");
-  }
-
-  if (connector?.name === "Leap") {
-    const leap = await getLeapProvider();
-    const account = await leap.getKey(evmos.cosmosId);
+  if (connectorCosmosBased) {
+    const account = await connectorCosmosBased.getKey(evmos.cosmosId);
 
     return Buffer.from(account.pubKey).toString("base64");
   }

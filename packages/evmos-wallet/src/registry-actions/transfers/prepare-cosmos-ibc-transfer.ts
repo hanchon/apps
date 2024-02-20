@@ -143,11 +143,11 @@ const signAmino = async (
 
 const signAminoLeap = async (
   tx: Tx,
-  ...[chainId, sender, signDoc]: Parameters<Keplr["signAmino"]>
+  ...[chainId, sender, signDoc]: Parameters<Leap["signAmino"]>
 ) => {
-  const keplr = await getKeplrProvider();
+  const leap = await getLeapProvider();
 
-  const signer = keplr.getOfflineSignerOnlyAmino(chainId);
+  const signer = leap.getOfflineSignerOnlyAmino(chainId);
 
   const signature = await signer.signAmino(sender, signDoc);
 

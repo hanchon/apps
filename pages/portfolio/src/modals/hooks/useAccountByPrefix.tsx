@@ -16,13 +16,17 @@ import { getSelectedNetworkMode } from "@evmosapps/ui-helpers/src/getSelectedNet
 import { CosmosAddress } from "helpers/src/crypto/addresses/types";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 import { getLeapProvider } from "@evmosapps/evmos-wallet/src/wallet/utils/leap/getLeapProvider";
+import { providers } from "@evmosapps/evmos-wallet/src/api/utils/cosmos-based";
+import { COSMOS_BASED_WALLETS } from "helpers/src/crypto/wallets/is-cosmos-wallet";
 
 const suggestChain = async (prefix: string) => {
-  let connector;
-  if (getActiveProviderKey() === "Leap") {
-    connector = await getLeapProvider();
+  const connector =
+    await providers[getActiveProviderKey() as COSMOS_BASED_WALLETS]();
+
+  if (!connector) {
+    return;
   }
-  connector = await getKeplrProvider();
+
   if (prefix === "cre") {
     const chainInfo = await import(
       "chainapsis-suggest-chain/cosmos/crescent.json"
