@@ -3,8 +3,6 @@
 
 import Long from "long";
 import { Key } from "./key";
-//  should it use the one that is defined on Leap? Reference: https://github.com/leapwallet/cosmos-extension/blob/main/packages/wallet-provider/src/provider/types/chain-info.ts
-import { ChainInfo, EthSignType } from "@keplr-wallet/types";
 import {
   AminoSignResponse,
   OfflineAminoSigner,
@@ -15,6 +13,8 @@ import {
   OfflineDirectSigner,
   OfflineSigner,
 } from "@cosmjs/proto-signing";
+import { ChainInfo } from "./chain-info";
+import { EthSignType } from "./eth-sign-type";
 export interface Leap {
   enable(chainIds: string | string[]): Promise<void>;
   experimentalSuggestChain(chainInfo: ChainInfo): Promise<void>;

@@ -67,13 +67,13 @@ async function signBackendDirectTransaction(transaction: ApiPresignTx) {
       sender: ethToEvmos(address),
       body: transaction.directSignDoc,
     });
+  } else {
+    response = await signKeplrDirect({
+      chainId: transaction.chainId,
+      sender: ethToEvmos(address),
+      body: transaction.directSignDoc,
+    });
   }
-  response = await signKeplrDirect({
-    chainId: transaction.chainId,
-    sender: ethToEvmos(address),
-    body: transaction.directSignDoc,
-  });
-
   return {
     signature: response.signature.signature,
     broadcast: () =>

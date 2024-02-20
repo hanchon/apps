@@ -22,7 +22,6 @@ import {
 } from "@evmosapps/evmos-wallet/src/internal/wallet/functionality/errors";
 import { useSetupCopilotModal } from "../SetupAccountModal/SetupAccountModal";
 import { ProvidersIcons } from "../../providerIcons";
-import { ComingSoonWallets } from "./coming-soon-wallets";
 import Image from "next/image";
 import { EvmosRedIcon } from "@evmosapps/icons/EvmosRedIcon";
 export const ButtonWallet = ({
@@ -182,7 +181,6 @@ export const ConnectModalContent = ({
             );
           })}
       </div>
-      <ComingSoonWallets />
     </div>
   );
 };

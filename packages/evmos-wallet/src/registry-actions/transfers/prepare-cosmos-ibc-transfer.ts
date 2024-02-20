@@ -190,23 +190,24 @@ export const executeCosmosIBCTransfer = async (params: {
           preferNoSetFee: true,
         },
       );
+    } else {
+      tx = await signDirect(
+        tx,
+        chain.cosmosId,
+        params.sender,
+        {
+          // @ts-expect-error This is typed as `Long`, but it does accept a string,
+          // I'd rather not have yet another library to do what native bigint does
+          accountNumber: accountNumber.toString(),
+          authInfoBytes: tx.authInfo?.toBinary(),
+          bodyBytes: tx.body?.toBinary(),
+          chainId: chain.cosmosId,
+        },
+        {
+          preferNoSetFee: true,
+        },
+      );
     }
-    tx = await signDirect(
-      tx,
-      chain.cosmosId,
-      params.sender,
-      {
-        // @ts-expect-error This is typed as `Long`, but it does accept a string,
-        // I'd rather not have yet another library to do what native bigint does
-        accountNumber: accountNumber.toString(),
-        authInfoBytes: tx.authInfo?.toBinary(),
-        bodyBytes: tx.body?.toBinary(),
-        chainId: chain.cosmosId,
-      },
-      {
-        preferNoSetFee: true,
-      },
-    );
   } else if (mode === "LEGACY_AMINO_JSON") {
     const fee = tx.authInfo?.fee;
     const msgs = tx.body?.messages ?? [];
@@ -232,28 +233,29 @@ export const executeCosmosIBCTransfer = async (params: {
 
         sequence: tx.authInfo!.signerInfos[0]?.sequence.toString() ?? "0",
       });
-    }
-    tx = await signAmino(tx, chain.cosmosId, params.sender, {
-      account_number: accountNumber,
-      chain_id: chain.cosmosId,
-      fee: {
-        amount: fee?.amount ?? [],
-        gas: fee?.gasLimit!.toString() ?? "0",
-      },
-      memo: tx.body?.memo ?? "",
-      msgs: [
-        {
-          type: "cosmos-sdk/MsgTransfer",
-          value: MsgTransfer.fromBinary(
-            msgs[0]?.value ?? raise("No message"),
-          ).toJson({
-            useProtoFieldName: true,
-          }),
+    } else {
+      tx = await signAmino(tx, chain.cosmosId, params.sender, {
+        account_number: accountNumber,
+        chain_id: chain.cosmosId,
+        fee: {
+          amount: fee?.amount ?? [],
+          gas: fee?.gasLimit!.toString() ?? "0",
         },
-      ],
+        memo: tx.body?.memo ?? "",
+        msgs: [
+          {
+            type: "cosmos-sdk/MsgTransfer",
+            value: MsgTransfer.fromBinary(
+              msgs[0]?.value ?? raise("No message"),
+            ).toJson({
+              useProtoFieldName: true,
+            }),
+          },
+        ],
 
-      sequence: tx.authInfo!.signerInfos[0]?.sequence.toString() ?? "0",
-    });
+        sequence: tx.authInfo!.signerInfos[0]?.sequence.toString() ?? "0",
+      });
+    }
   } else {
     throw new Error("UNSUPPORTED_SIGN_MODE");
   }
