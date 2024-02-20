@@ -4,13 +4,13 @@
 "use server";
 import { github } from "helpers/src/clients/github";
 import { isString } from "helpers";
-// https://api.github.com/repos/evmos/chain-token-registry/contents/tokens%2FBERLIN.json
+
 export const fetchChainRegistryDir = async <T>(dir: string) => {
   const { data } = await github.rest.repos.getContent({
     owner: "evmos",
     repo: "chain-token-registry",
     path: dir,
-    ref: process.env.CHAIN_REGISTRY_REF,
+    ref: process.env.CHAIN_REGISTRY_REF || "main",
     mediaType: {
       format: "json",
     },
@@ -31,7 +31,7 @@ export const fetchChainRegistryDir = async <T>(dir: string) => {
             owner: "evmos",
             repo: "chain-token-registry",
             path: file.path,
-            ref: process.env.CHAIN_REGISTRY_REF,
+            ref: process.env.CHAIN_REGISTRY_REF || "main",
             mediaType: {
               format: "raw",
             },

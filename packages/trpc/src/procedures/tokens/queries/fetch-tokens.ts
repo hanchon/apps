@@ -13,6 +13,8 @@ import { ChainType } from "@evmosapps/registry/src/types";
 import { nextCache } from "helpers/src/next/cache";
 import { seconds } from "helpers/src/time";
 
+const CHAIN_REGISTRY_REF = process.env.CHAIN_REGISTRY_REF || "main";
+
 export const fetchTokens = nextCache(
   async function () {
     const [chainMap, fromRegistry, fromExtensions] = await Promise.all([
@@ -26,20 +28,15 @@ export const fetchTokens = nextCache(
 
       const chain = chainMap.get(source) ?? raise(`Chain ${source} not found`);
       const networkType: ChainType = chain.configurationType;
-      if (process.env.CHAIN_REGISTRY_REF !== "main") {
+      if (CHAIN_REGISTRY_REF !== "main") {
         token = {
           ...token,
           img: token.img
             ? {
-                png: token.img.png.replace(
-                  "/main/",
-                  `/${process.env.CHAIN_REGISTRY_REF}/`,
-                ),
+                png: token.img.png.replace("/main/", `/${CHAIN_REGISTRY_REF}/`),
                 svg:
-                  token.img.svg?.replace(
-                    "/main/",
-                    `/${process.env.CHAIN_REGISTRY_REF}/`,
-                  ) ?? token.img.svg,
+                  token.img.svg?.replace("/main/", `/${CHAIN_REGISTRY_REF}/`) ??
+                  token.img.svg,
               }
             : undefined,
         };
