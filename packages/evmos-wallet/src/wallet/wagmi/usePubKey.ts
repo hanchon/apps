@@ -18,7 +18,10 @@ import { wagmiConfig } from "./config";
 import { getEvmosChainInfo } from "./chains";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
 import { providers } from "../../api/utils/cosmos-based";
-import { COSMOS_BASED_WALLETS } from "helpers/src/crypto/wallets/is-cosmos-wallet";
+import {
+  COSMOS_BASED_WALLETS,
+  isCosmosBasedWallet,
+} from "helpers/src/crypto/wallets/is-cosmos-wallet";
 const recoveryMessage = "generate_pubkey";
 const hashedMessage = Buffer.from(
   fromHex(hashMessage(recoveryMessage), "bytes"),
@@ -33,10 +36,9 @@ const queryFn = async () => {
 
   if (pubkey) return pubkey;
 
-  const connectorCosmosBased =
-    await providers[connector?.name as COSMOS_BASED_WALLETS]();
-
-  if (connectorCosmosBased) {
+  if (connector && isCosmosBasedWallet(connector?.name)) {
+    const connectorCosmosBased =
+      await providers[connector?.name as COSMOS_BASED_WALLETS]();
     const account = await connectorCosmosBased.getKey(evmos.cosmosId);
 
     return Buffer.from(account.pubKey).toString("base64");

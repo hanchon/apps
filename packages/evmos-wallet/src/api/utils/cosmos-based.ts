@@ -25,8 +25,8 @@ export const signers: { [key in COSMOS_BASED_WALLETS]: Signer } = {
 };
 
 export const providers: {
-  [key in COSMOS_BASED_WALLETS]: () => Promise<Keplr | Leap> | undefined;
+  [key in COSMOS_BASED_WALLETS]: () => Promise<Keplr | Leap>;
 } = {
-  Leap: getKeplrProvider,
-  Keplr: getLeapProvider,
+  Leap: getLeapProvider,
+  Keplr: getKeplrProvider,
 };

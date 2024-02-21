@@ -5,7 +5,6 @@ import { useAccount } from "wagmi";
 import {
   getActiveProviderKey,
   getChain,
-  getKeplrProvider,
   wagmiConfig,
 } from "@evmosapps/evmos-wallet";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -15,17 +14,20 @@ import { getAccount } from "wagmi/actions";
 import { getSelectedNetworkMode } from "@evmosapps/ui-helpers/src/getSelectedNetworkMode";
 import { CosmosAddress } from "helpers/src/crypto/addresses/types";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
-import { getLeapProvider } from "@evmosapps/evmos-wallet/src/wallet/utils/leap/getLeapProvider";
 import { providers } from "@evmosapps/evmos-wallet/src/api/utils/cosmos-based";
-import { COSMOS_BASED_WALLETS } from "helpers/src/crypto/wallets/is-cosmos-wallet";
+import {
+  COSMOS_BASED_WALLETS,
+  isCosmosBasedWallet,
+} from "helpers/src/crypto/wallets/is-cosmos-wallet";
 
 const suggestChain = async (prefix: string) => {
-  const connector =
-    await providers[getActiveProviderKey() as COSMOS_BASED_WALLETS]();
-
-  if (!connector) {
+  const activeProvider = getActiveProviderKey();
+  if (!activeProvider) return;
+  if (!isCosmosBasedWallet(activeProvider)) {
     return;
   }
+  const connector =
+    await providers[getActiveProviderKey() as COSMOS_BASED_WALLETS]();
 
   if (prefix === "cre") {
     const chainInfo = await import(
@@ -95,8 +97,9 @@ export const useWalletAccountByPrefix = (prefix?: string) => {
       }
       const activeProvider = getActiveProviderKey();
       if (!activeProvider) return;
-      if (activeProvider === "Keplr") {
-        const keplr = await getKeplrProvider();
+      if (isCosmosBasedWallet(activeProvider)) {
+        const connectorCosmosBased =
+          await providers[activeProvider as COSMOS_BASED_WALLETS]();
 
         const [suggestChainErr] = await E.try(() => suggestChain(chain.prefix));
 
@@ -104,7 +107,9 @@ export const useWalletAccountByPrefix = (prefix?: string) => {
           throw new Error("USER_REJECTED_REQUEST", { cause: suggestChainErr });
         }
 
-        const [err, account] = await E.try(() => keplr.getKey(chain.cosmosId));
+        const [err, account] = await E.try(() =>
+          connectorCosmosBased.getKey(chain.cosmosId),
+        );
 
         if (err) {
           throw new Error("USER_REJECTED_REQUEST", { cause: err });
@@ -118,29 +123,7 @@ export const useWalletAccountByPrefix = (prefix?: string) => {
           pubKey,
         };
       }
-      if (activeProvider === "Leap") {
-        const leap = await getLeapProvider();
 
-        const [suggestChainErr] = await E.try(() => suggestChain(chain.prefix));
-
-        if (suggestChainErr) {
-          throw new Error("USER_REJECTED_REQUEST", { cause: suggestChainErr });
-        }
-
-        const [err, account] = await E.try(() => leap.getKey(chain.cosmosId));
-
-        if (err) {
-          throw new Error("USER_REJECTED_REQUEST", { cause: err });
-        }
-
-        const { bech32Address, isNanoLedger, pubKey } = account;
-        return {
-          prefix: chain.prefix,
-          bech32Address: bech32Address as CosmosAddress,
-          isNanoLedger,
-          pubKey,
-        };
-      }
       if (prefix !== "evmos")
         throw new Error("NETWORK_NOT_SUPPORTED_BY_WALLET");
       if (!address) throw new Error("NOT_CONNECTED");
@@ -159,36 +142,17 @@ const requestWalletAccount = async (prefix: string) => {
   const activeProvider = getActiveProviderKey();
   if (!activeProvider) throw new Error("NO_ACTIVE_PROVIDER");
   const chain = getChain(prefix);
-  if (activeProvider === "Keplr") {
-    const keplr = await getKeplrProvider();
+  if (isCosmosBasedWallet(activeProvider)) {
+    const connectorCosmosBased =
+      await providers[activeProvider as COSMOS_BASED_WALLETS]();
     const [suggestChainErr] = await E.try(() => suggestChain(prefix));
     if (suggestChainErr) {
       throw new Error("USER_REJECTED_REQUEST", { cause: suggestChainErr });
     }
 
-    const [err, account] = await E.try(() => keplr.getKey(chain.cosmosId));
-
-    if (err) {
-      throw new Error("USER_REJECTED_REQUEST", { cause: err });
-    }
-
-    const { bech32Address, isNanoLedger, pubKey } = account;
-    return {
-      prefix,
-      bech32Address: bech32Address as CosmosAddress,
-      isNanoLedger,
-      pubKey,
-    };
-  }
-
-  if (activeProvider === "Leap") {
-    const leap = await getLeapProvider();
-    const [suggestChainErr] = await E.try(() => suggestChain(prefix));
-    if (suggestChainErr) {
-      throw new Error("USER_REJECTED_REQUEST", { cause: suggestChainErr });
-    }
-
-    const [err, account] = await E.try(() => leap.getKey(chain.cosmosId));
+    const [err, account] = await E.try(() =>
+      connectorCosmosBased.getKey(chain.cosmosId),
+    );
 
     if (err) {
       throw new Error("USER_REJECTED_REQUEST", { cause: err });
