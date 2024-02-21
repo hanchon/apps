@@ -645,8 +645,8 @@ importers:
         specifier: 18.11.14
         version: 18.11.14
       chain-token-registry:
-        specifier: github:evmos/chain-token-registry#8d6f7aef2ca1632c774847044a35d9370a6d54ac
-        version: github.com/evmos/chain-token-registry/8d6f7aef2ca1632c774847044a35d9370a6d54ac
+        specifier: github:evmos/chain-token-registry#main
+        version: github.com/evmos/chain-token-registry/46797778dfdf05e5146316ebf7a501c0c0aa5d39
       helpers:
         specifier: workspace:*
         version: link:../helpers
@@ -1205,7 +1205,7 @@ importers:
         version: link:../../packages/icons
       chainapsis-suggest-chain:
         specifier: github:chainapsis/keplr-chain-registry
-        version: github.com/chainapsis/keplr-chain-registry/ccd430f2cca04df7857f1dfa4102447a0cc6f38b(@babel/core@7.23.7)(react-is@18.2.0)
+        version: github.com/chainapsis/keplr-chain-registry/162353b022990ca1e6916723efe8d83734e3d5d5(@babel/core@7.23.7)(react-is@18.2.0)
       ethers:
         specifier: ^6.9.2
         version: 6.9.2
@@ -12956,7 +12956,6 @@ packages:
     dependencies:
       is-hex-prefixed: 1.0.0
       strip-hex-prefix: 1.0.0
-    bundledDependencies: false
 
   /event-emitter@0.3.5:
     resolution: {integrity: sha512-D9rRn9y7kLPnJ+hMq7S/nhvoKwwvVJahBi2BPmx3bvbsEdK3W9ii8cBSGjP+72/LnM4n6fo3+dkCX5FeTQruXA==}
@@ -21816,9 +21815,9 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
 
-  github.com/chainapsis/keplr-chain-registry/ccd430f2cca04df7857f1dfa4102447a0cc6f38b(@babel/core@7.23.7)(react-is@18.2.0):
-    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/ccd430f2cca04df7857f1dfa4102447a0cc6f38b}
-    id: github.com/chainapsis/keplr-chain-registry/ccd430f2cca04df7857f1dfa4102447a0cc6f38b
+  github.com/chainapsis/keplr-chain-registry/162353b022990ca1e6916723efe8d83734e3d5d5(@babel/core@7.23.7)(react-is@18.2.0):
+    resolution: {tarball: https://codeload.github.com/chainapsis/keplr-chain-registry/tar.gz/162353b022990ca1e6916723efe8d83734e3d5d5}
+    id: github.com/chainapsis/keplr-chain-registry/162353b022990ca1e6916723efe8d83734e3d5d5
     name: chainapsis-suggest-chain
     version: 0.0.1
     dependencies:
@@ -21851,8 +21850,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  github.com/evmos/chain-token-registry/8d6f7aef2ca1632c774847044a35d9370a6d54ac:
-    resolution: {tarball: https://codeload.github.com/evmos/chain-token-registry/tar.gz/8d6f7aef2ca1632c774847044a35d9370a6d54ac}
-    name: chain-token-registry#8d6f7aef2ca1632c774847044a35d9370a6d54ac
+  github.com/evmos/chain-token-registry/46797778dfdf05e5146316ebf7a501c0c0aa5d39:
+    resolution: {tarball: https://codeload.github.com/evmos/chain-token-registry/tar.gz/46797778dfdf05e5146316ebf7a501c0c0aa5d39}
+    name: chain-token-registry#main
     version: 0.0.0
     dev: true
