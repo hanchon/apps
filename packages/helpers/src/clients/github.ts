@@ -6,7 +6,6 @@ import { cachedFetch } from "../dev/cached-fetch";
 
 export const github = new Octokit({
   auth: process.env.GITHUB_TOKEN,
-
   request: {
     fetch: (input: RequestInfo | URL, init: RequestInit = {}) =>
       cachedFetch(input, {
