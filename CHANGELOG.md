@@ -36,6 +36,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (fix) apps/mission 1.0.32 | Adds error boundary to Evmos Price to prevent app crash in case of coingecko API failure
 - (fix) xap-157 | packages/widgets 1.0.4 | forge widget temporary change
 
 ## 2.0.5 - 2024-02-21
