@@ -80,8 +80,6 @@ export type LeapMode = "core" | "extension" | "mobile-web" | "walletconnect";
 
 export interface LeapSignOptions {
   readonly preferNoSetFee?: boolean;
-  readonly preferNoSetMemo?: boolean;
-  readonly disableBalanceCheck?: boolean;
 }
 
 export interface LeapIntereactionOptions {
