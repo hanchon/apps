@@ -10,7 +10,7 @@ export const fetchChainRegistryDir = async <T>(dir: string) => {
     owner: "evmos",
     repo: "chain-token-registry",
     path: dir,
-
+    ref: process.env.CHAIN_REGISTRY_REF ?? "main",
     mediaType: {
       format: "json",
     },
@@ -31,6 +31,7 @@ export const fetchChainRegistryDir = async <T>(dir: string) => {
             owner: "evmos",
             repo: "chain-token-registry",
             path: file.path,
+            ref: process.env.CHAIN_REGISTRY_REF ?? "main",
             mediaType: {
               format: "raw",
             },
