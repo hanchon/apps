@@ -18,7 +18,7 @@ describe("Dapp store", () => {
 
     await page.getByRole("button", { name: /accept and proceed/i }).click();
   });
-  test("should display cypher wallet widget", async ({ page, context }) => {
+  test("should display transak wallet widget", async ({ page, context }) => {
     await page.getByRole("button", { name: /Connect/i }).click();
     await page.getByRole("button", { name: /MetaMask/i }).click();
 
@@ -33,17 +33,17 @@ describe("Dapp store", () => {
 
     await page
       .getByRole("link", {
-        name: /Cypher Wallet Cypher Wallet/i,
+        name: /Transak Wallet Transak Wallet/i,
       })
       .click();
     await expect(page).toHaveURL(
-      "http://localhost:3000/dapps/bridge-and-swap/cypher-wallet",
+      "http://localhost:3000/dapps/on-ramps/transak",
     );
 
-    const cypherWidget = page.getByTestId("cypher-onboading-sdk");
-    await cypherWidget.waitFor();
+    const transakWidget = page.getByTestId("transak-widget");
+    await transakWidget.waitFor();
 
-    expect(await cypherWidget.count()).toBe(1);
+    expect(await transakWidget.count()).toBe(1);
 
     await expect(page.getByText(/Connection required/i)).not.toBeVisible();
   });
