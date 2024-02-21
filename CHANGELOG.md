@@ -36,8 +36,6 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
-## 2.0.6 - 2024-02-21
-
 - (fix) xap-157 | packages/widgets 1.0.4 | forge widget temporary change
 
 ## 2.0.5 - 2024-02-21
