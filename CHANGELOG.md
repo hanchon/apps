@@ -36,6 +36,8 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
+- (fix) apps/mission 1.0.32 | Adds error boundary to Evmos Price to prevent app crash in case of coingecko API failure
+
 ## 2.0.5 - 2024-02-21
 
 - (chore) onb-8 | apps/mission 1.0.31 packages/evmos-wallet 1.0.28 packages/registry 1.0.7 packages/trpc 1.0.1 | List BERLIN token
