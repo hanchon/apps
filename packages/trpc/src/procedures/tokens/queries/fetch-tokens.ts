@@ -13,7 +13,7 @@ import { ChainType } from "@evmosapps/registry/src/types";
 import { nextCache } from "helpers/src/next/cache";
 import { seconds } from "helpers/src/time";
 
-const CHAIN_REGISTRY_REF = process.env.CHAIN_REGISTRY_REF || "main";
+const CHAIN_REGISTRY_REF = process.env.CHAIN_REGISTRY_REF ?? "main";
 
 export const fetchTokens = nextCache(
   async function () {
