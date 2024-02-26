@@ -39,7 +39,8 @@ type ChainConfig =
 
 type PublicCosmoProvider = {
   enable: (chainId: string) => Promise<void>;
-  experimentalSuggestChain: (chainInfo: {}) => Promise<void>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  experimentalSuggestChain: (chainInfo: any) => Promise<void>;
   signEthereum: (
     chainId: string,
     signer: string,
@@ -50,7 +51,7 @@ type PublicCosmoProvider = {
 };
 export class CosmosEIP1193Provider implements EIP1193Provider {
   ee = new EventEmitter({});
-  private connectedNetwork: number | null;
+  private connectedNetwork: number;
 
   getCosmosProvider: () => Promise<PublicCosmoProvider>;
   constructor(
@@ -67,7 +68,7 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
     if (typeof window === "undefined") return;
     void this.setup();
   }
-  private isReady = false;
+
   resolveCosmosConfig = async (evmChainId: string | number) => {
     const chainConfig = this.chainConfigMap[normalizeChainId(evmChainId)];
     if (!chainConfig) {
@@ -79,10 +80,7 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
   };
 
   getCosmosId = async () => {
-    const chainId = await this.request({ method: "eth_chainId" });
-    const chainConfig = await this.resolveCosmosConfig(
-      normalizeChainId(chainId),
-    );
+    const chainConfig = await this.resolveCosmosConfig(this.connectedNetwork);
     return chainConfig.chainId;
   };
 
@@ -113,26 +111,25 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
   }
   request: EIP1193Provider["request"] = (args) => {
     const fn: unknown = get(this, args.method);
-
     if (typeof fn !== "function") {
       throw Error("Method not implemented.");
     }
 
-    return fn(args.params) as never;
+    return fn(args.params);
   };
 
   eth_chainId = () => {
-    if (!this.isReady || !this.connectedNetwork) {
-      throw new Error("Not connected");
-    }
-    return toHex(this.connectedNetwork);
+    return Promise.resolve(toHex(this.connectedNetwork));
   };
 
   eth_requestAccounts = async () => {
     const provider = await this.getCosmosProvider();
 
     const signer = provider.getOfflineSigner(await this.getCosmosId());
+
     const [account = raise("Account not found")] = await signer.getAccounts();
+
+    this.setIsAuthorized(true);
     return [normalizeToEth(account.address)] as const;
   };
 
@@ -316,7 +313,7 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
   };
 
   eth_accounts = async () => {
-    if (this.getIsAuthorized() && this.isReady) {
+    if (this.getIsAuthorized()) {
       return this.eth_requestAccounts();
     }
     return [];
@@ -347,7 +344,7 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
 
   wallet_switchEthereumChain = this.wallet_addEthereumChain;
 
-  async setup() {
+  setup() {
     if (typeof window === "undefined") return;
 
     window.addEventListener(`${this.name}_keystorechange`, async () => {
@@ -355,13 +352,5 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
 
       this.ee.emit("accountsChanged", accounts);
     });
-    try {
-      const cosmosProvider = await this.getCosmosProvider();
-
-      if (!cosmosProvider) return;
-      this.isReady = true;
-    } catch (e) {
-      // noop
-    }
   }
 }
