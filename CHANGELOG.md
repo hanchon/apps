@@ -36,7 +36,21 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## Unreleased
 
-- (chore) onb-3 | packages/evmos-wallet 1.0.28 packages/stateful-components 1.0.5 pages/staking 1.1.4 pages/vesting 1.0.2 | Add Rabby Wallet
+- (chore) onb-3 | packages/evmos-wallet 1.0.29 packages/stateful-components 1.0.5 pages/staking 1.1.4 pages/vesting 1.0.2 | Add Rabby Wallet
+
+## 2.0.6 - 2024-02-21
+
+- (fix) apps/mission 1.0.32 | Adds error boundary to Evmos Price to prevent app crash in case of coingecko API failure
+- (fix) xap-157 | packages/widgets 1.0.4 | forge widget temporary change
+
+## 2.0.5 - 2024-02-21
+
+- (chore) onb-8 | apps/mission 1.0.31 packages/evmos-wallet 1.0.28 packages/registry 1.0.7 packages/trpc 1.0.1 | List BERLIN token
+
+## 2.0.4 - 2024-02-19
+
+- (fix) xap-125 | apps 1.0.30 packages/copilot 1.0.13 packages/icons 1.0.12 packages/instantdapps 1.0.1 packages/widgets 1.0.3 pages/dappsstore 1.1.5 | Remove Cypher from instant dapps
+- (chore) | packages/widgets 1.0.3 packages/tracker 1.0.10 | Track widget transactions
 
 ## 2.0.3 - 2024-02-08
 
