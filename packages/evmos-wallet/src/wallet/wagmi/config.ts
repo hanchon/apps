@@ -5,17 +5,18 @@ import { createConfig, http } from "wagmi";
 
 import { injected, safe, walletConnect } from "wagmi/connectors";
 import { WALLET_CONNECT_PROJECT_ID } from "../../internal/wallet/functionality/networkConfig";
-import { keplr } from "./keplrConnector";
+
 import {
   evmoslocalnet,
   evmosmainnet,
   evmostestnet,
 } from "helpers/src/evmos-info";
+import { leap } from "./leapConnector";
+import { KeplrProvider } from "./keplrConnector";
 import { EIP1193Provider } from "viem";
 
 export const wagmiConfig = createConfig({
   chains: [evmosmainnet, evmostestnet, evmoslocalnet],
-
   transports: {
     [evmosmainnet.id]: http(),
     [evmostestnet.id]: http(),
@@ -37,7 +38,30 @@ export const wagmiConfig = createConfig({
         },
       },
     }),
-    keplr,
+    injected({
+      target() {
+        return {
+          id: "keplr",
+          name: "Keplr",
+          provider: new KeplrProvider({
+            DEFAULT: evmosmainnet.id,
+            [evmosmainnet.id]: {
+              isNative: true,
+              chainId: evmosmainnet.cosmosChainId,
+            },
+            [evmostestnet.id]: () =>
+              import("@evmosapps/registry/src/keplr/evmostestnet.json").then(
+                (module) => module.default,
+              ),
+            [evmoslocalnet.id]: () =>
+              import("@evmosapps/registry/src/keplr/evmostestnet.json").then(
+                (module) => module.default,
+              ),
+          }),
+        };
+      },
+    }),
+    leap,
     walletConnect({
       showQrModal: process.env.NODE_ENV !== "test",
       projectId: WALLET_CONNECT_PROJECT_ID,
@@ -53,4 +77,5 @@ export type ConnetorId =
   | "WalletConnect"
   | "Keplr"
   | "Safe"
+  | "Leap"
   | "Rabby";
