@@ -13,6 +13,7 @@ import {
 } from "helpers/src/evmos-info";
 import { leap } from "./leapConnector";
 import { KeplrProvider } from "./keplrConnector";
+import { EIP1193Provider } from "viem";
 
 export const wagmiConfig = createConfig({
   chains: [evmosmainnet, evmostestnet, evmoslocalnet],
@@ -26,6 +27,17 @@ export const wagmiConfig = createConfig({
 
   connectors: [
     injected({ target: "metaMask" }),
+    injected({
+      target: {
+        id: "rabby",
+        name: "Rabby Wallet",
+        provider: (window) => {
+          if (window && "rabby" in window) {
+            return window.rabby as EIP1193Provider;
+          }
+        },
+      },
+    }),
     injected({
       target() {
         return {
@@ -65,4 +77,5 @@ export type ConnetorId =
   | "WalletConnect"
   | "Keplr"
   | "Safe"
-  | "Leap";
+  | "Leap"
+  | "Rabby";
