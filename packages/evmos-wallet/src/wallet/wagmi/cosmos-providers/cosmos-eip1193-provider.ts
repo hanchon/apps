@@ -37,10 +37,15 @@ type ChainConfig =
       chainId: string;
     };
 
-type PublicCosmoProvider = {
+// This is the interface we expect from cosmos based wallets
+// chain info could be different from wallet to wallet, ideally we'd like
+// to make it type safe, but I think it's not worth the trouble for now while we only support keplr and leap, we may want to revisit later,
+// so I just threw any in there, sorry not sorry
+//
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface PublicCosmosProvider<TChainInfo = any> {
   enable: (chainId: string) => Promise<void>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  experimentalSuggestChain: (chainInfo: any) => Promise<void>;
+  experimentalSuggestChain: (chainInfo: TChainInfo) => Promise<void>;
   signEthereum: (
     chainId: string,
     signer: string,
@@ -48,12 +53,18 @@ type PublicCosmoProvider = {
     type: EthSignType,
   ) => Promise<Uint8Array>;
   getOfflineSigner: (chainId: string) => OfflineSigner;
-};
+}
+
+/**
+ * This is a wrapper around cosmos based public providers.
+ * Generally, they only provide a "signEthereum" method, but do not implement the EIP1193Provider interface as EVM based wallets do.
+ * So this is a bridge to make them compatible with EIP1193Provider.
+ */
 export class CosmosEIP1193Provider implements EIP1193Provider {
-  ee = new EventEmitter({});
+  private ee = new EventEmitter({});
   private connectedNetwork: number;
 
-  getCosmosProvider: () => Promise<PublicCosmoProvider>;
+  private getCosmosProvider: () => Promise<PublicCosmosProvider>;
   constructor(
     public name: string,
     public chainConfigMap: {
@@ -61,7 +72,7 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
       [evmId: number]: ChainConfig | (() => Promise<ChainConfig>);
     },
 
-    getCosmosProvider: () => Promise<PublicCosmoProvider>,
+    getCosmosProvider: () => Promise<PublicCosmosProvider>,
   ) {
     this.getCosmosProvider = getCosmosProvider.bind(this);
     this.connectedNetwork = this.chainConfigMap.DEFAULT;
@@ -69,7 +80,7 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
     void this.setup();
   }
 
-  resolveCosmosConfig = async (evmChainId: string | number) => {
+  private resolveCosmosConfig = async (evmChainId: string | number) => {
     const chainConfig = this.chainConfigMap[normalizeChainId(evmChainId)];
     if (!chainConfig) {
       throw new Error("Chain not supported");
@@ -79,18 +90,18 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
       : chainConfig;
   };
 
-  getCosmosId = async () => {
+  private getCosmosId = async () => {
     const chainConfig = await this.resolveCosmosConfig(this.connectedNetwork);
     return chainConfig.chainId;
   };
 
-  setIsAuthorized = (isAuthorized: boolean) => {
+  private setIsAuthorized = (isAuthorized: boolean) => {
     window.localStorage.setItem(
       `${this.name}.ProviderStatus`,
       isAuthorized ? "authorized" : "unauthorized",
     );
   };
-  getIsAuthorized = () => {
+  private getIsAuthorized = () => {
     return (
       window.localStorage.getItem(`${this.name}.ProviderStatus`) ===
       "authorized"
@@ -118,11 +129,11 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
     return fn(args.params);
   };
 
-  eth_chainId = () => {
+  private eth_chainId = () => {
     return Promise.resolve(toHex(this.connectedNetwork));
   };
 
-  eth_requestAccounts = async () => {
+  private eth_requestAccounts = async () => {
     const provider = await this.getCosmosProvider();
 
     const signer = provider.getOfflineSigner(await this.getCosmosId());
@@ -133,7 +144,7 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
     return [normalizeToEth(account.address)] as const;
   };
 
-  personal_sign = async (
+  private personal_sign = async (
     parameters: [string],
     signType: EthSignType,
   ): Promise<EIP1474ReturnType<"personal_sign">> => {
@@ -150,7 +161,7 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
 
     return toHex(signature);
   };
-  getPublicClient = async () => {
+  private getPublicClient = async () => {
     const chainId = normalizeChainId(
       await this.request({ method: "eth_chainId" }),
     );
@@ -162,7 +173,7 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
       transport: http(),
     });
   };
-  prepareTransactionForProvider = async (
+  private prepareTransactionForProvider = async (
     request: EIP1474Parameters<"eth_sendTransaction">[0],
   ) => {
     const chainId = normalizeChainId(
@@ -232,7 +243,7 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
       maxFeePerGas: toHex(maxFeePerGas),
     };
   };
-  eth_sendTransaction = async ([
+  private eth_sendTransaction = async ([
     request,
   ]: EIP1474Parameters<"eth_sendTransaction">): Promise<
     EIP1474ReturnType<"eth_sendTransaction">
@@ -272,7 +283,7 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
       params: [message],
     });
   };
-  eth_signTypedData_v4 = async (
+  private eth_signTypedData_v4 = async (
     parameters: EIP1474Parameters<"eth_signTypedData_v4">,
   ): Promise<EIP1474ReturnType<"eth_signTypedData_v4">> => {
     const cosmosProvider = await this.getCosmosProvider();
@@ -288,7 +299,7 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
     return toHex(signature);
   };
 
-  wallet_requestPermissions = async (
+  private wallet_requestPermissions = async (
     request: EIP1474Parameters<"wallet_requestPermissions">,
   ): Promise<EIP1474ReturnType<"wallet_requestPermissions">> => {
     const response = await Promise.all(
@@ -312,21 +323,21 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
     return response;
   };
 
-  eth_accounts = async () => {
+  private eth_accounts = async () => {
     if (this.getIsAuthorized()) {
       return this.eth_requestAccounts();
     }
     return [];
   };
 
-  setChain(chainId: number | string) {
+  private setChain(chainId: number | string) {
     const normalized = normalizeChainId(chainId);
 
     if (this.connectedNetwork === normalized) return;
     this.ee.emit("chainChanged", toHex(normalized));
     this.connectedNetwork = normalized;
   }
-  wallet_addEthereumChain = async (
+  private wallet_addEthereumChain = async (
     request: EIP1474Parameters<"wallet_addEthereumChain">,
   ): Promise<EIP1474ReturnType<"wallet_addEthereumChain">> => {
     const chainId = request[0].chainId;
@@ -342,9 +353,9 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
     return null;
   };
 
-  wallet_switchEthereumChain = this.wallet_addEthereumChain;
+  private wallet_switchEthereumChain = this.wallet_addEthereumChain;
 
-  setup() {
+  private setup() {
     if (typeof window === "undefined") return;
 
     window.addEventListener(`${this.name}_keystorechange`, async () => {

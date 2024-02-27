@@ -16,6 +16,6 @@ export async function getKeplrProvider() {
   await waitDocReady();
 
   return (
-    getGlobalKeplrProvider() ?? raise("global Leap provider not available")
+    getGlobalKeplrProvider() ?? raise("global Keplr provider not available")
   );
 }
