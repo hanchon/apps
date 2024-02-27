@@ -5,7 +5,11 @@
 import { createTxRaw } from "@evmos/proto";
 import { getAccount, getChainId } from "wagmi/actions";
 import { assert } from "helpers";
-import { signTypedDataMessage, wagmiConfig } from "../../wallet";
+import {
+  getActiveProviderKey,
+  signTypedDataMessage,
+  wagmiConfig,
+} from "../../wallet";
 import { apiBroadcastEip712, apiBroadcastRawTx } from "../evmos-api/broadcast";
 import { ApiPresignTx } from "../../utils";
 import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
@@ -75,23 +79,25 @@ async function signBackendDirectTransaction(transaction: ApiPresignTx) {
 
 export async function signApiPresignTx(presignedTx: ApiPresignTx) {
   const { address, connector } = getAccount(wagmiConfig);
-
   assert(address && connector, "COULD_NOT_SIGN_TRANSACTION");
   /**
    * If the connector is keplr / leap, we need to check if the key is a ledger key.
    * If it is, we need to sign the transaction as typed data
    */
-  const connectorCosmosBased =
-    await providers[connector.name as COSMOS_BASED_WALLETS]();
+  const activeProvider = getActiveProviderKey();
+  if (activeProvider && isCosmosBasedWallet(activeProvider)) {
+    const connectorCosmosBased =
+      await providers[connector.name as COSMOS_BASED_WALLETS]();
 
-  if (connectorCosmosBased) {
-    connectorCosmosBased.defaultOptions = {
-      sign: {
-        preferNoSetFee: presignedTx.chainId === evmosInfo.cosmosId,
-      },
-    };
-    const key = await connectorCosmosBased.getKey(presignedTx.chainId);
-    if (!key.isNanoLedger) return signBackendDirectTransaction(presignedTx);
+    if (connectorCosmosBased) {
+      connectorCosmosBased.defaultOptions = {
+        sign: {
+          preferNoSetFee: presignedTx.chainId === evmosInfo.cosmosId,
+        },
+      };
+      const key = await connectorCosmosBased.getKey(presignedTx.chainId);
+      if (!key.isNanoLedger) return signBackendDirectTransaction(presignedTx);
+    }
   }
 
   return signBackendTypedDataTransaction(presignedTx);
