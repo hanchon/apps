@@ -120,12 +120,14 @@ export class CosmosEIP1193Provider implements EIP1193Provider {
   ): void {
     this.ee.removeListener(event, listener);
   }
-  request: EIP1193Provider["request"] = (args) => {
+  request: EIP1193Provider["request"] = async (args) => {
     // proxies all requests to methods declared internally
 
     const fn: unknown = get(this, args.method);
     if (typeof fn !== "function") {
-      throw Error("Method not implemented.");
+      // redirect to the public provider
+      const client = await this.getPublicClient();
+      return client.request(args as never);
     }
 
     return fn(args.params) as never;
