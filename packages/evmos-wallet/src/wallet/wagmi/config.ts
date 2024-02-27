@@ -11,9 +11,12 @@ import {
   evmosmainnet,
   evmostestnet,
 } from "helpers/src/evmos-info";
-import { leap } from "./leapConnector";
-import { KeplrProvider } from "./keplrConnector";
 import { EIP1193Provider } from "viem";
+
+import {
+  keplrProvider,
+  leapProvider,
+} from "./cosmos-providers/cosmos-providers";
 
 export const wagmiConfig = createConfig({
   chains: [evmosmainnet, evmostestnet, evmoslocalnet],
@@ -43,25 +46,19 @@ export const wagmiConfig = createConfig({
         return {
           id: "keplr",
           name: "Keplr",
-          provider: new KeplrProvider({
-            DEFAULT: evmosmainnet.id,
-            [evmosmainnet.id]: {
-              isNative: true,
-              chainId: evmosmainnet.cosmosChainId,
-            },
-            [evmostestnet.id]: () =>
-              import("@evmosapps/registry/src/keplr/evmostestnet.json").then(
-                (module) => module.default,
-              ),
-            [evmoslocalnet.id]: () =>
-              import("@evmosapps/registry/src/keplr/evmostestnet.json").then(
-                (module) => module.default,
-              ),
-          }),
+          provider: keplrProvider,
         };
       },
     }),
-    leap,
+    injected({
+      target() {
+        return {
+          id: "leap",
+          name: "Leap",
+          provider: leapProvider,
+        };
+      },
+    }),
     walletConnect({
       showQrModal: process.env.NODE_ENV !== "test",
       projectId: WALLET_CONNECT_PROJECT_ID,
