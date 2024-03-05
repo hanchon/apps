@@ -3,8 +3,7 @@
 
 export const safeBigInt = (value: string | number | bigint) => {
   if (typeof value === "string") {
-    // ignores decimal points
-    const [safe = "0"] = value.match(/^-?\d+/) ?? [];
+    const [safe = "0"] = value.match(/^-?\d+$/) ?? [];
     return BigInt(safe);
   }
   if (typeof value === "number") {
