@@ -34,7 +34,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 # Changelog
 
-## Unreleased
+## 2.0.7 - 2024-03-05
 
 - (chore) | apps/mission 1.0.33 | Swap rpcs by the newly crated proxy
 - (chore) | packages/evmos-wallet 1.0.31 | Fix provider request
