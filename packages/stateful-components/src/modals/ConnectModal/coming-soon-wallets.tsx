@@ -2,6 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
 import { LeapIcon } from "@evmosapps/icons/LeapWalletIcon";
+import { RabbyIcon } from "@evmosapps/icons/RabbyWalletIcon";
 import { ButtonWallet } from "./ConnectModalContent";
 import { Badge } from "@evmosapps/ui-helpers";
 import { useTranslation } from "@evmosapps/i18n/client";
@@ -11,6 +12,7 @@ const wallets = [
     name: "Leap Wallet",
     icon: <LeapIcon className="w-7" />,
   },
+  { name: "Rabby Wallet", icon: <RabbyIcon className="w-7" /> },
 ];
 
 export const ComingSoonWallets = () => {

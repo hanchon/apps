@@ -14,20 +14,29 @@ import {
 } from "tracker";
 import { WalletExtension } from "../../internal/wallet/functionality/wallet";
 import { snackExecuteIBCTransfer } from "../../notification/helpers";
+import { getChainId, switchChain } from "wagmi/actions";
+import { getEvmosChainInfo } from "../../wallet/wagmi/chains";
 import { E } from "helpers";
-import { switchToEvmosChain } from "../../wallet/actions/switchToEvmosChain";
+import { wagmiConfig } from "../../wallet";
 
 type RewardsProps = {
   wallet: WalletExtension;
   setConfirmClicked: (value: boolean) => void;
 };
+const evmos = getEvmosChainInfo();
 
 export const useRewards = (rewardsProps: RewardsProps) => {
   const dispatch = useDispatch();
   const { wallet: value, setConfirmClicked } = rewardsProps;
   const handleConfirmButton = useCallback(async () => {
-    const [err] = await E.try(() => switchToEvmosChain());
-    if (err) return;
+    if (getChainId(wagmiConfig) !== evmos.id) {
+      const [err] = await E.try(() =>
+        switchChain(wagmiConfig, {
+          chainId: evmos.id,
+        }),
+      );
+      if (err) return;
+    }
 
     sendEvent(CLICK_CLAIM_REWARDS_BUTTON, {
       "User Wallet Address": value?.evmosAddressEthFormat,

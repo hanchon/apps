@@ -17,18 +17,28 @@ import {
 } from "tracker";
 
 import { EXPLORER_URL } from "constants-helper";
+import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { E } from "helpers";
 import { useStakingPrecompile } from "../../../../utils/hooks/useStakingPrecompile";
+import { useConfig } from "wagmi";
+import { getChainId, switchChain } from "wagmi/actions";
 
-import { switchToEvmosChain } from "@evmosapps/evmos-wallet/src/wallet/actions/switchToEvmosChain";
+const evmos = getEvmosChainInfo();
 
 export const useDelegation = (useDelegateProps: DelegateProps) => {
   const dispatch = useDispatch();
 
   const { delegate } = useStakingPrecompile();
+  const config = useConfig();
   const handleConfirmButton = async () => {
-    const [err] = await E.try(() => switchToEvmosChain());
-    if (err) return;
+    if (getChainId(config) !== evmos.id) {
+      const [err] = await E.try(() =>
+        switchChain(config, {
+          chainId: evmos.id,
+        }),
+      );
+      if (err) return;
+    }
 
     useDelegateProps.setConfirmClicked(true);
     if (
