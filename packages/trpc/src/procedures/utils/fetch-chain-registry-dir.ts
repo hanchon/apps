@@ -6,16 +6,6 @@ import { github } from "helpers/src/clients/github";
 import { isString } from "helpers";
 
 export const fetchChainRegistryDir = async <T>(dir: string) => {
-  // const { data } = await github.rest.repos.getContent({
-  //   owner: "evmos",
-  //   repo: "chain-token-registry",
-  //   path: dir,
-  //   ref: process.env.CHAIN_REGISTRY_REF ?? "main",
-  //   mediaType: {
-  //     format: "json",
-  //   },
-  // });
-
   const owner = "evmos";
   const repo = "chain-token-registry";
   const path = dir;
