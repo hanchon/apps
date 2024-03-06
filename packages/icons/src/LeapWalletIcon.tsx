@@ -7,7 +7,7 @@ type LeapIconProps = React.SVGAttributes<SVGElement> & {
 
 export const LeapIcon: React.FC<LeapIconProps> = ({
   width = "30",
-  height = "38",
+  height = "23",
   ...restProps
 }) => {
   return (
