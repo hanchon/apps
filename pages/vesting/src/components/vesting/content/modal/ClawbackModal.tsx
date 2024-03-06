@@ -21,10 +21,14 @@ import { useVestingPrecompile } from "../../../../internal/useVestingPrecompile"
 import { EXPLORER_URL } from "constants-helper";
 
 import { E } from "helpers";
+import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { ModalTitle } from "../../../ModalTitle";
+import { useConfig } from "wagmi";
+import { getChainId, switchChain } from "wagmi/actions";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { normalizeToEth } from "helpers/src/crypto/addresses/normalize-to-eth";
-import { switchToEvmosChain } from "@evmosapps/evmos-wallet/src/wallet/actions/switchToEvmosChain";
+
+const evmos = getEvmosChainInfo();
 
 // TODO: format totalTokens and availableClawback depending on the response
 export const ClawbackModal = ({
@@ -36,9 +40,16 @@ export const ClawbackModal = ({
   const [disabled, setDisabled] = useState(false);
 
   const { clawback } = useVestingPrecompile();
+  const config = useConfig();
   const handleOnClick = async () => {
-    const [err] = await E.try(() => switchToEvmosChain());
-    if (err) return;
+    if (getChainId(config) !== evmos.id) {
+      const [err] = await E.try(() =>
+        switchChain(config, {
+          chainId: evmos.id,
+        }),
+      );
+      if (err) return;
+    }
     try {
       setDisabled(true);
 

@@ -47,13 +47,15 @@ import { VestingResponse } from "../../../internal/types";
 
 import { ethers } from "ethers";
 import { EXPLORER_URL } from "constants-helper";
+import { switchChain, getChainId } from "wagmi/actions";
 import { E } from "helpers";
+import { getEvmosChainInfo } from "@evmosapps/evmos-wallet/src/wallet/wagmi/chains";
 import { ModalTitle } from "../../ModalTitle";
-import { useAccount } from "wagmi";
+import { useAccount, useConfig } from "wagmi";
 import { useTranslation } from "@evmosapps/i18n/client";
 import { normalizeToCosmos } from "helpers/src/crypto/addresses/normalize-to-cosmos";
-import { switchToEvmosChain } from "@evmosapps/evmos-wallet/src/wallet/actions/switchToEvmosChain";
 
+const evmos = getEvmosChainInfo();
 export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
   const [disabled, setDisabled] = useState(false);
   const { address } = useAccount();
@@ -65,6 +67,7 @@ export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
   const { fundVestingAccount } = useVestingPrecompile();
 
   const [fundAmount, setAmount] = useState("0");
+  const config = useConfig();
   const { evmosBalance: funderBalance } = useEvmosBalance();
 
   useEffect(() => {
@@ -115,8 +118,15 @@ export const FundVestingAccount = ({ onClose }: { onClose: () => void }) => {
   }, [vestingAddress]);
 
   const handleOnClick = async (d: FieldValues) => {
-    const [err] = await E.try(() => switchToEvmosChain());
-    if (err) return;
+    const connectedNetwork = getChainId(config);
+    if (connectedNetwork !== evmos.id) {
+      const [err] = await E.try(() =>
+        switchChain(config, {
+          chainId: evmos.id,
+        }),
+      );
+      if (err) return;
+    }
     try {
       setDisabled(true);
 

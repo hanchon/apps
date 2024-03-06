@@ -6,7 +6,7 @@ import { ChainRegistry } from "./types/chain";
 import { TokenRegistry } from "./types/token";
 import { groupBy } from "lodash-es";
 import { fileHeader } from "./constants";
-import { overwrites } from "./rpc-overwrites";
+import { lavaUrls } from "./lava-urls";
 import { readFiles } from "./readFiles";
 import { testnetConfigByChain, testnetTokensByIdentifiers } from "./testnets";
 
@@ -147,17 +147,17 @@ for (const chainRegistry of chains) {
   const isMainnet = configuration.configurationType === "mainnet";
 
   const cosmosRest = normalizeNetworkUrls([
-    overwrites[identifier]?.cosmosRest,
+    lavaUrls[identifier]?.cosmosRest,
     isMainnet ? `https://rest.cosmos.directory/${identifier}` : "",
     ...configuration.rest,
   ]);
   const tendermintRest = normalizeNetworkUrls([
-    overwrites[identifier]?.tendermintRest,
+    lavaUrls[identifier]?.tendermintRest,
     isMainnet ? `https://rpc.cosmos.directory/${identifier}` : "",
     ...configuration.rpc,
   ]);
   const evmRest = normalizeNetworkUrls([
-    overwrites[identifier]?.evmRest,
+    lavaUrls[identifier]?.evmRest,
     ...(configuration.web3 ?? []),
   ]);
 
