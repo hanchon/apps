@@ -6,16 +6,15 @@
 import { raise } from "helpers";
 
 import { fetchChains } from "../../chains/queries/fetch-chains";
-
+import { TokenEntity } from "@evmosapps/registry/autogen/token-entity";
+import { fetchChainRegistryDir } from "../../utils/fetch-chain-registry-dir";
 import { loadRegistryTokenExtensions } from "../../utils/load-registry-token-extensions";
 import { ChainType } from "@evmosapps/registry/src/types";
 import { nextCache } from "helpers/src/next/cache";
 import { seconds } from "helpers/src/time";
 
-import { TokenEntity } from "@evmosapps/registry/autogen/token-entity";
-import { fetchChainRegistryDir } from "../../utils/fetch-chain-registry-dir";
-
 const CHAIN_REGISTRY_REF = process.env.CHAIN_REGISTRY_REF ?? "main";
+
 export const fetchTokens = nextCache(
   async function () {
     const [chainMap, fromRegistry, fromExtensions] = await Promise.all([
