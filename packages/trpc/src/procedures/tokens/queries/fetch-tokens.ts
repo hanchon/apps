@@ -39,7 +39,7 @@ export const fetchTokens = nextCache(
                   token.img.svg?.replace("/main/", `/${CHAIN_REGISTRY_REF}/`) ??
                   token.img.svg,
               }
-            : undefined,
+            : {png: "", svg: ""},
         };
       }
       return {
