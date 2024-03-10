@@ -39,7 +39,10 @@ export const WIDGETS: {
     loading: () => <p>Loading...</p>,
     ssr: false,
   }),
-  osmosis: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Osmosis"), {
+  // osmosis: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Osmosis"), {
+  //   ssr: false,
+  // }),
+  osmosis: dynamic(() => import("@evmosapps/instant-dapps/src/dapps/Evmosme"), {
     ssr: false,
   }),
 };
